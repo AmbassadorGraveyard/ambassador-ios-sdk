@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  	<head>
+        <script>
+            var JSONdata = "it didn't work";
+            function callbackName ( json ) {
+              	console.log("Here's data about the device =>", json);
+                JSONdata = JSON.stringify(json);
+                window.location = 'myapp:myaction';
+          	}
+        </script>
+        <script id="augur.js" async src="http://cdn.augur.io/augur.min.js" data-callback="callbackName" data-warpspeed="truz"></script>
+    </head>
+  	<body></body>
+</html>

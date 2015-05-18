@@ -1,0 +1,10 @@
+PODS:
+  - Heap (2.1.4)
+
+DEPENDENCIES:
+  - Heap
+
+SPEC CHECKSUMS:
+  Heap: ea994e666fba201064c20f3fe9a9a09bf1fe5b0f
+
+COCOAPODS: 0.37.1

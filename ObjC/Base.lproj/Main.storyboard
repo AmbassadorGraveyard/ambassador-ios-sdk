@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Finger Print View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="FingerPrintViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="D6z-x4-zC3"/>
+                        <viewControllerLayoutGuide type="bottom" id="qCe-mI-VXr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8gX-bM-4Ra">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JdN-Z2-Uaf">
+                                <rect key="frame" x="16" y="28" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7RP-56-U51">
+                                <rect key="frame" x="66" y="24" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Dxf-PO-Aqj">
+                                <rect key="frame" x="14" y="57" width="118" height="31"/>
+                            </slider>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZUS-FR-4oo">
+                                <rect key="frame" x="138" y="28" width="51" height="31"/>
+                            </switch>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dWY-6z-0KS">
+                                <rect key="frame" x="16" y="95" width="376" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gaL-kS-Ky9">
+                                <rect key="frame" x="16" y="133" width="37" height="30"/>
+                                <state key="normal" title="TEST">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="7RP-56-U51" firstAttribute="leading" secondItem="JdN-Z2-Uaf" secondAttribute="trailing" constant="8" symbolic="YES" id="CG4-R7-0G3"/>
+                            <constraint firstItem="ZUS-FR-4oo" firstAttribute="leading" secondItem="Dxf-PO-Aqj" secondAttribute="trailing" constant="8" symbolic="YES" id="Cvd-hm-rGe"/>
+                            <constraint firstItem="ZUS-FR-4oo" firstAttribute="leading" secondItem="7RP-56-U51" secondAttribute="trailing" constant="26" id="XMU-Je-Oz2"/>
+                            <constraint firstItem="Dxf-PO-Aqj" firstAttribute="top" secondItem="JdN-Z2-Uaf" secondAttribute="bottom" constant="8" symbolic="YES" id="YFa-Bm-Frg"/>
+                            <constraint firstItem="JdN-Z2-Uaf" firstAttribute="top" secondItem="ZUS-FR-4oo" secondAttribute="top" id="jr8-9z-7fq"/>
+                            <constraint firstItem="JdN-Z2-Uaf" firstAttribute="top" secondItem="D6z-x4-zC3" secondAttribute="bottom" constant="8" symbolic="YES" id="oZj-aQ-ikW"/>
+                            <constraint firstItem="Dxf-PO-Aqj" firstAttribute="leading" secondItem="8gX-bM-4Ra" secondAttribute="leadingMargin" id="pWw-xk-6mY"/>
+                            <constraint firstItem="Dxf-PO-Aqj" firstAttribute="leading" secondItem="JdN-Z2-Uaf" secondAttribute="leading" id="qWM-yT-brR"/>
+                            <constraint firstItem="JdN-Z2-Uaf" firstAttribute="baseline" secondItem="7RP-56-U51" secondAttribute="baseline" id="sf9-F2-JNg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="button" destination="7RP-56-U51" id="OMX-to-C4Q"/>
+                        <outlet property="label" destination="JdN-Z2-Uaf" id="o5J-yT-CyV"/>
+                        <outlet property="slider" destination="Dxf-PO-Aqj" id="RKx-eQ-xH6"/>
+                        <outlet property="testButton" destination="gaL-kS-Ky9" id="DKn-al-0Y6"/>
+                        <outlet property="toggle" destination="ZUS-FR-4oo" id="69t-RV-h5T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>
