@@ -18,6 +18,16 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+//    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+//    [center addObserverForName:nil
+//                        object:nil
+//                         queue:nil
+//                    usingBlock:^(NSNotification *notification)
+//     {
+//         NSLog(@"%@", notification.description);
+//     }];
+    
+    
     [Heap setAppId:@"3281560249"];
     [Heap enableVisualizer];
     

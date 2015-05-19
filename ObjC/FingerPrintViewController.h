@@ -11,7 +11,7 @@
 
 @interface FingerPrintViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UISwitch *toggle;
-@property (weak, nonatomic) IBOutlet UIButton *button;
+@property (weak, nonatomic) IBOutlet UIButton *buttons;
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (weak, nonatomic) IBOutlet UIButton *testButton;

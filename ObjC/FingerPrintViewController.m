@@ -9,6 +9,7 @@
 #import "FingerPrintViewController.h"
 #import "AMBFingerprint.h"
 #import "AMBInsights.h"
+#import "CustomActivityViewOne.h"
 
 @interface FingerPrintViewController ()
 
@@ -24,55 +25,28 @@
 @end
 
 @implementation FingerPrintViewController
+- (IBAction)testButton:(UIButton *)sender {
+    [self testActiityViewController];
+}
+- (IBAction)regButton:(UIButton *)sender {
+    //[self testPopoverController];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.fingerPrintEngine = [[AMBFingerprint alloc] init];
     [self.fingerPrintEngine registerFingerprint];
     
-    self.insightsEngine = [[AMBInsights alloc] init];
-    [self.insightsEngine searchByUID:@"655077a40aaf6b75d0c1fe55bd4e0e6c32c074bfadfef5c29c2dfc50" withErrorBlock:^(NSError* error) {
-        NSLog(@"%@", error);
-    }];
-    
     //Set observer on the fingerprintEngine's dictionary
     //so it's only accessed after being set
     [self.fingerPrintEngine addObserver:self forKeyPath:@"jsonResponse" options:0 context:@"JSONFilled"];
-    //[self.fingerPrintEngine addObserver:self forKeyPath:@"jsonResponse" options:0 context:@"Fingerprinted"];
     
-    [self listSubviewsOfView:self.view withSpacing:@""];
+    //[self listSubviewsOfView:self.view withSpacing:@""];
     
 }
 
 //The observer handler
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (context == @"JSONFilled") {
-#ifdef DEBUG
-        [self addDevLables];
-#endif
-    } else if ( context == @"Fingerprinted") {
-        self.uid = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, [[UIScreen mainScreen] bounds].size.width, 10)];
-        self.uid.text = [NSString stringWithFormat:@"UID: %@",self.fingerPrintEngine.jsonResponse[@"consumer"][@"UID"]];
-        self.did = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, [[UIScreen mainScreen] bounds].size.width, 10)];
-        self.did.text = [NSString stringWithFormat:@"DID: %@",self.fingerPrintEngine.jsonResponse[@"device"][@"ID"]];
-        self.did.font = [UIFont systemFontOfSize:5];
-        self.uid.font = [UIFont systemFontOfSize:5];
-        [self.view addSubview:self.uid];
-        [self.view addSubview:self.did];
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
-
-- (void)addDevLables {
-    /*
-    self.jsonResponseText = [[UITextView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.jsonResponseText.text = [NSString stringWithFormat:@"%@", self.fingerPrintEngine
-                                  .jsonResponse];
-    self.jsonResponseText.font = [UIFont systemFontOfSize:5];
-    [self.view addSubview:self.jsonResponseText];
-     */
-}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {}
 
 #pragma mark - Memory
 
@@ -92,6 +66,7 @@
 
 #pragma mark - View Heirarchy Management
 
+//Development utility function
 - (void)listSubviewsOfView:(UIView *)view withSpacing:(NSString*)spacing {
 
     // Get the subviews of the view
@@ -108,6 +83,43 @@
         // List the subviews of subview
         [self listSubviewsOfView:subview withSpacing:[NSString stringWithFormat:@"%@  ",spacing]];
     }
+}
+
+- (void)testActiityViewController {
+    NSString* messageText = @"blah blah blah link link stuff message blah";
+    NSURL* messageUrl = [NSURL URLWithString:@"http://www.getambassador.com"];
+    UIImage* messageImage = [UIImage imageNamed:@"slack-imgs.com.gif"];
+    
+    NSArray* activityItems = [NSArray arrayWithObjects:messageText, messageUrl, messageImage, nil];
+    
+    CustomActivityViewOne* activityVC = [[CustomActivityViewOne alloc] init];
+    
+    
+    NSArray* excludedItems = [NSArray arrayWithObjects:UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, nil];
+    
+    UIActivityViewController* activityViewController = [[UIActivityViewController alloc]
+                                                        initWithActivityItems:activityItems
+                                                        applicationActivities:[NSArray arrayWithObject:activityVC]];
+    
+    activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    activityViewController.excludedActivityTypes = excludedItems;
+    
+    [self presentViewController:activityViewController animated:YES completion:nil];
+    
+}
+
+- (void)testPopoverController {
+    CustomActivityViewOne* activityVC = [[CustomActivityViewOne alloc] init];
+    UIActivityViewController* activityViewController = [[UIActivityViewController alloc]
+                                                        initWithActivityItems:nil
+                                                        applicationActivities:[NSArray arrayWithObject:activityVC]];
+
+    UIPopoverController* popover = [[UIPopoverController alloc] initWithContentViewController:activityViewController];
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    [popover
+     presentPopoverFromRect:rect inView:self.view
+     permittedArrowDirections:0
+     animated:YES];
 }
 
 @end

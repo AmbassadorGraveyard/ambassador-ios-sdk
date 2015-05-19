@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB0DA2B61B0B9D540050C5E2 /* slack-imgs.com.gif in Resources */ = {isa = PBXBuildFile; fileRef = DB0DA2B51B0B9D540050C5E2 /* slack-imgs.com.gif */; };
+		DB0DA2B91B0BB8D20050C5E2 /* CustomActivityViewOne.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0DA2B81B0BB8D20050C5E2 /* CustomActivityViewOne.m */; };
+		DB0DA2BB1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png in Resources */ = {isa = PBXBuildFile; fileRef = DB0DA2BA1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png */; };
+		DB0DA2C11B0BD4510050C5E2 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0DA2C01B0BD4510050C5E2 /* JRSwizzle.m */; };
+		DB0DA2C41B0BE1430050C5E2 /* TrackingApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0DA2C31B0BE1430050C5E2 /* TrackingApplication.m */; };
 		DB44E14D1B013FC900D28127 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DB44E14C1B013FC900D28127 /* main.m */; };
 		DB44E1501B013FC900D28127 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DB44E14F1B013FC900D28127 /* AppDelegate.m */; };
 		DB44E1561B013FC900D28127 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB44E1541B013FC900D28127 /* Main.storyboard */; };
@@ -26,6 +31,7 @@
 		DB99D73C1B025DEB00EA0C50 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = DB99D73B1B025DEB00EA0C50 /* Podfile */; };
 		DBADC0871B0A2E5700C9E502 /* augur.html in Resources */ = {isa = PBXBuildFile; fileRef = DBADC0861B0A2E5700C9E502 /* augur.html */; };
 		DBADC08D1B0A3A7D00C9E502 /* AMBFingerprint.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADC08B1B0A3A7D00C9E502 /* AMBFingerprint.m */; };
+		DBADC0901B0A94A200C9E502 /* EventTrackingLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADC08F1B0A94A200C9E502 /* EventTrackingLog.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +48,14 @@
 		6312CFDBB1AEE5DBFCD751C7 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		784882688E0B6E393A5443F3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		CA772B10C45D9D4EBE93D5F5 /* libHeap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libHeap.a; path = ../../../../../../../../Desktop/ObjC/Pods/Heap/libHeap.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB0DA2B51B0B9D540050C5E2 /* slack-imgs.com.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "slack-imgs.com.gif"; sourceTree = "<group>"; };
+		DB0DA2B71B0BB8D20050C5E2 /* CustomActivityViewOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomActivityViewOne.h; sourceTree = "<group>"; };
+		DB0DA2B81B0BB8D20050C5E2 /* CustomActivityViewOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomActivityViewOne.m; sourceTree = "<group>"; };
+		DB0DA2BA1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grumpybeard-vice-city_360.png"; sourceTree = "<group>"; };
+		DB0DA2BF1B0BD4510050C5E2 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		DB0DA2C01B0BD4510050C5E2 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
+		DB0DA2C21B0BE1430050C5E2 /* TrackingApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingApplication.h; sourceTree = "<group>"; };
+		DB0DA2C31B0BE1430050C5E2 /* TrackingApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingApplication.m; sourceTree = "<group>"; };
 		DB44E1471B013FC900D28127 /* ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB44E14B1B013FC900D28127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB44E14C1B013FC900D28127 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -71,6 +85,8 @@
 		DBADC0861B0A2E5700C9E502 /* augur.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = augur.html; sourceTree = "<group>"; };
 		DBADC08B1B0A3A7D00C9E502 /* AMBFingerprint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFingerprint.m; sourceTree = "<group>"; };
 		DBADC08C1B0A3A7D00C9E502 /* AMBFingerprint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFingerprint.h; sourceTree = "<group>"; };
+		DBADC08E1B0A94A200C9E502 /* EventTrackingLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTrackingLog.h; sourceTree = "<group>"; };
+		DBADC08F1B0A94A200C9E502 /* EventTrackingLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTrackingLog.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +139,13 @@
 		DB44E13E1B013FC900D28127 = {
 			isa = PBXGroup;
 			children = (
+				DB0DA2C21B0BE1430050C5E2 /* TrackingApplication.h */,
+				DB0DA2C31B0BE1430050C5E2 /* TrackingApplication.m */,
+				DB0DA2B71B0BB8D20050C5E2 /* CustomActivityViewOne.h */,
+				DB0DA2B81B0BB8D20050C5E2 /* CustomActivityViewOne.m */,
 				DB99D73B1B025DEB00EA0C50 /* Podfile */,
+				DB0DA2BF1B0BD4510050C5E2 /* JRSwizzle.h */,
+				DB0DA2C01B0BD4510050C5E2 /* JRSwizzle.m */,
 				DB44E1491B013FC900D28127 /* ObjC */,
 				DB44E1631B013FC900D28127 /* ObjCTests */,
 				DB44E1481B013FC900D28127 /* Products */,
@@ -150,6 +172,8 @@
 				DB6C88551B03F098003E2499 /* AMBInsights.m */,
 				DB98017B1B0551F300154573 /* GlobalMonitorUITapGestureRecognizer.h */,
 				DB98017C1B0551F300154573 /* GlobalMonitorUITapGestureRecognizer.m */,
+				DBADC08E1B0A94A200C9E502 /* EventTrackingLog.h */,
+				DBADC08F1B0A94A200C9E502 /* EventTrackingLog.m */,
 				DB44E14E1B013FC900D28127 /* AppDelegate.h */,
 				DB44E14F1B013FC900D28127 /* AppDelegate.m */,
 				DB99D7381B023E7E00EA0C50 /* FingerPrintViewController.h */,
@@ -167,6 +191,8 @@
 		DB44E14A1B013FC900D28127 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DB0DA2BA1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png */,
+				DB0DA2B51B0B9D540050C5E2 /* slack-imgs.com.gif */,
 				DBADC0861B0A2E5700C9E502 /* augur.html */,
 				DB44E14B1B013FC900D28127 /* Info.plist */,
 				DB44E14C1B013FC900D28127 /* main.m */,
@@ -273,8 +299,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB0DA2BB1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png in Resources */,
 				DB44E1561B013FC900D28127 /* Main.storyboard in Resources */,
 				DB44E15B1B013FC900D28127 /* LaunchScreen.xib in Resources */,
+				DB0DA2B61B0B9D540050C5E2 /* slack-imgs.com.gif in Resources */,
 				DBADC0871B0A2E5700C9E502 /* augur.html in Resources */,
 				DB99D73C1B025DEB00EA0C50 /* Podfile in Resources */,
 				DB44E1581B013FC900D28127 /* Images.xcassets in Resources */,
@@ -328,12 +356,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB0DA2B91B0BB8D20050C5E2 /* CustomActivityViewOne.m in Sources */,
 				DB6C88561B03F098003E2499 /* AMBInsights.m in Sources */,
 				DBADC08D1B0A3A7D00C9E502 /* AMBFingerprint.m in Sources */,
 				DB6C88501B03EB04003E2499 /* AMBBase.m in Sources */,
 				DB44E1501B013FC900D28127 /* AppDelegate.m in Sources */,
+				DBADC0901B0A94A200C9E502 /* EventTrackingLog.m in Sources */,
 				DB99D73A1B023E7E00EA0C50 /* FingerPrintViewController.m in Sources */,
 				DB44E14D1B013FC900D28127 /* main.m in Sources */,
+				DB0DA2C41B0BE1430050C5E2 /* TrackingApplication.m in Sources */,
+				DB0DA2C11B0BD4510050C5E2 /* JRSwizzle.m in Sources */,
 				DB98017D1B0551F300154573 /* GlobalMonitorUITapGestureRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
