@@ -14,7 +14,7 @@
 
 - (NSString*)activityTitle { return @"Review Activity"; }
 
-- (UIImage*)activityImage { return [UIImage imageNamed:@"grumpybeard-vice-city_360.png"]; }
+- (UIImage*)activityImage { return [UIImage imageNamed:@"slack-imgs.com.gif"]; }
 
 - (BOOL)canPerformWithActivityItems:(NSArray *)activityItems {
     NSLog(@"%s", __FUNCTION__);
@@ -33,6 +33,8 @@
 - (void)performActivity {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.getambassador.com"]];
     [self activityDidFinish:YES];
+    
+    //[[UIApplication sharedApplication] ]
 }
 
 @end

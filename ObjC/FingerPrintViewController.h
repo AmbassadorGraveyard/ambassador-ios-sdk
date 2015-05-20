@@ -10,10 +10,9 @@
 #import <UIKit/UIKit.h>
 
 @interface FingerPrintViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UISwitch *toggle;
-@property (weak, nonatomic) IBOutlet UIButton *buttons;
-@property (weak, nonatomic) IBOutlet UILabel *label;
-@property (weak, nonatomic) IBOutlet UISlider *slider;
-@property (weak, nonatomic) IBOutlet UIButton *testButton;
+@property (weak, nonatomic) IBOutlet UITextField *usernameText;
+@property (weak, nonatomic) IBOutlet UITextField *passwordText;
+@property (weak, nonatomic) IBOutlet UIButton *logInButton;
+
 
 @end

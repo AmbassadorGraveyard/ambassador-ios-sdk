@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB0CCF4A1B0CE1E400FF269D /* CustomApp.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0CCF491B0CE1E400FF269D /* CustomApp.m */; };
+		DB0CCF4D1B0CE3F200FF269D /* UIApplication+Analytics.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0CCF4C1B0CE3F200FF269D /* UIApplication+Analytics.m */; };
+		DB0CCF4F1B0D1D7000FF269D /* libHeap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0CCF4E1B0D1D7000FF269D /* libHeap.a */; };
 		DB0DA2B61B0B9D540050C5E2 /* slack-imgs.com.gif in Resources */ = {isa = PBXBuildFile; fileRef = DB0DA2B51B0B9D540050C5E2 /* slack-imgs.com.gif */; };
 		DB0DA2B91B0BB8D20050C5E2 /* CustomActivityViewOne.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0DA2B81B0BB8D20050C5E2 /* CustomActivityViewOne.m */; };
 		DB0DA2BB1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png in Resources */ = {isa = PBXBuildFile; fileRef = DB0DA2BA1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png */; };
 		DB0DA2C11B0BD4510050C5E2 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0DA2C01B0BD4510050C5E2 /* JRSwizzle.m */; };
-		DB0DA2C41B0BE1430050C5E2 /* TrackingApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0DA2C31B0BE1430050C5E2 /* TrackingApplication.m */; };
 		DB44E14D1B013FC900D28127 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DB44E14C1B013FC900D28127 /* main.m */; };
 		DB44E1501B013FC900D28127 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DB44E14F1B013FC900D28127 /* AppDelegate.m */; };
 		DB44E1561B013FC900D28127 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB44E1541B013FC900D28127 /* Main.storyboard */; };
@@ -47,15 +49,17 @@
 /* Begin PBXFileReference section */
 		6312CFDBB1AEE5DBFCD751C7 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		784882688E0B6E393A5443F3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		CA772B10C45D9D4EBE93D5F5 /* libHeap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libHeap.a; path = ../../../../../../../../Desktop/ObjC/Pods/Heap/libHeap.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB0CCF481B0CE1E400FF269D /* CustomApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomApp.h; sourceTree = "<group>"; };
+		DB0CCF491B0CE1E400FF269D /* CustomApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomApp.m; sourceTree = "<group>"; };
+		DB0CCF4B1B0CE3F200FF269D /* UIApplication+Analytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+Analytics.h"; sourceTree = "<group>"; };
+		DB0CCF4C1B0CE3F200FF269D /* UIApplication+Analytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+Analytics.m"; sourceTree = "<group>"; };
+		DB0CCF4E1B0D1D7000FF269D /* libHeap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libHeap.a; sourceTree = "<group>"; };
 		DB0DA2B51B0B9D540050C5E2 /* slack-imgs.com.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "slack-imgs.com.gif"; sourceTree = "<group>"; };
 		DB0DA2B71B0BB8D20050C5E2 /* CustomActivityViewOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomActivityViewOne.h; sourceTree = "<group>"; };
 		DB0DA2B81B0BB8D20050C5E2 /* CustomActivityViewOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomActivityViewOne.m; sourceTree = "<group>"; };
 		DB0DA2BA1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grumpybeard-vice-city_360.png"; sourceTree = "<group>"; };
 		DB0DA2BF1B0BD4510050C5E2 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
 		DB0DA2C01B0BD4510050C5E2 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
-		DB0DA2C21B0BE1430050C5E2 /* TrackingApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingApplication.h; sourceTree = "<group>"; };
-		DB0DA2C31B0BE1430050C5E2 /* TrackingApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingApplication.m; sourceTree = "<group>"; };
 		DB44E1471B013FC900D28127 /* ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB44E14B1B013FC900D28127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB44E14C1B013FC900D28127 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 				DB8B236C1B02616700E146F3 /* SystemConfiguration.framework in Frameworks */,
 				DB8B236A1B02615B00E146F3 /* Security.framework in Frameworks */,
 				DB8B23681B02615200E146F3 /* libicucore.dylib in Frameworks */,
+				DB0CCF4F1B0D1D7000FF269D /* libHeap.a in Frameworks */,
 				DB8B23661B02614700E146F3 /* Foundation.framework in Frameworks */,
 				DB8B23641B02613E00E146F3 /* CFNetwork.framework in Frameworks */,
 			);
@@ -131,7 +136,7 @@
 				DB8B23671B02615200E146F3 /* libicucore.dylib */,
 				DB8B23651B02614600E146F3 /* Foundation.framework */,
 				DB8B23631B02613E00E146F3 /* CFNetwork.framework */,
-				CA772B10C45D9D4EBE93D5F5 /* libHeap.a */,
+				DB0CCF4E1B0D1D7000FF269D /* libHeap.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -139,8 +144,6 @@
 		DB44E13E1B013FC900D28127 = {
 			isa = PBXGroup;
 			children = (
-				DB0DA2C21B0BE1430050C5E2 /* TrackingApplication.h */,
-				DB0DA2C31B0BE1430050C5E2 /* TrackingApplication.m */,
 				DB0DA2B71B0BB8D20050C5E2 /* CustomActivityViewOne.h */,
 				DB0DA2B81B0BB8D20050C5E2 /* CustomActivityViewOne.m */,
 				DB99D73B1B025DEB00EA0C50 /* Podfile */,
@@ -172,6 +175,10 @@
 				DB6C88551B03F098003E2499 /* AMBInsights.m */,
 				DB98017B1B0551F300154573 /* GlobalMonitorUITapGestureRecognizer.h */,
 				DB98017C1B0551F300154573 /* GlobalMonitorUITapGestureRecognizer.m */,
+				DB0CCF481B0CE1E400FF269D /* CustomApp.h */,
+				DB0CCF491B0CE1E400FF269D /* CustomApp.m */,
+				DB0CCF4B1B0CE3F200FF269D /* UIApplication+Analytics.h */,
+				DB0CCF4C1B0CE3F200FF269D /* UIApplication+Analytics.m */,
 				DBADC08E1B0A94A200C9E502 /* EventTrackingLog.h */,
 				DBADC08F1B0A94A200C9E502 /* EventTrackingLog.m */,
 				DB44E14E1B013FC900D28127 /* AppDelegate.h */,
@@ -356,6 +363,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB0CCF4A1B0CE1E400FF269D /* CustomApp.m in Sources */,
+				DB0CCF4D1B0CE3F200FF269D /* UIApplication+Analytics.m in Sources */,
 				DB0DA2B91B0BB8D20050C5E2 /* CustomActivityViewOne.m in Sources */,
 				DB6C88561B03F098003E2499 /* AMBInsights.m in Sources */,
 				DBADC08D1B0A3A7D00C9E502 /* AMBFingerprint.m in Sources */,
@@ -364,7 +373,6 @@
 				DBADC0901B0A94A200C9E502 /* EventTrackingLog.m in Sources */,
 				DB99D73A1B023E7E00EA0C50 /* FingerPrintViewController.m in Sources */,
 				DB44E14D1B013FC900D28127 /* main.m in Sources */,
-				DB0DA2C41B0BE1430050C5E2 /* TrackingApplication.m in Sources */,
 				DB0DA2C11B0BD4510050C5E2 /* JRSwizzle.m in Sources */,
 				DB98017D1B0551F300154573 /* GlobalMonitorUITapGestureRecognizer.m in Sources */,
 			);
@@ -497,6 +505,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ObjC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -523,6 +535,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ObjC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

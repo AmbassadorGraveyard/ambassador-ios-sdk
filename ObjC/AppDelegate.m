@@ -28,8 +28,8 @@
 //     }];
     
     
-    [Heap setAppId:@"3281560249"];
-    [Heap enableVisualizer];
+//    [Heap setAppId:@"3281560249"];
+//    [Heap enableVisualizer];
     
     GlobalMonitorUITapGestureRecognizer* recognizer =
         [[GlobalMonitorUITapGestureRecognizer alloc] initWithTarget:nil action:nil];

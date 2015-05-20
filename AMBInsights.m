@@ -13,10 +13,6 @@
 
 @implementation AMBInsights
 
-#pragma mark - Initialization
-
-//REMOVED IN CLEAN UP
-
 #pragma mark - Search Interfaces
 
 - (void)searchByEmail:(NSString *)email withErrorBlock:(void (^)(NSError *))errorBlock {
@@ -61,9 +57,9 @@
                         //Success
                         //Handle JSON data somehow...
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            //self.jsonResponse = jsonResponse;
+                            self.jsonResponse = jsonResponse;
 #ifdef DEBUG
-                            //NSLog(@"Data from insights JSON reponse:\n%@", self.jsonResponse);
+                            NSLog(@"Data from insights JSON reponse:\n%@", self.jsonResponse);
 #endif
                         });
                     }

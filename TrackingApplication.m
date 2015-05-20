@@ -20,16 +20,28 @@
 @implementation TrackingApplication
 
 - (void)sendEvent:(UIEvent *)event {
-    NSLog(@"Event was caught: %@", event.description);
-    NSMutableArray* touches = [NSMutableArray arrayWithArray:[[event allTouches] allObjects]];
     
-    UITouch* touch = touches[0];
-    [self addBorderAnimationOnView:touch.view];
-    [self takeScreenshotFromView:touch.view];
-    [self allPropertyNamesWithObject:touch];
-    [self trackTouch:touch];
-    
+//    NSArray* array = [NSArray arrayWithArray:[self findSubViews:[self findSuperView:touch.view]]];
+//    
+//    self.trackedObjects = [NSMutableArray array];
+//    unsigned count;
+//    objc_property_t* properties = class_copyPropertyList([touch.view.superview class], &count);
+//    for (unsigned i = 0; i < count; i++) {
+//        objc_property_t property = properties[i];
+//        NSString* name = [NSString stringWithUTF8String:property_getName(property)];
+//        [self.trackedObjects addObject:name];
+//    }
+//    NSLog(@"%@", self.trackedObjects);
+//    free(properties);
     [super sendEvent:event];
+}
+
+- (UIView*)findSuperView:(UIView*)view {
+    return view.superview;
+}
+
+-(NSArray*)findSubViews:(UIView*)view {
+    return view.subviews;
 }
      
  - (void)trackTouch:(UITouch*)touch {
@@ -73,16 +85,7 @@
      }
  }
 
-- (void)addBorderAnimationOnView:(UIView*)view {
-    view.layer.borderWidth = 1;
-    CABasicAnimation* borderAnimation = [CABasicAnimation animationWithKeyPath:@"borderColor"];
-    borderAnimation.fromValue = (id)[UIColor orangeColor].CGColor;
-    borderAnimation.toValue = (id)[UIColor clearColor].CGColor;
-    view.layer.borderColor = [UIColor clearColor].CGColor;
-    borderAnimation.duration =  .75;//[CATransaction animationDuration];
-    borderAnimation.timingFunction = [CATransaction animationTimingFunction];
-    [view.layer addAnimation:borderAnimation forKey:@"animationTest"];
-}
+
 
 - (void)takeScreenshotFromView:(UIView*)view {
     //Beging getting context (checking for retina and scaling)

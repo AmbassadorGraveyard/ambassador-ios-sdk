@@ -36,6 +36,9 @@
     return self;
 }
 
+#pragma mark - Deallocation
+
+
 #pragma mark - Fingerprinting
 
 - (void)registerFingerprint {
@@ -64,7 +67,17 @@
         NSLog(@"Unable to parse JSON reponse\n%@", e);
     } else {
         self.jsonResponse = json;
+        
+        //Log the JSON
         NSLog(@"Data from JSON reponse:\n\tDID: %@\n\tUID: %@", self.jsonResponse[@"device"][@"ID"], self.jsonResponse[@"consumer"][@"UID"]);
+        
+        //Notify the app that the JSON is ready
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AMBFingerprintDidGetJSON" object:self];
+        
+        //Save the data to User Defaults
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:json forKey:@"fingerprintJSON"];
+        [defaults synchronize];
     }
 }
 

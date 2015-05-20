@@ -10,13 +10,13 @@
 #import "FingerPrintViewController.h"
 #import <objc/runtime.h>
 #import "EventTrackingLog.h"
+#import "CustomActivityViewOne.h"
 
 @import Foundation;
 
 
 @interface GlobalMonitorUITapGestureRecognizer ()
 
-@property NSMutableArray* trackedObjects;
 @property BOOL enabledVisualizer;
 @property NSMutableDictionary* eventTracking;
 
@@ -32,40 +32,8 @@
     return self;
 }
 
-- (void)eventHandler {
-    NSLog(@"Event Handled");
-}
-
 - (void)enableVisualizer {
-    self.enabledVisualizer = YES;
-}
-
-//In order to effectively track UI Elements that might get moved around in the
-//view hierarchy or positioned in different areas, the most effective ID is the
-//property name given by the developer. This function will start with the touched
-//object and find the root view controller, grab the navigation controller and the
-//VC associated with the view currently on screen to find the properties and fill the
-//elementsTracked array to be used for searching against.
-//
-//NOTE: Hasnt been tested with a navigation view controller (i.e. nested ViewControllers)
-//
-- (void)allPropertyNamesWithObject:(UITouch*)obj {
-    //find the view controller where the touched object resides
-    UIViewController* vc = [self findViewController:obj.window.rootViewController];
-    
-    self.trackedObjects = [NSMutableArray array];
-    
-    //This is the Objective-C runtime library being used to get the properties
-    //on the view controller holding the touched obj and adds the to the array
-    unsigned count;
-    objc_property_t* properties = class_copyPropertyList([vc class], &count);
-    for (unsigned i = 0; i < count; i++) {
-        objc_property_t property = properties[i];
-        NSString* name = [NSString stringWithUTF8String:property_getName(property)];
-        [self.trackedObjects addObject:name];
-    }
-    NSLog(@"%@", self.trackedObjects);
-    free(properties);
+    self.enabledVisualizer = NO;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -74,11 +42,11 @@
     for (UITouch* obj in touches.allObjects) {
         
         if (self.enabledVisualizer) {
-           // [self addBorderAnimationOnView:obj.view];
+            [self addBorderAnimationOnView:obj.view];
             [self takeScreenshotFromTouch:obj];
         }
         //[self allPropertyNamesWithObject:obj];
-        //[self trackTouch:obj];
+        [self trackTouch:obj];
     }
 
     //NSLog(@"touchesBegn: %@", touches.allObjects);
@@ -116,6 +84,8 @@
     [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
     UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    UIImageWriteToSavedPhotosAlbum(image, self, NULL, NULL);
+    
     NSData* data = UIImagePNGRepresentation(image);
     //Save the image at the designated path
     NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -123,7 +93,7 @@
     NSString* filePath = [documentsDirectory stringByAppendingPathComponent:@"test.png"];
     NSFileManager* fileManager = [NSFileManager defaultManager];
     if ([fileManager createFileAtPath:filePath contents:data attributes:nil]) {
-        NSLog(@"File Saved at %@", filePath);
+        NSLog(@"Thumbnail Saved %@",filePath);
     } else {
         NSLog(@"Oops, file didn't save :(");
     }
@@ -192,53 +162,106 @@
         } else {
             return viewController;
         }
-    } else if ([viewController isKindOfClass:[UINavigationBar class]]) {
-        UINavigationBar* navBarVC = (UINavigationBar*)viewController;
-        return viewController;
     } else {
         return viewController;
     }
 }
 
 - (void)trackTouch:(UITouch*)touch {
-    //Set rootController equal to the view controller containing the touched object
-    UIViewController* rootController = [self findViewController:touch.window.rootViewController];
-    
-    //Has there been an event to track yet? If not, allocated for the tracking Dectionary
-    if (!self.eventTracking) {
-        self.eventTracking = [[NSMutableDictionary alloc] init];
-    }
-    
-    //Loop through the objects we are tracking in this view and test touch object
-    //agaisnt it
-    for (unsigned i = 0; i < self.trackedObjects.count; ++i) {
-        if (touch.view == [rootController valueForKey:self.trackedObjects[i]]) {
-            
-            NSLog(@"%@", self.trackedObjects[i]);
-            
-            //Make a log object for the eventTracking Dictionary
-            EventTrackingLog* log = [[EventTrackingLog alloc] init];
-            
-            //Create the timestamp for the log object
-            NSDate* now = [NSDate date];
-            NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
-            log.timeStamp = [dateFormatter stringFromDate:now];
-            
-            //Either add a new item to the eventsTracking
-            //dictionary (if it's the first time it was touched) or update the
-            //count.
-            if (self.eventTracking[self.trackedObjects[i]] == nil) {
-                log.count = [NSNumber numberWithInt:1];
-            } else {
-                log = self.eventTracking[self.trackedObjects[i]];
-                int value = [log.count intValue];
-                log.count = [NSNumber numberWithInt:value + 1];
-            }
-            [self.eventTracking setValue:log forKey:self.trackedObjects[i]];
-            break;
+    UIView* touchView = [[UIView alloc] init];
+    touchView = touch.view;
+
+    if ([touch.view isKindOfClass:[UINavigationBar class]]) {
+        NSLog(@"Navigation Bar clicked %p", touch.view);
+        [self logEventWithName:@"__NavigationBar" touch:touch andViewController:touch.view.superview];
+    } else if ([touch.view.superview isKindOfClass:[UINavigationBar class]]) {
+        NSLog(@"Navigation Bar Button clicked %p", touch.view);
+        [self logEventWithName:@"__Navigation Bar Button" touch:touch andViewController:touch.view.superview];
+    } else {
+        //Set rootController equal to the view controller containing the touched object
+        UIViewController* rootController = [self findViewController:touch.window.rootViewController];
+        
+        //Has there been an event to track yet? If not, allocated for the tracking Dectionary
+        if (!self.eventTracking) {
+            self.eventTracking = [[NSMutableDictionary alloc] init];
         }
+        
+        //In order to effectively track UI Elements that might get moved around in the
+        //view hierarchy or positioned in different areas, the most effective ID is the
+        //property name given by the developer. This function will start with the touched
+        //object and find the root view controller, grab the navigation controller and the
+        //VC associated with the view currently on screen to find the properties and fill the
+        //elementsTracked array to be used for searching against.
+        //
+        //NOTE: Hasnt been thoughouly tested with all nested ViewControllers
+        //
+        //
+        unsigned count;
+        objc_property_t* properties = class_copyPropertyList([rootController class], &count);
+        for (unsigned i = 0; i < count; i++) {
+            objc_property_t property = properties[i];
+            NSString* name = [NSString stringWithUTF8String:property_getName(property)];
+            if ([rootController respondsToSelector:NSSelectorFromString(name)]) {
+                if (touch.view == [rootController valueForKey:name]) {
+                    [self logEventWithName:name touch:touch andViewController:rootController];
+                    if ([name  isEqual: @"textFeild"]) {
+                        NSLog(@"tracked conversion");
+                        [self testActiityViewControllerWithViewController:rootController];
+                    }
+                    break;
+                }
+            }
+        }
+        free(properties);
     }
+}
+
+- (void)logEventWithName:(NSString*)name touch:(UITouch*)touch andViewController:(id)viewController {
+    //Make a log object for the eventTracking Dictionary
+    NSMutableDictionary* log = [[NSMutableDictionary alloc] init];
+    
+    //Create the timestamp for the log object
+    NSDate* now = [NSDate date];
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
+    NSString* dateString = [dateFormatter stringFromDate:now];
+    //Either add a new item to the eventsTracking
+    //dictionary (if it's the first time it was touched) or update the
+    //count.
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        [log setObject:NSStringFromClass([touch.view class]) forKey:@"className"];
+        //[log setObject:[NSNumber numberWithInt:1] forKey:@"count"];
+        [log setObject:dateString forKey:@"timeStamp"];
+        [log setObject:NSStringFromClass([viewController class]) forKey:@"viewController"];
+        [log setObject:[defaults objectForKey:@"fingerprintJSON"] forKey:@"fingerprint"];
+        //[self.eventTracking setValue:log forKey:name];
+        NSLog(@"%@\t%@", log[@"className"], name);
+}
+
+- (void)testActiityViewControllerWithViewController:(UIViewController*)viewController {
+    NSString* messageText = @"blah blah blah link link stuff message blah";
+    NSURL* messageUrl = [NSURL URLWithString:@"http://www.getambassador.com"];
+    UIImage* messageImage = [UIImage imageNamed:@"slack-imgs.com.gif"];
+    
+    NSArray* activityItems = [NSArray arrayWithObjects:messageText, messageUrl, messageImage, nil];
+    
+    CustomActivityViewOne* activityVC = [[CustomActivityViewOne alloc] init];
+    
+    NSArray* excludedItems = [NSArray arrayWithObjects: UIActivityTypePrint,
+                                                        UIActivityTypeCopyToPasteboard,
+                                                        UIActivityTypeAssignToContact,
+                                                        UIActivityTypeSaveToCameraRoll,
+                                                        UIActivityTypeAddToReadingList,
+                                                        UIActivityTypeAirDrop, nil];
+    
+    UIActivityViewController* activityViewController = [[UIActivityViewController alloc]
+                                                        initWithActivityItems:activityItems
+                                                        applicationActivities:[NSArray arrayWithObject:activityVC]];
+    
+    activityViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    activityViewController.excludedActivityTypes = excludedItems;
+    
+    [viewController presentViewController:activityViewController animated:YES completion:nil];
 }
 
 @end
