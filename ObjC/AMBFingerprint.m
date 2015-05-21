@@ -42,6 +42,8 @@
 #pragma mark - Fingerprinting
 
 - (void)registerFingerprint {
+    //NSString* indexPath = [[NSBundle mainBundle] pathForResource:@"augur" ofType:@"html" inDirectory:nil];
+    //NSURLRequest* request = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:indexPath]];
     NSURL* url = [NSURL URLWithString:self.urlString];
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];

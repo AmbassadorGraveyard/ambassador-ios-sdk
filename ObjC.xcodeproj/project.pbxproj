@@ -7,13 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DB0CCF4A1B0CE1E400FF269D /* CustomApp.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0CCF491B0CE1E400FF269D /* CustomApp.m */; };
 		DB0CCF4D1B0CE3F200FF269D /* UIApplication+Analytics.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0CCF4C1B0CE3F200FF269D /* UIApplication+Analytics.m */; };
 		DB0CCF4F1B0D1D7000FF269D /* libHeap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0CCF4E1B0D1D7000FF269D /* libHeap.a */; };
 		DB0DA2B61B0B9D540050C5E2 /* slack-imgs.com.gif in Resources */ = {isa = PBXBuildFile; fileRef = DB0DA2B51B0B9D540050C5E2 /* slack-imgs.com.gif */; };
 		DB0DA2B91B0BB8D20050C5E2 /* CustomActivityViewOne.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0DA2B81B0BB8D20050C5E2 /* CustomActivityViewOne.m */; };
 		DB0DA2BB1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png in Resources */ = {isa = PBXBuildFile; fileRef = DB0DA2BA1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png */; };
 		DB0DA2C11B0BD4510050C5E2 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0DA2C01B0BD4510050C5E2 /* JRSwizzle.m */; };
+		DB341B191B0E12530043EB1D /* augur.html in Resources */ = {isa = PBXBuildFile; fileRef = DB341B181B0E12530043EB1D /* augur.html */; };
+		DB341B1F1B0E305F0043EB1D /* ReferAFriendCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB341B1E1B0E305F0043EB1D /* ReferAFriendCollectionViewController.m */; };
+		DB341B221B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB341B211B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.m */; };
+		DB341B291B0E44470043EB1D /* fb.png in Resources */ = {isa = PBXBuildFile; fileRef = DB341B271B0E44470043EB1D /* fb.png */; };
+		DB341B2A1B0E44470043EB1D /* tw.png in Resources */ = {isa = PBXBuildFile; fileRef = DB341B281B0E44470043EB1D /* tw.png */; };
+		DB341B2D1B0E456F0043EB1D /* RAFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB341B2C1B0E456F0043EB1D /* RAFViewController.m */; };
 		DB44E14D1B013FC900D28127 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DB44E14C1B013FC900D28127 /* main.m */; };
 		DB44E1501B013FC900D28127 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DB44E14F1B013FC900D28127 /* AppDelegate.m */; };
 		DB44E1561B013FC900D28127 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB44E1541B013FC900D28127 /* Main.storyboard */; };
@@ -31,9 +36,10 @@
 		DB98017D1B0551F300154573 /* GlobalMonitorUITapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = DB98017C1B0551F300154573 /* GlobalMonitorUITapGestureRecognizer.m */; };
 		DB99D73A1B023E7E00EA0C50 /* FingerPrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB99D7391B023E7E00EA0C50 /* FingerPrintViewController.m */; };
 		DB99D73C1B025DEB00EA0C50 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = DB99D73B1B025DEB00EA0C50 /* Podfile */; };
-		DBADC0871B0A2E5700C9E502 /* augur.html in Resources */ = {isa = PBXBuildFile; fileRef = DBADC0861B0A2E5700C9E502 /* augur.html */; };
 		DBADC08D1B0A3A7D00C9E502 /* AMBFingerprint.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADC08B1B0A3A7D00C9E502 /* AMBFingerprint.m */; };
-		DBADC0901B0A94A200C9E502 /* EventTrackingLog.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADC08F1B0A94A200C9E502 /* EventTrackingLog.m */; };
+		DBEDFC731B0E79950097C31B /* sms.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEDFC711B0E79950097C31B /* sms.png */; };
+		DBEDFC741B0E79950097C31B /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEDFC721B0E79950097C31B /* mail.png */; };
+		DBEDFC771B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEDFC761B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,8 +55,6 @@
 /* Begin PBXFileReference section */
 		6312CFDBB1AEE5DBFCD751C7 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		784882688E0B6E393A5443F3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		DB0CCF481B0CE1E400FF269D /* CustomApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomApp.h; sourceTree = "<group>"; };
-		DB0CCF491B0CE1E400FF269D /* CustomApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomApp.m; sourceTree = "<group>"; };
 		DB0CCF4B1B0CE3F200FF269D /* UIApplication+Analytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+Analytics.h"; sourceTree = "<group>"; };
 		DB0CCF4C1B0CE3F200FF269D /* UIApplication+Analytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+Analytics.m"; sourceTree = "<group>"; };
 		DB0CCF4E1B0D1D7000FF269D /* libHeap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libHeap.a; sourceTree = "<group>"; };
@@ -60,6 +64,15 @@
 		DB0DA2BA1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grumpybeard-vice-city_360.png"; sourceTree = "<group>"; };
 		DB0DA2BF1B0BD4510050C5E2 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
 		DB0DA2C01B0BD4510050C5E2 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
+		DB341B181B0E12530043EB1D /* augur.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = augur.html; sourceTree = "<group>"; };
+		DB341B1D1B0E305F0043EB1D /* ReferAFriendCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferAFriendCollectionViewController.h; sourceTree = "<group>"; };
+		DB341B1E1B0E305F0043EB1D /* ReferAFriendCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferAFriendCollectionViewController.m; sourceTree = "<group>"; };
+		DB341B201B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferAFriendCollectionViewCell.h; sourceTree = "<group>"; };
+		DB341B211B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferAFriendCollectionViewCell.m; sourceTree = "<group>"; };
+		DB341B271B0E44470043EB1D /* fb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb.png; sourceTree = "<group>"; };
+		DB341B281B0E44470043EB1D /* tw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tw.png; sourceTree = "<group>"; };
+		DB341B2B1B0E456F0043EB1D /* RAFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFViewController.h; sourceTree = "<group>"; };
+		DB341B2C1B0E456F0043EB1D /* RAFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFViewController.m; sourceTree = "<group>"; };
 		DB44E1471B013FC900D28127 /* ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB44E14B1B013FC900D28127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB44E14C1B013FC900D28127 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -86,11 +99,12 @@
 		DB99D7381B023E7E00EA0C50 /* FingerPrintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FingerPrintViewController.h; sourceTree = "<group>"; };
 		DB99D7391B023E7E00EA0C50 /* FingerPrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FingerPrintViewController.m; sourceTree = "<group>"; };
 		DB99D73B1B025DEB00EA0C50 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
-		DBADC0861B0A2E5700C9E502 /* augur.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = augur.html; sourceTree = "<group>"; };
 		DBADC08B1B0A3A7D00C9E502 /* AMBFingerprint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFingerprint.m; sourceTree = "<group>"; };
 		DBADC08C1B0A3A7D00C9E502 /* AMBFingerprint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFingerprint.h; sourceTree = "<group>"; };
-		DBADC08E1B0A94A200C9E502 /* EventTrackingLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTrackingLog.h; sourceTree = "<group>"; };
-		DBADC08F1B0A94A200C9E502 /* EventTrackingLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTrackingLog.m; sourceTree = "<group>"; };
+		DBEDFC711B0E79950097C31B /* sms.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sms.png; sourceTree = "<group>"; };
+		DBEDFC721B0E79950097C31B /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail.png; sourceTree = "<group>"; };
+		DBEDFC751B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		DBEDFC761B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,17 +189,21 @@
 				DB6C88551B03F098003E2499 /* AMBInsights.m */,
 				DB98017B1B0551F300154573 /* GlobalMonitorUITapGestureRecognizer.h */,
 				DB98017C1B0551F300154573 /* GlobalMonitorUITapGestureRecognizer.m */,
-				DB0CCF481B0CE1E400FF269D /* CustomApp.h */,
-				DB0CCF491B0CE1E400FF269D /* CustomApp.m */,
 				DB0CCF4B1B0CE3F200FF269D /* UIApplication+Analytics.h */,
 				DB0CCF4C1B0CE3F200FF269D /* UIApplication+Analytics.m */,
-				DBADC08E1B0A94A200C9E502 /* EventTrackingLog.h */,
-				DBADC08F1B0A94A200C9E502 /* EventTrackingLog.m */,
 				DB44E14E1B013FC900D28127 /* AppDelegate.h */,
 				DB44E14F1B013FC900D28127 /* AppDelegate.m */,
 				DB99D7381B023E7E00EA0C50 /* FingerPrintViewController.h */,
 				DB99D7391B023E7E00EA0C50 /* FingerPrintViewController.m */,
 				DB44E1541B013FC900D28127 /* Main.storyboard */,
+				DB341B2B1B0E456F0043EB1D /* RAFViewController.h */,
+				DB341B2C1B0E456F0043EB1D /* RAFViewController.m */,
+				DB341B1D1B0E305F0043EB1D /* ReferAFriendCollectionViewController.h */,
+				DB341B1E1B0E305F0043EB1D /* ReferAFriendCollectionViewController.m */,
+				DBEDFC751B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.h */,
+				DBEDFC761B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.m */,
+				DB341B201B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.h */,
+				DB341B211B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.m */,
 				DB6C884E1B03EB04003E2499 /* AMBBase.h */,
 				DB6C884F1B03EB04003E2499 /* AMBBase.m */,
 				DB44E1571B013FC900D28127 /* Images.xcassets */,
@@ -198,9 +216,13 @@
 		DB44E14A1B013FC900D28127 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DBEDFC711B0E79950097C31B /* sms.png */,
+				DBEDFC721B0E79950097C31B /* mail.png */,
+				DB341B271B0E44470043EB1D /* fb.png */,
+				DB341B281B0E44470043EB1D /* tw.png */,
+				DB341B181B0E12530043EB1D /* augur.html */,
 				DB0DA2BA1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png */,
 				DB0DA2B51B0B9D540050C5E2 /* slack-imgs.com.gif */,
-				DBADC0861B0A2E5700C9E502 /* augur.html */,
 				DB44E14B1B013FC900D28127 /* Info.plist */,
 				DB44E14C1B013FC900D28127 /* main.m */,
 			);
@@ -307,11 +329,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB0DA2BB1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png in Resources */,
+				DB341B291B0E44470043EB1D /* fb.png in Resources */,
 				DB44E1561B013FC900D28127 /* Main.storyboard in Resources */,
+				DBEDFC731B0E79950097C31B /* sms.png in Resources */,
 				DB44E15B1B013FC900D28127 /* LaunchScreen.xib in Resources */,
+				DB341B2A1B0E44470043EB1D /* tw.png in Resources */,
+				DBEDFC741B0E79950097C31B /* mail.png in Resources */,
 				DB0DA2B61B0B9D540050C5E2 /* slack-imgs.com.gif in Resources */,
-				DBADC0871B0A2E5700C9E502 /* augur.html in Resources */,
 				DB99D73C1B025DEB00EA0C50 /* Podfile in Resources */,
+				DB341B191B0E12530043EB1D /* augur.html in Resources */,
 				DB44E1581B013FC900D28127 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -363,16 +389,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB0CCF4A1B0CE1E400FF269D /* CustomApp.m in Sources */,
 				DB0CCF4D1B0CE3F200FF269D /* UIApplication+Analytics.m in Sources */,
 				DB0DA2B91B0BB8D20050C5E2 /* CustomActivityViewOne.m in Sources */,
 				DB6C88561B03F098003E2499 /* AMBInsights.m in Sources */,
 				DBADC08D1B0A3A7D00C9E502 /* AMBFingerprint.m in Sources */,
+				DBEDFC771B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.m in Sources */,
 				DB6C88501B03EB04003E2499 /* AMBBase.m in Sources */,
 				DB44E1501B013FC900D28127 /* AppDelegate.m in Sources */,
-				DBADC0901B0A94A200C9E502 /* EventTrackingLog.m in Sources */,
+				DB341B2D1B0E456F0043EB1D /* RAFViewController.m in Sources */,
+				DB341B221B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.m in Sources */,
 				DB99D73A1B023E7E00EA0C50 /* FingerPrintViewController.m in Sources */,
 				DB44E14D1B013FC900D28127 /* main.m in Sources */,
+				DB341B1F1B0E305F0043EB1D /* ReferAFriendCollectionViewController.m in Sources */,
 				DB0DA2C11B0BD4510050C5E2 /* JRSwizzle.m in Sources */,
 				DB98017D1B0551F300154573 /* GlobalMonitorUITapGestureRecognizer.m in Sources */,
 			);

@@ -1,6 +1,13 @@
 <!doctype html>
 <html>
   	<head>
+  		<title>Augur Test</title>
+  		<style type="text/css">
+  			p {
+  				font: 5px arial, sans-serif;
+  				color: red;
+  			}
+  		</style>
         <script>
             var JSONdata = "it didn't work";
             function callbackName ( json ) {
@@ -8,8 +15,13 @@
                 JSONdata = JSON.stringify(json);
                 window.location = 'myapp:myaction';
           	}
+            function returnJSON () {
+                return 
+            }
         </script>
-        <script id="augur.js" async src="http://cdn.augur.io/augur.min.js" data-callback="callbackName" data-warpspeed="truz"></script>
-    </head>
-  	<body></body>
+      <script id="augur.js" async src="http://cdn.augur.io/augur.min.js" data-callback="callbackName" data-warpspeed="truz"></script>
+  	</head>
+  	<body>
+  	TESTIng testing testing
+  	</body>
 </html>

@@ -30,15 +30,14 @@
     
 //    [Heap setAppId:@"3281560249"];
 //    [Heap enableVisualizer];
+    NSMutableDictionary* conversions = [NSMutableDictionary dictionaryWithObject:@"UIViewController" forKey:@"Go To Next Page"];
+    NSMutableDictionary* RAF = [NSMutableDictionary dictionaryWithObject:@"UIViewController" forKey:@"ReferAFriend"];
     
     GlobalMonitorUITapGestureRecognizer* recognizer =
-        [[GlobalMonitorUITapGestureRecognizer alloc] initWithTarget:nil action:nil];
+    [[GlobalMonitorUITapGestureRecognizer alloc] initWithConversionItems:conversions andReferAFriendItems:RAF];
     [recognizer setCancelsTouchesInView:NO];
     [self.window addGestureRecognizer:recognizer];
     [recognizer enableVisualizer];
-    //[recognizer release];
-    
-    // Override point for customization after application launch.
     return YES;
 }
 

@@ -27,24 +27,8 @@
 
 @implementation FingerPrintViewController
 
-- (IBAction)testButton:(UIButton *)sender {
-    //[self testActiityViewController];
-}
-- (IBAction)regButton:(UIButton *)sender {
-    TWTweetComposeViewController *tweetComposeViewController =
-    [[TWTweetComposeViewController alloc] init];
-    [tweetComposeViewController setInitialText:@"Lorem ipsum dolor sit amet."];
-    [self.navigationController presentViewController:tweetComposeViewController
-                                            animated:YES
-                                          completion:^{
-                                              //...
-                                          }];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.fingerPrintEngine = [[AMBFingerprint alloc] init];
-    [self.fingerPrintEngine registerFingerprint];
     
     //Set observer on the fingerprintEngine's dictionary
     //so it's only accessed after being set
