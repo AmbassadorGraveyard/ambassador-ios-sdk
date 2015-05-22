@@ -11,6 +11,8 @@
 #import <objc/runtime.h>
 #import "CustomActivityViewOne.h"
 #import "AMBFingerprint.h"
+#import "RAFCollectionViewController.h"
+#import "CustomFlow.h"
 
 @import Foundation;
 
@@ -148,9 +150,17 @@
 #pragma mark - Touch Tracking
 
 - (void)trackTouch:(UITouch*)touch {
+    //Grab the view from the touch
     UIView* touchView = [[UIView alloc] init];
     touchView = touch.view;
+    
+    //Set rootController equal to the view controller containing the touched object
     UIViewController* rootController = [self findViewController:touch.window.rootViewController];
+    
+    //Has there been an event to track yet? If not, allocated for the tracking Dectionary
+    if (!self.eventTracking) {
+        self.eventTracking = [[NSMutableDictionary alloc] init];
+    }
 
     if ([touch.view isKindOfClass:[UINavigationBar class]]) {
         NSLog(@"Navigation Bar clicked %p", touch.view);
@@ -160,28 +170,27 @@
         [self logEventWithName:@"__Navigation Bar Button" touch:touch andViewController:touch.view.superview];
     } else if ([touch.view isKindOfClass:[UIButton class]]) {
         UIButton* button = (UIButton*)touch.view;
-        NSLog(@"%@ button in %@ view controller", button.titleLabel.text, NSStringFromClass([rootController class]));
-        [self logEventWithName:button.titleLabel.text touch:touch andViewController:touch.view];
+        //NSLog(@"%@ button in %@ view controller", button.titleLabel.text, NSStringFromClass([rootController class]));
+        [self logEventWithName:button.titleLabel.text touch:touch andViewController:rootController];
         
         //Check if it's a conversion item
         if (self.conversionItems[button.titleLabel.text] &&
             [self.conversionItems[button.titleLabel.text] isEqualToString:NSStringFromClass([rootController class])]) {
             NSLog(@"Button conversion tracked");
+            [self testActiityViewControllerWithViewController:rootController];
         }
         
         //Check if it's a refer a friend trigger
         if (self.referAFreindLauchItems[button.titleLabel.text] &&
             [self.referAFreindLauchItems[button.titleLabel.text] isEqualToString:NSStringFromClass([rootController class])]) {
-            [self testActiityViewControllerWithViewController:rootController];
+            NSLog(@"Presented RAF view controller");
+            CustomFlow* layout = [[CustomFlow alloc] init];
+            RAFCollectionViewController* vc = [[RAFCollectionViewController alloc] initWithCollectionViewLayout:layout];
+            vc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+            vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+            [rootController presentViewController:vc animated:YES completion:nil];
         }
     } else {
-        //Set rootController equal to the view controller containing the touched object
-        
-        
-        //Has there been an event to track yet? If not, allocated for the tracking Dectionary
-        if (!self.eventTracking) {
-            self.eventTracking = [[NSMutableDictionary alloc] init];
-        }
         
         //
         //In order to effectively track UI Elements that might get moved around in the
@@ -194,6 +203,7 @@
         //NOTE: Hasnt been thoughouly tested with all nested ViewControllers
         //
         unsigned count;
+        bool flag = false;
         objc_property_t* properties = class_copyPropertyList([rootController class], &count);
         for (unsigned i = 0; i < count; i++) {
             objc_property_t property = properties[i];
@@ -201,15 +211,15 @@
             if ([rootController respondsToSelector:NSSelectorFromString(name)]) {
                 if (touch.view == [rootController valueForKey:name]) {
                     [self logEventWithName:name touch:touch andViewController:rootController];
-                    if (self.conversionItems[name]) {
-                        NSLog(@"tracked conversion");
-                        [self testActiityViewControllerWithViewController:rootController];
-                    }
+                    flag = true;
                     break;
                 }
             }
         }
         free(properties);
+        if (!flag) {
+            [self logEventWithName:NSStringFromClass([touch.view class]) touch:touch andViewController:rootController];
+        }
     }
 }
 
@@ -268,9 +278,9 @@
         //[log setObject:[NSNumber numberWithInt:1] forKey:@"count"];
         [log setObject:dateString forKey:@"timeStamp"];
         [log setObject:NSStringFromClass([viewController class]) forKey:@"viewController"];
-        [log setObject:[defaults objectForKey:@"fingerprintJSON"] forKey:@"fingerprint"];
+        //[log setObject:[defaults objectForKey:@"fingerprintJSON"] forKey:@"fingerprint"];
         //[self.eventTracking setValue:log forKey:name];
-        NSLog(@"%@\t%@", log[@"className"], name);
+        NSLog(@"Touch on item: %@ in the view controller: %@", log[@"className"], log[@"viewController"]);
 }
 
 

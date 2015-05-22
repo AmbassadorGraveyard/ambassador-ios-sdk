@@ -6,15 +6,15 @@
 //  Copyright (c) 2015 Ambassador. All rights reserved.
 //
 
-#import "ReferAFriendCollectionViewController.h"
-#import "ReferAFriendCollectionViewCell.h"
+#import "RAFCollectionViewController.h"
+#import "CustomFlow.h"
 #import "RAFViewController.h"
+//#import "RAFPresentationViewController.h"
 
 @interface RAFViewController ()
 
 @property NSMutableArray* testPhotos;
 @property UICollectionView* collectionView;
-@property ReferAFriendCollectionViewController* controller;
 
 @end
 
@@ -22,7 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor = [UIColor greenColor];
     
 }
 
@@ -36,10 +36,4 @@
     [super didReceiveMemoryWarning];
 }
 
-- (IBAction)referAFriend:(UIButton *)sender {
-    ReferAFriendCollectionViewController* controller = [[ReferAFriendCollectionViewController alloc] init];
-    controller.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    controller.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    [self presentViewController:controller animated:YES completion:nil];
-}
 @end

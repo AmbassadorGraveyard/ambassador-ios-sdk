@@ -30,8 +30,8 @@
     
 //    [Heap setAppId:@"3281560249"];
 //    [Heap enableVisualizer];
-    NSMutableDictionary* conversions = [NSMutableDictionary dictionaryWithObject:@"UIViewController" forKey:@"Go To Next Page"];
-    NSMutableDictionary* RAF = [NSMutableDictionary dictionaryWithObject:@"UIViewController" forKey:@"ReferAFriend"];
+    NSMutableDictionary* conversions = [NSMutableDictionary dictionaryWithObject:@"RAFViewController" forKey:@"Button1"];
+    NSMutableDictionary* RAF = [NSMutableDictionary dictionaryWithObject:@"RAFViewController" forKey:@"Button2"];
     
     GlobalMonitorUITapGestureRecognizer* recognizer =
     [[GlobalMonitorUITapGestureRecognizer alloc] initWithConversionItems:conversions andReferAFriendItems:RAF];

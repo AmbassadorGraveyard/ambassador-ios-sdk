@@ -14,8 +14,6 @@
 		DB0DA2BB1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png in Resources */ = {isa = PBXBuildFile; fileRef = DB0DA2BA1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png */; };
 		DB0DA2C11B0BD4510050C5E2 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0DA2C01B0BD4510050C5E2 /* JRSwizzle.m */; };
 		DB341B191B0E12530043EB1D /* augur.html in Resources */ = {isa = PBXBuildFile; fileRef = DB341B181B0E12530043EB1D /* augur.html */; };
-		DB341B1F1B0E305F0043EB1D /* ReferAFriendCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB341B1E1B0E305F0043EB1D /* ReferAFriendCollectionViewController.m */; };
-		DB341B221B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB341B211B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.m */; };
 		DB341B291B0E44470043EB1D /* fb.png in Resources */ = {isa = PBXBuildFile; fileRef = DB341B271B0E44470043EB1D /* fb.png */; };
 		DB341B2A1B0E44470043EB1D /* tw.png in Resources */ = {isa = PBXBuildFile; fileRef = DB341B281B0E44470043EB1D /* tw.png */; };
 		DB341B2D1B0E456F0043EB1D /* RAFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB341B2C1B0E456F0043EB1D /* RAFViewController.m */; };
@@ -25,6 +23,9 @@
 		DB44E1581B013FC900D28127 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB44E1571B013FC900D28127 /* Images.xcassets */; };
 		DB44E15B1B013FC900D28127 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB44E1591B013FC900D28127 /* LaunchScreen.xib */; };
 		DB44E1671B013FC900D28127 /* ObjCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB44E1661B013FC900D28127 /* ObjCTests.m */; };
+		DB5C25D11B0F6F3600E890CA /* CustomFlow.m in Sources */ = {isa = PBXBuildFile; fileRef = DB5C25CC1B0F6F3600E890CA /* CustomFlow.m */; };
+		DB5C25D21B0F6F3600E890CA /* RAFCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB5C25CE1B0F6F3600E890CA /* RAFCollectionViewController.m */; };
+		DB5C25D31B0F6F3600E890CA /* RAFCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DB5C25D01B0F6F3600E890CA /* RAFCollectionViewCell.m */; };
 		DB6C88501B03EB04003E2499 /* AMBBase.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6C884F1B03EB04003E2499 /* AMBBase.m */; };
 		DB6C88561B03F098003E2499 /* AMBInsights.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6C88551B03F098003E2499 /* AMBInsights.m */; };
 		DB8B23641B02613E00E146F3 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB8B23631B02613E00E146F3 /* CFNetwork.framework */; };
@@ -39,7 +40,6 @@
 		DBADC08D1B0A3A7D00C9E502 /* AMBFingerprint.m in Sources */ = {isa = PBXBuildFile; fileRef = DBADC08B1B0A3A7D00C9E502 /* AMBFingerprint.m */; };
 		DBEDFC731B0E79950097C31B /* sms.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEDFC711B0E79950097C31B /* sms.png */; };
 		DBEDFC741B0E79950097C31B /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEDFC721B0E79950097C31B /* mail.png */; };
-		DBEDFC771B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEDFC761B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,16 +59,12 @@
 		DB0CCF4C1B0CE3F200FF269D /* UIApplication+Analytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+Analytics.m"; sourceTree = "<group>"; };
 		DB0CCF4E1B0D1D7000FF269D /* libHeap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libHeap.a; sourceTree = "<group>"; };
 		DB0DA2B51B0B9D540050C5E2 /* slack-imgs.com.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "slack-imgs.com.gif"; sourceTree = "<group>"; };
-		DB0DA2B71B0BB8D20050C5E2 /* CustomActivityViewOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomActivityViewOne.h; sourceTree = "<group>"; };
-		DB0DA2B81B0BB8D20050C5E2 /* CustomActivityViewOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomActivityViewOne.m; sourceTree = "<group>"; };
+		DB0DA2B71B0BB8D20050C5E2 /* CustomActivityViewOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomActivityViewOne.h; path = ../CustomActivityViewOne.h; sourceTree = "<group>"; };
+		DB0DA2B81B0BB8D20050C5E2 /* CustomActivityViewOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomActivityViewOne.m; path = ../CustomActivityViewOne.m; sourceTree = "<group>"; };
 		DB0DA2BA1B0BB9F10050C5E2 /* grumpybeard-vice-city_360.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grumpybeard-vice-city_360.png"; sourceTree = "<group>"; };
 		DB0DA2BF1B0BD4510050C5E2 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
 		DB0DA2C01B0BD4510050C5E2 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
 		DB341B181B0E12530043EB1D /* augur.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = augur.html; sourceTree = "<group>"; };
-		DB341B1D1B0E305F0043EB1D /* ReferAFriendCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferAFriendCollectionViewController.h; sourceTree = "<group>"; };
-		DB341B1E1B0E305F0043EB1D /* ReferAFriendCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferAFriendCollectionViewController.m; sourceTree = "<group>"; };
-		DB341B201B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferAFriendCollectionViewCell.h; sourceTree = "<group>"; };
-		DB341B211B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferAFriendCollectionViewCell.m; sourceTree = "<group>"; };
 		DB341B271B0E44470043EB1D /* fb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb.png; sourceTree = "<group>"; };
 		DB341B281B0E44470043EB1D /* tw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tw.png; sourceTree = "<group>"; };
 		DB341B2B1B0E456F0043EB1D /* RAFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFViewController.h; sourceTree = "<group>"; };
@@ -84,6 +80,13 @@
 		DB44E1601B013FC900D28127 /* ObjCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ObjCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB44E1651B013FC900D28127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB44E1661B013FC900D28127 /* ObjCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjCTests.m; sourceTree = "<group>"; };
+		DB5C25CB1B0F6F3600E890CA /* CustomFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomFlow.h; sourceTree = "<group>"; };
+		DB5C25CC1B0F6F3600E890CA /* CustomFlow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomFlow.m; sourceTree = "<group>"; };
+		DB5C25CD1B0F6F3600E890CA /* RAFCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFCollectionViewController.h; sourceTree = "<group>"; };
+		DB5C25CE1B0F6F3600E890CA /* RAFCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFCollectionViewController.m; sourceTree = "<group>"; };
+		DB5C25CF1B0F6F3600E890CA /* RAFCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFCollectionViewCell.h; sourceTree = "<group>"; };
+		DB5C25D01B0F6F3600E890CA /* RAFCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFCollectionViewCell.m; sourceTree = "<group>"; };
+		DB5C25E41B0FCB9C00E890CA /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		DB6C884E1B03EB04003E2499 /* AMBBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBBase.h; sourceTree = "<group>"; };
 		DB6C884F1B03EB04003E2499 /* AMBBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBBase.m; sourceTree = "<group>"; };
 		DB6C88541B03F098003E2499 /* AMBInsights.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBInsights.h; path = ../AMBInsights.h; sourceTree = "<group>"; };
@@ -103,8 +106,6 @@
 		DBADC08C1B0A3A7D00C9E502 /* AMBFingerprint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFingerprint.h; sourceTree = "<group>"; };
 		DBEDFC711B0E79950097C31B /* sms.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sms.png; sourceTree = "<group>"; };
 		DBEDFC721B0E79950097C31B /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail.png; sourceTree = "<group>"; };
-		DBEDFC751B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFCollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		DBEDFC761B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +145,7 @@
 		A4909914BFF6B1EF652AF8B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DB5C25E41B0FCB9C00E890CA /* MessageUI.framework */,
 				DB8B236D1B02617100E146F3 /* UIKit.framework */,
 				DB8B236B1B02616700E146F3 /* SystemConfiguration.framework */,
 				DB8B23691B02615B00E146F3 /* Security.framework */,
@@ -158,8 +160,6 @@
 		DB44E13E1B013FC900D28127 = {
 			isa = PBXGroup;
 			children = (
-				DB0DA2B71B0BB8D20050C5E2 /* CustomActivityViewOne.h */,
-				DB0DA2B81B0BB8D20050C5E2 /* CustomActivityViewOne.m */,
 				DB99D73B1B025DEB00EA0C50 /* Podfile */,
 				DB0DA2BF1B0BD4510050C5E2 /* JRSwizzle.h */,
 				DB0DA2C01B0BD4510050C5E2 /* JRSwizzle.m */,
@@ -183,6 +183,14 @@
 		DB44E1491B013FC900D28127 /* ObjC */ = {
 			isa = PBXGroup;
 			children = (
+				DB0DA2B71B0BB8D20050C5E2 /* CustomActivityViewOne.h */,
+				DB0DA2B81B0BB8D20050C5E2 /* CustomActivityViewOne.m */,
+				DB5C25CB1B0F6F3600E890CA /* CustomFlow.h */,
+				DB5C25CC1B0F6F3600E890CA /* CustomFlow.m */,
+				DB5C25CD1B0F6F3600E890CA /* RAFCollectionViewController.h */,
+				DB5C25CE1B0F6F3600E890CA /* RAFCollectionViewController.m */,
+				DB5C25CF1B0F6F3600E890CA /* RAFCollectionViewCell.h */,
+				DB5C25D01B0F6F3600E890CA /* RAFCollectionViewCell.m */,
 				DBADC08B1B0A3A7D00C9E502 /* AMBFingerprint.m */,
 				DBADC08C1B0A3A7D00C9E502 /* AMBFingerprint.h */,
 				DB6C88541B03F098003E2499 /* AMBInsights.h */,
@@ -198,12 +206,6 @@
 				DB44E1541B013FC900D28127 /* Main.storyboard */,
 				DB341B2B1B0E456F0043EB1D /* RAFViewController.h */,
 				DB341B2C1B0E456F0043EB1D /* RAFViewController.m */,
-				DB341B1D1B0E305F0043EB1D /* ReferAFriendCollectionViewController.h */,
-				DB341B1E1B0E305F0043EB1D /* ReferAFriendCollectionViewController.m */,
-				DBEDFC751B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.h */,
-				DBEDFC761B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.m */,
-				DB341B201B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.h */,
-				DB341B211B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.m */,
 				DB6C884E1B03EB04003E2499 /* AMBBase.h */,
 				DB6C884F1B03EB04003E2499 /* AMBBase.m */,
 				DB44E1571B013FC900D28127 /* Images.xcassets */,
@@ -390,17 +392,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB0CCF4D1B0CE3F200FF269D /* UIApplication+Analytics.m in Sources */,
+				DB5C25D21B0F6F3600E890CA /* RAFCollectionViewController.m in Sources */,
 				DB0DA2B91B0BB8D20050C5E2 /* CustomActivityViewOne.m in Sources */,
 				DB6C88561B03F098003E2499 /* AMBInsights.m in Sources */,
 				DBADC08D1B0A3A7D00C9E502 /* AMBFingerprint.m in Sources */,
-				DBEDFC771B0E7E4A0097C31B /* RAFCollectionViewFlowLayout.m in Sources */,
 				DB6C88501B03EB04003E2499 /* AMBBase.m in Sources */,
 				DB44E1501B013FC900D28127 /* AppDelegate.m in Sources */,
+				DB5C25D11B0F6F3600E890CA /* CustomFlow.m in Sources */,
+				DB5C25D31B0F6F3600E890CA /* RAFCollectionViewCell.m in Sources */,
 				DB341B2D1B0E456F0043EB1D /* RAFViewController.m in Sources */,
-				DB341B221B0E34EB0043EB1D /* ReferAFriendCollectionViewCell.m in Sources */,
 				DB99D73A1B023E7E00EA0C50 /* FingerPrintViewController.m in Sources */,
 				DB44E14D1B013FC900D28127 /* main.m in Sources */,
-				DB341B1F1B0E305F0043EB1D /* ReferAFriendCollectionViewController.m in Sources */,
 				DB0DA2C11B0BD4510050C5E2 /* JRSwizzle.m in Sources */,
 				DB98017D1B0551F300154573 /* GlobalMonitorUITapGestureRecognizer.m in Sources */,
 			);

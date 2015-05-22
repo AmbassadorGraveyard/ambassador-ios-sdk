@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RAFViewController : UIViewController
-- (IBAction)referAFriend:(UIButton *)sender;
 
 @end
