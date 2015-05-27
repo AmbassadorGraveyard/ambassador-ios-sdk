@@ -1,0 +1,14 @@
+PODS:
+  - Ambassador (0.0.1)
+
+DEPENDENCIES:
+  - Ambassador (from `../Ambassador`)
+
+EXTERNAL SOURCES:
+  Ambassador:
+    :path: ../Ambassador
+
+SPEC CHECKSUMS:
+  Ambassador: fed64bf9ed43a1bbd25ef9704ebec730af263f81
+
+COCOAPODS: 0.37.1
