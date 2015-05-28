@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
-        <!--Welcome Full View-->
+        <!--ReferA Friend Full View-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="AMB_WelcomeFullView" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="AMB_ReferAFriendFullView" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -17,13 +17,14 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="tf3-zh-0Aw"/>
                     <connections>
-                        <segue destination="MP4-7c-kDe" kind="show" id="87X-o9-26U"/>
+                        <segue destination="MP4-7c-kDe" kind="show" identifier="moveFromWelcome" id="87X-o9-26U"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="90" y="383"/>
+            <point key="canvasLocation" x="902" y="383"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="kVm-K2-Q7P">
@@ -41,7 +42,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p0X-BJ-cBj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="753" y="469"/>
+            <point key="canvasLocation" x="1570" y="383"/>
         </scene>
     </scenes>
 </document>

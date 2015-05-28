@@ -12,6 +12,8 @@
 		DB6744971B15FFB600CD8934 /* AMBASSADORConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6744961B15FFB600CD8934 /* AMBASSADORConstants.m */; };
 		DB67449A1B1602AA00CD8934 /* AMB_Identify.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6744931B15FF4A00CD8934 /* AMB_Identify.m */; };
 		DB67449C1B1602BE00CD8934 /* InitializationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DB67449B1B1602BE00CD8934 /* InitializationTest.m */; };
+		DBFC352F1B17B51300C03CAC /* AMB_ReferAFriendFullView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFC352E1B17B51300C03CAC /* AMB_ReferAFriendFullView.m */; };
+		DBFC35321B17BD8800C03CAC /* AMB_RAF_ShareServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFC35311B17BD8800C03CAC /* AMB_RAF_ShareServiceCell.m */; };
 		DBFF72FC1B161CA900DB5F3D /* AMB_Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFF72FB1B161CA900DB5F3D /* AMB_Conversion.m */; };
 		DBFF73031B163CDA00DB5F3D /* AMB_WelcomeFullView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFF73021B163CDA00DB5F3D /* AMB_WelcomeFullView.m */; };
 /* End PBXBuildFile section */
@@ -47,6 +49,10 @@
 		DB6744951B15FFA200CD8934 /* AMBASSADORConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBASSADORConstants.h; sourceTree = "<group>"; };
 		DB6744961B15FFB600CD8934 /* AMBASSADORConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBASSADORConstants.m; sourceTree = "<group>"; };
 		DB67449B1B1602BE00CD8934 /* InitializationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitializationTest.m; sourceTree = "<group>"; };
+		DBFC352D1B17B51300C03CAC /* AMB_ReferAFriendFullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMB_ReferAFriendFullView.h; sourceTree = "<group>"; };
+		DBFC352E1B17B51300C03CAC /* AMB_ReferAFriendFullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMB_ReferAFriendFullView.m; sourceTree = "<group>"; };
+		DBFC35301B17BD8800C03CAC /* AMB_RAF_ShareServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMB_RAF_ShareServiceCell.h; sourceTree = "<group>"; };
+		DBFC35311B17BD8800C03CAC /* AMB_RAF_ShareServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMB_RAF_ShareServiceCell.m; sourceTree = "<group>"; };
 		DBFF72FA1B161CA900DB5F3D /* AMB_Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMB_Conversion.h; sourceTree = "<group>"; };
 		DBFF72FB1B161CA900DB5F3D /* AMB_Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMB_Conversion.m; sourceTree = "<group>"; };
 		DBFF72FD1B1622B100DB5F3D /* AMB_Errors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMB_Errors.h; sourceTree = "<group>"; };
@@ -94,6 +100,10 @@
 		DB0DCC2C1B15FC0F00B81A43 /* Ambassador */ = {
 			isa = PBXGroup;
 			children = (
+				DBFC352D1B17B51300C03CAC /* AMB_ReferAFriendFullView.h */,
+				DBFC352E1B17B51300C03CAC /* AMB_ReferAFriendFullView.m */,
+				DBFC35301B17BD8800C03CAC /* AMB_RAF_ShareServiceCell.h */,
+				DBFC35311B17BD8800C03CAC /* AMB_RAF_ShareServiceCell.m */,
 				DB6744921B15FF4A00CD8934 /* AMB_Identify.h */,
 				DB6744931B15FF4A00CD8934 /* AMB_Identify.m */,
 				DBFF72FD1B1622B100DB5F3D /* AMB_Errors.h */,
@@ -215,6 +225,8 @@
 				DB6744971B15FFB600CD8934 /* AMBASSADORConstants.m in Sources */,
 				DBFF73031B163CDA00DB5F3D /* AMB_WelcomeFullView.m in Sources */,
 				DB6744941B15FF4A00CD8934 /* AMB_Identify.m in Sources */,
+				DBFC352F1B17B51300C03CAC /* AMB_ReferAFriendFullView.m in Sources */,
+				DBFC35321B17BD8800C03CAC /* AMB_RAF_ShareServiceCell.m in Sources */,
 				DBFF72FC1B161CA900DB5F3D /* AMB_Conversion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

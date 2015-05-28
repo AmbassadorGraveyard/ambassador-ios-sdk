@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		4AB6EEB549F030A8ABB73C53 /* libPods-SDKTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B4DED70EE2416663DBA6A2 /* libPods-SDKTest.a */; };
 		DBF5C6FE1B1640E30076043D /* photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DBF5C6FD1B1640E30076043D /* photo.jpg */; };
+		DBFC35291B17AC4100C03CAC /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFC35281B17AC4100C03CAC /* TestController.m */; };
 		DBFF72D71B16186700DB5F3D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFF72D61B16186700DB5F3D /* main.m */; };
 		DBFF72DA1B16186700DB5F3D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFF72D91B16186700DB5F3D /* AppDelegate.m */; };
-		DBFF72DD1B16186700DB5F3D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFF72DC1B16186700DB5F3D /* ViewController.m */; };
 		DBFF72E01B16186700DB5F3D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBFF72DE1B16186700DB5F3D /* Main.storyboard */; };
 		DBFF72E21B16186700DB5F3D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBFF72E11B16186700DB5F3D /* Images.xcassets */; };
 		DBFF72E51B16186700DB5F3D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBFF72E31B16186700DB5F3D /* LaunchScreen.xib */; };
@@ -33,13 +33,13 @@
 		79B4DED70EE2416663DBA6A2 /* libPods-SDKTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SDKTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		80191B4B7D985CF8A410C9E8 /* Pods-SDKTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SDKTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-SDKTest/Pods-SDKTest.release.xcconfig"; sourceTree = "<group>"; };
 		DBF5C6FD1B1640E30076043D /* photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo.jpg; sourceTree = "<group>"; };
+		DBFC35271B17AC4100C03CAC /* TestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestController.h; sourceTree = "<group>"; };
+		DBFC35281B17AC4100C03CAC /* TestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestController.m; sourceTree = "<group>"; };
 		DBFF72D11B16186700DB5F3D /* SDKTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDKTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBFF72D51B16186700DB5F3D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBFF72D61B16186700DB5F3D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DBFF72D81B16186700DB5F3D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DBFF72D91B16186700DB5F3D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DBFF72DB1B16186700DB5F3D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		DBFF72DC1B16186700DB5F3D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		DBFF72DF1B16186700DB5F3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DBFF72E11B16186700DB5F3D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DBFF72E41B16186700DB5F3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -109,9 +109,9 @@
 			children = (
 				DBFF72D81B16186700DB5F3D /* AppDelegate.h */,
 				DBFF72D91B16186700DB5F3D /* AppDelegate.m */,
-				DBFF72DB1B16186700DB5F3D /* ViewController.h */,
-				DBFF72DC1B16186700DB5F3D /* ViewController.m */,
 				DBFF72DE1B16186700DB5F3D /* Main.storyboard */,
+				DBFC35271B17AC4100C03CAC /* TestController.h */,
+				DBFC35281B17AC4100C03CAC /* TestController.m */,
 				DBFF72E11B16186700DB5F3D /* Images.xcassets */,
 				DBFF72E31B16186700DB5F3D /* LaunchScreen.xib */,
 				DBFF72D41B16186700DB5F3D /* Supporting Files */,
@@ -282,8 +282,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBFF72DD1B16186700DB5F3D /* ViewController.m in Sources */,
 				DBFF72DA1B16186700DB5F3D /* AppDelegate.m in Sources */,
+				DBFC35291B17AC4100C03CAC /* TestController.m in Sources */,
 				DBFF72D71B16186700DB5F3D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

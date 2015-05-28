@@ -7,17 +7,14 @@
 //
 
 #import "AMB_WelcomeFullView.h"
+#import <QuartzCore/QuartzCore.h>
 
-@interface AMB_WelcomeFullView ()
+@interface AMB_WelcomeFullView () <UITextViewDelegate>
 
 @property NSDictionary *userInformation;
-@property NSDictionary *styleOptions;
 @property UIImageView *avatar;
 @property UITextView *welcomeMessage;
 @property UIButton *continueButton;
-
-@property UIView *redView;
-@property UIView *yellowView;
 @property NSDictionary *viewsDictionary;
 
 @end
@@ -25,17 +22,130 @@
 
 @implementation AMB_WelcomeFullView
 
-- (void)viewDidLoad
+#pragma mark - Inits
+- (id)init
 {
-    self.view.backgroundColor = [UIColor orangeColor];
+    if ([super init])
+    {
+        [self setup];
+    }
+    
+    return self;
+}
+
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if ([super initWithCoder:aDecoder])
+    {
+        [self setup];
+    }
+    
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    if ([super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
+    {
+        [self setup];
+    }
+    
+    return self;
+}
+
+- (void)setup
+{
+    
+    
+    // TEMP //
+    self.userInformation = @{
+                                @"fromFirstName" : @"John",
+                                @"fromLastName" : @"Doe",
+                                @"toFirstName" : @"Jane",
+                                @"toLastName" : @"Doe",
+                                @"photoPath" : @"photo.jpg"
+                            };
+    
+    
+/*
+--------------------------------------------------------------------------------
+//TODO: Set these with the API
+--------------------------------------------------------------------------------
+*/
+
+    /*
+    --------------------
+    Main view properties
+    --------------------
+    */
+    self.mainViewBackgroundColor = [UIColor whiteColor];
+    self.showAvatar = YES;
+    self.showWelcomeMessage = YES;
+    self.mainViewBorderColor = [UIColor clearColor];
+    self.mainViewBorderWidth = 0.0f;
+    
+    /*
+    -----------------
+    Avatar properties
+    -----------------
+    */
+    self.avatarBorderColor = [UIColor clearColor];
+    self.avatarBorderWidth = 0.0f;
+    
+    /*
+    --------------------------
+    Welcome message properties
+    --------------------------
+    */
+    self.welcomeMessageTextColor = [UIColor blackColor];
+    self.welcomeMessageTextFont = [UIFont fontWithName:@"HelveticaNeue" size:16];
+    self.welcomeMessageBorderColor = [UIColor clearColor];
+    self.welcomeMessageBorderWidth = 0.0f;
+    self.welcomeMessageTextAllignment = NSTextAlignmentCenter;
+    
+    /*
+    --------------------------
+    Continue button properties
+    --------------------------
+    */
+    self.continueButtonLabelText = @"Continue";
+    self.continueButtonBackgroundColor = [UIColor clearColor];
+    self.continueButtonLableTextColor = [UIColor blackColor];
+    self.continueButtonLableTextFont = [UIFont fontWithName:@"HelveticaNeue" size:14];
+    self.continueButtonBorderColor = [UIColor blackColor];
+    self.continueButtonBorderWidth = 1.0f;
+    
+    /*
+    ---------------------
+    Storyboard properties
+    ---------------------
+    */
+    self.segueIdentifier = @"moveFromWelcome";
+    
+    
+/*
+--------------------------------------------------------------------------------
+=========================   Initialization of views   ==========================
+--------------------------------------------------------------------------------
+*/
+    /*
+    ------------------------
+    Main view initialization
+    ------------------------
+    */
+    self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.view.translatesAutoresizingMaskIntoConstraints = NO;
+    
     /*
     ---------------------
     Avatar initialization
     ---------------------
     */
-    self.avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo.jpg"]];
-    self.avatar.backgroundColor = [UIColor grayColor];
+    self.avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.userInformation[@"photoPath"]]];
     self.avatar.translatesAutoresizingMaskIntoConstraints = NO;
+    self.avatar.clipsToBounds = YES;
+    self.avatar.layer.cornerRadius = 20;
     [self.view addSubview:self.avatar];
     
     /*
@@ -44,12 +154,11 @@
     ------------------------------
     */
     self.welcomeMessage = [[UITextView alloc] init];
-    self.welcomeMessage.backgroundColor = [UIColor clearColor];
     self.welcomeMessage.translatesAutoresizingMaskIntoConstraints = NO;
-    self.welcomeMessage.text = @"Hi John,\nYour friend Bob sent you here.\n\nWelcome!";
-    self.welcomeMessage.textAlignment = NSTextAlignmentCenter;
-    self.welcomeMessage.font = [UIFont fontWithName:@"Helvetica Neue" size:18];
-    self.welcomeMessage.textColor = [UIColor whiteColor];
+    self.welcomeMessage.editable = NO;
+    self.welcomeMessage.text = [NSString stringWithFormat:@"Hi %@,\n Your friend %@ sent you here.\n\n Welcome!",
+                                self.userInformation[@"toFirstName"],
+                                self.userInformation[@"fromFirstName"]];
     [self.view addSubview:self.welcomeMessage];
     
     /*
@@ -58,132 +167,183 @@
     ------------------------------
     */
     self.continueButton = [[UIButton alloc] init];
-    [self.continueButton setTitle:@"Continue"
-                         forState:UIControlStateNormal];
-    [self.continueButton setTitleColor:[UIColor orangeColor]
-                              forState:UIControlStateNormal];
-    self.continueButton.backgroundColor = [UIColor whiteColor];
     self.continueButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.continueButton addTarget:self
                             action:@selector(continueButtonClicked)
                   forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.continueButton];
+}
+
+
+#pragma mark - View Controller Lifecycle
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+/*
+--------------------------------------------------------------------------------
+============================   Property Updates   ==============================
+--------------------------------------------------------------------------------
+*/
     
     /*
-    ------------------
-    Dictionary of view
-    ------------------
+    --------------------------
+    Main view property updates
+    --------------------------
     */
-    self.viewsDictionary = @{ @"avatar" : self.avatar,
+    self.view.backgroundColor = self.mainViewBackgroundColor;
+    
+    /*
+    -----------------------
+    Avatar property updates
+    -----------------------
+    */
+    self.avatar.layer.borderWidth = self.avatarBorderWidth;
+    self.avatar.layer.borderColor = [self.avatarBorderColor CGColor];
+    
+    /*
+    --------------------------------
+    Welcome message property updates
+    --------------------------------
+    */
+    self.welcomeMessage.textAlignment = self.welcomeMessageTextAllignment;
+    self.welcomeMessage.font = self.welcomeMessageTextFont;
+    self.welcomeMessage.textColor = self.welcomeMessageTextColor;
+    self.welcomeMessage.layer.borderColor = [self.welcomeMessageBorderColor CGColor];
+    self.welcomeMessage.layer.borderWidth = self.welcomeMessageBorderWidth;
+    
+    /*
+    --------------------------------
+    Continue button property updates
+    --------------------------------
+    */
+    self.continueButton.backgroundColor = self.continueButtonBackgroundColor;
+    self.continueButton.font = self.continueButtonLableTextFont;
+    self.continueButton.layer.borderColor = [self.continueButtonBorderColor CGColor];
+    self.continueButton.layer.borderWidth = self.continueButtonBorderWidth;
+    [self.continueButton setTitle:self.continueButtonLabelText
+                         forState:UIControlStateNormal];
+    [self.continueButton setTitleColor:self.continueButtonLableTextColor
+                              forState:UIControlStateNormal];
+  
+    
+/*
+--------------------------------------------------------------------------------
+=========================   AutoLayout Constraints   ===========================
+--------------------------------------------------------------------------------
+*/
+    
+    /*
+    ---------------------------------
+    Dictionaries of metrics and names
+    ---------------------------------
+    */
+    CGSize screen = [[UIScreen mainScreen] bounds].size;
+    self.viewsDictionary = @{
+                              @"avatar" : self.avatar,
                               @"welcomeMessage" : self.welcomeMessage,
                               @"continueButton" : self.continueButton
                             };
+    NSDictionary *metrics = @{
+                              @"verticalPad" : [NSNumber numberWithFloat:screen.height * 0.1]
+                            };
     
-    /* 
+    /*
     ------------------
     Avatar constraints
     ------------------
     */
-    NSArray *avatarConstraintsH = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[avatar(75)]"
-                                                                           options:0
-                                                                           metrics:nil
-                                                                             views:self.viewsDictionary];
-    NSArray *avatarConstraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"H:[avatar(75)]"
-                                                                           options:0
-                                                                           metrics:nil
-                                                                             views:self.viewsDictionary];
-    [self.avatar addConstraints:avatarConstraintsH];
-    [self.avatar addConstraints:avatarConstraintsV];
-    NSArray *avatarConstraintsPOSX = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-50-[avatar]"
-                                                                              options:0
-                                                                              metrics:nil
-                                                                                views:self.viewsDictionary];
-    [self.view addConstraints:avatarConstraintsPOSX];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.avatar
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:0.2
+                                                           constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.avatar
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:0.2
+                                                           constant:0.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.avatar
                                                           attribute:NSLayoutAttributeCenterX
-                                                           relatedBy:NSLayoutRelationEqual
+                                                          relatedBy:NSLayoutRelationEqual
                                                              toItem:self.view
                                                           attribute:NSLayoutAttributeCenterX
                                                          multiplier:1.0
                                                            constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.avatar
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0
+                                                           constant:50.0]];
+
     /*
     ---------------------------
     Welcome message constraints
     ---------------------------
     */
-    NSDictionary *metrics = @{@"vSpacing":@30, @"hSpacing":@10};
-    NSArray *welcomeMessageConstraintsH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-vSpacing-[welcomeMessage]-vSpacing-|"
-                                                                                  options:0
-                                                                                  metrics:metrics
-                                                                                    views:self.viewsDictionary];
-    NSArray *welcomeMessageConstraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[welcomeMessage(200)]"
-                                                                                  options:0
-                                                                                  metrics:nil
-                                                                                    views:self.viewsDictionary];
-    NSArray *welcomeMessagePOSY = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[avatar]-15-[welcomeMessage]"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:self.viewsDictionary];
-    [self.view addConstraints:welcomeMessageConstraintsH];
-    [self.view addConstraints:welcomeMessagePOSY];
-    [self.welcomeMessage addConstraints:welcomeMessageConstraintsV];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[avatar]-10-[welcomeMessage]-10-[continueButton]"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:self.viewsDictionary]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.welcomeMessage
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeWidth
+                                                         multiplier:0.9
+                                                           constant:0.0]];
+
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.welcomeMessage
+                                                          attribute:NSLayoutAttributeCenterX
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeCenterX
+                                                         multiplier:1.0 constant:0.0]];
     
     /*
     ---------------------------
     Continue button constraints
     ---------------------------
     */
-    NSArray *continueButtonConstraintsH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-vSpacing-[continueButton]-vSpacing-|"
-                                                                                  options:0
-                                                                                  metrics:metrics
-                                                                                    views:self.viewsDictionary];
-    NSArray *continueButtonPOSY = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[continueButton]-50-|"
-                                                                          options:0
-                                                                          metrics:nil
-                                                                            views:self.viewsDictionary];
-    [self.view addConstraints:continueButtonConstraintsH];
-    [self.view addConstraints:continueButtonPOSY];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.continueButton
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:0.1
+                                                           constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.continueButton
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeWidth
+                                                         multiplier:0.5
+                              
+                                                           constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.continueButton
+                                                          attribute:NSLayoutAttributeCenterX
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeCenterX
+                                                         multiplier:1.0 constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.continueButton
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0
+                                                           constant:-25.0]];
 }
 
+
+#pragma mark - Segues
 - (void)continueButtonClicked {
-    UIViewController *to = [self.storyboard instantiateViewControllerWithIdentifier:@"test"];
-    UIStoryboardSegue *segue = [[UIStoryboardSegue alloc] initWithIdentifier:@"continueButton" source:self destination:to];
-    [segue perform];
+    [self performSegueWithIdentifier:self.segueIdentifier sender:self];
 }
 
 @end
-
-
-//self.userInformation = @{	@"refererFirstName": @"John",
-//                            @"refererLastName": @"Doe",
-//                            @"refererPhotoPath": @"/Users/diplomat/photo.jpg",
-//                            @"refereeFirstName": @"Jane",
-//                            @"refererLastName": @"Doe",
-//                            @"customMessage": @"Welcome!!!"
-//                            };
-//
-//CGSize screen = [[UIScreen mainScreen] bounds].size;
-//
-////The avatar image view
-//UIImage *avatarImage = [UIImage imageNamed:@"photo.jpg"];
-//
-//self.avatar = [[UIImageView alloc] initWithImage:avatarImage];
-//self.avatar.frame = CGRectMake((screen.width / 2) - 50, 75, 100, 100);
-////self.avatar.translatesAutoresizingMaskIntoConstraints = NO;
-//self.avatar.backgroundColor = [UIColor grayColor];
-//
-//[self.view addSubview:self.avatar];
-//
-////The welcome message text view
-//self.welcomeMessage = [[UITextView alloc] initWithFrame:CGRectMake(25, 250, screen.width - 50, screen.height - 450)];
-//self.welcomeMessage.translatesAutoresizingMaskIntoConstraints = NO;
-//self.welcomeMessage.backgroundColor = [UIColor greenColor];
-//[self.view addSubview:self.welcomeMessage];
-//
-////The continue button
-//self.continueButtom = [[UIButton alloc] initWithFrame:CGRectMake(25, 525, screen.width - 50, 50)];
-//[self.continueButtom setTitle:@"Continue" forState:UIControlStateNormal];
-////self.continueButtom.translatesAutoresizingMaskIntoConstraints = NO;
-//self.continueButtom.backgroundColor = [UIColor grayColor];
-//
-//[self.view addSubview:self.continueButtom];
