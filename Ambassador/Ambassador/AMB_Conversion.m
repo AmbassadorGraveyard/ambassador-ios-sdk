@@ -57,6 +57,7 @@
             
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             NSDictionary *identifyData = [userDefaults objectForKey:NSUserDefaultsKeyName];
+            NSLog(@"%@", identifyData);
         }
         else
         {

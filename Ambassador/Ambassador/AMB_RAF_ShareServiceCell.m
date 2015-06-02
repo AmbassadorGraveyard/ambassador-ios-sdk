@@ -43,10 +43,9 @@
 
 - (void)setup
 {
-    self.logo = [[UILabel alloc] initWithFrame:self.contentView.frame];
+    self.logo = [[UIImageView alloc] initWithFrame:self.contentView.frame];
+    self.logo.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:self.logo];
-    [self.logo setFont:[UIFont systemFontOfSize:8]];
-    self.contentView.backgroundColor = [UIColor greenColor];
 }
 
 @end

@@ -10,6 +10,6 @@
 
 @interface AMB_RAF_ShareServiceCell : UICollectionViewCell
 
-@property UILabel *logo;
+@property UIImageView *logo;
 
 @end

@@ -11,9 +11,9 @@
 
 @interface AMB_WelcomeFullView () <UITextViewDelegate>
 
-@property NSDictionary *userInformation;
+@property NSMutableArray *apiResponse;
 @property UIImageView *avatar;
-@property UITextView *welcomeMessage;
+@property UILabel *welcomeMessage;
 @property UIButton *continueButton;
 @property NSDictionary *viewsDictionary;
 
@@ -27,7 +27,7 @@
 {
     if ([super init])
     {
-        [self setup];
+        //[self getAPIInfo];
     }
     
     return self;
@@ -38,7 +38,7 @@
 {
     if ([super initWithCoder:aDecoder])
     {
-        [self setup];
+        //[self getAPIInfo];
     }
     
     return self;
@@ -48,25 +48,28 @@
 {
     if ([super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
-        [self setup];
+        //[self getAPIInfo];
     }
     
     return self;
 }
 
+- (void)getAPIInfo
+{
+    self.apiResponse = [[NSMutableArray alloc] init];
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithURL:[NSURL URLWithString:@"http://localhost:3000/welcome"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSError *e;
+        NSMutableArray * json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&e];
+        if (!e)
+        {
+            self.apiResponse = json;
+        }
+    }] resume];
+}
+
 - (void)setup
 {
-    
-    
-    // TEMP //
-    self.userInformation = @{
-                                @"fromFirstName" : @"John",
-                                @"fromLastName" : @"Doe",
-                                @"toFirstName" : @"Jane",
-                                @"toLastName" : @"Doe",
-                                @"photoPath" : @"photo.jpg"
-                            };
-    
     
 /*
 --------------------------------------------------------------------------------
@@ -123,62 +126,8 @@
     */
     self.segueIdentifier = @"moveFromWelcome";
     
-    
-/*
---------------------------------------------------------------------------------
-=========================   Initialization of views   ==========================
---------------------------------------------------------------------------------
-*/
-    /*
-    ------------------------
-    Main view initialization
-    ------------------------
-    */
-    self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.view.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    /*
-    ---------------------
-    Avatar initialization
-    ---------------------
-    */
-    self.avatar = [[UIImageView alloc] initWithImage:[UIImage imageNamed:self.userInformation[@"photoPath"]]];
-    self.avatar.translatesAutoresizingMaskIntoConstraints = NO;
-    self.avatar.clipsToBounds = YES;
-    self.avatar.layer.cornerRadius = 20;
-    [self.view addSubview:self.avatar];
-    
-    /*
-    ------------------------------
-    Welcome message initialization
-    ------------------------------
-    */
-    self.welcomeMessage = [[UITextView alloc] init];
-    self.welcomeMessage.translatesAutoresizingMaskIntoConstraints = NO;
-    self.welcomeMessage.editable = NO;
-    self.welcomeMessage.text = [NSString stringWithFormat:@"Hi %@,\n Your friend %@ sent you here.\n\n Welcome!",
-                                self.userInformation[@"toFirstName"],
-                                self.userInformation[@"fromFirstName"]];
-    [self.view addSubview:self.welcomeMessage];
-    
-    /*
-    ------------------------------
-    Welcome message initialization
-    ------------------------------
-    */
-    self.continueButton = [[UIButton alloc] init];
-    self.continueButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.continueButton addTarget:self
-                            action:@selector(continueButtonClicked)
-                  forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.continueButton];
-}
 
 
-#pragma mark - View Controller Lifecycle
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
 /*
 --------------------------------------------------------------------------------
 ============================   Property Updates   ==============================
