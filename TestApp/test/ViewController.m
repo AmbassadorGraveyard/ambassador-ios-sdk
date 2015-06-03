@@ -20,12 +20,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [[Ambassador sharedInstance] registerConversion];
+    [Ambassador registerConversion];
     
     self.button = [[UIButton alloc]init];
     self.button.backgroundColor = [UIColor greenColor];
     [self.button addTarget:self action:@selector(buttonStuff) forControlEvents:UIControlEventTouchUpInside];
     self.button.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.button setTitle:@"RAF" forState:UIControlStateNormal];
     [self.view addSubview:self.button];
     
     
@@ -39,7 +40,7 @@
 
 - (void)buttonStuff
 {
-    [[Ambassador sharedInstance] presentRAFFromViewController:self];
+    [Ambassador presentRAFFromViewController:self];
 }
 
 - (void)didReceiveMemoryWarning {

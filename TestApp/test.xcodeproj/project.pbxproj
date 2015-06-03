@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		DB009D171B1DF8B800A9EC92 /* CutomTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB009D161B1DF8B800A9EC92 /* CutomTabBarController.m */; };
 		DB009D231B1E3D3200A9EC92 /* TestWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB009D221B1E3D3200A9EC92 /* TestWelcomeViewController.m */; };
-		DB65DABA1B1D05C300ED2452 /* Promise.m in Sources */ = {isa = PBXBuildFile; fileRef = DB65DAB91B1D05C300ED2452 /* Promise.m */; };
 		DBA1AB651B190CF600E7FFF2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA1AB641B190CF600E7FFF2 /* main.m */; };
 		DBA1AB681B190CF600E7FFF2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA1AB671B190CF600E7FFF2 /* AppDelegate.m */; };
 		DBA1AB6B1B190CF600E7FFF2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA1AB6A1B190CF600E7FFF2 /* ViewController.m */; };
@@ -38,8 +37,6 @@
 		DB009D161B1DF8B800A9EC92 /* CutomTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CutomTabBarController.m; sourceTree = "<group>"; };
 		DB009D211B1E3D3200A9EC92 /* TestWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestWelcomeViewController.h; sourceTree = "<group>"; };
 		DB009D221B1E3D3200A9EC92 /* TestWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestWelcomeViewController.m; sourceTree = "<group>"; };
-		DB65DAB81B1D05C300ED2452 /* Promise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Promise.h; sourceTree = "<group>"; };
-		DB65DAB91B1D05C300ED2452 /* Promise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Promise.m; sourceTree = "<group>"; };
 		DBA1AB5F1B190CF600E7FFF2 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBA1AB631B190CF600E7FFF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBA1AB641B190CF600E7FFF2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -107,9 +104,9 @@
 				DBA1AB691B190CF600E7FFF2 /* ViewController.h */,
 				DBA1AB6A1B190CF600E7FFF2 /* ViewController.m */,
 				DBA1AB881B190D0800E7FFF2 /* Identify.h */,
+				DBA1AB891B190D0800E7FFF2 /* Identify.m */,
 				DB009D211B1E3D3200A9EC92 /* TestWelcomeViewController.h */,
 				DB009D221B1E3D3200A9EC92 /* TestWelcomeViewController.m */,
-				DBA1AB891B190D0800E7FFF2 /* Identify.m */,
 				DBA1AB8A1B190D0800E7FFF2 /* Constants.h */,
 				DBA1AB8B1B190D0800E7FFF2 /* Constants.m */,
 				DBA1AB8E1B19104A00E7FFF2 /* Conversion.h */,
@@ -118,8 +115,6 @@
 				DB009D161B1DF8B800A9EC92 /* CutomTabBarController.m */,
 				DBE2CB5D1B1C8F5E00CD78A3 /* Ambassador.h */,
 				DBE2CB5E1B1C8F5E00CD78A3 /* Ambassador.m */,
-				DB65DAB81B1D05C300ED2452 /* Promise.h */,
-				DB65DAB91B1D05C300ED2452 /* Promise.m */,
 				DBA1AB6C1B190CF600E7FFF2 /* Main.storyboard */,
 				DBA1AB6F1B190CF600E7FFF2 /* Images.xcassets */,
 				DBA1AB711B190CF600E7FFF2 /* LaunchScreen.xib */,
@@ -257,7 +252,6 @@
 				DBA1AB8D1B190D0800E7FFF2 /* Constants.m in Sources */,
 				DBA1AB6B1B190CF600E7FFF2 /* ViewController.m in Sources */,
 				DBE2CB5F1B1C8F5E00CD78A3 /* Ambassador.m in Sources */,
-				DB65DABA1B1D05C300ED2452 /* Promise.m in Sources */,
 				DBA1AB8C1B190D0800E7FFF2 /* Identify.m in Sources */,
 				DB009D171B1DF8B800A9EC92 /* CutomTabBarController.m in Sources */,
 				DBA1AB901B19104A00E7FFF2 /* Conversion.m in Sources */,

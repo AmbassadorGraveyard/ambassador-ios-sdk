@@ -10,7 +10,6 @@
 #import <UIKit/UIKit.h>
 #import "Identify.h"
 #import "Constants.h"
-#import "Promise.h"
 
 @interface Identify () <UIWebViewDelegate>
 
@@ -39,11 +38,13 @@ long long count = 0;
 - (BOOL)identify
 {
     NSUserDefaults* defualts = [NSUserDefaults standardUserDefaults];
-    if ([defualts dictionaryForKey:NSUserDefaultsKeyName])
+    if ([defualts dictionaryForKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY])
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
+                                                            object:self];
         return YES;
     }
-    NSURL *url = [NSURL URLWithString:augurFingerprintURL];
+    NSURL *url = [NSURL URLWithString:AMBASSADOR_IDENTIFY_URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
     return NO;
@@ -54,15 +55,15 @@ long long count = 0;
 - (BOOL)getJSON
 {
     NSString *JSONString = [self.webView
-                            stringByEvaluatingJavaScriptFromString:JSONJavascriptVariableName];
+                            stringByEvaluatingJavaScriptFromString:AMBASSADOR_IDENTIFY_JAVASCRIPT_VARIABLE_NAME];
     NSData *JSONData = [JSONString dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error;
+    __autoreleasing NSError *e;
     NSDictionary *JSONSerialization = [NSJSONSerialization JSONObjectWithData:JSONData
                                                                       options:NSJSONReadingMutableContainers
-                                                                        error:&error];
-    if (error)
+                                                                        error:&e];
+    if (e)
     {
-        NSLog(@"%@\n%@", JSONParseErrorMessage, error);
+        NSLog(@"%@\n%@", AMBASSADOR_JSON_PARSE_ERROR, e);
         if (count > 25) { return NO; }
         ++count;
         [self performSelector:@selector(identify) withObject:self afterDelay:2.0];
@@ -72,11 +73,11 @@ long long count = 0;
     {
         count = 0;
         NSLog(@"%f kB", (float)JSONData.length / 1024.0f);
-        NSLog(@"%@", fingerprintSuccessMessage);
+        NSLog(@"%@", AMBASSADOR_IDENTIFY_DATA_RECIEVED_SUCCESS);
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:JSONSerialization forKey:NSUserDefaultsKeyName];
+        [defaults setObject:JSONSerialization forKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY];
         [defaults synchronize];
-        [[NSNotificationCenter defaultCenter] postNotificationName:JSONCompletedNotificationName
+        [[NSNotificationCenter defaultCenter] postNotificationName:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
                                                             object:self];
         return YES;
     }
@@ -90,7 +91,7 @@ long long count = 0;
     NSString *urlRequestString = [[request URL] absoluteString];
     NSArray *urlRequestComponents = [urlRequestString componentsSeparatedByString:@":"];
     if (urlRequestComponents.count > 1 &&
-        [(NSString *)urlRequestComponents[0] isEqualToString:internalURLString])
+        [(NSString *)urlRequestComponents[0] isEqualToString:AMBASSADOR_IDENTIFY_SIGNAL_URL])
     {
         [self getJSON];
         return NO;
@@ -113,7 +114,7 @@ long long count = 0;
     }
     else
     {
-        NSLog(@"%@ - %ld", fingerprintErrorMessage, (long)response.statusCode);
+        NSLog(@"%@ - %ld", AMBASSADOR_IDENTIFY_GENERAL_FAIL_ERROR_MESSAGE, (long)response.statusCode);
         if (count > 25) { return; }
         ++count;
         [self performSelector:@selector(identify) withObject:self afterDelay:2.0];
@@ -122,7 +123,7 @@ long long count = 0;
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    NSLog(@"%@\n%@", webViewFailedToLoadErrorMessage, error);
+    NSLog(@"%@\n%@", AMBASSADOR_IDENTIFY_GENERAL_FAIL_ERROR_MESSAGE, error);
     if (count > 25) { return;  }
     ++count;
     [self performSelector:@selector(identify) withObject:self afterDelay:2.0];

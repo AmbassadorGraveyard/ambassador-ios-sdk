@@ -18,7 +18,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-        [[Ambassador sharedInstance] setAPIKey:@"Test123"];
+    NSLog(@"APPLICATION OPENED");
+    [Ambassador runWithAPIKey:@"Test123"];
     return YES;
 }
 

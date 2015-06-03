@@ -23,7 +23,7 @@
     {
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(flushQueue)
-                                                     name:JSONCompletedNotificationName
+                                                     name:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
                                                    object:nil];
     }
     
@@ -39,7 +39,7 @@
 #pragma mark - API Functions
 - (BOOL)registerConversion
 {
-    return [self registerConversionWithEmail:noConversionEmailDefualtString];
+    return [self registerConversionWithEmail:@""];
 }
 
 - (BOOL)registerConversionWithEmail:(NSString *)email
@@ -50,31 +50,25 @@
     __autoreleasing NSError *error;
     NSDate *installDate = [[[NSFileManager defaultManager] attributesOfItemAtPath:urlToDocumentsFolder.path
                                                                             error:&error] objectForKey:NSFileCreationDate];
-    NSLog(@"This app was installed by the user on %@", installDate);
+    NSLog(@"App installed on %@", installDate);
     
     //Check if we have identify
-    if (! [[NSUserDefaults standardUserDefaults] dictionaryForKey:NSUserDefaultsKeyName])
+    if (! [[NSUserDefaults standardUserDefaults] objectForKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY])
     {
         NSLog(@"Identify data not found");
-        
-        //Create or add to queue
-        NSMutableArray *queue = [[NSMutableArray alloc] init];
+        NSMutableArray * queue = [[NSUserDefaults standardUserDefaults] objectForKey:AMBASSADOR_USER_DEFAULTS_EVENT_QUEUE_KEY];
+        if (!queue) {
+            queue = [[NSMutableArray alloc] init];
+            NSLog(@"Events queue created");
+        } else {
+            NSLog(@"Events queue appended");
+        }
         [queue addObject:@YES];
-        if (![[NSUserDefaults standardUserDefaults] dictionaryForKey:@"Ambassaqueue"])
-        {
-            [[NSUserDefaults standardUserDefaults] setObject:queue forKey:@"Ambassaqueue"];
-            NSLog(@"Created queue");
-        }
-        else
-        {
-            queue = [[NSUserDefaults standardUserDefaults] mutableArrayValueForKey:@"Ambassaqueue"];
-            NSLog(@"Appended to queue");
-        }
-        //TODO: Add to queue
-        [[NSUserDefaults standardUserDefaults] setObject:queue forKey:@"Ambassaqueue"];
+        [[NSUserDefaults standardUserDefaults] setObject:queue forKey:AMBASSADOR_USER_DEFAULTS_EVENT_QUEUE_KEY];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
-    if ([email isEqualToString:noConversionEmailDefualtString])
+    if ([email isEqualToString:@""])
     {
         //TODO: Handle situation when email is not passed
         //[self makeAPICallWithEmail:email];
@@ -108,35 +102,33 @@
           }
           else
           {
-              NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: @"Non 200 server response" };
-              //TODO: Fix the code in the error
-              NSLog(@"%@", [NSError errorWithDomain:conversionErrorDomain
-                                               code:httpResponse.statusCode
-                                           userInfo:userInfo]);
+              //TODO: Do something with unsuccessful call
           }
       }] resume];
 }
 
 - (void)flushQueue
 {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"Ambassaqueue"])
+    NSMutableArray * queue = [[NSUserDefaults standardUserDefaults] objectForKey:AMBASSADOR_USER_DEFAULTS_EVENT_QUEUE_KEY];
+    if (queue)
     {
-        /*
-            -------------------------------------------------------------------------
-            TODO: Put this on a background queue. It can be called before preferences 
-            get loaded, and so a delay here is going to indirectly block the 
-            main thread and Ambassador viewController presentation
-            -------------------------------------------------------------------------
-        */
-        NSMutableArray * queue = [[NSUserDefaults standardUserDefaults] mutableArrayValueForKey:@"Ambassaqueue"];
         if (queue.count > 0)
         {
-            //TODO: Flush queue
-            NSLog(@"Queue flushed");
-            [queue removeAllObjects];
+            queue = (NSMutableArray *)queue;
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [queue removeAllObjects];
+                [[NSUserDefaults standardUserDefaults] setObject:queue forKey:AMBASSADOR_USER_DEFAULTS_EVENT_QUEUE_KEY];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                NSLog(@"Event queue flushed");
+            });
         }
         //We don't have to worry if the queue is empty
     }
+    else
+    {
+        NSLog(@"Event queue didnt exist");
+    }
+   
     //We don't have to worry if there isn't even a queue made
 }
 

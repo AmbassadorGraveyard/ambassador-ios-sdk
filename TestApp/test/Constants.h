@@ -10,30 +10,39 @@
 
 @interface Constants : NSObject
 
-#pragma mark - Augur Variables
-FOUNDATION_EXPORT NSString *const augurFingerprintURL;
-FOUNDATION_EXPORT NSString *const JSONJavascriptVariableName;
-
-#pragma mark - Identify Status Messages
-FOUNDATION_EXPORT NSString *const JSONParseErrorMessage;
-FOUNDATION_EXPORT NSString *const JSONCompletedNotificationName;
-FOUNDATION_EXPORT NSString *const fingerprintSuccessMessage;
-FOUNDATION_EXPORT NSString *const fingerprintErrorMessage;
-FOUNDATION_EXPORT NSString *const webViewFailedToLoadErrorMessage;
-
-#pragma mark - Identify Funcitons' Variables
-FOUNDATION_EXPORT NSString *const internalURLString;
-FOUNDATION_EXPORT NSString *const NSUserDefaultsKeyName;
-FOUNDATION_EXPORT NSString *const noConversionEmailDefualtString;
-
-#pragma mark - Errors
-FOUNDATION_EXPORT NSString *const conversionErrorDomain;
+#pragma mark - URLs
+FOUNDATION_EXPORT NSString *const AMBASSADOR_IDENTIFY_URL; //where we store the augur html
+FOUNDATION_EXPORT NSString *const AMBASSADOR_PREFERENCE_URL;
+FOUNDATION_EXPORT NSString *const AMBASSADOR_CONVERSION_URL;
+FOUNDATION_EXPORT NSString *const AMBASSADOR_IDENTIFY_SIGNAL_URL; //augur callback uses this
 
 
-#pragma mark - Welcome Screen Style Options
-FOUNDATION_EXPORT NSString *const welcomeViewBackgroundColor;
-FOUNDATION_EXPORT NSString *const welcomeViewTextColor;
-FOUNDATION_EXPORT NSString *const welcomeViewTextFont;
-FOUNDATION_EXPORT NSString *const welcomeViewButtonLableText;
+#pragma mark - Error messages
+FOUNDATION_EXPORT NSString *const AMBASSADOR_JSON_PARSE_ERROR;
+FOUNDATION_EXPORT NSString *const AMBASSADOR_NETWORK_500_ERROR;
+FOUNDATION_EXPORT NSString *const AMBASSADOR_NETWORK_UNREACHABLE_ERROR;
+FOUNDATION_EXPORT NSString *const AMBASSADOR_NETWORK_TOO_MANY_REQUESTS_ERROR;
+FOUNDATION_EXPORT NSString *const AMBASSADOR_API_INVALID_ERROR;
+FOUNDATION_EXPORT NSString *const AMBASSADOR_IDENTIFY_GENERAL_FAIL_ERROR_MESSAGE;
+
+
+#pragma mark - NSUserDefaults names
+FOUNDATION_EXPORT NSString *const AMBASSADOR_USER_DEFAULTS_APIKEY_KEY;
+FOUNDATION_EXPORT NSString *const AMBASSADOR_USER_DEFAULTS_UIPREFERENCES_KEY;
+FOUNDATION_EXPORT NSString *const AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY;
+FOUNDATION_EXPORT NSString *const AMBASSADOR_USER_DEFAULTS_EVENT_QUEUE_KEY;
+
+
+#pragma mark - Variables
+FOUNDATION_EXPORT NSString *const AMBASSADOR_IDENTIFY_JAVASCRIPT_VARIABLE_NAME;
+
+
+#pragma mark - NSNotificationCenter notification names
+FOUNDATION_EXPORT NSString *const AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION;
+
+#pragma mark - Success messages
+FOUNDATION_EXPORT NSString *const AMBASSADOR_IDENTIFY_DATA_RECIEVED_SUCCESS;
+FOUNDATION_EXPORT NSString *const AMBASSADOR_PREFERENCES_DATA_RECIEVED_SUCCESS;
+FOUNDATION_EXPORT NSString *const AMBASSADOR_CONVERSION_DATA_RECIEVED_SUCCESS;
 
 @end

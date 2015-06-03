@@ -10,7 +10,6 @@
 #import "Ambassador.h"
 #import "Identify.h"
 #import "Conversion.h"
-#import "Promise.h"
 #import "CutomTabBarController.h"
 #import "TestWelcomeViewController.h"
 //TODO: Import the view controllers
@@ -24,6 +23,9 @@
     //TODO: REMOVE THESE FOR PRODUCTION
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+
+    
+    
     
     static Ambassador* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
@@ -44,30 +46,47 @@ static bool showWelcomeScreen = false;
 //TODO: add the view controllers
 
 
-- (NSMutableDictionary *)getPreferencesData
+#pragma mark - Class method wrappers of instance methods
++ (void)runWithAPIKey:(NSString *)key
 {
-    return preferences;
+    [[Ambassador sharedInstance] runWithAPIKey:key];
 }
 
-#pragma mark - API functions
-- (void)setAPIKey:(NSString *)key
++ (void)registerConversionWithEmail:(NSString *)email
+{
+    [[Ambassador sharedInstance] registerConversionWithEmail:email];
+}
+
++ (void)registerConversion
+{
+    [[Ambassador sharedInstance] registerConversion];
+}
+
++ (void)presentRAFFromViewController:(UIViewController *)viewController
+{
+    [[Ambassador sharedInstance] presentRAFFromViewController:viewController];
+}
+
+
+#pragma mark - Internal API functions
+- (void)runWithAPIKey:(NSString *)key
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString* userDefaultsAPIKey = [defaults stringForKey:@"Ambassakey"];
+    NSString* userDefaultsAPIKey = [defaults stringForKey:AMBASSADOR_USER_DEFAULTS_APIKEY_KEY];
     if (!userDefaultsAPIKey)
     {
         //TODO: API key set
         showWelcomeScreen = true;
     }
-    [defaults setObject:key forKey:@"Ambassakey"];
+    [defaults setObject:key forKey:AMBASSADOR_USER_DEFAULTS_APIKEY_KEY];
     [defaults synchronize];
     APIKey = key;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(getPreferences)
-                                                 name:JSONCompletedNotificationName
+                                                 name:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
                                                object:nil];
-    //Initialize the non-UI classes
+    
     identify = [[Identify alloc] init];
     conversion = [[Conversion alloc] init];
     [identify identify];
@@ -76,12 +95,12 @@ static bool showWelcomeScreen = false;
 
 -(void)getPreferences
 {
-    [[[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:@"http://localhost:3000/welcome"]
+    [[[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:AMBASSADOR_PREFERENCE_URL]
                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
     {
         if (error)
         {
-            NSLog(@"Network error occured during request for preferences\n\n %@", error);
+            NSLog(AMBASSADOR_NETWORK_UNREACHABLE_ERROR, error);
             return;
         }
         
@@ -91,12 +110,12 @@ static bool showWelcomeScreen = false;
                                                                           error:&e];
         if (e)
         {
-            NSLog(@"JSON error occured while trying to parse preferences\n\n %@" ,e);
+            NSLog(@"%@\n%@", AMBASSADOR_JSON_PARSE_ERROR, e);
             return;
         }
         
-        [[NSUserDefaults standardUserDefaults] setObject:jsonData forKey:@"AmbassaUIPreferences"];
-        NSLog(@"%@", jsonData);
+        [[NSUserDefaults standardUserDefaults] setObject:jsonData forKey:AMBASSADOR_USER_DEFAULTS_UIPREFERENCES_KEY];
+        NSLog(@"%@", AMBASSADOR_PREFERENCES_DATA_RECIEVED_SUCCESS);
         preferences = jsonData;
         
         if (showWelcomeScreen) {
@@ -118,21 +137,13 @@ static bool showWelcomeScreen = false;
 
 - (void)presentWelcomeScreenFromViewController:(UIViewController *)viewController
 {
-    TestWelcomeViewController* vc = [[TestWelcomeViewController alloc] init];
-    NSDictionary *color = [NSDictionary  dictionaryWithDictionary:preferences[@"backgroundColor"]];
-    float red = [(NSNumber *)color[@"red"] floatValue];
-    float green = [(NSNumber *)color[@"green"] floatValue];
-    float blue = [(NSNumber *)color[@"blue"] floatValue];
-    
-    vc.accentColor = [UIColor colorWithRed:red / 255.0 green:green / 255.0 blue:blue / 255.0 alpha:1.0];
-    
-    vc.view.backgroundColor = [UIColor colorWithRed:red / 255.0 green:green / 255.0 blue:blue / 255.0 alpha:1.0];
+    TestWelcomeViewController* vc = [[TestWelcomeViewController alloc] initWithPreferences:preferences];
     [viewController presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)presentRAFFromViewController:(UIViewController *)viewController
 {
-    CutomTabBarController* vc = [[CutomTabBarController alloc] init];
+    CutomTabBarController* vc = [[CutomTabBarController alloc] initWithUIPreferences:preferences];
     [viewController presentViewController:vc animated:YES completion:nil];
 }
 

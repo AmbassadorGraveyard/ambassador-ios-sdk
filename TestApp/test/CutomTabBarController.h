@@ -10,4 +10,8 @@
 
 @interface CutomTabBarController : UIViewController
 
+@property NSMutableDictionary *UIPreferences;
+
+- (id)initWithUIPreferences:(NSMutableDictionary *)preferences;
+
 @end

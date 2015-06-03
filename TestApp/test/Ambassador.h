@@ -11,10 +11,13 @@
 
 @interface Ambassador : NSObject
 
-//+ (Ambassador*)sharedInstance;
-- (void)setAPIKey:(NSString *)key;
-- (void)registerConversion;
+#pragma mark - Retrieve shared instance
 + (Ambassador *)sharedInstance;
-- (void)presentRAFFromViewController:(UIViewController *)viewController;
-- (NSMutableDictionary *)getPreferencesData;
+
+#pragma mark - API functions
++ (void)runWithAPIKey:(NSString *)key;
++ (void)registerConversionWithEmail:(NSString *)email;
++ (void)registerConversion;
++ (void)presentRAFFromViewController:(UIViewController *)viewController;
+
 @end

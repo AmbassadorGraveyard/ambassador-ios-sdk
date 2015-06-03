@@ -10,5 +10,6 @@
 
 @interface TestWelcomeViewController : UIViewController
 
-@property UIColor *accentColor;
+- (id)initWithPreferences:(NSMutableDictionary *)preferences;
+
 @end
