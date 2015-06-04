@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "Identify.h"
 #import "Constants.h"
+#import "interface.h"
 
 @interface Identify () <UIWebViewDelegate>
 
@@ -37,13 +38,18 @@ long long count = 0;
 #pragma mark - API Functions
 - (BOOL)identify
 {
-    NSUserDefaults* defualts = [NSUserDefaults standardUserDefaults];
-    if ([defualts dictionaryForKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY])
+    interface *fileInterface = [[interface alloc] init];
+    NSString *path =[fileInterface getPathDirectory];
+    path = [path stringByAppendingPathComponent:@"identify.data"];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path])
     {
+        NSLog(@"%@", [fileInterface writeDictionary:nil toQueue:@"identify.data"]);
         [[NSNotificationCenter defaultCenter] postNotificationName:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
                                                             object:self];
         return YES;
     }
+
     NSURL *url = [NSURL URLWithString:AMBASSADOR_IDENTIFY_URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
@@ -58,7 +64,7 @@ long long count = 0;
                             stringByEvaluatingJavaScriptFromString:AMBASSADOR_IDENTIFY_JAVASCRIPT_VARIABLE_NAME];
     NSData *JSONData = [JSONString dataUsingEncoding:NSUTF8StringEncoding];
     __autoreleasing NSError *e;
-    NSDictionary *JSONSerialization = [NSJSONSerialization JSONObjectWithData:JSONData
+    NSMutableDictionary *JSONSerialization = [NSJSONSerialization JSONObjectWithData:JSONData
                                                                       options:NSJSONReadingMutableContainers
                                                                         error:&e];
     if (e)
@@ -72,11 +78,16 @@ long long count = 0;
     else
     {
         count = 0;
-        NSLog(@"%f kB", (float)JSONData.length / 1024.0f);
-        NSLog(@"%@", AMBASSADOR_IDENTIFY_DATA_RECIEVED_SUCCESS);
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:JSONSerialization forKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY];
-        [defaults synchronize];
+        NSLog(@"%@ - size: %f kB", AMBASSADOR_IDENTIFY_DATA_RECIEVED_SUCCESS, (float)JSONData.length / 1024.0f);
+        interface *fileInterface = [[interface alloc] init];
+        
+        if ([fileInterface setUpAmbassadorDocumentsDirectory])
+        {
+            NSLog(@"%@", [fileInterface writeDictionary:JSONSerialization toQueue:@"identify.data"]);
+            self.identifyData = [[NSMutableDictionary alloc] init];
+            self.identifyData = JSONSerialization;
+        }
+
         [[NSNotificationCenter defaultCenter] postNotificationName:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
                                                             object:self];
         return YES;

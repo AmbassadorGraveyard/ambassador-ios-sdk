@@ -215,8 +215,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.avatar.layer.cornerRadius = self.avatar.frame.size.width / 2;
-    [self.avatar setNeedsDisplay];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSLog(@"Welcome screen presented");
 }
 
 - (void)didReceiveMemoryWarning {
@@ -226,6 +230,7 @@
 
 - (void)backButton:(UIBarButtonItem *)button
 {
+    NSLog(@"Welcome screen dismissed");
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 

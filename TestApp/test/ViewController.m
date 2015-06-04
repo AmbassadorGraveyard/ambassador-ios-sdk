@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "Ambassador.h"
+#import "interface.h"
 
 @interface ViewController ()
 
@@ -17,10 +18,11 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [Ambassador registerConversion];
+    [Ambassador registerConversionWithEmail:@"email@website.com"];
     
     self.button = [[UIButton alloc]init];
     self.button.backgroundColor = [UIColor greenColor];
@@ -34,8 +36,8 @@
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.button attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.0 constant:100.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.button attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
-
-
+    
+    //[self runTestsOnfileInterface];
 }
 
 - (void)buttonStuff
@@ -43,9 +45,25 @@
     [Ambassador presentRAFFromViewController:self];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)runTestsOnfileInterface
+{
+    NSString *paths = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *path = [paths stringByAppendingPathComponent:@"AmbassadorDocuments"];
+    NSError *error;
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path])	//Does directory exist?
+    {
+        if (![[NSFileManager defaultManager] removeItemAtPath:path error:&error])	//Delete it
+        {
+            NSLog(@"Delete directory error: %@", error);
+        }
+    }
 }
 
 

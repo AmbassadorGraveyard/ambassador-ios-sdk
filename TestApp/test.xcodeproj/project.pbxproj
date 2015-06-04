@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DB009D171B1DF8B800A9EC92 /* CutomTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB009D161B1DF8B800A9EC92 /* CutomTabBarController.m */; };
 		DB009D231B1E3D3200A9EC92 /* TestWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB009D221B1E3D3200A9EC92 /* TestWelcomeViewController.m */; };
+		DB0CFE471B20AC9400AF773E /* interface.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0CFE461B20AC9400AF773E /* interface.m */; };
 		DBA1AB651B190CF600E7FFF2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA1AB641B190CF600E7FFF2 /* main.m */; };
 		DBA1AB681B190CF600E7FFF2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA1AB671B190CF600E7FFF2 /* AppDelegate.m */; };
 		DBA1AB6B1B190CF600E7FFF2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA1AB6A1B190CF600E7FFF2 /* ViewController.m */; };
@@ -19,6 +20,8 @@
 		DBA1AB8C1B190D0800E7FFF2 /* Identify.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA1AB891B190D0800E7FFF2 /* Identify.m */; };
 		DBA1AB8D1B190D0800E7FFF2 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA1AB8B1B190D0800E7FFF2 /* Constants.m */; };
 		DBA1AB901B19104A00E7FFF2 /* Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA1AB8F1B19104A00E7FFF2 /* Conversion.m */; };
+		DBC4B84E1B20D96C002E1E8A /* EventQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC4B84D1B20D96C002E1E8A /* EventQueue.m */; };
+		DBC4B8511B20D9EE002E1E8A /* EventObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DBC4B8501B20D9EE002E1E8A /* EventObject.m */; };
 		DBE2CB5F1B1C8F5E00CD78A3 /* Ambassador.m in Sources */ = {isa = PBXBuildFile; fileRef = DBE2CB5E1B1C8F5E00CD78A3 /* Ambassador.m */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +40,8 @@
 		DB009D161B1DF8B800A9EC92 /* CutomTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CutomTabBarController.m; sourceTree = "<group>"; };
 		DB009D211B1E3D3200A9EC92 /* TestWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestWelcomeViewController.h; sourceTree = "<group>"; };
 		DB009D221B1E3D3200A9EC92 /* TestWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestWelcomeViewController.m; sourceTree = "<group>"; };
+		DB0CFE451B20AC9400AF773E /* interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
+		DB0CFE461B20AC9400AF773E /* interface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = interface.m; sourceTree = "<group>"; };
 		DBA1AB5F1B190CF600E7FFF2 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBA1AB631B190CF600E7FFF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBA1AB641B190CF600E7FFF2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -56,6 +61,10 @@
 		DBA1AB8B1B190D0800E7FFF2 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		DBA1AB8E1B19104A00E7FFF2 /* Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversion.h; sourceTree = "<group>"; };
 		DBA1AB8F1B19104A00E7FFF2 /* Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversion.m; sourceTree = "<group>"; };
+		DBC4B84C1B20D96C002E1E8A /* EventQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventQueue.h; sourceTree = "<group>"; };
+		DBC4B84D1B20D96C002E1E8A /* EventQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventQueue.m; sourceTree = "<group>"; };
+		DBC4B84F1B20D9EE002E1E8A /* EventObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventObject.h; sourceTree = "<group>"; };
+		DBC4B8501B20D9EE002E1E8A /* EventObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventObject.m; sourceTree = "<group>"; };
 		DBE2CB5D1B1C8F5E00CD78A3 /* Ambassador.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ambassador.h; sourceTree = "<group>"; };
 		DBE2CB5E1B1C8F5E00CD78A3 /* Ambassador.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ambassador.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,6 +108,8 @@
 		DBA1AB611B190CF600E7FFF2 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				DB0CFE451B20AC9400AF773E /* interface.h */,
+				DB0CFE461B20AC9400AF773E /* interface.m */,
 				DBA1AB661B190CF600E7FFF2 /* AppDelegate.h */,
 				DBA1AB671B190CF600E7FFF2 /* AppDelegate.m */,
 				DBA1AB691B190CF600E7FFF2 /* ViewController.h */,
@@ -111,6 +122,10 @@
 				DBA1AB8B1B190D0800E7FFF2 /* Constants.m */,
 				DBA1AB8E1B19104A00E7FFF2 /* Conversion.h */,
 				DBA1AB8F1B19104A00E7FFF2 /* Conversion.m */,
+				DBC4B84F1B20D9EE002E1E8A /* EventObject.h */,
+				DBC4B8501B20D9EE002E1E8A /* EventObject.m */,
+				DBC4B84C1B20D96C002E1E8A /* EventQueue.h */,
+				DBC4B84D1B20D96C002E1E8A /* EventQueue.m */,
 				DB009D151B1DF8B800A9EC92 /* CutomTabBarController.h */,
 				DB009D161B1DF8B800A9EC92 /* CutomTabBarController.m */,
 				DBE2CB5D1B1C8F5E00CD78A3 /* Ambassador.h */,
@@ -250,10 +265,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBA1AB8D1B190D0800E7FFF2 /* Constants.m in Sources */,
+				DBC4B8511B20D9EE002E1E8A /* EventObject.m in Sources */,
 				DBA1AB6B1B190CF600E7FFF2 /* ViewController.m in Sources */,
 				DBE2CB5F1B1C8F5E00CD78A3 /* Ambassador.m in Sources */,
 				DBA1AB8C1B190D0800E7FFF2 /* Identify.m in Sources */,
+				DBC4B84E1B20D96C002E1E8A /* EventQueue.m in Sources */,
 				DB009D171B1DF8B800A9EC92 /* CutomTabBarController.m in Sources */,
+				DB0CFE471B20AC9400AF773E /* interface.m in Sources */,
 				DBA1AB901B19104A00E7FFF2 /* Conversion.m in Sources */,
 				DB009D231B1E3D3200A9EC92 /* TestWelcomeViewController.m in Sources */,
 				DBA1AB681B190CF600E7FFF2 /* AppDelegate.m in Sources */,

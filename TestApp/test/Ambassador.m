@@ -9,9 +9,10 @@
 #import "Constants.h"
 #import "Ambassador.h"
 #import "Identify.h"
-#import "Conversion.h"
+#import "EventQueue.h"
 #import "CutomTabBarController.h"
 #import "TestWelcomeViewController.h"
+#import "interface.h"
 //TODO: Import the view controllers
 
 
@@ -20,13 +21,6 @@
 #pragma mark - Singleton instantiation
 + (Ambassador *)sharedInstance
 {
-    //TODO: REMOVE THESE FOR PRODUCTION
-    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-
-    
-    
-    
     static Ambassador* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
@@ -36,13 +30,19 @@
     return _sharedInsance;
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 
 #pragma mark - Static class variables
 static Identify *identify;
-static Conversion *conversion;
+static EventQueue *eventsQueue;
 static NSString *APIKey;
 static NSMutableDictionary *preferences;
 static bool showWelcomeScreen = false;
+static NSMutableDictionary *identifyData;
 //TODO: add the view controllers
 
 
@@ -57,11 +57,6 @@ static bool showWelcomeScreen = false;
     [[Ambassador sharedInstance] registerConversionWithEmail:email];
 }
 
-+ (void)registerConversion
-{
-    [[Ambassador sharedInstance] registerConversion];
-}
-
 + (void)presentRAFFromViewController:(UIViewController *)viewController
 {
     [[Ambassador sharedInstance] presentRAFFromViewController:viewController];
@@ -71,26 +66,44 @@ static bool showWelcomeScreen = false;
 #pragma mark - Internal API functions
 - (void)runWithAPIKey:(NSString *)key
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString* userDefaultsAPIKey = [defaults stringForKey:AMBASSADOR_USER_DEFAULTS_APIKEY_KEY];
-    if (!userDefaultsAPIKey)
+    interface *fileInterface = [[interface alloc] init];
+    NSString *path = [fileInterface getPathDirectory];
+    [path stringByAppendingPathComponent:@"identify.data"];
+    
+    
+    //TODO: REMOVE THESE FOR PRODUCTION
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    
+    
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path])
     {
         //TODO: API key set
         showWelcomeScreen = true;
     }
-    [defaults setObject:key forKey:AMBASSADOR_USER_DEFAULTS_APIKEY_KEY];
-    [defaults synchronize];
-    APIKey = key;
     
+    
+    
+    NSLog(@"identify.data found");
+    APIKey = key;
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(getPreferences)
+                                             selector:@selector(identifyCallback:)
                                                  name:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
                                                object:nil];
     
     identify = [[Identify alloc] init];
-    conversion = [[Conversion alloc] init];
+    eventsQueue = [[EventQueue alloc] initWithQueueName:@"events.queue"];
+    identifyData = [[NSMutableDictionary alloc] init];
     [identify identify];
     
+}
+
+- (void)identifyCallback:(NSNotification *)notification
+{
+    [self getPreferences];
+    Identify* identificationObject = (Identify *)notification.object;
+    identifyData = identificationObject.identifyData;
+    [self emptyQueue];
 }
 
 -(void)getPreferences
@@ -114,8 +127,11 @@ static bool showWelcomeScreen = false;
             return;
         }
         
-        [[NSUserDefaults standardUserDefaults] setObject:jsonData forKey:AMBASSADOR_USER_DEFAULTS_UIPREFERENCES_KEY];
-        NSLog(@"%@", AMBASSADOR_PREFERENCES_DATA_RECIEVED_SUCCESS);
+        interface *fileInterface = [[interface alloc] init];
+        if ([fileInterface setUpAmbassadorDocumentsDirectory]) {
+            NSLog(@"%@", [fileInterface writeDictionary:jsonData toQueue:@"ui.preferences"]);
+        }
+        
         preferences = jsonData;
         
         if (showWelcomeScreen) {
@@ -123,16 +139,15 @@ static bool showWelcomeScreen = false;
         }
         
     }] resume];
-}
 
-- (void)registerConversion
-{
-    [conversion registerConversion];
 }
 
 - (void)registerConversionWithEmail:(NSString *)email
 {
-    [conversion registerConversionWithEmail:email];
+    EventObject *event = [[EventObject alloc] init];
+    event.parameter = email;
+    [eventsQueue pushEvent:event];
+    NSLog(@"%@", [eventsQueue getQueue]);
 }
 
 - (void)presentWelcomeScreenFromViewController:(UIViewController *)viewController
@@ -145,6 +160,37 @@ static bool showWelcomeScreen = false;
 {
     CutomTabBarController* vc = [[CutomTabBarController alloc] initWithUIPreferences:preferences];
     [viewController presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)emptyQueue
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        __autoreleasing NSError *e;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:identifyData options:0 error:&e];
+        
+        if (e) {
+            NSLog(@"Couldn't parse JSON");
+            return;
+        }
+        
+        NSURL *url = [NSURL URLWithString:AMBASSADOR_IDENTIFY_URL];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+        [request setHTTPMethod:@"PSOT"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[jsonData length]] forHTTPHeaderField:@"Content-Length"];
+        [request setHTTPBody:jsonData];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                //if (error) {
+               //     NSLog(@"Couldn't send queue");
+              //  }
+                NSLog(@"Successfully sent queue");
+                [eventsQueue emptyQueue];
+            //}];
+        });
+    });
 }
 
 @end

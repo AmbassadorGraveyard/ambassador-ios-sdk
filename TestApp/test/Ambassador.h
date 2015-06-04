@@ -17,7 +17,6 @@
 #pragma mark - API functions
 + (void)runWithAPIKey:(NSString *)key;
 + (void)registerConversionWithEmail:(NSString *)email;
-+ (void)registerConversion;
 + (void)presentRAFFromViewController:(UIViewController *)viewController;
 
 @end

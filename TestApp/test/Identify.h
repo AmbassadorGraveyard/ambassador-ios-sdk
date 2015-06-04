@@ -13,4 +13,6 @@
 - (BOOL)identify;
 - (id)init;
 
+@property NSMutableDictionary *identifyData;
+
 @end
