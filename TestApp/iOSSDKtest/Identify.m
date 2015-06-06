@@ -10,7 +10,6 @@
 #import <UIKit/UIKit.h>
 #import "Identify.h"
 #import "Constants.h"
-#import "interface.h"
 
 @interface Identify () <UIWebViewDelegate>
 
@@ -38,13 +37,9 @@ long long count = 0;
 #pragma mark - API Functions
 - (BOOL)identify
 {
-    interface *fileInterface = [[interface alloc] init];
-    NSString *path =[fileInterface getPathDirectory];
-    path = [path stringByAppendingPathComponent:@"identify.data"];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path])
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY])
     {
-        NSLog(@"%@", [fileInterface writeDictionary:nil toQueue:@"identify.data"]);
+        //We have Identify
         [[NSNotificationCenter defaultCenter] postNotificationName:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
                                                             object:self];
         return YES;
@@ -79,17 +74,13 @@ long long count = 0;
     {
         count = 0;
         NSLog(@"%@ - size: %f kB", AMBASSADOR_IDENTIFY_DATA_RECIEVED_SUCCESS, (float)JSONData.length / 1024.0f);
-        interface *fileInterface = [[interface alloc] init];
-        
-        if ([fileInterface setUpAmbassadorDocumentsDirectory])
-        {
-            NSLog(@"%@", [fileInterface writeDictionary:JSONSerialization toQueue:@"identify.data"]);
-            self.identifyData = [[NSMutableDictionary alloc] init];
-            self.identifyData = JSONSerialization;
-        }
 
+        [[NSUserDefaults standardUserDefaults] setObject:JSONSerialization
+                                                  forKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY];
         [[NSNotificationCenter defaultCenter] postNotificationName:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
                                                             object:self];
+        self.identifyData = [[NSMutableDictionary alloc] init];
+        self.identifyData = JSONSerialization;
         return YES;
     }
 }

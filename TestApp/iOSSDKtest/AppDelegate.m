@@ -18,6 +18,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+//    NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+//    NSString *filePath = [documentsPath stringByAppendingPathComponent:@"conversion.queue"];
+//    
+//    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+//    {
+//        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+//    }
     NSLog(@"Application opened");
     [Ambassador runWithAPIKey:@"Test123"];
     return YES;

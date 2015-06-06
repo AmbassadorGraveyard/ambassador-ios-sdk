@@ -1,4 +1,4 @@
-//
+;//
 //  Ambassador.h
 //  test
 //
@@ -18,5 +18,7 @@
 + (void)runWithAPIKey:(NSString *)key;
 + (void)registerConversionWithEmail:(NSString *)email;
 + (void)presentRAFFromViewController:(UIViewController *)viewController;
+
++ (void)emptyQueue;
 
 @end

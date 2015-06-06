@@ -1,8 +1,8 @@
 //
 //  main.m
-//  test
+//  iOSSDKtest
 //
-//  Created by Diplomat on 5/29/15.
+//  Created by Diplomat on 6/5/15.
 //  Copyright (c) 2015 Ambassador. All rights reserved.
 //
 

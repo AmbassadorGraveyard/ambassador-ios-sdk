@@ -1,19 +1,19 @@
 //
-//  testTests.m
-//  testTests
+//  iOSSDKtestTests.m
+//  iOSSDKtestTests
 //
-//  Created by Diplomat on 5/29/15.
+//  Created by Diplomat on 6/5/15.
 //  Copyright (c) 2015 Ambassador. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-@interface testTests : XCTestCase
+@interface iOSSDKtestTests : XCTestCase
 
 @end
 
-@implementation testTests
+@implementation iOSSDKtestTests
 
 - (void)setUp {
     [super setUp];
