@@ -43,6 +43,7 @@
     self.buttontoo.translatesAutoresizingMaskIntoConstraints = NO;
     [self.buttontoo setTitle:@"RAF" forState:UIControlStateNormal];
     [self.view addSubview:self.buttontoo];
+    self.buttontoo.hidden = YES;
     
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.buttontoo attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:0.0 constant:100.0]];

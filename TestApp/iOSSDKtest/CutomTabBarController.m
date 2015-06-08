@@ -8,12 +8,16 @@
 
 #import "CutomTabBarController.h"
 #import <MessageUI/MessageUI.h>
+#import <Twitter/Twitter.h>
+#import <QuartzCore/QuartzCore.h>
 
-@interface CutomTabBarController () <MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
+@interface CutomTabBarController () <MFMailComposeViewControllerDelegate>
 
-@property UINavigationBar *navBar;
-@property UIBarButtonItem *backBuutton;
-@property UINavigationItem *navBarItem;
+@property UILabel *titleLabel;
+@property UIButton *cancelButton;
+@property UIView *containerView;
+@property SLComposeViewController *slComposeViewController;
+@property MFMailComposeViewController *mailComposeViewcontroller;
 @property (nonatomic, strong) UIViewController *currentViewController;
 @property (nonatomic, strong) NSArray *services;
 @property (nonatomic, strong) NSMutableArray *tabBarButtons;
@@ -25,21 +29,127 @@
 @implementation CutomTabBarController
 
 #pragma mark - Inits
-- (id)initWithUIPreferences:(NSMutableDictionary *)preferences
+- (id)initWithUIPreferences:(NSMutableDictionary *)preferences andSender:(id)sender
 {
     if ([super init])
     {
+        //Initializing containers
+        self.sender = sender;
         self.UIPreferences = [NSMutableDictionary dictionaryWithDictionary:preferences];
         self.services = [[NSArray alloc] initWithArray:self.UIPreferences[@"services"]];
         self.tabBarButtons = [[NSMutableArray alloc] init];
+        
+        //Set up main view
+        self.view.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.0];
+        
+        //Set up container view
+        self.containerView = [[UIView alloc] init];
+        self.containerView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.containerView.backgroundColor = [UIColor colorWithRed:50.0/255.0 green:50.0/255.0 blue:50.0/255.0 alpha:0.9];
+        [self.view addSubview:self.containerView];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.containerView
+                                                              attribute:NSLayoutAttributeHeight
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeHeight
+                                                             multiplier:0.0
+                                                               constant:200.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.containerView
+                                                              attribute:NSLayoutAttributeWidth
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeWidth
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.containerView
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.view
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+        
+        //Set up cancel view
+        self.cancelButton = [[UIButton alloc] init];
+        self.cancelButton.backgroundColor = [UIColor redColor];
+        self.cancelButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        [self.cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.cancelButton addTarget:self action:@selector(cancelButtonPress) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:self.cancelButton];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.cancelButton
+                                                              attribute:NSLayoutAttributeHeight
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.containerView
+                                                              attribute:NSLayoutAttributeHeight
+                                                             multiplier:0.0
+                                                               constant:50.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.cancelButton
+                                                              attribute:NSLayoutAttributeWidth
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.containerView
+                                                              attribute:NSLayoutAttributeWidth
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.cancelButton
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.containerView
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+        
+        
+        //Set up title view
+        self.titleLabel = [[UILabel alloc] init];
+        self.titleLabel.backgroundColor = [UIColor clearColor];
+        self.titleLabel.text = @"Spread the word";
+        self.titleLabel.textColor = [UIColor whiteColor];
+        
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:24];
+        [self.view addSubview:self.titleLabel];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                              attribute:NSLayoutAttributeHeight
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.containerView
+                                                              attribute:NSLayoutAttributeHeight
+                                                             multiplier:0.0
+                                                               constant:50.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                              attribute:NSLayoutAttributeWidth
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.containerView
+                                                              attribute:NSLayoutAttributeWidth
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.containerView
+                                                              attribute:NSLayoutAttributeTop
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                              attribute:NSLayoutAttributeCenterX
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:self.containerView
+                                                              attribute:NSLayoutAttributeCenterX
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+        
+        
         for (NSDictionary* service in self.services)
         {
             UIButton * btn = [UIButton new];
             [btn setTitle:service[@"title"] forState:UIControlStateNormal];
             btn.translatesAutoresizingMaskIntoConstraints = NO;
             [btn addTarget:self action:@selector(tabButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+            [btn setBackgroundColor:[UIColor clearColor]];
+            btn.imageView.contentMode = UIViewContentModeCenter;
             btn.titleLabel.font = [UIFont systemFontOfSize:12.0];
             
             //TODO: Set target action
@@ -55,24 +165,24 @@
             [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btn
                                                                   attribute:NSLayoutAttributeHeight
                                                                   relatedBy:NSLayoutRelationEqual
-                                                                     toItem:self.view
+                                                                     toItem:self.containerView
                                                                   attribute:NSLayoutAttributeHeight
                                                                  multiplier:0.0
                                                                    constant:50.0]];
             [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btn
                                                                   attribute:NSLayoutAttributeWidth
                                                                   relatedBy:NSLayoutRelationEqual
-                                                                     toItem:self.view
+                                                                     toItem:self.containerView
                                                                   attribute:NSLayoutAttributeWidth
                                                                  multiplier:1.0 / self.services.count
                                                                    constant:0.0]];
             [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btn
-                                                                  attribute:NSLayoutAttributeTop
+                                                                  attribute:NSLayoutAttributeCenterY
                                                                   relatedBy:NSLayoutRelationEqual
-                                                                     toItem:self.view
-                                                                  attribute:NSLayoutAttributeTop
+                                                                     toItem:self.containerView
+                                                                  attribute:NSLayoutAttributeCenterY
                                                                  multiplier:1.0
-                                                                   constant:64.25]];
+                                                                   constant:0.0]];
             
             if (btn == [self.tabBarButtons firstObject])
             {
@@ -97,7 +207,7 @@
             }
         }
         
-        [self tabButtonPress:(UIButton *)[self.tabBarButtons firstObject]];
+        //[self tabButtonPress:(UIButton *)[self.tabBarButtons firstObject]];
     }
     
     return self;
@@ -105,37 +215,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navBarItem = [[UINavigationItem alloc] initWithTitle:@"Refer A Friend"];
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.navBar = [[UINavigationBar alloc] init];
-    self.navBar.translatesAutoresizingMaskIntoConstraints = NO;
-    self.navBar.tintColor = [UIColor blackColor];
-    self.navBar.translucent = NO;
-    self.backBuutton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
-                                                        style:UIBarButtonItemStylePlain
-                                                       target:self
-                                                       action:@selector(backButton:)];
-    self.navBarItem.leftBarButtonItem = self.backBuutton;
-    self.navBar.items = @[ self.navBarItem ];
-    [self.view addSubview:self.navBar];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.navBar
-                                                          attribute:NSLayoutAttributeHeight
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeHeight
-                                                         multiplier:0.0
-                                                           constant:64.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.navBar
-                                                          attribute:NSLayoutAttributeWidth
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeWidth
-                                                         multiplier:1.0
-                                                           constant:0.0]];
 }
 
 - (void)backButton:(UIBarButtonItem *)button
+{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)cancelButtonPress
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
@@ -145,83 +232,58 @@
     int selectedIndex = 0;
     for (int i = 0; i < self.tabBarButtons.count; ++i)
     {
-        UIButton *btn = (UIButton*)self.tabBarButtons[i];
+        UIButton *btn = (UIButton *)self.tabBarButtons[i];
         if (btn == button)
         {
-            selectedIndex = i;
             btn.selected = YES;
-            btn.backgroundColor = [UIColor blackColor];
+            btn.backgroundColor = [UIColor whiteColor];
+            selectedIndex = i;
         }
         else
         {
             btn.selected = NO;
-            btn.backgroundColor = [UIColor whiteColor];
+            btn.backgroundColor = [UIColor blackColor];
         }
     }
     
-    NSString* serviceTitle = self.services[selectedIndex][@"title"];
-    UIViewController* vc = [[UIViewController alloc] init];
+    [self cancelButtonPress];
     
+    NSString *serviceTitle = [NSString stringWithString:self.services[selectedIndex][@"title"]];
     if ([serviceTitle isEqualToString:@"twitter"])
     {
-        vc.view.backgroundColor = [UIColor lightGrayColor];
+        //
+        self.slComposeViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [self.slComposeViewController setInitialText:@"First post from my iPhone app"];
+        [self.presentingViewController presentViewController:self.slComposeViewController animated:YES completion:^{
+            //
+        }];
     }
     else if ([serviceTitle isEqualToString:@"facebook"])
     {
-        vc.view.backgroundColor = [UIColor purpleColor];
+        //
+        self.slComposeViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        [self.slComposeViewController setInitialText:@"First post from my iPhone app"];
+        [self.presentingViewController presentViewController:self.slComposeViewController animated:YES completion:^{
+            //
+        }];
     }
     else if ([serviceTitle isEqualToString:@"mail"])
     {
-        MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
-        [mail setSubject:@"Ambassador"];
-        [mail setMessageBody:@"Mail stuff\nhttp://google.com" isHTML:NO];
-        mail.mailComposeDelegate = self;
-        [self loadViewController:mail];
-    }
-    else if ([serviceTitle isEqualToString:@"sms"])
-    {
-        MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
-        [mail setSubject:@"Sms wont work cuz it's dumb on the simulator"];
-        [mail setMessageBody:@"I wish it were sms stuff\nhttp://google.com" isHTML:NO];
-        mail.mailComposeDelegate = self;
-        [self loadViewController:mail];
+        self.mailComposeViewcontroller = [[MFMailComposeViewController alloc] init];
+        self.mailComposeViewcontroller.mailComposeDelegate = self;
+        [self.mailComposeViewcontroller setSubject:@"Somthing to share"];
+        NSString *emailBody = @"Check out this link: http://www.google.com";
+        [self.mailComposeViewcontroller setMessageBody:emailBody isHTML:NO];
+        
+        [self.presentingViewController presentViewController:self.mailComposeViewcontroller animated:YES completion:^{
+            //
+        }];
     }
     else
     {
-        vc.view.backgroundColor = [UIColor orangeColor];
+        
     }
-    
-    //[self loadViewController:vc];
-}
 
-- (void)loadViewController:(UIViewController *)vc
-{
-    CGSize screen = [[UIScreen mainScreen] bounds].size;
-    
-    if (vc == self.currentViewController) {
-        return;
-    }
-    
-    [self addChildViewController:vc];
-    if (!self.currentViewController) {
-        [self.view addSubview:vc.view];
-        vc.view.frame = CGRectMake(0, 114.25, screen.width, screen.height -114.25);
-        self.currentViewController = vc;
-        return;
-    }
-    
-    vc.view.frame = CGRectMake(0, 114.25, screen.width, screen.height - 114.25);
-    
-    [self transitionFromViewController:self.currentViewController
-                      toViewController:vc
-                              duration:0
-                               options:0
-                            animations:nil
-                            completion:^(BOOL finished)
-    {
-        [self.currentViewController removeFromParentViewController];
-        self.currentViewController = vc;
-    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -238,7 +300,29 @@
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
+    if (result == MFMailComposeResultCancelled)
+    {
+        NSLog(@"Cancelled");
+    }
+    else if (result == MFMailComposeResultFailed)
+    {
+        NSLog(@"Failed with error, %@", error);
+    }
+    else if (result == MFMailComposeResultSaved)
+    {
+        NSLog(@"Saved");
+    }
+    else if (result == MFMailComposeResultSent)
+    {
+        NSLog(@"Sent");
+    }
+    else
+    {
+        NSLog(@"Other");
+    }
     
+    [self dismissViewControllerAnimated:YES completion:^{}];
 }
+
 
 @end

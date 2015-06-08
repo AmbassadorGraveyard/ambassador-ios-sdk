@@ -1,0 +1,6 @@
+framework module AmbassadorFramework {
+  umbrella header "AmbassadorFramework.h"
+
+  export *
+  module * { export * }
+}

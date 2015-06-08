@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB7C0F201B2610CA0010C809 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = DB7C0F1F1B2610CA0010C809 /* twitter.png */; };
 		DBFF0B291B22338A003F3D8B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFF0B281B22338A003F3D8B /* main.m */; };
 		DBFF0B431B22338A003F3D8B /* iOSSDKtestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFF0B421B22338A003F3D8B /* iOSSDKtestTests.m */; };
 		DBFF0B5F1B2233AC003F3D8B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFF0B4D1B2233AC003F3D8B /* AppDelegate.m */; };
@@ -47,6 +48,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DB7C0F1F1B2610CA0010C809 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
 		DBFF0B231B22338A003F3D8B /* iOSSDKtest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSDKtest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBFF0B271B22338A003F3D8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBFF0B281B22338A003F3D8B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 		DBFF0B261B22338A003F3D8B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DB7C0F1F1B2610CA0010C809 /* twitter.png */,
 				DBFF0B271B22338A003F3D8B /* Info.plist */,
 				DBFF0B281B22338A003F3D8B /* main.m */,
 			);
@@ -249,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBFF0B671B2233AC003F3D8B /* Main.storyboard in Resources */,
+				DB7C0F201B2610CA0010C809 /* twitter.png in Resources */,
 				DBFF0B691B2233AC003F3D8B /* LaunchScreen.xib in Resources */,
 				DBFF0B681B2233AC003F3D8B /* Images.xcassets in Resources */,
 			);

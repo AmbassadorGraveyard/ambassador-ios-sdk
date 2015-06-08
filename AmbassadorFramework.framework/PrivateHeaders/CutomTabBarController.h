@@ -12,7 +12,6 @@
 
 @property NSMutableDictionary *UIPreferences;
 
-- (id)initWithUIPreferences:(NSMutableDictionary *)preferences andSender:(id)sender;
-@property id sender;
+- (id)initWithUIPreferences:(NSMutableDictionary *)preferences;
 
 @end

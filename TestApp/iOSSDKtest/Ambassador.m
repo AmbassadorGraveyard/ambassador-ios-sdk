@@ -100,7 +100,8 @@ static NSMutableDictionary *identifyData;
 {
     if (preferences && preferences.count > 0)
     {
-        CutomTabBarController* vc = [[CutomTabBarController alloc] initWithUIPreferences:preferences];
+        CutomTabBarController* vc = [[CutomTabBarController alloc] initWithUIPreferences:preferences andSender:self];
+        [vc setModalPresentationStyle:UIModalPresentationOverCurrentContext];
         [viewController presentViewController:vc animated:YES completion:nil];
     }
 }
