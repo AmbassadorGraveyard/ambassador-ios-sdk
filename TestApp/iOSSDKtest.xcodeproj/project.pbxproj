@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB3AC5F31B276EA900F2AA9E /* Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = DB3AC5F21B276EA900F2AA9E /* Conversion.m */; };
+		DB3AC6151B277C4A00F2AA9E /* UIApplication+EventTracking.m in Sources */ = {isa = PBXBuildFile; fileRef = DB3AC6141B277C4A00F2AA9E /* UIApplication+EventTracking.m */; };
 		DB7C0F201B2610CA0010C809 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = DB7C0F1F1B2610CA0010C809 /* twitter.png */; };
 		DBFF0B291B22338A003F3D8B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFF0B281B22338A003F3D8B /* main.m */; };
 		DBFF0B431B22338A003F3D8B /* iOSSDKtestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFF0B421B22338A003F3D8B /* iOSSDKtestTests.m */; };
@@ -21,7 +23,6 @@
 		DBFF0B671B2233AC003F3D8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBFF0B5C1B2233AC003F3D8B /* Main.storyboard */; };
 		DBFF0B681B2233AC003F3D8B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBFF0B5D1B2233AC003F3D8B /* Images.xcassets */; };
 		DBFF0B691B2233AC003F3D8B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBFF0B5E1B2233AC003F3D8B /* LaunchScreen.xib */; };
-		DBFF0BA81B22474B003F3D8B /* ConversionQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFF0BA71B22474B003F3D8B /* ConversionQueue.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DB3AC5F11B276EA900F2AA9E /* Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversion.h; sourceTree = "<group>"; };
+		DB3AC5F21B276EA900F2AA9E /* Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversion.m; sourceTree = "<group>"; };
+		DB3AC6131B277C4A00F2AA9E /* UIApplication+EventTracking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIApplication+EventTracking.h"; path = "../UIApplication+EventTracking.h"; sourceTree = "<group>"; };
+		DB3AC6141B277C4A00F2AA9E /* UIApplication+EventTracking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+EventTracking.m"; path = "../UIApplication+EventTracking.m"; sourceTree = "<group>"; };
 		DB7C0F1F1B2610CA0010C809 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
 		DBFF0B231B22338A003F3D8B /* iOSSDKtest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSDKtest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBFF0B271B22338A003F3D8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,8 +79,6 @@
 		DBFF0B5C1B2233AC003F3D8B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		DBFF0B5D1B2233AC003F3D8B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DBFF0B5E1B2233AC003F3D8B /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		DBFF0BA61B22474B003F3D8B /* ConversionQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversionQueue.h; sourceTree = "<group>"; };
-		DBFF0BA71B22474B003F3D8B /* ConversionQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversionQueue.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +99,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB3AC5F41B2776B000F2AA9E /* FrameworkFiles */ = {
+			isa = PBXGroup;
+			children = (
+				DB3AC6131B277C4A00F2AA9E /* UIApplication+EventTracking.h */,
+				DB3AC6141B277C4A00F2AA9E /* UIApplication+EventTracking.m */,
+				DBFF0B501B2233AC003F3D8B /* Identify.h */,
+				DBFF0B511B2233AC003F3D8B /* Identify.m */,
+				DBFF0B521B2233AC003F3D8B /* TestWelcomeViewController.h */,
+				DBFF0B531B2233AC003F3D8B /* TestWelcomeViewController.m */,
+				DBFF0B541B2233AC003F3D8B /* Constants.h */,
+				DBFF0B551B2233AC003F3D8B /* Constants.m */,
+				DBFF0B561B2233AC003F3D8B /* EventObject.h */,
+				DBFF0B571B2233AC003F3D8B /* EventObject.m */,
+				DBFF0B581B2233AC003F3D8B /* CutomTabBarController.h */,
+				DBFF0B591B2233AC003F3D8B /* CutomTabBarController.m */,
+				DBFF0B5A1B2233AC003F3D8B /* Ambassador.h */,
+				DBFF0B5B1B2233AC003F3D8B /* Ambassador.m */,
+				DB3AC5F11B276EA900F2AA9E /* Conversion.h */,
+				DB3AC5F21B276EA900F2AA9E /* Conversion.m */,
+			);
+			name = FrameworkFiles;
+			sourceTree = "<group>";
+		};
 		DBFF0B1A1B22338A003F3D8B = {
 			isa = PBXGroup;
 			children = (
@@ -117,24 +143,11 @@
 		DBFF0B251B22338A003F3D8B /* iOSSDKtest */ = {
 			isa = PBXGroup;
 			children = (
+				DB3AC5F41B2776B000F2AA9E /* FrameworkFiles */,
 				DBFF0B4C1B2233AC003F3D8B /* AppDelegate.h */,
 				DBFF0B4D1B2233AC003F3D8B /* AppDelegate.m */,
 				DBFF0B4E1B2233AC003F3D8B /* ViewController.h */,
 				DBFF0B4F1B2233AC003F3D8B /* ViewController.m */,
-				DBFF0B501B2233AC003F3D8B /* Identify.h */,
-				DBFF0B511B2233AC003F3D8B /* Identify.m */,
-				DBFF0B521B2233AC003F3D8B /* TestWelcomeViewController.h */,
-				DBFF0B531B2233AC003F3D8B /* TestWelcomeViewController.m */,
-				DBFF0B541B2233AC003F3D8B /* Constants.h */,
-				DBFF0B551B2233AC003F3D8B /* Constants.m */,
-				DBFF0B561B2233AC003F3D8B /* EventObject.h */,
-				DBFF0B571B2233AC003F3D8B /* EventObject.m */,
-				DBFF0B581B2233AC003F3D8B /* CutomTabBarController.h */,
-				DBFF0B591B2233AC003F3D8B /* CutomTabBarController.m */,
-				DBFF0B5A1B2233AC003F3D8B /* Ambassador.h */,
-				DBFF0B5B1B2233AC003F3D8B /* Ambassador.m */,
-				DBFF0BA61B22474B003F3D8B /* ConversionQueue.h */,
-				DBFF0BA71B22474B003F3D8B /* ConversionQueue.m */,
 				DBFF0B5C1B2233AC003F3D8B /* Main.storyboard */,
 				DBFF0B5D1B2233AC003F3D8B /* Images.xcassets */,
 				DBFF0B5E1B2233AC003F3D8B /* LaunchScreen.xib */,
@@ -273,7 +286,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBFF0B641B2233AC003F3D8B /* EventObject.m in Sources */,
-				DBFF0BA81B22474B003F3D8B /* ConversionQueue.m in Sources */,
 				DBFF0B601B2233AC003F3D8B /* ViewController.m in Sources */,
 				DBFF0B651B2233AC003F3D8B /* CutomTabBarController.m in Sources */,
 				DBFF0B611B2233AC003F3D8B /* Identify.m in Sources */,
@@ -282,6 +294,8 @@
 				DBFF0B661B2233AC003F3D8B /* Ambassador.m in Sources */,
 				DBFF0B291B22338A003F3D8B /* main.m in Sources */,
 				DBFF0B631B2233AC003F3D8B /* Constants.m in Sources */,
+				DB3AC5F31B276EA900F2AA9E /* Conversion.m in Sources */,
+				DB3AC6151B277C4A00F2AA9E /* UIApplication+EventTracking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +409,7 @@
 				INFOPLIST_FILE = iOSSDKtest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -409,6 +424,7 @@
 				INFOPLIST_FILE = iOSSDKtest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

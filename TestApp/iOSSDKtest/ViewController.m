@@ -50,8 +50,6 @@
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.buttontoo attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:0.0 constant:100.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.buttontoo attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.buttontoo attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.button attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0]];
-    
-    //[self runTestsOnfileInterface];
 }
 
 - (void)buttonStuff
@@ -68,7 +66,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)runTestsOnfileInterface

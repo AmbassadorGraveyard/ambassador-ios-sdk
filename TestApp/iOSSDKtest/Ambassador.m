@@ -12,19 +12,19 @@
 #import "EventObject.h"
 #import "CutomTabBarController.h"
 #import "TestWelcomeViewController.h"
-#import "ConversionQueue.h"
+#import "Conversion.h"
 //TODO: Import the view controllers
 
 @implementation Ambassador
 
 #pragma mark - Static class variables
-static ConversionQueue *conversionQueue;
-static NSTimer* timer;
+static Conversion *conversionQueue;
 static Identify *identify;
+static NSTimer* timer;
 static NSString *APIKey;
 static NSMutableDictionary *preferences;
-static bool showWelcomeScreen = false;
 static NSMutableDictionary *identifyData;
+static bool showWelcomeScreen = false;
 //TODO: add the view controllers
 
 
@@ -52,7 +52,6 @@ static NSMutableDictionary *identifyData;
     [[Ambassador sharedInstance] runWithAPIKey:key];
 }
 
-
 + (void)presentRAFFromViewController:(UIViewController *)viewController
 {
     [[Ambassador sharedInstance] presentRAFFromViewController:viewController];
@@ -60,25 +59,40 @@ static NSMutableDictionary *identifyData;
 
 + (void)registerConversionWithEmail:(NSString *)email
 {
-    [[Ambassador sharedInstance] registerConversionWithEmail:email];
+    NSLog(@"in class call");
+    //TODO:fix what actually needs to be put here
+    [conversionQueue push:email];
 }
 
 
 #pragma mark - Internal API functions
 - (void)runWithAPIKey:(NSString *)key
 {
-    timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(makeConversionCall) userInfo:nil repeats:YES];
+    //
+    // Set up timer to check for conversions that didn't get sent successfully
+    //
+    timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(makeNetworkCall) userInfo:nil repeats:YES];
+    
+    //
+    // Listen for successful call to identify (we got a fingerprint back)
+    //
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(identifyCallback:) name:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION object:nil];
+    
+    //
+    // TODO: Remove for production
+    //
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
+    //
+    // Check if we have identify data. If not, the welcome screen should be shown
+    //
     if ([[NSUserDefaults standardUserDefaults] objectForKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY])
     {
-        //We have identify
         NSLog(@"identify data found");
     }
     else
     {
-        //We dont' have identify
         showWelcomeScreen = true;
         NSLog(@"identify not found");
     }
@@ -86,13 +100,7 @@ static NSMutableDictionary *identifyData;
     APIKey = key;
     identify = [[Identify alloc] init];
     identifyData = [[NSMutableDictionary alloc] init];
-    conversionQueue = [[ConversionQueue alloc] init];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(identifyCallback:)
-                                                 name:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
-                                               object:nil];
-    
+    conversionQueue = [[Conversion alloc] init];
     [identify identify];
 }
 
@@ -101,39 +109,43 @@ static NSMutableDictionary *identifyData;
     if (preferences && preferences.count > 0)
     {
         CutomTabBarController* vc = [[CutomTabBarController alloc] initWithUIPreferences:preferences andSender:self];
-        [vc setModalPresentationStyle:UIModalPresentationOverCurrentContext];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            vc.modalPresentationStyle = UIModalPresentationFormSheet;
+        }
+        else
+        {
+            vc.modalPresentationStyle = UIModalPresentationPageSheet;
+        }
+
+        //[vc setModalPresentationStyle:UIModalPresentationOverCurrentContext];
         [viewController presentViewController:vc animated:YES completion:nil];
     }
 }
 
-- (void)registerConversionWithEmail:(NSString *)email
-{
-    [conversionQueue registerConversionWithEmail:email];
-}
-
-
 
 #pragma mark - Helper functions
-- (void)makeConversionCall
+- (void)makeNetworkCall
 {
-    [conversionQueue makeConversionCall];
+    [conversionQueue makeNetworkCall];
 }
-
 
 - (void)identifyCallback:(NSNotification *)notification
 {
-    [self getPreferences];
+    //
+    // Get preferences
+    //
+    [self getUIPreferences];
+    
     Identify* identificationObject = (Identify *)notification.object;
     identifyData = identificationObject.identifyData;
-    if (conversionQueue.dirtyQueue) {
-        [conversionQueue makeConversionCall];
-    }
+    [conversionQueue makeNetworkCall];
+    
 }
 
--(void)getPreferences
+-(void)getUIPreferences
 {
-    [[[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:AMBASSADOR_PREFERENCE_URL]
-                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+    [[[NSURLSession sharedSession] dataTaskWithURL:[NSURL URLWithString:AMBASSADOR_PREFERENCE_URL] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
     {
         if (error)
         {
@@ -142,9 +154,8 @@ static NSMutableDictionary *identifyData;
         }
         
         __autoreleasing NSError *e;
-        NSMutableDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data
-                                                                        options:NSJSONReadingMutableContainers
-                                                                          error:&e];
+        NSMutableDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&e];
+        
         if (e)
         {
             NSLog(@"%@\n%@", AMBASSADOR_JSON_PARSE_ERROR, e);
@@ -153,8 +164,13 @@ static NSMutableDictionary *identifyData;
         
         [[NSUserDefaults standardUserDefaults] setObject:jsonData forKey:AMBASSADOR_USER_DEFAULTS_UIPREFERENCES_KEY];
         preferences = jsonData;
+
+//                                                                                            //
+//TODO: set the welcome screen from api response to see if identify has been registered before//
+//                                                                                            //
         
-        if (showWelcomeScreen) {
+        if (showWelcomeScreen)
+        {
             [self presentWelcomeScreenFromViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
         }
         
@@ -166,6 +182,15 @@ static NSMutableDictionary *identifyData;
     if (preferences && preferences.count > 0)
     {
         TestWelcomeViewController* vc = [[TestWelcomeViewController alloc] initWithPreferences:preferences];
+
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            vc.modalPresentationStyle = UIModalPresentationFormSheet;
+        }
+        else
+        {
+            vc.modalPresentationStyle = UIModalPresentationPageSheet;
+        }
         [viewController presentViewController:vc animated:YES completion:nil];
     }
 }

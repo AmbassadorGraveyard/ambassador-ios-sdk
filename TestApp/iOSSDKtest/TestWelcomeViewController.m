@@ -15,7 +15,7 @@
 @interface TestWelcomeViewController ()
 
 @property UIImageView *avatar;
-@property UINavigationBar *navBar; //
+@property UINavigationBar *navBar; 
 @property UIButton *back;
 @property UIView *topView;
 @property UILabel *welcomeMessage;
@@ -38,11 +38,11 @@
         self.welcomeMessage.numberOfLines = 0;
         self.welcomeMessage.translatesAutoresizingMaskIntoConstraints = NO;
         self.welcomeMessage.textAlignment = NSTextAlignmentCenter;
-        self.welcomeMessage.textColor = [UIColor whiteColor];
+        self.welcomeMessage.textColor = [UIColor blackColor];
         [self.view addSubview:self.welcomeMessage];
         
         self.avatar = [[UIImageView alloc] init];
-        self.avatar.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.avatar.layer.borderColor = [UIColor blackColor].CGColor;
         self.avatar.layer.borderWidth = 3.0;
         self.avatar.layer.cornerRadius = 150 / 2;  //TODO: get size from api
         self.avatar.clipsToBounds = YES;
@@ -57,10 +57,15 @@
         
         self.back = [[UIButton alloc] init];
         self.back.translatesAutoresizingMaskIntoConstraints = NO;
-        self.back.backgroundColor = [UIColor whiteColor];
+        self.back.backgroundColor = [UIColor blackColor];
         [self.back addTarget:self action:@selector(backButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.back setTitle:@"Continue" forState:UIControlStateNormal];
-        [self.back setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        
+        NSDictionary *color = self.preferences[@"backgroundColor"];
+        float red = [(NSNumber *)color[@"red"] floatValue];
+        float green = [(NSNumber *)color[@"green"] floatValue];
+        float blue = [(NSNumber *)color[@"blue"] floatValue];
+        [self.back setTitleColor:Rgb2UIColor(red, green, blue) forState:UIControlStateNormal];
         [self.view addSubview:self.back];
 
         
@@ -68,12 +73,9 @@
         self.topView.translatesAutoresizingMaskIntoConstraints = NO;
         self.topView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:self.topView];
+        self.topView.hidden = YES;
         
         //TODO: Set preferences here
-        NSDictionary *color = self.preferences[@"backgroundColor"];
-        float red = [(NSNumber *)color[@"red"] floatValue];
-        float green = [(NSNumber *)color[@"green"] floatValue];
-        float blue = [(NSNumber *)color[@"blue"] floatValue];
         self.view.backgroundColor = Rgb2UIColor(red, green, blue);
         
         
@@ -142,8 +144,8 @@
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self.view
                                                               attribute:NSLayoutAttributeHeight
-                                                             multiplier:0.0
-                                                               constant:100.0]];
+                                                             multiplier:0.1
+                                                               constant:0.0]];
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.back
                                                               attribute:NSLayoutAttributeWidth
                                                               relatedBy:NSLayoutRelationEqual

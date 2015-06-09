@@ -45,15 +45,15 @@
         //Set up container view
         self.containerView = [[UIView alloc] init];
         self.containerView.translatesAutoresizingMaskIntoConstraints = NO;
-        self.containerView.backgroundColor = [UIColor colorWithRed:50.0/255.0 green:50.0/255.0 blue:50.0/255.0 alpha:0.9];
+        self.containerView.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
         [self.view addSubview:self.containerView];
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.containerView
                                                               attribute:NSLayoutAttributeHeight
                                                               relatedBy:NSLayoutRelationEqual
                                                                  toItem:self.view
                                                               attribute:NSLayoutAttributeHeight
-                                                             multiplier:0.0
-                                                               constant:200.0]];
+                                                             multiplier:1.0
+                                                               constant:0.0]];
         [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.containerView
                                                               attribute:NSLayoutAttributeWidth
                                                               relatedBy:NSLayoutRelationEqual
@@ -104,7 +104,7 @@
         self.titleLabel = [[UILabel alloc] init];
         self.titleLabel.backgroundColor = [UIColor clearColor];
         self.titleLabel.text = @"Spread the word";
-        self.titleLabel.textColor = [UIColor whiteColor];
+        self.titleLabel.textColor = [UIColor blackColor];
         
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -139,14 +139,13 @@
                                                              multiplier:1.0
                                                                constant:0.0]];
         
-        
         for (NSDictionary* service in self.services)
         {
             UIButton * btn = [UIButton new];
             [btn setTitle:service[@"title"] forState:UIControlStateNormal];
             btn.translatesAutoresizingMaskIntoConstraints = NO;
             [btn addTarget:self action:@selector(tabButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
             [btn setBackgroundColor:[UIColor clearColor]];
             btn.imageView.contentMode = UIViewContentModeCenter;
@@ -160,7 +159,7 @@
         for (int i = 0; i < self.tabBarButtons.count; ++i)
         {
             UIButton *btn = (UIButton *)self.tabBarButtons[i];
-            //TODO: set hiehgt from parameter and vertical padding
+            //TODO: set height from parameter and vertical padding
             [self.view addSubview:btn];
             [self.view addConstraint:[NSLayoutConstraint constraintWithItem:btn
                                                                   attribute:NSLayoutAttributeHeight
@@ -206,8 +205,6 @@
                                                                        constant:0.0]];
             }
         }
-        
-        //[self tabButtonPress:(UIButton *)[self.tabBarButtons firstObject]];
     }
     
     return self;
@@ -251,21 +248,15 @@
     NSString *serviceTitle = [NSString stringWithString:self.services[selectedIndex][@"title"]];
     if ([serviceTitle isEqualToString:@"twitter"])
     {
-        //
         self.slComposeViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
         [self.slComposeViewController setInitialText:@"First post from my iPhone app"];
-        [self.presentingViewController presentViewController:self.slComposeViewController animated:YES completion:^{
-            //
-        }];
+        [self.presentingViewController presentViewController:self.slComposeViewController animated:YES completion:nil];
     }
     else if ([serviceTitle isEqualToString:@"facebook"])
     {
-        //
         self.slComposeViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
         [self.slComposeViewController setInitialText:@"First post from my iPhone app"];
-        [self.presentingViewController presentViewController:self.slComposeViewController animated:YES completion:^{
-            //
-        }];
+        [self.presentingViewController presentViewController:self.slComposeViewController animated:YES completion:nil];
     }
     else if ([serviceTitle isEqualToString:@"mail"])
     {
@@ -274,10 +265,7 @@
         [self.mailComposeViewcontroller setSubject:@"Somthing to share"];
         NSString *emailBody = @"Check out this link: http://www.google.com";
         [self.mailComposeViewcontroller setMessageBody:emailBody isHTML:NO];
-        
-        [self.presentingViewController presentViewController:self.mailComposeViewcontroller animated:YES completion:^{
-            //
-        }];
+        [self.presentingViewController presentViewController:self.mailComposeViewcontroller animated:YES completion:nil];
     }
     else
     {

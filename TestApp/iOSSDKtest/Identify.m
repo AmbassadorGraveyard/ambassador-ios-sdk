@@ -6,8 +6,6 @@
 //  Copyright (c) 2015 Ambassador. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "Identify.h"
 #import "Constants.h"
 
@@ -19,9 +17,6 @@
 
 
 @implementation Identify
-
-// Counter for unsuccessful identify attempts
-long long count = 0;
 
 #pragma mark - Inits
 - (id)init
@@ -37,13 +32,13 @@ long long count = 0;
 #pragma mark - API Functions
 - (BOOL)identify
 {
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY])
-    {
-        //We have Identify
-        [[NSNotificationCenter defaultCenter] postNotificationName:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
-                                                            object:self];
-        return YES;
-    }
+//    if ([[NSUserDefaults standardUserDefaults] objectForKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY])
+//    {
+//        //We have Identify
+//        //[[NSNotificationCenter defaultCenter] postNotificationName:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
+//        //                                                    object:self];
+//        // return YES;
+//    }
 
     NSURL *url = [NSURL URLWithString:AMBASSADOR_IDENTIFY_URL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -55,32 +50,31 @@ long long count = 0;
 #pragma mark - Network Helper Functions
 - (BOOL)getJSON
 {
+    //
+    // Pull the JSON fingerprint string from webView and serialize to dictionary
+    //
     NSString *JSONString = [self.webView
                             stringByEvaluatingJavaScriptFromString:AMBASSADOR_IDENTIFY_JAVASCRIPT_VARIABLE_NAME];
     NSData *JSONData = [JSONString dataUsingEncoding:NSUTF8StringEncoding];
     __autoreleasing NSError *e;
-    NSMutableDictionary *JSONSerialization = [NSJSONSerialization JSONObjectWithData:JSONData
-                                                                      options:NSJSONReadingMutableContainers
-                                                                        error:&e];
+    NSMutableDictionary *JSONSerialization = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableContainers error:&e];
+    
+    //
+    // Make sure the JSON was serialized successfully
+    //
     if (e)
     {
         NSLog(@"%@\n%@", AMBASSADOR_JSON_PARSE_ERROR, e);
-        if (count > 25) { return NO; }
-        ++count;
         [self performSelector:@selector(identify) withObject:self afterDelay:2.0];
         return NO;
     }
     else
     {
-        count = 0;
         NSLog(@"%@ - size: %f kB", AMBASSADOR_IDENTIFY_DATA_RECIEVED_SUCCESS, (float)JSONData.length / 1024.0f);
-
-        [[NSUserDefaults standardUserDefaults] setObject:JSONSerialization
-                                                  forKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY];
-        [[NSNotificationCenter defaultCenter] postNotificationName:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION
-                                                            object:self];
+        [[NSUserDefaults standardUserDefaults] setObject:JSONSerialization forKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY];
         self.identifyData = [[NSMutableDictionary alloc] init];
         self.identifyData = JSONSerialization;
+        [[NSNotificationCenter defaultCenter] postNotificationName:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION object:self];
         return YES;
     }
 }
@@ -90,8 +84,15 @@ long long count = 0;
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {
+    //
+    // Parse the URL string delimiting at ":"
+    //
     NSString *urlRequestString = [[request URL] absoluteString];
     NSArray *urlRequestComponents = [urlRequestString componentsSeparatedByString:@":"];
+    
+    //
+    // Check if the URL is signal URL used in Augur javascript callback
+    //
     if (urlRequestComponents.count > 1 &&
         [(NSString *)urlRequestComponents[0] isEqualToString:AMBASSADOR_IDENTIFY_SIGNAL_URL])
     {
@@ -105,31 +106,27 @@ long long count = 0;
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    //
+    // Get the response code
+    //
     NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] init];
-    NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache]
-                                           cachedResponseForRequest:webView.request];
+    NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
     response = (NSHTTPURLResponse *)cachedResponse.response;
-    //TODO: create proper errors to throw for non-200 responses
-    if (response.statusCode == 200 || response.statusCode == 202)
-    {
-        count = 0;
-    }
-    else
+    
+    //
+    // Check for a vaild response code
+    //
+    if (!(response.statusCode == 200 || response.statusCode == 202))
     {
         NSLog(@"%@ - %ld", AMBASSADOR_IDENTIFY_GENERAL_FAIL_ERROR_MESSAGE, (long)response.statusCode);
-        if (count > 25) { return; }
-        ++count;
-        [self performSelector:@selector(identify) withObject:self afterDelay:2.0];
+        [self performSelector:@selector(identify) withObject:self afterDelay:2.0]; // Try again
     }
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     NSLog(@"%@\n%@", AMBASSADOR_IDENTIFY_GENERAL_FAIL_ERROR_MESSAGE, error);
-    if (count > 25) { return;  }
-    ++count;
     [self performSelector:@selector(identify) withObject:self afterDelay:2.0];
 }
-
 
 @end
