@@ -1,0 +1,18 @@
+{
+  "name": "Ambassador",
+  "version": "0.0.1",
+  "summary": "Track referrals on iOS devices",
+  "description": "                   Track referrals on iOS using the Ambassador platform\n\n                   * Think: Why did you write this? What is the focus? What does it do?\n                   * CocoaPods will be using this to generate tags, and improve search results.\n                   * Try to keep it short, snappy and to the point.\n                   * Finally, don't worry about the indent, CocoaPods strips it!\n",
+  "homepage": "http://EXAMPLE/Ambassador",
+  "license": "MIT (example)",
+  "authors": {
+    "Your Name": "austinbrewer@live.com"
+  },
+  "platforms": {
+    "ios": "7.0"
+  },
+  "source_files": [
+    "Ambassador",
+    "Ambassador/**/*.{h,m}"
+  ]
+}
