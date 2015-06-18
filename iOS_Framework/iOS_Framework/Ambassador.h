@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface Ambassador : NSObject
+
+#pragma mark - Retrieve shared instance
++ (Ambassador *)sharedInstance;
+
+#pragma mark - API functions
++ (void)runWithKey:(NSString *)key;
++ (void)registerConversion:(NSMutableDictionary *)email;
++ (void)presentRAFFromViewController:(UIViewController *)viewController;
 
 @end
