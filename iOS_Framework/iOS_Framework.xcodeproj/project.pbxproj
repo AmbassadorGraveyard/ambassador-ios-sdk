@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB743E7D1B33742F00262293 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB743E7B1B33742F00262293 /* Ambassador.h */; };
+		DB743E7E1B33742F00262293 /* Ambassador.m in Sources */ = {isa = PBXBuildFile; fileRef = DB743E7C1B33742F00262293 /* Ambassador.m */; };
 		DB9013C81B2A03CD001F1CF8 /* iOS_Framework.h in Headers */ = {isa = PBXBuildFile; fileRef = DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB9013CE1B2A03CD001F1CF8 /* iOS_Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9013C21B2A03CD001F1CF8 /* iOS_Framework.framework */; };
 		DB9013D51B2A03CD001F1CF8 /* iOS_FrameworkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9013D41B2A03CD001F1CF8 /* iOS_FrameworkTests.m */; };
@@ -23,6 +25,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DB743E7B1B33742F00262293 /* Ambassador.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ambassador.h; sourceTree = "<group>"; };
+		DB743E7C1B33742F00262293 /* Ambassador.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ambassador.m; sourceTree = "<group>"; };
 		DB9013C21B2A03CD001F1CF8 /* iOS_Framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iOS_Framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB9013C61B2A03CD001F1CF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOS_Framework.h; sourceTree = "<group>"; };
@@ -72,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */,
+				DB743E7B1B33742F00262293 /* Ambassador.h */,
+				DB743E7C1B33742F00262293 /* Ambassador.m */,
 				DB9013C51B2A03CD001F1CF8 /* Supporting Files */,
 			);
 			path = iOS_Framework;
@@ -110,6 +116,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB9013C81B2A03CD001F1CF8 /* iOS_Framework.h in Headers */,
+				DB743E7D1B33742F00262293 /* Ambassador.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +216,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB743E7E1B33742F00262293 /* Ambassador.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +406,7 @@
 				DB9013DA1B2A03CD001F1CF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DB9013DB1B2A03CD001F1CF8 /* Build configuration list for PBXNativeTarget "iOS_FrameworkTests" */ = {
 			isa = XCConfigurationList;
@@ -406,6 +415,7 @@
 				DB9013DD1B2A03CD001F1CF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
