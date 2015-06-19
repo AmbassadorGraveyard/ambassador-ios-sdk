@@ -103,7 +103,7 @@ static NSTimer *conversionTimer;
     //Initialize class variables
     DLog(@"Initializing class variables");
     APIKey = key;
-    conversionTimer = [NSTimer scheduledTimerWithTimeInterval:30
+    conversionTimer = [NSTimer scheduledTimerWithTimeInterval:AMB_CONVERSION_FLUSH_TIME
                                                        target:self
                                                      selector:@selector(checkConversionQueue)
                                                      userInfo:nil

@@ -17,5 +17,6 @@
 
 extern NSString * const AMB_IDENTIFY_NOTIFICATION_NAME;
 extern NSString * const AMB_IDENTIFY_STORAGE_KEY;
+extern float const AMB_CONVERSION_FLUSH_TIME;
 
 #endif
