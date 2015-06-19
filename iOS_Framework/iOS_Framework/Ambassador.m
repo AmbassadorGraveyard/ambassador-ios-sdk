@@ -47,10 +47,11 @@ static NSTimer *conversionTimer;
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
 //
-+ (void)runWithKey:(NSString *)key
++ (void)runWithKey:(NSString *)key convertingOnLaunch:(NSDictionary *)information
 {
     DLog();
-    [[Ambassador sharedInstance] runWithKey:key];
+    [[Ambassador sharedInstance] runWithKey:key
+                      convertingOnLaunch:information];
 }
 
 + (void)presentRAFFromViewController:(UIViewController *)viewController
@@ -59,7 +60,7 @@ static NSTimer *conversionTimer;
     [[Ambassador sharedInstance] presentRAFFromViewController:viewController];
 }
 
-+ (void)registerConversion:(NSMutableDictionary *)information
++ (void)registerConversion:(NSDictionary *)information
 {
     DLog();
     [[Ambassador sharedInstance] registerConversion:information];
@@ -67,16 +68,17 @@ static NSTimer *conversionTimer;
 
 
 #pragma mark - Internal API methods
-- (void)runWithKey:(NSString *)key
+- (void)runWithKey:(NSString *)key convertingOnLaunch:(NSDictionary *)information
 {
     DLog();
+    DLog(@"Begin listening for identify notification")
     //Listen for successful call to identify (we got a fingerprint back)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(identifyCallback:)
                                                  name:AMB_IDENTIFY_NOTIFICATION_NAME
                                                object:nil];
     
-    DLog(@"\tRemoving user defaults for testing");
+    DLog(@"Removing user defaults for testing");
     // TODO: Remove for production
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
@@ -90,12 +92,12 @@ static NSTimer *conversionTimer;
     DLog(@"Checking for identify data");
     if ([[NSUserDefaults standardUserDefaults] objectForKey:AMB_IDENTIFY_STORAGE_KEY])
     {
-        DLog(@"\tIdentify data not found");
+        DLog(@"\tIdentify data was found");
     }
     else
     {
         showWelcomeScreen = true;
-        DLog(@"\tIdentify data was found");
+        DLog(@"\tIdentify data not found");
     }
     
     //Initialize class variables
@@ -109,6 +111,12 @@ static NSTimer *conversionTimer;
     //TODO: Initialize identify object
     //TODO: Initialize conversion object
     //TODO: Make call to identify
+    DLog(@"Checking if conversion is made on app launch");
+    if (information)
+    {
+        DLog(@"\tSending conversion on app lanuch");
+        [self registerConversion:information];
+    }
 }
 
 - (void)presentRAFFromViewController:(UIViewController *)viewController
@@ -116,10 +124,11 @@ static NSTimer *conversionTimer;
     DLog();
 }
 
-- (void)registerConversion:(NSMutableDictionary *)information
+- (void)registerConversion:(NSDictionary *)information
 {
     DLog();
 }
+
 
 
 
