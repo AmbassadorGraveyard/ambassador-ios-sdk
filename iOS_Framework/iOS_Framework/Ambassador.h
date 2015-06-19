@@ -14,9 +14,11 @@
 #pragma mark - Retrieve shared instance
 + (Ambassador *)sharedInstance;
 
+
+
 #pragma mark - API functions
-+ (void)runWithKey:(NSString *)key;
-+ (void)registerConversion:(NSMutableDictionary *)information;
++ (void)runWithKey:(NSString *)key convertingOnLaunch:(NSDictionary *)information;
++ (void)registerConversion:(NSDictionary *)information;
 + (void)presentRAFFromViewController:(UIViewController *)viewController;
 
 @end

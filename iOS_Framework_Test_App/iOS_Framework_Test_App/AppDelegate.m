@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [Ambassador runWithKey:@"abc123"];
+    [Ambassador runWithKey:@"abc123" convertingOnLaunch:nil];
     return YES;
 }
 
