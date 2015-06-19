@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DB743E7D1B33742F00262293 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB743E7B1B33742F00262293 /* Ambassador.h */; };
+		DB743E7D1B33742F00262293 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB743E7B1B33742F00262293 /* Ambassador.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB743E7E1B33742F00262293 /* Ambassador.m in Sources */ = {isa = PBXBuildFile; fileRef = DB743E7C1B33742F00262293 /* Ambassador.m */; };
 		DB743E801B3375A700262293 /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = DB743E7F1B3375A700262293 /* Constants.h */; };
 		DB743E821B3375B300262293 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = DB743E811B3375B300262293 /* Constants.m */; };
