@@ -7,6 +7,7 @@
 //
 
 #import "Ambassador.h"
+#import "Constants.h"
 
 @implementation Ambassador
 
@@ -15,6 +16,7 @@ static NSString *APIKey;
 static NSMutableDictionary *backEndData;
 static NSMutableDictionary *identifyData;
 static bool showWelcomeScreen = false;
+static NSTimer *conversionTimer;
 //TODO: add objects once created
 //  * identify
 //  * conversion
@@ -24,6 +26,7 @@ static bool showWelcomeScreen = false;
 #pragma mark - Object lifecycle
 + (Ambassador *)sharedInstance
 {
+    DLog();
     static Ambassador* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
@@ -35,6 +38,7 @@ static bool showWelcomeScreen = false;
 
 - (void)dealloc
 {
+    DLog();
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -43,80 +47,94 @@ static bool showWelcomeScreen = false;
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
 //
-+ (void)runWithAPIKey:(NSString *)key
++ (void)runWithKey:(NSString *)key
 {
-
+    DLog();
+    [[Ambassador sharedInstance] runWithKey:key];
 }
 
 + (void)presentRAFFromViewController:(UIViewController *)viewController
 {
-    
+    DLog();
+    [[Ambassador sharedInstance] presentRAFFromViewController:viewController];
 }
 
-+ (void)registerConversionWithEmail:(NSString *)email
++ (void)registerConversion:(NSMutableDictionary *)information
 {
-    
+    DLog();
+    [[Ambassador sharedInstance] registerConversion:information];
 }
 
-/*
+
 #pragma mark - Internal API methods
-- (void)runWithAPIKey:(NSString *)key
+- (void)runWithKey:(NSString *)key
 {
-    //
-    // Set up timer to check for conversions that didn't get sent successfully
-    //
+    DLog();
+    //Listen for successful call to identify (we got a fingerprint back)
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(identifyCallback:)
+                                                 name:AMB_IDENTIFY_NOTIFICATION_NAME
+                                               object:nil];
     
-    //
-    // Listen for successful call to identify (we got a fingerprint back)
-    //
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(identifyCallback:) name:AMBASSADOR_NSNOTIFICATION_IDENTIFYDIDCOMPLETENOTIFICATION object:nil];
-    
-    //
+    DLog(@"\tRemoving user defaults for testing");
     // TODO: Remove for production
-    //
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
+    
     //
-    // Check if we have identify data. If not, the welcome screen should be shown
+    //Check if we have identify data. If not, the welcome may need to be shown
+    //Could be set to no if not refered, the app was reinstalled but backend has
+    //device id, etc.
     //
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:AMBASSADOR_USER_DEFAULTS_IDENTIFYDATA_KEY])
+    DLog(@"Checking for identify data");
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:AMB_IDENTIFY_STORAGE_KEY])
     {
-        NSLog(@"identify data found");
+        DLog(@"\tIdentify data not found");
     }
     else
     {
         showWelcomeScreen = true;
-        NSLog(@"identify not found");
+        DLog(@"\tIdentify data was found");
     }
     
+    //Initialize class variables
+    DLog(@"Initializing class variables");
     APIKey = key;
-    identify = [[Identify alloc] init];
-    identifyData = [[NSMutableDictionary alloc] init];
-    conversionQueue = [[Conversion alloc] init];
-    [identify identify];
+    conversionTimer = [NSTimer scheduledTimerWithTimeInterval:30
+                                                       target:self
+                                                     selector:@selector(checkConversionQueue)
+                                                     userInfo:nil
+                                                      repeats:YES];
+    //TODO: Initialize identify object
+    //TODO: Initialize conversion object
+    //TODO: Make call to identify
 }
 
 - (void)presentRAFFromViewController:(UIViewController *)viewController
 {
-    if (preferences && preferences.count > 0)
-    {
-        CutomTabBarController* vc = [[CutomTabBarController alloc] initWithUIPreferences:preferences andSender:self];
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            vc.modalPresentationStyle = UIModalPresentationFormSheet;
-        }
-        else
-        {
-            vc.modalPresentationStyle = UIModalPresentationPageSheet;
-        }
-        
-        //[vc setModalPresentationStyle:UIModalPresentationOverCurrentContext];
-        [viewController presentViewController:vc animated:YES completion:nil];
-    }
+    DLog();
 }
- */
+
+- (void)registerConversion:(NSMutableDictionary *)information
+{
+    DLog();
+}
 
 
+
+#pragma mark - Callback functions
+- (void)identifyCallback:(NSNotification *)notifications
+{
+    DLog();
+}
+
+
+
+#pragma mark - Helper functions
+- (void)checkConversionQueue
+{
+    DLog();
+}
 
 @end

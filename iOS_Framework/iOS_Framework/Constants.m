@@ -9,5 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "Constants.h"
 
+// DLog is almost a drop-in replacement for NSLog
+// DLog();
+// DLog(@"here");
+// DLog(@"value: %d", x);
+// Unfortunately this doesn't work DLog(aStringVariable); you have to do this instead DLog(@"%@", aStringVariable);
+
 NSString * const AMB_IDENTIFY_NOTIFICATION_NAME = @"AMBIDENTNOTIF";
 NSString * const AMB_IDENTIFY_STORAGE_KEY = @"AMBIDENTSTORAGE";
