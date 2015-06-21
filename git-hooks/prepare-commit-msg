@@ -1,0 +1,5 @@
+story_id=`git symbolic-ref --short -q HEAD | grep -o "^[[:digit:]]*"`
+if [ ! -z "$story_id" -a "$story_id" != " " ]
+then
+  echo "[#$story_id] $(cat $1)" > "$1"
+fi
