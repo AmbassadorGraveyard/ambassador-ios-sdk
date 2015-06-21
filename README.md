@@ -1,5 +1,11 @@
 # ambassador-ios-sdk
 
+## Getting Started
+
+Install Git hooks:
+
+    ln -s ../../git-hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
+
 ## Documentation
 
 ### Setup
@@ -18,4 +24,3 @@
   ```objective-c
   [Ambassador runWithKey:@"abc123" convertingOnLaunch:@{/*your_dictionary*/}];
   ```
- 
