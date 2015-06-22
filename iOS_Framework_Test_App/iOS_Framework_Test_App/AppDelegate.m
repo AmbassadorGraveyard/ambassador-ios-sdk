@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <iOS_Framework/iOS_Framework.h>
 
 @interface AppDelegate ()
 
@@ -17,6 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [Ambassador runWithKey:@"abc123" convertingOnLaunch:nil];
     return YES;
 }
 
