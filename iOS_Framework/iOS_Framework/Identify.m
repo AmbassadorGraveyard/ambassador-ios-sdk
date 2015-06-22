@@ -13,6 +13,7 @@
 @interface Identify () <UIWebViewDelegate>
 
 @property UIWebView *webview;
+@property UIView *view;
 
 @end
 
