@@ -14,6 +14,8 @@
 		DB9013C81B2A03CD001F1CF8 /* iOS_Framework.h in Headers */ = {isa = PBXBuildFile; fileRef = DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB9013CE1B2A03CD001F1CF8 /* iOS_Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9013C21B2A03CD001F1CF8 /* iOS_Framework.framework */; };
 		DB9013D51B2A03CD001F1CF8 /* iOS_FrameworkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9013D41B2A03CD001F1CF8 /* iOS_FrameworkTests.m */; };
+		DBFA134B1B34BF1800620985 /* Identify.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFA13491B34BF1800620985 /* Identify.h */; };
+		DBFA134C1B34BF1800620985 /* Identify.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFA134A1B34BF1800620985 /* Identify.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +39,8 @@
 		DB9013CD1B2A03CD001F1CF8 /* iOS_FrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOS_FrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB9013D31B2A03CD001F1CF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB9013D41B2A03CD001F1CF8 /* iOS_FrameworkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_FrameworkTests.m; sourceTree = "<group>"; };
+		DBFA13491B34BF1800620985 /* Identify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Identify.h; sourceTree = "<group>"; };
+		DBFA134A1B34BF1800620985 /* Identify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Identify.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,8 @@
 				DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */,
 				DB743E7B1B33742F00262293 /* Ambassador.h */,
 				DB743E7C1B33742F00262293 /* Ambassador.m */,
+				DBFA13491B34BF1800620985 /* Identify.h */,
+				DBFA134A1B34BF1800620985 /* Identify.m */,
 				DB743E7F1B3375A700262293 /* Constants.h */,
 				DB743E811B3375B300262293 /* Constants.m */,
 				DB9013C51B2A03CD001F1CF8 /* Supporting Files */,
@@ -121,6 +127,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBFA134B1B34BF1800620985 /* Identify.h in Headers */,
 				DB9013C81B2A03CD001F1CF8 /* iOS_Framework.h in Headers */,
 				DB743E7D1B33742F00262293 /* Ambassador.h in Headers */,
 				DB743E801B3375A700262293 /* Constants.h in Headers */,
@@ -223,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBFA134C1B34BF1800620985 /* Identify.m in Sources */,
 				DB743E7E1B33742F00262293 /* Ambassador.m in Sources */,
 				DB743E821B3375B300262293 /* Constants.m in Sources */,
 			);
