@@ -8,17 +8,17 @@
 
 #import "Ambassador.h"
 #import "Constants.h"
+#import "Identify.h"
 
 @implementation Ambassador
 
 #pragma mark - Static class variables
 static NSString *APIKey;
 static NSMutableDictionary *backEndData;
-static NSMutableDictionary *identifyData;
 static bool showWelcomeScreen = false;
 static NSTimer *conversionTimer;
+static Identify *identify;
 //TODO: add objects once created
-//  * identify
 //  * conversion
 
 
@@ -80,8 +80,8 @@ static NSTimer *conversionTimer;
     
     DLog(@"Removing user defaults for testing");
     // TODO: Remove for production
-    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    //NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
     
     //
@@ -108,9 +108,9 @@ static NSTimer *conversionTimer;
                                                      selector:@selector(checkConversionQueue)
                                                      userInfo:nil
                                                       repeats:YES];
-    //TODO: Initialize identify object
+    identify = [[Identify alloc] init];
     //TODO: Initialize conversion object
-    //TODO: Make call to identify
+    [identify identify];
     DLog(@"Checking if conversion is made on app launch");
     if (information)
     {
@@ -136,6 +136,24 @@ static NSTimer *conversionTimer;
 - (void)identifyCallback:(NSNotification *)notifications
 {
     DLog();
+    __autoreleasing NSError *e;
+    DLog(@"Seralizing identify data into NSData");
+    NSData *requestData = [NSJSONSerialization dataWithJSONObject:identify.identifyData
+                                                          options:0
+                                                            error:&e];
+    if (!e)
+    {
+        DLog(@"Serialization successful, making network request");
+        [self makeNetworkRequestToURL:AMB_INITIAL_BACKEND_REQUEST_URL withData:requestData];
+    }
+    else
+    {
+        DLog(@"Serialization unsuccessful");
+        //TODO: Do we need to retry here or are we just in trouble?
+        //      It shouldn't happen because we had a succesful serialization in
+        //      the first place
+    }
+    
 }
 
 
@@ -144,6 +162,54 @@ static NSTimer *conversionTimer;
 - (void)checkConversionQueue
 {
     DLog();
+}
+
+- (void)makeNetworkRequestToURL:(NSString *)url withData:(NSData *)data
+{
+    DLog();
+    DLog(@"Building the request with url %@", url);
+    //Build the request
+    //TODO: there might be additional HTTP header fields to consider in production
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:url]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
+    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)data.length]
+               forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:data];
+    
+    DLog(@"Making the data task call");
+    //Make the call
+    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession]
+                                      dataTaskWithRequest:request
+                                      completionHandler:^(NSData *data,
+                                                          NSURLResponse *response,
+                                                          NSError *error)
+    {
+        if (!error)
+        {
+            //TODO: there might be other acceptable status codes
+            if (((NSHTTPURLResponse *)response).statusCode == 200)
+            {
+                DLog(@"Successful data task completion with status code %li and response data: %@",
+                     (long)((NSHTTPURLResponse *)response).statusCode,
+                     data);
+            }
+            else
+            {
+                DLog(@"Successful data task request BUT status code %li and response data: %@",
+                     (long)((NSHTTPURLResponse *)response).statusCode,
+                     data);
+            }
+        }
+        else
+        {
+            DLog(@"Unsuccessful data task request with status code %li and error: %@",
+                 (long)((NSHTTPURLResponse *)response).statusCode,
+                 error.localizedDescription);
+        }
+    }];
+    [dataTask resume];
 }
 
 @end
