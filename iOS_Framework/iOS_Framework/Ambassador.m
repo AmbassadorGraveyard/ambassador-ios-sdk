@@ -201,6 +201,16 @@ static Identify *identify;
                      (long)((NSHTTPURLResponse *)response).statusCode,
                      data);
             }
+            
+            //TODO: Removing for production
+            /*
+             __autoreleasing NSString * string;
+             [NSString stringEncodingForData:data 
+                             encodingOptions:nil
+                             convertedString:&string 
+                         usedLossyConversion:0];
+             DLog(@"%@",string);
+             */
         }
         else
         {
