@@ -114,7 +114,7 @@ static Identify *identify;
     DLog(@"Checking if conversion is made on app launch");
     if (information)
     {
-        DLog(@"\tSending conversion on app lanuch");
+        DLog(@"\tSending conversion on app launch");
         [self registerConversion:information];
     }
 }

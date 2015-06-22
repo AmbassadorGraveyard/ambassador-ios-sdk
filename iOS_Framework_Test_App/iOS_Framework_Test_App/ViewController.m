@@ -22,7 +22,6 @@
     [Ambassador registerConversion:@{}];
     [Ambassador presentRAFFromViewController:self];
     
-    
     [self functionToIgnoreDuringCodeReview];
 }
 
