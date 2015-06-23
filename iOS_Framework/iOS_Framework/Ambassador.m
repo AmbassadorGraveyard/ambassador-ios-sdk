@@ -78,11 +78,11 @@ static Identify *identify;
                                                  name:AMB_IDENTIFY_NOTIFICATION_NAME
                                                object:nil];
     
+#if DEBUG
     DLog(@"Removing user defaults for testing");
-    // TODO: Remove for production
-    //NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-    
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+#endif
     
     //
     //Check if we have identify data. If not, the welcome may need to be shown
@@ -201,16 +201,6 @@ static Identify *identify;
                      (long)((NSHTTPURLResponse *)response).statusCode,
                      data);
             }
-            
-            //TODO: Removing for production
-            /*
-             __autoreleasing NSString * string;
-             [NSString stringEncodingForData:data 
-                             encodingOptions:nil
-                             convertedString:&string 
-                         usedLossyConversion:0];
-             DLog(@"%@",string);
-             */
         }
         else
         {
