@@ -80,9 +80,18 @@ static Identify *identify;
     
 #if DEBUG
     DLog(@"Removing user defaults for testing");
+<<<<<<< HEAD
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 #endif
+=======
+    
+#if DEBUG
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+#endif
+    
+>>>>>>> 3c29f68e7756cfb8e67d084715fc8b739b6d0e79
     
     //
     //Check if we have identify data. If not, the welcome may need to be shown
