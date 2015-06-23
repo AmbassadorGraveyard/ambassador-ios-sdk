@@ -79,9 +79,11 @@ static Identify *identify;
                                                object:nil];
     
     DLog(@"Removing user defaults for testing");
-    // TODO: Remove for production
-    //NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
+#if DEBUG
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+#endif
     
     
     //
@@ -201,16 +203,6 @@ static Identify *identify;
                      (long)((NSHTTPURLResponse *)response).statusCode,
                      data);
             }
-            
-            //TODO: Removing for production
-            /*
-             __autoreleasing NSString * string;
-             [NSString stringEncodingForData:data 
-                             encodingOptions:nil
-                             convertedString:&string 
-                         usedLossyConversion:0];
-             DLog(@"%@",string);
-             */
         }
         else
         {
