@@ -14,11 +14,19 @@
                         return decodeURIComponent(pair[1]);
                     }
                 }
+<<<<<<< HEAD
                 return "";
+=======
+                var errorMessage = { "Title" : "Invalid query string", 
+                                     "Description" : "Could not find the 'cbURL' qeury string parameter. Add the address to redirect to after identification"
+                                   }
+                console.log("Didn't find the query string")
+>>>>>>> 3c29f68e7756cfb8e67d084715fc8b739b6d0e79
             }
 
             function callbackName ( json ) {
                 JSONdata = JSON.stringify(json);
+<<<<<<< HEAD
                 var callBackUrl = getQueryVariable("cbURL");
 
                 if (callBackUrl != "") {
@@ -29,6 +37,9 @@
                                    }
                     console.log(errorMessage.Title + "\n" + errorMessage.Description);
                 }
+=======
+                window.location = getQueryVariable("cbURL");
+>>>>>>> 3c29f68e7756cfb8e67d084715fc8b739b6d0e79
           	}
         </script>
         <script id="augur.js" async src="http://cdn.augur.io/augur.min.js" data-callback="callbackName" data-warpspeed="truz"></script>
