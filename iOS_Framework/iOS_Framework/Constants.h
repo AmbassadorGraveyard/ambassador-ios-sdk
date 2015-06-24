@@ -17,6 +17,13 @@
 
 extern NSString * const AMB_IDENTIFY_NOTIFICATION_NAME;
 extern NSString * const AMB_IDENTIFY_STORAGE_KEY;
+extern NSString * const AMB_IDENTIFY_URL;
+extern NSString * const AMB_IDENTIFY_JS_VAR;
+extern NSString * const AMB_IDENTIFY_USER_DEFUALTS_KEY;
+extern NSString * const AMB_IDENTIFY_SIGNAL_URL;
+extern NSString * const AMB_INITIAL_BACKEND_REQUEST_URL;
+
 extern float const AMB_CONVERSION_FLUSH_TIME;
+extern float const AMB_IDENTIFY_RETRY_TIME;
 
 #endif
