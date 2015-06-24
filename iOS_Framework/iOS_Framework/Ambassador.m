@@ -9,6 +9,7 @@
 #import "Ambassador.h"
 #import "Constants.h"
 #import "Identify.h"
+#import "Convert.h"
 
 @implementation Ambassador
 
@@ -18,8 +19,7 @@ static NSMutableDictionary *backEndData;
 static bool showWelcomeScreen = false;
 static NSTimer *conversionTimer;
 static Identify *identify;
-//TODO: add objects once created
-//  * conversion
+static Convert *convert;
 
 
 
@@ -48,7 +48,7 @@ static Identify *identify;
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
 //
-+ (void)runWithKey:(NSString *)key convertingOnLaunch:(NSDictionary *)information
++ (void)runWithKey:(NSString *)key convertingOnLaunch:(Conversion *)information
 {
     DLog();
     [[Ambassador sharedInstance] runWithKey:key
@@ -61,7 +61,7 @@ static Identify *identify;
     [[Ambassador sharedInstance] presentRAFFromViewController:viewController];
 }
 
-+ (void)registerConversion:(NSDictionary *)information
++ (void)registerConversion:(Conversion *)information
 {
     DLog();
     [[Ambassador sharedInstance] registerConversion:information];
@@ -69,7 +69,7 @@ static Identify *identify;
 
 
 #pragma mark - Internal API methods
-- (void)runWithKey:(NSString *)key convertingOnLaunch:(NSDictionary *)information
+- (void)runWithKey:(NSString *)key convertingOnLaunch:(Conversion *)information
 {
     DLog();
     DLog(@"Begin listening for identify notification")
@@ -109,7 +109,7 @@ static Identify *identify;
                                                      userInfo:nil
                                                       repeats:YES];
     identify = [[Identify alloc] init];
-    //TODO: Initialize conversion object
+    convert = [[Convert alloc] init];
     [identify identify];
     DLog(@"Checking if conversion is made on app launch");
     if (information)
@@ -124,9 +124,10 @@ static Identify *identify;
     DLog();
 }
 
-- (void)registerConversion:(NSDictionary *)information
+- (void)registerConversion:(Conversion *)information
 {
     DLog();
+    [convert registerConversion:information];
 }
 
 
