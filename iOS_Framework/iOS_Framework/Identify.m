@@ -47,8 +47,8 @@
 - (BOOL)getIdentifyData
 {
     DLog();
-    //Pull the data from the webview
     
+    //Pull the data from the webview
     DLog(@"Grabbing the identify data string from webView");
     NSString *identifyDataString = [self.webview
                                     stringByEvaluatingJavaScriptFromString:AMB_IDENTIFY_JS_VAR];
@@ -75,11 +75,11 @@
         self.identifyData = [NSMutableDictionary dictionaryWithDictionary:identifyData];
         
         //Save a copy locally
-         [[NSUserDefaults standardUserDefaults] setObject:identifyData
+        [[NSUserDefaults standardUserDefaults] setObject:identifyData
                                                    forKey:AMB_IDENTIFY_USER_DEFUALTS_KEY];
         
         //Notify the app
-         [[NSNotificationCenter defaultCenter] postNotificationName:AMB_IDENTIFY_NOTIFICATION_NAME
+        [[NSNotificationCenter defaultCenter] postNotificationName:AMB_IDENTIFY_NOTIFICATION_NAME
                                                              object:self];
         return YES;
     }
@@ -92,12 +92,12 @@
 {
     DLog();
     
-    // Parse the URL string delimiting at ":"
+    //Parse the URL string delimiting at ":"
     NSString *urlRequestString = [[request URL] absoluteString];
     NSArray *urlRequestComponents = [urlRequestString componentsSeparatedByString:@":"];
     DLog(@"Url components: %@", urlRequestComponents);
     
-    // Check if the URL is signal URL used in Augur javascript callback
+    //Check if the URL is signal URL used in Augur javascript callback
     if (urlRequestComponents.count > 1 &&
         [(NSString *)urlRequestComponents[0] isEqualToString:AMB_IDENTIFY_SIGNAL_URL])
     {
@@ -112,13 +112,13 @@
 {
     DLog();
     
-    // Get the response code
+    //Get the response code
     NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] init];
     NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
     response = (NSHTTPURLResponse *)cachedResponse.response;
     
-    DLog(@"Response code: %ld", (long)response.statusCode);
     // Check for a vaild response code
+    DLog(@"Response code: %ld", (long)response.statusCode);
     if (!(response.statusCode == 200 || response.statusCode == 202))
     {
         DLog(@"Trying to identify again after %f seconds", AMB_IDENTIFY_RETRY_TIME);
