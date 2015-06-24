@@ -11,7 +11,6 @@
 @interface Identify : NSObject
 
 - (void)identify;
-
 @property NSMutableDictionary *identifyData;
 
 @end

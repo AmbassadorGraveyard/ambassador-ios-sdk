@@ -1,10 +1,9 @@
 <!doctype html>
 <html>
-  	<head>
-      	<title>Augur Test</title>
+    <head>
+        <title>Augur Test</title>
         <script>
-            var JSONdata = "it didn't work";
-            
+            var JSONdata = "";
             function getQueryVariable( variable ) {
                 var query = window.location.search.substring(1);
                 var vars = query.split('&');
@@ -14,25 +13,23 @@
                         return decodeURIComponent(pair[1]);
                     }
                 }
-                console.log("Didn't find the query string")
+                return "";
             }
-
             function callbackName ( json ) {
-              	console.log("Here's data about the device =>", json);
                 JSONdata = JSON.stringify(json);
-
-
-                // window.location = 'myapp:myaction';
+                var callBackUrl = getQueryVariable("cbURL");
+                if (callBackUrl != "") {
+                    window.location = callBackUrl
+                } else {
+                    var errorMessage = { "title" : "Invalid query string", 
+                                         "description" : "Could not find the 'cbURL' qeury string parameter. Add the address to redirect to after identification"
+                                        }
+                    console.log(errorMessage.Title + "\n" + errorMessage.Description);
+                }
                 window.location = getQueryVariable("cbURL");
-          	}
-            
-            function returnJSON () {
-                return 
             }
         </script>
         <script id="augur.js" async src="http://cdn.augur.io/augur.min.js" data-callback="callbackName" data-warpspeed="truz"></script>
-  	</head>
-  	<body>
-      	TESTIng testing testing
-  	</body>
+    </head>
+    <body></body>
 </html>

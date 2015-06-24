@@ -43,6 +43,7 @@ static Identify *identify;
 }
 
 #pragma mark - Class API method wrappers of instance API methods
+
 //This was done to allow [Ambassador some_method]
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
@@ -72,23 +73,22 @@ static Identify *identify;
 {
     DLog();
     DLog(@"Begin listening for identify notification")
+    
     //Listen for successful call to identify (we got a fingerprint back)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(identifyCallback:)
                                                  name:AMB_IDENTIFY_NOTIFICATION_NAME
                                                object:nil];
     
+#if DEBUG
     DLog(@"Removing user defaults for testing");
-    // TODO: Remove for production
-    //NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    //[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+#endif
     
-    
-    //
     //Check if we have identify data. If not, the welcome may need to be shown
     //Could be set to no if not refered, the app was reinstalled but backend has
     //device id, etc.
-    //
     DLog(@"Checking for identify data");
     if ([[NSUserDefaults standardUserDefaults] objectForKey:AMB_IDENTIFY_STORAGE_KEY])
     {
@@ -167,8 +167,9 @@ static Identify *identify;
 - (void)makeNetworkRequestToURL:(NSString *)url withData:(NSData *)data
 {
     DLog();
-    DLog(@"Building the request with url %@", url);
+    
     //Build the request
+    DLog(@"Building the request with url %@", url);
     //TODO: there might be additional HTTP header fields to consider in production
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString:url]];
@@ -178,8 +179,8 @@ static Identify *identify;
                forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:data];
     
-    DLog(@"Making the data task call");
     //Make the call
+    DLog(@"Making the data task call");
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession]
                                       dataTaskWithRequest:request
                                       completionHandler:^(NSData *data,
@@ -201,16 +202,6 @@ static Identify *identify;
                      (long)((NSHTTPURLResponse *)response).statusCode,
                      data);
             }
-            
-            //TODO: Removing for production
-            /*
-             __autoreleasing NSString * string;
-             [NSString stringEncodingForData:data 
-                             encodingOptions:nil
-                             convertedString:&string 
-                         usedLossyConversion:0];
-             DLog(@"%@",string);
-             */
         }
         else
         {
