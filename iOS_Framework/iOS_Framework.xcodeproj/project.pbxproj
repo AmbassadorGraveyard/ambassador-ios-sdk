@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		DB0F48FC1B3B450100CCE614 /* Conversion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB0F48FA1B3B450100CCE614 /* Conversion.xcdatamodeld */; };
-		DB0F48FF1B3B4A0200CCE614 /* Conversion.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F48FD1B3B4A0200CCE614 /* Conversion.h */; };
+		DB0F48FF1B3B4A0200CCE614 /* Conversion.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F48FD1B3B4A0200CCE614 /* Conversion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB0F49001B3B4A0200CCE614 /* Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F48FE1B3B4A0200CCE614 /* Conversion.m */; };
+		DB0F49061B3B4C2200CCE614 /* CoreDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49041B3B4C2200CCE614 /* CoreDataManager.h */; };
+		DB0F49071B3B4C2200CCE614 /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F49051B3B4C2200CCE614 /* CoreDataManager.m */; };
+		DB0F490A1B3B549000CCE614 /* Convert.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49081B3B549000CCE614 /* Convert.h */; };
+		DB0F490B1B3B549000CCE614 /* Convert.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F49091B3B549000CCE614 /* Convert.m */; };
 		DB743E7D1B33742F00262293 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB743E7B1B33742F00262293 /* Ambassador.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB743E7E1B33742F00262293 /* Ambassador.m in Sources */ = {isa = PBXBuildFile; fileRef = DB743E7C1B33742F00262293 /* Ambassador.m */; };
 		DB743E801B3375A700262293 /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = DB743E7F1B3375A700262293 /* Constants.h */; };
@@ -35,6 +39,10 @@
 		DB0F48FB1B3B450100CCE614 /* Conversion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Conversion.xcdatamodel; sourceTree = "<group>"; };
 		DB0F48FD1B3B4A0200CCE614 /* Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Conversion.h; path = ../Conversion.h; sourceTree = "<group>"; };
 		DB0F48FE1B3B4A0200CCE614 /* Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Conversion.m; path = ../Conversion.m; sourceTree = "<group>"; };
+		DB0F49041B3B4C2200CCE614 /* CoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
+		DB0F49051B3B4C2200CCE614 /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
+		DB0F49081B3B549000CCE614 /* Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Convert.h; sourceTree = "<group>"; };
+		DB0F49091B3B549000CCE614 /* Convert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Convert.m; sourceTree = "<group>"; };
 		DB743E7B1B33742F00262293 /* Ambassador.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ambassador.h; sourceTree = "<group>"; };
 		DB743E7C1B33742F00262293 /* Ambassador.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ambassador.m; sourceTree = "<group>"; };
 		DB743E7F1B3375A700262293 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -68,6 +76,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DB0F49011B3B4B7400CCE614 /* Conversion */ = {
+			isa = PBXGroup;
+			children = (
+				DB0F48FA1B3B450100CCE614 /* Conversion.xcdatamodeld */,
+				DB0F48FD1B3B4A0200CCE614 /* Conversion.h */,
+				DB0F48FE1B3B4A0200CCE614 /* Conversion.m */,
+				DB0F49041B3B4C2200CCE614 /* CoreDataManager.h */,
+				DB0F49051B3B4C2200CCE614 /* CoreDataManager.m */,
+				DB0F49081B3B549000CCE614 /* Convert.h */,
+				DB0F49091B3B549000CCE614 /* Convert.m */,
+			);
+			name = Conversion;
+			sourceTree = "<group>";
+		};
+		DB0F49021B3B4B8E00CCE614 /* Singleton */ = {
+			isa = PBXGroup;
+			children = (
+				DB743E7B1B33742F00262293 /* Ambassador.h */,
+				DB743E7C1B33742F00262293 /* Ambassador.m */,
+			);
+			name = Singleton;
+			sourceTree = "<group>";
+		};
+		DB0F49031B3B4BB300CCE614 /* Identify */ = {
+			isa = PBXGroup;
+			children = (
+				DBFA13491B34BF1800620985 /* Identify.h */,
+				DBFA134A1B34BF1800620985 /* Identify.m */,
+			);
+			name = Identify;
+			sourceTree = "<group>";
+		};
 		DB9013B81B2A03CD001F1CF8 = {
 			isa = PBXGroup;
 			children = (
@@ -89,16 +129,12 @@
 		DB9013C41B2A03CD001F1CF8 /* iOS_Framework */ = {
 			isa = PBXGroup;
 			children = (
-				DB0F48FD1B3B4A0200CCE614 /* Conversion.h */,
-				DB0F48FE1B3B4A0200CCE614 /* Conversion.m */,
 				DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */,
-				DB743E7B1B33742F00262293 /* Ambassador.h */,
-				DB743E7C1B33742F00262293 /* Ambassador.m */,
-				DBFA13491B34BF1800620985 /* Identify.h */,
-				DB0F48FA1B3B450100CCE614 /* Conversion.xcdatamodeld */,
-				DBFA134A1B34BF1800620985 /* Identify.m */,
 				DB743E7F1B3375A700262293 /* Constants.h */,
 				DB743E811B3375B300262293 /* Constants.m */,
+				DB0F49011B3B4B7400CCE614 /* Conversion */,
+				DB0F49021B3B4B8E00CCE614 /* Singleton */,
+				DB0F49031B3B4BB300CCE614 /* Identify */,
 				DB9013C51B2A03CD001F1CF8 /* Supporting Files */,
 			);
 			path = iOS_Framework;
@@ -139,6 +175,8 @@
 				DBFA134B1B34BF1800620985 /* Identify.h in Headers */,
 				DB0F48FF1B3B4A0200CCE614 /* Conversion.h in Headers */,
 				DB9013C81B2A03CD001F1CF8 /* iOS_Framework.h in Headers */,
+				DB0F490A1B3B549000CCE614 /* Convert.h in Headers */,
+				DB0F49061B3B4C2200CCE614 /* CoreDataManager.h in Headers */,
 				DB743E7D1B33742F00262293 /* Ambassador.h in Headers */,
 				DB743E801B3375A700262293 /* Constants.h in Headers */,
 			);
@@ -240,11 +278,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB0F49071B3B4C2200CCE614 /* CoreDataManager.m in Sources */,
 				DBFA134C1B34BF1800620985 /* Identify.m in Sources */,
 				DB0F49001B3B4A0200CCE614 /* Conversion.m in Sources */,
 				DB0F48FC1B3B450100CCE614 /* Conversion.xcdatamodeld in Sources */,
 				DB743E7E1B33742F00262293 /* Ambassador.m in Sources */,
 				DB743E821B3375B300262293 /* Constants.m in Sources */,
+				DB0F490B1B3B549000CCE614 /* Convert.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

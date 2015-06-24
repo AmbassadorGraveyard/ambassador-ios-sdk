@@ -19,7 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [Ambassador registerConversion:@{}];
+    Conversion *conversion = [[Conversion alloc] init];
+    [Ambassador registerConversion:conversion];
     [Ambassador presentRAFFromViewController:self];
     
     [self functionToIgnoreDuringCodeReview];
