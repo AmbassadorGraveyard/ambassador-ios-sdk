@@ -8,17 +8,17 @@
 
 #import "Ambassador.h"
 #import "Constants.h"
+#import "Identify.h"
 
 @implementation Ambassador
 
 #pragma mark - Static class variables
 static NSString *APIKey;
 static NSMutableDictionary *backEndData;
-static NSMutableDictionary *identifyData;
 static bool showWelcomeScreen = false;
 static NSTimer *conversionTimer;
+static Identify *identify;
 //TODO: add objects once created
-//  * identify
 //  * conversion
 
 
@@ -43,6 +43,7 @@ static NSTimer *conversionTimer;
 }
 
 #pragma mark - Class API method wrappers of instance API methods
+
 //This was done to allow [Ambassador some_method]
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
@@ -72,23 +73,22 @@ static NSTimer *conversionTimer;
 {
     DLog();
     DLog(@"Begin listening for identify notification")
+    
     //Listen for successful call to identify (we got a fingerprint back)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(identifyCallback:)
                                                  name:AMB_IDENTIFY_NOTIFICATION_NAME
                                                object:nil];
     
+#if DEBUG
     DLog(@"Removing user defaults for testing");
-    // TODO: Remove for production
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+#endif
     
-    
-    //
     //Check if we have identify data. If not, the welcome may need to be shown
     //Could be set to no if not refered, the app was reinstalled but backend has
     //device id, etc.
-    //
     DLog(@"Checking for identify data");
     if ([[NSUserDefaults standardUserDefaults] objectForKey:AMB_IDENTIFY_STORAGE_KEY])
     {
@@ -108,13 +108,13 @@ static NSTimer *conversionTimer;
                                                      selector:@selector(checkConversionQueue)
                                                      userInfo:nil
                                                       repeats:YES];
-    //TODO: Initialize identify object
+    identify = [[Identify alloc] init];
     //TODO: Initialize conversion object
-    //TODO: Make call to identify
+    [identify identify];
     DLog(@"Checking if conversion is made on app launch");
     if (information)
     {
-        DLog(@"\tSending conversion on app lanuch");
+        DLog(@"\tSending conversion on app launch");
         [self registerConversion:information];
     }
 }
@@ -136,6 +136,24 @@ static NSTimer *conversionTimer;
 - (void)identifyCallback:(NSNotification *)notifications
 {
     DLog();
+    __autoreleasing NSError *e;
+    DLog(@"Seralizing identify data into NSData");
+    NSData *requestData = [NSJSONSerialization dataWithJSONObject:identify.identifyData
+                                                          options:0
+                                                            error:&e];
+    if (!e)
+    {
+        DLog(@"Serialization successful, making network request");
+        [self makeNetworkRequestToURL:AMB_INITIAL_BACKEND_REQUEST_URL withData:requestData];
+    }
+    else
+    {
+        DLog(@"Serialization unsuccessful");
+        //TODO: Do we need to retry here or are we just in trouble?
+        //      It shouldn't happen because we had a succesful serialization in
+        //      the first place
+    }
+    
 }
 
 
@@ -144,6 +162,55 @@ static NSTimer *conversionTimer;
 - (void)checkConversionQueue
 {
     DLog();
+}
+
+- (void)makeNetworkRequestToURL:(NSString *)url withData:(NSData *)data
+{
+    DLog();
+    
+    //Build the request
+    DLog(@"Building the request with url %@", url);
+    //TODO: there might be additional HTTP header fields to consider in production
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:url]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
+    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)data.length]
+               forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:data];
+    
+    //Make the call
+    DLog(@"Making the data task call");
+    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession]
+                                      dataTaskWithRequest:request
+                                      completionHandler:^(NSData *data,
+                                                          NSURLResponse *response,
+                                                          NSError *error)
+    {
+        if (!error)
+        {
+            //TODO: there might be other acceptable status codes
+            if (((NSHTTPURLResponse *)response).statusCode == 200)
+            {
+                DLog(@"Successful data task completion with status code %li and response data: %@",
+                     (long)((NSHTTPURLResponse *)response).statusCode,
+                     data);
+            }
+            else
+            {
+                DLog(@"Successful data task request BUT status code %li and response data: %@",
+                     (long)((NSHTTPURLResponse *)response).statusCode,
+                     data);
+            }
+        }
+        else
+        {
+            DLog(@"Unsuccessful data task request with status code %li and error: %@",
+                 (long)((NSHTTPURLResponse *)response).statusCode,
+                 error.localizedDescription);
+        }
+    }];
+    [dataTask resume];
 }
 
 @end
