@@ -54,6 +54,7 @@ NSString *AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions
 
 - (void)registerConversionWithParameters:(ConversionParameters *)parameters
 {
+    DLog();
     FMDatabase *database = [FMDatabase databaseWithPath:self.databaseFilePath];
     [database open];
     if ([database executeUpdate:@"INSERT INTO Conversions VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
@@ -77,6 +78,7 @@ NSString *AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions
                              parameters.mbsy_is_approved])
     {
         DLog(@"Insert conversion successful");
+        
     }
     else
     {
@@ -88,17 +90,80 @@ NSString *AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions
 
 - (void)sendConversions
 {
+    DLog();
+    NSURL *url = [NSURL URLWithString:@"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/?u=***REMOVED***"];
+    
     //TODO: make network call and put the following code in completion block
     FMDatabase * database = [FMDatabase databaseWithPath:self.databaseFilePath];
     [database open];
     FMResultSet *resultSet = [database executeQuery:@"SELECT * FROM Conversions"];
-    ConversionParameters *parameters = [[ConversionParameters alloc] init];
+    while ([resultSet next])
+    {
+        
+        NSDictionary *jsonData = @{
+                                   @"fields" :
+                                       @{
+                                           @"mbsy_campaign": [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_campaign"]],
+                                           @"mbsy_email": [resultSet stringForColumn:@"mbsy_email"],
+                                           @"mbsy_first_name": [resultSet stringForColumn:@"mbsy_first_name"],
+                                           @"mbsy_last_name": [resultSet stringForColumn:@"mbsy_last_name"],
+                                           @"mbsy_email_new_ambassador": [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_email_new_ambassador"]],
+                                           @"mbsy_uid": [resultSet stringForColumn:@"mbsy_uid"],
+                                           @"mbsy_custom1": [resultSet stringForColumn:@"mbsy_custom1"],
+                                           @"mbsy_custom2": [resultSet stringForColumn:@"mbsy_custom2"],
+                                           @"mbsy_custom3": [resultSet stringForColumn:@"mbsy_custom3"],
+                                           @"mbsy_auto_create": [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_auto_create"]],
+                                           @"mbsy_revenue": [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_revenue"]],
+                                           @"mbsy_deactivate_new_ambassador": [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_deactivate_new_ambassador"]],
+                                           @"mbsy_transaction_uid": [resultSet stringForColumn:@"mbsy_transaction_uid"],
+                                           @"mbsy_add_to_group_id": [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_add_to_group_id"]],
+                                           @"mbsy_event_data1": [resultSet stringForColumn:@"mbsy_event_data1"],
+                                           @"mbsy_event_data2": [resultSet stringForColumn:@"mbsy_event_data2"],
+                                           @"mbsy_event_data3": [resultSet stringForColumn:@"mbsy_event_data3"],
+                                           @"mbsy_is_approved": [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_is_approved"]]
+                                           }//,
+
+                                   };
+        __autoreleasing NSError *e = nil;
+        NSData *JSONData = [NSJSONSerialization dataWithJSONObject:jsonData options:0 error:&e];
+        if (!e)
+        {
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+            request.HTTPMethod = @"POST";
+            request.HTTPBody = JSONData;
+            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [request setValue:@"***REMOVED***" forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+            [request setValue:@"UniversalToken ***REMOVED***" forHTTPHeaderField:@"Authorization"];
+            
+            // Create a task.
+            NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request
+                                                                         completionHandler:^(NSData *data,
+                                                                                             NSURLResponse *response,
+                                                                                             NSError *error)
+                                          {
+                                              if (!error)
+                                              {
+                                                  NSLog(@"Status code: %li", (long)((NSHTTPURLResponse *)response).statusCode);
+                                                  DLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                                              }
+                                              else
+                                              {
+                                                  NSLog(@"Error: %@", error.localizedDescription);
+                                              }
+                                          }];
+            
+            // Start the task.
+            [task resume];
+
+        }
+    }
     [database close];
     [self emptyDatabase];
 }
 
 - (BOOL)shouldSendConversions
 {
+    DLog();
     FMDatabase *database = [FMDatabase databaseWithPath:self.databaseFilePath];
     [database open];
     FMResultSet *resultSet = [database executeQuery:@"SELECT * FROM Conversions"];
@@ -110,11 +175,17 @@ NSString *AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions
 
 - (void)emptyDatabase
 {
+    DLog();
     FMDatabase * database = [FMDatabase databaseWithPath:self.databaseFilePath];
     [database open];
     [database executeStatements:@"DELETE FROM Conversions"];
     [database close];
 
+}
+
+- (void)attachInsightsDataToID:(int)ID
+{
+    
 }
 
 @end
