@@ -58,6 +58,7 @@ NSString *AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions
     if (![parameters isValid])
     {
         //TODO: Throw an exception so developers know to take care of this
+        [NSException raise:@"Invalid conversion parameters" format:@"Conversion parameters must have set values for 'mbsy_revenue' (NSNumber *), mbsy_campaign (NSNumber *), and 'mbsy_email' (NSString *)"];
         DLog(@"***INVALID PARAMETERS PASSED***");
         return;
     }
