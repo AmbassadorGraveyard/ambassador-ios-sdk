@@ -55,6 +55,14 @@ NSString *AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions
 - (void)registerConversionWithParameters:(ConversionParameters *)parameters
 {
     DLog();
+    if (![parameters isValid])
+    {
+        //TODO: Throw an exception so developers know to take care of this
+        DLog(@"***INVALID PARAMETERS PASSED***");
+        return;
+    }
+    
+    DLog(@"Valid parameters passed");
     FMDatabase *database = [FMDatabase databaseWithPath:self.databaseFilePath];
     [database open];
     if ([database executeUpdate:@"INSERT INTO Conversions VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
