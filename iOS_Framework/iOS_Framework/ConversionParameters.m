@@ -59,4 +59,9 @@
             self.mbsy_event_data3,
             self.mbsy_is_approved];
 }
+
+- (BOOL)isValid
+{
+    return [self.mbsy_campaign intValue] > -1 && ![self.mbsy_email isEqualToString:@""] && [self.mbsy_revenue intValue] > -1;
+}
 @end
