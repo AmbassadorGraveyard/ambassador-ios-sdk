@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "Conversion.h"
+#import "ConversionParameters.h"
 
 @interface Ambassador : NSObject
 
@@ -18,8 +18,8 @@
 
 
 #pragma mark - API functions
-+ (void)runWithKey:(NSString *)key convertingOnLaunch:(NSDictionary *)information;
-+ (void)registerConversion:(Conversion *)information;
++ (void)runWithKey:(NSString *)key convertingOnLaunch:(ConversionParameters *)information;
++ (void)registerConversion:(ConversionParameters *)information;
 + (void)presentRAFFromViewController:(UIViewController *)viewController;
 
 @end

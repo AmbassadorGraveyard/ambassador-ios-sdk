@@ -10,4 +10,53 @@
 
 @implementation ConversionParameters
 
+- (id)init
+{
+    if ([super init])
+    {
+        self.mbsy_campaign = @-1;
+        self.mbsy_email = @"";
+        self.mbsy_first_name = @"";
+        self.mbsy_last_name = @"";
+        self.mbsy_email_new_ambassador = @0;
+        self.mbsy_uid = @"";
+        self.mbsy_custom1 = @"";
+        self.mbsy_custom2 = @"";
+        self.mbsy_custom3 = @"";
+        self.mbsy_auto_create = @1;
+        self.mbsy_revenue = @-1;
+        self.mbsy_deactivate_new_ambassador = @0;
+        self.mbsy_transaction_uid = @"";
+        self.mbsy_add_to_group_id = @-1;
+        self.mbsy_event_data1 = @"";
+        self.mbsy_event_data2 = @"";
+        self.mbsy_event_data3 = @"";
+        self.mbsy_is_approved = @1;
+    }
+    
+    return self;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ |",
+            self.mbsy_campaign,
+            self.mbsy_email,
+            self.mbsy_first_name,
+            self.mbsy_last_name,
+            self.mbsy_email_new_ambassador,
+            self.mbsy_uid,
+            self.mbsy_custom1,
+            self.mbsy_custom2,
+            self.mbsy_custom3,
+            self.mbsy_auto_create,
+            self.mbsy_revenue,
+            self.mbsy_deactivate_new_ambassador,
+            self.mbsy_transaction_uid,
+            self.mbsy_add_to_group_id,
+            self.mbsy_event_data1,
+            self.mbsy_event_data2,
+            self.mbsy_event_data3,
+            self.mbsy_is_approved];
+}
 @end

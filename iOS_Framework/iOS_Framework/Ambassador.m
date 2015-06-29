@@ -9,7 +9,8 @@
 #import "Ambassador.h"
 #import "Constants.h"
 #import "Identify.h"
-#import "Convert.h"
+#import "Conversion.h"
+#import "ConversionParameters.h"
 
 @implementation Ambassador
 
@@ -19,7 +20,7 @@ static NSMutableDictionary *backEndData;
 static bool showWelcomeScreen = false;
 static NSTimer *conversionTimer;
 static Identify *identify;
-static Convert *convert;
+static Conversion *conversion;
 
 
 
@@ -48,7 +49,7 @@ static Convert *convert;
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
 //
-+ (void)runWithKey:(NSString *)key convertingOnLaunch:(Conversion *)information
++ (void)runWithKey:(NSString *)key convertingOnLaunch:(ConversionParameters *)information
 {
     DLog();
     [[Ambassador sharedInstance] runWithKey:key
@@ -61,15 +62,16 @@ static Convert *convert;
     [[Ambassador sharedInstance] presentRAFFromViewController:viewController];
 }
 
-+ (void)registerConversion:(Conversion *)information
++ (void)registerConversion:(ConversionParameters *)information
 {
     DLog();
     [[Ambassador sharedInstance] registerConversion:information];
 }
 
 
+
 #pragma mark - Internal API methods
-- (void)runWithKey:(NSString *)key convertingOnLaunch:(Conversion *)information
+- (void)runWithKey:(NSString *)key convertingOnLaunch:(ConversionParameters *)information
 {
     DLog();
     DLog(@"Begin listening for identify notification")
@@ -109,7 +111,7 @@ static Convert *convert;
                                                      userInfo:nil
                                                       repeats:YES];
     identify = [[Identify alloc] init];
-    convert = [[Convert alloc] init];
+    conversion = [[Conversion alloc] init];
     [identify identify];
     DLog(@"Checking if conversion is made on app launch");
     if (information)
@@ -124,12 +126,11 @@ static Convert *convert;
     DLog();
 }
 
-- (void)registerConversion:(Conversion *)information
+- (void)registerConversion:(ConversionParameters *)information
 {
     DLog();
-    [convert registerConversion:information];
+    [conversion registerConversionWithParameters:information];
 }
-
 
 
 
@@ -163,6 +164,7 @@ static Convert *convert;
 - (void)checkConversionQueue
 {
     DLog();
+    [conversion sendConversions];
 }
 
 - (void)makeNetworkRequestToURL:(NSString *)url withData:(NSData *)data

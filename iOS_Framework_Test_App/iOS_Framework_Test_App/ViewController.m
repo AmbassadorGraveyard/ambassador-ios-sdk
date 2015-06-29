@@ -19,7 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    Conversion *conversion = [[Conversion alloc] init];
+    ConversionParameters *conversion = [[ConversionParameters alloc] init];
+    conversion.mbsy_add_to_group_id = @134;
     [Ambassador registerConversion:conversion];
     [Ambassador presentRAFFromViewController:self];
     
