@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ConversionParameters.h"
 
 @interface Conversion : NSObject
+
+- (void)registerConversionWithParameters:(ConversionParameters *)parameters;
+- (void)sendConversions;
+- (BOOL)shouldSendConversions;
 
 @end

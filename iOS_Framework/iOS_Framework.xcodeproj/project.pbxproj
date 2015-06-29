@@ -7,13 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DB0F48FC1B3B450100CCE614 /* Conversion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DB0F48FA1B3B450100CCE614 /* Conversion.xcdatamodeld */; };
-		DB0F48FF1B3B4A0200CCE614 /* Conversion.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F48FD1B3B4A0200CCE614 /* Conversion.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DB0F49001B3B4A0200CCE614 /* Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F48FE1B3B4A0200CCE614 /* Conversion.m */; };
-		DB0F49061B3B4C2200CCE614 /* CoreDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49041B3B4C2200CCE614 /* CoreDataManager.h */; };
-		DB0F49071B3B4C2200CCE614 /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F49051B3B4C2200CCE614 /* CoreDataManager.m */; };
-		DB0F490A1B3B549000CCE614 /* Convert.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49081B3B549000CCE614 /* Convert.h */; };
-		DB0F490B1B3B549000CCE614 /* Convert.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F49091B3B549000CCE614 /* Convert.m */; };
+		DB0F49471B419DCC00CCE614 /* ConversionParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49451B419DCC00CCE614 /* ConversionParameters.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DB0F49481B419DCC00CCE614 /* ConversionParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F49461B419DCC00CCE614 /* ConversionParameters.m */; };
+		DB0F494B1B419DF000CCE614 /* Conversion.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49491B419DF000CCE614 /* Conversion.h */; };
+		DB0F494C1B419DF000CCE614 /* Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F494A1B419DF000CCE614 /* Conversion.m */; };
+		DB0F49511B41A12500CCE614 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = DB0F494E1B41A12500CCE614 /* LICENSE.txt */; };
+		DB0F49521B41A12500CCE614 /* README.markdown in Sources */ = {isa = PBXBuildFile; fileRef = DB0F494F1B41A12500CCE614 /* README.markdown */; };
+		DB0F49751B41A14500CCE614 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F496A1B41A14500CCE614 /* FMDatabase.h */; };
+		DB0F49761B41A14500CCE614 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F496B1B41A14500CCE614 /* FMDatabase.m */; };
+		DB0F49771B41A14500CCE614 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F496C1B41A14500CCE614 /* FMDatabaseAdditions.h */; };
+		DB0F49781B41A14500CCE614 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F496D1B41A14500CCE614 /* FMDatabaseAdditions.m */; };
+		DB0F49791B41A14500CCE614 /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F496E1B41A14500CCE614 /* FMDatabasePool.h */; };
+		DB0F497A1B41A14500CCE614 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F496F1B41A14500CCE614 /* FMDatabasePool.m */; };
+		DB0F497B1B41A14500CCE614 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49701B41A14500CCE614 /* FMDatabaseQueue.h */; };
+		DB0F497C1B41A14500CCE614 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F49711B41A14500CCE614 /* FMDatabaseQueue.m */; };
+		DB0F497D1B41A14500CCE614 /* FMDB.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49721B41A14500CCE614 /* FMDB.h */; };
+		DB0F497E1B41A14500CCE614 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49731B41A14500CCE614 /* FMResultSet.h */; };
+		DB0F497F1B41A14500CCE614 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F49741B41A14500CCE614 /* FMResultSet.m */; };
+		DB0F49811B41AA9300CCE614 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0F49801B41AA9300CCE614 /* libsqlite3.dylib */; };
 		DB743E7D1B33742F00262293 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB743E7B1B33742F00262293 /* Ambassador.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB743E7E1B33742F00262293 /* Ambassador.m in Sources */ = {isa = PBXBuildFile; fileRef = DB743E7C1B33742F00262293 /* Ambassador.m */; };
 		DB743E801B3375A700262293 /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = DB743E7F1B3375A700262293 /* Constants.h */; };
@@ -36,13 +47,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DB0F48FB1B3B450100CCE614 /* Conversion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Conversion.xcdatamodel; sourceTree = "<group>"; };
-		DB0F48FD1B3B4A0200CCE614 /* Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Conversion.h; path = ../Conversion.h; sourceTree = "<group>"; };
-		DB0F48FE1B3B4A0200CCE614 /* Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Conversion.m; path = ../Conversion.m; sourceTree = "<group>"; };
-		DB0F49041B3B4C2200CCE614 /* CoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
-		DB0F49051B3B4C2200CCE614 /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
-		DB0F49081B3B549000CCE614 /* Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Convert.h; sourceTree = "<group>"; };
-		DB0F49091B3B549000CCE614 /* Convert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Convert.m; sourceTree = "<group>"; };
+		DB0F49451B419DCC00CCE614 /* ConversionParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversionParameters.h; sourceTree = "<group>"; };
+		DB0F49461B419DCC00CCE614 /* ConversionParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversionParameters.m; sourceTree = "<group>"; };
+		DB0F49491B419DF000CCE614 /* Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversion.h; sourceTree = "<group>"; };
+		DB0F494A1B419DF000CCE614 /* Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversion.m; sourceTree = "<group>"; };
+		DB0F494E1B41A12500CCE614 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		DB0F494F1B41A12500CCE614 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.markdown; sourceTree = "<group>"; };
+		DB0F496A1B41A14500CCE614 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		DB0F496B1B41A14500CCE614 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		DB0F496C1B41A14500CCE614 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		DB0F496D1B41A14500CCE614 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		DB0F496E1B41A14500CCE614 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		DB0F496F1B41A14500CCE614 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		DB0F49701B41A14500CCE614 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		DB0F49711B41A14500CCE614 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		DB0F49721B41A14500CCE614 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		DB0F49731B41A14500CCE614 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		DB0F49741B41A14500CCE614 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		DB0F49801B41AA9300CCE614 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		DB743E7B1B33742F00262293 /* Ambassador.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ambassador.h; sourceTree = "<group>"; };
 		DB743E7C1B33742F00262293 /* Ambassador.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ambassador.m; sourceTree = "<group>"; };
 		DB743E7F1B3375A700262293 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -62,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB0F49811B41AA9300CCE614 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,13 +102,10 @@
 		DB0F49011B3B4B7400CCE614 /* Conversion */ = {
 			isa = PBXGroup;
 			children = (
-				DB0F48FA1B3B450100CCE614 /* Conversion.xcdatamodeld */,
-				DB0F48FD1B3B4A0200CCE614 /* Conversion.h */,
-				DB0F48FE1B3B4A0200CCE614 /* Conversion.m */,
-				DB0F49041B3B4C2200CCE614 /* CoreDataManager.h */,
-				DB0F49051B3B4C2200CCE614 /* CoreDataManager.m */,
-				DB0F49081B3B549000CCE614 /* Convert.h */,
-				DB0F49091B3B549000CCE614 /* Convert.m */,
+				DB0F49451B419DCC00CCE614 /* ConversionParameters.h */,
+				DB0F49461B419DCC00CCE614 /* ConversionParameters.m */,
+				DB0F49491B419DF000CCE614 /* Conversion.h */,
+				DB0F494A1B419DF000CCE614 /* Conversion.m */,
 			);
 			name = Conversion;
 			sourceTree = "<group>";
@@ -108,9 +128,30 @@
 			name = Identify;
 			sourceTree = "<group>";
 		};
+		DB0F494D1B41A0FF00CCE614 /* SQLite */ = {
+			isa = PBXGroup;
+			children = (
+				DB0F494E1B41A12500CCE614 /* LICENSE.txt */,
+				DB0F494F1B41A12500CCE614 /* README.markdown */,
+				DB0F496A1B41A14500CCE614 /* FMDatabase.h */,
+				DB0F496B1B41A14500CCE614 /* FMDatabase.m */,
+				DB0F496C1B41A14500CCE614 /* FMDatabaseAdditions.h */,
+				DB0F496D1B41A14500CCE614 /* FMDatabaseAdditions.m */,
+				DB0F496E1B41A14500CCE614 /* FMDatabasePool.h */,
+				DB0F496F1B41A14500CCE614 /* FMDatabasePool.m */,
+				DB0F49701B41A14500CCE614 /* FMDatabaseQueue.h */,
+				DB0F49711B41A14500CCE614 /* FMDatabaseQueue.m */,
+				DB0F49721B41A14500CCE614 /* FMDB.h */,
+				DB0F49731B41A14500CCE614 /* FMResultSet.h */,
+				DB0F49741B41A14500CCE614 /* FMResultSet.m */,
+			);
+			name = SQLite;
+			sourceTree = "<group>";
+		};
 		DB9013B81B2A03CD001F1CF8 = {
 			isa = PBXGroup;
 			children = (
+				DB0F49801B41AA9300CCE614 /* libsqlite3.dylib */,
 				DB9013C41B2A03CD001F1CF8 /* iOS_Framework */,
 				DB9013D11B2A03CD001F1CF8 /* iOS_FrameworkTests */,
 				DB9013C31B2A03CD001F1CF8 /* Products */,
@@ -132,6 +173,7 @@
 				DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */,
 				DB743E7F1B3375A700262293 /* Constants.h */,
 				DB743E811B3375B300262293 /* Constants.m */,
+				DB0F494D1B41A0FF00CCE614 /* SQLite */,
 				DB0F49011B3B4B7400CCE614 /* Conversion */,
 				DB0F49021B3B4B8E00CCE614 /* Singleton */,
 				DB0F49031B3B4BB300CCE614 /* Identify */,
@@ -172,11 +214,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB0F49771B41A14500CCE614 /* FMDatabaseAdditions.h in Headers */,
+				DB0F497B1B41A14500CCE614 /* FMDatabaseQueue.h in Headers */,
+				DB0F49471B419DCC00CCE614 /* ConversionParameters.h in Headers */,
+				DB0F49751B41A14500CCE614 /* FMDatabase.h in Headers */,
 				DBFA134B1B34BF1800620985 /* Identify.h in Headers */,
-				DB0F48FF1B3B4A0200CCE614 /* Conversion.h in Headers */,
+				DB0F497E1B41A14500CCE614 /* FMResultSet.h in Headers */,
+				DB0F497D1B41A14500CCE614 /* FMDB.h in Headers */,
+				DB0F494B1B419DF000CCE614 /* Conversion.h in Headers */,
 				DB9013C81B2A03CD001F1CF8 /* iOS_Framework.h in Headers */,
-				DB0F490A1B3B549000CCE614 /* Convert.h in Headers */,
-				DB0F49061B3B4C2200CCE614 /* CoreDataManager.h in Headers */,
+				DB0F49791B41A14500CCE614 /* FMDatabasePool.h in Headers */,
 				DB743E7D1B33742F00262293 /* Ambassador.h in Headers */,
 				DB743E801B3375A700262293 /* Constants.h in Headers */,
 			);
@@ -261,6 +308,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB0F49511B41A12500CCE614 /* LICENSE.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,13 +326,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB0F49071B3B4C2200CCE614 /* CoreDataManager.m in Sources */,
 				DBFA134C1B34BF1800620985 /* Identify.m in Sources */,
-				DB0F49001B3B4A0200CCE614 /* Conversion.m in Sources */,
-				DB0F48FC1B3B450100CCE614 /* Conversion.xcdatamodeld in Sources */,
+				DB0F494C1B419DF000CCE614 /* Conversion.m in Sources */,
+				DB0F49521B41A12500CCE614 /* README.markdown in Sources */,
+				DB0F49761B41A14500CCE614 /* FMDatabase.m in Sources */,
+				DB0F497C1B41A14500CCE614 /* FMDatabaseQueue.m in Sources */,
+				DB0F497F1B41A14500CCE614 /* FMResultSet.m in Sources */,
 				DB743E7E1B33742F00262293 /* Ambassador.m in Sources */,
+				DB0F49781B41A14500CCE614 /* FMDatabaseAdditions.m in Sources */,
 				DB743E821B3375B300262293 /* Constants.m in Sources */,
-				DB0F490B1B3B549000CCE614 /* Convert.m in Sources */,
+				DB0F497A1B41A14500CCE614 /* FMDatabasePool.m in Sources */,
+				DB0F49481B419DCC00CCE614 /* ConversionParameters.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,19 +538,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		DB0F48FA1B3B450100CCE614 /* Conversion.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				DB0F48FB1B3B450100CCE614 /* Conversion.xcdatamodel */,
-			);
-			currentVersion = DB0F48FB1B3B450100CCE614 /* Conversion.xcdatamodel */;
-			path = Conversion.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = DB9013B91B2A03CD001F1CF8 /* Project object */;
 }
