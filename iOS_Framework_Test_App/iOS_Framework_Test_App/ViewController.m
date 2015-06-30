@@ -23,7 +23,7 @@
     conversion.mbsy_add_to_group_id = @134;
     conversion.mbsy_revenue = 0;
     conversion.mbsy_campaign = @260;
-    conversion.mbsy_email = @"test_from_ios1@example.com";
+    conversion.mbsy_email = @"1954testimport@example.com";
     [Ambassador registerConversion:conversion];
     [Ambassador presentRAFFromViewController:self];
     
