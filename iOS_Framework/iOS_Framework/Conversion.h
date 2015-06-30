@@ -13,6 +13,5 @@
 
 - (void)registerConversionWithParameters:(ConversionParameters *)parameters;
 - (void)sendConversions;
-- (BOOL)shouldSendConversions;
 
 @end
