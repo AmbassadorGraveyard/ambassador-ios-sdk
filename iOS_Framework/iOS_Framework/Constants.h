@@ -29,6 +29,7 @@ extern NSString * const AMB_CONVERSION_URL;
 extern NSString * const AMB_CONVERSION_SELECT_ALL_QUERY;
 extern NSString * const AMB_CONVERSION_DELETE_ALL_QUERY;
 extern NSString * const AMB_CONVERSION_INSERT_QUERY;
+extern NSString * const AMB_INSIGHTS_USER_DEFAULTS_KEY;
 extern NSString * const AMB_MBSY_UNIVERSAL_ID;
 extern NSString * const AMB_AUTHORIZATION_TOKEN;
 extern NSString * const AMB_CREATE_CONVERSION_TABLE;
