@@ -11,8 +11,6 @@
 #import "FMDatabase.h"
 #import "Constants.h"
 
-NSString *AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions (ID INTEGER PRIMARY KEY AUTOINCREMENT, mbsy_campaign INTEGER, mbsy_email TEXT, mbsy_first_name TEXT, mbsy_last_name TEXT, mbsy_email_new_ambassador INTEGER, mbsy_uid TEXT, mbsy_custom1 TEXT, mbsy_custom2 TEXT, mbsy_custom3 TEXT, mbsy_auto_create INTEGER, mbsy_revenue REAL, mbsy_deactivate_new_ambassador INTEGER, mbsy_transaction_uid TEXT, mbsy_add_to_group_id INTEGER, mbsy_event_data1 TEXT, mbsy_event_data2 TEXT, mbsy_event_data3 TEXT, mbsy_is_approved INTEGER)";
-
 @interface Conversion ()
 
 @property NSString *databaseName;
@@ -28,7 +26,7 @@ NSString *AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions
     DLog();
     if ([super init])
     {
-        self.databaseName = @"Conversions.db";
+        self.databaseName = AMB_CONVERSION_DB_NAME;
         self.libraryDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject];
         self.databaseFilePath = [self.libraryDirectoryPath stringByAppendingString:self.databaseName];
         
@@ -66,7 +64,7 @@ NSString *AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions
     DLog(@"Valid parameters passed");
     FMDatabase *database = [FMDatabase databaseWithPath:self.databaseFilePath];
     [database open];
-    if ([database executeUpdate:@"INSERT INTO Conversions VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+    if ([database executeUpdate:AMB_CONVERSION_INSERT_QUERY,
                              parameters.mbsy_campaign,
                              parameters.mbsy_email,
                              parameters.mbsy_first_name,
@@ -100,12 +98,12 @@ NSString *AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions
 - (void)sendConversions
 {
     DLog();
-    NSURL *url = [NSURL URLWithString:@"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/?u=***REMOVED***"];
+    NSURL *url = [NSURL URLWithString:AMB_CONVERSION_URL];
     
     //TODO: make network call and put the following code in completion block
     FMDatabase * database = [FMDatabase databaseWithPath:self.databaseFilePath];
     [database open];
-    FMResultSet *resultSet = [database executeQuery:@"SELECT * FROM Conversions"];
+    FMResultSet *resultSet = [database executeQuery:[NSString stringWithFormat:@"SELECT * FROM %@", AMB_CONVERSION_SQL_TABLE_NAME]];
     while ([resultSet next])
     {
         
@@ -141,8 +139,8 @@ NSString *AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions
             request.HTTPMethod = @"POST";
             request.HTTPBody = JSONData;
             [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-            [request setValue:@"***REMOVED***" forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-            [request setValue:@"UniversalToken ***REMOVED***" forHTTPHeaderField:@"Authorization"];
+            [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+            [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
             
             // Create a task.
             NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request
@@ -170,24 +168,13 @@ NSString *AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions
     [self emptyDatabase];
 }
 
-- (BOOL)shouldSendConversions
-{
-    DLog();
-    FMDatabase *database = [FMDatabase databaseWithPath:self.databaseFilePath];
-    [database open];
-    FMResultSet *resultSet = [database executeQuery:@"SELECT * FROM Conversions"];
-    [database close];
-    while ([resultSet next]) { return YES; }
-    
-    return NO;
-}
 
 - (void)emptyDatabase
 {
     DLog();
     FMDatabase * database = [FMDatabase databaseWithPath:self.databaseFilePath];
     [database open];
-    [database executeStatements:@"DELETE FROM Conversions"];
+    [database executeStatements:[NSString stringWithFormat:@"DELETE FROM %@", AMB_CONVERSION_SQL_TABLE_NAME]];
     [database close];
 
 }
