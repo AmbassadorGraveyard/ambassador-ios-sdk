@@ -12,7 +12,6 @@
 		DB0F494B1B419DF000CCE614 /* Conversion.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49491B419DF000CCE614 /* Conversion.h */; };
 		DB0F494C1B419DF000CCE614 /* Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F494A1B419DF000CCE614 /* Conversion.m */; };
 		DB0F49511B41A12500CCE614 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = DB0F494E1B41A12500CCE614 /* LICENSE.txt */; };
-		DB0F49521B41A12500CCE614 /* README.markdown in Sources */ = {isa = PBXBuildFile; fileRef = DB0F494F1B41A12500CCE614 /* README.markdown */; };
 		DB0F49751B41A14500CCE614 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F496A1B41A14500CCE614 /* FMDatabase.h */; };
 		DB0F49761B41A14500CCE614 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F496B1B41A14500CCE614 /* FMDatabase.m */; };
 		DB0F49771B41A14500CCE614 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F496C1B41A14500CCE614 /* FMDatabaseAdditions.h */; };
@@ -52,7 +51,6 @@
 		DB0F49491B419DF000CCE614 /* Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversion.h; sourceTree = "<group>"; };
 		DB0F494A1B419DF000CCE614 /* Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversion.m; sourceTree = "<group>"; };
 		DB0F494E1B41A12500CCE614 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		DB0F494F1B41A12500CCE614 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.markdown; sourceTree = "<group>"; };
 		DB0F496A1B41A14500CCE614 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		DB0F496B1B41A14500CCE614 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		DB0F496C1B41A14500CCE614 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -132,7 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				DB0F494E1B41A12500CCE614 /* LICENSE.txt */,
-				DB0F494F1B41A12500CCE614 /* README.markdown */,
 				DB0F496A1B41A14500CCE614 /* FMDatabase.h */,
 				DB0F496B1B41A14500CCE614 /* FMDatabase.m */,
 				DB0F496C1B41A14500CCE614 /* FMDatabaseAdditions.h */,
@@ -328,7 +325,6 @@
 			files = (
 				DBFA134C1B34BF1800620985 /* Identify.m in Sources */,
 				DB0F494C1B419DF000CCE614 /* Conversion.m in Sources */,
-				DB0F49521B41A12500CCE614 /* README.markdown in Sources */,
 				DB0F49761B41A14500CCE614 /* FMDatabase.m in Sources */,
 				DB0F497C1B41A14500CCE614 /* FMDatabaseQueue.m in Sources */,
 				DB0F497F1B41A14500CCE614 /* FMResultSet.m in Sources */,
