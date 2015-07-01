@@ -88,9 +88,9 @@
 - (void)getInsightsData
 {
     DLog();
-    
     if ([self.identifyData[@"consumer"][@"UID"] isEqualToString:@""])
     {
+        DLog(@"No UID exists - creating emtpy Insights dictionary");
         NSDictionary *insights = @{
                                    @"PSYCHOGRAPHICS": @{},
                                    @"DEMOGRAPHICS":@{},
@@ -105,6 +105,7 @@
     }
     
     NSString *urlString = [NSString stringWithFormat:@"https://api.augur.io/v2/user?key=7g1a8dumog40o61y5irl1sscm4nu6g60&uid=%@", self.identifyData[@"consumer"][@"UID"]];
+    
     [[[NSURLSession sharedSession] dataTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]
                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
       {
@@ -122,6 +123,7 @@
                       //Save a copy locally
                       [[NSUserDefaults standardUserDefaults] setObject:insightsData
                                                                 forKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
+                      DLog(@"%@", insightsData);
                       
                       //Notify the app
                       [[NSNotificationCenter defaultCenter] postNotificationName:AMB_IDENTIFY_NOTIFICATION_NAME
