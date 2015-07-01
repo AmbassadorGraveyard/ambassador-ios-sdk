@@ -35,7 +35,7 @@
         self.databaseName = AMB_CONVERSION_DB_NAME;
         self.libraryDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject];
         self.databaseFilePath = [self.libraryDirectoryPath stringByAppendingString:self.databaseName];
-        DLog(@"%@", self.databaseFilePath);
+        DLog(@"Database file for viewing at: %@", self.databaseFilePath);
         
         if (![[NSFileManager defaultManager] fileExistsAtPath:self.databaseFilePath])
         {
@@ -184,7 +184,7 @@
               {
                   if (!error)
                   {
-                      NSLog(@"Status code: %ld", ((NSHTTPURLResponse *)response).statusCode);
+                      DLog(@"Status code: %ld", ((NSHTTPURLResponse *)response).statusCode);
                       
                       //Check for 2xx status codes
                       if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
