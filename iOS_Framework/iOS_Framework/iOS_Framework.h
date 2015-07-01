@@ -16,4 +16,4 @@ FOUNDATION_EXPORT const unsigned char iOS_FrameworkVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <iOS_Framework/PublicHeader.h>
 #import <iOS_Framework/Ambassador.h>
-#import <iOS_Framework/Conversion.h>
+#import <iOS_Framework/ConversionParameters.h>
