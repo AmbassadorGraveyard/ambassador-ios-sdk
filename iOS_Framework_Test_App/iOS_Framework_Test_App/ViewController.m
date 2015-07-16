@@ -40,7 +40,8 @@
     conversion.mbsy_is_approved = @NO;
     conversion.mbsy_email = @"anonymous_test_1578@example.com";
     [Ambassador registerConversion:conversion];
-    [Ambassador presentRAFFromViewController:self];
+    [Ambassador identifyWithEmail:@"austin@getambassador.com"];
+    [Ambassador presentRAFForCampaign:@"768" FromViewController:self];
     
     [self functionToIgnoreDuringCodeReview];
 }

@@ -7,13 +7,31 @@
 //
 
 #import "Identify.h"
-#import "Constants.h"
 #import <UIKit/UIKit.h>
+#import <Pusher.h>
+#import "Utilities.h"
+#import "Constants.h"
 
-@interface Identify () <UIWebViewDelegate>
+
+
+#pragma mark - Local Constants
+NSString * const AMB_IDENTIFY_URL = @"http://127.0.0.1:7999/augur.html?cbURL=ambassador:mylocation";
+NSString * const AMB_IDENTIFY_JS_VAR = @"JSONdata";
+NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
+NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/?u=abfd1c89-4379-44e2-8361-ee7b87332e32";
+float const AMB_IDENTIFY_RETRY_TIME = 2.0;
+
+
+
+@interface Identify () <UIWebViewDelegate, PTPusherDelegate>
 
 @property UIWebView *webview;
 @property UIView *view;
+@property NSString *email;
+
+//TODO: Declare pusher properties
+@property PTPusher *client;
+@property PTPusherPrivateChannel *channel;
 
 @end
 
@@ -29,6 +47,12 @@
     {
         self.webview = [[UIWebView alloc] init];
         self.webview.delegate = self;
+        self.email = @"";
+        
+        //TODO: Initialize pusher properties
+        self.client = [PTPusher pusherWithKey:@"8bd3fe1994164f9b83f6" delegate:self encrypted:YES];
+        self.client.authorizationURL = [NSURL URLWithString:@"https://dev-ambassador-api.herokuapp.com/auth/subscribe/"];
+        [self.client connect];
     }
     
     return self;
@@ -42,30 +66,33 @@
     [self.webview loadRequest:request];
 }
 
+- (void)identifyWithEmail:(NSString *)email
+{
+    DLog();
+    self.email = email;
+    [self identify];
+}
 
 #pragma mark - Augur callback
 - (BOOL)getIdentifyData
 {
     DLog();
     
-    //Pull the data from the webview
+    // Pull the data from the webview
     DLog(@"Grabbing the identify data string from webView");
-    NSString *identifyDataString = [self.webview
-                                    stringByEvaluatingJavaScriptFromString:AMB_IDENTIFY_JS_VAR];
+    NSString *identifyDataString = [self.webview stringByEvaluatingJavaScriptFromString:AMB_IDENTIFY_JS_VAR];
     DLog(@"Converting identify data string to NSData");
     NSData *identifyDataRaw = [identifyDataString dataUsingEncoding:NSUTF8StringEncoding];
+    
     __autoreleasing NSError *e;
     DLog(@"Attempt to serialize identify data NSData object into Dictionary");
-    NSMutableDictionary *identifyData = [NSJSONSerialization
-                                         JSONObjectWithData:identifyDataRaw
-                                         options:0
-                                         error:&e];
+    NSMutableDictionary *identifyData = [NSJSONSerialization JSONObjectWithData:identifyDataRaw options:0 error:&e];
     
     if (e)
     {
         DLog(@"Error parsing identify data NSData object: %@", e.debugDescription);
         
-        //Try again
+        // Try again
         [self performSelector:@selector(identify) withObject:self afterDelay:2.0];
         return NO;
     }
@@ -74,11 +101,26 @@
         DLog(@"Identify data NSData object was serialized. Data: %@", identifyData);
         self.identifyData = [NSMutableDictionary dictionaryWithDictionary:identifyData];
         
-        //Save a copy locally
+        // Save a copy locally
         [[NSUserDefaults standardUserDefaults] setObject:identifyData
-                                                   forKey:AMB_IDENTIFY_USER_DEFUALTS_KEY];
+                                                  forKey:AMB_IDENTIFY_USER_DEFAULTS_KEY];
         
-        //Get insights data
+        // Call the delegate method
+        [self.delegate identifyDataWasRecieved:identifyData];
+        
+        // Send identify to backend
+        if (![self.email isEqualToString:@""])
+        {
+            self.channel = [self.client subscribeToPrivateChannelNamed:[NSString stringWithFormat:@"snippet-channel@user=%@", self.identifyData[@"device"][@"ID"]]];
+            [self.channel bindToEventNamed:@"identify_action" handleWithBlock:^(PTPusherEvent *event)
+             {
+                 [[NSUserDefaults standardUserDefaults] setValue:event.data forKey:AMB_AMBASSADOR_INFO_STORAGE_KEY];
+                 DLog(@"Recieved Information about the Ambassador");
+             }];
+            [self sendIdentifyData];
+        }
+        
+        // Get insights data
         [self getInsightsData];
         
         return YES;
@@ -120,14 +162,13 @@
                   
                   if (!e)
                   {
-                      //Save a copy locally
+                      // Save a copy locally
                       [[NSUserDefaults standardUserDefaults] setObject:insightsData
                                                                 forKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
                       DLog(@"%@", insightsData);
                       
-                      //Notify the app
-                      [[NSNotificationCenter defaultCenter] postNotificationName:AMB_IDENTIFY_NOTIFICATION_NAME
-                                                                          object:self];
+                      // Call the delegate
+                      [self.delegate insightsDataWasRecieved:insightsData];
                   }
                   else
                   {
@@ -136,7 +177,7 @@
               }
               else
               {
-                  DLog(@"Insights network call returned status code - %ld", ((NSHTTPURLResponse *)response).statusCode);
+                  DLog(@"Insights network call returned status code - %ld", (long)((NSHTTPURLResponse *)response).statusCode);
               }
           }
           else
@@ -146,6 +187,49 @@
       }] resume];
 }
 
+- (void)sendIdentifyData
+{
+    DLog();
+    // Create the payload to send
+    NSMutableDictionary *payload = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                                                   @"email" : self.email,
+                                                                                   @"fp" : self.identifyData,
+                                                                                   @"mbsy_source" : @"",
+                                                                                   @"mbsy_cookie_code" : @""
+                                                                                   }];
+    
+    //Create the POST request
+    NSURL *url = [NSURL URLWithString:AMB_IDENTIFY_SEND_URL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+    
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession]
+                                  dataTaskWithRequest:request
+                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+                                  {
+                                      if (!error)
+                                      {
+                                          DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                                          
+                                          //Check for 2xx status codes
+                                          if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                                              ((NSHTTPURLResponse *)response).statusCode < 300)
+                                          {
+                                              DLog(@"Response from backend from sending identify: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                                          }
+                                      }
+                                      else
+                                      {
+                                          NSLog(@"Error: %@", error.localizedDescription);
+                                      }
+                                  }];
+    [task resume];
+}
+
 
 
 #pragma mark - UIWebViewDelegate
@@ -153,12 +237,12 @@
 {
     DLog();
     
-    //Parse the URL string delimiting at ":"
+    // Parse the URL string delimiting at ":"
     NSString *urlRequestString = [[request URL] absoluteString];
     NSArray *urlRequestComponents = [urlRequestString componentsSeparatedByString:@":"];
     DLog(@"Url components: %@", urlRequestComponents);
     
-    //Check if the URL is signal URL used in Augur javascript callback
+    // Check if the URL is signal URL used in Augur javascript callback
     if (urlRequestComponents.count > 1 &&
         [(NSString *)urlRequestComponents[0] isEqualToString:AMB_IDENTIFY_SIGNAL_URL])
     {
@@ -173,7 +257,7 @@
 {
     DLog();
     
-    //Get the response code
+    // Get the response code
     NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] init];
     NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
     response = (NSHTTPURLResponse *)cachedResponse.response;
@@ -198,5 +282,41 @@
                afterDelay:AMB_IDENTIFY_RETRY_TIME];
 }
 
+
+
+#pragma mark - PTPusherDelegate
+- (void)pusher:(PTPusher *)pusher willAuthorizeChannel:(PTPusherChannel *)channel withRequest:(NSMutableURLRequest *)request
+{
+    DLog(@"Channel: %@\nRequest body: %@", channel.name, [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding]);
+    [request setValue:@"UniversalToken bdb49d2b9ae24b7b6bc5da122370f3517f98336f" forHTTPHeaderField:@"Authorization"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    NSMutableString *httpBodyString = [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding];
+    NSMutableDictionary *httpBody = parseQueryString(httpBodyString);
+    httpBody = [NSMutableDictionary dictionaryWithDictionary:@{
+                                                               @"auth_type" : @"private",
+                                                               @"channel" : channel.name,
+                                                               @"socket_id" : httpBody[@"socket_id"]
+                                                               }];
+    
+    __autoreleasing NSError *e = nil;
+    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:httpBody options:0 error:&e];
+    if (!e)
+    {
+        request.HTTPBody = bodyData;
+    }
+    else
+    {
+        DLog(@"Error serializing pusher channel subscription request's HTTPBody - %@", e.description);
+    }
+}
+- (void)pusher:(PTPusher *)pusher didFailToSubscribeToChannel:(PTPusherChannel *)channel withError:(NSError *)error
+{
+    DLog(@"%@ - %@",channel.name, error.debugDescription);
+}
+
+- (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel
+{
+    DLog(@"%@", channel.name);
+}
 
 @end
