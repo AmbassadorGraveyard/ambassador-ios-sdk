@@ -78,11 +78,72 @@
         [[NSUserDefaults standardUserDefaults] setObject:identifyData
                                                    forKey:AMB_IDENTIFY_USER_DEFUALTS_KEY];
         
-        //Notify the app
-        [[NSNotificationCenter defaultCenter] postNotificationName:AMB_IDENTIFY_NOTIFICATION_NAME
-                                                             object:self];
+        //Get insights data
+        [self getInsightsData];
+        
         return YES;
     }
+}
+
+- (void)getInsightsData
+{
+    DLog();
+    if ([self.identifyData[@"consumer"][@"UID"] isEqualToString:@""])
+    {
+        DLog(@"No UID exists - creating emtpy Insights dictionary");
+        NSDictionary *insights = @{
+                                   @"PSYCHOGRAPHICS": @{},
+                                   @"DEMOGRAPHICS":@{},
+                                   @"GEOGRAPHICS": @{},
+                                   @"PROFILES":@{},
+                                   @"PRIVATE":@{},
+                                   @"MISC":@{}
+                                   };
+        [[NSUserDefaults standardUserDefaults] setObject:insights
+                                                  forKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
+        return;
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"https://api.augur.io/v2/user?key=***REMOVED***&uid=%@", self.identifyData[@"consumer"][@"UID"]];
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]
+                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+      {
+          DLog();
+          if (!error)
+          {
+              if (((NSHTTPURLResponse *)response).statusCode == 200 ||
+                  ((NSHTTPURLResponse *)response).statusCode == 202)
+              {
+                  __autoreleasing NSError *e = nil;
+                  NSMutableDictionary *insightsData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&e];
+                  
+                  if (!e)
+                  {
+                      //Save a copy locally
+                      [[NSUserDefaults standardUserDefaults] setObject:insightsData
+                                                                forKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
+                      DLog(@"%@", insightsData);
+                      
+                      //Notify the app
+                      [[NSNotificationCenter defaultCenter] postNotificationName:AMB_IDENTIFY_NOTIFICATION_NAME
+                                                                          object:self];
+                  }
+                  else
+                  {
+                      DLog(@"Error serializing insights data - %@", e.localizedDescription);
+                  }
+              }
+              else
+              {
+                  DLog(@"Insights network call returned status code - %ld", ((NSHTTPURLResponse *)response).statusCode);
+              }
+          }
+          else
+          {
+              DLog(@"Error making insights call - %@", error.localizedDescription);
+          }
+      }] resume];
 }
 
 
