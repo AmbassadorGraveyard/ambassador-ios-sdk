@@ -190,6 +190,7 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
 - (void)sendIdentifyData
 {
     NSLog(@"Preparig to send Identify data");
+    
     // Create the payload to send
     NSMutableDictionary *payload = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                    @"email" : self.email,
