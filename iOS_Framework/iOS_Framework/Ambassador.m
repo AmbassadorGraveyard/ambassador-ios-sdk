@@ -9,6 +9,8 @@
 #import "Ambassador.h"
 #import "Constants.h"
 #import "Identify.h"
+#import "Conversion.h"
+#import "ConversionParameters.h"
 
 @implementation Ambassador
 
@@ -18,8 +20,7 @@ static NSMutableDictionary *backEndData;
 static bool showWelcomeScreen = false;
 static NSTimer *conversionTimer;
 static Identify *identify;
-//TODO: add objects once created
-//  * conversion
+static Conversion *conversion;
 
 
 
@@ -48,7 +49,7 @@ static Identify *identify;
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
 //
-+ (void)runWithKey:(NSString *)key convertingOnLaunch:(NSDictionary *)information
++ (void)runWithKey:(NSString *)key convertingOnLaunch:(ConversionParameters *)information
 {
     DLog();
     [[Ambassador sharedInstance] runWithKey:key
@@ -61,15 +62,16 @@ static Identify *identify;
     [[Ambassador sharedInstance] presentRAFFromViewController:viewController];
 }
 
-+ (void)registerConversion:(NSDictionary *)information
++ (void)registerConversion:(ConversionParameters *)information
 {
     DLog();
     [[Ambassador sharedInstance] registerConversion:information];
 }
 
 
+
 #pragma mark - Internal API methods
-- (void)runWithKey:(NSString *)key convertingOnLaunch:(NSDictionary *)information
+- (void)runWithKey:(NSString *)key convertingOnLaunch:(ConversionParameters *)information
 {
     DLog();
     DLog(@"Begin listening for identify notification")
@@ -109,7 +111,7 @@ static Identify *identify;
                                                      userInfo:nil
                                                       repeats:YES];
     identify = [[Identify alloc] init];
-    //TODO: Initialize conversion object
+    conversion = [[Conversion alloc] init];
     [identify identify];
     DLog(@"Checking if conversion is made on app launch");
     if (information)
@@ -124,11 +126,11 @@ static Identify *identify;
     DLog();
 }
 
-- (void)registerConversion:(NSDictionary *)information
+- (void)registerConversion:(ConversionParameters *)information
 {
     DLog();
+    [conversion registerConversionWithParameters:information];
 }
-
 
 
 
@@ -162,6 +164,7 @@ static Identify *identify;
 - (void)checkConversionQueue
 {
     DLog();
+    [conversion sendConversions];
 }
 
 - (void)makeNetworkRequestToURL:(NSString *)url withData:(NSData *)data
