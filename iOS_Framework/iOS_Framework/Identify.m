@@ -320,7 +320,7 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=7g1a8dumo
 
 - (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel
 {
-    NSLog(@"%@", channel.name);
+    NSLog(@"Subscribed to: %@", channel.name);
 }
 
 @end
