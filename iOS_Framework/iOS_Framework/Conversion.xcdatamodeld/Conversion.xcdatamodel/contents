@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Conversion" representedClassName="Conversion" syncable="YES">
+        <attribute name="mbsy_add_to_group_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="mbsy_auto_create" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="mbsy_campaign" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="mbsy_custom1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mbsy_custom2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mbsy_custom3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mbsy_deactivate_new_ambassador" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="mbsy_email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mbsy_email_new_ambassador" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="mbsy_event_data1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mbsy_event_data2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mbsy_event_data3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mbsy_first_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mbsy_is_approved" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="mbsy_last_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mbsy_revenue" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mbsy_transaction_uid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mbsy_uid" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Conversion" positionX="-54" positionY="-9" width="128" height="315"/>
+    </elements>
+</model>
