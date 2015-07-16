@@ -20,6 +20,7 @@ NSString * const AMB_IDENTIFY_JS_VAR = @"JSONdata";
 NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
 NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/?u=***REMOVED***";
 float const AMB_IDENTIFY_RETRY_TIME = 2.0;
+NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVED***&uid=";
 
 
 
@@ -48,10 +49,8 @@ float const AMB_IDENTIFY_RETRY_TIME = 2.0;
         self.webview = [[UIWebView alloc] init];
         self.webview.delegate = self;
         self.email = @"";
-        
-        //TODO: Initialize pusher properties
-        self.client = [PTPusher pusherWithKey:@"***REMOVED***" delegate:self encrypted:YES];
-        self.client.authorizationURL = [NSURL URLWithString:@"https://dev-ambassador-api.herokuapp.com/auth/subscribe/"];
+        self.client = [PTPusher pusherWithKey:AMB_PUSHER_KEY delegate:self encrypted:YES];
+        self.client.authorizationURL = [NSURL URLWithString:AMB_PUSHER_AUTHENTICATION_URL];
         [self.client connect];
     }
     
@@ -108,29 +107,29 @@ float const AMB_IDENTIFY_RETRY_TIME = 2.0;
         // Call the delegate method
         [self.delegate identifyDataWasRecieved:identifyData];
         
-        // Send identify to backend
+        // Send identify to backend if there is an email
         if (![self.email isEqualToString:@""])
         {
             self.channel = [self.client subscribeToPrivateChannelNamed:[NSString stringWithFormat:@"snippet-channel@user=%@", self.identifyData[@"device"][@"ID"]]];
             [self.channel bindToEventNamed:@"identify_action" handleWithBlock:^(PTPusherEvent *event)
              {
-                 [[NSUserDefaults standardUserDefaults] setValue:event.data forKey:AMB_AMBASSADOR_INFO_STORAGE_KEY];
-                 DLog(@"Recieved Information about the Ambassador");
+                 [[NSUserDefaults standardUserDefaults] setValue:event.data forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
+                 NSLog(@"Pusher event - %@", event.data);
              }];
             [self sendIdentifyData];
         }
         
         // Get insights data
-        [self getInsightsData];
+        [self getInsightsDataForUID:self.identifyData[@"consumer"][@"UID"]];
         
         return YES;
     }
 }
 
-- (void)getInsightsData
+- (void)getInsightsDataForUID:(NSString *)UID
 {
     DLog();
-    if ([self.identifyData[@"consumer"][@"UID"] isEqualToString:@""])
+    if ([UID isEqualToString:@""])
     {
         DLog(@"No UID exists - creating emtpy Insights dictionary");
         NSDictionary *insights = @{
@@ -146,7 +145,7 @@ float const AMB_IDENTIFY_RETRY_TIME = 2.0;
         return;
     }
     
-    NSString *urlString = [NSString stringWithFormat:@"https://api.augur.io/v2/user?key=***REMOVED***&uid=%@", self.identifyData[@"consumer"][@"UID"]];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", AMB_INSIGHTS_URL, UID];
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]
                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
@@ -154,6 +153,7 @@ float const AMB_IDENTIFY_RETRY_TIME = 2.0;
           DLog();
           if (!error)
           {
+              DLog(@"%ld", (long)((NSHTTPURLResponse *)response).statusCode)
               if (((NSHTTPURLResponse *)response).statusCode == 200 ||
                   ((NSHTTPURLResponse *)response).statusCode == 202)
               {
@@ -189,7 +189,7 @@ float const AMB_IDENTIFY_RETRY_TIME = 2.0;
 
 - (void)sendIdentifyData
 {
-    DLog();
+    NSLog(@"Preparig to send Identify data");
     // Create the payload to send
     NSMutableDictionary *payload = [NSMutableDictionary dictionaryWithDictionary:@{
                                                                                    @"email" : self.email,
@@ -213,13 +213,13 @@ float const AMB_IDENTIFY_RETRY_TIME = 2.0;
                                   {
                                       if (!error)
                                       {
-                                          DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                                          NSLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
                                           
                                           //Check for 2xx status codes
                                           if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
                                               ((NSHTTPURLResponse *)response).statusCode < 300)
                                           {
-                                              DLog(@"Response from backend from sending identify: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                                              NSLog(@"Response from backend from sending identify: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
                                           }
                                       }
                                       else
@@ -287,8 +287,11 @@ float const AMB_IDENTIFY_RETRY_TIME = 2.0;
 #pragma mark - PTPusherDelegate
 - (void)pusher:(PTPusher *)pusher willAuthorizeChannel:(PTPusherChannel *)channel withRequest:(NSMutableURLRequest *)request
 {
-    DLog(@"Channel: %@\nRequest body: %@", channel.name, [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding]);
-    [request setValue:@"UniversalToken ***REMOVED***" forHTTPHeaderField:@"Authorization"];
+    NSLog(@"Channel: %@\nRequest body: %@", channel.name, [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding]);
+    
+    // Modify the default autheticate request that Pusher will make. The
+    // HTTP body is set per Ambassador back end requirements
+    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSMutableString *httpBodyString = [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding];
     NSMutableDictionary *httpBody = parseQueryString(httpBodyString);
@@ -306,17 +309,18 @@ float const AMB_IDENTIFY_RETRY_TIME = 2.0;
     }
     else
     {
-        DLog(@"Error serializing pusher channel subscription request's HTTPBody - %@", e.description);
+        NSLog(@"Error serializing pusher channel subscription request's HTTPBody - %@", e.description);
     }
 }
+
 - (void)pusher:(PTPusher *)pusher didFailToSubscribeToChannel:(PTPusherChannel *)channel withError:(NSError *)error
 {
-    DLog(@"%@ - %@",channel.name, error.debugDescription);
+    NSLog(@"%@ - %@",channel.name, error.debugDescription);
 }
 
 - (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel
 {
-    DLog(@"%@", channel.name);
+    NSLog(@"%@", channel.name);
 }
 
 @end

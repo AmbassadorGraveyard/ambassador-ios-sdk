@@ -24,7 +24,6 @@ float const AMB_CONVERSION_FLUSH_TIME = 10.0;
 #pragma mark - Static class variables
 static NSString *APIKey;
 static NSMutableDictionary *backEndData;
-static bool showWelcomeScreen = false;
 static NSTimer *conversionTimer;
 static Identify *identify;
 static Conversion *conversion;
@@ -102,7 +101,6 @@ static Conversion *conversion;
     }
     else
     {
-        showWelcomeScreen = true;
         DLog(@"\tIdentify data not found");
     }
     
@@ -128,19 +126,6 @@ static Conversion *conversion;
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
 {
     DLog();
-    NSDictionary *ambassadorInfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_STORAGE_KEY];
-    NSArray *urls = ambassadorInfo[@"urls"];
-    
-    for (NSDictionary* url in urls)
-    {
-        NSString *campaignUID = [NSString stringWithFormat:@"%@", url[@"campaign_uid"]];
-        
-        if ([campaignUID isEqualToString:ID])
-        {
-            DLog(@"%@", url[@"url"]);
-        }
-    }
-    
 }
 
 - (void)registerConversion:(ConversionParameters *)information
