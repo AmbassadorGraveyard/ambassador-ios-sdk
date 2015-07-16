@@ -25,6 +25,8 @@
 		DB0F497E1B41A14500CCE614 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49731B41A14500CCE614 /* FMResultSet.h */; };
 		DB0F497F1B41A14500CCE614 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F49741B41A14500CCE614 /* FMResultSet.m */; };
 		DB0F49811B41AA9300CCE614 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0F49801B41AA9300CCE614 /* libsqlite3.dylib */; };
+		DB46FE151B57EAA400FEB0B0 /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = DB46FE131B57EAA400FEB0B0 /* Utilities.h */; };
+		DB46FE161B57EAA400FEB0B0 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DB46FE141B57EAA400FEB0B0 /* Utilities.m */; };
 		DB743E7D1B33742F00262293 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB743E7B1B33742F00262293 /* Ambassador.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB743E7E1B33742F00262293 /* Ambassador.m in Sources */ = {isa = PBXBuildFile; fileRef = DB743E7C1B33742F00262293 /* Ambassador.m */; };
 		DB743E801B3375A700262293 /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = DB743E7F1B3375A700262293 /* Constants.h */; };
@@ -67,6 +69,8 @@
 		DB0F49731B41A14500CCE614 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		DB0F49741B41A14500CCE614 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		DB0F49801B41AA9300CCE614 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		DB46FE131B57EAA400FEB0B0 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		DB46FE141B57EAA400FEB0B0 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		DB743E7B1B33742F00262293 /* Ambassador.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ambassador.h; sourceTree = "<group>"; };
 		DB743E7C1B33742F00262293 /* Ambassador.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ambassador.m; sourceTree = "<group>"; };
 		DB743E7F1B3375A700262293 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -194,6 +198,8 @@
 				DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */,
 				DB743E7F1B3375A700262293 /* Constants.h */,
 				DB743E811B3375B300262293 /* Constants.m */,
+				DB46FE131B57EAA400FEB0B0 /* Utilities.h */,
+				DB46FE141B57EAA400FEB0B0 /* Utilities.m */,
 				DB0F494D1B41A0FF00CCE614 /* SQLite */,
 				DB0F49011B3B4B7400CCE614 /* Conversion */,
 				DB0F49021B3B4B8E00CCE614 /* Singleton */,
@@ -245,6 +251,7 @@
 				DB0F494B1B419DF000CCE614 /* Conversion.h in Headers */,
 				DB9013C81B2A03CD001F1CF8 /* iOS_Framework.h in Headers */,
 				DB0F49791B41A14500CCE614 /* FMDatabasePool.h in Headers */,
+				DB46FE151B57EAA400FEB0B0 /* Utilities.h in Headers */,
 				DB743E7D1B33742F00262293 /* Ambassador.h in Headers */,
 				DB743E801B3375A700262293 /* Constants.h in Headers */,
 			);
@@ -388,6 +395,7 @@
 				DB0F497C1B41A14500CCE614 /* FMDatabaseQueue.m in Sources */,
 				DB0F497F1B41A14500CCE614 /* FMResultSet.m in Sources */,
 				DB743E7E1B33742F00262293 /* Ambassador.m in Sources */,
+				DB46FE161B57EAA400FEB0B0 /* Utilities.m in Sources */,
 				DB0F49781B41A14500CCE614 /* FMDatabaseAdditions.m in Sources */,
 				DB743E821B3375B300262293 /* Constants.m in Sources */,
 				DB0F497A1B41A14500CCE614 /* FMDatabasePool.m in Sources */,
