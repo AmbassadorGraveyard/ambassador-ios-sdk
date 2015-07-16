@@ -11,9 +11,16 @@
 #import "Identify.h"
 #import "Conversion.h"
 #import "ConversionParameters.h"
+#import "Utilities.h"
+
+
+
+#pragma mark - Local Constants
+float const AMB_CONVERSION_FLUSH_TIME = 10.0;
+
+
 
 @implementation Ambassador
-
 #pragma mark - Static class variables
 static NSString *APIKey;
 static NSMutableDictionary *backEndData;
@@ -53,13 +60,13 @@ static Conversion *conversion;
 {
     DLog();
     [[Ambassador sharedInstance] runWithKey:key
-                      convertingOnLaunch:information];
+                         convertingOnLaunch:information];
 }
 
-+ (void)presentRAFFromViewController:(UIViewController *)viewController
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
 {
     DLog();
-    [[Ambassador sharedInstance] presentRAFFromViewController:viewController];
+    [[Ambassador sharedInstance] presentRAFForCampaign:ID FromViewController:viewController];
 }
 
 + (void)registerConversion:(ConversionParameters *)information
@@ -68,31 +75,28 @@ static Conversion *conversion;
     [[Ambassador sharedInstance] registerConversion:information];
 }
 
++ (void)identifyWithEmail:(NSString *)email
+{
+    DLog();
+    [[Ambassador sharedInstance] identifyWithEmail:email];
+}
+
 
 
 #pragma mark - Internal API methods
 - (void)runWithKey:(NSString *)key convertingOnLaunch:(ConversionParameters *)information
 {
-    DLog();
-    DLog(@"Begin listening for identify notification")
-    
-    //Listen for successful call to identify (we got a fingerprint back)
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(identifyCallback:)
-                                                 name:AMB_IDENTIFY_NOTIFICATION_NAME
-                                               object:nil];
-    
 #if DEBUG
-    DLog(@"Removing user defaults for testing");
-    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    //    DLog(@"Removing user defaults for testing");
+    //    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    //    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 #endif
     
     //Check if we have identify data. If not, the welcome may need to be shown
     //Could be set to no if not refered, the app was reinstalled but backend has
     //device id, etc.
     DLog(@"Checking for identify data");
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:AMB_IDENTIFY_STORAGE_KEY])
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:AMB_IDENTIFY_USER_DEFAULTS_KEY])
     {
         DLog(@"\tIdentify data was found");
     }
@@ -112,7 +116,7 @@ static Conversion *conversion;
                                                       repeats:YES];
     identify = [[Identify alloc] init];
     conversion = [[Conversion alloc] init];
-    [identify identify];
+    //[identify identifyWithEmail:@""];
     DLog(@"Checking if conversion is made on app launch");
     if (information)
     {
@@ -121,9 +125,22 @@ static Conversion *conversion;
     }
 }
 
-- (void)presentRAFFromViewController:(UIViewController *)viewController
+- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
 {
     DLog();
+    NSDictionary *ambassadorInfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_STORAGE_KEY];
+    NSArray *urls = ambassadorInfo[@"urls"];
+    
+    for (NSDictionary* url in urls)
+    {
+        NSString *campaignUID = [NSString stringWithFormat:@"%@", url[@"campaign_uid"]];
+        
+        if ([campaignUID isEqualToString:ID])
+        {
+            DLog(@"%@", url[@"url"]);
+        }
+    }
+    
 }
 
 - (void)registerConversion:(ConversionParameters *)information
@@ -132,30 +149,10 @@ static Conversion *conversion;
     [conversion registerConversionWithParameters:information];
 }
 
-
-
-#pragma mark - Callback functions
-- (void)identifyCallback:(NSNotification *)notifications
+- (void)identifyWithEmail:(NSString *)email
 {
     DLog();
-    __autoreleasing NSError *e;
-    DLog(@"Seralizing identify data into NSData");
-    NSData *requestData = [NSJSONSerialization dataWithJSONObject:identify.identifyData
-                                                          options:0
-                                                            error:&e];
-    if (!e)
-    {
-        DLog(@"Serialization successful, making network request");
-        [self makeNetworkRequestToURL:AMB_INITIAL_BACKEND_REQUEST_URL withData:requestData];
-    }
-    else
-    {
-        DLog(@"Serialization unsuccessful");
-        //TODO: Do we need to retry here or are we just in trouble?
-        //      It shouldn't happen because we had a succesful serialization in
-        //      the first place
-    }
-    
+    [identify identifyWithEmail:email];
 }
 
 
@@ -165,55 +162,6 @@ static Conversion *conversion;
 {
     DLog();
     [conversion sendConversions];
-}
-
-- (void)makeNetworkRequestToURL:(NSString *)url withData:(NSData *)data
-{
-    DLog();
-    
-    //Build the request
-    DLog(@"Building the request with url %@", url);
-    //TODO: there might be additional HTTP header fields to consider in production
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:url]];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
-    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)data.length]
-               forHTTPHeaderField:@"Content-Length"];
-    [request setHTTPBody:data];
-    
-    //Make the call
-    DLog(@"Making the data task call");
-    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession]
-                                      dataTaskWithRequest:request
-                                      completionHandler:^(NSData *data,
-                                                          NSURLResponse *response,
-                                                          NSError *error)
-    {
-        if (!error)
-        {
-            //TODO: there might be other acceptable status codes
-            if (((NSHTTPURLResponse *)response).statusCode == 200)
-            {
-                DLog(@"Successful data task completion with status code %li and response data: %@",
-                     (long)((NSHTTPURLResponse *)response).statusCode,
-                     data);
-            }
-            else
-            {
-                DLog(@"Successful data task request BUT status code %li and response data: %@",
-                     (long)((NSHTTPURLResponse *)response).statusCode,
-                     data);
-            }
-        }
-        else
-        {
-            DLog(@"Unsuccessful data task request with status code %li and error: %@",
-                 (long)((NSHTTPURLResponse *)response).statusCode,
-                 error.localizedDescription);
-        }
-    }];
-    [dataTask resume];
 }
 
 @end

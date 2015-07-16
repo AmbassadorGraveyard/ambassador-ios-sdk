@@ -20,6 +20,8 @@
 #pragma mark - API functions
 + (void)runWithKey:(NSString *)key convertingOnLaunch:(ConversionParameters *)information;
 + (void)registerConversion:(ConversionParameters *)information;
-+ (void)presentRAFFromViewController:(UIViewController *)viewController;
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController;
++ (void)identifyWithEmail:(NSString *)email;
 
 @end
+
