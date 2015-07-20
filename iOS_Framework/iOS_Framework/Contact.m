@@ -25,11 +25,24 @@
     return self;
 }
 
+
+
+#pragma mark - Concat Name
 - (NSString *)fullName
 {
     return [NSString stringWithFormat:@"%@ %@", self.firstName, self.lastName];
 }
 
+
+
+#pragma mark - Overrides for NSSet Storage
+//
+// [NSSet memeber:(id)obj] will test for equality by calling the obj's
+// isEqual: method. To test for equality it compares the hash which is
+// set equal to the value key of the contact which is unique due to NSMutableSet
+// adhearing to strict set requirements. This makes the contacts's value
+// deterministic.
+//
 - (BOOL)isEqual:(id)object
 {
     Contact *obj = (Contact *)object;

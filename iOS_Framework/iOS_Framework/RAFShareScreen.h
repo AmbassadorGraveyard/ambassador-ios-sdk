@@ -10,4 +10,6 @@
 
 @interface RAFShareScreen : UIViewController
 
+- (id)initWithShortURL:(NSString *)url;
+
 @end

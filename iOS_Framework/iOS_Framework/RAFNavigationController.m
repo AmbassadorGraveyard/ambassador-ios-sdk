@@ -7,7 +7,14 @@
 //
 
 #import "RAFNavigationController.h"
+#import "Utilities.h"
 
 @implementation RAFNavigationController
+
+- (BOOL)shouldAutorotate
+{
+    DLog();
+    return NO;
+}
 
 @end
