@@ -41,9 +41,8 @@
     conversion.mbsy_email = @"anonymous_test_1578@example.com";
     [Ambassador registerConversion:conversion];
     [Ambassador identifyWithEmail:@"austin@getambassador.com"];
-    [Ambassador presentRAFForCampaign:@"768" FromViewController:self];
-    
-    [self functionToIgnoreDuringCodeReview];
+
+    //[self functionToIgnoreDuringCodeReview];
 }
 
 - (void)functionToIgnoreDuringCodeReview
@@ -89,6 +88,16 @@
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.message attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.message attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.message attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self performSelector:@selector(presentRAF) withObject:self afterDelay:10.0];
+}
+
+- (void)presentRAF
+{
+    [Ambassador presentRAFForCampaign:@"847" FromViewController:self];
 }
 
 @end

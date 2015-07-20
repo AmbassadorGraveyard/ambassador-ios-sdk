@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface LinkedInShareViewController : UIViewController
+
+@property NSString *defaultMessage;
+- (BOOL)isAuthorized;
 
 @end
