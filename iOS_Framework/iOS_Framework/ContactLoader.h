@@ -8,9 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol ContactLoaderDelegate <NSObject>
+
+- (void)contactsFailedToLoadWithError:(NSString*)errorTitle message:(NSString *)message;
+
+@end
+
 @interface ContactLoader : NSObject
 
+- (id)initWithDelegate:(id<ContactLoaderDelegate>)delegate;
 @property NSMutableArray *phoneNumbers;
 @property NSMutableArray *emailAddresses;
+@property (nonatomic, weak) id<ContactLoaderDelegate>delegate;
 
 @end

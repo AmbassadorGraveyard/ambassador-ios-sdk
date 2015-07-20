@@ -10,6 +10,7 @@
 
 @implementation ConversionParameters
 
+#pragma mark - Initialization
 - (id)init
 {
     if ([super init])
@@ -37,6 +38,9 @@
     return self;
 }
 
+
+
+#pragma mark - Formatted printing
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ |",
@@ -60,8 +64,12 @@
             self.mbsy_is_approved];
 }
 
+
+
+#pragma mark - Validation
 - (BOOL)isValid
 {
     return [self.mbsy_campaign intValue] > -1 && ![self.mbsy_email isEqualToString:@""] && [self.mbsy_revenue intValue] > -1;
 }
+
 @end

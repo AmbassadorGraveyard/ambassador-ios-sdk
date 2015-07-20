@@ -8,6 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
+
+
+@protocol LinkedInAuthorizeWebViewDelegate <NSObject>
+
+- (void)userDidContinue;
+
+@optional
+- (void)userDidCancel;
+
+
+@end
+
+
+
 @interface LinkedInAuthorizeWebView : UIViewController
+
+@property (nonatomic, weak) id<LinkedInAuthorizeWebViewDelegate>delegate;
+@property (nonatomic, weak) UIViewController *callbackViewController;
 
 @end

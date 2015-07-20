@@ -10,4 +10,8 @@
 
 @interface ShareServiceCell : UICollectionViewCell
 
+@property UIImageView * logo;
+@property UILabel * title;
+@property UIView * logoBackground;
+
 @end

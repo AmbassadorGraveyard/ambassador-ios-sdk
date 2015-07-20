@@ -10,6 +10,9 @@
 #import <AddressBook/AddressBook.h>
 #import "Constants.h"
 #import "Contact.h"
+#import "Utilities.h"
+
+
 
 @interface ContactLoader ()
 
@@ -22,11 +25,14 @@
 
 @implementation ContactLoader
 
-- (id)init
+
+#pragma mark - Initialization
+- (id)initWithDelegate:(id<ContactLoaderDelegate>)delegate
 {
     if ([super init])
     {
         DLog();
+        self.delegate = delegate;
         [self setUp];
     }
     
@@ -47,10 +53,12 @@
 
 - (void)getPermissions
 {
+    DLog();
     if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied ||
         ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted)
     {
         DLog(@"Don't have permission to access contacts");
+        [self.delegate contactsFailedToLoadWithError:@"Couldn't load contacts" message:@"Sharing requires access to your contacts. You can enable this in your settings."];
         //TODO: alert user that we need contact permission
     }
     else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
@@ -65,6 +73,7 @@
             if (!granted)
             {
                 DLog(@"Contact access permission request denied");
+                [self.delegate contactsFailedToLoadWithError:@"Couln't load contacts" message:@"Sharing requires access to your contact books. You can enable this in your settings"];
                 //TODO: alert user that we need contact permission
             }
             DLog(@"Contact access permission request granted");
@@ -73,23 +82,32 @@
     }
 }
 
+
+
+#pragma mark - Main contacts loop
 - (void)loadContacts
 {
     DLog();
     if (self.addressBook != nil)
     {
         ABRecordRef source = ABAddressBookCopyDefaultSource(self.addressBook);
+        
+        // Load addressbook
         self.allContacts = (__bridge NSArray *)ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(self.addressBook, source, kABPersonFirstNameProperty);
+        
+        // Main contact loop
         for (NSUInteger i = 0; i < self.allContacts.count; ++i)
         {
             ABRecordRef person = (__bridge ABRecordRef)self.allContacts[i];
             [self getEmailsForPerson:person];
             [self getNumbersForPerson:person];
         }
-        //DLog(@"Contact phone numbers: %@\nContact email addresses: %@", self.phoneNumbers, self.emailAddresses);
     }
 }
 
+
+
+#pragma mark - Accessory Functions
 - (void)getNumbersForPerson:(ABRecordRef)person
 {
     // Get name
@@ -200,6 +218,5 @@
     }
     return returnNumber;
 }
-
 
 @end
