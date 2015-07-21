@@ -11,6 +11,12 @@
 
 @implementation RAFNavigationController
 
+- (void)viewDidLoad {
+    DLog();
+    NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+    [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
+}
+
 - (BOOL)shouldAutorotate
 {
     DLog();
