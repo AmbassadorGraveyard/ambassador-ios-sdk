@@ -17,8 +17,8 @@
 
 @interface LinkedInShareViewController : UIViewController
 
+- (id)initWithDefaultMessage:(NSString *)message;
 @property (nonatomic, weak) id<LinkedInShareDelegate>delegate;
-@property NSString *defaultMessage;
 - (BOOL)isAuthorized;
 
 @end

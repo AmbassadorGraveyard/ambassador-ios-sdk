@@ -457,6 +457,8 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     SLComposeViewController *vc = nil;
     DLog(@"Press on %@", serviceTitle);
     
+    NSString *message = [NSString stringWithFormat:@"I'm a fan of this company. Check them out! %@", self.shortCodeField.text];
+    
     if ([serviceTitle isEqualToString:FACEBOOK_TITLE])
     {
         vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
@@ -467,7 +469,7 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     }
     else if ([serviceTitle isEqualToString:LINKEDIN_TITLE])
     {
-        LinkedInShareViewController* lkdIn = [[LinkedInShareViewController alloc] init];
+        LinkedInShareViewController* lkdIn = [[LinkedInShareViewController alloc] initWithDefaultMessage:message];
         lkdIn.delegate = self;
         
         if (![lkdIn isAuthorized])
@@ -483,13 +485,13 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     }
     else if ([serviceTitle isEqualToString:EMAIL_TITLE])
     {
-        ContactSelectionViewController *contactVC = [[ContactSelectionViewController alloc] initWithInitialMessage:[NSString stringWithFormat:@"I'm a fan of this company. Check them out! %@", self.shortCodeField.text]];
+        ContactSelectionViewController *contactVC = [[ContactSelectionViewController alloc] initWithInitialMessage:message];
         contactVC.data = self.loader.emailAddresses;
         [self.navigationController pushViewController:contactVC animated:YES];
     }
     else if ([serviceTitle isEqualToString:SMS_TITLE])
     {
-        ContactSelectionViewController *contactVC = [[ContactSelectionViewController alloc] initWithInitialMessage:[NSString stringWithFormat:@"I'm a fan of this company. Check them out! %@", self.shortCodeField.text]];
+        ContactSelectionViewController *contactVC = [[ContactSelectionViewController alloc] initWithInitialMessage:message];
         contactVC.data = self.loader.phoneNumbers;
         [self.navigationController pushViewController:contactVC animated:YES];
     }
@@ -498,14 +500,13 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     {
         vc.completionHandler = ^(SLComposeViewControllerResult result)
         {
-            DLog(@"*************************************************************");
             if (result == SLComposeViewControllerResultDone)
             {
                 DLog();
                 //TODO: Add callback Function
             }
         };
-        [vc setInitialText:[NSString stringWithFormat:@"I'm a fan of this company. Check them out! %@", self.shortCodeField.text]];
+        [vc setInitialText:message];
         [self presentViewController:vc animated:YES completion:nil];
     }
     

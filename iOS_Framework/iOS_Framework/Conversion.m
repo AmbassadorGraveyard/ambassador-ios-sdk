@@ -127,13 +127,13 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
     NSDictionary *userDefaultsInsights = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
     
     //Check if insights and identify data exist to send. Else don't send
-    if (!userDefaultsInsights) { return; }
+    if (!userDefaultsInsights || !userDefaultsIdentify) { return; }
     
     [self.databaseQueue inDatabase:^(FMDatabase *db)
     {
         DLog(@"Getting all database records");
         FMResultSet *resultSet = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM %@", AMB_CONVERSION_SQL_TABLE_NAME]];
-        
+
         while ([resultSet next])
         {
             // Build a dictionary for sending in POST request below
@@ -159,23 +159,27 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
                     @"mbsy_is_approved" : [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_is_approved"]]
                 }];
             
+            DLog();
             //Remove 'status' key from insights before sending to the backend
             NSMutableDictionary *insightsDataCopy = [NSMutableDictionary dictionaryWithDictionary:userDefaultsInsights];
+            DLog();
             if ([insightsDataCopy objectForKey:@"status"])
             {
+                DLog();
                 [insightsDataCopy removeObjectForKey:@"status"];
             }
-            
+            DLog();
             //Build the payload data to POST to the backend
             NSDictionary * consumer = @{
                                         @"UID" : userDefaultsIdentify[@"consumer"][@"UID"],
                                         @"insights" : insightsDataCopy
                                         };
+            DLog();
             NSDictionary * device = @{
                                       @"type" : userDefaultsIdentify[@"device"][@"type"],
                                       @"ID" : userDefaultsIdentify[@"device"][@"ID"]
                                       };
-            
+            DLog();
             [fields removeObjectForKey:@"insights"];
             NSDictionary * payload = @{
                                        @"fp" : @{
@@ -184,12 +188,12 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
                                                },
                                        @"fields" : fields
                                        };
-            
+            DLog();
             // Convert to NSData to attach to request's HTTPBody
             NSData *JSONData = [NSJSONSerialization dataWithJSONObject:payload
                                                                options:0
                                                                  error:nil];
-            
+            DLog();
             //Create the POST request
             NSURL *url = [NSURL URLWithString:AMB_CONVERSION_URL];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
