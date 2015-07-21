@@ -424,7 +424,8 @@ NSString * const SHARE_CODE_KEY = @"code";
               if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
                   ((NSHTTPURLResponse *)response).statusCode < 300)
               {
-                  DLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                  [self.delegate userDidPost:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
+                  //TODO: call completion handler
               }
               else if (((NSHTTPURLResponse *)response).statusCode == 400)
               {
@@ -461,13 +462,5 @@ NSString * const SHARE_CODE_KEY = @"code";
     
     [self.presentingViewController presentViewController:alert animated:YES completion:nil];
 }
-
-
-
-//- (NSUInteger)supportedInterfaceOrientations
-//{
-//    // Lock it in portrait
-//    return UIInterfaceOrientationMaskPortrait;
-//}
 
 @end
