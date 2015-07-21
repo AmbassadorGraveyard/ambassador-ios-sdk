@@ -738,6 +738,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B86B9A260D26D9787B6A18FE /* Pods.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -756,6 +757,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A2FE29966919422FC00FE524 /* Pods.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
