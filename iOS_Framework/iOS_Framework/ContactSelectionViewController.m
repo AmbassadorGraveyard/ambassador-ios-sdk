@@ -112,7 +112,10 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
     [self setUpFadeInView];
 }
 
-// TODO: unregister when dealloc
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)setUpFlexView
 {

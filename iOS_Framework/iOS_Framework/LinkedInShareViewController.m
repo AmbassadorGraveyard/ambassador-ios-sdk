@@ -85,7 +85,7 @@ NSString * const SHARE_CODE_KEY = @"code";
 @property UITextView *messageBox;
 @property NSString *clientCode;
 @property UIView *lowerBorder;
-
+@property NSString *defaultMessage;
 @property BOOL blurViewAdded;
 
 @end
@@ -95,11 +95,12 @@ NSString * const SHARE_CODE_KEY = @"code";
 @implementation LinkedInShareViewController
 
 #pragma mark - Initialization
-- (id)init
+- (id)initWithDefaultMessage:(NSString *)message
 {
     if ([super init])
     {
         DLog();
+        self.defaultMessage = message;
         [self setUp];
     }
     
@@ -219,8 +220,6 @@ NSString * const SHARE_CODE_KEY = @"code";
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithTitle:NAV_BAR_POST_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(postButtonPressed:)];
     [rightBarButton setTitleTextAttributes:@{ NSFontAttributeName : NAV_BAR_FONT() } forState:UIControlStateNormal];
     navItem.rightBarButtonItem = rightBarButton;
-    
-    //TODO: fix translucent navbar issue;
     self.navBar.items = @[ navItem ];
     self.navBar.layer.cornerRadius = CONTENT_VIEW_CORNER_RADIUS;
     [self.navBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
@@ -398,13 +397,7 @@ NSString * const SHARE_CODE_KEY = @"code";
     DLog();
     
     NSDictionary *authKey = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
-    if (!authKey)
-    {
-        return;
-        //TODO: Add an error to be displayed here
-    }
-    
-    DLog();
+
     NSURL *url = [NSURL URLWithString:LINKEDIN_SHARE_URL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";

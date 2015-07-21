@@ -377,7 +377,6 @@ float const TABLE_VIEW_TOP_CONSTANT = 70.0;
     [self setActiveSearchFlag:fullSearchText];
     [self setAddingNewNumberFlag];
     [self searchWithText:fullSearchText];
-    //TODO: catch search string in here
     [self.tableView reloadData];
     return YES;
 }
