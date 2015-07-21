@@ -59,6 +59,11 @@ UIFont* DEFAULT_FONT()
     return [UIFont systemFontOfSize:16];
 }
 
+UIFont* DEFAULT_FONT_LARGE()
+{
+    return [UIFont systemFontOfSize:18];
+}
+
 UIColor* FACEBOOK_COLOR()
 {
     return ColorFromRGB(59, 89, 152);
