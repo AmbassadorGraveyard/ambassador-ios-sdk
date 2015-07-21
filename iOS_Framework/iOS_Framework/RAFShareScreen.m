@@ -73,7 +73,7 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
 
 
 
-@interface RAFShareScreen () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, LinkedInAuthorizeWebViewDelegate, ContactLoaderDelegate>
+@interface RAFShareScreen () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, LinkedInAuthorizeWebViewDelegate, ContactLoaderDelegate, LinkedInShareDelegate>
 
 @property UILabel *titleLabel;
 @property UILabel *descriptionLabel;
@@ -468,6 +468,7 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     else if ([serviceTitle isEqualToString:LINKEDIN_TITLE])
     {
         LinkedInShareViewController* lkdIn = [[LinkedInShareViewController alloc] init];
+        lkdIn.delegate = self;
         
         if (![lkdIn isAuthorized])
         {
@@ -495,6 +496,15 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     
     if (vc)
     {
+        vc.completionHandler = ^(SLComposeViewControllerResult result)
+        {
+            DLog(@"*************************************************************");
+            if (result == SLComposeViewControllerResultDone)
+            {
+                DLog();
+                //TODO: Add callback Function
+            }
+        };
         [vc setInitialText:[NSString stringWithFormat:@"I'm a fan of this company. Check them out! %@", self.shortCodeField.text]];
         [self presentViewController:vc animated:YES completion:nil];
     }
@@ -548,6 +558,13 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
 
 
 
+
+#pragma mark - LinkedInShareDelegate
+- (void)userDidPost:(NSMutableDictionary *)data
+{
+    DLog(@"%@", data);
+    // TODO: add callback function
+}
 
 
 #pragma mark - ContactLoaderDelegate
