@@ -9,13 +9,14 @@ ln -s ../../git-hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
 ## Documentation
 ### Initializing Ambassador
 * Download the framework file and copy it to your project directory.
+* Add the framework under the 'Embedded Binaries' section under project settings.
 * You initialize Ambassador in the ```application:application didFinishLaunchingWithOptions:``` method of your app delegate. You can initialize with the option to register a conversion upon app launch by passing in a conversion object (see *[Conversions](### Conversions)*):
 ```objective-c
-[Ambassador runWithKey:@"abc123" convertingOnLaunch:<your_conversion_parameters_object>];
+[Ambassador runWithKey:/*<your_ambassador_API_key_string>*/ convertingOnLaunch:<your_conversion_parameters_object>];
 ```
 **OR** pass in nil to opt out of a conversion on launch:
 ```objective-c
-[Ambassador runWithKey:@"abc123" convertingOnLaunch:nil];
+[Ambassador runWithKey:/*<your_ambassador_API_key_string>*/ convertingOnLaunch:nil];
 ```
 
 ### Identifying a User
