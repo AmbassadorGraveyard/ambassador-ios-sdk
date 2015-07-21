@@ -92,9 +92,9 @@ static Conversion *conversion;
 - (void)runWithKey:(NSString *)key convertingOnLaunch:(ConversionParameters *)information
 {
 #if DEBUG
-//        DLog(@"Removing user defaults for testing");
-//        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-//        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    DLog(@"Removing user defaults for testing");
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 #endif
     
     //Check if we have identify data. If not, the welcome may need to be shown

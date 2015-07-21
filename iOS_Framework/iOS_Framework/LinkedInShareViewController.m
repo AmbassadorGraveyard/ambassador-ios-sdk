@@ -225,7 +225,7 @@ NSString * const SHARE_CODE_KEY = @"code";
     [self.navBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navBar.shadowImage = [UIImage new];
     self.navBar.translucent = YES;
-    self.contentView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
+    self.contentView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.75];
     self.navBar.clipsToBounds = YES;
             //self.navBar.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.70];
     self.navBar.translatesAutoresizingMaskIntoConstraints = NO;
