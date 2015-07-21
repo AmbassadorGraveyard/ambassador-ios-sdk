@@ -59,7 +59,6 @@
     {
         DLog(@"Don't have permission to access contacts");
         [self.delegate contactsFailedToLoadWithError:@"Couldn't load contacts" message:@"Sharing requires access to your contacts. You can enable this in your settings."];
-        //TODO: alert user that we need contact permission
     }
     else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
     {
@@ -74,7 +73,6 @@
             {
                 DLog(@"Contact access permission request denied");
                 [self.delegate contactsFailedToLoadWithError:@"Couln't load contacts" message:@"Sharing requires access to your contact books. You can enable this in your settings"];
-                //TODO: alert user that we need contact permission
             }
             DLog(@"Contact access permission request granted");
             [self loadContacts];
