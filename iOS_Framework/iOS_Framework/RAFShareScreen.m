@@ -122,7 +122,7 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     [self addServiceWithTitle:EMAIL_TITLE logoName:EMAIL_LOGO backgroundColor:CLEAR_COLOR() borderColor:DEFAULT_GRAY_COLOR()];
     
     // Set the navigation bar attributes (title and back button)
-    self.navigationItem.title = AMB_RAF_SHARE_SERVICES_TITLE;
+//    self.navigationItem.title = AMB_RAF_SHARE_SERVICES_TITLE;
     UIButton *closeButton = [[UIButton alloc] initWithFrame:AMB_CLOSE_BUTTON_FRAME()];
     [closeButton setImage:imageFromBundleNamed(AMB_CLOSE_BUTTON_NAME) forState:UIControlStateNormal];
     [closeButton addTarget:self action:@selector(closeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -156,7 +156,7 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.titleLabel.font = DEFAULT_FONT();
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    self.titleLabel.text = TITLE_LABEL_TEXT;
+    //self.titleLabel.text = TITLE_LABEL_TEXT;
     
     // Add to view hierarchy
     [self.view addSubview:self.titleLabel];
@@ -207,7 +207,7 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     self.descriptionLabel.font = DEFAULT_FONT();
     self.descriptionLabel.textAlignment = NSTextAlignmentCenter;
     self.descriptionLabel.textColor = DEFAULT_GRAY_COLOR();
-    self.descriptionLabel.text = DESCRIPTION_LABLE_TEXT;
+//    self.descriptionLabel.text = DESCRIPTION_LABLE_TEXT;
     
     // Add to view hierarchy
     [self.view addSubview:self.descriptionLabel];
@@ -410,6 +410,13 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
                               constant:0.0]];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    DLog(@"%@", self.rafParameters);
+    self.titleLabel.text = self.rafParameters.welcomeTitle;
+    self.descriptionLabel.text = self.rafParameters.welcomeDescription;
+    self.navigationItem.title = self.rafParameters.navBarTitle;
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     // Prefetch the contacts in the background
@@ -457,7 +464,7 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     SLComposeViewController *vc = nil;
     DLog(@"Press on %@", serviceTitle);
     
-    NSString *message = [NSString stringWithFormat:@"I'm a fan of this company. Check them out! %@", self.shortCodeField.text];
+    NSString *message = [NSString stringWithFormat:@"%@ %@", self.rafParameters.defaultShareMessage, self.shortCodeField.text];
     
     if ([serviceTitle isEqualToString:FACEBOOK_TITLE])
     {
@@ -486,12 +493,14 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     else if ([serviceTitle isEqualToString:EMAIL_TITLE])
     {
         ContactSelectionViewController *contactVC = [[ContactSelectionViewController alloc] initWithInitialMessage:message];
+        contactVC.navigationItem.title = self.rafParameters.navBarTitle;
         contactVC.data = self.loader.emailAddresses;
         [self.navigationController pushViewController:contactVC animated:YES];
     }
     else if ([serviceTitle isEqualToString:SMS_TITLE])
     {
         ContactSelectionViewController *contactVC = [[ContactSelectionViewController alloc] initWithInitialMessage:message];
+        contactVC.navigationItem.title = self.rafParameters.navBarTitle;
         contactVC.data = self.loader.phoneNumbers;
         [self.navigationController pushViewController:contactVC animated:YES];
     }
@@ -553,7 +562,7 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
 {
     DLog();
     [self.navigationController popViewControllerAnimated:YES];
-    NSString *message = [NSString stringWithFormat:@"I'm a fan of this company. Check them out! %@", self.shortCodeField.text];
+    NSString *message = [NSString stringWithFormat:@"%@ %@", self.rafParameters.defaultShareMessage, self.shortCodeField.text];
     LinkedInShareViewController* lkdIn = [[LinkedInShareViewController alloc] initWithDefaultMessage:message];
     lkdIn.delegate = self;
     [self presentCrossDisolved:lkdIn];

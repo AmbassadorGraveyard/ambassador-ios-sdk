@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RAFParameters.h"
 
 @interface RAFShareScreen : UIViewController
+
+@property (nonatomic, strong) RAFParameters * rafParameters;
 
 - (id)initWithShortURL:(NSString *)url;
 

@@ -68,10 +68,10 @@ static Conversion *conversion;
                          convertingOnLaunch:information];
 }
 
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(RAFParameters*)parameters
 {
     DLog();
-    [[Ambassador sharedInstance] presentRAFForCampaign:ID FromViewController:viewController];
+    [[Ambassador sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withRAFParameters:parameters];
 }
 
 + (void)registerConversion:(ConversionParameters *)information
@@ -128,7 +128,7 @@ static Conversion *conversion;
     }
 }
 
-- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
+- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withRAFParameters:(RAFParameters*)parameters
 {
     DLog();
     // Validate campaign ID before RAF is presented
@@ -154,6 +154,7 @@ static Conversion *conversion;
     
     // Initialize root view controller
     RAFShareScreen *vc = [[RAFShareScreen alloc] initWithShortURL:shortCodeURL];
+    vc.rafParameters = parameters;
     
     // Initialize navigation controller and set vc as root
     RAFNavigationController *navController = [[RAFNavigationController alloc] initWithRootViewController:vc];
