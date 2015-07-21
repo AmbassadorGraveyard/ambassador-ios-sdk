@@ -553,8 +553,10 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
 {
     DLog();
     [self.navigationController popViewControllerAnimated:YES];
-    LinkedInShareViewController *vc = [[LinkedInShareViewController alloc] init];
-    [self presentCrossDisolved:vc];
+    NSString *message = [NSString stringWithFormat:@"I'm a fan of this company. Check them out! %@", self.shortCodeField.text];
+    LinkedInShareViewController* lkdIn = [[LinkedInShareViewController alloc] initWithDefaultMessage:message];
+    lkdIn.delegate = self;
+    [self presentCrossDisolved:lkdIn];
 }
 
 
