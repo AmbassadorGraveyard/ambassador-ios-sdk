@@ -208,12 +208,12 @@ UIColor * ACCENT_COLOR()
     // Add autolayout constraints
     DLog(@"%f", TEXT_BOX_BOTTOM_CONSTANT);
     [self.composeMessageView addConstraint:[NSLayoutConstraint constraintWithItem:self.textBox
-                                                                        attribute:NSLayoutAttributeBottom
+                                                                        attribute:NSLayoutAttributeHeight
                                                                         relatedBy:NSLayoutRelationEqual
                                                                            toItem:self.composeMessageView
-                                                                        attribute:NSLayoutAttributeBottom
-                                                                       multiplier:1.0
-                                                                         constant:TEXT_BOX_BOTTOM_CONSTANT]];
+                                                                        attribute:NSLayoutAttributeHeight
+                                                                       multiplier:0.0
+                                                                         constant:40.0]];
     DLog();
     [self.composeMessageView addConstraint:[NSLayoutConstraint constraintWithItem:self.textBox
                                                                         attribute:NSLayoutAttributeRight

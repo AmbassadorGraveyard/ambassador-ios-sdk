@@ -53,6 +53,7 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
 @property NSLayoutConstraint *flexViewBottom;
 @property NSLayoutConstraint *composeBoxHeight;
 @property NSLayoutConstraint *composeBoxWidth;
+@property NSLayoutConstraint *composeBoxBottom;
 
 @end
 
@@ -193,13 +194,14 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
                                                        multiplier:constraints.contactsTableWidthMultiplier
                                                          constant:0.0];
     [self.flexView addConstraint:self.composeBoxWidth];
-    [self.flexView addConstraint:[NSLayoutConstraint constraintWithItem:self.composeBox.view
-                                                              attribute:NSLayoutAttributeBottom
-                                                              relatedBy:NSLayoutRelationEqual
-                                                                 toItem:self.flexView
-                                                              attribute:NSLayoutAttributeBottom
-                                                             multiplier:1.0
-                                                               constant:0.0]];
+    self.composeBoxBottom = [NSLayoutConstraint constraintWithItem:self.composeBox.view
+                                                         attribute:NSLayoutAttributeBottom
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.flexView
+                                                         attribute:NSLayoutAttributeBottom
+                                                        multiplier:1.0
+                                                          constant:0.0];
+    [self.flexView addConstraint:self.composeBoxBottom];
 }
 
 - (void)setUpContactsTable
@@ -362,6 +364,7 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
         }
         [self.view bringSubviewToFront:self.composeBox.view];
         self.composeBoxHeight.constant = COMPOSE_MESSAGE_BOX_HEIGHT - SEND_BUTTON_HEIGHT;
+        //self.composeBoxBottom.constant = 0;
         self.fadeInView.hidden = NO;
     }
     
@@ -382,6 +385,7 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
     self.flexViewBottom.constant = 0;
     self.composeBox.sendbuttonHeight.constant = SEND_BUTTON_HEIGHT;
     self.composeBoxHeight.constant = COMPOSE_MESSAGE_BOX_HEIGHT;
+    //self.composeBoxBottom.constant -= SEND_BUTTON_HEIGHT;
     self.composeBoxWidth.constant = 0;
     self.fadeInView.hidden = YES;
     [self.view layoutIfNeeded];
