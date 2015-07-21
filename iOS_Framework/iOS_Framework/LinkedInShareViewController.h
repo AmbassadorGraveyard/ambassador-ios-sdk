@@ -8,10 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol LinkedInShareDelegate <NSObject>
+
+- (void)userDidPost:(NSMutableDictionary *)data;
+
+@end
 
 
 @interface LinkedInShareViewController : UIViewController
 
+@property (nonatomic, weak) id<LinkedInShareDelegate>delegate;
 @property NSString *defaultMessage;
 - (BOOL)isAuthorized;
 
