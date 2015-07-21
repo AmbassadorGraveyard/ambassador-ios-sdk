@@ -86,6 +86,8 @@ NSString * const SHARE_CODE_KEY = @"code";
 @property NSString *clientCode;
 @property UIView *lowerBorder;
 
+@property BOOL blurViewAdded;
+
 @end
 
 
@@ -102,6 +104,21 @@ NSString * const SHARE_CODE_KEY = @"code";
     }
     
     return self;
+}
+
+- (void)viewDidLayoutSubviews {
+    if (!self.blurViewAdded) {
+        DLog();
+        // Adding blurview behind contentView
+        UIVisualEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
+        blurView.frame = CGRectMake(0, 0, self.contentView.frame.size.width, self.contentView.frame.size.height);
+        blurView.layer.cornerRadius = CONTENT_VIEW_CORNER_RADIUS;
+        blurView.clipsToBounds = YES;
+        [self.contentView addSubview:blurView];
+        [self.contentView sendSubviewToBack:blurView];
+        self.blurViewAdded = YES;
+    }
 }
 
 - (void) setUp
@@ -196,7 +213,7 @@ NSString * const SHARE_CODE_KEY = @"code";
     [UINavigationBar appearance].titleTextAttributes = @{ NSFontAttributeName : NAV_BAR_FONT() };
     // Nav bar "cancel" button
     UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:NAV_BAR_CANCEL_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed:)];
-    [leftBarButton setTitleTextAttributes:@{ NSFontAttributeName : NAV_BAR_FONT() }forState:UIControlStateNormal];
+    [leftBarButton setTitleTextAttributes:@{ NSFontAttributeName : DEFAULT_FONT_LARGE() }forState:UIControlStateNormal];
     navItem.leftBarButtonItem = leftBarButton;
     // Nav bar "post" button
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithTitle:NAV_BAR_POST_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(postButtonPressed:)];
@@ -206,7 +223,10 @@ NSString * const SHARE_CODE_KEY = @"code";
     //TODO: fix translucent navbar issue;
     self.navBar.items = @[ navItem ];
     self.navBar.layer.cornerRadius = CONTENT_VIEW_CORNER_RADIUS;
+    [self.navBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    self.navBar.shadowImage = [UIImage new];
     self.navBar.translucent = YES;
+    self.contentView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5];
     self.navBar.clipsToBounds = YES;
             //self.navBar.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.70];
     self.navBar.translatesAutoresizingMaskIntoConstraints = NO;
