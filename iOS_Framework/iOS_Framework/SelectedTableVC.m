@@ -193,11 +193,6 @@
     return 40.0;
 }
 
-//- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-//{
-//    [self.delegate removeContact:self.data[indexPath.row]];
-//}
-
 - (void)removeContact:(UIButton *)button
 {
     DLog();
@@ -215,15 +210,5 @@
     [self.selected removeAllObjects];
     [self.delegate selectedContactsChanged];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
