@@ -257,7 +257,11 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
     self.selectionTable.delegate = self;
     [self addChildViewController:self.selectionTable];
     self.selectionTable.selected = self.selected;
+    
+    // Add to view hierarchy
     [self.flexView addSubview:self.selectionTable.view];
+    
+    // Add autolayout constraints
     [self.flexView addConstraint:[NSLayoutConstraint constraintWithItem:self.selectionTable.view
                                                               attribute:NSLayoutAttributeTop
                                                               relatedBy:NSLayoutRelationEqual
@@ -295,7 +299,11 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
     self.fadeInView.translatesAutoresizingMaskIntoConstraints = NO;
     self.fadeInView.backgroundColor = DEFAULT_FADE_VIEW_COLOR(false);
     self.fadeInView.hidden = YES;
+    
+    // Add to view hierarchy
     [self.flexView addSubview:self.fadeInView];
+    
+    // Add autolayout constraints
     [self.flexView addConstraint:[NSLayoutConstraint constraintWithItem:self.fadeInView
                                                               attribute:NSLayoutAttributeTop
                                                               relatedBy:NSLayoutRelationEqual
@@ -330,7 +338,11 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
 - (void)selectedContactsChanged
 {
     DLog();
+    
+    // Refrresh button count and color (if first contact selected)
     [self.composeBox updateButtonWithCount:self.selected.count];
+    
+    // Reload the tables to reflect new selection
     [self.contactsTable.tableView reloadData];
     self.selectionTable.data = [NSMutableArray arrayWithArray:[self.selected allObjects]];
     [self.selectionTable.tableView reloadData];
@@ -344,16 +356,17 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
                                                  name:UIKeyboardWillShowNotification object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
-    
 }
 
 - (void)keyboardWasShown:(NSNotification*)sender
 {
     DLog();
+    
+    // Animate compose box upward (and adjust to full width if iPad) and hide
+    // the 'send to contacts' button
     if (self.composeBox.editButton.selected)
     {
         CGRect frame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -367,7 +380,6 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
         }
         [self.view bringSubviewToFront:self.composeBox.view];
         self.composeBoxHeight.constant = COMPOSE_MESSAGE_BOX_HEIGHT - SEND_BUTTON_HEIGHT;
-        //self.composeBoxBottom.constant = 0;
         self.fadeInView.hidden = NO;
     }
     
@@ -385,10 +397,12 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
     DLog();
+    
+    // Restore the compose box to the bottom of the screen, un-hide 'send to
+    // contacts' button and adjust the width if needed (on iPad)
     self.flexViewBottom.constant = 0;
     self.composeBox.sendbuttonHeight.constant = SEND_BUTTON_HEIGHT;
     self.composeBoxHeight.constant = COMPOSE_MESSAGE_BOX_HEIGHT;
-    //self.composeBoxBottom.constant -= SEND_BUTTON_HEIGHT;
     self.composeBoxWidth.constant = 0;
     self.fadeInView.hidden = YES;
     [self.view layoutIfNeeded];
@@ -396,6 +410,8 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
 
 - (void)backButtonPressed:(UIButton *)button
 {
+    DLog();
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
