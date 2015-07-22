@@ -8,9 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol IdentifyDelegate <NSObject>
+
+- (void)identifyDataWasRecieved:(NSMutableDictionary *)data;
+- (void)insightsDataWasRecieved:(NSMutableDictionary *)data;
+- (void)ambassadorDataWasRecieved:(NSMutableDictionary *)data;
+
+@end
+
 @interface Identify : NSObject
 
-- (void)identify;
+- (void)identifyWithEmail:(NSString *)email;
 @property NSMutableDictionary *identifyData;
+@property NSString *pusherChannelName;
+@property (nonatomic, weak) id<IdentifyDelegate>delegate;
 
 @end
