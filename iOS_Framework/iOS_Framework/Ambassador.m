@@ -21,6 +21,7 @@
 float const AMB_CONVERSION_FLUSH_TIME = 10.0;
 NSString * const AMBASSADOR_INFO_URLS_KEY = @"urls";
 NSString * const CAMPAIGN_UID_KEY = @"campaign_uid";
+NSString * const SHORT_CODE_KEY = @"short_code";
 NSString * const SHORT_CODE_URL_KEY = @"url";
 #pragma mark -
 
@@ -97,8 +98,8 @@ static Conversion *conversion;
 {
 #if DEBUG
     DLog(@"Removing user defaults for testing");
-    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+//    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 #endif
     
     //Check if we have identify data. If not, the welcome may need to be shown
@@ -137,6 +138,7 @@ static Conversion *conversion;
     DLog();
     // Validate campaign ID before RAF is presented
     NSString *shortCodeURL = @"";
+    NSString *shortCode = @"";
     NSDictionary *userInfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
     if (userInfo)
     {
@@ -147,6 +149,7 @@ static Conversion *conversion;
             if ([campaignID isEqualToString:ID])
             {
                 shortCodeURL = url[SHORT_CODE_URL_KEY];
+                shortCode = url[SHORT_CODE_KEY];
             }
         }
     }
@@ -157,7 +160,7 @@ static Conversion *conversion;
     }
     
     // Initialize root view controller
-    RAFShareScreen *vc = [[RAFShareScreen alloc] initWithShortURL:shortCodeURL];
+    RAFShareScreen *vc = [[RAFShareScreen alloc] initWithShortURL:shortCodeURL shortCode:shortCode ];
     vc.rafParameters = parameters;
     
     // Initialize navigation controller and set vc as root

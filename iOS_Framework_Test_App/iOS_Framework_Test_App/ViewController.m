@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     ConversionParameters *conversion = [[ConversionParameters alloc] init];
-    conversion.mbsy_add_to_group_id = @134;
+    conversion.mbsy_add_to_group_id = @"134";
     conversion.mbsy_revenue = @1000;
     conversion.mbsy_campaign = @260;
     conversion.mbsy_first_name = @"test";
@@ -33,7 +33,6 @@
     conversion.mbsy_auto_create = @NO;
     conversion.mbsy_deactivate_new_ambassador = @YES;
     conversion.mbsy_transaction_uid = @"transuidtransuid";
-    conversion.mbsy_add_to_group_id = @123456789;
     conversion.mbsy_event_data1 = @"eventdata1";
     conversion.mbsy_event_data2 = @"eventdata2";
     conversion.mbsy_event_data3 = @"eventdata3";
@@ -92,12 +91,12 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self performSelector:@selector(presentRAF) withObject:self afterDelay:2.0];
+    [self performSelector:@selector(presentRAF) withObject:self afterDelay:7.0];
 }
 
 - (void)presentRAF
 {
-    [Ambassador presentRAFForCampaign:@"847" FromViewController:self];
+    [Ambassador presentRAFForCampaign:@"847" FromViewController:self WithRAFParameters:nil];
 }
 
 @end

@@ -17,6 +17,7 @@
     [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
 }
 
+
 - (BOOL)shouldAutorotate
 {
     DLog();
