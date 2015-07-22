@@ -184,6 +184,7 @@
     lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
     
     return @{
+             // Check if fields are set before attempting to insert the values
              @"firstName" : firstName? firstName : @"",
              @"lastName" : lastName? lastName : @""
              };
