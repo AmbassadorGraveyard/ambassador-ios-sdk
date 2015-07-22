@@ -72,7 +72,7 @@ The RAF screen labels and navigation title can be customized with RAF Parameters
 * Welcome Description - "Refer a friend to get rewards"
 * Default Share Message - "I'm a fan of this company, check them out!"
 
-![Alt text] (https://github.com/GetAmbassador/ambassador-ios-sdk.git/screenShots/rafDemoImg.png)
+![Alt text](screenShots/rafDemoImg.png?raw=true)
 
 ```objective-c  
 // Create the RAFParameters object
