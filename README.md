@@ -65,7 +65,7 @@ To present a RAF, you only need to pass in the campaign ID you would like the sh
 **Identify should also be called before any calls to present a RAF. Identify will need to generate/update the short urls, and therefore should not be placed immediately before any RAF presentation calls.  This will allow the share urls to be generated for your user. If identify is not called before, or a campaign ID that does not exist is passed, a warning will be logged to let you know**
 
 ####RAF Parameters
-The RAF screen labels and navigation title can be customized with RAF Parameters.  These parameters are optional, and if not set, default strings will be used.
+The RAF screen labels and navigation title can be customized with RAF Parameters.  These parameters are optional, and if not set or set to nil, default strings will be used.
 
 * Navigation Title - "Refer your friends"
 * Welcome Title - "Spread the word"
