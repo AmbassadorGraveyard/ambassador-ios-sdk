@@ -37,21 +37,21 @@ conversion.mbsy_campaign = @101; // NSNumber
 conversion.mbsy_email = @"user@example.com"; // NSString
 
 // STEP THREE: Set any optional properties
-conversion.mbsy_add_to_group_id = @123; // NSNumber
+conversion.mbsy_add_to_group_id = @"123"; // NSString
 conversion.mbsy_first_name = @"John"; // NSString
 conversion.mbsy_last_name = @"Doe"; // NSString
-conversion.mbsy_email_new_ambassador = @YES; // BOOL
+conversion.mbsy_email_new_ambassador = @NO; // BOOL (Deafaults to @NO)
 conversion.mbsy_uid = @"mbsy_uid"; // NSString
 conversion.mbsy_custom1 = @"custom1"; // NSString
 conversion.mbsy_custom2 = @"custom2"; // NSString
 conversion.mbsy_custom3 = @"custom3"; // NSString
-conversion.mbsy_auto_create = @NO; // BOOL
-conversion.mbsy_deactivate_new_ambassador = @YES; // BOOL
+conversion.mbsy_auto_create = @YES; // BOOL (Defaults to @YES)
+conversion.mbsy_deactivate_new_ambassador = @NO; // BOOL (Defaults to @NO)
 conversion.mbsy_transaction_uid = @"trans_uid"; // NSString
 conversion.mbsy_event_data1 = @"eventdata1"; // NSString
 conversion.mbsy_event_data2 = @"eventdata2"; // NSString
 conversion.mbsy_event_data3 = @"eventdata3"; // NSString
-conversion.mbsy_is_approved = @NO; // BOOL
+conversion.mbsy_is_approved = @YES; // BOOL (Defaults to @YES)
 
 // STEP FOUR: Register the conversion with the parameter object
 [Ambassador registerConversion:conversion];
