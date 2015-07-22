@@ -13,6 +13,6 @@
 
 @property (nonatomic, strong) RAFParameters * rafParameters;
 
-- (id)initWithShortURL:(NSString *)url;
+- (id)initWithShortURL:(NSString *)url shortCode:(NSString *)shortCode;
 
 @end
