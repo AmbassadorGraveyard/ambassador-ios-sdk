@@ -71,6 +71,10 @@ static Conversion *conversion;
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(RAFParameters*)parameters
 {
     DLog();
+    if (!parameters) {
+        parameters = [[RAFParameters alloc] init];
+    }
+    
     [[Ambassador sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withRAFParameters:parameters];
 }
 
