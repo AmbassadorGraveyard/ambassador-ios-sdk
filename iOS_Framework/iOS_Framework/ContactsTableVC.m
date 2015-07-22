@@ -353,9 +353,13 @@ float const TABLE_VIEW_TOP_CONSTANT = 70.0;
     [self setActiveSearchFlag:textField.text];
     self.searchBarRightPosition.constant = -65.0;
     self.doneButton.hidden = NO;
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:0.1 delay:0.0 options:0 animations:^{
         [self.searchBar layoutIfNeeded];
-    }];
+    } completion:nil];
+//    
+//    [UIView animateWithDuration:0.5 animations:^{
+//        [self.searchBar layoutIfNeeded];
+//    }];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -365,9 +369,16 @@ float const TABLE_VIEW_TOP_CONSTANT = 70.0;
     [self setActiveSearchFlag:textField.text];
     self.searchBarRightPosition.constant = -15.0;
     self.doneButton.hidden = YES;
-    [UIView animateWithDuration:0.5 animations:^{
-        [self.searchBar layoutIfNeeded];
-    }];
+//    [UIView animateWithDuration:0.5 animations:^{
+//        [self.searchBar layoutIfNeeded];
+//    }];
+    
+    
+    [UIView animateKeyframesWithDuration:.5 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.5 animations:^{
+             [self.searchBar layoutIfNeeded];
+        }];
+    } completion:nil];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
