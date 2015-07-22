@@ -130,7 +130,6 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     [self addServiceWithTitle:EMAIL_TITLE logoName:EMAIL_LOGO backgroundColor:CLEAR_COLOR() borderColor:DEFAULT_GRAY_COLOR()];
     
     // Set the navigation bar attributes (title and back button)
-//    self.navigationItem.title = AMB_RAF_SHARE_SERVICES_TITLE;
     UIButton *closeButton = [[UIButton alloc] initWithFrame:AMB_CLOSE_BUTTON_FRAME()];
     [closeButton setImage:imageFromBundleNamed(AMB_CLOSE_BUTTON_NAME) forState:UIControlStateNormal];
     [closeButton addTarget:self action:@selector(closeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -164,7 +163,6 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.titleLabel.font = DEFAULT_FONT();
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    //self.titleLabel.text = TITLE_LABEL_TEXT;
     
     // Add to view hierarchy
     [self.view addSubview:self.titleLabel];
@@ -215,7 +213,6 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     self.descriptionLabel.font = DEFAULT_FONT();
     self.descriptionLabel.textAlignment = NSTextAlignmentCenter;
     self.descriptionLabel.textColor = DEFAULT_GRAY_COLOR();
-//    self.descriptionLabel.text = DESCRIPTION_LABLE_TEXT;
     
     // Add to view hierarchy
     [self.view addSubview:self.descriptionLabel];
@@ -482,7 +479,6 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
             if (result == SLComposeViewControllerResultDone)
             {
                 DLog();
-                //TODO: Add callback Function
                 [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"facebook" recipientUsername:@""];
             }
         };
@@ -495,7 +491,6 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
             if (result == SLComposeViewControllerResultDone)
             {
                 DLog();
-                //TODO: Add callback Function
                 [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"twitter" recipientUsername:@""];
             }
         };
@@ -562,17 +557,6 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)showLinkedInComposeController
-{
-    DLog();
-//    LinkedInShareViewController *lkdinVC = [[LinkedInShareViewController alloc] init];
-//    
-//    lkdinVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-//    lkdinVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//    [self presentViewController:lkdinVC animated: YES completion:nil];
-}
-
-
 
 
 #pragma mark - LinkedInAuthorizeWebViewDelegate
@@ -593,7 +577,6 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
 - (void)userDidPost:(NSMutableDictionary *)data
 {
     DLog(@"%@", data);
-    // TODO: add callback function
     [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"linkedin" recipientUsername:@""];
 }
 
@@ -676,11 +659,6 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
           }
       }];
     [task resume];
-
-    
-    
-    
 }
 
 @end
-

@@ -184,8 +184,8 @@
     lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
     
     return @{
-             @"firstName" : firstName,
-             @"lastName" : lastName
+             @"firstName" : firstName? firstName : @"",
+             @"lastName" : lastName? lastName : @""
              };
 }
 
