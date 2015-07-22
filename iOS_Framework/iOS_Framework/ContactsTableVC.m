@@ -293,8 +293,10 @@ float const TABLE_VIEW_TOP_CONSTANT = 70.0;
     DLog();
     
     Contact *contact;
+    // Pull contact from filtered array if we are in an active search
     contact = self.isActiveSearch ? self.filteredData[indexPath.row] : self.data[indexPath.row];
     
+    // Determine if contact should be added or removed from selected
     if ([self.selected member:contact])
     {
         [self.selected removeObject:contact];
@@ -306,28 +308,6 @@ float const TABLE_VIEW_TOP_CONSTANT = 70.0;
     
     [self.delegate selectedContactsChanged];
 }
-
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    // Included to give full line separator in tableView
-//
-//    if ([cell respondsToSelector:@selector(setSeparatorInset:)])
-//    {
-//        [cell setSeparatorInset:UIEdgeInsetsZero];
-//    }
-//
-//    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)])
-//    {
-//        [cell setPreservesSuperviewLayoutMargins:NO];
-//    }
-//
-//    if ([cell respondsToSelector:@selector(setLayoutMargins:)])
-//    {
-//        [cell setLayoutMargins:UIEdgeInsetsZero];
-//    }
-}
-
-
 
 - (void)addCheckMarkOnCell:(ContactListTableCell *)cell
 {
@@ -350,16 +330,15 @@ float const TABLE_VIEW_TOP_CONSTANT = 70.0;
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     DLog();
+    
     [self setActiveSearchFlag:textField.text];
+    
+    // Shrink the text bar width to reveal a 'Done' button
     self.searchBarRightPosition.constant = -65.0;
     self.doneButton.hidden = NO;
     [UIView animateWithDuration:0.1 delay:0.0 options:0 animations:^{
         [self.searchBar layoutIfNeeded];
     } completion:nil];
-//    
-//    [UIView animateWithDuration:0.5 animations:^{
-//        [self.searchBar layoutIfNeeded];
-//    }];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -367,13 +346,10 @@ float const TABLE_VIEW_TOP_CONSTANT = 70.0;
     DLog();
     [textField resignFirstResponder];
     [self setActiveSearchFlag:textField.text];
-    self.searchBarRightPosition.constant = -15.0;
+    
+    // Restore the width of the text field and hide 'Done' button
     self.doneButton.hidden = YES;
-//    [UIView animateWithDuration:0.5 animations:^{
-//        [self.searchBar layoutIfNeeded];
-//    }];
-    
-    
+    self.searchBarRightPosition.constant = -15.0;
     [UIView animateKeyframesWithDuration:.5 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
         [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.5 animations:^{
              [self.searchBar layoutIfNeeded];
