@@ -54,6 +54,12 @@ NSString * const SHORT_CODE_CLIPBOARD_IMAGE_NAME = @"clipboard.png";
 float const SHARE_SERVICE_TOP_PADDING = 60.0;
 float const SHARE_SERVICE_WIDTH_MULTIPLIER = 0.9;
 
+NSString * const AMB_SHARE_TRACK_URL = @"https://dev-ambassador-api.herokuapp.com/track/share/";
+NSString * const SHARE_TRACK_SHORT_CODE_KEY = @"short_code";
+NSString * const SHARE_TRACK_RECIPIENT_EMAIL_KEY = @"recipient_email";
+NSString * const SHARE_TRACK_SOCIAL_NAME_KEY = @"social_name";
+NSString * const SHARE_TRACK_RECIPIENT_USERNAME_KEY = @"recipient_username";
+
 NSString * CELL_IDENTIFIER = @"cellIdentifier";
 CGSize CELL_SIZE()
 {
@@ -86,6 +92,7 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
 @property ContactLoader *loader;
 @property LinkedInShareViewController *lkdIn;
 @property NSString *shortURL;
+@property NSString *shortCode;
 
 @end
 
@@ -94,12 +101,13 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
 @implementation RAFShareScreen
 
 #pragma mark - Initialization / Lifecycle
-- (id)initWithShortURL:(NSString *)url
+- (id)initWithShortURL:(NSString *)url shortCode:(NSString *)shortCode
 {
     DLog();
     if ([super init])
     {
         self.shortURL = [NSString stringWithString:url];
+        self.shortCode = [NSString stringWithString:shortCode];
         [self setUp];
     }
     
@@ -469,10 +477,28 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     if ([serviceTitle isEqualToString:FACEBOOK_TITLE])
     {
         vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        vc.completionHandler = ^(SLComposeViewControllerResult result)
+        {
+            if (result == SLComposeViewControllerResultDone)
+            {
+                DLog();
+                //TODO: Add callback Function
+                [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"facebook" recipientUsername:@""];
+            }
+        };
     }
     else if ([serviceTitle isEqualToString:TWITTER_TITLE])
     {
         vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        vc.completionHandler = ^(SLComposeViewControllerResult result)
+        {
+            if (result == SLComposeViewControllerResultDone)
+            {
+                DLog();
+                //TODO: Add callback Function
+                [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"twitter" recipientUsername:@""];
+            }
+        };
     }
     else if ([serviceTitle isEqualToString:LINKEDIN_TITLE])
     {
@@ -507,14 +533,6 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     
     if (vc)
     {
-        vc.completionHandler = ^(SLComposeViewControllerResult result)
-        {
-            if (result == SLComposeViewControllerResultDone)
-            {
-                DLog();
-                //TODO: Add callback Function
-            }
-        };
         [vc setInitialText:message];
         [self presentViewController:vc animated:YES completion:nil];
     }
@@ -576,6 +594,7 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
 {
     DLog(@"%@", data);
     // TODO: add callback function
+    [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"linkedin" recipientUsername:@""];
 }
 
 
@@ -600,7 +619,6 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
 
 
 #pragma mark - Helper Functions
-#pragma mark - Helper Functions
 - (void)simpleAlertWith:(NSString*)title message:(NSString *)message
 {
     DLog();
@@ -614,6 +632,54 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     [alert addAction:okAction];
     
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+
+
+#pragma mark - Share track
+- (void)postShareTrackWithShortCode:(NSString *)shortCode recipientEmail:(NSString *)recipientEmail socialName:(NSString *)socialName recipientUsername:(NSString *)recipientUsername
+{
+    DLog();
+    //Create payload
+    NSDictionary *payload = @{ SHARE_TRACK_SHORT_CODE_KEY : shortCode,
+                               SHARE_TRACK_RECIPIENT_EMAIL_KEY : recipientEmail,
+                               SHARE_TRACK_SOCIAL_NAME_KEY : socialName,
+                               SHARE_TRACK_RECIPIENT_USERNAME_KEY : recipientUsername };
+    
+    NSURL *url = [NSURL URLWithString:AMB_SHARE_TRACK_URL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+    
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession]
+                                  dataTaskWithRequest:request
+                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+      {
+          if (!error)
+          {
+              DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+              
+              //Check for 2xx status codes
+              if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                  ((NSHTTPURLResponse *)response).statusCode < 300)
+              {
+                  // Looking for a "Polling" response
+                  DLog(@"Response from backend from sending identify: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+              }
+          }
+          else
+          {
+              DLog(@"Error: %@", error.localizedDescription);
+          }
+      }];
+    [task resume];
+
+    
+    
+    
 }
 
 @end

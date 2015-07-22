@@ -28,7 +28,7 @@
         self.mbsy_revenue = @-1;
         self.mbsy_deactivate_new_ambassador = @0;
         self.mbsy_transaction_uid = @"";
-        self.mbsy_add_to_group_id = @-1;
+        self.mbsy_add_to_group_id = @"";
         self.mbsy_event_data1 = @"";
         self.mbsy_event_data2 = @"";
         self.mbsy_event_data3 = @"";
