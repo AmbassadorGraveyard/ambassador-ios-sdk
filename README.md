@@ -72,7 +72,7 @@ The RAF screen labels and navigation title can be customized with RAF Parameters
 * Welcome Description - "Refer a friend to get rewards"
 * Default Share Message - "I'm a fan of this company, check them out!"
 
-![Alt text](screenShots/rafDemoImg.png?raw=true)
+<!--<img src="screenShots/rafDemoImg.png" alt="rafDemo" style="width: 100px;"/>-->
 
 ```objective-c  
 // Create the RAFParameters object
