@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ContactListTableCell : UITableViewCell
-
 @property UILabel *name;
 @property UILabel *value;
-
 @end

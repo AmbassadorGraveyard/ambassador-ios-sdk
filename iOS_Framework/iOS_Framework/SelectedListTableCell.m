@@ -33,9 +33,14 @@ float const SELECTED_NAME_LEFT_CONSTANT = 15.0;
 
 - (void)setUpName
 {
+    // Initialize properties
     self.name = [[UILabel alloc] init];
     self.name.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    // Add to view hierarchy
     [self.contentView addSubview:self.name];
+    
+    // Add autolayout constraints
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.name
                                                                  attribute:NSLayoutAttributeHeight
                                                                  relatedBy:NSLayoutRelationEqual
