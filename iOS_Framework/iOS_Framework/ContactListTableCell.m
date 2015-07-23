@@ -11,13 +11,13 @@
 
 
 #pragma mark - Local Constants
-float const NAME_HEIGHT_CONSTANT = 20.0;
-float const NAME_WIDTH_CONSTANT = -15.0;
-float const NAME_LEFT_CONSTANT = 15.0;
+static float const NAME_HEIGHT_CONSTANT = 20.0;
+static float const NAME_WIDTH_CONSTANT = -15.0;
+static float const NAME_LEFT_CONSTANT = 15.0;
 
-float const VALUE_HEIGHT_CONSTANT = 20.0;
-float const VALUE_WIDTH_CONSTANT = -15.0;
-float const VALUE_LEFT_CONSTANT = 15.0;
+static float const VALUE_HEIGHT_CONSTANT = 20.0;
+static float const VALUE_WIDTH_CONSTANT = -15.0;
+static float const VALUE_LEFT_CONSTANT = 15.0;
 #pragma mark -
 
 

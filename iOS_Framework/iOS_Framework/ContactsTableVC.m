@@ -12,6 +12,9 @@
 #import "Contact.h"
 #import "Utilities.h"
 
+
+
+#pragma mark - Local Constants
 CGRect SEARCH_ICON_FRAME()
 {
     return CGRectMake(0, 0, 28, 14);
@@ -43,6 +46,9 @@ float const DONE_BUTTON_HEIGHT_CONSTANT = 12.0;
 float const DONE_BUTTON_WIDTH_CONSTANT = 50.0;
 
 float const TABLE_VIEW_TOP_CONSTANT = 70.0;
+#pragma mark -
+
+
 
 @interface ContactsTableVC () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 @property UITextField *searchBar;
@@ -305,6 +311,11 @@ float const TABLE_VIEW_TOP_CONSTANT = 70.0;
     {
         [self.selected addObject:contact];
     }
+    if (self.isActiveSearch)
+    {
+        self.searchBar.text = @"";
+        [self textFieldShouldClear:self.searchBar];
+    }
     
     [self.delegate selectedContactsChanged];
 }
@@ -312,7 +323,7 @@ float const TABLE_VIEW_TOP_CONSTANT = 70.0;
 - (void)addCheckMarkOnCell:(ContactListTableCell *)cell
 {
     UIImageView *accView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 18.5, 13.5)];
-    accView.image = [UIImage imageNamed:@"check.png" inBundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"] compatibleWithTraitCollection:nil];
+    accView.image = imageFromBundleNamed(@"check.png");
     cell.accessoryView = accView;
 }
 
