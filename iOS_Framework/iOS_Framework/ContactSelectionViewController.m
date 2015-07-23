@@ -13,6 +13,12 @@
 #import "ComposeMessageVC.h"
 #import "Utilities.h"
 
+
+
+#pragma mark - Local Constants
+static float const SEND_BUTTON_HEIGHT = 42.0;
+static float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
+
 typedef struct {
     float contactsTableWidthMultiplier;
     float selectionTableWidthMultiplier;
@@ -37,12 +43,11 @@ SubViewConstraints getConstraints()
     
     return constraints;
 }
+#pragma mark -
 
-float const SEND_BUTTON_HEIGHT = 42.0;
-float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
+
 
 @interface ContactSelectionViewController () <SelectedContactsProtocol>
-
 @property UIView *flexView;
 @property UIView *fadeInView;
 @property ContactsTableVC *contactsTable;
@@ -54,8 +59,9 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
 @property NSLayoutConstraint *composeBoxHeight;
 @property NSLayoutConstraint *composeBoxWidth;
 @property NSLayoutConstraint *composeBoxBottom;
-
 @end
+
+
 
 @implementation ContactSelectionViewController
 
@@ -79,7 +85,6 @@ float const COMPOSE_MESSAGE_BOX_HEIGHT = 123.0;
     DLog();
     
     // Navigation bar set up
-//    self.navigationItem.title = AMB_RAF_SHARE_SERVICES_TITLE;
     UIButton *closeButton = [[UIButton alloc] initWithFrame:AMB_CLOSE_BUTTON_FRAME()];
     [closeButton setImage:imageFromBundleNamed(AMB_BACK_BUTTON_NAME) forState:UIControlStateNormal];
     [closeButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];

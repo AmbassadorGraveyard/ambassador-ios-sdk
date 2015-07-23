@@ -16,25 +16,24 @@
 
 
 #pragma mark - Local constants
-float const SHARE_TABLE_TOP_CONSTANT = 60.0;
 
-NSString * const SHARE_CELL_IDENTIFIER = @"selectedCell";
-NSString * const SCREEN_TITLE = @"SELECTED CONTACTS";
-NSString * const CLEAR_ALL_BUTTON_TITLE = @"CLEAR ALL";
+static NSString * const SHARE_CELL_IDENTIFIER = @"selectedCell";
+static NSString * const SCREEN_TITLE = @"SELECTED CONTACTS";
+static NSString * const CLEAR_ALL_BUTTON_TITLE = @"CLEAR ALL";
 
-float const SCREEN_TITLE_TOP_CONSTANT = 20.0;
-float const SCREEN_TITLE_LEFT_CONSTANT = 15.0;
-float const SCREEN_TITLE_RIGHT_CONSTANT = -90.0;
-float const SCREEN_TITLE_HEIGHT_CONSTANT = 20.0;
+static float const SHARE_TABLE_TOP_CONSTANT = 60.0;
+
+static float const SCREEN_TITLE_TOP_CONSTANT = 20.0;
+static float const SCREEN_TITLE_LEFT_CONSTANT = 15.0;
+static float const SCREEN_TITLE_RIGHT_CONSTANT = -90.0;
+static float const SCREEN_TITLE_HEIGHT_CONSTANT = 20.0;
 #pragma mark -
 
 
 
 @interface SelectedTableVC () <UITableViewDataSource, UITableViewDelegate>
-
 @property UILabel *screenTitle;
 @property UIButton *clearAllButton;
-
 @end
 
 

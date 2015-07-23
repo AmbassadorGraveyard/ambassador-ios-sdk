@@ -10,6 +10,7 @@
 #define iOS_Framework_Constants_h
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 #pragma mark - Notifications
 extern NSString * const AMB_IDENTIFY_NOTIFICATION_NAME;
@@ -61,5 +62,21 @@ extern NSString * const LINKEDIN_ERROR_KEY;
 extern NSString * const LINKEDIN_CODE_KEY;
 extern NSString * const LINKEDIN_EXPIRES_KEY;
 extern NSString * const LINKEDIN_ACCESS_TOKEN_KEY;
+
+
+typedef struct {
+    float topMultiplier;
+    float topConstatnt;
+    float bottomMultiplier;
+    float bottomConstant;
+    float leftMultiplier;
+    float leftConstant;
+    float rightMultiplier;
+    float rightConstant;
+    float heightMultiplier;
+    float heightConstant;
+    float widthMultiplier;
+    float widthConstant;
+} LayoutProps;
 
 #endif
