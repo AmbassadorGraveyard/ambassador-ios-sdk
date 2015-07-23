@@ -9,12 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface Contact : NSObject
-
 @property NSString *firstName;
 @property NSString *lastName;
 @property NSString *label;
 @property NSString *value;
 
 - (NSString *)fullName;
-
 @end
