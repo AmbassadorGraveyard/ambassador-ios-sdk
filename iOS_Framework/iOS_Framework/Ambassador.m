@@ -55,11 +55,11 @@ static Conversion *conversion;
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
 //
-+ (void)runWithKey:(NSString *)key convertingOnInstall:(ConversionParameters *)information
++ (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information
 {
     DLog();
     [[Ambassador sharedInstance] runWithKey:key
-                         convertingOnInstall:information];
+                         convertOnInstall:information];
 }
 
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
@@ -83,7 +83,7 @@ static Conversion *conversion;
 
 
 #pragma mark - Internal API methods
-- (void)runWithKey:(NSString *)key convertingOnInstall:(ConversionParameters *)information
+- (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information
 {
 #if DEBUG
         DLog(@"Removing user defaults for testing");
