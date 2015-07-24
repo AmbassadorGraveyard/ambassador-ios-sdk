@@ -91,7 +91,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self performSelector:@selector(presentRAF) withObject:self afterDelay:7.0];
+    [self performSelector:@selector(presentRAF) withObject:self afterDelay:2.0];
 }
 
 - (void)presentRAF

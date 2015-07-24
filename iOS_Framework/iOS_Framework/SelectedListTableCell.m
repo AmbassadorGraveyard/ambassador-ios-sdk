@@ -33,6 +33,8 @@ float const SELECTED_NAME_LEFT_CONSTANT = 15.0;
 
 - (void)setUpName
 {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     // Initialize properties
     self.name = [[UILabel alloc] init];
     self.name.translatesAutoresizingMaskIntoConstraints = NO;

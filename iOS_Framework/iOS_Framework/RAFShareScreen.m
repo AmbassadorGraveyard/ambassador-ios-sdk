@@ -25,19 +25,14 @@ NSString * const SERVICE_BACKGROUND_COLOR_KEY = @"backgroundColor";
 NSString * const SERVICE_BORDER_COLOR_KEY = @"borderColor";
 
 NSString * const FACEBOOK_TITLE = @"Facebook";
-NSString * const FACEBOOK_LOGO = @"facebook.png";
 
 NSString * const TWITTER_TITLE = @"Twitter";
-NSString * const TWITTER_LOGO = @"twitter.png";
 
 NSString * const LINKEDIN_TITLE = @"LinkedIn";
-NSString * const LINKEDIN_LOGO = @"linkedin.png";
 
 NSString * const SMS_TITLE = @"SMS";
-NSString * const SMS_LOGO = @"sms.png";
 
 NSString * const EMAIL_TITLE = @"Email";
-NSString * const EMAIL_LOGO = @"email.png";
 
 float const TITLE_LABLE_HEIGHT = 30.0;
 float const TITLE_LABEL_TOP_PADDING_MULTIPLIER = 0.07;
@@ -123,11 +118,11 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     
     // Fill the service information array for service cells to use
     self.shareServiceInformation = [[NSMutableArray alloc] init];
-    [self addServiceWithTitle:FACEBOOK_TITLE logoName:FACEBOOK_LOGO backgroundColor:FACEBOOK_COLOR() borderColor:CLEAR_COLOR()];
-    [self addServiceWithTitle:TWITTER_TITLE logoName:TWITTER_LOGO backgroundColor:TWITTER_COLOR() borderColor:CLEAR_COLOR()];
-    [self addServiceWithTitle:LINKEDIN_TITLE logoName:LINKEDIN_LOGO backgroundColor:LINKEDIN_COLOR() borderColor:CLEAR_COLOR()];
-    [self addServiceWithTitle:SMS_TITLE logoName:SMS_LOGO backgroundColor:CLEAR_COLOR() borderColor:DEFAULT_GRAY_COLOR()];
-    [self addServiceWithTitle:EMAIL_TITLE logoName:EMAIL_LOGO backgroundColor:CLEAR_COLOR() borderColor:DEFAULT_GRAY_COLOR()];
+    [self addServiceWithTitle:FACEBOOK_TITLE logoName:FB_IMAGE_NAME backgroundColor:FACEBOOK_COLOR() borderColor:CLEAR_COLOR()];
+    [self addServiceWithTitle:TWITTER_TITLE logoName:TWTR_IMAGE_NAME backgroundColor:TWITTER_COLOR() borderColor:CLEAR_COLOR()];
+    [self addServiceWithTitle:LINKEDIN_TITLE logoName:LKDN_IMAGE_NAME backgroundColor:LINKEDIN_COLOR() borderColor:CLEAR_COLOR()];
+    [self addServiceWithTitle:SMS_TITLE logoName:SMS_IMAGE_NAME backgroundColor:CLEAR_COLOR() borderColor:DEFAULT_GRAY_COLOR()];
+    [self addServiceWithTitle:EMAIL_TITLE logoName:EMAIL_IMAGE_NAME backgroundColor:CLEAR_COLOR() borderColor:DEFAULT_GRAY_COLOR()];
     
     // Set the navigation bar attributes (title and back button)
     UIButton *closeButton = [[UIButton alloc] initWithFrame:AMB_CLOSE_BUTTON_FRAME()];
@@ -579,6 +574,23 @@ CGRect SHORT_CODE_CLIPBOARD_FRAME()
     DLog(@"%@", data);
     [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"linkedin" recipientUsername:@""];
 }
+
+- (void)userMustReauthenticate
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Authentication Error" message:@"Sorry. You're currently logged out. Please log in and try your post again" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Continue to login" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                               {
+                                   DLog();
+                                       LinkedInAuthorizeWebView *authVC = [[LinkedInAuthorizeWebView alloc] init];
+                                       authVC.delegate = self;
+                                   [self.navigationController pushViewController:authVC animated:YES];
+                               }];
+    
+    [alert addAction:okAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+
+    }
 
 
 #pragma mark - ContactLoaderDelegate
