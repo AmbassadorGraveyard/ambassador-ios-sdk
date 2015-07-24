@@ -104,3 +104,17 @@ NSString * const LINKEDIN_ERROR_KEY = @"error";
 NSString * const LINKEDIN_CODE_KEY = @"code";
 NSString * const LINKEDIN_EXPIRES_KEY = @"expires_in";
 NSString * const LINKEDIN_ACCESS_TOKEN_KEY = @"access_token";
+
+
+
+#pragma mark - Image Names
+NSString * const BACK_IMAGE_NAME = @"back.png";
+NSString * const CHECK_IMAGE_NAME = @"check.png";
+NSString * const PENCIL_IMAGE_NAME = @"pencil.png";
+NSString * const COPY_IMAGE_NAME = @"clipboard.png";
+NSString * const FB_IMAGE_NAME = @"facebook.png";
+NSString * const TWTR_IMAGE_NAME = @"twitter.png";
+NSString * const LKDN_IMAGE_NAME = @"linkedin.png";
+NSString * const SMS_IMAGE_NAME = @"sms.png";
+NSString * const EMAIL_IMAGE_NAME = @"email.png";
+NSString * const SEARCH_IMAGE_NAME = @"search.png";
