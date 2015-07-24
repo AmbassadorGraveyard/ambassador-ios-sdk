@@ -33,7 +33,6 @@ float const EDIT_BUTTON_WIDTH_CONSTANT = 40.0;
 float const EDIT_BUTTON_RIGHT_CONSTANT = -15.0;
 float const EDIT_BUTTON_TOP_CONSTANT = 20.0;
 
-NSString * EDIT_BUTTON_IMAGE_NAME = @"pencil.png";
 NSString * EDIT_BUTTON_SELECTED_TITLE = @"DONE";
 
 UIColor * ACCENT_COLOR()
@@ -45,15 +44,16 @@ UIColor * ACCENT_COLOR()
 
 
 @interface ComposeMessageVC ()
-
 @property UIView *composeMessageView;
 @property UITextView *textBox;
 @property UIView *topBorderView;
-
 @end
+
+
 
 @implementation ComposeMessageVC
 
+#pragma mark - Initialization
 - (id)initWithInitialMessage:(NSString *)string
 {
     if ([super init])
@@ -245,7 +245,7 @@ UIColor * ACCENT_COLOR()
     // Initialize properties
     self.editButton = [[UIButton alloc] init];
     self.editButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.editButton setBackgroundImage:imageFromBundleNamed(EDIT_BUTTON_IMAGE_NAME) forState:UIControlStateNormal];
+    [self.editButton setBackgroundImage:imageFromBundleNamed(PENCIL_IMAGE_NAME) forState:UIControlStateNormal];
     [self.editButton setBackgroundImage:[[UIImage alloc] init] forState:UIControlStateSelected];
     [self.editButton setTitle:EDIT_BUTTON_SELECTED_TITLE forState:UIControlStateSelected];
     self.editButton.titleLabel.font = DEFAULT_FONT_SMALL();
@@ -286,6 +286,9 @@ UIColor * ACCENT_COLOR()
                                                                          constant:EDIT_BUTTON_TOP_CONSTANT]];
 }
 
+
+
+#pragma mark -
 - (void)updateButtonWithCount:(NSUInteger)count
 {
     self.sendButton.backgroundColor = count == 0 ? DEFAULT_GRAY_COLOR() : ACCENT_COLOR();
@@ -303,6 +306,9 @@ UIColor * ACCENT_COLOR()
     [self.sendButton setTitle:text forState:UIControlStateNormal];
 }
 
+
+
+#pragma mark -
 - (void)editButtonPressed:(UIButton *)button
 {
     DLog();

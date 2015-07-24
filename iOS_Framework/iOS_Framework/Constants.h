@@ -64,19 +64,17 @@ extern NSString * const LINKEDIN_EXPIRES_KEY;
 extern NSString * const LINKEDIN_ACCESS_TOKEN_KEY;
 
 
-typedef struct {
-    float topMultiplier;
-    float topConstatnt;
-    float bottomMultiplier;
-    float bottomConstant;
-    float leftMultiplier;
-    float leftConstant;
-    float rightMultiplier;
-    float rightConstant;
-    float heightMultiplier;
-    float heightConstant;
-    float widthMultiplier;
-    float widthConstant;
-} LayoutProps;
+
+#pragma mark - Image Names
+extern NSString * const BACK_IMAGE_NAME;
+extern NSString * const CHECK_IMAGE_NAME;
+extern NSString * const PENCIL_IMAGE_NAME;
+extern NSString * const COPY_IMAGE_NAME;
+extern NSString * const FB_IMAGE_NAME;
+extern NSString * const TWTR_IMAGE_NAME;
+extern NSString * const LKDN_IMAGE_NAME;
+extern NSString * const SMS_IMAGE_NAME;
+extern NSString * const EMAIL_IMAGE_NAME;
+extern NSString * const SEARCH_IMAGE_NAME;
 
 #endif

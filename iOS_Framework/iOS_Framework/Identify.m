@@ -15,7 +15,7 @@
 
 
 #pragma mark - Local Constants
-NSString * const AMB_IDENTIFY_URL = @"http://0.0.0.0:7999/augur.html?cbURL=ambassador:mylocation";
+NSString * const AMB_IDENTIFY_URL = @"http://127.0.0.1:7999/augur.html?cbURL=ambassador:mylocation";
 NSString * const AMB_IDENTIFY_JS_VAR = @"JSONdata";
 NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
 NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/?u=***REMOVED***";
