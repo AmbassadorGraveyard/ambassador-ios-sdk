@@ -29,7 +29,7 @@ ContentViewConstraints getContentViewConstraints()
         viewConstraints.widthMultiplier = 0.0;
         viewConstraints.widthConstant = 390.0;
         viewConstraints.topOffsetMultiplier = 0.30;
-        viewConstraints.heightConstant = 150.0;
+        viewConstraints.heightConstant = 200.0;
     }
     else
     {
@@ -418,11 +418,15 @@ NSString * const SHARE_CODE_KEY = @"code";
                   ((NSHTTPURLResponse *)response).statusCode < 300)
               {
                   [self.delegate userDidPost:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
-                  //TODO: call completion handler
               }
               else if (((NSHTTPURLResponse *)response).statusCode == 400)
               {
                   [self simpleAlertWith:@"Posting Error" message:@"You may have already posted this comment"];
+              }
+              else if (((NSHTTPURLResponse *)response).statusCode == 401)
+              {
+                  DLog();
+                  [self.delegate userMustReauthenticate];
               }
               else
               {

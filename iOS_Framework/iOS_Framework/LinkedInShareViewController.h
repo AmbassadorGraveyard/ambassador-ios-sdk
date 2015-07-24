@@ -11,6 +11,7 @@
 @protocol LinkedInShareDelegate <NSObject>
 
 - (void)userDidPost:(NSMutableDictionary *)data;
+- (void)userMustReauthenticate;
 
 @end
 

@@ -35,11 +35,6 @@ static float const VALUE_LEFT_CONSTANT = 15.0;
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-}
-
 - (void)setUp
 {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
