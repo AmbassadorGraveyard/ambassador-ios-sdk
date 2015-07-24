@@ -25,5 +25,5 @@ NSString * const AMB_PUSHER_KEY = @"***REMOVED***";
 
 NSString * const AMB_PUSHER_AUTHENTICATION_URL = @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
 
-
+NSString * const AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY = @"AMBFIRSTLAUNCHSTORAGE";
 
