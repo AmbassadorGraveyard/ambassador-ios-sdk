@@ -10,6 +10,7 @@
 
 @implementation ConversionParameters
 
+#pragma mark - Initialization
 - (id)init
 {
     if ([super init])
@@ -27,7 +28,7 @@
         self.mbsy_revenue = @-1;
         self.mbsy_deactivate_new_ambassador = @0;
         self.mbsy_transaction_uid = @"";
-        self.mbsy_add_to_group_id = @-1;
+        self.mbsy_add_to_group_id = @"";
         self.mbsy_event_data1 = @"";
         self.mbsy_event_data2 = @"";
         self.mbsy_event_data3 = @"";
@@ -37,6 +38,9 @@
     return self;
 }
 
+
+
+#pragma mark - Formatted printing
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ |",
@@ -60,8 +64,12 @@
             self.mbsy_is_approved];
 }
 
+
+
+#pragma mark - Validation
 - (BOOL)isValid
 {
     return [self.mbsy_campaign intValue] > -1 && ![self.mbsy_email isEqualToString:@""] && [self.mbsy_revenue intValue] > -1;
 }
+
 @end
