@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ConversionParameters.h"
+#import "RAFParameters.h"
 
 @interface Ambassador : NSObject
 
@@ -20,7 +21,7 @@
 #pragma mark - API functions
 + (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information;
 + (void)registerConversion:(ConversionParameters *)information;
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController;
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(RAFParameters*)parameters;
 + (void)identifyWithEmail:(NSString *)email;
 
 @end
