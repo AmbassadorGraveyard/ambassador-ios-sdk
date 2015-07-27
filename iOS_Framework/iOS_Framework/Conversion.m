@@ -11,6 +11,7 @@
 #import "FMDatabase.h"
 #import "FMDatabaseQueue.h"
 #import "Constants.h"
+#import "Utilities.h"
 
 
 
@@ -20,6 +21,7 @@ NSString * const AMB_CONVERSION_SQL_TABLE_NAME = @"conversions";
 NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/?u=abfd1c89-4379-44e2-8361-ee7b87332e32";
 NSString * const AMB_CONVERSION_INSERT_QUERY = @"INSERT INTO Conversions VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions (ID INTEGER PRIMARY KEY AUTOINCREMENT, mbsy_campaign INTEGER, mbsy_email TEXT, mbsy_first_name TEXT, mbsy_last_name TEXT, mbsy_email_new_ambassador INTEGER, mbsy_uid TEXT, mbsy_custom1 TEXT, mbsy_custom2 TEXT, mbsy_custom3 TEXT, mbsy_auto_create INTEGER, mbsy_revenue REAL, mbsy_deactivate_new_ambassador INTEGER, mbsy_transaction_uid TEXT, mbsy_add_to_group_id INTEGER, mbsy_event_data1 TEXT, mbsy_event_data2 TEXT, mbsy_event_data3 TEXT, mbsy_is_approved INTEGER, insights_data BLOB)";
+#pragma mark -
 
 
 
@@ -37,21 +39,26 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
 
 @implementation Conversion
 
+#pragma mark - Initialization
 - (id)init
 {
     DLog();
     if ([super init])
     {
+        // Build file path for the database file and log it
         self.databaseName = AMB_CONVERSION_DB_NAME;
         self.libraryDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject];
         self.databaseFilePath = [self.libraryDirectoryPath stringByAppendingString:self.databaseName];
         DLog(@"Database file for viewing at: %@", self.databaseFilePath);
         
+        // Check if the file exists
         if (![[NSFileManager defaultManager] fileExistsAtPath:self.databaseFilePath])
         {
             DLog(@"Database file needs to be created");
             self.database = [FMDatabase databaseWithPath:self.databaseFilePath];
             [self.database open];
+            
+            // Run the SQL query to create the Conversions table
             if ([self.database executeUpdate:AMB_CREATE_CONVERSION_TABLE])
             {
                 DLog(@"Create 'Conversions' table succeeded");
@@ -62,13 +69,17 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
             }
             [self.database close];
         }
-
+        
+        // Set the database queue to point to database file
         self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:self.databaseFilePath];
     }
     
     return self;
 }
 
+
+
+#pragma mark - API Functions
 - (void)registerConversionWithParameters:(ConversionParameters *)parameters
 {
     DLog();
@@ -83,6 +94,7 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
                     format:@"Conversion parameters must have set values for 'mbsy_revenue' (NSNumber *), 'mbsy_campaign' (NSNumber *), and 'mbsy_email' (NSString *)"];
     }
     
+    // Insert new record into SQL database
     [self.databaseQueue inDatabase:^(FMDatabase *db)
     {
         [db executeUpdate:AMB_CONVERSION_INSERT_QUERY,
@@ -115,15 +127,16 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
     NSDictionary *userDefaultsInsights = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
     
     //Check if insights and identify data exist to send. Else don't send
-    if (!userDefaultsInsights) { return; }
+    if (!userDefaultsInsights || !userDefaultsIdentify) { return; }
     
     [self.databaseQueue inDatabase:^(FMDatabase *db)
     {
         DLog(@"Getting all database records");
         FMResultSet *resultSet = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM %@", AMB_CONVERSION_SQL_TABLE_NAME]];
-        
+
         while ([resultSet next])
         {
+            // Build a dictionary for sending in POST request below
             NSMutableDictionary * fields = [NSMutableDictionary dictionaryWithDictionary:
                 @{
                     @"mbsy_campaign" : [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_campaign"]],
@@ -152,7 +165,7 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
             {
                 [insightsDataCopy removeObjectForKey:@"status"];
             }
-            
+
             //Build the payload data to POST to the backend
             NSDictionary * consumer = @{
                                         @"UID" : userDefaultsIdentify[@"consumer"][@"UID"],
@@ -162,7 +175,6 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
                                       @"type" : userDefaultsIdentify[@"device"][@"type"],
                                       @"ID" : userDefaultsIdentify[@"device"][@"ID"]
                                       };
-            
             [fields removeObjectForKey:@"insights"];
             NSDictionary * payload = @{
                                        @"fp" : @{
@@ -171,11 +183,10 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
                                                },
                                        @"fields" : fields
                                        };
-            
+            // Convert to NSData to attach to request's HTTPBody
             NSData *JSONData = [NSJSONSerialization dataWithJSONObject:payload
                                                                options:0
                                                                  error:nil];
-            
             //Create the POST request
             NSURL *url = [NSURL URLWithString:AMB_CONVERSION_URL];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -194,7 +205,7 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
               {
                   if (!error)
                   {
-                      DLog(@"Status code: %ld", ((NSHTTPURLResponse *)response).statusCode);
+                      DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
                       
                       //Check for 2xx status codes
                       if (((NSHTTPURLResponse *)response).statusCode >= 200 &&

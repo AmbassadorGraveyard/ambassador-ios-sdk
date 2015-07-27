@@ -12,15 +12,23 @@
 #import "Conversion.h"
 #import "ConversionParameters.h"
 #import "Utilities.h"
+#import "RAFNavigationController.h"
+#import "RAFShareScreen.h"
 
 
 
 #pragma mark - Local Constants
 float const AMB_CONVERSION_FLUSH_TIME = 10.0;
+NSString * const AMBASSADOR_INFO_URLS_KEY = @"urls";
+NSString * const CAMPAIGN_UID_KEY = @"campaign_uid";
+NSString * const SHORT_CODE_KEY = @"short_code";
+NSString * const SHORT_CODE_URL_KEY = @"url";
+#pragma mark -
 
 
 
 @implementation Ambassador
+
 #pragma mark - Static class variables
 static NSString *APIKey;
 static NSMutableDictionary *backEndData;
@@ -50,7 +58,6 @@ static Conversion *conversion;
 }
 
 #pragma mark - Class API method wrappers of instance API methods
-
 //This was done to allow [Ambassador some_method]
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
@@ -62,10 +69,14 @@ static Conversion *conversion;
                          convertOnInstall:information];
 }
 
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(RAFParameters*)parameters
 {
     DLog();
-    [[Ambassador sharedInstance] presentRAFForCampaign:ID FromViewController:viewController];
+    if (!parameters) {
+        parameters = [[RAFParameters alloc] init];
+    }
+    
+    [[Ambassador sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withRAFParameters:parameters];
 }
 
 + (void)registerConversion:(ConversionParameters *)information
@@ -101,9 +112,9 @@ static Conversion *conversion;
                                                       repeats:YES];
     identify = [[Identify alloc] init];
     conversion = [[Conversion alloc] init];
-    [identify identifyWithEmail:@""];
     
-    NSLog(@"Checking if conversion is made on app launch");
+    DLog(@"Checking if conversion is made on app launch");
+
     if (information)
     {
         // Check if this is the first time opening
@@ -118,9 +129,43 @@ static Conversion *conversion;
 
 }
 
-- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
+- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withRAFParameters:(RAFParameters*)parameters
 {
     DLog();
+    // Validate campaign ID before RAF is presented
+    NSString *shortCodeURL = @"";
+    NSString *shortCode = @"";
+    NSDictionary *userInfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
+    if (userInfo)
+    {
+        NSArray* urls = userInfo[AMBASSADOR_INFO_URLS_KEY];
+        for (NSDictionary *url in urls)
+        {
+            NSString *campaignID = [NSString stringWithFormat:@"%@", url[CAMPAIGN_UID_KEY]];
+            if ([campaignID isEqualToString:ID])
+            {
+                shortCodeURL = url[SHORT_CODE_URL_KEY];
+                shortCode = url[SHORT_CODE_KEY];
+            }
+        }
+    }
+    
+    if ([shortCodeURL isEqualToString:@""])
+    {
+        NSLog(@"USER DOES NOT HAVE A SHORT CODE FOR THE GIVEN CAMPAIGN");
+    }
+    
+    // Initialize root view controller
+    RAFShareScreen *vc = [[RAFShareScreen alloc] initWithShortURL:shortCodeURL shortCode:shortCode ];
+    vc.rafParameters = parameters;
+    
+    // Initialize navigation controller and set vc as root
+    RAFNavigationController *navController = [[RAFNavigationController alloc] initWithRootViewController:vc];
+    navController.navigationBar.translucent = NO;
+    navController.navigationBar.tintColor = AMB_NAVIGATION_BAR_TINT_COLOR();
+    
+    // Present
+    [viewController presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)registerConversion:(ConversionParameters *)information

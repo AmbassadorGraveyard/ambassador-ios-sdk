@@ -29,4 +29,7 @@ UIColor* ColorFromRGB(float r, float g, float b)
     return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
 }
 
-
+UIImage* imageFromBundleNamed(NSString *name)
+{
+    return [UIImage imageNamed:name inBundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"] compatibleWithTraitCollection:nil];
+}
