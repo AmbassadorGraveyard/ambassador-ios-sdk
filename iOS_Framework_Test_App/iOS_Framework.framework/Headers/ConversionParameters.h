@@ -23,7 +23,7 @@
 @property (nonatomic, retain) NSNumber * mbsy_revenue;
 @property (nonatomic, retain) NSNumber * mbsy_deactivate_new_ambassador;
 @property (nonatomic, retain) NSString * mbsy_transaction_uid;
-@property (nonatomic, retain) NSNumber * mbsy_add_to_group_id;
+@property (nonatomic, retain) NSString * mbsy_add_to_group_id;
 @property (nonatomic, retain) NSString * mbsy_event_data1;
 @property (nonatomic, retain) NSString * mbsy_event_data2;
 @property (nonatomic, retain) NSString * mbsy_event_data3;

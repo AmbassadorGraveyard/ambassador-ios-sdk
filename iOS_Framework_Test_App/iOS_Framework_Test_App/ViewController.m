@@ -19,10 +19,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    ConversionParameters *conversion = [[ConversionParameters alloc] init];
+    conversion.mbsy_add_to_group_id = @"134";
+    conversion.mbsy_revenue = @1000;
+    conversion.mbsy_campaign = @260;
+    conversion.mbsy_first_name = @"test";
+    conversion.mbsy_last_name = @"one";
+    conversion.mbsy_email_new_ambassador = @YES;
+    conversion.mbsy_uid = @"uiduiduiduiduiduiduid";
+    conversion.mbsy_custom1 = @"custom111";
+    conversion.mbsy_custom2 = @"custom222";
+    conversion.mbsy_custom3 = @"custom333";
+    conversion.mbsy_auto_create = @NO;
+    conversion.mbsy_deactivate_new_ambassador = @YES;
+    conversion.mbsy_transaction_uid = @"transuidtransuid";
+    conversion.mbsy_event_data1 = @"eventdata1";
+    conversion.mbsy_event_data2 = @"eventdata2";
+    conversion.mbsy_event_data3 = @"eventdata3";
+    conversion.mbsy_is_approved = @NO;
+    conversion.mbsy_email = @"anonymous_test_1578@example.com";
+    [Ambassador registerConversion:conversion];
     [Ambassador identifyWithEmail:@"austin@getambassador.com"];
-    [Ambassador presentRAFForCampaign:@"768" FromViewController:self];
-    
-    [self functionToIgnoreDuringCodeReview];
+
+    //[self functionToIgnoreDuringCodeReview];
 }
 
 - (void)functionToIgnoreDuringCodeReview
@@ -68,6 +87,16 @@
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.message attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.message attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.message attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self performSelector:@selector(presentRAF) withObject:self afterDelay:2.0];
+}
+
+- (void)presentRAF
+{
+    [Ambassador presentRAFForCampaign:@"847" FromViewController:self WithRAFParameters:nil];
 }
 
 @end

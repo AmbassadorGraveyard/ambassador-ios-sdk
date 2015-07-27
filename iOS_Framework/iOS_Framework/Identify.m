@@ -22,6 +22,16 @@ NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.
 float const AMB_IDENTIFY_RETRY_TIME = 2.0;
 NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVED***&uid=";
 
+NSString * const SEND_IDENTIFY_EMAIL_KEY = @"email";
+NSString * const SEND_IDENTIFY_FP_KEY = @"fp";
+NSString * const SEND_IDENTIFY_MBSY_SOURCE_KEY = @"mbsy_source";
+NSString * const SEND_IDENTIFY_MBSY_COOKIE_CODE_KEY = @"mbsy_cookie_code";
+
+NSString * const PUSHER_AUTH_AUTHTYPE_KEY = @"auth_type";
+NSString * const PUSHER_AUTH_CHANNEL_KEY = @"channel";
+NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
+#pragma mark -
+
 
 
 @interface Identify () <UIWebViewDelegate, PTPusherDelegate>
@@ -29,8 +39,6 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
 @property UIWebView *webview;
 @property UIView *view;
 @property NSString *email;
-
-//TODO: Declare pusher properties
 @property PTPusher *client;
 @property PTPusherPrivateChannel *channel;
 
@@ -71,6 +79,8 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
     self.email = email;
     [self identify];
 }
+
+
 
 #pragma mark - Augur callback
 - (BOOL)getIdentifyData
@@ -114,7 +124,7 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
             [self.channel bindToEventNamed:@"identify_action" handleWithBlock:^(PTPusherEvent *event)
              {
                  [[NSUserDefaults standardUserDefaults] setValue:event.data forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
-                 NSLog(@"Pusher event - %@", event.data);
+                 DLog(@"Pusher event - %@", event.data);
              }];
             [self sendIdentifyData];
         }
@@ -129,9 +139,13 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
 - (void)getInsightsDataForUID:(NSString *)UID
 {
     DLog();
+    
+    // Check if we have a UID (Fingerprints don't always have them)
     if ([UID isEqualToString:@""])
     {
         DLog(@"No UID exists - creating emtpy Insights dictionary");
+        
+        // Create an emtpy Insights dictionary and save
         NSDictionary *insights = @{
                                    @"PSYCHOGRAPHICS": @{},
                                    @"DEMOGRAPHICS":@{},
@@ -145,6 +159,7 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
         return;
     }
     
+    // There is a UID and we can make a request to Augur's insights API
     NSString *urlString = [NSString stringWithFormat:@"%@%@", AMB_INSIGHTS_URL, UID];
     
     [[[NSURLSession sharedSession] dataTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlString]]
@@ -153,6 +168,7 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
           DLog();
           if (!error)
           {
+              // Check for valid response code
               DLog(@"%ld", (long)((NSHTTPURLResponse *)response).statusCode)
               if (((NSHTTPURLResponse *)response).statusCode == 200 ||
                   ((NSHTTPURLResponse *)response).statusCode == 202)
@@ -189,14 +205,14 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
 
 - (void)sendIdentifyData
 {
-    NSLog(@"Preparig to send Identify data");
+    DLog(@"Preparig to send Identify data");
     
     // Create the payload to send
     NSMutableDictionary *payload = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                   @"email" : self.email,
-                                                                                   @"fp" : self.identifyData,
-                                                                                   @"mbsy_source" : @"",
-                                                                                   @"mbsy_cookie_code" : @""
+                                                                                   SEND_IDENTIFY_EMAIL_KEY : self.email,
+                                                                                   SEND_IDENTIFY_FP_KEY: self.identifyData,
+                                                                                   SEND_IDENTIFY_MBSY_SOURCE_KEY : @"",
+                                                                                   SEND_IDENTIFY_MBSY_COOKIE_CODE_KEY : @""
                                                                                    }];
     
     //Create the POST request
@@ -214,18 +230,19 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
                                   {
                                       if (!error)
                                       {
-                                          NSLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                                          DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
                                           
                                           //Check for 2xx status codes
                                           if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
                                               ((NSHTTPURLResponse *)response).statusCode < 300)
                                           {
-                                              NSLog(@"Response from backend from sending identify: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                                              // Looking for a "Polling" response
+                                              DLog(@"Response from backend from sending identify: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
                                           }
                                       }
                                       else
                                       {
-                                          NSLog(@"Error: %@", error.localizedDescription);
+                                          DLog(@"Error: %@", error.localizedDescription);
                                       }
                                   }];
     [task resume];
@@ -278,6 +295,8 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
 {
     DLog(@"The error was: %@", error);
     DLog(@"Trying to identify again after %f seconds", AMB_IDENTIFY_RETRY_TIME);
+    
+    // Schedule another call to identify
     [self performSelector:@selector(identify)
                withObject:self
                afterDelay:AMB_IDENTIFY_RETRY_TIME];
@@ -288,7 +307,7 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
 #pragma mark - PTPusherDelegate
 - (void)pusher:(PTPusher *)pusher willAuthorizeChannel:(PTPusherChannel *)channel withRequest:(NSMutableURLRequest *)request
 {
-    NSLog(@"Channel: %@\nRequest body: %@", channel.name, [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding]);
+    DLog(@"Channel: %@\nRequest body: %@", channel.name, [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding]);
     
     // Modify the default autheticate request that Pusher will make. The
     // HTTP body is set per Ambassador back end requirements
@@ -296,12 +315,15 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSMutableString *httpBodyString = [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding];
     NSMutableDictionary *httpBody = parseQueryString(httpBodyString);
+    
+    // Create the body dectionary
     httpBody = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                               @"auth_type" : @"private",
-                                                               @"channel" : channel.name,
-                                                               @"socket_id" : httpBody[@"socket_id"]
+                                                               PUSHER_AUTH_AUTHTYPE_KEY : @"private",
+                                                               PUSHER_AUTH_CHANNEL_KEY : channel.name,
+                                                               PUSHER_AUTH_SOCKET_ID_KEY : httpBody[PUSHER_AUTH_SOCKET_ID_KEY]
                                                                }];
     
+    // Turn into NSData to attatch to the request's HTTPBody
     __autoreleasing NSError *e = nil;
     NSData *bodyData = [NSJSONSerialization dataWithJSONObject:httpBody options:0 error:&e];
     if (!e)
@@ -310,18 +332,18 @@ NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVE
     }
     else
     {
-        NSLog(@"Error serializing pusher channel subscription request's HTTPBody - %@", e.description);
+        DLog(@"Error serializing pusher channel subscription request's HTTPBody - %@", e.description);
     }
 }
 
 - (void)pusher:(PTPusher *)pusher didFailToSubscribeToChannel:(PTPusherChannel *)channel withError:(NSError *)error
 {
-    NSLog(@"%@ - %@",channel.name, error.debugDescription);
+    DLog(@"%@ - %@",channel.name, error.debugDescription);
 }
 
 - (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel
 {
-    NSLog(@"Subscribed to: %@", channel.name);
+    DLog(@"Subscribed to: %@", channel.name);
 }
 
 @end
