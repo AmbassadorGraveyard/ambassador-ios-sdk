@@ -55,11 +55,11 @@ static Conversion *conversion;
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
 //
-+ (void)runWithKey:(NSString *)key convertingOnLaunch:(ConversionParameters *)information
++ (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information
 {
     DLog();
     [[Ambassador sharedInstance] runWithKey:key
-                         convertingOnLaunch:information];
+                         convertOnInstall:information];
 }
 
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
@@ -83,26 +83,13 @@ static Conversion *conversion;
 
 
 #pragma mark - Internal API methods
-- (void)runWithKey:(NSString *)key convertingOnLaunch:(ConversionParameters *)information
+- (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information
 {
 #if DEBUG
         DLog(@"Removing user defaults for testing");
-        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+//        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 #endif
-    
-    //Check if we have identify data. If not, the welcome may need to be shown
-    //Could be set to no if not refered, the app was reinstalled but backend has
-    //device id, etc.
-    DLog(@"Checking for identify data");
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:AMB_IDENTIFY_USER_DEFAULTS_KEY])
-    {
-        DLog(@"\tIdentify data was found");
-    }
-    else
-    {
-        DLog(@"\tIdentify data not found");
-    }
     
     //Initialize class variables
     DLog(@"Initializing class variables");
@@ -115,12 +102,20 @@ static Conversion *conversion;
     identify = [[Identify alloc] init];
     conversion = [[Conversion alloc] init];
     [identify identifyWithEmail:@""];
-    DLog(@"Checking if conversion is made on app launch");
+    
+    NSLog(@"Checking if conversion is made on app launch");
     if (information)
     {
-        DLog(@"\tSending conversion on app launch");
-        [self registerConversion:information];
+        // Check if this is the first time opening
+        if (![[NSUserDefaults standardUserDefaults] objectForKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]) {
+            NSLog(@"\tSending conversion on app launch");
+            [self registerConversion:information];
+        }
     }
+    
+    // Set launch flag in User Deafaults
+    [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY];
+
 }
 
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
