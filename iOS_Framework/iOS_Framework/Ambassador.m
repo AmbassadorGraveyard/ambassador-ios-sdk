@@ -12,8 +12,9 @@
 #import "Conversion.h"
 #import "ConversionParameters.h"
 #import "Utilities.h"
-#import "RAFNavigationController.h"
-#import "RAFShareScreen.h"
+#import "ServiceSelector.h"
+#import "ServiceSelectorPreferences.h"
+
 
 
 
@@ -69,11 +70,11 @@ static Conversion *conversion;
                          convertOnInstall:information];
 }
 
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(RAFParameters*)parameters
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(ServiceSelectorPreferences*)parameters
 {
     DLog();
     if (!parameters) {
-        parameters = [[RAFParameters alloc] init];
+        parameters = [[ServiceSelectorPreferences alloc] init];
     }
     
     [[Ambassador sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withRAFParameters:parameters];
@@ -129,7 +130,7 @@ static Conversion *conversion;
 
 }
 
-- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withRAFParameters:(RAFParameters*)parameters
+- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withRAFParameters:(ServiceSelectorPreferences*)parameters
 {
     DLog();
     // Validate campaign ID before RAF is presented
@@ -156,16 +157,10 @@ static Conversion *conversion;
     }
     
     // Initialize root view controller
-    RAFShareScreen *vc = [[RAFShareScreen alloc] initWithShortURL:shortCodeURL shortCode:shortCode ];
-    vc.rafParameters = parameters;
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"]];
+    ServiceSelector *vc = (ServiceSelector *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
     
-    // Initialize navigation controller and set vc as root
-    RAFNavigationController *navController = [[RAFNavigationController alloc] initWithRootViewController:vc];
-    navController.navigationBar.translucent = NO;
-    navController.navigationBar.tintColor = AMB_NAVIGATION_BAR_TINT_COLOR();
-    
-    // Present
-    [viewController presentViewController:navController animated:YES completion:nil];
+    [viewController presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)registerConversion:(ConversionParameters *)information

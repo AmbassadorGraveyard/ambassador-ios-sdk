@@ -8,7 +8,6 @@
 
 #import "ContactLoader.h"
 #import <AddressBook/AddressBook.h>
-#import "Constants.h"
 #import "Contact.h"
 #import "Utilities.h"
 
