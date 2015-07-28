@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SendButtonDelegate <NSObject>
+
+- (void)sendWasPressed;
+
+@end
+
 @interface ComposeMessageVC : UIViewController
 
 - (void)updateButtonWithCount:(NSUInteger)count;
@@ -19,5 +25,6 @@
 // Allow dynamic adjustment of constraints
 @property NSLayoutConstraint* sendbuttonHeight;
 @property NSLayoutConstraint* width;
+@property (weak) id<SendButtonDelegate>delegate;
 
 @end

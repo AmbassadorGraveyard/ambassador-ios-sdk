@@ -87,6 +87,7 @@ UIColor * ACCENT_COLOR()
     self.sendButton = [[UIButton alloc] init];
     self.sendButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.sendButton.titleLabel.font = DEFAULT_FONT();
+    [self.sendButton addTarget:self action:@selector(sendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     // Add to view hierarchy
     [self.view addSubview:self.sendButton];
@@ -293,9 +294,11 @@ UIColor * ACCENT_COLOR()
 {
     self.sendButton.backgroundColor = count == 0 ? DEFAULT_GRAY_COLOR() : ACCENT_COLOR();
     NSString *text = @"Select contacts";
+    self.sendButton.selected = NO;
     
     if (count >= 1)
     {
+        self.sendButton.selected = YES;
         text = [NSString stringWithFormat:@"Send to %ld contact", (unsigned long)count];
         if (count > 1)
         {
@@ -328,6 +331,12 @@ UIColor * ACCENT_COLOR()
         self.textBox.textColor = DEFAULT_GRAY_COLOR();
         [self.textBox resignFirstResponder];
     }
+}
+
+- (void)sendButtonPressed:(UIButton *)button
+{
+    if (self.sendButton.selected == NO) return;
+    [self.delegate sendWasPressed];
 }
 
 @end
