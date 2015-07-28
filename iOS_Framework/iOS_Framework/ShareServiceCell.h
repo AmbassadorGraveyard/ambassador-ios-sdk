@@ -10,8 +10,8 @@
 
 @interface ShareServiceCell : UICollectionViewCell
 
-@property UIImageView * logo;
-@property UILabel * title;
-@property UIView * logoBackground;
+@property (weak, nonatomic) IBOutlet UIImageView *logo;
+@property (weak, nonatomic) IBOutlet UIView *logoBackground;
+@property (weak, nonatomic) IBOutlet UILabel *title;
 
 @end
