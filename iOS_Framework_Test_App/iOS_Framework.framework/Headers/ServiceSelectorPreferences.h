@@ -14,5 +14,7 @@
 @property NSString *descriptionLabelText;
 @property NSString *textFieldText;
 @property NSString *navBarTitle;
+@property NSString *defaultShareMessage;
+
 
 @end

@@ -14,6 +14,9 @@
 #import "ContactLoader.h"
 #import "AuthorizeLinkedIn.h"
 #import "Utilities.h"
+#import "LinkedInAPIConstants.h"
+#import "Constants.h"
+#import <Social/Social.h>
 
 
 @interface ServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
@@ -24,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-@property (strong, nonatomic) ServiceSelectorPreferences *prefs;
 @property (strong, nonatomic) NSMutableArray *services;
 @property (strong, nonatomic) ContactLoader *loader;
 
@@ -95,12 +97,34 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 - (void)viewDidLoad {
     [self addServices];
     
+    // Set the navigation bar attributes (title and back button)
+    UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+    [closeButton setImage:imageFromBundleNamed(@"close.png") forState:UIControlStateNormal];
+    [closeButton addTarget:self action:@selector(closeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *closeBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
+    self.navigationItem.leftBarButtonItem = closeBarButtonItem;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         self.loader = [[ContactLoader alloc] initWithDelegate:self];
     });
     
+    // Text Field Left padding view
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 12)];
+    self.textField.leftView = paddingView;
+    self.textField.leftViewMode = UITextFieldViewModeAlways;
+    // Text field Right clipboard view
+    UIButton *clipboardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 15)];
+    [clipboardButton setImage:imageFromBundleNamed(@"clipboard") forState:UIControlStateNormal];
+    [clipboardButton addTarget:self action:@selector(clipboardButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+    self.textField.rightView = clipboardButton;
+    self.textField.rightViewMode = UITextFieldViewModeAlways;
+
+    
     [super viewDidLoad];
-    self.titleLabel.text = self.prefs.textFieldText;
+    self.titleLabel.text = self.prefs.titleLabelText;
+    self.descriptionLabel.text = self.prefs.descriptionLabelText;
+    self.textField.text = self.prefs.textFieldText;
+    self.title = self.prefs.navBarTitle;
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -140,14 +164,50 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     if ([service.title isEqualToString:FACEBOOK_TITLE])
     {
         //TODO:facebook
+        SLComposeViewController *vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        vc.completionHandler = ^(SLComposeViewControllerResult result)
+        {
+            if (result == SLComposeViewControllerResultDone)
+            {
+                DLog();
+                [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"facebook" recipientUsername:@""];
+            }
+        };
+        [vc setInitialText:self.prefs.defaultShareMessage];
+        [self presentViewController:vc animated:YES completion:nil];
     }
     else if ([service.title isEqualToString:TWITTER_TITLE])
     {
         //TODO:twitter
+        SLComposeViewController *vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        vc.completionHandler = ^(SLComposeViewControllerResult result)
+        {
+            if (result == SLComposeViewControllerResultDone)
+            {
+                DLog();
+                [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"facebook" recipientUsername:@""];
+            }
+        };
+        [vc setInitialText:self.prefs.defaultShareMessage];
+        [self presentViewController:vc animated:YES completion:nil];
     }
     else if ([service.title isEqualToString:LINKEDIN_TITLE])
     {
         //TODO:linkedin
+        DLog();
+        NSDictionary *token = [[NSUserDefaults  standardUserDefaults] dictionaryForKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
+        if (token) {
+            NSDate *referenceDate = token[LKDN_EXPIRES_DICT_KEY];
+            if (!([referenceDate timeIntervalSinceNow] < 0.0))
+            {
+                DLog();
+                //TOOO: present the modal
+            }
+        }
+        else
+        {
+            [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
+        }
     }
     else if ([service.title isEqualToString:SMS_TITLE])
     {
@@ -163,6 +223,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 
 
+
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -170,6 +231,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     {
         ContactSelector *vc = (ContactSelector *)segue.destinationViewController;
         NSString *serviceType = (NSString *)sender;
+        vc.prefs = self.prefs;
         
         if ([serviceType isEqualToString:SMS_TITLE])
         {
@@ -185,6 +247,11 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         AuthorizeLinkedIn *vc = (AuthorizeLinkedIn *)segue.destinationViewController;
         vc.delegate = self;
     }
+}
+
+- (void)closeButtonPressed:(UIButton *)button
+{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -220,6 +287,67 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 }
 
 
+
 #pragma mark - Lkdn delegate
+
+- (void)userDidContinue
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+
+#pragma mark - TextField Activity Functions
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField { return NO; }
+
+- (void)clipboardButtonPress:(UIButton *)button
+{
+    UIPasteboard *pb = [UIPasteboard generalPasteboard];
+    [pb setString:self.textField.text];
+}
+
+
+
+#pragma mark - Share track
+- (void)postShareTrackWithShortCode:(NSString *)shortCode recipientEmail:(NSString *)recipientEmail socialName:(NSString *)socialName recipientUsername:(NSString *)recipientUsername
+{
+    DLog();
+    //Create payload
+//    NSDictionary *payload = @{ SHARE_TRACK_SHORT_CODE_KEY : shortCode,
+//                               SHARE_TRACK_RECIPIENT_EMAIL_KEY : recipientEmail,
+//                               SHARE_TRACK_SOCIAL_NAME_KEY : socialName,
+//                               SHARE_TRACK_RECIPIENT_USERNAME_KEY : recipientUsername };
+//    
+//    NSURL *url = [NSURL URLWithString:AMB_SHARE_TRACK_URL];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+//    request.HTTPMethod = @"POST";
+//    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+//    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+//    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+//    
+//    NSURLSessionDataTask *task = [[NSURLSession sharedSession]
+//                                  dataTaskWithRequest:request
+//                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+//                                  {
+//                                      if (!error)
+//                                      {
+//                                          DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+//                                          
+//                                          //Check for 2xx status codes
+//                                          if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+//                                              ((NSHTTPURLResponse *)response).statusCode < 300)
+//                                          {
+//                                              // Looking for a "Polling" response
+//                                              DLog(@"Response from backend from sending identify: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+//                                          }
+//                                      }
+//                                      else
+//                                      {
+//                                          DLog(@"Error: %@", error.localizedDescription);
+//                                      }
+//                                  }];
+//    [task resume];
+}
 
 @end
