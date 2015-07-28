@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ServiceSelectorPreferences.h"
 
 @interface ContactSelector : UIViewController
 
 @property NSMutableArray *data;
+@property ServiceSelectorPreferences *prefs;
+@property NSString *shortCode;
 
 @end

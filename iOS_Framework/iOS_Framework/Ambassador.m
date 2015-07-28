@@ -158,8 +158,14 @@ static Conversion *conversion;
     
     // Initialize root view controller
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"]];
-    ServiceSelector *vc = (ServiceSelector *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
+    UINavigationController *vc = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
+    ServiceSelector *rootVC = (ServiceSelector *)vc.childViewControllers[0];
     
+    //TODO: set short code and text field text
+    rootVC.shortCode = @"123";
+    parameters.textFieldText = @"www.mbsy.co/yourshortcode";
+    rootVC.prefs = parameters;
+
     [viewController presentViewController:vc animated:YES completion:nil];
 }
 
