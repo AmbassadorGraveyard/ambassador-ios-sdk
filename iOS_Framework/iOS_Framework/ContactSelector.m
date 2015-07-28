@@ -10,6 +10,7 @@
 #import "ContactCell.h"
 #import "SelectedCell.h"
 #import "Contact.h"
+#import "Utilities.h"
 
 @interface ContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                SelectedCellDelegate, UITextFieldDelegate>
@@ -192,7 +193,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     
     if ([self.selected member:contact])
     {
-         cell.checkmarkView.image = [UIImage imageNamed:@"check.png"];
+         cell.checkmarkView.image = imageFromBundleNamed(@"check.png");
     }
     else
     {

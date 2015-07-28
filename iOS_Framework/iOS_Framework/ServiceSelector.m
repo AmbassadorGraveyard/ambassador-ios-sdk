@@ -13,6 +13,7 @@
 #import "ContactSelector.h"
 #import "ContactLoader.h"
 #import "AuthorizeLinkedIn.h"
+#import "Utilities.h"
 
 
 @interface ServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
@@ -86,7 +87,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     service.title = title;
     service.backgroundColor = backgroundColor;
     service.borderColor = borderColor;
-    service.logo = [UIImage imageNamed:logoName];
+    service.logo =  imageFromBundleNamed(logoName);
     
     [self.services addObject:service];
 }
