@@ -47,7 +47,7 @@ SubViewConstraints getConstraints()
 
 
 
-@interface ContactSelectionViewController () <SelectedContactsProtocol>
+@interface ContactSelectionViewController () <SelectedContactsProtocol, SendButtonDelegate>
 @property UIView *flexView;
 @property UIView *fadeInView;
 @property ContactsTableVC *contactsTable;
@@ -171,6 +171,7 @@ SubViewConstraints getConstraints()
     [self addChildViewController:self.contactsTable];
     self.composeBox.view.translatesAutoresizingMaskIntoConstraints = NO;
     self.composeBox.sendbuttonHeight.constant = SEND_BUTTON_HEIGHT;
+    self.composeBox.delegate = self;
     
     // Refresh the button UI properties
     [self.composeBox updateButtonWithCount:self.selected.count];
@@ -417,6 +418,11 @@ SubViewConstraints getConstraints()
 {
     DLog();
     
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)sendWasPressed
+{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
