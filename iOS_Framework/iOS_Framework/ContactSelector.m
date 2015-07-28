@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet UIButton *doneSearchingButton;
 @property (weak, nonatomic) IBOutlet UITextView *composeMessageTextView;
+@property (weak, nonatomic) IBOutlet UIView *fadeView;
 
 //iPad Specific
 @property (weak, nonatomic) IBOutlet UITableView *selectedTable;
@@ -30,6 +31,8 @@
 
 //Dynamic AutoLayout constraints
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewBottomConstraint;
+
+
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *composeBoxWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *composeBoxHeight;
@@ -54,7 +57,15 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 - (void)viewDidLoad
 {
     [self registerForKeyboardNotifications];
+
+    // Set the navigation bar attributes (title and back button)
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+    [backButton setImage:imageFromBundleNamed(@"back.png") forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backBarButtonItem;
     
+    self.title = self.prefs.navBarTitle;
     
     self.selected = [[NSMutableSet alloc] init];
     self.filteredData = [[NSMutableArray alloc] init];
@@ -70,6 +81,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     self.composeMessageTextView.editable = NO;
     self.composeMessageTextView.textColor = [UIColor lightGrayColor];
     self.editMessageButton.selected = NO;
+    
+    self.fadeView.hidden = YES;
     
     [self updateButton];
 }
@@ -93,6 +106,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 {
     self.composeMessageTextView.editable = !self.composeMessageTextView.editable;
     self.editMessageButton.selected = !self.editMessageButton.selected;
+    self.fadeView.hidden = !self.fadeView.hidden;
     if (!self.editMessageButton.selected)
     {
         [self.composeMessageTextView resignFirstResponder];
@@ -327,7 +341,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
-            //self.composeBoxWidth.constant = newFrame.size.width / 2;
+            self.composeBoxWidth.constant -= self.selectedTable.frame.size.width;
         }
         
         self.composeBoxHeight.constant = COMPOSE_MESSAGE_VIEW_HEIGHT - SEND_BUTTON_HEIGHT;
@@ -357,6 +371,14 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     [UIView animateWithDuration:duration animations:^{
         [self.view layoutIfNeeded];
     }];
+}
+
+
+
+#pragma mark - Navigation
+- (void)backButtonPressed:(UIButton *)button
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
