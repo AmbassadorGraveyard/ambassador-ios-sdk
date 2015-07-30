@@ -11,7 +11,7 @@
 
 @protocol ContactSelectorDelegate <NSObject>
 
-- (void)sendValues:(NSArray*)values forServiceType:(NSString *)serviceType;
+- (void)sendToContacts:(NSArray*)values forServiceType:(NSString *)serviceType fromName:(NSString *)name withMessage:(NSString *)string;
 
 @end
 
@@ -19,6 +19,7 @@
 
 @property NSMutableArray *data;
 @property ServiceSelectorPreferences *prefs;
+@property NSString *defaultMessage;
 @property NSString *shortCode;
 @property (weak)id<ContactSelectorDelegate>delegate;
 @property NSString *serviceType;

@@ -88,6 +88,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     
     self.fadeView.hidden = YES;
     
+    self.composeMessageTextView.text = self.defaultMessage;
+    
     [self updateButton];
 }
 - (IBAction)sendButtonPressed:(UIButton *)sender
@@ -103,7 +105,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             }
             else
             {
-                [self sendSMS];
+                //TODO: get the real name from the back end
+                [self sendSMSWithName:@""];
             }
         }
         else if ([self.serviceType isEqualToString:EMAIL_TITLE])
@@ -402,20 +405,20 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 
 #pragma mark - NamePromptDelegate
-- (void)sendSMSPressed
+- (void)sendSMSPressedWithName:(NSString *)name
 {
-    [self sendSMS];
+    [self sendSMSWithName:name];
 }
 
-- (void)sendSMS
+- (void)sendSMSWithName:(NSString *)name
 {
-    [self.delegate sendValues:[self.selected allObjects] forServiceType:SMS_TITLE];
+    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:SMS_TITLE fromName:name withMessage:self.composeMessageTextView.text];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)sendEmail
 {
-    [self.delegate sendValues:[self.selected allObjects] forServiceType:EMAIL_TITLE];
+    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:EMAIL_TITLE fromName:@"" withMessage:self.composeMessageTextView.text];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

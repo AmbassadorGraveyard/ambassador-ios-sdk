@@ -16,7 +16,7 @@
 
 #pragma mark - Local Constants
 NSString * const AMB_IDENTIFY_URL = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/&universal_id=abfd1c89-4379-44e2-8361-ee7b87332e32";
-NSString * const AMB_IDENTIFY_JS_VAR = @"augur_data";
+NSString * const AMB_IDENTIFY_JS_VAR = @"JSON.stringify(augur_data)";
 NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
 NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/?u=abfd1c89-4379-44e2-8361-ee7b87332e32";
 float const AMB_IDENTIFY_RETRY_TIME = 2.0;
@@ -120,13 +120,15 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         // Send identify to backend if there is an email
         if (![self.email isEqualToString:@""])
         {
-            self.channel = [self.client subscribeToPrivateChannelNamed:[NSString stringWithFormat:@"snippet-channel@user=%@", self.identifyData[@"device"][@"ID"]]];
-            [self.channel bindToEventNamed:@"identify_action" handleWithBlock:^(PTPusherEvent *event)
-             {
-                 [[NSUserDefaults standardUserDefaults] setValue:event.data forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
-                 DLog(@"Pusher event - %@", event.data);
-             }];
-            [self sendIdentifyData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.channel = [self.client subscribeToPrivateChannelNamed:[NSString stringWithFormat:@"snippet-channel@user=%@", self.identifyData[@"device"][@"ID"]]];
+                [self.channel bindToEventNamed:@"identify_action" handleWithBlock:^(PTPusherEvent *event)
+                 {
+                     [[NSUserDefaults standardUserDefaults] setValue:event.data forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
+                     DLog(@"Pusher event - %@", event.data);
+                 }];
+                [self sendIdentifyData];
+            });
         }
         
         // Get insights data
