@@ -71,7 +71,7 @@
 
 - (void)didSelectCancel
 {
-   
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
