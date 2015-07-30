@@ -11,9 +11,11 @@
 #import "SelectedCell.h"
 #import "Contact.h"
 #import "Utilities.h"
+#import "NamePrompt.h"
+#import "ShareServicesConstants.h"
 
 @interface ContactSelector () <UITableViewDataSource, UITableViewDelegate,
-                               SelectedCellDelegate, UITextFieldDelegate>
+                               SelectedCellDelegate, UITextFieldDelegate, NamePromptDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *contactsTable;
 
 @property (weak, nonatomic) IBOutlet UIView *composeMessageView;
@@ -50,6 +52,8 @@
 NSString * const CONTACT_CELL_IDENTIFIER = @"contactCell";
 NSString * const SELECTED_CELL_IDENTIFIER = @"selectedCell";
 
+NSString * const NAME_PROMPT_SEGUE_IDENTIFIER = @"goToNamePrompt";
+
 float const COMPOSE_MESSAGE_VIEW_HEIGHT = 123.0;
 float const SEND_BUTTON_HEIGHT = 42.0;
 
@@ -85,6 +89,28 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     self.fadeView.hidden = YES;
     
     [self updateButton];
+}
+- (IBAction)sendButtonPressed:(UIButton *)sender
+{
+    if (self.selected.count > 0)
+    {
+        if ([self.serviceType isEqualToString:SMS_TITLE])
+        {
+            //TODO: chck for name
+            if (YES)
+            {
+                [self performSegueWithIdentifier:NAME_PROMPT_SEGUE_IDENTIFIER sender:self];
+            }
+            else
+            {
+                [self sendSMS];
+            }
+        }
+        else if ([self.serviceType isEqualToString:EMAIL_TITLE])
+        {
+            [self sendEmail];
+        }
+    }
 }
 
 - (IBAction)clearAllButton:(UIButton *)sender
@@ -375,10 +401,39 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 
 
+#pragma mark - NamePromptDelegate
+- (void)sendSMSPressed
+{
+    [self sendSMS];
+}
+
+- (void)sendSMS
+{
+    [self.delegate sendValues:[self.selected allObjects] forServiceType:SMS_TITLE];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)sendEmail
+{
+    [self.delegate sendValues:[self.selected allObjects] forServiceType:EMAIL_TITLE];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+
+
 #pragma mark - Navigation
 - (void)backButtonPressed:(UIButton *)button
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
+{
+    if ([segue.identifier isEqualToString:NAME_PROMPT_SEGUE_IDENTIFIER])
+    {
+        NamePrompt *vc = (NamePrompt *)segue.destinationViewController;
+        vc.delegate = self;
+    }
 }
 
 @end

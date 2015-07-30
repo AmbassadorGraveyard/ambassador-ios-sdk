@@ -15,8 +15,8 @@
 
 
 #pragma mark - Local Constants
-NSString * const AMB_IDENTIFY_URL = @"http://127.0.0.1:7999/augur.html?cbURL=ambassador:mylocation";
-NSString * const AMB_IDENTIFY_JS_VAR = @"JSONdata";
+NSString * const AMB_IDENTIFY_URL = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/&universal_id=***REMOVED***";
+NSString * const AMB_IDENTIFY_JS_VAR = @"augur_data";
 NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
 NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/?u=***REMOVED***";
 float const AMB_IDENTIFY_RETRY_TIME = 2.0;
@@ -90,7 +90,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     // Pull the data from the webview
     DLog(@"Grabbing the identify data string from webView");
     NSString *identifyDataString = [self.webview stringByEvaluatingJavaScriptFromString:AMB_IDENTIFY_JS_VAR];
-    DLog(@"Converting identify data string to NSData");
+    DLog(@"Converting identify data string to NSData *************************%@", identifyDataString);
     NSData *identifyDataRaw = [identifyDataString dataUsingEncoding:NSUTF8StringEncoding];
     
     __autoreleasing NSError *e;
