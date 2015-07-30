@@ -186,33 +186,33 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFY-Fk-jda">
-                                                            <rect key="frame" x="8" y="30" width="558" height="21"/>
+                                                            <rect key="frame" x="16" y="30" width="542" height="22"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LTS-mD-3ev">
-                                                            <rect key="frame" x="574" y="23" width="18" height="14"/>
+                                                            <rect key="frame" x="566" y="23" width="18" height="14"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="18" id="WgB-3o-DBw"/>
                                                                 <constraint firstAttribute="height" constant="14" id="ea5-OO-vSk"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nKa-Zo-lVt">
-                                                            <rect key="frame" x="8" y="8" width="558" height="21"/>
+                                                            <rect key="frame" x="16" y="8" width="542" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="UFY-Fk-jda" firstAttribute="leading" secondItem="5Ap-fV-JNz" secondAttribute="leadingMargin" id="0mX-Pc-Yzt"/>
+                                                        <constraint firstItem="UFY-Fk-jda" firstAttribute="leading" secondItem="5Ap-fV-JNz" secondAttribute="leadingMargin" constant="8" id="0mX-Pc-Yzt"/>
                                                         <constraint firstItem="LTS-mD-3ev" firstAttribute="leading" secondItem="UFY-Fk-jda" secondAttribute="trailing" constant="8" id="1yX-HF-hDL"/>
                                                         <constraint firstAttribute="centerY" secondItem="LTS-mD-3ev" secondAttribute="centerY" constant="-0.5" id="Ebq-kb-haV"/>
                                                         <constraint firstItem="nKa-Zo-lVt" firstAttribute="top" secondItem="5Ap-fV-JNz" secondAttribute="topMargin" id="F9w-Jv-qQL"/>
                                                         <constraint firstItem="UFY-Fk-jda" firstAttribute="top" secondItem="nKa-Zo-lVt" secondAttribute="bottom" constant="1" id="Tc5-Gv-ddb"/>
-                                                        <constraint firstItem="LTS-mD-3ev" firstAttribute="trailing" secondItem="5Ap-fV-JNz" secondAttribute="trailingMargin" id="oef-ue-Do5"/>
-                                                        <constraint firstItem="nKa-Zo-lVt" firstAttribute="leading" secondItem="5Ap-fV-JNz" secondAttribute="leadingMargin" id="pZI-RV-bQQ"/>
+                                                        <constraint firstItem="LTS-mD-3ev" firstAttribute="trailing" secondItem="5Ap-fV-JNz" secondAttribute="trailingMargin" constant="-8" id="oef-ue-Do5"/>
+                                                        <constraint firstItem="nKa-Zo-lVt" firstAttribute="leading" secondItem="5Ap-fV-JNz" secondAttribute="leadingMargin" constant="8" id="pZI-RV-bQQ"/>
                                                         <constraint firstItem="UFY-Fk-jda" firstAttribute="bottom" secondItem="5Ap-fV-JNz" secondAttribute="bottomMargin" id="rmi-iK-Rii"/>
                                                         <constraint firstItem="LTS-mD-3ev" firstAttribute="leading" secondItem="nKa-Zo-lVt" secondAttribute="trailing" constant="8" id="wYP-Ew-jyX"/>
                                                     </constraints>

@@ -99,8 +99,8 @@ static Conversion *conversion;
 {
 #if DEBUG
         DLog(@"Removing user defaults for testing");
-        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+//        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 #endif
     
     //Initialize class variables
@@ -136,8 +136,8 @@ static Conversion *conversion;
     // Validate campaign ID before RAF is presented
     
     //TODO: take this out after daisy chain
-    NSString *shortCodeURL = @"www.mbsy.co/jw9j";
-    NSString *shortCode = @"jw9j";
+    NSString *shortCodeURL = @"";
+    NSString *shortCode = @"";
     NSDictionary *userInfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
     if (userInfo)
     {
@@ -156,6 +156,25 @@ static Conversion *conversion;
     if ([shortCodeURL isEqualToString:@""])
     {
         NSLog(@"USER DOES NOT HAVE A SHORT CODE FOR THE GIVEN CAMPAIGN");
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:@"Network Error"
+                                    message:@"We couldn't load your URLs. Check your network connection and try again"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction
+                                   actionWithTitle:@"Ok"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       //[self.presentingViewController dismissViewControllerAnimated:YES
+                                       // completion:nil];
+                                   }];
+        
+        [alert addAction:okAction];
+        
+        [viewController presentViewController:alert animated:YES completion:nil];
+        //TODO: try to grab the short codes again
+        
     }
     
     // Initialize root view controller
@@ -166,7 +185,7 @@ static Conversion *conversion;
     //TODO: set short code and text field text
     rootVC.shortCode = shortCode;
     rootVC.shortURL = shortCodeURL;
-    parameters.textFieldText = @"www.mbsy.co/yourshortcode";
+    parameters.textFieldText = shortCodeURL;
     rootVC.prefs = parameters;
 
     [viewController presentViewController:vc animated:YES completion:nil];
