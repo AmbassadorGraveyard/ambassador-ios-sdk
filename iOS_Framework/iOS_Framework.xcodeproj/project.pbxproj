@@ -78,8 +78,6 @@
 		DBBB38081B67CEF90084D822 /* ServiceSelectorPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBB38061B67CEF90084D822 /* ServiceSelectorPreferences.m */; };
 		DBBB380B1B67CF010084D822 /* ShareServicesConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBBB38091B67CF010084D822 /* ShareServicesConstants.h */; };
 		DBBB380C1B67CF010084D822 /* ShareServicesConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBB380A1B67CF010084D822 /* ShareServicesConstants.m */; };
-		DBDCA5971B697C5100B85E5A /* ShareTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = DBDCA5951B697C5100B85E5A /* ShareTrack.h */; };
-		DBDCA5981B697C5100B85E5A /* ShareTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDCA5961B697C5100B85E5A /* ShareTrack.m */; };
 		DBDCA59A1B6A5D6800B85E5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBDCA5991B6A5D6800B85E5A /* Main.storyboard */; };
 		DBFA134B1B34BF1800620985 /* Identify.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFA13491B34BF1800620985 /* Identify.h */; };
 		DBFA134C1B34BF1800620985 /* Identify.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFA134A1B34BF1800620985 /* Identify.m */; };
@@ -172,8 +170,6 @@
 		DBBB38061B67CEF90084D822 /* ServiceSelectorPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceSelectorPreferences.m; sourceTree = "<group>"; };
 		DBBB38091B67CF010084D822 /* ShareServicesConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareServicesConstants.h; sourceTree = "<group>"; };
 		DBBB380A1B67CF010084D822 /* ShareServicesConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareServicesConstants.m; sourceTree = "<group>"; };
-		DBDCA5951B697C5100B85E5A /* ShareTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareTrack.h; sourceTree = "<group>"; };
-		DBDCA5961B697C5100B85E5A /* ShareTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareTrack.m; sourceTree = "<group>"; };
 		DBDCA5991B6A5D6800B85E5A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		DBFA13491B34BF1800620985 /* Identify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Identify.h; sourceTree = "<group>"; };
 		DBFA134A1B34BF1800620985 /* Identify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Identify.m; sourceTree = "<group>"; };
@@ -353,8 +349,6 @@
 				DBBB37E01B67CE750084D822 /* LinkedInAPIConstants.m */,
 				DB86FA291B695D8A008115D9 /* NamePrompt.h */,
 				DB86FA2A1B695D8A008115D9 /* NamePrompt.m */,
-				DBDCA5951B697C5100B85E5A /* ShareTrack.h */,
-				DBDCA5961B697C5100B85E5A /* ShareTrack.m */,
 				DBBB37E51B67CE880084D822 /* AuthorizeLinkedIn.h */,
 				DBBB37E61B67CE880084D822 /* AuthorizeLinkedIn.m */,
 				DBBB37E91B67CE900084D822 /* RemoveButton.h */,
@@ -408,7 +402,6 @@
 				DBBB37DB1B67CE6B0084D822 /* ContactLoader.h in Headers */,
 				DBBB37F31B67CEA20084D822 /* ContactSelector.h in Headers */,
 				DBBB380B1B67CF010084D822 /* ShareServicesConstants.h in Headers */,
-				DBDCA5971B697C5100B85E5A /* ShareTrack.h in Headers */,
 				DBBB37E71B67CE880084D822 /* AuthorizeLinkedIn.h in Headers */,
 				DBBB38031B67CEF00084D822 /* ShareService.h in Headers */,
 				DB4579F21B69264600AEC688 /* ServicesPostModal.h in Headers */,
@@ -579,7 +572,6 @@
 				DBBB38001B67CEE40084D822 /* ServiceSelector.m in Sources */,
 				DB0F49761B41A14500CCE614 /* FMDatabase.m in Sources */,
 				DB0F497C1B41A14500CCE614 /* FMDatabaseQueue.m in Sources */,
-				DBDCA5981B697C5100B85E5A /* ShareTrack.m in Sources */,
 				DBBB37DE1B67CE6B0084D822 /* Contact.m in Sources */,
 				DBBB37F81B67CED20084D822 /* ContactCell.m in Sources */,
 				DB0F497F1B41A14500CCE614 /* FMResultSet.m in Sources */,
