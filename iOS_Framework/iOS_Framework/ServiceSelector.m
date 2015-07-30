@@ -336,7 +336,25 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 - (void)userMustReauthenticate
 {
     NSLog(@"Reauthenticate");
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:@"Expired LinkedIn Session"
+                                message:@"We just need you to log in again and we will bring you back to the post screen"
+                                preferredStyle:UIAlertControllerStyleAlert];
     
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:@"Login"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                       [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
+                                   });
+                               }];
+    
+    [alert addAction:okAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+
 }
 
 
