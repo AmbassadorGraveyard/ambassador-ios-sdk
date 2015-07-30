@@ -402,67 +402,67 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 - (void)bulkPostShareTrackWithShortCode:(NSString *)shortCode values:(NSArray *)values socialName:(NSString *)serviceType
 {
-    ShareTrackBulk *shareTrackObjects = [[ShareTrackBulk alloc] init];
-    shareTrackObjects.bulk = [[NSMutableArray alloc] init];
-    if ([serviceType isEqualToString:SMS_TITLE])
-    {
-        for (int i = 0; i < values.count; ++i)
-        {
-            ShareTrack * obj = [[ShareTrack alloc] init];
-            obj.short_code = shortCode;
-            obj.recipient_email = @"";
-            obj.social_name = @"sms";
-            obj.recipient_username = values[i];
-            
-            [shareTrackObjects.bulk addObject:obj];
-        }
-    }
-    else if ([serviceType isEqualToString:EMAIL_TITLE])
-    {
+//    ShareTrackBulk *shareTrackObjects = [[ShareTrackBulk alloc] init];
+//    shareTrackObjects.bulk = [[NSMutableArray alloc] init];
+//    if ([serviceType isEqualToString:SMS_TITLE])
+//    {
 //        for (int i = 0; i < values.count; ++i)
 //        {
-//            [shareTrackObjects addObject:@{    AMB_SHARE_TRACK_SHORT_CODE_DICT_KEY : shortCode,
-//                                               AMB_SHARE_TRACK_RECIPIENT_EMAIL_DICT_KEY : values[i],
-//                                               AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY : @"email",
-//                                               AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY : @""
-//                                               }];
+//            ShareTrack * obj = [[ShareTrack alloc] init];
+//            obj.short_code = shortCode;
+//            obj.recipient_email = @"";
+//            obj.social_name = @"sms";
+//            obj.recipient_username = values[i];
+//            
+//            [shareTrackObjects.bulk addObject:obj];
 //        }
-    }
-    
-    
-    NSURL *url = [NSURL URLWithString:AMB_SHARE_TRACK_URL];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
-    
-    DLog(@"%@", [shareTrackObjects toDictionary]);
-    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:[shareTrackObjects toDictionary] options:0 error:nil];
-    
-    
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession]
-                                  dataTaskWithRequest:request
-                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-                                  {
-                                      if (!error)
-                                      {
-                                          DLog(@"Status code for share track: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                                          
-                                          //Check for 2xx status codes
-                                          if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-                                              ((NSHTTPURLResponse *)response).statusCode < 300)
-                                          {
-                                              // Looking for a "Polling" response
-                                              DLog(@"Response from backend from sending share track: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                                          }
-                                      }
-                                      else
-                                      {
-                                          DLog(@"Error: %@", error.localizedDescription);
-                                      }
-                                  }];
-    [task resume];
+//    }
+//    else if ([serviceType isEqualToString:EMAIL_TITLE])
+//    {
+////        for (int i = 0; i < values.count; ++i)
+////        {
+////            [shareTrackObjects addObject:@{    AMB_SHARE_TRACK_SHORT_CODE_DICT_KEY : shortCode,
+////                                               AMB_SHARE_TRACK_RECIPIENT_EMAIL_DICT_KEY : values[i],
+////                                               AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY : @"email",
+////                                               AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY : @""
+////                                               }];
+////        }
+//    }
+//    
+//    
+//    NSURL *url = [NSURL URLWithString:AMB_SHARE_TRACK_URL];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+//    request.HTTPMethod = @"POST";
+//    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+//    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+//    
+//    DLog(@"%@", [shareTrackObjects toDictionary]);
+//    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:[shareTrackObjects toDictionary] options:0 error:nil];
+//    
+//    
+//    NSURLSessionDataTask *task = [[NSURLSession sharedSession]
+//                                  dataTaskWithRequest:request
+//                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+//                                  {
+//                                      if (!error)
+//                                      {
+//                                          DLog(@"Status code for share track: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+//                                          
+//                                          //Check for 2xx status codes
+//                                          if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+//                                              ((NSHTTPURLResponse *)response).statusCode < 300)
+//                                          {
+//                                              // Looking for a "Polling" response
+//                                              DLog(@"Response from backend from sending share track: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+//                                          }
+//                                      }
+//                                      else
+//                                      {
+//                                          DLog(@"Error: %@", error.localizedDescription);
+//                                      }
+//                                  }];
+//    [task resume];
 }
 
 @end
