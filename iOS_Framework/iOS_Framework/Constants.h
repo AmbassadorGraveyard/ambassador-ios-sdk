@@ -29,6 +29,12 @@ extern NSString * const AMB_LINKEDIN_USER_DEFAULTS_KEY;
 #pragma mark - Ambassador Back End
 extern NSString * const AMB_MBSY_UNIVERSAL_ID;
 extern NSString * const AMB_AUTHORIZATION_TOKEN;
+extern NSString * const AMB_SHARE_TRACK_URL;
+
+extern NSString * const AMB_SHARE_TRACK_SHORT_CODE_DICT_KEY;
+extern NSString * const AMB_SHARE_TRACK_RECIPIENT_EMAIL_DICT_KEY;
+extern NSString * const AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY;
+extern NSString * const AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY;
 
 
 

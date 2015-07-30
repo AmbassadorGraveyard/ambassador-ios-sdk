@@ -25,6 +25,10 @@
 		DB0F497E1B41A14500CCE614 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49731B41A14500CCE614 /* FMResultSet.h */; };
 		DB0F497F1B41A14500CCE614 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F49741B41A14500CCE614 /* FMResultSet.m */; };
 		DB0F49811B41AA9300CCE614 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0F49801B41AA9300CCE614 /* libsqlite3.dylib */; };
+		DB4579F21B69264600AEC688 /* ServicesPostModal.h in Headers */ = {isa = PBXBuildFile; fileRef = DB4579F01B69264600AEC688 /* ServicesPostModal.h */; };
+		DB4579F31B69264600AEC688 /* ServicesPostModal.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4579F11B69264600AEC688 /* ServicesPostModal.m */; };
+		DB457A2B1B692D7D00AEC688 /* LinkedInShare.h in Headers */ = {isa = PBXBuildFile; fileRef = DB457A291B692D7D00AEC688 /* LinkedInShare.h */; };
+		DB457A2C1B692D7D00AEC688 /* LinkedInShare.m in Sources */ = {isa = PBXBuildFile; fileRef = DB457A2A1B692D7D00AEC688 /* LinkedInShare.m */; };
 		DB46FE151B57EAA400FEB0B0 /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = DB46FE131B57EAA400FEB0B0 /* Utilities.h */; };
 		DB46FE161B57EAA400FEB0B0 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DB46FE141B57EAA400FEB0B0 /* Utilities.m */; };
 		DB46FE4F1B58510000FEB0B0 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = DB46FE441B58510000FEB0B0 /* back.png */; };
@@ -43,6 +47,8 @@
 		DB743E7E1B33742F00262293 /* Ambassador.m in Sources */ = {isa = PBXBuildFile; fileRef = DB743E7C1B33742F00262293 /* Ambassador.m */; };
 		DB743E801B3375A700262293 /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = DB743E7F1B3375A700262293 /* Constants.h */; };
 		DB743E821B3375B300262293 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = DB743E811B3375B300262293 /* Constants.m */; };
+		DB86FA2B1B695D8A008115D9 /* NamePrompt.h in Headers */ = {isa = PBXBuildFile; fileRef = DB86FA291B695D8A008115D9 /* NamePrompt.h */; };
+		DB86FA2C1B695D8A008115D9 /* NamePrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = DB86FA2A1B695D8A008115D9 /* NamePrompt.m */; };
 		DB9013C81B2A03CD001F1CF8 /* iOS_Framework.h in Headers */ = {isa = PBXBuildFile; fileRef = DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB9013CE1B2A03CD001F1CF8 /* iOS_Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9013C21B2A03CD001F1CF8 /* iOS_Framework.framework */; };
 		DB9013D51B2A03CD001F1CF8 /* iOS_FrameworkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9013D41B2A03CD001F1CF8 /* iOS_FrameworkTests.m */; };
@@ -52,7 +58,6 @@
 		DBBB37DE1B67CE6B0084D822 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBB37DA1B67CE6B0084D822 /* Contact.m */; };
 		DBBB37E11B67CE750084D822 /* LinkedInAPIConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBBB37DF1B67CE750084D822 /* LinkedInAPIConstants.h */; };
 		DBBB37E21B67CE750084D822 /* LinkedInAPIConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBB37E01B67CE750084D822 /* LinkedInAPIConstants.m */; };
-		DBBB37E41B67CE7C0084D822 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBBB37E31B67CE7C0084D822 /* Main.storyboard */; };
 		DBBB37E71B67CE880084D822 /* AuthorizeLinkedIn.h in Headers */ = {isa = PBXBuildFile; fileRef = DBBB37E51B67CE880084D822 /* AuthorizeLinkedIn.h */; };
 		DBBB37E81B67CE880084D822 /* AuthorizeLinkedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBB37E61B67CE880084D822 /* AuthorizeLinkedIn.m */; };
 		DBBB37EB1B67CE900084D822 /* RemoveButton.h in Headers */ = {isa = PBXBuildFile; fileRef = DBBB37E91B67CE900084D822 /* RemoveButton.h */; };
@@ -73,6 +78,9 @@
 		DBBB38081B67CEF90084D822 /* ServiceSelectorPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBB38061B67CEF90084D822 /* ServiceSelectorPreferences.m */; };
 		DBBB380B1B67CF010084D822 /* ShareServicesConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBBB38091B67CF010084D822 /* ShareServicesConstants.h */; };
 		DBBB380C1B67CF010084D822 /* ShareServicesConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBB380A1B67CF010084D822 /* ShareServicesConstants.m */; };
+		DBDCA5971B697C5100B85E5A /* ShareTrack.h in Headers */ = {isa = PBXBuildFile; fileRef = DBDCA5951B697C5100B85E5A /* ShareTrack.h */; };
+		DBDCA5981B697C5100B85E5A /* ShareTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = DBDCA5961B697C5100B85E5A /* ShareTrack.m */; };
+		DBDCA59A1B6A5D6800B85E5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBDCA5991B6A5D6800B85E5A /* Main.storyboard */; };
 		DBFA134B1B34BF1800620985 /* Identify.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFA13491B34BF1800620985 /* Identify.h */; };
 		DBFA134C1B34BF1800620985 /* Identify.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFA134A1B34BF1800620985 /* Identify.m */; };
 /* End PBXBuildFile section */
@@ -108,6 +116,10 @@
 		DB0F49731B41A14500CCE614 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		DB0F49741B41A14500CCE614 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		DB0F49801B41AA9300CCE614 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		DB4579F01B69264600AEC688 /* ServicesPostModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServicesPostModal.h; sourceTree = "<group>"; };
+		DB4579F11B69264600AEC688 /* ServicesPostModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServicesPostModal.m; sourceTree = "<group>"; };
+		DB457A291B692D7D00AEC688 /* LinkedInShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInShare.h; sourceTree = "<group>"; };
+		DB457A2A1B692D7D00AEC688 /* LinkedInShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedInShare.m; sourceTree = "<group>"; };
 		DB46FE131B57EAA400FEB0B0 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		DB46FE141B57EAA400FEB0B0 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		DB46FE441B58510000FEB0B0 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
@@ -126,6 +138,8 @@
 		DB743E7C1B33742F00262293 /* Ambassador.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ambassador.m; sourceTree = "<group>"; };
 		DB743E7F1B3375A700262293 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		DB743E811B3375B300262293 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		DB86FA291B695D8A008115D9 /* NamePrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NamePrompt.h; sourceTree = "<group>"; };
+		DB86FA2A1B695D8A008115D9 /* NamePrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NamePrompt.m; sourceTree = "<group>"; };
 		DB9013C21B2A03CD001F1CF8 /* iOS_Framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iOS_Framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB9013C61B2A03CD001F1CF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOS_Framework.h; sourceTree = "<group>"; };
@@ -138,7 +152,6 @@
 		DBBB37DA1B67CE6B0084D822 /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
 		DBBB37DF1B67CE750084D822 /* LinkedInAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInAPIConstants.h; sourceTree = "<group>"; };
 		DBBB37E01B67CE750084D822 /* LinkedInAPIConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedInAPIConstants.m; sourceTree = "<group>"; };
-		DBBB37E31B67CE7C0084D822 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		DBBB37E51B67CE880084D822 /* AuthorizeLinkedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeLinkedIn.h; sourceTree = "<group>"; };
 		DBBB37E61B67CE880084D822 /* AuthorizeLinkedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeLinkedIn.m; sourceTree = "<group>"; };
 		DBBB37E91B67CE900084D822 /* RemoveButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveButton.h; sourceTree = "<group>"; };
@@ -159,6 +172,9 @@
 		DBBB38061B67CEF90084D822 /* ServiceSelectorPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceSelectorPreferences.m; sourceTree = "<group>"; };
 		DBBB38091B67CF010084D822 /* ShareServicesConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareServicesConstants.h; sourceTree = "<group>"; };
 		DBBB380A1B67CF010084D822 /* ShareServicesConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareServicesConstants.m; sourceTree = "<group>"; };
+		DBDCA5951B697C5100B85E5A /* ShareTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareTrack.h; sourceTree = "<group>"; };
+		DBDCA5961B697C5100B85E5A /* ShareTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareTrack.m; sourceTree = "<group>"; };
+		DBDCA5991B6A5D6800B85E5A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		DBFA13491B34BF1800620985 /* Identify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Identify.h; sourceTree = "<group>"; };
 		DBFA134A1B34BF1800620985 /* Identify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Identify.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -328,13 +344,17 @@
 		DBBB37D61B67CE5C0084D822 /* RAF */ = {
 			isa = PBXGroup;
 			children = (
+				DBDCA5991B6A5D6800B85E5A /* Main.storyboard */,
 				DBBB37D71B67CE6B0084D822 /* ContactLoader.h */,
 				DBBB37D81B67CE6B0084D822 /* ContactLoader.m */,
 				DBBB37D91B67CE6B0084D822 /* Contact.h */,
 				DBBB37DA1B67CE6B0084D822 /* Contact.m */,
 				DBBB37DF1B67CE750084D822 /* LinkedInAPIConstants.h */,
 				DBBB37E01B67CE750084D822 /* LinkedInAPIConstants.m */,
-				DBBB37E31B67CE7C0084D822 /* Main.storyboard */,
+				DB86FA291B695D8A008115D9 /* NamePrompt.h */,
+				DB86FA2A1B695D8A008115D9 /* NamePrompt.m */,
+				DBDCA5951B697C5100B85E5A /* ShareTrack.h */,
+				DBDCA5961B697C5100B85E5A /* ShareTrack.m */,
 				DBBB37E51B67CE880084D822 /* AuthorizeLinkedIn.h */,
 				DBBB37E61B67CE880084D822 /* AuthorizeLinkedIn.m */,
 				DBBB37E91B67CE900084D822 /* RemoveButton.h */,
@@ -349,6 +369,10 @@
 				DBBB37FA1B67CEDC0084D822 /* ShareServiceCell.m */,
 				DBBB37FD1B67CEE40084D822 /* ServiceSelector.h */,
 				DBBB37FE1B67CEE40084D822 /* ServiceSelector.m */,
+				DB457A291B692D7D00AEC688 /* LinkedInShare.h */,
+				DB457A2A1B692D7D00AEC688 /* LinkedInShare.m */,
+				DB4579F01B69264600AEC688 /* ServicesPostModal.h */,
+				DB4579F11B69264600AEC688 /* ServicesPostModal.m */,
 				DBBB38011B67CEF00084D822 /* ShareService.h */,
 				DBBB38021B67CEF00084D822 /* ShareService.m */,
 				DBBB38051B67CEF90084D822 /* ServiceSelectorPreferences.h */,
@@ -375,6 +399,7 @@
 				DBBB38071B67CEF90084D822 /* ServiceSelectorPreferences.h in Headers */,
 				DBBB37FF1B67CEE40084D822 /* ServiceSelector.h in Headers */,
 				DBFA134B1B34BF1800620985 /* Identify.h in Headers */,
+				DB86FA2B1B695D8A008115D9 /* NamePrompt.h in Headers */,
 				DBBB37EB1B67CE900084D822 /* RemoveButton.h in Headers */,
 				DB0F497E1B41A14500CCE614 /* FMResultSet.h in Headers */,
 				DB0F497D1B41A14500CCE614 /* FMDB.h in Headers */,
@@ -383,14 +408,17 @@
 				DBBB37DB1B67CE6B0084D822 /* ContactLoader.h in Headers */,
 				DBBB37F31B67CEA20084D822 /* ContactSelector.h in Headers */,
 				DBBB380B1B67CF010084D822 /* ShareServicesConstants.h in Headers */,
+				DBDCA5971B697C5100B85E5A /* ShareTrack.h in Headers */,
 				DBBB37E71B67CE880084D822 /* AuthorizeLinkedIn.h in Headers */,
 				DBBB38031B67CEF00084D822 /* ShareService.h in Headers */,
+				DB4579F21B69264600AEC688 /* ServicesPostModal.h in Headers */,
 				DB9013C81B2A03CD001F1CF8 /* iOS_Framework.h in Headers */,
 				DB0F49791B41A14500CCE614 /* FMDatabasePool.h in Headers */,
 				DB46FE151B57EAA400FEB0B0 /* Utilities.h in Headers */,
 				DB743E7D1B33742F00262293 /* Ambassador.h in Headers */,
 				DBBB37F71B67CED20084D822 /* ContactCell.h in Headers */,
 				DBBB37EF1B67CE960084D822 /* SelectedCell.h in Headers */,
+				DB457A2B1B692D7D00AEC688 /* LinkedInShare.h in Headers */,
 				DB743E801B3375A700262293 /* Constants.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,6 +504,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBDCA59A1B6A5D6800B85E5A /* Main.storyboard in Resources */,
 				DB46FE551B58510000FEB0B0 /* pencil.png in Resources */,
 				DB46FE511B58510000FEB0B0 /* clipboard.png in Resources */,
 				DB46FE581B58510000FEB0B0 /* sms.png in Resources */,
@@ -483,7 +512,6 @@
 				DB46FE501B58510000FEB0B0 /* check.png in Resources */,
 				DB46FE531B58510000FEB0B0 /* email.png in Resources */,
 				DB46FE571B58510000FEB0B0 /* search.png in Resources */,
-				DBBB37E41B67CE7C0084D822 /* Main.storyboard in Resources */,
 				DB46FE541B58510000FEB0B0 /* facebook.png in Resources */,
 				DB46FE5B1B58513E00FEB0B0 /* linkedin.png in Resources */,
 				DB46FE4F1B58510000FEB0B0 /* back.png in Resources */,
@@ -543,6 +571,7 @@
 				DBFA134C1B34BF1800620985 /* Identify.m in Sources */,
 				DBBB38041B67CEF00084D822 /* ShareService.m in Sources */,
 				DBBB37FC1B67CEDC0084D822 /* ShareServiceCell.m in Sources */,
+				DB457A2C1B692D7D00AEC688 /* LinkedInShare.m in Sources */,
 				DBBB38081B67CEF90084D822 /* ServiceSelectorPreferences.m in Sources */,
 				DBBB37DC1B67CE6B0084D822 /* ContactLoader.m in Sources */,
 				DB0F494C1B419DF000CCE614 /* Conversion.m in Sources */,
@@ -550,11 +579,13 @@
 				DBBB38001B67CEE40084D822 /* ServiceSelector.m in Sources */,
 				DB0F49761B41A14500CCE614 /* FMDatabase.m in Sources */,
 				DB0F497C1B41A14500CCE614 /* FMDatabaseQueue.m in Sources */,
+				DBDCA5981B697C5100B85E5A /* ShareTrack.m in Sources */,
 				DBBB37DE1B67CE6B0084D822 /* Contact.m in Sources */,
 				DBBB37F81B67CED20084D822 /* ContactCell.m in Sources */,
 				DB0F497F1B41A14500CCE614 /* FMResultSet.m in Sources */,
 				DB743E7E1B33742F00262293 /* Ambassador.m in Sources */,
 				DBBB37E81B67CE880084D822 /* AuthorizeLinkedIn.m in Sources */,
+				DB4579F31B69264600AEC688 /* ServicesPostModal.m in Sources */,
 				DBBB380C1B67CF010084D822 /* ShareServicesConstants.m in Sources */,
 				DBBB37E21B67CE750084D822 /* LinkedInAPIConstants.m in Sources */,
 				DBBB37F41B67CEA20084D822 /* ContactSelector.m in Sources */,
@@ -563,6 +594,7 @@
 				DB743E821B3375B300262293 /* Constants.m in Sources */,
 				DB0F497A1B41A14500CCE614 /* FMDatabasePool.m in Sources */,
 				DBBB37F01B67CE960084D822 /* SelectedCell.m in Sources */,
+				DB86FA2C1B695D8A008115D9 /* NamePrompt.m in Sources */,
 				DB0F49481B419DCC00CCE614 /* ConversionParameters.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
