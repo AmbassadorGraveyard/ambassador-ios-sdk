@@ -14,5 +14,6 @@
 - (id)initWithPreferences:(ServiceSelectorPreferences *)prefs;
 @property (strong, nonatomic) ServiceSelectorPreferences *prefs;
 @property NSString *shortCode;
+@property NSString *shortURL;
 
 @end
