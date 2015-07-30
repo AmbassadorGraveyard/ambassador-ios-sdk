@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8124.4"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -492,8 +491,12 @@
                                                         <constraint firstItem="KAc-b0-nmv" firstAttribute="leading" secondItem="Fwn-Oj-VMd" secondAttribute="trailing" constant="8" id="6u6-4Y-h5p"/>
                                                         <constraint firstAttribute="centerY" secondItem="KAc-b0-nmv" secondAttribute="centerY" id="VE4-4S-uF6"/>
                                                         <constraint firstAttribute="centerY" secondItem="Fwn-Oj-VMd" secondAttribute="centerY" constant="0.5" id="f37-Uh-wsg"/>
-                                                        <constraint firstItem="KAc-b0-nmv" firstAttribute="trailing" secondItem="ukp-TX-pW7" secondAttribute="trailingMargin" id="lqb-PB-JVT"/>
-                                                        <constraint firstItem="Fwn-Oj-VMd" firstAttribute="leading" secondItem="ukp-TX-pW7" secondAttribute="leadingMargin" id="wvZ-5r-ukt"/>
+                                                        <constraint firstItem="KAc-b0-nmv" firstAttribute="trailing" secondItem="ukp-TX-pW7" secondAttribute="trailingMargin" id="lqb-PB-JVT">
+                                                            <variation key="widthClass=regular" constant="-8"/>
+                                                        </constraint>
+                                                        <constraint firstItem="Fwn-Oj-VMd" firstAttribute="leading" secondItem="ukp-TX-pW7" secondAttribute="leadingMargin" id="wvZ-5r-ukt">
+                                                            <variation key="widthClass=regular" constant="8"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="subviews">
