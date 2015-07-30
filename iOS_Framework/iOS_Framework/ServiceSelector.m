@@ -17,10 +17,13 @@
 #import "LinkedInAPIConstants.h"
 #import "Constants.h"
 #import <Social/Social.h>
+#import "LinkedInShare.h"
+#import "ShareTrack.h"
 
 
 @interface ServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
-                               ContactLoaderDelegate, LinkedInAuthorizeDelegate>
+                               ContactLoaderDelegate, LinkedInAuthorizeDelegate,
+                               ShareServiceDelegate, ContactSelectorDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
@@ -165,6 +168,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     {
         //TODO:facebook
         SLComposeViewController *vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        [vc addURL:[NSURL URLWithString:self.shortURL]];
         vc.completionHandler = ^(SLComposeViewControllerResult result)
         {
             if (result == SLComposeViewControllerResultDone)
@@ -178,14 +182,14 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     }
     else if ([service.title isEqualToString:TWITTER_TITLE])
     {
-        //TODO:twitter
-        SLComposeViewController *vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        SLComposeViewController *vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [vc addURL:[NSURL URLWithString:self.shortURL]];
         vc.completionHandler = ^(SLComposeViewControllerResult result)
         {
             if (result == SLComposeViewControllerResultDone)
             {
                 DLog();
-                [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"facebook" recipientUsername:@""];
+                [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"twitter" recipientUsername:@""];
             }
         };
         [vc setInitialText:self.prefs.defaultShareMessage];
@@ -193,15 +197,15 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     }
     else if ([service.title isEqualToString:LINKEDIN_TITLE])
     {
-        //TODO:linkedin
         DLog();
         NSDictionary *token = [[NSUserDefaults  standardUserDefaults] dictionaryForKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
+        DLog(@"%@", token);
         if (token) {
             NSDate *referenceDate = token[LKDN_EXPIRES_DICT_KEY];
             if (!([referenceDate timeIntervalSinceNow] < 0.0))
             {
                 DLog();
-                //TOOO: present the modal
+                [self presentLinkedIn];
             }
         }
         else
@@ -221,6 +225,16 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     }
 }
 
+- (void)presentLinkedIn
+{
+    LinkedInShare * vc = [[LinkedInShare alloc] init];
+    vc.defaultMessage = self.prefs.defaultShareMessage;
+    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    vc.shortCode = self.shortCode;
+    vc.shortURL = self.shortURL;
+    vc.delegate = self;
+    [self presentViewController:vc animated:YES completion:nil];
+}
 
 
 
@@ -232,14 +246,17 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         ContactSelector *vc = (ContactSelector *)segue.destinationViewController;
         NSString *serviceType = (NSString *)sender;
         vc.prefs = self.prefs;
+        vc.delegate = self;
         
         if ([serviceType isEqualToString:SMS_TITLE])
         {
             vc.data = self.loader.phoneNumbers;
+            vc.serviceType = SMS_TITLE;
         }
         else if ([serviceType isEqualToString:EMAIL_TITLE])
         {
             vc.data = self.loader.emailAddresses;
+            vc.serviceType = EMAIL_TITLE;
         }
     }
     else if ([segue.identifier isEqualToString:LKND_AUTHORIZE_SEGUE])
@@ -277,8 +294,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                                style:UIAlertActionStyleDefault
                                handler:^(UIAlertAction *action)
     {
-        [self.presentingViewController dismissViewControllerAnimated:YES
-                                                          completion:nil];
+        //[self.presentingViewController dismissViewControllerAnimated:YES
+                                                         // completion:nil];
     }];
     
     [alert addAction:okAction];
@@ -289,10 +306,36 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 
 #pragma mark - Lkdn delegate
-
 - (void)userDidContinue
 {
     [self.navigationController popViewControllerAnimated:YES];
+    [self presentLinkedIn];
+}
+
+
+
+#pragma mark - ShareServiceDelegate
+- (void)networkError:(NSString *)title message:(NSString *)message
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self simpleAlertWith:title message:message];
+    });
+    
+}
+
+- (void)userDidPostFromService:(NSString *)service
+{
+    DLog(@"Post succeeded");
+    if ([service isEqualToString:LINKEDIN_TITLE])
+    {
+        [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"linkedin" recipientUsername:@""];
+    }
+}
+
+- (void)userMustReauthenticate
+{
+    NSLog(@"Reauthenticate");
+    
 }
 
 
@@ -308,46 +351,118 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 
 
+#pragma mark - ContactSelectorDelegate
+- (void)sendValues:(NSArray *)values forServiceType:(NSString *)serviceType
+{
+    [self bulkPostShareTrackWithShortCode:self.shortCode values:values socialName:serviceType];
+}
+
+
 #pragma mark - Share track
 - (void)postShareTrackWithShortCode:(NSString *)shortCode recipientEmail:(NSString *)recipientEmail socialName:(NSString *)socialName recipientUsername:(NSString *)recipientUsername
 {
     DLog();
     //Create payload
-//    NSDictionary *payload = @{ SHARE_TRACK_SHORT_CODE_KEY : shortCode,
-//                               SHARE_TRACK_RECIPIENT_EMAIL_KEY : recipientEmail,
-//                               SHARE_TRACK_SOCIAL_NAME_KEY : socialName,
-//                               SHARE_TRACK_RECIPIENT_USERNAME_KEY : recipientUsername };
-//    
-//    NSURL *url = [NSURL URLWithString:AMB_SHARE_TRACK_URL];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    request.HTTPMethod = @"POST";
-//    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-//    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
-//    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-//    
-//    NSURLSessionDataTask *task = [[NSURLSession sharedSession]
-//                                  dataTaskWithRequest:request
-//                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-//                                  {
-//                                      if (!error)
-//                                      {
-//                                          DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-//                                          
-//                                          //Check for 2xx status codes
-//                                          if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-//                                              ((NSHTTPURLResponse *)response).statusCode < 300)
-//                                          {
-//                                              // Looking for a "Polling" response
-//                                              DLog(@"Response from backend from sending identify: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-//                                          }
-//                                      }
-//                                      else
-//                                      {
-//                                          DLog(@"Error: %@", error.localizedDescription);
-//                                      }
-//                                  }];
-//    [task resume];
+    NSDictionary *payload = @{ AMB_SHARE_TRACK_SHORT_CODE_DICT_KEY : shortCode,
+                               AMB_SHARE_TRACK_RECIPIENT_EMAIL_DICT_KEY : recipientEmail,
+                               AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY : socialName,
+                               AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY : recipientUsername };
+    
+    NSURL *url = [NSURL URLWithString:AMB_SHARE_TRACK_URL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+    
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession]
+                                  dataTaskWithRequest:request
+                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+                                  {
+                                      if (!error)
+                                      {
+                                          DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                                          
+                                          //Check for 2xx status codes
+                                          if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                                              ((NSHTTPURLResponse *)response).statusCode < 300)
+                                          {
+                                              // Looking for a "Polling" response
+                                              DLog(@"Response from backend from sending identify: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                                          }
+                                      }
+                                      else
+                                      {
+                                          DLog(@"Error: %@", error.localizedDescription);
+                                      }
+                                  }];
+    [task resume];
+}
+
+- (void)bulkPostShareTrackWithShortCode:(NSString *)shortCode values:(NSArray *)values socialName:(NSString *)serviceType
+{
+    ShareTrackBulk *shareTrackObjects = [[ShareTrackBulk alloc] init];
+    shareTrackObjects.bulk = [[NSMutableArray alloc] init];
+    if ([serviceType isEqualToString:SMS_TITLE])
+    {
+        for (int i = 0; i < values.count; ++i)
+        {
+            ShareTrack * obj = [[ShareTrack alloc] init];
+            obj.short_code = shortCode;
+            obj.recipient_email = @"";
+            obj.social_name = @"sms";
+            obj.recipient_username = values[i];
+            
+            [shareTrackObjects.bulk addObject:obj];
+        }
+    }
+    else if ([serviceType isEqualToString:EMAIL_TITLE])
+    {
+//        for (int i = 0; i < values.count; ++i)
+//        {
+//            [shareTrackObjects addObject:@{    AMB_SHARE_TRACK_SHORT_CODE_DICT_KEY : shortCode,
+//                                               AMB_SHARE_TRACK_RECIPIENT_EMAIL_DICT_KEY : values[i],
+//                                               AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY : @"email",
+//                                               AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY : @""
+//                                               }];
+//        }
+    }
+    
+    
+    NSURL *url = [NSURL URLWithString:AMB_SHARE_TRACK_URL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    
+    DLog(@"%@", [shareTrackObjects toDictionary]);
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:[shareTrackObjects toDictionary] options:0 error:nil];
+    
+    
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession]
+                                  dataTaskWithRequest:request
+                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+                                  {
+                                      if (!error)
+                                      {
+                                          DLog(@"Status code for share track: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                                          
+                                          //Check for 2xx status codes
+                                          if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                                              ((NSHTTPURLResponse *)response).statusCode < 300)
+                                          {
+                                              // Looking for a "Polling" response
+                                              DLog(@"Response from backend from sending share track: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                                          }
+                                      }
+                                      else
+                                      {
+                                          DLog(@"Error: %@", error.localizedDescription);
+                                      }
+                                  }];
+    [task resume];
 }
 
 @end

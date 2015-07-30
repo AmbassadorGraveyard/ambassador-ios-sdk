@@ -27,6 +27,7 @@ NSString * const AMB_PUSHER_KEY = @"8bd3fe1994164f9b83f6";
 NSString * const AMB_PUSHER_AUTHENTICATION_URL = @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
 
 NSString * const AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY = @"AMBFIRSTLAUNCHSTORAGE";
+
 NSString * const AMB_RAF_SHARE_SERVICES_TITLE = @"Refer your friends";
 
 NSString * const AMB_CLOSE_BUTTON_NAME = @"close.png";
@@ -34,6 +35,16 @@ NSString * const AMB_CLOSE_BUTTON_NAME = @"close.png";
 NSString * const AMB_BACK_BUTTON_NAME = @"back.png";
 
 NSString * const AMB_LINKEDIN_USER_DEFAULTS_KEY = @"AMBLINKEDINSTORAGE";
+
+NSString * const AMB_SHARE_TRACK_URL = @"https://dev-ambassador-api.herokuapp.com/track/share/";
+
+NSString * const AMB_SHARE_TRACK_SHORT_CODE_DICT_KEY = @"short_code";
+
+NSString * const AMB_SHARE_TRACK_RECIPIENT_EMAIL_DICT_KEY = @"recipient_email";
+
+NSString * const AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY = @"social_name";
+
+NSString * const AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY = @"recipient_username";
 
 
 

@@ -15,11 +15,16 @@
 extern NSString * const LKDN_ERROR_DICT_KEY; // During first auth step
 extern NSString * const LKDN_CODE_DICT_KEY; // During first auth step
 extern NSString * const LKDN_EXPIRES_DICT_KEY; // During second auth step
+extern NSString * const LKDN_OAUTH_TOKEN_KEY; // Key for token in userdefaults
+
+extern NSString * const LKDN_COMMENT_DICT_KEY;
+extern NSString * const LKDN_VISIBILITY_DICT_KEY;
 
 // Urls
 extern NSString * const LKDN_AUTH_URL;
 extern NSString * const LKDN_AUTH_CALLBACK_URL;
 extern NSString * const LKDN_REQUEST_OAUTH_TOKEN_URL;
+extern NSString * const LKDN_SHARE_URL;
 
 NSString* lkdnBuildRequestTokenHTTPBody(NSString* key);
 

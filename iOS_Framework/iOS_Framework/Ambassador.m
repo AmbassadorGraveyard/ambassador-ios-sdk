@@ -99,8 +99,8 @@ static Conversion *conversion;
 {
 #if DEBUG
         DLog(@"Removing user defaults for testing");
-//        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-//        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 #endif
     
     //Initialize class variables
@@ -134,8 +134,10 @@ static Conversion *conversion;
 {
     DLog();
     // Validate campaign ID before RAF is presented
-    NSString *shortCodeURL = @"";
-    NSString *shortCode = @"";
+    
+    //TODO: take this out after daisy chain
+    NSString *shortCodeURL = @"www.mbsy.co/jw9j";
+    NSString *shortCode = @"jw9j";
     NSDictionary *userInfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
     if (userInfo)
     {
@@ -162,7 +164,8 @@ static Conversion *conversion;
     ServiceSelector *rootVC = (ServiceSelector *)vc.childViewControllers[0];
     
     //TODO: set short code and text field text
-    rootVC.shortCode = @"123";
+    rootVC.shortCode = shortCode;
+    rootVC.shortURL = shortCodeURL;
     parameters.textFieldText = @"www.mbsy.co/yourshortcode";
     rootVC.prefs = parameters;
 
