@@ -46,6 +46,8 @@ NSString * const AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY = @"social_name";
 
 NSString * const AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY = @"recipient_username";
 
+NSString * const AMB_SMS_SHARE_URL = @"https://dev-ambassador-api.herokuapp.com/share/sms/";
+
 
 
 

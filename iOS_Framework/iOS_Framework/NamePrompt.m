@@ -45,7 +45,7 @@
 {
     if ([self textFieldIsValid:self.textField.text])
     {
-        [self.delegate sendSMSPressed];
+        [self.delegate sendSMSPressedWithName:self.textField.text];
     }
    
     self.textField.delegate = self;
@@ -55,7 +55,6 @@
 - (BOOL)textFieldIsValid:(NSString *)string
 {
     NSArray *nameComponents = [string componentsSeparatedByString:@" "];
-    DLog(@"%@", nameComponents);
     return (nameComponents.count == 2) &&
     (![[nameComponents firstObject] isEqualToString:@""]) &&
     (![[nameComponents lastObject] isEqualToString:@""])? YES : NO;

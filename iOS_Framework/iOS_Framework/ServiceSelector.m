@@ -19,6 +19,7 @@
 #import <Social/Social.h>
 #import "LinkedInShare.h"
 #import "ShareTrack.h"
+#import "Contact.h"
 
 
 @interface ServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
@@ -247,6 +248,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         NSString *serviceType = (NSString *)sender;
         vc.prefs = self.prefs;
         vc.delegate = self;
+        vc.defaultMessage = self.prefs.defaultShareMessage;
         
         if ([serviceType isEqualToString:SMS_TITLE])
         {
@@ -352,9 +354,58 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 
 #pragma mark - ContactSelectorDelegate
-- (void)sendValues:(NSArray *)values forServiceType:(NSString *)serviceType
+- (void)sendToContacts:(NSArray *)contacts forServiceType:(NSString *)serviceType fromName:(NSString *)name withMessage:(NSString *)message
 {
-    [self bulkPostShareTrackWithShortCode:self.shortCode values:values socialName:serviceType];
+    NSString *shortCode = self.shortCode;
+    
+    if ([serviceType isEqualToString:EMAIL_TITLE])
+    {
+        [self bulkPostShareTrackWithShortCode:shortCode values:[self validateEmails:contacts] socialName:EMAIL_TITLE];
+    }
+    else if ([serviceType isEqualToString:SMS_TITLE])
+    {
+        NSDictionary *payload = @{
+                                  @"to" : [self validatePhoneNumbers:contacts],
+                                  @"name" : name,
+                                  @"message" : [NSString stringWithFormat:@"%@ %@", message, self.shortURL]
+                                  };
+        DLog(@"%@", payload);
+        
+
+        
+        NSURL *url = [NSURL URLWithString:AMB_SMS_SHARE_URL];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        request.HTTPMethod = @"POST";
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+        [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+        request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+        
+        NSURLSessionDataTask *task = [[NSURLSession sharedSession]
+                                      dataTaskWithRequest:request
+                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+          {
+              if (!error)
+              {
+                  DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                  
+                  //Check for 2xx status codes
+                  if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                      ((NSHTTPURLResponse *)response).statusCode < 300)
+                  {
+                      // Looking for a "Qued" response
+                      DLog(@"Response from backend from sending identify: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                      [self bulkPostShareTrackWithShortCode:shortCode values:[self validatePhoneNumbers:contacts] socialName:SMS_TITLE];
+                  }
+              }
+              else
+              {
+                  DLog(@"Error: %@", error.localizedDescription);
+                  [self simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+              }
+          }];
+        [task resume];
+    }
 }
 
 
@@ -379,90 +430,115 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
                                   dataTaskWithRequest:request
                                   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-                                  {
-                                      if (!error)
-                                      {
-                                          DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                                          
-                                          //Check for 2xx status codes
-                                          if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-                                              ((NSHTTPURLResponse *)response).statusCode < 300)
-                                          {
-                                              // Looking for a "Polling" response
-                                              DLog(@"Response from backend from sending identify: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                                          }
-                                      }
-                                      else
-                                      {
-                                          DLog(@"Error: %@", error.localizedDescription);
-                                      }
-                                  }];
+      {
+          if (!error)
+          {
+              DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+              
+              //Check for 2xx status codes
+              if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                  ((NSHTTPURLResponse *)response).statusCode < 300)
+              {
+                  // Looking for a "echo" response
+                  DLog(@"Response from backend from sending sms: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+              }
+          }
+          else
+          {
+              DLog(@"Error: %@", error.localizedDescription);
+          }
+      }];
     [task resume];
+}
+
+- (NSMutableArray *)validatePhoneNumbers:(NSArray *)contacts
+{
+    NSMutableArray *validSet = [[NSMutableArray alloc] init];
+    for (Contact *contact in contacts)
+    {
+        NSString *number = [[contact.value componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]] componentsJoinedByString:@""];
+        if (number.length == 11 || number.length == 10 || number.length == 7)
+        {
+            [validSet addObject:number];
+        }
+    }
+    return validSet;
+}
+
+- (NSMutableArray *)validateEmails:(NSArray *)contacts
+{
+    NSMutableArray *validSet = [[NSMutableArray alloc] init];
+    for (Contact *contact in contacts)
+    {
+        NSString *number = contact.value;
+        [validSet addObject:number];
+    }
+    return validSet;
 }
 
 - (void)bulkPostShareTrackWithShortCode:(NSString *)shortCode values:(NSArray *)values socialName:(NSString *)serviceType
 {
-//    ShareTrackBulk *shareTrackObjects = [[ShareTrackBulk alloc] init];
-//    shareTrackObjects.bulk = [[NSMutableArray alloc] init];
-//    if ([serviceType isEqualToString:SMS_TITLE])
-//    {
-//        for (int i = 0; i < values.count; ++i)
-//        {
-//            ShareTrack * obj = [[ShareTrack alloc] init];
-//            obj.short_code = shortCode;
-//            obj.recipient_email = @"";
-//            obj.social_name = @"sms";
-//            obj.recipient_username = values[i];
-//            
-//            [shareTrackObjects.bulk addObject:obj];
-//        }
-//    }
-//    else if ([serviceType isEqualToString:EMAIL_TITLE])
-//    {
-////        for (int i = 0; i < values.count; ++i)
-////        {
-////            [shareTrackObjects addObject:@{    AMB_SHARE_TRACK_SHORT_CODE_DICT_KEY : shortCode,
-////                                               AMB_SHARE_TRACK_RECIPIENT_EMAIL_DICT_KEY : values[i],
-////                                               AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY : @"email",
-////                                               AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY : @""
-////                                               }];
-////        }
-//    }
-//    
-//    
-//    NSURL *url = [NSURL URLWithString:AMB_SHARE_TRACK_URL];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    request.HTTPMethod = @"POST";
-//    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-//    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
-//    
-//    DLog(@"%@", [shareTrackObjects toDictionary]);
-//    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:[shareTrackObjects toDictionary] options:0 error:nil];
-//    
-//    
-//    NSURLSessionDataTask *task = [[NSURLSession sharedSession]
-//                                  dataTaskWithRequest:request
-//                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-//                                  {
-//                                      if (!error)
-//                                      {
-//                                          DLog(@"Status code for share track: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-//                                          
-//                                          //Check for 2xx status codes
-//                                          if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-//                                              ((NSHTTPURLResponse *)response).statusCode < 300)
-//                                          {
-//                                              // Looking for a "Polling" response
-//                                              DLog(@"Response from backend from sending share track: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-//                                          }
-//                                      }
-//                                      else
-//                                      {
-//                                          DLog(@"Error: %@", error.localizedDescription);
-//                                      }
-//                                  }];
-//    [task resume];
+    NSMutableArray *payload = [[NSMutableArray alloc] init];
+    if ([serviceType isEqualToString:SMS_TITLE])
+    {
+        for (int i = 0; i < values.count; ++i)
+        {
+            NSDictionary* obj = @{
+                                  @"short_code" : shortCode,
+                                  @"recipient_email" : @"",
+                                  @"social_name" : @"sms",
+                                  @"recipient_username" : values[i]
+                                  };
+            
+            [payload addObject:obj];
+        }
+    }
+    else if ([serviceType isEqualToString:EMAIL_TITLE])
+    {
+        for (int i = 0; i < values.count; ++i)
+        {
+            [payload addObject:@{
+                                 AMB_SHARE_TRACK_SHORT_CODE_DICT_KEY : shortCode,
+                                 AMB_SHARE_TRACK_RECIPIENT_EMAIL_DICT_KEY : values[i],
+                                 AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY : @"email",
+                                 AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY : @""
+                                 }];
+        }
+    }
+    
+    
+    NSURL *url = [NSURL URLWithString:AMB_SHARE_TRACK_URL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+    
+    
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession]
+                                  dataTaskWithRequest:request
+                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+      {
+          if (!error)
+          {
+              DLog(@"Status code for share track: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+              
+              //Check for 2xx status codes
+              if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                  ((NSHTTPURLResponse *)response).statusCode < 300)
+              {
+                  // Looking for a "Polling" response
+                  DLog(@"Response from backend from sending share track: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+              }
+          }
+          else
+          {
+              DLog(@"Error: %@", error.localizedDescription);
+          }
+      }];
+    [task resume];
 }
 
 @end
