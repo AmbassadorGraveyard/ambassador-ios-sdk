@@ -40,7 +40,7 @@
     conversion.mbsy_is_approved = @NO;
     conversion.mbsy_email = @"anonymous_test_1578@example.com";
 
-    [Ambassador runWithKey:@"abc123" convertOnInstall:conversion];
+    [Ambassador runWithKey:@"UniversalToken bdb49d2b9ae25da122370f3517f98336f" convertOnInstall:conversion];
     return YES;
 }
 

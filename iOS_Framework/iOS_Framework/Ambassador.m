@@ -111,8 +111,8 @@ static Conversion *conversion;
                                                      selector:@selector(checkConversionQueue)
                                                      userInfo:nil
                                                       repeats:YES];
-    identify = [[Identify alloc] init];
-    conversion = [[Conversion alloc] init];
+    identify = [[Identify alloc] initWithKey:APIKey];
+    conversion = [[Conversion alloc] initWithKey:APIKey];
     
     DLog(@"Checking if conversion is made on app launch");
 
@@ -187,6 +187,7 @@ static Conversion *conversion;
     rootVC.shortURL = shortCodeURL;
     parameters.textFieldText = shortCodeURL;
     rootVC.prefs = parameters;
+    rootVC.APIKey = APIKey;
 
     [viewController presentViewController:vc animated:YES completion:nil];
 }
@@ -211,5 +212,7 @@ static Conversion *conversion;
     DLog();
     [conversion sendConversions];
 }
+
+
 
 @end
