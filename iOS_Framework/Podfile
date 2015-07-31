@@ -1,1 +1,2 @@
 pod 'libPusher', '~> 1.5'
+pod 'JSONModel'

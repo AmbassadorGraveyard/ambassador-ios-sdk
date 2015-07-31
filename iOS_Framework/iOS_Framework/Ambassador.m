@@ -12,8 +12,9 @@
 #import "Conversion.h"
 #import "ConversionParameters.h"
 #import "Utilities.h"
-#import "RAFNavigationController.h"
-#import "RAFShareScreen.h"
+#import "ServiceSelector.h"
+#import "ServiceSelectorPreferences.h"
+
 
 
 
@@ -69,11 +70,11 @@ static Conversion *conversion;
                          convertOnInstall:information];
 }
 
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(RAFParameters*)parameters
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(ServiceSelectorPreferences*)parameters
 {
     DLog();
     if (!parameters) {
-        parameters = [[RAFParameters alloc] init];
+        parameters = [[ServiceSelectorPreferences alloc] init];
     }
     
     [[Ambassador sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withRAFParameters:parameters];
@@ -129,10 +130,12 @@ static Conversion *conversion;
 
 }
 
-- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withRAFParameters:(RAFParameters*)parameters
+- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withRAFParameters:(ServiceSelectorPreferences*)parameters
 {
     DLog();
     // Validate campaign ID before RAF is presented
+    
+    //TODO: take this out after daisy chain
     NSString *shortCodeURL = @"";
     NSString *shortCode = @"";
     NSDictionary *userInfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
@@ -153,19 +156,39 @@ static Conversion *conversion;
     if ([shortCodeURL isEqualToString:@""])
     {
         NSLog(@"USER DOES NOT HAVE A SHORT CODE FOR THE GIVEN CAMPAIGN");
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:@"Network Error"
+                                    message:@"We couldn't load your URLs. Check your network connection and try again"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction
+                                   actionWithTitle:@"Ok"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       //[self.presentingViewController dismissViewControllerAnimated:YES
+                                       // completion:nil];
+                                   }];
+        
+        [alert addAction:okAction];
+        
+        [viewController presentViewController:alert animated:YES completion:nil];
+        //TODO: try to grab the short codes again
+        
     }
     
     // Initialize root view controller
-    RAFShareScreen *vc = [[RAFShareScreen alloc] initWithShortURL:shortCodeURL shortCode:shortCode ];
-    vc.rafParameters = parameters;
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"]];
+    UINavigationController *vc = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
+    ServiceSelector *rootVC = (ServiceSelector *)vc.childViewControllers[0];
     
-    // Initialize navigation controller and set vc as root
-    RAFNavigationController *navController = [[RAFNavigationController alloc] initWithRootViewController:vc];
-    navController.navigationBar.translucent = NO;
-    navController.navigationBar.tintColor = AMB_NAVIGATION_BAR_TINT_COLOR();
-    
-    // Present
-    [viewController presentViewController:navController animated:YES completion:nil];
+    //TODO: set short code and text field text
+    rootVC.shortCode = shortCode;
+    rootVC.shortURL = shortCodeURL;
+    parameters.textFieldText = shortCodeURL;
+    rootVC.prefs = parameters;
+
+    [viewController presentViewController:vc animated:YES completion:nil];
 }
 
 - (void)registerConversion:(ConversionParameters *)information

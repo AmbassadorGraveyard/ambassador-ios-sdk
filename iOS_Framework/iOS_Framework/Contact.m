@@ -7,7 +7,6 @@
 //
 
 #import "Contact.h"
-#import "Constants.h"
 
 @implementation Contact
 
