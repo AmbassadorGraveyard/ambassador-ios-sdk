@@ -220,7 +220,7 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
                   }
                   else
                   {
-                      NSLog(@"Error: %@", error.localizedDescription);
+                      DLog(@"Error: %@", error.localizedDescription);
                   }
               }];
             [task resume];

@@ -113,35 +113,6 @@
     // Get name
     NSDictionary *name = [self getNameForPerson:person];
     
-    // Emails for contact
-    ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
-    
-    // Cycle through emails
-    for (CFIndex j = 0; j < ABMultiValueGetCount(emails); ++j) {
-        
-        //String to store label of each email type
-        NSString *emailLabel = (__bridge NSString *)ABMultiValueCopyLabelAtIndex(emails, j);
-        
-        //Strip the charaters surrounding label type
-        emailLabel = [emailLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]];
-        
-        NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emails, j);
-        
-        Contact *contact = [[Contact alloc] init];
-        contact.firstName = name[@"firstName"];
-        contact.lastName = name[@"lastName"];
-        contact.label = emailLabel;
-        contact.value = email;
-        
-        [self.emailAddresses addObject:contact];
-    }
-}
-
-- (void)getEmailsForPerson:(ABRecordRef)person
-{
-    // Get name
-    NSDictionary *name = [self getNameForPerson:person];
-    
     // Phone numbers for contact
     ABMultiValueRef phones = ABRecordCopyValue(person, kABPersonPhoneProperty);
     
@@ -160,6 +131,7 @@
         {
             //Strip the charaters surrounding label type
             phoneLabel = [phoneLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]];
+            if (!phoneLabel) phoneLabel = @"Other";
             
             //Get the number
             NSString *number = (__bridge NSString *)ABMultiValueCopyValueAtIndex(phones, j);
@@ -177,6 +149,37 @@
             [self.phoneNumbers addObject:contact];
         }
     }
+}
+
+- (void)getEmailsForPerson:(ABRecordRef)person
+{
+    // Get name
+    NSDictionary *name = [self getNameForPerson:person];
+    
+    // Emails for contact
+    ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
+    
+    // Cycle through emails
+    for (CFIndex j = 0; j < ABMultiValueGetCount(emails); ++j) {
+        
+        //String to store label of each email type
+        NSString *emailLabel = (__bridge NSString *)ABMultiValueCopyLabelAtIndex(emails, j);
+        
+        //Strip the charaters surrounding label type
+        emailLabel = [emailLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]];
+        if (!emailLabel) emailLabel = @"Other";
+        
+        NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emails, j);
+        
+        Contact *contact = [[Contact alloc] init];
+        contact.firstName = name[@"firstName"];
+        contact.lastName = name[@"lastName"];
+        contact.label = emailLabel;
+        contact.value = email;
+        
+        [self.emailAddresses addObject:contact];
+    }
+
 }
 
 - (NSDictionary *)getNameForPerson:(ABRecordRef)person

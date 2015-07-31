@@ -16,7 +16,7 @@
 
 #pragma mark - Local Constants
 NSString * const AMB_IDENTIFY_URL = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/&universal_id=***REMOVED***";
-NSString * const AMB_IDENTIFY_JS_VAR = @"JSON.stringify(augur_data)";
+NSString * const AMB_IDENTIFY_JS_VAR = @"JSON.stringify(augur.json)";
 NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
 NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/?u=***REMOVED***";
 float const AMB_IDENTIFY_RETRY_TIME = 2.0;
@@ -224,7 +224,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+    //[request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
     [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     
@@ -242,6 +242,10 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                                           {
                                               // Looking for a "Polling" response
                                               DLog(@"Response from backend from sending identify: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                                          }
+                                          else if (((NSHTTPURLResponse *)response).statusCode == 401)
+                                          {
+                                              NSLog(@"AMBASSADOR ERROR: Unauthorized access encountered. Check the API Key provided.");
                                           }
                                       }
                                       else
