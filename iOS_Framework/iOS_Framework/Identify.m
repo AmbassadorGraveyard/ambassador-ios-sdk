@@ -41,6 +41,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @property NSString *email;
 @property PTPusher *client;
 @property PTPusherPrivateChannel *channel;
+@property NSString *APIKey;
 
 @end
 
@@ -49,7 +50,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @implementation Identify
 
 #pragma mark - Object lifecycle
-- (id)init
+- (id)initWithKey:(NSString *)key
 {
     DLog();
     if ([super init])
@@ -57,6 +58,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         self.webview = [[UIWebView alloc] init];
         self.webview.delegate = self;
         self.email = @"";
+        self.APIKey = key;
         self.client = [PTPusher pusherWithKey:AMB_PUSHER_KEY delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:AMB_PUSHER_AUTHENTICATION_URL];
         [self.client connect];
@@ -223,7 +225,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
@@ -313,7 +315,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     
     // Modify the default autheticate request that Pusher will make. The
     // HTTP body is set per Ambassador back end requirements
-    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSMutableString *httpBodyString = [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding];
     NSMutableDictionary *httpBody = parseQueryString(httpBodyString);

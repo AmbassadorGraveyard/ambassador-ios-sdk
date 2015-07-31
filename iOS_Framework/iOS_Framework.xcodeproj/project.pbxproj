@@ -25,8 +25,6 @@
 		DB0F497E1B41A14500CCE614 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = DB0F49731B41A14500CCE614 /* FMResultSet.h */; };
 		DB0F497F1B41A14500CCE614 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F49741B41A14500CCE614 /* FMResultSet.m */; };
 		DB0F49811B41AA9300CCE614 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0F49801B41AA9300CCE614 /* libsqlite3.dylib */; };
-		DB4579F21B69264600AEC688 /* ServicesPostModal.h in Headers */ = {isa = PBXBuildFile; fileRef = DB4579F01B69264600AEC688 /* ServicesPostModal.h */; };
-		DB4579F31B69264600AEC688 /* ServicesPostModal.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4579F11B69264600AEC688 /* ServicesPostModal.m */; };
 		DB457A2B1B692D7D00AEC688 /* LinkedInShare.h in Headers */ = {isa = PBXBuildFile; fileRef = DB457A291B692D7D00AEC688 /* LinkedInShare.h */; };
 		DB457A2C1B692D7D00AEC688 /* LinkedInShare.m in Sources */ = {isa = PBXBuildFile; fileRef = DB457A2A1B692D7D00AEC688 /* LinkedInShare.m */; };
 		DB46FE151B57EAA400FEB0B0 /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = DB46FE131B57EAA400FEB0B0 /* Utilities.h */; };
@@ -114,8 +112,6 @@
 		DB0F49731B41A14500CCE614 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		DB0F49741B41A14500CCE614 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		DB0F49801B41AA9300CCE614 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		DB4579F01B69264600AEC688 /* ServicesPostModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServicesPostModal.h; sourceTree = "<group>"; };
-		DB4579F11B69264600AEC688 /* ServicesPostModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServicesPostModal.m; sourceTree = "<group>"; };
 		DB457A291B692D7D00AEC688 /* LinkedInShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInShare.h; sourceTree = "<group>"; };
 		DB457A2A1B692D7D00AEC688 /* LinkedInShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedInShare.m; sourceTree = "<group>"; };
 		DB46FE131B57EAA400FEB0B0 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
@@ -287,8 +283,12 @@
 			children = (
 				DBBB37D61B67CE5C0084D822 /* RAF */,
 				DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */,
+				DBBB38091B67CF010084D822 /* ShareServicesConstants.h */,
+				DBBB380A1B67CF010084D822 /* ShareServicesConstants.m */,
 				DB743E7F1B3375A700262293 /* Constants.h */,
 				DB743E811B3375B300262293 /* Constants.m */,
+				DBBB37DF1B67CE750084D822 /* LinkedInAPIConstants.h */,
+				DBBB37E01B67CE750084D822 /* LinkedInAPIConstants.m */,
 				DB46FE131B57EAA400FEB0B0 /* Utilities.h */,
 				DB46FE141B57EAA400FEB0B0 /* Utilities.m */,
 				DB0F494D1B41A0FF00CCE614 /* SQLite */,
@@ -340,41 +340,75 @@
 		DBBB37D61B67CE5C0084D822 /* RAF */ = {
 			isa = PBXGroup;
 			children = (
+				DBDD72D71B6BA3C40037CD7B /* Custom Buttons */,
+				DBDD72D61B6BA39A0037CD7B /* Social View Controllers */,
+				DBDD72D51B6BA3600037CD7B /* Data objects */,
+				DBDD72D41B6BA32D0037CD7B /* Custom Cells */,
+				DBDD72D31B6BA3150037CD7B /* View Controllers */,
 				DBDCA5991B6A5D6800B85E5A /* Main.storyboard */,
 				DBBB37D71B67CE6B0084D822 /* ContactLoader.h */,
 				DBBB37D81B67CE6B0084D822 /* ContactLoader.m */,
-				DBBB37D91B67CE6B0084D822 /* Contact.h */,
-				DBBB37DA1B67CE6B0084D822 /* Contact.m */,
-				DBBB37DF1B67CE750084D822 /* LinkedInAPIConstants.h */,
-				DBBB37E01B67CE750084D822 /* LinkedInAPIConstants.m */,
+			);
+			name = RAF;
+			sourceTree = "<group>";
+		};
+		DBDD72D31B6BA3150037CD7B /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
 				DB86FA291B695D8A008115D9 /* NamePrompt.h */,
 				DB86FA2A1B695D8A008115D9 /* NamePrompt.m */,
 				DBBB37E51B67CE880084D822 /* AuthorizeLinkedIn.h */,
 				DBBB37E61B67CE880084D822 /* AuthorizeLinkedIn.m */,
-				DBBB37E91B67CE900084D822 /* RemoveButton.h */,
-				DBBB37EA1B67CE900084D822 /* RemoveButton.m */,
-				DBBB37ED1B67CE960084D822 /* SelectedCell.h */,
-				DBBB37EE1B67CE960084D822 /* SelectedCell.m */,
 				DBBB37F11B67CEA20084D822 /* ContactSelector.h */,
 				DBBB37F21B67CEA20084D822 /* ContactSelector.m */,
+				DBBB37FD1B67CEE40084D822 /* ServiceSelector.h */,
+				DBBB37FE1B67CEE40084D822 /* ServiceSelector.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		DBDD72D41B6BA32D0037CD7B /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				DBBB37ED1B67CE960084D822 /* SelectedCell.h */,
+				DBBB37EE1B67CE960084D822 /* SelectedCell.m */,
 				DBBB37F51B67CED20084D822 /* ContactCell.h */,
 				DBBB37F61B67CED20084D822 /* ContactCell.m */,
 				DBBB37F91B67CEDC0084D822 /* ShareServiceCell.h */,
 				DBBB37FA1B67CEDC0084D822 /* ShareServiceCell.m */,
-				DBBB37FD1B67CEE40084D822 /* ServiceSelector.h */,
-				DBBB37FE1B67CEE40084D822 /* ServiceSelector.m */,
-				DB457A291B692D7D00AEC688 /* LinkedInShare.h */,
-				DB457A2A1B692D7D00AEC688 /* LinkedInShare.m */,
-				DB4579F01B69264600AEC688 /* ServicesPostModal.h */,
-				DB4579F11B69264600AEC688 /* ServicesPostModal.m */,
+			);
+			name = "Custom Cells";
+			sourceTree = "<group>";
+		};
+		DBDD72D51B6BA3600037CD7B /* Data objects */ = {
+			isa = PBXGroup;
+			children = (
+				DBBB37D91B67CE6B0084D822 /* Contact.h */,
+				DBBB37DA1B67CE6B0084D822 /* Contact.m */,
 				DBBB38011B67CEF00084D822 /* ShareService.h */,
 				DBBB38021B67CEF00084D822 /* ShareService.m */,
 				DBBB38051B67CEF90084D822 /* ServiceSelectorPreferences.h */,
 				DBBB38061B67CEF90084D822 /* ServiceSelectorPreferences.m */,
-				DBBB38091B67CF010084D822 /* ShareServicesConstants.h */,
-				DBBB380A1B67CF010084D822 /* ShareServicesConstants.m */,
 			);
-			name = RAF;
+			name = "Data objects";
+			sourceTree = "<group>";
+		};
+		DBDD72D61B6BA39A0037CD7B /* Social View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DB457A291B692D7D00AEC688 /* LinkedInShare.h */,
+				DB457A2A1B692D7D00AEC688 /* LinkedInShare.m */,
+			);
+			name = "Social View Controllers";
+			sourceTree = "<group>";
+		};
+		DBDD72D71B6BA3C40037CD7B /* Custom Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				DBBB37E91B67CE900084D822 /* RemoveButton.h */,
+				DBBB37EA1B67CE900084D822 /* RemoveButton.m */,
+			);
+			name = "Custom Buttons";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -404,7 +438,6 @@
 				DBBB380B1B67CF010084D822 /* ShareServicesConstants.h in Headers */,
 				DBBB37E71B67CE880084D822 /* AuthorizeLinkedIn.h in Headers */,
 				DBBB38031B67CEF00084D822 /* ShareService.h in Headers */,
-				DB4579F21B69264600AEC688 /* ServicesPostModal.h in Headers */,
 				DB9013C81B2A03CD001F1CF8 /* iOS_Framework.h in Headers */,
 				DB0F49791B41A14500CCE614 /* FMDatabasePool.h in Headers */,
 				DB46FE151B57EAA400FEB0B0 /* Utilities.h in Headers */,
@@ -577,7 +610,6 @@
 				DB0F497F1B41A14500CCE614 /* FMResultSet.m in Sources */,
 				DB743E7E1B33742F00262293 /* Ambassador.m in Sources */,
 				DBBB37E81B67CE880084D822 /* AuthorizeLinkedIn.m in Sources */,
-				DB4579F31B69264600AEC688 /* ServicesPostModal.m in Sources */,
 				DBBB380C1B67CF010084D822 /* ShareServicesConstants.m in Sources */,
 				DBBB37E21B67CE750084D822 /* LinkedInAPIConstants.m in Sources */,
 				DBBB37F41B67CEA20084D822 /* ContactSelector.m in Sources */,
