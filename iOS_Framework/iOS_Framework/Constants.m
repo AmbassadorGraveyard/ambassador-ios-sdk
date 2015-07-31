@@ -27,6 +27,7 @@ NSString * const AMB_PUSHER_KEY = @"***REMOVED***";
 NSString * const AMB_PUSHER_AUTHENTICATION_URL = @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
 
 NSString * const AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY = @"AMBFIRSTLAUNCHSTORAGE";
+
 NSString * const AMB_RAF_SHARE_SERVICES_TITLE = @"Refer your friends";
 
 NSString * const AMB_CLOSE_BUTTON_NAME = @"close.png";
@@ -35,87 +36,19 @@ NSString * const AMB_BACK_BUTTON_NAME = @"back.png";
 
 NSString * const AMB_LINKEDIN_USER_DEFAULTS_KEY = @"AMBLINKEDINSTORAGE";
 
-CGRect AMB_CLOSE_BUTTON_FRAME()
-{
-    return CGRectMake(0, 0, 14, 14);
-}
+NSString * const AMB_SHARE_TRACK_URL = @"https://dev-ambassador-api.herokuapp.com/track/share/";
 
-UIColor* AMB_NAVIGATION_BAR_TINT_COLOR()
-{
-    return [UIColor blackColor];
-}
+NSString * const AMB_SHARE_TRACK_SHORT_CODE_DICT_KEY = @"short_code";
 
-UIFont* DEFAULT_FONT_SMALL()
-{
-    return [UIFont systemFontOfSize:12];
-}
+NSString * const AMB_SHARE_TRACK_RECIPIENT_EMAIL_DICT_KEY = @"recipient_email";
 
-UIFont* DEFAULT_FONT_XSMALL()
-{
-    return [UIFont systemFontOfSize:10];
-}
+NSString * const AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY = @"social_name";
 
-UIFont* DEFAULT_FONT()
-{
-    return [UIFont systemFontOfSize:16];
-}
+NSString * const AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY = @"recipient_username";
 
-UIFont* DEFAULT_FONT_LARGE()
-{
-    return [UIFont systemFontOfSize:18];
-}
+NSString * const AMB_SMS_SHARE_URL = @"https://dev-ambassador-api.herokuapp.com/share/sms/";
 
-UIColor* FACEBOOK_COLOR()
-{
-    return ColorFromRGB(59, 89, 152);
-}
-
-UIColor* TWITTER_COLOR()
-{
-    return ColorFromRGB(85, 172, 238);
-}
-
-UIColor* LINKEDIN_COLOR()
-{
-    return ColorFromRGB(0, 119, 181);
-}
-
-UIColor* DEFAULT_GRAY_COLOR()
-{
-    return ColorFromRGB(170, 170, 170);
-}
-
-UIColor* DEFAULT_LIGHT_GRAY_COLOR()
-{
-    return ColorFromRGB(241, 241, 241);
-}
-
-UIColor* CLEAR_COLOR()
-{
-    return [UIColor clearColor];
-}
-
-UIColor* DEFAULT_FADE_VIEW_COLOR(bool black)
-{
-    return black? [UIColor colorWithWhite:0.0 alpha:0.5] :
-                  [UIColor colorWithWhite:1.0 alpha:0.65];
-}
-
-NSString * const LINKEDIN_ERROR_KEY = @"error";
-NSString * const LINKEDIN_CODE_KEY = @"code";
-NSString * const LINKEDIN_EXPIRES_KEY = @"expires_in";
-NSString * const LINKEDIN_ACCESS_TOKEN_KEY = @"access_token";
 
 
 
 #pragma mark - Image Names
-NSString * const BACK_IMAGE_NAME = @"back.png";
-NSString * const CHECK_IMAGE_NAME = @"check.png";
-NSString * const PENCIL_IMAGE_NAME = @"pencil.png";
-NSString * const COPY_IMAGE_NAME = @"clipboard.png";
-NSString * const FB_IMAGE_NAME = @"facebook.png";
-NSString * const TWTR_IMAGE_NAME = @"twitter.png";
-NSString * const LKDN_IMAGE_NAME = @"linkedin.png";
-NSString * const SMS_IMAGE_NAME = @"sms.png";
-NSString * const EMAIL_IMAGE_NAME = @"email.png";
-NSString * const SEARCH_IMAGE_NAME = @"search.png";
