@@ -335,7 +335,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 - (void)userMustReauthenticate
 {
-    NSLog(@"Reauthenticate");
+    DLog(@"Reauthenticate");
     UIAlertController *alert = [UIAlertController
                                 alertControllerWithTitle:@"Expired LinkedIn Session"
                                 message:@"We just need you to log in again and we will bring you back to the post screen"
@@ -395,7 +395,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         request.HTTPMethod = @"POST";
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-        [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+        [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
         request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
         
         NSURLSessionDataTask *task = [[NSURLSession sharedSession]
@@ -441,7 +441,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
@@ -529,7 +529,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     

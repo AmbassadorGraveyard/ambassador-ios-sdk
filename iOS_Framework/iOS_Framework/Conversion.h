@@ -11,6 +11,7 @@
 
 @interface Conversion : NSObject
 
+- (id)initWithKey:(NSString *)key;
 - (void)registerConversionWithParameters:(ConversionParameters *)parameters;
 - (void)sendConversions;
 
