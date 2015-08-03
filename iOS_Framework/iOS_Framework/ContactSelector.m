@@ -187,6 +187,11 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             [self.selected addObject:contact];
         }
     }
+    if (tableView == self.selectedTable)
+    {
+        SelectedCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        [self.selected removeObject:cell.removeButton.contact];
+    }
     
     [self refreshAll];
 }

@@ -38,10 +38,13 @@
     conversion.mbsy_event_data3 = @"eventdata3";
     conversion.mbsy_is_approved = @NO;
     conversion.mbsy_email = @"anonymous_test_1578@example.com";
-    //[Ambassador registerConversion:conversion];
+    [Ambassador registerConversion:conversion];
     [Ambassador identifyWithEmail:@"austin@getambassador.com"];
 
     //[self functionToIgnoreDuringCodeReview];
+}
+- (IBAction)shareButtonPressed:(UIButton *)sender {
+    [self presentRAF];
 }
 
 - (void)functionToIgnoreDuringCodeReview
@@ -91,7 +94,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self performSelector:@selector(presentRAF) withObject:self afterDelay:5.0];
+    //[self performSelector:@selector(presentRAF) withObject:self afterDelay:10.0];
 }
 
 - (void)presentRAF
