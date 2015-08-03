@@ -388,40 +388,47 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                                   };
         DLog(@"%@", payload);
         
+        if ([self validatePhoneNumbers:contacts].count >0 )
+        {
+            
+            NSURL *url = [NSURL URLWithString:AMB_SMS_SHARE_URL];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+            request.HTTPMethod = @"POST";
+            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+            [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
+            request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+            
+            NSURLSessionDataTask *task = [[NSURLSession sharedSession]
+                                          dataTaskWithRequest:request
+                                          completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+                                          {
+                                              if (!error)
+                                              {
+                                                  DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                                                  
+                                                  //Check for 2xx status codes
+                                                  if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                                                      ((NSHTTPURLResponse *)response).statusCode < 300)
+                                                  {
+                                                      // Looking for a "Qued" response
+                                                      DLog(@"Response from backend from sending identify: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                                                      [self bulkPostShareTrackWithShortCode:shortCode values:[self validatePhoneNumbers:contacts] socialName:SMS_TITLE];
+                                                  }
+                                              }
+                                              else
+                                              {
+                                                  DLog(@"Error: %@", error.localizedDescription);
+                                                  [self simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+                                              }
+                                          }];
+            [task resume];
 
-        
-        NSURL *url = [NSURL URLWithString:AMB_SMS_SHARE_URL];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-        request.HTTPMethod = @"POST";
-        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-        [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
-        request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-        
-        NSURLSessionDataTask *task = [[NSURLSession sharedSession]
-                                      dataTaskWithRequest:request
-                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-          {
-              if (!error)
-              {
-                  DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                  
-                  //Check for 2xx status codes
-                  if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-                      ((NSHTTPURLResponse *)response).statusCode < 300)
-                  {
-                      // Looking for a "Qued" response
-                      DLog(@"Response from backend from sending identify: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                      [self bulkPostShareTrackWithShortCode:shortCode values:[self validatePhoneNumbers:contacts] socialName:SMS_TITLE];
-                  }
-              }
-              else
-              {
-                  DLog(@"Error: %@", error.localizedDescription);
-                  [self simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
-              }
-          }];
-        [task resume];
+        }
+        else
+        {
+            DLog(@"No valid numbers were selected");
+        }
     }
 }
 
