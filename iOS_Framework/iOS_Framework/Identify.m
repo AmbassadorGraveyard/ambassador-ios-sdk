@@ -92,7 +92,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     // Pull the data from the webview
     DLog(@"Grabbing the identify data string from webView");
     NSString *identifyDataString = [self.webview stringByEvaluatingJavaScriptFromString:AMB_IDENTIFY_JS_VAR];
-    DLog(@"Converting identify data string to NSData *************************%@", identifyDataString);
     NSData *identifyDataRaw = [identifyDataString dataUsingEncoding:NSUTF8StringEncoding];
     
     __autoreleasing NSError *e;
@@ -224,35 +223,34 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    //[request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
     [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
                                   dataTaskWithRequest:request
                                   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-                                  {
-                                      if (!error)
-                                      {
-                                          DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                                          
-                                          //Check for 2xx status codes
-                                          if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-                                              ((NSHTTPURLResponse *)response).statusCode < 300)
-                                          {
-                                              // Looking for a "Polling" response
-                                              DLog(@"Response from backend from sending identify: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
-                                          }
-                                          else if (((NSHTTPURLResponse *)response).statusCode == 401)
-                                          {
-                                              NSLog(@"AMBASSADOR ERROR: Unauthorized access encountered. Check the API Key provided.");
-                                          }
-                                      }
-                                      else
-                                      {
-                                          DLog(@"Error: %@", error.localizedDescription);
-                                      }
-                                  }];
+      {
+          if (!error)
+          {
+              DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+              
+              //Check for 2xx status codes
+              if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                  ((NSHTTPURLResponse *)response).statusCode < 300)
+              {
+                  // Looking for a "Polling" response
+                  DLog(@"Response from backend from sending identify: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+              }
+              else if (((NSHTTPURLResponse *)response).statusCode == 401)
+              {
+                  NSLog(@"AMBASSADOR ERROR: Unauthorized access encountered. Check the API Key provided.");
+              }
+          }
+          else
+          {
+              DLog(@"Error: %@", error.localizedDescription);
+          }
+      }];
     [task resume];
 }
 
