@@ -20,6 +20,7 @@
 
 @interface Identify : NSObject
 
+- (id)initWithKey:(NSString *)key;
 - (void)identifyWithEmail:(NSString *)email;
 @property NSMutableDictionary *identifyData;
 @property NSString *pusherChannelName;
