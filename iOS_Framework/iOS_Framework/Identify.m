@@ -16,7 +16,7 @@
 
 #pragma mark - Local Constants
 NSString * const AMB_IDENTIFY_URL = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/&universal_id=abfd1c89-4379-44e2-8361-ee7b87332e32";
-NSString * const AMB_IDENTIFY_JS_VAR = @"JSON.stringify(augur_data)";
+NSString * const AMB_IDENTIFY_JS_VAR = @"JSON.stringify(augur.json)";
 NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
 NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/?u=abfd1c89-4379-44e2-8361-ee7b87332e32";
 float const AMB_IDENTIFY_RETRY_TIME = 2.0;
@@ -41,6 +41,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @property NSString *email;
 @property PTPusher *client;
 @property PTPusherPrivateChannel *channel;
+@property NSString *APIKey;
 
 @end
 
@@ -49,7 +50,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @implementation Identify
 
 #pragma mark - Object lifecycle
-- (id)init
+- (id)initWithKey:(NSString *)key
 {
     DLog();
     if ([super init])
@@ -57,6 +58,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         self.webview = [[UIWebView alloc] init];
         self.webview.delegate = self;
         self.email = @"";
+        self.APIKey = key;
         self.client = [PTPusher pusherWithKey:AMB_PUSHER_KEY delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:AMB_PUSHER_AUTHENTICATION_URL];
         [self.client connect];
@@ -222,8 +224,8 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    //[request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
@@ -240,6 +242,10 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                                           {
                                               // Looking for a "Polling" response
                                               DLog(@"Response from backend from sending identify: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                                          }
+                                          else if (((NSHTTPURLResponse *)response).statusCode == 401)
+                                          {
+                                              NSLog(@"AMBASSADOR ERROR: Unauthorized access encountered. Check the API Key provided.");
                                           }
                                       }
                                       else
@@ -313,7 +319,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     
     // Modify the default autheticate request that Pusher will make. The
     // HTTP body is set per Ambassador back end requirements
-    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSMutableString *httpBodyString = [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding];
     NSMutableDictionary *httpBody = parseQueryString(httpBodyString);

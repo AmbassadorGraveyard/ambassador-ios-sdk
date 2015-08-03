@@ -15,5 +15,6 @@
 @property (strong, nonatomic) ServiceSelectorPreferences *prefs;
 @property NSString *shortCode;
 @property NSString *shortURL;
+@property NSString *APIKey;
 
 @end

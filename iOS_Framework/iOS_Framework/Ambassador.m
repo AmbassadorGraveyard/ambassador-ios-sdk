@@ -111,8 +111,8 @@ static Conversion *conversion;
                                                      selector:@selector(checkConversionQueue)
                                                      userInfo:nil
                                                       repeats:YES];
-    identify = [[Identify alloc] init];
-    conversion = [[Conversion alloc] init];
+    identify = [[Identify alloc] initWithKey:APIKey];
+    conversion = [[Conversion alloc] initWithKey:APIKey];
     
     DLog(@"Checking if conversion is made on app launch");
 
@@ -120,7 +120,7 @@ static Conversion *conversion;
     {
         // Check if this is the first time opening
         if (![[NSUserDefaults standardUserDefaults] objectForKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]) {
-            NSLog(@"\tSending conversion on app launch");
+            DLog(@"\tSending conversion on app launch");
             [self registerConversion:information];
         }
     }
@@ -155,7 +155,7 @@ static Conversion *conversion;
     
     if ([shortCodeURL isEqualToString:@""])
     {
-        NSLog(@"USER DOES NOT HAVE A SHORT CODE FOR THE GIVEN CAMPAIGN");
+        DLog(@"USER DOES NOT HAVE A SHORT CODE FOR THE GIVEN CAMPAIGN");
         UIAlertController *alert = [UIAlertController
                                     alertControllerWithTitle:@"Network Error"
                                     message:@"We couldn't load your URLs. Check your network connection and try again"
@@ -176,19 +176,22 @@ static Conversion *conversion;
         //TODO: try to grab the short codes again
         
     }
-    
-    // Initialize root view controller
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"]];
-    UINavigationController *vc = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
-    ServiceSelector *rootVC = (ServiceSelector *)vc.childViewControllers[0];
-    
-    //TODO: set short code and text field text
-    rootVC.shortCode = shortCode;
-    rootVC.shortURL = shortCodeURL;
-    parameters.textFieldText = shortCodeURL;
-    rootVC.prefs = parameters;
+    else
+    {
+        // Initialize root view controller
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"]];
+        UINavigationController *vc = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
+        ServiceSelector *rootVC = (ServiceSelector *)vc.childViewControllers[0];
+        
+        //TODO: set short code and text field text
+        rootVC.shortCode = shortCode;
+        rootVC.shortURL = shortCodeURL;
+        parameters.textFieldText = shortCodeURL;
+        rootVC.prefs = parameters;
+        rootVC.APIKey = APIKey;
 
-    [viewController presentViewController:vc animated:YES completion:nil];
+        [viewController presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 - (void)registerConversion:(ConversionParameters *)information
@@ -211,5 +214,7 @@ static Conversion *conversion;
     DLog();
     [conversion sendConversions];
 }
+
+
 
 @end

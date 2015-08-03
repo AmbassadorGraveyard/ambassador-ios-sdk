@@ -32,6 +32,7 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
 @property NSString *databaseFilePath;
 @property FMDatabaseQueue *databaseQueue;
 @property FMDatabase *database;
+@property NSString * key;
 
 @end
 
@@ -40,11 +41,13 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
 @implementation Conversion
 
 #pragma mark - Initialization
-- (id)init
+- (id)initWithKey:(NSString *)key
 {
     DLog();
     if ([super init])
     {
+        self.key = key;
+        
         // Build file path for the database file and log it
         self.databaseName = AMB_CONVERSION_DB_NAME;
         self.libraryDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject];
@@ -192,8 +195,8 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             request.HTTPMethod = @"POST";
             [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-            [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-            [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+           // [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+            [request setValue:self.key forHTTPHeaderField:@"Authorization"];
             request.HTTPBody = JSONData;
         
             //Get ID in order to remove upon sucessful network request
@@ -217,7 +220,7 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
                   }
                   else
                   {
-                      NSLog(@"Error: %@", error.localizedDescription);
+                      DLog(@"Error: %@", error.localizedDescription);
                   }
               }];
             [task resume];
