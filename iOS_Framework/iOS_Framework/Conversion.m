@@ -51,7 +51,7 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
         // Build file path for the database file and log it
         self.databaseName = AMB_CONVERSION_DB_NAME;
         self.libraryDirectoryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject];
-        self.databaseFilePath = [self.libraryDirectoryPath stringByAppendingString:self.databaseName];
+        self.databaseFilePath = [self.libraryDirectoryPath stringByAppendingString:[NSString stringWithFormat:@"/%@", self.databaseName]];
         DLog(@"Database file for viewing at: %@", self.databaseFilePath);
         
         // Check if the file exists
