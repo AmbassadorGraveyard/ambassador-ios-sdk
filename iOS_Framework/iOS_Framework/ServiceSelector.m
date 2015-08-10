@@ -443,46 +443,54 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         
         NSLog(@"SMS data sent to servers %@", payload);
 
-        NSArray *components = [name componentsSeparatedByString:@" "];
-        NSString *firstName = [components firstObject];
-        NSString *lastName = [components lastObject];
-        
-        NSURL *url = [NSURL URLWithString:AMB_SMS_SHARE_URL];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-        request.HTTPMethod = @"POST";
-        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-        [request setValue:weakSelf.APIKey forHTTPHeaderField:@"Authorization"];
-        request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-        
-        NSURLSessionDataTask *task = [[NSURLSession sharedSession]
-                                      dataTaskWithRequest:request
-                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-          {
-              if (!error)
-              {
-                  NSLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                  
-                  //Check for 2xx status codes
-                  if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-                      ((NSHTTPURLResponse *)response).statusCode < 300)
-                  {
-                      // Looking for an echo response
-                      NSLog(@"Response from backend from sending sms: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                      [weakSelf bulkPostShareTrackWithShortCode:shortCode values:[weakSelf validatePhoneNumbers:contacts] socialName:SMS_TITLE];
-                  }
-              }
-              else
-              {
-                  NSLog(@"Error: %@", error.localizedDescription);
-                  dispatch_async(dispatch_get_main_queue(), ^{
-                    [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
-                  });
-              }
-          }];
-        [task resume];
-        
-        [self updateFirstName:firstName lastName:lastName];
+        if ([self validatePhoneNumbers:contacts].count >0 )
+        {
+            NSArray *components = [name componentsSeparatedByString:@" "];
+            NSString *firstName = [components firstObject];
+            NSString *lastName = [components lastObject];
+            
+            NSURL *url = [NSURL URLWithString:AMB_SMS_SHARE_URL];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+            request.HTTPMethod = @"POST";
+            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
+            [request setValue:weakSelf.APIKey forHTTPHeaderField:@"Authorization"];
+            request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+            
+            NSURLSessionDataTask *task = [[NSURLSession sharedSession]
+                                          dataTaskWithRequest:request
+                                          completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+                                          {
+                                              if (!error)
+                                              {
+                                                  NSLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                                                  
+                                                  //Check for 2xx status codes
+                                                  if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                                                      ((NSHTTPURLResponse *)response).statusCode < 300)
+                                                  {
+                                                      // Looking for an echo response
+                                                      NSLog(@"Response from backend from sending sms: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                                                      [weakSelf bulkPostShareTrackWithShortCode:shortCode values:[weakSelf validatePhoneNumbers:contacts] socialName:SMS_TITLE];
+                                                  }
+                                              }
+                                              else
+                                              {
+                                                  NSLog(@"Error: %@", error.localizedDescription);
+                                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                                      [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+                                                  });
+                                              }
+                                          }];
+            [task resume];
+            
+            [self updateFirstName:firstName lastName:lastName];
+
+        }
+        else
+        {
+            DLog(@"No valid numbers were selected");
+        }
     }
 }
 
