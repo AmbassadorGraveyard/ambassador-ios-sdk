@@ -485,7 +485,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
             [task resume];
             
             [self updateFirstName:firstName lastName:lastName];
-
         }
         else
         {

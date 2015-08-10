@@ -18,7 +18,9 @@
 NSString * const AMB_IDENTIFY_URL = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/&universal_id=***REMOVED***";
 NSString * const AMB_IDENTIFY_JS_VAR = @"JSON.stringify(augur.json)";
 NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
-NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/";
+
+NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/?u=***REMOVED***";
+
 float const AMB_IDENTIFY_RETRY_TIME = 2.0;
 NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=***REMOVED***&uid=";
 
