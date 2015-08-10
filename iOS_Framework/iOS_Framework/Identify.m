@@ -18,7 +18,7 @@
 NSString * const AMB_IDENTIFY_URL = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/&universal_id=abfd1c89-4379-44e2-8361-ee7b87332e32";
 NSString * const AMB_IDENTIFY_JS_VAR = @"JSON.stringify(augur.json)";
 NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
-NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/?u=abfd1c89-4379-44e2-8361-ee7b87332e32";
+NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/";
 float const AMB_IDENTIFY_RETRY_TIME = 2.0;
 NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=7g1a8dumog40o61y5irl1sscm4nu6g60&uid=";
 
@@ -126,8 +126,24 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                 self.channel = [self.client subscribeToPrivateChannelNamed:[NSString stringWithFormat:@"snippet-channel@user=%@", self.identifyData[@"device"][@"ID"]]];
                 [self.channel bindToEventNamed:@"identify_action" handleWithBlock:^(PTPusherEvent *event)
                  {
-                     [[NSUserDefaults standardUserDefaults] setValue:event.data forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
-                     DLog(@"Pusher event - %@", event.data);
+                     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:event.data];
+                     NSString *phone = dictionary[@"phone"];
+                     NSString *firstName = dictionary[@"first_name"];
+                     NSString *lastName = dictionary[@"last_name"];
+                     if ([phone isEqual:[NSNull null]])
+                     {
+                         dictionary[@"phone"] = @"";
+                     }
+                     if ([firstName isEqual:[NSNull null]])
+                     {
+                         dictionary[@"first_name"] = @"";
+                     }
+                     if ([lastName isEqual:[NSNull null]])
+                     {
+                         dictionary[@"last_name"] = @"";
+                     }
+                     NSLog(@"Pusher event - %@", event.data);
+                     [[NSUserDefaults standardUserDefaults] setValue:dictionary forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
                  }];
                 [self sendIdentifyData];
             });
@@ -231,28 +247,28 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
                                   dataTaskWithRequest:request
                                   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-                                  {
-                                      if (!error)
-                                      {
-                                          DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                                          
-                                          //Check for 2xx status codes
-                                          if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-                                              ((NSHTTPURLResponse *)response).statusCode < 300)
-                                          {
-                                              // Looking for a "Polling" response
-                                              DLog(@"Response from backend from sending identify: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
-                                          }
-                                          else if (((NSHTTPURLResponse *)response).statusCode == 401)
-                                          {
-                                              NSLog(@"AMBASSADOR ERROR: Unauthorized access encountered. Check the API Key provided.");
-                                          }
-                                      }
-                                      else
-                                      {
-                                          DLog(@"Error: %@", error.localizedDescription);
-                                      }
-                                  }];
+      {
+          if (!error)
+          {
+              DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+              
+              //Check for 2xx status codes
+              if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                  ((NSHTTPURLResponse *)response).statusCode < 300)
+              {
+                  // Looking for a "Polling" response
+                  NSLog(@"Response from backend from sending identify (looking for 'polling'): %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+              }
+              else if (((NSHTTPURLResponse *)response).statusCode == 401)
+              {
+                  NSLog(@"AMBASSADOR ERROR: Unauthorized access encountered. Check the API Key provided.");
+              }
+          }
+          else
+          {
+              DLog(@"Error: %@", error.localizedDescription);
+          }
+      }];
     [task resume];
 }
 
@@ -351,7 +367,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 
 - (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel
 {
-    DLog(@"Subscribed to: %@", channel.name);
+    NSLog(@"Subscribed to: %@", channel.name);
 }
 
 @end

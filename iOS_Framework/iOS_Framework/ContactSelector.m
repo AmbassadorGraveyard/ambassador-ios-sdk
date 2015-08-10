@@ -13,6 +13,7 @@
 #import "Utilities.h"
 #import "NamePrompt.h"
 #import "ShareServicesConstants.h"
+#import "Constants.h"
 
 @interface ContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                SelectedCellDelegate, UITextFieldDelegate, NamePromptDelegate>
@@ -99,14 +100,28 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         if ([self.serviceType isEqualToString:SMS_TITLE])
         {
             //TODO: chck for name
-            if (YES)
+            NSDictionary *ambassadorInfo = [[NSUserDefaults standardUserDefaults]
+                                            dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
+            NSMutableString *firstName = [NSMutableString stringWithString:@""];
+            NSMutableString *lastName = [NSMutableString stringWithString:@""];
+            
+            firstName = ambassadorInfo[@"first_name"];
+            lastName = ambassadorInfo[@"last_name"];
+            
+            firstName = (NSMutableString *)[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            
+            
+            NSLog(@"User first and last name: %@ %@", firstName, lastName);
+            
+            if ([firstName isEqualToString:@""] || [lastName isEqualToString:@""])
             {
                 [self performSegueWithIdentifier:NAME_PROMPT_SEGUE_IDENTIFIER sender:self];
             }
             else
             {
-                //TODO: get the real name from the back end
-                [self sendSMSWithName:@""];
+                NSLog(@"Sending first and last name");
+                [self sendSMSWithName:[NSString stringWithFormat:@"%@ %@", firstName, lastName]];
             }
         }
         else if ([self.serviceType isEqualToString:EMAIL_TITLE])
@@ -186,6 +201,11 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         {
             [self.selected addObject:contact];
         }
+    }
+    if (tableView == self.selectedTable)
+    {
+        SelectedCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        [self.selected removeObject:cell.removeButton.contact];
     }
     
     [self refreshAll];

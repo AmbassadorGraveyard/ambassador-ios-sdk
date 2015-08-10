@@ -77,6 +77,7 @@
 		DBBB380B1B67CF010084D822 /* ShareServicesConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBBB38091B67CF010084D822 /* ShareServicesConstants.h */; };
 		DBBB380C1B67CF010084D822 /* ShareServicesConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBB380A1B67CF010084D822 /* ShareServicesConstants.m */; };
 		DBDCA59A1B6A5D6800B85E5A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBDCA5991B6A5D6800B85E5A /* Main.storyboard */; };
+		DBE671ED1B78E16D00AB890E /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = DBE671EC1B78E16D00AB890E /* blank.png */; };
 		DBFA134B1B34BF1800620985 /* Identify.h in Headers */ = {isa = PBXBuildFile; fileRef = DBFA13491B34BF1800620985 /* Identify.h */; };
 		DBFA134C1B34BF1800620985 /* Identify.m in Sources */ = {isa = PBXBuildFile; fileRef = DBFA134A1B34BF1800620985 /* Identify.m */; };
 /* End PBXBuildFile section */
@@ -167,6 +168,7 @@
 		DBBB38091B67CF010084D822 /* ShareServicesConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareServicesConstants.h; sourceTree = "<group>"; };
 		DBBB380A1B67CF010084D822 /* ShareServicesConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareServicesConstants.m; sourceTree = "<group>"; };
 		DBDCA5991B6A5D6800B85E5A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		DBE671EC1B78E16D00AB890E /* blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blank.png; sourceTree = "<group>"; };
 		DBFA13491B34BF1800620985 /* Identify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Identify.h; sourceTree = "<group>"; };
 		DBFA134A1B34BF1800620985 /* Identify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Identify.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -303,6 +305,7 @@
 		DB9013C51B2A03CD001F1CF8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DBE671EC1B78E16D00AB890E /* blank.png */,
 				DB46FE441B58510000FEB0B0 /* back.png */,
 				DB46FE451B58510000FEB0B0 /* check.png */,
 				DB46FE461B58510000FEB0B0 /* clipboard.png */,
@@ -545,6 +548,7 @@
 				DB46FE591B58510000FEB0B0 /* twitter.png in Resources */,
 				DB46FE521B58510000FEB0B0 /* close.png in Resources */,
 				DB0F49511B41A12500CCE614 /* LICENSE.txt in Resources */,
+				DBE671ED1B78E16D00AB890E /* blank.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
