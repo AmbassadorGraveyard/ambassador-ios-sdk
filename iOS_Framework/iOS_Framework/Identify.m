@@ -92,7 +92,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     // Pull the data from the webview
     DLog(@"Grabbing the identify data string from webView");
     NSString *identifyDataString = [self.webview stringByEvaluatingJavaScriptFromString:AMB_IDENTIFY_JS_VAR];
-    DLog(@"Converting identify data string to NSData *************************%@", identifyDataString);
     NSData *identifyDataRaw = [identifyDataString dataUsingEncoding:NSUTF8StringEncoding];
     
     __autoreleasing NSError *e;
@@ -240,7 +239,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    //[request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
     [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     

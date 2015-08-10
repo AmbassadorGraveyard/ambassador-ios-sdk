@@ -10,6 +10,7 @@ ln -s ../../git-hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
 ### Initializing Ambassador
 * Download the framework file and copy it to your project directory.
 * Add the framework under the 'Embedded Binaries' section under project settings.
+  * You may need to remove a duplicate instance of the framework file under 'Linked Frameworks and Libraries.'
 * You initialize Ambassador in the ```application:application didFinishLaunchingWithOptions:``` method of your app delegate. You can initialize with the option to register a conversion upon the initial app launch after installation by passing in a conversion object (see *[Conversions](### Conversions)*):
 ```objective-c
 [Ambassador runWithKey:/*<your_ambassador_API_key_string>*/ convertOnLaunch:<your_conversion_parameters_object>];
@@ -18,6 +19,7 @@ ln -s ../../git-hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
 ```objective-c
 [Ambassador runWithKey:/*<your_ambassador_API_key_string>*/ convertOnLaunch:nil];
 ```
+***Your API_Key is the token provided to you by Ambassador.***
 
 ### Identifying a User
 In order to track a conversion and provide users with custom share links, Ambassador only needs the email address of the user. The call to identify the user should be done as early in the app to make sure all Ambassador services can be provided as soon as possible:
@@ -72,21 +74,21 @@ To present a RAF, you only need to pass in the campaign ID you would like the sh
 The RAF screen labels and navigation title can be customized with RAF Parameters.  These parameters are optional, and if not set or set to nil, default strings will be used.
 
 * Navigation Title - "Refer your friends"
-* Welcome Title - "Spread the word"
-* Welcome Description - "Refer a friend to get rewards"
+* Title Label Text - "Spread the word"
+* Description Label Text - "Refer a friend to get rewards"
 * Default Share Message - "I'm a fan of this company, check them out!"
 
 <img src="screenShots/rafDemoImg.jpg" width="250" />   <img src="screenShots/contactShare.jpg" width="250"/>
 
 ```objective-c  
 // Create the RAFParameters object
-RAFParameters *rafParams = [[RAFParameters alloc] init];
+ShareServicePreferences *preferences = [[ShareServicePreferences alloc] init];
 
 // Set the properties of the RAFParameters object
-rafParams.navBarTitle = @"New navBar title"; // NSString
-rafParams.welcomeTitle = @"New welcome title"; // NSString
-rafParams.welcomeDescription = @"This is test description"; // NSString
-rafParams.defaultShareMessage = @"Share this test please!"; // NSString
+preferences.navBarTitle = @"New navBar title"; // NSString
+preferences.titleLabelText = @"New welcome title"; // NSString
+preferences.descriptionLabelText = @"This is test description"; // NSString
+preferences.defaultShareMessage = @"Share this test please!"; // NSString
 
 // Present the RAF Modal View
 [Ambassador presentRAFForCampaign:@"877" FromViewController:self WithRAFParameters:rafParams];
