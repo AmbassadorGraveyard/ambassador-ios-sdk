@@ -20,7 +20,6 @@
 - (void)viewDidLoad {
     [Ambassador identifyWithEmail:@"brian@getambassador.com"];
 
-
     //[self functionToIgnoreDuringCodeReview];
 }
 - (IBAction)shareButtonPressed:(UIButton *)sender {

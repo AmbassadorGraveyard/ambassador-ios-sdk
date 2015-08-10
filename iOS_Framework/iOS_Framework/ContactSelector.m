@@ -99,7 +99,6 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     {
         if ([self.serviceType isEqualToString:SMS_TITLE])
         {
-            //TODO: chck for name
             NSDictionary *ambassadorInfo = [[NSUserDefaults standardUserDefaults]
                                             dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
             NSMutableString *firstName = [NSMutableString stringWithString:@""];
