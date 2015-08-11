@@ -110,7 +110,6 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             firstName = (NSMutableString *)[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             
-            
             NSLog(@"User first and last name: %@ %@", firstName, lastName);
             
             if ([firstName isEqualToString:@""] || [lastName isEqualToString:@""])
@@ -203,7 +202,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     }
     if (tableView == self.selectedTable)
     {
-        SelectedCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        SelectedCell *cell = (SelectedCell *)[tableView cellForRowAtIndexPath:indexPath];
         [self.selected removeObject:cell.removeButton.contact];
     }
     

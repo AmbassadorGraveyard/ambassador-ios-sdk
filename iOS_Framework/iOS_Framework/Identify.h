@@ -10,6 +10,7 @@
 
 @protocol IdentifyDelegate <NSObject>
 
+@optional
 - (void)identifyDataWasRecieved:(NSMutableDictionary *)data;
 - (void)insightsDataWasRecieved:(NSMutableDictionary *)data;
 - (void)ambassadorDataWasRecieved:(NSMutableDictionary *)data;

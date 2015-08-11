@@ -117,8 +117,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         [[NSUserDefaults standardUserDefaults] setObject:identifyData
                                                   forKey:AMB_IDENTIFY_USER_DEFAULTS_KEY];
         
-        // Call the delegate method
-        [self.delegate identifyDataWasRecieved:identifyData];
         
         // Send identify to backend if there is an email
         if (![self.email isEqualToString:@""])
@@ -145,6 +143,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                      }
                      NSLog(@"Pusher event - %@", event.data);
                      [[NSUserDefaults standardUserDefaults] setValue:dictionary forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
+                     [self.delegate ambassadorDataWasRecieved:dictionary];
                  }];
                 [self sendIdentifyData];
             });
