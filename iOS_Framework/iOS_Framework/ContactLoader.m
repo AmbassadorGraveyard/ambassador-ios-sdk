@@ -55,7 +55,7 @@
         ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted)
     {
         DLog(@"Don't have permission to access contacts");
-        [self throwContactLoadError];
+        [self requestContactsPermission];
     }
     else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
     {
@@ -64,22 +64,30 @@
     }
     else
     {
-        DLog(@"Asking for permission to access contacts");
-        ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, nil), ^(bool granted, CFErrorRef error) {
-            if (!granted)
-            {
-                DLog(@"Contact access permission request denied");
-                [self throwContactLoadError];
-            }
+        [self requestContactsPermission];
+    }
+}
+
+- (void)requestContactsPermission
+{
+    DLog(@"Asking for permission to access contacts");
+    ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, nil), ^(bool granted, CFErrorRef error) {
+        if (!granted)
+        {
+            DLog(@"Contact access permission request denied");
+            [self throwContactLoadError];
+        }
+        else
+        {
             DLog(@"Contact access permission request granted");
             [self loadContacts];
-        });
-    }
+        }
+    });
 }
 
 - (void)throwContactLoadError
 {
-    [self.delegate contactsFailedToLoadWithError:@"Couln't load contacts" message:@"Sharing requires access to your contact books. You can enable this in your settings"];
+    [self.delegate contactsFailedToLoadWithError:@"Couldn't load contacts" message:@"Sharing requires access to your contact book. You can enable this in your settings."];
 }
 
 

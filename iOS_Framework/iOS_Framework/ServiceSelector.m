@@ -19,6 +19,7 @@
 #import <Social/Social.h>
 #import "LinkedInShare.h"
 #import "Contact.h"
+#import "AMBReachability.h"
 
 
 @interface ServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
@@ -29,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+
 
 @property (strong, nonatomic) NSMutableArray *services;
 @property (strong, nonatomic) ContactLoader *loader;
@@ -131,6 +133,19 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
+    
+    DLog(@"%@", self.shortURL);
+    if ((self.shortURL != nil) && ![self.shortURL isEqualToString:@""])
+    {
+        DLog();
+        self.waitView.hidden = YES;
+    }
+}
+
+- (void)removeWaitView
+{
+    self.waitView.hidden = YES;
+    self.textField.text = self.shortURL;
 }
 
 
@@ -198,30 +213,33 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     else if ([service.title isEqualToString:LINKEDIN_TITLE])
     {
         DLog();
-        NSDictionary *token = [[NSUserDefaults  standardUserDefaults] dictionaryForKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
-        DLog(@"%@", token);
-        if (token) {
-            NSDate *referenceDate = token[LKDN_EXPIRES_DICT_KEY];
-            if (!([referenceDate timeIntervalSinceNow] < 0.0))
-            {
-                DLog();
-                [self presentLinkedIn];
-            }
-        }
-        else
-        {
-            [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
-        }
+        [self checkLinkedInToken];
     }
     else if ([service.title isEqualToString:SMS_TITLE])
     {
-        //TODO:sms
         [self performSegueWithIdentifier:CONTACT_SELECTOR_SEGUE sender:SMS_TITLE];
     }
     else if ([service.title isEqualToString:EMAIL_TITLE])
     {
-        //TODO:email
         [self performSegueWithIdentifier:CONTACT_SELECTOR_SEGUE sender:EMAIL_TITLE];
+    }
+}
+
+- (void)checkLinkedInToken
+{
+    NSDictionary *token = [[NSUserDefaults  standardUserDefaults] dictionaryForKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
+    DLog(@"%@", token);
+    if (token) {
+        NSDate *referenceDate = token[LKDN_EXPIRES_DICT_KEY];
+        if (!([referenceDate timeIntervalSinceNow] < 0.0))
+        {
+            DLog();
+            [self presentLinkedIn];
+        }
+    }
+    else
+    {
+        [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
     }
 }
 
@@ -373,6 +391,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 #pragma mark - ContactSelectorDelegate
 - (void)sendToContacts:(NSArray *)contacts forServiceType:(NSString *)serviceType fromName:(NSString *)name withMessage:(NSString *)message
 {
+    
     __weak NSString *shortCode = self.shortCode;
     __weak NSString *shortURL = self.shortURL;
     __weak ServiceSelector *weakSelf = self;
@@ -424,6 +443,11 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                       NSLog(@"Response from backend from sending email: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
                       [weakSelf bulkPostShareTrackWithShortCode:shortCode values:[weakSelf validateEmails:contacts] socialName:EMAIL_TITLE];
                   }
+                  else
+                  {
+                      NSLog(@"Error: %@", error.localizedDescription);
+                      [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+                  }
               }
               else
               {
@@ -460,35 +484,40 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
             NSURLSessionDataTask *task = [[NSURLSession sharedSession]
                                           dataTaskWithRequest:request
                                           completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-                                          {
-                                              if (!error)
-                                              {
-                                                  NSLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                                                  
-                                                  //Check for 2xx status codes
-                                                  if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-                                                      ((NSHTTPURLResponse *)response).statusCode < 300)
-                                                  {
-                                                      // Looking for an echo response
-                                                      NSLog(@"Response from backend from sending sms: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                                                      [weakSelf bulkPostShareTrackWithShortCode:shortCode values:[weakSelf validatePhoneNumbers:contacts] socialName:SMS_TITLE];
-                                                  }
-                                              }
-                                              else
-                                              {
-                                                  NSLog(@"Error: %@", error.localizedDescription);
-                                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                                      [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
-                                                  });
-                                              }
-                                          }];
+              {
+                  if (!error)
+                  {
+                      NSLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                      
+                      //Check for 2xx status codes
+                      if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                          ((NSHTTPURLResponse *)response).statusCode < 300)
+                      {
+                          // Looking for an echo response
+                          NSLog(@"Response from backend from sending sms: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                          [weakSelf bulkPostShareTrackWithShortCode:shortCode values:[weakSelf validatePhoneNumbers:contacts] socialName:SMS_TITLE];
+                      }
+                      else
+                      {
+                          NSLog(@"Error: %@", error.localizedDescription);
+                          [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+                      }
+                  }
+                  else
+                  {
+                      NSLog(@"Error: %@", error.localizedDescription);
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+                      });
+                  }
+              }];
             [task resume];
             
             [self updateFirstName:firstName lastName:lastName];
         }
         else
         {
-            DLog(@"No valid numbers were selected");
+            NSLog(@"No valid numbers were selected");
         }
     }
 }
@@ -593,7 +622,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         }
     }
     
-    
     NSURL *url = [NSURL URLWithString:AMB_SHARE_TRACK_URL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
@@ -602,7 +630,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-    
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
                                   dataTaskWithRequest:request
@@ -650,7 +677,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                                    };
     [payload setValue:updateData forKey:@"update_data"];
 
-    
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]

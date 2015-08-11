@@ -12,9 +12,13 @@
 @interface ServiceSelector : UIViewController
 
 - (id)initWithPreferences:(ServiceSelectorPreferences *)prefs;
+- (void)removeWaitView;
+
 @property (strong, nonatomic) ServiceSelectorPreferences *prefs;
 @property NSString *shortCode;
 @property NSString *shortURL;
 @property NSString *APIKey;
+@property NSString *campaignID;
+@property (weak, nonatomic) IBOutlet UIView *waitView;
 
 @end

@@ -767,6 +767,13 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"kPTPusherClientLibraryVersion=@\\\"1.6\\\"",
+					"kPTPusherClientLibraryVersion=@\\\"1.6\\\"",
+					"AMBPRODUCTION=1",
+				);
 				INFOPLIST_FILE = iOS_Framework/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
