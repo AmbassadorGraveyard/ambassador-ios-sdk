@@ -1,9 +1,6 @@
 //
 //  Ambassador.h
-//  iOS_Framework
-//
-//  Created by Diplomat on 6/18/15.
-//  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
+//  Copyright (c) 2015 ZFERRAL INC (dba Ambassador Software). All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,12 +8,17 @@
 #import "ConversionParameters.h"
 #import "ServiceSelectorPreferences.h"
 
+/**
+ `Ambassador` is the object that provides access to Ambassador's SDK functionality
+ 
+ ## Subclaasing Notes
+ This class is provided as an easy way to integrate Ambassador's services in your iOS app and is not intended to be subclassed. Subclassing may lead to unexpected behavior and stability issues.
+ 
+ ## Methods to override
+ No methods should be overridden. This class is not meant to be subclassed.
+ */
+
 @interface Ambassador : NSObject
-
-#pragma mark - Retrieve shared instance
-+ (Ambassador *)sharedInstance;
-
-
 
 #pragma mark - API functions
 + (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information;
