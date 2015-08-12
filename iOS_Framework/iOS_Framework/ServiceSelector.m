@@ -24,7 +24,8 @@
 
 @interface ServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
                                ContactLoaderDelegate, LinkedInAuthorizeDelegate,
-                               ShareServiceDelegate, ContactSelectorDelegate>
+                               ShareServiceDelegate, ContactSelectorDelegate,
+                               UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
@@ -123,6 +124,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     [clipboardButton addTarget:self action:@selector(clipboardButtonPress:) forControlEvents:UIControlEventTouchUpInside];
     self.textField.rightView = clipboardButton;
     self.textField.rightViewMode = UITextFieldViewModeAlways;
+    self.textField.delegate = self;
 
     
     [super viewDidLoad];
