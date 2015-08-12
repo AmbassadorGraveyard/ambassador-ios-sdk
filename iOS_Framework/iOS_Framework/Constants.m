@@ -10,7 +10,7 @@
 #import "Constants.h"
 #import "Utilities.h"
 
-#define PRODUCTION true
+
 
 NSString * const AMB_IDENTIFY_NOTIFICATION_NAME = @"AMBIDENTNOTIF";
 
