@@ -20,6 +20,7 @@
 #import "LinkedInShare.h"
 #import "Contact.h"
 #import "AMBReachability.h"
+#import "SendCompletionModal.h"
 
 
 @interface ServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
@@ -191,6 +192,9 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
             if (result == SLComposeViewControllerResultDone)
             {
                 DLog();
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    sendAlert(YES, @"Your link was successfully shared");
+                });
                 [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"facebook" recipientUsername:@""];
             }
         };
@@ -206,6 +210,9 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
             if (result == SLComposeViewControllerResultDone)
             {
                 DLog();
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    sendAlert(YES, @"Your link was successfully shared");
+                });
                 [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"twitter" recipientUsername:@""];
             }
         };
@@ -247,13 +254,17 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 - (void)presentLinkedIn
 {
+    DLog();
     LinkedInShare * vc = [[LinkedInShare alloc] init];
+    DLog(@"%@", vc.debugDescription);
     vc.defaultMessage = self.prefs.defaultShareMessage;
     vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     vc.shortCode = self.shortCode;
     vc.shortURL = self.shortURL;
     vc.delegate = self;
-    [self presentViewController:vc animated:YES completion:nil];
+    [self presentViewController:vc animated:YES completion:^{
+        DLog(@"finished presenting linkedIN");
+    }];
 }
 
 
@@ -349,32 +360,36 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     DLog(@"Post succeeded");
     if ([service isEqualToString:LINKEDIN_TITLE])
     {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            sendAlert(YES, @"Your link was successfully shared");
+        });
         [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"linkedin" recipientUsername:@""];
     }
 }
 
 - (void)userMustReauthenticate
 {
-    DLog(@"Reauthenticate");
-    UIAlertController *alert = [UIAlertController
-                                alertControllerWithTitle:@"Expired LinkedIn Session"
-                                message:@"We just need you to log in again and we will bring you back to the post screen"
-                                preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *okAction = [UIAlertAction
-                               actionWithTitle:@"Login"
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction *action)
-                               {
-                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                       [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
-                                   });
-                               }];
-    
-    [alert addAction:okAction];
-    
-    [self presentViewController:alert animated:YES completion:nil];
-
+    dispatch_async(dispatch_get_main_queue(), ^{
+        DLog(@"Reauthenticate");
+        UIAlertController *alert = [UIAlertController
+                                    alertControllerWithTitle:@"Expired LinkedIn Session"
+                                    message:@"We just need you to log in again and we will bring you back to the post screen"
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction
+                                   actionWithTitle:@"Login"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                           [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
+                                       });
+                                   }];
+        
+        [alert addAction:okAction];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    });
 }
 
 
@@ -393,7 +408,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 #pragma mark - ContactSelectorDelegate
 - (void)sendToContacts:(NSArray *)contacts forServiceType:(NSString *)serviceType fromName:(NSString *)name withMessage:(NSString *)message
 {
-    
     __weak NSString *shortCode = self.shortCode;
     __weak NSString *shortURL = self.shortURL;
     __weak ServiceSelector *weakSelf = self;
@@ -411,8 +425,10 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
             }
         }
         
+        NSArray *validContacts = [weakSelf validateEmails:contacts];
+        
         NSDictionary *payload = @{
-                                  @"to_emails" : [weakSelf validateEmails:contacts],
+                                  @"to_emails" : validContacts,
                                   @"short_code" : shortCode,
                                   @"message" : [NSString stringWithFormat:@"%@ %@", message, shortURL],
                                   @"subject_line" : subjectLine
@@ -443,6 +459,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                   {
                       // Looking for a "Qued" response
                       NSLog(@"Response from backend from sending email: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                      [self sendSuccessMessageWithCount:validContacts.count];
                       [weakSelf bulkPostShareTrackWithShortCode:shortCode values:[weakSelf validateEmails:contacts] socialName:EMAIL_TITLE];
                   }
                   else
@@ -461,8 +478,9 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     }
     else if ([serviceType isEqualToString:SMS_TITLE])
     {
+        NSArray *validContacts = [weakSelf validatePhoneNumbers:contacts];
         NSDictionary *payload = @{
-                                  @"to" : [weakSelf validatePhoneNumbers:contacts],
+                                  @"to" : validContacts,
                                   @"name" : name,
                                   @"message" : [NSString stringWithFormat:@"%@ %@", message, shortURL]
                                   };
@@ -497,6 +515,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                       {
                           // Looking for an echo response
                           NSLog(@"Response from backend from sending sms: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                          [self sendSuccessMessageWithCount:validContacts.count];
                           [weakSelf bulkPostShareTrackWithShortCode:shortCode values:[weakSelf validatePhoneNumbers:contacts] socialName:SMS_TITLE];
                       }
                       else
@@ -524,6 +543,18 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     }
 }
 
+- (void)sendSuccessMessageWithCount:(NSUInteger)count
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSMutableString *message = [NSMutableString stringWithFormat:@"Your link was successfully shared to %ld contact", count];
+        if (count != 1)
+        {
+            [message appendString:@"s"];
+        }
+        
+        sendAlert(YES, message);
+    });
+}
 
 #pragma mark - Share track
 - (void)postShareTrackWithShortCode:(NSString *)shortCode recipientEmail:(NSString *)recipientEmail socialName:(NSString *)socialName recipientUsername:(NSString *)recipientUsername
@@ -542,7 +573,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
     [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-    
+
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
                                   dataTaskWithRequest:request
                                   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)

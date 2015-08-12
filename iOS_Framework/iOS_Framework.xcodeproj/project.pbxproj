@@ -45,6 +45,10 @@
 		DB743E7E1B33742F00262293 /* Ambassador.m in Sources */ = {isa = PBXBuildFile; fileRef = DB743E7C1B33742F00262293 /* Ambassador.m */; };
 		DB743E801B3375A700262293 /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = DB743E7F1B3375A700262293 /* Constants.h */; };
 		DB743E821B3375B300262293 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = DB743E811B3375B300262293 /* Constants.m */; };
+		DB8457AE1B7BB7EE008A306F /* SendCompletionModal.h in Headers */ = {isa = PBXBuildFile; fileRef = DB8457AC1B7BB7EE008A306F /* SendCompletionModal.h */; };
+		DB8457AF1B7BB7EE008A306F /* SendCompletionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = DB8457AD1B7BB7EE008A306F /* SendCompletionModal.m */; };
+		DB8457B21B7BC058008A306F /* failIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8457B01B7BC058008A306F /* failIcon.png */; };
+		DB8457B31B7BC058008A306F /* successIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DB8457B11B7BC058008A306F /* successIcon.png */; };
 		DB86FA2B1B695D8A008115D9 /* NamePrompt.h in Headers */ = {isa = PBXBuildFile; fileRef = DB86FA291B695D8A008115D9 /* NamePrompt.h */; };
 		DB86FA2C1B695D8A008115D9 /* NamePrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = DB86FA2A1B695D8A008115D9 /* NamePrompt.m */; };
 		DB9013C81B2A03CD001F1CF8 /* iOS_Framework.h in Headers */ = {isa = PBXBuildFile; fileRef = DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -133,6 +137,10 @@
 		DB743E7C1B33742F00262293 /* Ambassador.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ambassador.m; sourceTree = "<group>"; };
 		DB743E7F1B3375A700262293 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		DB743E811B3375B300262293 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		DB8457AC1B7BB7EE008A306F /* SendCompletionModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCompletionModal.h; sourceTree = "<group>"; };
+		DB8457AD1B7BB7EE008A306F /* SendCompletionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendCompletionModal.m; sourceTree = "<group>"; };
+		DB8457B01B7BC058008A306F /* failIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = failIcon.png; sourceTree = "<group>"; };
+		DB8457B11B7BC058008A306F /* successIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = successIcon.png; sourceTree = "<group>"; };
 		DB86FA291B695D8A008115D9 /* NamePrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NamePrompt.h; sourceTree = "<group>"; };
 		DB86FA2A1B695D8A008115D9 /* NamePrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NamePrompt.m; sourceTree = "<group>"; };
 		DB9013C21B2A03CD001F1CF8 /* iOS_Framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iOS_Framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -318,6 +326,8 @@
 				DB46FE4C1B58510000FEB0B0 /* search.png */,
 				DB46FE4D1B58510000FEB0B0 /* sms.png */,
 				DB46FE4E1B58510000FEB0B0 /* twitter.png */,
+				DB8457B01B7BC058008A306F /* failIcon.png */,
+				DB8457B11B7BC058008A306F /* successIcon.png */,
 				DB9013C61B2A03CD001F1CF8 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -358,6 +368,8 @@
 		DBDD72D31B6BA3150037CD7B /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DB8457AC1B7BB7EE008A306F /* SendCompletionModal.h */,
+				DB8457AD1B7BB7EE008A306F /* SendCompletionModal.m */,
 				DB86FA291B695D8A008115D9 /* NamePrompt.h */,
 				DB86FA2A1B695D8A008115D9 /* NamePrompt.m */,
 				DBBB37E51B67CE880084D822 /* AuthorizeLinkedIn.h */,
@@ -433,6 +445,7 @@
 				DB86FA2B1B695D8A008115D9 /* NamePrompt.h in Headers */,
 				DBBB37EB1B67CE900084D822 /* RemoveButton.h in Headers */,
 				DB0F497E1B41A14500CCE614 /* FMResultSet.h in Headers */,
+				DB8457AE1B7BB7EE008A306F /* SendCompletionModal.h in Headers */,
 				DB0F497D1B41A14500CCE614 /* FMDB.h in Headers */,
 				DBBB37DD1B67CE6B0084D822 /* Contact.h in Headers */,
 				DB0F494B1B419DF000CCE614 /* Conversion.h in Headers */,
@@ -535,10 +548,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBDCA59A1B6A5D6800B85E5A /* Main.storyboard in Resources */,
+				DB8457B21B7BC058008A306F /* failIcon.png in Resources */,
 				DB46FE551B58510000FEB0B0 /* pencil.png in Resources */,
 				DB46FE511B58510000FEB0B0 /* clipboard.png in Resources */,
 				DB46FE581B58510000FEB0B0 /* sms.png in Resources */,
 				DB46FE561B58510000FEB0B0 /* plus.png in Resources */,
+				DB8457B31B7BC058008A306F /* successIcon.png in Resources */,
 				DB46FE501B58510000FEB0B0 /* check.png in Resources */,
 				DB46FE531B58510000FEB0B0 /* email.png in Resources */,
 				DB46FE571B58510000FEB0B0 /* search.png in Resources */,
@@ -622,6 +637,7 @@
 				DB0F49781B41A14500CCE614 /* FMDatabaseAdditions.m in Sources */,
 				DB743E821B3375B300262293 /* Constants.m in Sources */,
 				DB0F497A1B41A14500CCE614 /* FMDatabasePool.m in Sources */,
+				DB8457AF1B7BB7EE008A306F /* SendCompletionModal.m in Sources */,
 				DBBB37F01B67CE960084D822 /* SelectedCell.m in Sources */,
 				DB86FA2C1B695D8A008115D9 /* NamePrompt.m in Sources */,
 				DB0F49481B419DCC00CCE614 /* ConversionParameters.m in Sources */,

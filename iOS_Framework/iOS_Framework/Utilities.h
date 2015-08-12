@@ -22,5 +22,6 @@ NSMutableDictionary* parseQueryString(NSString *string);
 UIColor* ColorFromRGB(float r, float g, float b);
 UIImage* imageFromBundleNamed(NSString *name);
 void simpleAlert(NSString *title, NSString *message, UIViewController *vc);
+void sendAlert(BOOL success, NSString *message);
 
 #endif
