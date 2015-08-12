@@ -16,7 +16,8 @@
 #import "Constants.h"
 
 @interface ContactSelector () <UITableViewDataSource, UITableViewDelegate,
-                               SelectedCellDelegate, UITextFieldDelegate, NamePromptDelegate>
+                               SelectedCellDelegate, UITextFieldDelegate,
+                               NamePromptDelegate, UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *contactsTable;
 
 @property (weak, nonatomic) IBOutlet UIView *composeMessageView;
@@ -83,8 +84,9 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     
     self.searchBar.delegate = self;
     
-    self.composeMessageTextView.editable = NO;
+    //self.composeMessageTextView.editable = NO;
     self.composeMessageTextView.textColor = [UIColor lightGrayColor];
+    self.composeMessageTextView.delegate = self;
     self.editMessageButton.selected = NO;
     
     self.fadeView.hidden = YES;
@@ -131,12 +133,16 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 - (IBAction)clearAllButton:(UIButton *)sender
 {
+    DLog();
+    
     [self.selected removeAllObjects];
     [self refreshAll];
 }
 
 - (IBAction)doneSearchingButton:(UIButton *)sender
 {
+    DLog();
+    
     self.searchBar.text = @"";
     [self.searchBar resignFirstResponder];
     self.activeSearch = NO;
@@ -146,17 +152,37 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 - (IBAction)editMessageButton:(UIButton *)sender
 {
-    self.composeMessageTextView.editable = !self.composeMessageTextView.editable;
+    DLog();
+    //self.composeMessageTextView.editable = !self.composeMessageTextView.editable;
+    if (self.editMessageButton.selected)
+    {
+        DLog();
+        
+        [self.composeMessageTextView resignFirstResponder];
+    }
+    else
+    {
+        DLog();
+        
+        [self.composeMessageTextView becomeFirstResponder];
+    }
+}
+
+- (void)updateEditMessageButton
+{
+    DLog();
     self.editMessageButton.selected = !self.editMessageButton.selected;
     self.fadeView.hidden = !self.fadeView.hidden;
     if (!self.editMessageButton.selected)
     {
-        [self.composeMessageTextView resignFirstResponder];
+        DLog();
+        
         self.composeMessageTextView.textColor = [UIColor lightGrayColor];
     }
     else
     {
-        [self.composeMessageTextView becomeFirstResponder];
+        DLog();
+        
         self.composeMessageTextView.textColor = [UIColor blackColor];
     }
 }
@@ -330,6 +356,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 - (BOOL)setActiveSearchFlag:(NSString *)searchText
 {
+    DLog();
+    
     self.activeSearch = [searchText isEqualToString:@""] ? NO : YES;
     self.doneSearchingButton.selected = self.activeSearch? YES : NO;
     return self.activeSearch;
@@ -366,6 +394,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 #pragma mark - Keyboard Layout Adjustments
 - (void)registerForKeyboardNotifications
 {
+    DLog();
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
                                                  name:UIKeyboardWillShowNotification object:nil];
@@ -376,10 +406,14 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 - (void)keyboardWasShown:(NSNotification*)sender
 {
+    DLog();
+    
     // Animate compose box upward (and adjust to full width if iPad) and hide
     // the 'send to contacts' button
-    if (self.editMessageButton.selected)
+    if ([self.composeMessageTextView isFirstResponder])
     {
+        [self updateEditMessageButton];
+        
         CGRect frame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
         CGRect newFrame = [self.view convertRect:frame fromView:[[UIApplication sharedApplication] delegate].window];
         [self.view layoutIfNeeded];
@@ -407,6 +441,13 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
+    DLog();
+    
+    if ([self.composeMessageTextView isFirstResponder])
+    {
+        [self updateEditMessageButton];
+    }
+    
     // Restore the compose box to the bottom of the screen, un-hide 'send to
     // contacts' button and adjust the width if needed (on iPad)
     self.bottomViewBottomConstraint.constant = 0;
@@ -425,31 +466,51 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 #pragma mark - NamePromptDelegate
 - (void)sendSMSPressedWithName:(NSString *)name
 {
+    DLog();
+    
     [self sendSMSWithName:name];
 }
 
 - (void)sendSMSWithName:(NSString *)name
 {
+    DLog();
+    
     [self.delegate sendToContacts:[self.selected allObjects] forServiceType:SMS_TITLE fromName:name withMessage:self.composeMessageTextView.text];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)sendEmail
 {
+    DLog();
+    
     [self.delegate sendToContacts:[self.selected allObjects] forServiceType:EMAIL_TITLE fromName:@"" withMessage:self.composeMessageTextView.text];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
 
+#pragma mark - UITextViewDelegate
+//- (void)textViewDidBeginEditing:(UITextView *)textView
+//{
+//    DLog();
+//    
+//    [self editMessageButton:self.editMessageButton];
+//}
+
+
+
 #pragma mark - Navigation
 - (void)backButtonPressed:(UIButton *)button
 {
+    DLog();
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
 {
+    DLog();
+    
     if ([segue.identifier isEqualToString:NAME_PROMPT_SEGUE_IDENTIFIER])
     {
         NamePrompt *vc = (NamePrompt *)segue.destinationViewController;
