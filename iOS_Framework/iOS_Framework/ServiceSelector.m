@@ -403,6 +403,11 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 {
     UIPasteboard *pb = [UIPasteboard generalPasteboard];
     [pb setString:self.textField.text];
+    
+    UIButton *clipboardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 15)];
+    [clipboardButton setImage:imageFromBundleNamed(@"graycheck") forState:UIControlStateNormal];
+    [clipboardButton addTarget:self action:@selector(clipboardButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+    self.textField.rightView = clipboardButton;
 }
 
 
