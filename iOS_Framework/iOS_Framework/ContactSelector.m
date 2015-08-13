@@ -99,6 +99,14 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 {
     if (self.selected.count > 0)
     {
+        //TODO: validate short url is in there
+        if (![self validateString:self.shortURL inString:self.composeMessageTextView.text])
+        {
+            NSString *message = [NSString stringWithFormat:@"Please include your url in the message: %@", self.shortURL];
+            sendAlert(NO, message, self);
+            return;
+        }
+        
         if ([self.serviceType isEqualToString:SMS_TITLE])
         {
             NSDictionary *ambassadorInfo = [[NSUserDefaults standardUserDefaults]
@@ -129,6 +137,11 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             [self sendEmail];
         }
     }
+}
+
+- (BOOL)validateString:(NSString *)string inString:(NSString *)inString
+{
+    return [inString rangeOfString:string].location != NSNotFound;
 }
 
 - (IBAction)clearAllButton:(UIButton *)sender
