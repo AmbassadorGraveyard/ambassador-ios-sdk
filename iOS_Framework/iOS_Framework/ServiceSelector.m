@@ -277,6 +277,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         ContactSelector *vc = (ContactSelector *)segue.destinationViewController;
         NSString *serviceType = (NSString *)sender;
         vc.prefs = self.prefs;
+        vc.shortURL = self.shortURL;
+        vc.shortCode = self.shortCode;
         vc.delegate = self;
         vc.defaultMessage = [NSString stringWithFormat:@"%@ %@", self.prefs.defaultShareMessage, self.shortURL];
         

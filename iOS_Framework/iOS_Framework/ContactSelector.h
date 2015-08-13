@@ -21,6 +21,7 @@
 @property ServiceSelectorPreferences *prefs;
 @property NSString *defaultMessage;
 @property NSString *shortCode;
+@property NSString *shortURL;
 @property (weak)id<ContactSelectorDelegate>delegate;
 @property NSString *serviceType;
 
