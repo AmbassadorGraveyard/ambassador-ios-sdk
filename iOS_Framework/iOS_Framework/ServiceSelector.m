@@ -278,7 +278,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         NSString *serviceType = (NSString *)sender;
         vc.prefs = self.prefs;
         vc.delegate = self;
-        vc.defaultMessage = self.prefs.defaultShareMessage;
+        vc.defaultMessage = [NSString stringWithFormat:@"%@ %@", self.prefs.defaultShareMessage, self.shortURL];
         
         if ([serviceType isEqualToString:SMS_TITLE])
         {
@@ -416,7 +416,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 - (void)sendToContacts:(NSArray *)contacts forServiceType:(NSString *)serviceType fromName:(NSString *)name withMessage:(NSString *)message
 {
     __weak NSString *shortCode = self.shortCode;
-    __weak NSString *shortURL = self.shortURL;
     __weak ServiceSelector *weakSelf = self;
     
     if ([serviceType isEqualToString:EMAIL_TITLE])
@@ -437,7 +436,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         NSDictionary *payload = @{
                                   @"to_emails" : validContacts,
                                   @"short_code" : shortCode,
-                                  @"message" : [NSString stringWithFormat:@"%@ %@", message, shortURL],
+                                  @"message" : message,
                                   @"subject_line" : subjectLine
                                   };
         
@@ -491,7 +490,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         NSDictionary *payload = @{
                                   @"to" : validContacts,
                                   @"name" : name,
-                                  @"message" : [NSString stringWithFormat:@"%@ %@", message, shortURL]
+                                  @"message" : message
                                   };
         
         NSLog(@"SMS data sent to servers %@", payload);
