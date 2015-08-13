@@ -63,7 +63,15 @@
 
 - (IBAction)buttonPressed:(UIButton *)sender
 {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    if (self.buttonAction)
+    {
+        self.buttonAction();
+    }
+    else
+    {
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    }
+    
 }
 
 @end
