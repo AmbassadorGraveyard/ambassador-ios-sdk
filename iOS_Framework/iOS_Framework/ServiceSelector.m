@@ -193,7 +193,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
             {
                 DLog();
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    sendAlert(YES, @"Your link was successfully shared");
+                    sendAlert(YES, @"Your link was successfully shared", self);
                 });
                 [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"facebook" recipientUsername:@""];
             }
@@ -211,7 +211,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
             {
                 DLog();
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    sendAlert(YES, @"Your link was successfully shared");
+                    sendAlert(YES, @"Your link was successfully shared", self);
                 });
                 [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"twitter" recipientUsername:@""];
             }
@@ -350,7 +350,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 - (void)networkError:(NSString *)title message:(NSString *)message
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self simpleAlertWith:title message:message];
+//        [self simpleAlertWith:title message:message];
+        sendAlert(NO, message, self);
     });
     
 }
@@ -361,7 +362,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     if ([service isEqualToString:LINKEDIN_TITLE])
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            sendAlert(YES, @"Your link was successfully shared");
+            sendAlert(YES, @"Your link was successfully shared", self);
         });
         [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"linkedin" recipientUsername:@""];
     }
@@ -371,24 +372,25 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         DLog(@"Reauthenticate");
-        UIAlertController *alert = [UIAlertController
-                                    alertControllerWithTitle:@"Expired LinkedIn Session"
-                                    message:@"We just need you to log in again and we will bring you back to the post screen"
-                                    preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertController *alert = [UIAlertController
+//                                    alertControllerWithTitle:@"Expired LinkedIn Session"
+//                                    message:@"We just need you to log in again and we will bring you back to the post screen"
+//                                    preferredStyle:UIAlertControllerStyleAlert];
+//        
+//        UIAlertAction *okAction = [UIAlertAction
+//                                   actionWithTitle:@"Login"
+//                                   style:UIAlertActionStyleDefault
+//                                   handler:^(UIAlertAction *action)
+//                                   {
+//                                       dispatch_async(dispatch_get_main_queue(), ^{
+//                                           [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
+//                                       });
+//                                   }];
+//        
+//        [alert addAction:okAction];
+        sendAlert(NO, @"You've been logged out of linkedIn. Log in and we will bring you back to the share screen.", self);
         
-        UIAlertAction *okAction = [UIAlertAction
-                                   actionWithTitle:@"Login"
-                                   style:UIAlertActionStyleDefault
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                           [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
-                                       });
-                                   }];
-        
-        [alert addAction:okAction];
-        
-        [self presentViewController:alert animated:YES completion:nil];
+        //[self presentViewController:alert animated:YES completion:nil];
     });
 }
 
@@ -465,13 +467,15 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                   else
                   {
                       NSLog(@"Error: %@", error.localizedDescription);
-                      [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+                      sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
+//                      [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
                   }
               }
               else
               {
                   NSLog(@"Error: %@", error.localizedDescription);
-                  [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+//                  [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+                   sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
               }
           }];
         [task resume];
@@ -521,14 +525,16 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                       else
                       {
                           NSLog(@"Error: %@", error.localizedDescription);
-                          [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+//                          [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+                           sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
                       }
                   }
                   else
                   {
                       NSLog(@"Error: %@", error.localizedDescription);
                       dispatch_async(dispatch_get_main_queue(), ^{
-                          [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+//                          [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
+                           sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
                       });
                   }
               }];
@@ -551,8 +557,9 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         {
             [message appendString:@"s"];
         }
+        [message appendString:@"."];
         
-        sendAlert(YES, message);
+        sendAlert(YES, message, self);
     });
 }
 
