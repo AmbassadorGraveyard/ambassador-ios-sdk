@@ -54,6 +54,7 @@
 		DB9013C81B2A03CD001F1CF8 /* iOS_Framework.h in Headers */ = {isa = PBXBuildFile; fileRef = DB9013C71B2A03CD001F1CF8 /* iOS_Framework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB9013CE1B2A03CD001F1CF8 /* iOS_Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9013C21B2A03CD001F1CF8 /* iOS_Framework.framework */; };
 		DB9013D51B2A03CD001F1CF8 /* iOS_FrameworkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9013D41B2A03CD001F1CF8 /* iOS_FrameworkTests.m */; };
+		DB927F591B7CE705003240E1 /* graycheck.png in Resources */ = {isa = PBXBuildFile; fileRef = DB927F581B7CE705003240E1 /* graycheck.png */; };
 		DBBB37DB1B67CE6B0084D822 /* ContactLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = DBBB37D71B67CE6B0084D822 /* ContactLoader.h */; };
 		DBBB37DC1B67CE6B0084D822 /* ContactLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = DBBB37D81B67CE6B0084D822 /* ContactLoader.m */; };
 		DBBB37DD1B67CE6B0084D822 /* Contact.h in Headers */ = {isa = PBXBuildFile; fileRef = DBBB37D91B67CE6B0084D822 /* Contact.h */; };
@@ -149,6 +150,7 @@
 		DB9013CD1B2A03CD001F1CF8 /* iOS_FrameworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOS_FrameworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB9013D31B2A03CD001F1CF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB9013D41B2A03CD001F1CF8 /* iOS_FrameworkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_FrameworkTests.m; sourceTree = "<group>"; };
+		DB927F581B7CE705003240E1 /* graycheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graycheck.png; sourceTree = "<group>"; };
 		DBBB37D71B67CE6B0084D822 /* ContactLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactLoader.h; sourceTree = "<group>"; };
 		DBBB37D81B67CE6B0084D822 /* ContactLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactLoader.m; sourceTree = "<group>"; };
 		DBBB37D91B67CE6B0084D822 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 		DB9013C51B2A03CD001F1CF8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DB927F581B7CE705003240E1 /* graycheck.png */,
 				DBE671EC1B78E16D00AB890E /* blank.png */,
 				DB46FE441B58510000FEB0B0 /* back.png */,
 				DB46FE451B58510000FEB0B0 /* check.png */,
@@ -548,6 +551,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBDCA59A1B6A5D6800B85E5A /* Main.storyboard in Resources */,
+				DB927F591B7CE705003240E1 /* graycheck.png in Resources */,
 				DB8457B21B7BC058008A306F /* failIcon.png in Resources */,
 				DB46FE551B58510000FEB0B0 /* pencil.png in Resources */,
 				DB46FE511B58510000FEB0B0 /* clipboard.png in Resources */,
