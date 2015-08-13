@@ -12,5 +12,6 @@
 
 @property NSString *alertMessage;
 - (void)shouldUseSuccessIcon:(BOOL)successful;
+@property (nonatomic, copy)void (^buttonAction)();
 
 @end

@@ -36,6 +36,7 @@
 
 @property (strong, nonatomic) NSMutableArray *services;
 @property (strong, nonatomic) ContactLoader *loader;
+@property (strong, nonatomic) NSTimer *waitViewTimer;
 
 @end
 
@@ -137,6 +138,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
+    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
+    
     DLog(@"%@", self.shortURL);
     if ((self.shortURL != nil) && ![self.shortURL isEqualToString:@""])
     {
@@ -145,8 +148,27 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     }
 }
 
+- (void)alertForNetworkTimeout
+{
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"]];
+    SendCompletionModal *vc = (SendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
+    vc.alertMessage = @"The network request timed out. Please check your connection and try again";
+    [vc shouldUseSuccessIcon:NO];
+    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    __weak ServiceSelector *weakSelf = self;
+    vc.buttonAction = ^() {
+        [weakSelf dismissViewControllerAnimated:YES completion:^{
+            [weakSelf.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+        }];
+    };
+    
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
 - (void)removeWaitView
 {
+    [self.waitViewTimer invalidate];
     self.waitView.hidden = YES;
     self.textField.text = self.shortURL;
 }
