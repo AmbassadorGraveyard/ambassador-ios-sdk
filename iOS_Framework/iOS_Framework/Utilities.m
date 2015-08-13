@@ -35,33 +35,14 @@ UIImage* imageFromBundleNamed(NSString *name)
     return [UIImage imageNamed:name inBundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"] compatibleWithTraitCollection:nil];
 }
 
-
-UIViewController *topViewController(UIViewController *rootViewController)
-{
-    if (rootViewController.presentedViewController == nil) {
-        return rootViewController;
-    }
-    
-    if ([rootViewController.presentedViewController isKindOfClass:[UINavigationController class]]) {
-        UINavigationController *navigationController = (UINavigationController *)rootViewController.presentedViewController;
-        UIViewController *lastViewController = [[navigationController viewControllers] lastObject];
-        return topViewController(lastViewController);
-    }
-    
-    UIViewController *presentedViewController = (UIViewController *)rootViewController.presentedViewController;
-    return topViewController(presentedViewController);
-}
-
-void sendAlert(BOOL success, NSString *message)
+void sendAlert(BOOL success, NSString *message, UIViewController *presenter)
 {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"]];
     SendCompletionModal *vc = (SendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
-    
-    UIViewController *presenter = topViewController([UIApplication sharedApplication].keyWindow.rootViewController);
-    
     vc.alertMessage = message;
     [vc shouldUseSuccessIcon:success];
     vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
     [presenter presentViewController:vc animated:YES completion:nil];
 }
