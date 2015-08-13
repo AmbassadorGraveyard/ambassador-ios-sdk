@@ -21,12 +21,14 @@
 #import "Contact.h"
 #import "AMBReachability.h"
 #import "SendCompletionModal.h"
+#import <MessageUI/MessageUI.h>
 
 
 @interface ServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
                                ContactLoaderDelegate, LinkedInAuthorizeDelegate,
                                ShareServiceDelegate, ContactSelectorDelegate,
-                               UITextFieldDelegate>
+                               UITextFieldDelegate, MFMessageComposeViewControllerDelegate,
+                               MFMailComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
@@ -37,6 +39,9 @@
 @property (strong, nonatomic) NSMutableArray *services;
 @property (strong, nonatomic) ContactLoader *loader;
 @property (strong, nonatomic) NSTimer *waitViewTimer;
+
+@property NSString *singleEmail;
+@property NSString *singleSMS;
 
 @end
 
@@ -57,6 +62,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     if ([super init])
     {
         self.prefs = prefs;
+        self.singleEmail = @"";
+        self.singleSMS = @"";
     }
     
     return self;
@@ -138,13 +145,16 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
-    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     
     DLog(@"%@", self.shortURL);
     if ((self.shortURL != nil) && ![self.shortURL isEqualToString:@""])
     {
         DLog();
         self.waitView.hidden = YES;
+    }
+    else
+    {
+        self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     }
 }
 
@@ -168,7 +178,11 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 - (void)removeWaitView
 {
-    [self.waitViewTimer invalidate];
+    if (self.waitViewTimer)
+    {
+        [self.waitViewTimer invalidate];
+    }
+    
     self.waitView.hidden = YES;
     self.textField.text = self.shortURL;
 }
@@ -396,25 +410,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         DLog(@"Reauthenticate");
-//        UIAlertController *alert = [UIAlertController
-//                                    alertControllerWithTitle:@"Expired LinkedIn Session"
-//                                    message:@"We just need you to log in again and we will bring you back to the post screen"
-//                                    preferredStyle:UIAlertControllerStyleAlert];
-//        
-//        UIAlertAction *okAction = [UIAlertAction
-//                                   actionWithTitle:@"Login"
-//                                   style:UIAlertActionStyleDefault
-//                                   handler:^(UIAlertAction *action)
-//                                   {
-//                                       dispatch_async(dispatch_get_main_queue(), ^{
-//                                           [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
-//                                       });
-//                                   }];
-//        
-//        [alert addAction:okAction];
         sendAlert(NO, @"You've been logged out of linkedIn. Log in and we will bring you back to the share screen.", self);
-        
-        //[self presentViewController:alert animated:YES completion:nil];
     });
 }
 
@@ -457,6 +453,26 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         
         NSArray *validContacts = [weakSelf validateEmails:contacts];
         
+        if (validContacts.count == 1)
+        {
+            MFMailComposeViewController *vc = [[MFMailComposeViewController alloc] init];
+            if ([MFMailComposeViewController canSendMail]) {
+                vc.mailComposeDelegate = self;
+                [vc setMessageBody:message isHTML:NO];
+                [vc setSubject:subjectLine];
+                [vc setToRecipients:validContacts];
+                
+                [self presentViewController:vc animated:YES completion:nil];
+                self.singleEmail = [validContacts firstObject];
+            }
+            else
+            {
+                //sendAlert(NO, @"Your device doesn't support sending email.", self);
+            }
+
+            return;
+        }
+        
         NSDictionary *payload = @{
                                   @"to_emails" : validContacts,
                                   @"short_code" : shortCode,
@@ -496,13 +512,11 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                   {
                       NSLog(@"Error: %@", error.localizedDescription);
                       sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
-//                      [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
                   }
               }
               else
               {
                   NSLog(@"Error: %@", error.localizedDescription);
-//                  [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
                    sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
               }
           }];
@@ -518,8 +532,28 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                                   };
         
         NSLog(@"SMS data sent to servers %@", payload);
+        
+        if (validContacts.count == 1)
+        {
+            MFMessageComposeViewController *vc = [[MFMessageComposeViewController alloc] init];
+            if ([MFMessageComposeViewController canSendText])
+            {
+                DLog(@"%@", vc);
+                vc.messageComposeDelegate = self;
+                [vc setBody:message];
+                [vc setRecipients:validContacts];
+                
+                [self presentViewController:vc animated:YES completion:nil];
+                self.singleSMS = [validContacts firstObject];
+            }
+            else
+            {
+                //sendAlert(NO, @"Your device doesn't support sending SMS", self);
+            }
+            return;
+        }
 
-        if ([self validatePhoneNumbers:contacts].count >0 )
+        if (validContacts.count > 0 )
         {
             NSArray *components = [name componentsSeparatedByString:@" "];
             NSString *firstName = [components firstObject];
@@ -553,7 +587,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                       else
                       {
                           NSLog(@"Error: %@", error.localizedDescription);
-//                          [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
                            sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
                       }
                   }
@@ -561,7 +594,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                   {
                       NSLog(@"Error: %@", error.localizedDescription);
                       dispatch_async(dispatch_get_main_queue(), ^{
-//                          [weakSelf simpleAlertWith:@"Netwrok Error" message:@"We couldn't send your messages right now. Please check your network connection and try again"];
                            sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
                       });
                   }
@@ -770,5 +802,47 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
       }];
     [task resume];
 }
+
+
+
+#pragma mark - MFComposeViewController Delegates
+- (void)mailComposeController:(nonnull MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(nullable NSError *)error
+{
+    if (result == MFMailComposeResultFailed)
+    {
+        sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
+    }
+    else if (result == MFMailComposeResultSent)
+    {
+        sendAlert(NO, @"Your link was successfully shared", self);
+        [self postShareTrackWithShortCode:self.shortCode recipientEmail:self.singleEmail socialName:@"email" recipientUsername:@""];
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    }
+    else if (result == MFMailComposeResultSaved || result == MFMailComposeResultCancelled)
+    {
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (void)messageComposeViewController:(nonnull MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    if (result == MessageComposeResultFailed)
+    {
+        sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
+    }
+    else if (result == MessageComposeResultSent)
+    {
+        sendAlert(NO, @"Your link was successfully shared", self);
+        [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"sms" recipientUsername:self.singleSMS];
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    }
+    else if (result == MessageComposeResultCancelled)
+    {
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+
+
 
 @end

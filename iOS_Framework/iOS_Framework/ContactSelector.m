@@ -106,7 +106,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             sendAlert(NO, message, self);
             return;
         }
-        
+
         if ([self.serviceType isEqualToString:SMS_TITLE])
         {
             NSDictionary *ambassadorInfo = [[NSUserDefaults standardUserDefaults]
