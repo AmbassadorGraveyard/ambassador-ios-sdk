@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import <iOS_Framework/iOS_Framework.h>
+#import <Ambassador/Ambassador.h>
 
 @interface ViewController ()
 
@@ -18,7 +18,7 @@
 @implementation ViewController
 
 - (void)viewDidLoad {
-    [Ambassador identifyWithEmail:@"1954testimport@example.com"];
+    [AmbassadorSDK identifyWithEmail:@"1954testimport@example.com"];
 
     //[self functionToIgnoreDuringCodeReview];
 }
@@ -78,7 +78,7 @@
 
 - (void)presentRAF
 {
-    [Ambassador presentRAFForCampaign:@"847" FromViewController:self WithRAFParameters:nil];
+    [AmbassadorSDK presentRAFForCampaign:@"847" FromViewController:self WithRAFParameters:nil];
 }
 
 @end
