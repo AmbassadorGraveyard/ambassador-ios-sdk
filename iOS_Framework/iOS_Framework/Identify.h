@@ -3,13 +3,14 @@
 //  iOS_Framework
 //
 //  Created by Diplomat on 6/19/15.
-//  Copyright (c) 2015 Ambassador. All rights reserved.
+//  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 @protocol IdentifyDelegate <NSObject>
 
+@optional
 - (void)identifyDataWasRecieved:(NSMutableDictionary *)data;
 - (void)insightsDataWasRecieved:(NSMutableDictionary *)data;
 - (void)ambassadorDataWasRecieved:(NSMutableDictionary *)data;
@@ -20,6 +21,7 @@
 
 @interface Identify : NSObject
 
+- (id)initWithKey:(NSString *)key;
 - (void)identifyWithEmail:(NSString *)email;
 @property NSMutableDictionary *identifyData;
 @property NSString *pusherChannelName;

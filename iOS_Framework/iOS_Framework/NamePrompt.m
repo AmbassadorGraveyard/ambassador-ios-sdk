@@ -3,11 +3,12 @@
 //  iOS_Framework
 //
 //  Created by Diplomat on 7/29/15.
-//  Copyright © 2015 Ambassador. All rights reserved.
+//  Copyright © 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
 //
 
 #import "NamePrompt.h"
 #import "Utilities.h"
+#import "Constants.h"
 
 @interface NamePrompt () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *continueButton;
@@ -45,6 +46,17 @@
 {
     if ([self textFieldIsValid:self.textField.text])
     {
+        NSMutableDictionary *information = [[NSUserDefaults standardUserDefaults] objectForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
+        DLog(@"This is what is stored before the name change %@", information)
+        if (information)
+        {
+            NSArray *nameComponents = [self.textField.text componentsSeparatedByString:@" "];
+            information[@"first_name"] = [nameComponents firstObject];
+            information[@"last_name"] = [nameComponents lastObject];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:information forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
+            DLog(@"Updating local cache %@", information);
+        }
         [self.delegate sendSMSPressedWithName:self.textField.text];
     }
    

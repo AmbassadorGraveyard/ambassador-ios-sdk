@@ -3,10 +3,11 @@
 //  iOS_Framework
 //
 //  Created by Diplomat on 7/15/15.
-//  Copyright (c) 2015 Ambassador. All rights reserved.
+//  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
 //
 
 #import "Utilities.h"
+#import "SendCompletionModal.h"
 
 NSMutableDictionary* parseQueryString(NSString *string)
 {
@@ -33,3 +34,16 @@ UIImage* imageFromBundleNamed(NSString *name)
 {
     return [UIImage imageNamed:name inBundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"] compatibleWithTraitCollection:nil];
 }
+
+void sendAlert(BOOL success, NSString *message, UIViewController *presenter)
+{
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"]];
+    SendCompletionModal *vc = (SendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
+    vc.alertMessage = message;
+    [vc shouldUseSuccessIcon:success];
+    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    [presenter presentViewController:vc animated:YES completion:nil];
+}
+

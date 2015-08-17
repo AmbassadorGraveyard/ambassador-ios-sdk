@@ -3,7 +3,7 @@
 //  RAF
 //
 //  Created by Diplomat on 7/24/15.
-//  Copyright (c) 2015 Austin. All rights reserved.
+//  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
 //
 
 #import "ContactSelector.h"
@@ -13,9 +13,11 @@
 #import "Utilities.h"
 #import "NamePrompt.h"
 #import "ShareServicesConstants.h"
+#import "Constants.h"
 
 @interface ContactSelector () <UITableViewDataSource, UITableViewDelegate,
-                               SelectedCellDelegate, UITextFieldDelegate, NamePromptDelegate>
+                               SelectedCellDelegate, UITextFieldDelegate,
+                               NamePromptDelegate, UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *contactsTable;
 
 @property (weak, nonatomic) IBOutlet UIView *composeMessageView;
@@ -82,8 +84,9 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     
     self.searchBar.delegate = self;
     
-    self.composeMessageTextView.editable = NO;
+    //self.composeMessageTextView.editable = NO;
     self.composeMessageTextView.textColor = [UIColor lightGrayColor];
+    self.composeMessageTextView.delegate = self;
     self.editMessageButton.selected = NO;
     
     self.fadeView.hidden = YES;
@@ -96,17 +99,37 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 {
     if (self.selected.count > 0)
     {
+        //TODO: validate short url is in there
+        if (![self validateString:self.shortURL inString:self.composeMessageTextView.text])
+        {
+            NSString *message = [NSString stringWithFormat:@"Please include your url in the message: %@", self.shortURL];
+            sendAlert(NO, message, self);
+            return;
+        }
+
         if ([self.serviceType isEqualToString:SMS_TITLE])
         {
-            //TODO: chck for name
-            if (YES)
+            NSDictionary *ambassadorInfo = [[NSUserDefaults standardUserDefaults]
+                                            dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
+            NSMutableString *firstName = [NSMutableString stringWithString:@""];
+            NSMutableString *lastName = [NSMutableString stringWithString:@""];
+            
+            firstName = ambassadorInfo[@"first_name"];
+            lastName = ambassadorInfo[@"last_name"];
+            
+            firstName = (NSMutableString *)[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            
+            NSLog(@"User first and last name: %@ %@", firstName, lastName);
+            
+            if ([firstName isEqualToString:@""] || [lastName isEqualToString:@""])
             {
                 [self performSegueWithIdentifier:NAME_PROMPT_SEGUE_IDENTIFIER sender:self];
             }
             else
             {
-                //TODO: get the real name from the back end
-                [self sendSMSWithName:@""];
+                NSLog(@"Sending first and last name");
+                [self sendSMSWithName:[NSString stringWithFormat:@"%@ %@", firstName, lastName]];
             }
         }
         else if ([self.serviceType isEqualToString:EMAIL_TITLE])
@@ -116,14 +139,23 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     }
 }
 
+- (BOOL)validateString:(NSString *)string inString:(NSString *)inString
+{
+    return [inString rangeOfString:string].location != NSNotFound;
+}
+
 - (IBAction)clearAllButton:(UIButton *)sender
 {
+    DLog();
+    
     [self.selected removeAllObjects];
     [self refreshAll];
 }
 
 - (IBAction)doneSearchingButton:(UIButton *)sender
 {
+    DLog();
+    
     self.searchBar.text = @"";
     [self.searchBar resignFirstResponder];
     self.activeSearch = NO;
@@ -133,17 +165,37 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 - (IBAction)editMessageButton:(UIButton *)sender
 {
-    self.composeMessageTextView.editable = !self.composeMessageTextView.editable;
+    DLog();
+    //self.composeMessageTextView.editable = !self.composeMessageTextView.editable;
+    if (self.editMessageButton.selected)
+    {
+        DLog();
+        
+        [self.composeMessageTextView resignFirstResponder];
+    }
+    else
+    {
+        DLog();
+        
+        [self.composeMessageTextView becomeFirstResponder];
+    }
+}
+
+- (void)updateEditMessageButton
+{
+    DLog();
     self.editMessageButton.selected = !self.editMessageButton.selected;
     self.fadeView.hidden = !self.fadeView.hidden;
     if (!self.editMessageButton.selected)
     {
-        [self.composeMessageTextView resignFirstResponder];
+        DLog();
+        
         self.composeMessageTextView.textColor = [UIColor lightGrayColor];
     }
     else
     {
-        [self.composeMessageTextView becomeFirstResponder];
+        DLog();
+        
         self.composeMessageTextView.textColor = [UIColor blackColor];
     }
 }
@@ -186,6 +238,11 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         {
             [self.selected addObject:contact];
         }
+    }
+    if (tableView == self.selectedTable)
+    {
+        SelectedCell *cell = (SelectedCell *)[tableView cellForRowAtIndexPath:indexPath];
+        [self.selected removeObject:cell.removeButton.contact];
     }
     
     [self refreshAll];
@@ -312,6 +369,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 - (BOOL)setActiveSearchFlag:(NSString *)searchText
 {
+    DLog();
+    
     self.activeSearch = [searchText isEqualToString:@""] ? NO : YES;
     self.doneSearchingButton.selected = self.activeSearch? YES : NO;
     return self.activeSearch;
@@ -348,6 +407,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 #pragma mark - Keyboard Layout Adjustments
 - (void)registerForKeyboardNotifications
 {
+    DLog();
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
                                                  name:UIKeyboardWillShowNotification object:nil];
@@ -358,10 +419,14 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 - (void)keyboardWasShown:(NSNotification*)sender
 {
+    DLog();
+    
     // Animate compose box upward (and adjust to full width if iPad) and hide
     // the 'send to contacts' button
-    if (self.editMessageButton.selected)
+    if ([self.composeMessageTextView isFirstResponder])
     {
+        [self updateEditMessageButton];
+        
         CGRect frame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
         CGRect newFrame = [self.view convertRect:frame fromView:[[UIApplication sharedApplication] delegate].window];
         [self.view layoutIfNeeded];
@@ -389,6 +454,13 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
+    DLog();
+    
+    if ([self.composeMessageTextView isFirstResponder])
+    {
+        [self updateEditMessageButton];
+    }
+    
     // Restore the compose box to the bottom of the screen, un-hide 'send to
     // contacts' button and adjust the width if needed (on iPad)
     self.bottomViewBottomConstraint.constant = 0;
@@ -407,31 +479,51 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 #pragma mark - NamePromptDelegate
 - (void)sendSMSPressedWithName:(NSString *)name
 {
+    DLog();
+    
     [self sendSMSWithName:name];
 }
 
 - (void)sendSMSWithName:(NSString *)name
 {
+    DLog();
+    
     [self.delegate sendToContacts:[self.selected allObjects] forServiceType:SMS_TITLE fromName:name withMessage:self.composeMessageTextView.text];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)sendEmail
 {
+    DLog();
+    
     [self.delegate sendToContacts:[self.selected allObjects] forServiceType:EMAIL_TITLE fromName:@"" withMessage:self.composeMessageTextView.text];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
 
+#pragma mark - UITextViewDelegate
+//- (void)textViewDidBeginEditing:(UITextView *)textView
+//{
+//    DLog();
+//    
+//    [self editMessageButton:self.editMessageButton];
+//}
+
+
+
 #pragma mark - Navigation
 - (void)backButtonPressed:(UIButton *)button
 {
+    DLog();
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
 {
+    DLog();
+    
     if ([segue.identifier isEqualToString:NAME_PROMPT_SEGUE_IDENTIFIER])
     {
         NamePrompt *vc = (NamePrompt *)segue.destinationViewController;
