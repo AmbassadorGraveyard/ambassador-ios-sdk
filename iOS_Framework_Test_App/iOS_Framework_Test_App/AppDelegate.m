@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <iOS_Framework/iOS_Framework.h>
+#import <Ambassador/Ambassador.h>
 
 
 @interface AppDelegate ()
@@ -40,7 +40,7 @@
     conversion.mbsy_is_approved = @NO;
     conversion.mbsy_email = @"anonymous_test_1578@example.com";
 
-    [Ambassador runWithKey:@"UniversalToken bdb49d2b9ae24b7b6bc5da122370f3517f98336f" convertOnInstall:conversion];
+    [AmbassadorSDK runWithKey:@"UniversalToken bdb49d2b9ae24b7b6bc5da122370f3517f98336f" convertOnInstall:conversion];
     return YES;
 }
 
