@@ -3,7 +3,7 @@
 //  iOS_Framework
 //
 //  Created by Diplomat on 7/8/15.
-//  Copyright (c) 2015 Ambassador. All rights reserved.
+//  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
 //
 
 #import "ContactLoader.h"
@@ -55,7 +55,7 @@
         ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted)
     {
         DLog(@"Don't have permission to access contacts");
-        [self throwContactLoadError];
+        [self requestContactsPermission];
     }
     else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
     {
@@ -64,22 +64,30 @@
     }
     else
     {
-        DLog(@"Asking for permission to access contacts");
-        ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, nil), ^(bool granted, CFErrorRef error) {
-            if (!granted)
-            {
-                DLog(@"Contact access permission request denied");
-                [self throwContactLoadError];
-            }
+        [self requestContactsPermission];
+    }
+}
+
+- (void)requestContactsPermission
+{
+    DLog(@"Asking for permission to access contacts");
+    ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, nil), ^(bool granted, CFErrorRef error) {
+        if (!granted)
+        {
+            DLog(@"Contact access permission request denied");
+            [self throwContactLoadError];
+        }
+        else
+        {
             DLog(@"Contact access permission request granted");
             [self loadContacts];
-        });
-    }
+        }
+    });
 }
 
 - (void)throwContactLoadError
 {
-    [self.delegate contactsFailedToLoadWithError:@"Couln't load contacts" message:@"Sharing requires access to your contact books. You can enable this in your settings"];
+    [self.delegate contactsFailedToLoadWithError:@"Couldn't load contacts" message:@"Sharing requires access to your contact book. You can enable this in your settings."];
 }
 
 
@@ -113,35 +121,6 @@
     // Get name
     NSDictionary *name = [self getNameForPerson:person];
     
-    // Emails for contact
-    ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
-    
-    // Cycle through emails
-    for (CFIndex j = 0; j < ABMultiValueGetCount(emails); ++j) {
-        
-        //String to store label of each email type
-        NSString *emailLabel = (__bridge NSString *)ABMultiValueCopyLabelAtIndex(emails, j);
-        
-        //Strip the charaters surrounding label type
-        emailLabel = [emailLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]];
-        
-        NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emails, j);
-        
-        Contact *contact = [[Contact alloc] init];
-        contact.firstName = name[@"firstName"];
-        contact.lastName = name[@"lastName"];
-        contact.label = emailLabel;
-        contact.value = email;
-        
-        [self.emailAddresses addObject:contact];
-    }
-}
-
-- (void)getEmailsForPerson:(ABRecordRef)person
-{
-    // Get name
-    NSDictionary *name = [self getNameForPerson:person];
-    
     // Phone numbers for contact
     ABMultiValueRef phones = ABRecordCopyValue(person, kABPersonPhoneProperty);
     
@@ -160,6 +139,7 @@
         {
             //Strip the charaters surrounding label type
             phoneLabel = [phoneLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]];
+            if (!phoneLabel) phoneLabel = @"Other";
             
             //Get the number
             NSString *number = (__bridge NSString *)ABMultiValueCopyValueAtIndex(phones, j);
@@ -177,6 +157,37 @@
             [self.phoneNumbers addObject:contact];
         }
     }
+}
+
+- (void)getEmailsForPerson:(ABRecordRef)person
+{
+    // Get name
+    NSDictionary *name = [self getNameForPerson:person];
+    
+    // Emails for contact
+    ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
+    
+    // Cycle through emails
+    for (CFIndex j = 0; j < ABMultiValueGetCount(emails); ++j) {
+        
+        //String to store label of each email type
+        NSString *emailLabel = (__bridge NSString *)ABMultiValueCopyLabelAtIndex(emails, j);
+        
+        //Strip the charaters surrounding label type
+        emailLabel = [emailLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]];
+        if (!emailLabel) emailLabel = @"Other";
+        
+        NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emails, j);
+        
+        Contact *contact = [[Contact alloc] init];
+        contact.firstName = name[@"firstName"];
+        contact.lastName = name[@"lastName"];
+        contact.label = emailLabel;
+        contact.value = email;
+        
+        [self.emailAddresses addObject:contact];
+    }
+
 }
 
 - (NSDictionary *)getNameForPerson:(ABRecordRef)person

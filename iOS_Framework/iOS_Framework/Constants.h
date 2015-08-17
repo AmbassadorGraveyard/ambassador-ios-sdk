@@ -3,7 +3,7 @@
 //  iOS_Framework
 //
 //  Created by Diplomat on 6/18/15.
-//  Copyright (c) 2015 Ambassador. All rights reserved.
+//  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
 //
 
 #ifndef iOS_Framework_Constants_h
@@ -36,6 +36,8 @@ extern NSString * const AMB_SHARE_TRACK_RECIPIENT_EMAIL_DICT_KEY;
 extern NSString * const AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY;
 extern NSString * const AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY;
 extern NSString * const AMB_SMS_SHARE_URL;
+extern NSString * const AMB_EMAIL_SHARE_URL;
+extern NSString * const AMB_UPDATE_IDENTIFY_URL;
 
 
 

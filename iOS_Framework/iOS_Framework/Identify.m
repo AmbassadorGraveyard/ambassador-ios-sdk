@@ -3,7 +3,7 @@
 //  iOS_Framework
 //
 //  Created by Diplomat on 6/19/15.
-//  Copyright (c) 2015 Ambassador. All rights reserved.
+//  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
 //
 
 #import "Identify.h"
@@ -16,9 +16,11 @@
 
 #pragma mark - Local Constants
 NSString * const AMB_IDENTIFY_URL = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/&universal_id=abfd1c89-4379-44e2-8361-ee7b87332e32";
-NSString * const AMB_IDENTIFY_JS_VAR = @"JSON.stringify(augur_data)";
+NSString * const AMB_IDENTIFY_JS_VAR = @"JSON.stringify(augur.json)";
 NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
+
 NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/?u=abfd1c89-4379-44e2-8361-ee7b87332e32";
+
 float const AMB_IDENTIFY_RETRY_TIME = 2.0;
 NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=7g1a8dumog40o61y5irl1sscm4nu6g60&uid=";
 
@@ -41,6 +43,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @property NSString *email;
 @property PTPusher *client;
 @property PTPusherPrivateChannel *channel;
+@property NSString *APIKey;
 
 @end
 
@@ -49,7 +52,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @implementation Identify
 
 #pragma mark - Object lifecycle
-- (id)init
+- (id)initWithKey:(NSString *)key
 {
     DLog();
     if ([super init])
@@ -57,6 +60,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         self.webview = [[UIWebView alloc] init];
         self.webview.delegate = self;
         self.email = @"";
+        self.APIKey = key;
         self.client = [PTPusher pusherWithKey:AMB_PUSHER_KEY delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:AMB_PUSHER_AUTHENTICATION_URL];
         [self.client connect];
@@ -90,7 +94,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     // Pull the data from the webview
     DLog(@"Grabbing the identify data string from webView");
     NSString *identifyDataString = [self.webview stringByEvaluatingJavaScriptFromString:AMB_IDENTIFY_JS_VAR];
-    DLog(@"Converting identify data string to NSData *************************%@", identifyDataString);
     NSData *identifyDataRaw = [identifyDataString dataUsingEncoding:NSUTF8StringEncoding];
     
     __autoreleasing NSError *e;
@@ -114,8 +117,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         [[NSUserDefaults standardUserDefaults] setObject:identifyData
                                                   forKey:AMB_IDENTIFY_USER_DEFAULTS_KEY];
         
-        // Call the delegate method
-        [self.delegate identifyDataWasRecieved:identifyData];
         
         // Send identify to backend if there is an email
         if (![self.email isEqualToString:@""])
@@ -124,8 +125,25 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                 self.channel = [self.client subscribeToPrivateChannelNamed:[NSString stringWithFormat:@"snippet-channel@user=%@", self.identifyData[@"device"][@"ID"]]];
                 [self.channel bindToEventNamed:@"identify_action" handleWithBlock:^(PTPusherEvent *event)
                  {
-                     [[NSUserDefaults standardUserDefaults] setValue:event.data forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
-                     DLog(@"Pusher event - %@", event.data);
+                     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:event.data];
+                     NSString *phone = dictionary[@"phone"];
+                     NSString *firstName = dictionary[@"first_name"];
+                     NSString *lastName = dictionary[@"last_name"];
+                     if ([phone isEqual:[NSNull null]])
+                     {
+                         dictionary[@"phone"] = @"";
+                     }
+                     if ([firstName isEqual:[NSNull null]])
+                     {
+                         dictionary[@"first_name"] = @"";
+                     }
+                     if ([lastName isEqual:[NSNull null]])
+                     {
+                         dictionary[@"last_name"] = @"";
+                     }
+                     NSLog(@"Pusher event - %@", event.data);
+                     [[NSUserDefaults standardUserDefaults] setValue:dictionary forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
+                     [self.delegate ambassadorDataWasRecieved:dictionary];
                  }];
                 [self sendIdentifyData];
             });
@@ -222,31 +240,34 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
-    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
                                   dataTaskWithRequest:request
                                   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-                                  {
-                                      if (!error)
-                                      {
-                                          DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                                          
-                                          //Check for 2xx status codes
-                                          if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-                                              ((NSHTTPURLResponse *)response).statusCode < 300)
-                                          {
-                                              // Looking for a "Polling" response
-                                              DLog(@"Response from backend from sending identify: %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
-                                          }
-                                      }
-                                      else
-                                      {
-                                          DLog(@"Error: %@", error.localizedDescription);
-                                      }
-                                  }];
+      {
+          if (!error)
+          {
+              DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+              
+              //Check for 2xx status codes
+              if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
+                  ((NSHTTPURLResponse *)response).statusCode < 300)
+              {
+                  // Looking for a "Polling" response
+                  NSLog(@"Response from backend from sending identify (looking for 'polling'): %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+              }
+              else if (((NSHTTPURLResponse *)response).statusCode == 401)
+              {
+                  NSLog(@"AMBASSADOR ERROR: Unauthorized access encountered. Check the API Key provided.");
+              }
+          }
+          else
+          {
+              DLog(@"Error: %@", error.localizedDescription);
+          }
+      }];
     [task resume];
 }
 
@@ -313,7 +334,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     
     // Modify the default autheticate request that Pusher will make. The
     // HTTP body is set per Ambassador back end requirements
-    [request setValue:AMB_AUTHORIZATION_TOKEN forHTTPHeaderField:@"Authorization"];
+    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSMutableString *httpBodyString = [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding];
     NSMutableDictionary *httpBody = parseQueryString(httpBodyString);
@@ -345,7 +366,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 
 - (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel
 {
-    DLog(@"Subscribed to: %@", channel.name);
+    NSLog(@"Subscribed to: %@", channel.name);
 }
 
 @end

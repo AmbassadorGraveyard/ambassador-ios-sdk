@@ -3,7 +3,7 @@
 //  iOS_Framework
 //
 //  Created by Diplomat on 6/18/15.
-//  Copyright (c) 2015 Ambassador. All rights reserved.
+//  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
 //
 
 #import "Ambassador.h"
@@ -17,7 +17,6 @@
 
 
 
-
 #pragma mark - Local Constants
 float const AMB_CONVERSION_FLUSH_TIME = 10.0;
 NSString * const AMBASSADOR_INFO_URLS_KEY = @"urls";
@@ -26,6 +25,9 @@ NSString * const SHORT_CODE_KEY = @"short_code";
 NSString * const SHORT_CODE_URL_KEY = @"url";
 #pragma mark -
 
+@interface Ambassador () <IdentifyDelegate>
+
+@end
 
 
 @implementation Ambassador
@@ -36,6 +38,7 @@ static NSMutableDictionary *backEndData;
 static NSTimer *conversionTimer;
 static Identify *identify;
 static Conversion *conversion;
+static ServiceSelector *raf;
 
 
 
@@ -111,8 +114,9 @@ static Conversion *conversion;
                                                      selector:@selector(checkConversionQueue)
                                                      userInfo:nil
                                                       repeats:YES];
-    identify = [[Identify alloc] init];
-    conversion = [[Conversion alloc] init];
+    identify = [[Identify alloc] initWithKey:APIKey];
+    identify.delegate = self;
+    conversion = [[Conversion alloc] initWithKey:APIKey];
     
     DLog(@"Checking if conversion is made on app launch");
 
@@ -120,7 +124,7 @@ static Conversion *conversion;
     {
         // Check if this is the first time opening
         if (![[NSUserDefaults standardUserDefaults] objectForKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]) {
-            NSLog(@"\tSending conversion on app launch");
+            DLog(@"\tSending conversion on app launch");
             [self registerConversion:information];
         }
     }
@@ -133,9 +137,6 @@ static Conversion *conversion;
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withRAFParameters:(ServiceSelectorPreferences*)parameters
 {
     DLog();
-    // Validate campaign ID before RAF is presented
-    
-    //TODO: take this out after daisy chain
     NSString *shortCodeURL = @"";
     NSString *shortCode = @"";
     NSDictionary *userInfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
@@ -152,41 +153,18 @@ static Conversion *conversion;
             }
         }
     }
-    
-    if ([shortCodeURL isEqualToString:@""])
-    {
-        NSLog(@"USER DOES NOT HAVE A SHORT CODE FOR THE GIVEN CAMPAIGN");
-        UIAlertController *alert = [UIAlertController
-                                    alertControllerWithTitle:@"Network Error"
-                                    message:@"We couldn't load your URLs. Check your network connection and try again"
-                                    preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *okAction = [UIAlertAction
-                                   actionWithTitle:@"Ok"
-                                   style:UIAlertActionStyleDefault
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                       //[self.presentingViewController dismissViewControllerAnimated:YES
-                                       // completion:nil];
-                                   }];
-        
-        [alert addAction:okAction];
-        
-        [viewController presentViewController:alert animated:YES completion:nil];
-        //TODO: try to grab the short codes again
-        
-    }
-    
+
     // Initialize root view controller
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle bundleWithIdentifier:@"com.ambassador.Framework"]];
     UINavigationController *vc = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
-    ServiceSelector *rootVC = (ServiceSelector *)vc.childViewControllers[0];
-    
-    //TODO: set short code and text field text
-    rootVC.shortCode = shortCode;
-    rootVC.shortURL = shortCodeURL;
+    raf = (ServiceSelector *)vc.childViewControllers[0];
+    DLog(@"ShortCodeURL: %@    ShortCode: %@",shortCodeURL, shortCode);
+    raf.shortCode = shortCode;
+    raf.shortURL = shortCodeURL;
     parameters.textFieldText = shortCodeURL;
-    rootVC.prefs = parameters;
+    raf.prefs = parameters;
+    raf.APIKey = APIKey;
+    raf.campaignID = ID;
 
     [viewController presentViewController:vc animated:YES completion:nil];
 }
@@ -210,6 +188,33 @@ static Conversion *conversion;
 {
     DLog();
     [conversion sendConversions];
+}
+
+
+
+#pragma mark - Identify Delegate
+- (void)ambassadorDataWasRecieved:(NSMutableDictionary *)data
+{
+    NSString *shortCodeURL = @"";
+    NSString *shortCode = @"";
+    NSDictionary *userInfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
+    if (userInfo)
+    {
+        NSArray* urls = userInfo[AMBASSADOR_INFO_URLS_KEY];
+        for (NSDictionary *url in urls)
+        {
+            NSString *campaignID = [NSString stringWithFormat:@"%@", url[CAMPAIGN_UID_KEY]];
+            if ([campaignID isEqualToString:raf.campaignID])
+            {
+                shortCodeURL = url[SHORT_CODE_URL_KEY];
+                shortCode = url[SHORT_CODE_KEY];
+            }
+        }
+    }
+    raf.shortCode = shortCode;
+    raf.shortURL = shortCodeURL;
+    
+    [raf removeWaitView];
 }
 
 @end
