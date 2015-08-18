@@ -41,6 +41,7 @@
     conversion.mbsy_email = @"anonymous_test_1578@example.com";
 
     [AmbassadorSDK runWithKey:@"UniversalToken ***REMOVED***" convertOnInstall:conversion];
+    [AmbassadorSDK registerConversion:conversion];
     return YES;
 }
 
