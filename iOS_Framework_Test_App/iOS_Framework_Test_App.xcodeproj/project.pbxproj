@@ -14,8 +14,8 @@
 		DB0F48A21B39DF7E00CCE614 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB0F48A11B39DF7E00CCE614 /* Images.xcassets */; };
 		DB0F48A51B39DF7E00CCE614 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB0F48A31B39DF7E00CCE614 /* LaunchScreen.xib */; };
 		DB0F48B11B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F48B01B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.m */; };
-		DB0F48BC1B39DFFE00CCE614 /* iOS_Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0F48BA1B39DFF800CCE614 /* iOS_Framework.framework */; };
-		DB0F48BD1B39DFFE00CCE614 /* iOS_Framework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DB0F48BA1B39DFF800CCE614 /* iOS_Framework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DB1C58EB1B8264E00090D4C8 /* Ambassador.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB1C58E91B8264D90090D4C8 /* Ambassador.framework */; };
+		DB1C58EC1B8264E00090D4C8 /* Ambassador.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DB1C58E91B8264D90090D4C8 /* Ambassador.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +35,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				DB0F48BD1B39DFFE00CCE614 /* iOS_Framework.framework in Embed Frameworks */,
+				DB1C58EC1B8264E00090D4C8 /* Ambassador.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,7 +56,7 @@
 		DB0F48AA1B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOS_Framework_Test_AppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB0F48AF1B39DF7E00CCE614 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB0F48B01B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_Framework_Test_AppTests.m; sourceTree = "<group>"; };
-		DB0F48BA1B39DFF800CCE614 /* iOS_Framework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iOS_Framework.framework; sourceTree = "<group>"; };
+		DB1C58E91B8264D90090D4C8 /* Ambassador.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Ambassador.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB0F48BC1B39DFFE00CCE614 /* iOS_Framework.framework in Frameworks */,
+				DB1C58EB1B8264E00090D4C8 /* Ambassador.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,7 +81,7 @@
 		DB0F48881B39DF7E00CCE614 = {
 			isa = PBXGroup;
 			children = (
-				DB0F48BA1B39DFF800CCE614 /* iOS_Framework.framework */,
+				DB1C58E91B8264D90090D4C8 /* Ambassador.framework */,
 				DB0F48931B39DF7E00CCE614 /* iOS_Framework_Test_App */,
 				DB0F48AD1B39DF7E00CCE614 /* iOS_Framework_Test_AppTests */,
 				DB0F48921B39DF7E00CCE614 /* Products */,
