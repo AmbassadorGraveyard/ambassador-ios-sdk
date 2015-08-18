@@ -101,12 +101,31 @@ parameters in [Conversions](#conversions). Your API key will be provided to you 
   ConversionParameters *parameters = [[ConversionParameters alloc] init];
   // ... set parameters' properties (more on this in the "Conversions" section)
   [AmbassadorSDK runWithKey:<your_API_key> convertOnInstall:parameters];
+
+  return YES;
 }
 ```
 
 **Swift**
-```swift
-//TODO: swift stuff
+```objective-c
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+{
+    // Override point for customization after application launch.
+
+    // If you don't want to register a conversion during the first launch of your
+    // application, then pass nil for the convertOnInstall parameter
+    AmbassadorSDK.runWithKey(<your_API_key>)
+
+    //--OR--
+
+    // If you would like to register a conversion for one of your campaigns,
+    // create a conversion object to pass for the convertOnInstall parameter
+    var parameters = ConversionParameters()
+    // ... set parameters' properties (more on this in the "Conversions" section)
+    AmbassadorSDK.runWithKey(<your_API_key>, convertOnInstall: parameters)
+
+    return true
+}
 ```
 
 ## Identifying a User
@@ -123,8 +142,7 @@ the user should be done early in the app to make sure all Ambassador services
 
 **Swift**
 
-```swift
-//TODO: swift stuff
+```objective-c
 AmbassadorSDK.identifyWithEmail("user@example.com")
 ```
 
@@ -163,8 +181,34 @@ conversion.mbsy_is_approved = @YES; // BOOL (Defaults to @YES)
 ```
 
 **Swift**
-```swift
-//TODO: swift stuff
+```objective-c
+// STEP ONE: Create a conversion parameters object
+var parameters = ConversionParameters()
+
+// STEP TWO: Set the required properties
+parameters.mbsy_revenue = 10 // NSNumber
+parameters.mbsy_campaign = 101 // NSNumber
+parameters.mbsy_email = "user@example.com" // NSString
+
+// STEP THREE: Set any optional properties
+parameters.mbsy_add_to_group_id = "123" // NSString
+parameters.mbsy_first_name = "John" // NSString
+parameters.mbsy_last_name = "Doe" // NSString
+parameters.mbsy_email_new_ambassador = false // BOOL (Deafaults to false)
+parameters.mbsy_uid = "mbsy_uid" // NSString
+parameters.mbsy_custom1 = "custom1" // NSString
+parameters.mbsy_custom2 = "custom2" // NSString
+parameters.mbsy_custom3 = "custom3" // NSString
+parameters.mbsy_auto_create = true // BOOL (Defaults to true)
+parameters.mbsy_deactivate_new_ambassador = false // BOOL (Defaults to false)
+parameters.mbsy_transaction_uid = "trans_uid" // NSString
+parameters.mbsy_event_data1 = "eventdata1" // NSString
+parameters.mbsy_event_data2 = "eventdata2" // NSString
+parameters.mbsy_event_data3 = "eventdata3" // NSString
+parameters.mbsy_is_approved = true // BOOL (Defaults to true)
+
+// STEP FOUR: Register the conversion with the parameter object
+AmbassadorSDK.registerConversion(parameters)
 ```
 
 ## Presenting the 'Refer A Friend' Screen (RAF)
@@ -185,7 +229,7 @@ The editable properties and their default strings are:
 **Objective-c**
 ```objective-c
 // STEP ONE: Create a share service preferences object
-ShareServicePreferences *preferences = [[ShareServicePreferences alloc] init];
+ServiceSelectorPreferences *preferences = ServiceSelectorPreferences()
 
 // STEP TWO: (optional) Set the properties
 preferences.navBarTitle = @"New navBar title"; // NSString
@@ -194,7 +238,22 @@ preferences.descriptionLabelText = @"This is test description"; // NSString
 preferences.defaultShareMessage = @"Share this test please!"; // NSString
 
 // STEP THREE: Present the RAF Modal View
-[AmbassadorSDK presentRAFForCampaign:@"877" FromViewController:self WithRAFParameters:rafParams];
+[AmbassadorSDK presentRAFForCampaign:@"877" FromViewController:self WithRAFParameters:preferences];
+```
+
+**Swift**
+```objective-c
+// STEP ONE: Create a share service preferences object
+var preferences = ServiceSelectorPreferences()
+
+// STEP TWO: (optional) Set the properties
+preferences.navBarTitle = "New navBar title" // NSString
+preferences.titleLabelText = "New welcome title" // NSString
+preferences.descriptionLabelText = "This is test description" // NSString
+preferences.defaultShareMessage = "Share this test please!" // NSString
+
+// STEP THREE: Present the RAF Modal View
+AmbassadorSDK.presentRAFForCampaign("877", fromViewController: self, withRAFParameters: preferences)
 ```
 
 **NOTES**
