@@ -1,14 +1,59 @@
-# Ambassador iOS SDK
+## Installing the SDK
+Follow the steps to install the Ambassador SDK in your Objective-c or Swift project.
+* Download the framework and drag it into your project
 
-## Getting Started
-***---------TODO--------***
+  <img src="screenShots/Install_pt1.png" width="300" />
 
-* Download the framework file and copy it to your project directory.
-* Add the framework under the 'Embedded Binaries' section under project settings.
-  * You may need to remove a duplicate instance of the framework file under 'Linked Frameworks and Libraries.'  
+* Elect to copy the framework files into your project
 
+  <img src="screenShots/Install_pt2.png" width="600" />
 
-***-------END TODO------***
+* Click **'+'** under the **Embedded Binaries** section under project settings to add a new binary.
+
+  <img src="screenShots/Install_pt3.png" width="600" />
+
+* Select **Ambassador.framework** and click **Add**
+
+  <img src="screenShots/Install_pt4.png" width="600" />
+
+* You may need to remove a duplicate instance of the framework file under **Linked Frameworks and Libraries**.  
+
+  <img src="screenShots/Install_pt5.png" width="600" />
+
+### Adding a bridging header (Swift projects)
+The SDK is written in Objective-c. In addition to the previous steps, installing the SDK into a Swift project requires a bridging header. If your project doesn't already have a bridging header, you can add one easily. If you already have a bridging header due to another library or framework, you can go to [Configuring a Bridging header (Swift Projects)](#config-bridge)
+
+* Add a new file to your project.
+
+  <img src="screenShots/Install_pt6.png" width="600" />
+
+* Select the Objective-C file type.
+
+  <img src="screenShots/Install_pt7.png" width="600" />
+
+* This is essentially a dummy file, and you can name it anything.
+
+  <img src="screenShots/Install_pt8.png" width="600" />
+
+* A Prompt will appear asking if you want to configure a bridging header. Select yes.
+
+  <img src="screenShots/Install_pt9.png" width="600" />
+
+* This will create both the dummy Objective-C file and a bridging header sharing the name of your project.
+
+  <img src="screenShots/Install_pt10.png" width="300" />
+
+* At this point, you can delete the dummy Objective-C file. It is no longer needed.
+
+  <img src="screenShots/Install_pt11.png" width="450" />
+
+### <a name="config-bridge"></a>Configuring a Bridging header (Swift projects)
+
+In the bridging header, add an import statement for the Ambassador SDK.
+
+```objective-c
+#import <Ambassador/Ambassador.h>
+```
 
 ## Initializing Ambassador
 
@@ -17,19 +62,19 @@
 
   **Objective-c**
   ```objective-c
-  #import <iOS_Framework/iOS_Framework.h>
+  #import <Ambassador/Ambassador.h>
   ```
 
   **Swift**
-  ```swift
-  // TODO: swift stuff
+  ```javascript
+  import Ambassador
   ```
 
 ### Step 2
 You run Ambassador inside `application:didFinishLaunchingWithOptions:`
 and have the option to convert on install. This will register a conversion
 the first time the app is launched. More on conversions and setting their
-parameters in [Conversions](). Your API key will be provided to you by Ambassador.
+parameters in [Conversions](#conversions). Your API key will be provided to you by Ambassador.
 
 **Objective-c**
 ```objective-c
@@ -38,7 +83,7 @@ parameters in [Conversions](). Your API key will be provided to you by Ambassado
 
   // If you don't want to register a conversion during the first launch of your
   // application, then pass nil for the convertOnInstall parameter
-  [Ambassador runWithKey:<your_API_key> convertOnInstall:nil];
+  [AmbassadorSDK runWithKey:<your_API_key> convertOnInstall:nil];
 
   //--OR--
 
@@ -46,7 +91,7 @@ parameters in [Conversions](). Your API key will be provided to you by Ambassado
   // create a conversion object to pass for the convertOnInstall parameter
   ConversionParameters *parameters = [[ConversionParameters alloc] init];
   // ... set parameters' properties (more on this in the "Conversions" section)
-  [Ambassador runWithKey:<your_API_key> convertOnInstall:parameters];
+  [AmbassadorSDK runWithKey:<your_API_key> convertOnInstall:parameters];
 }
 ```
 
@@ -64,14 +109,14 @@ the user should be done early in the app to make sure all Ambassador services
 
  **Objective-c**
 ```objective-c
-[Ambassador identifyWithEmail:@"user@example.com"];
+[AmbassadorSDK identifyWithEmail:@"user@example.com"];
 ```
 
 **Swift**
 
 ```swift
 //TODO: swift stuff
-Ambassador.identifyWithEmail("user@example.com")
+AmbassadorSDK.identifyWithEmail("user@example.com")
 ```
 
 ## Conversions
@@ -105,7 +150,7 @@ conversion.mbsy_event_data3 = @"eventdata3"; // NSString
 conversion.mbsy_is_approved = @YES; // BOOL (Defaults to @YES)
 
 // STEP FOUR: Register the conversion with the parameter object
-[Ambassador registerConversion:conversion];
+[AmbassadorSDK registerConversion:conversion];
 ```
 
 **Swift**
@@ -140,7 +185,7 @@ preferences.descriptionLabelText = @"This is test description"; // NSString
 preferences.defaultShareMessage = @"Share this test please!"; // NSString
 
 // STEP THREE: Present the RAF Modal View
-[Ambassador presentRAFForCampaign:@"877" FromViewController:self WithRAFParameters:rafParams];
+[AmbassadorSDK presentRAFForCampaign:@"877" FromViewController:self WithRAFParameters:rafParams];
 ```
 
 **NOTES**
