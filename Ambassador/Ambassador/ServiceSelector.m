@@ -611,7 +611,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 - (void)sendSuccessMessageWithCount:(NSUInteger)count
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSMutableString *message = [NSMutableString stringWithFormat:@"Your link was successfully shared to %ld contact", count];
+        NSMutableString *message = [NSMutableString stringWithFormat:@"Your link was successfully shared to %ld contact", (unsigned long)count];
         if (count != 1)
         {
             [message appendString:@"s"];
