@@ -29,6 +29,53 @@ Follow the steps to install the Ambassador SDK in your Objective-c or Swift proj
 
   <img src="screenShots/Install_pt5.png" width="600" />
 
+### Slicing the framework
+For convenience, we distribute a fat binary that will work with both xCode simulators and physical devices. This is great for development, but is not acceptable for app submission to the iTunes store.
+You can still build using the fat binary by 'slicing' out the architectures specific to your build. This can be done with a simple run script.
+
+* In your project's **Build Phases**, add a new **Run Script Phase**.
+
+  <img src="screenShots/Install_pt13.png" width="600" />
+
+* Expand the newly added run script item.
+
+  <img src="screenShots/Install_pt14.png" width="600" />
+
+* Copy and paste the following script.
+
+  ```shell
+  APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
+
+  # This script loops through the frameworks embedded in the application and
+  # removes unused architectures.
+  find "$APP_PATH" -name '*.framework' -type d | while read -r FRAMEWORK
+  do
+  FRAMEWORK_EXECUTABLE_NAME=$(defaults read "$FRAMEWORK/Info.plist" CFBundleExecutable)
+  FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME"
+  echo "Executable is $FRAMEWORK_EXECUTABLE_PATH"
+
+  EXTRACTED_ARCHS=()
+
+  for ARCH in $ARCHS
+  do
+  echo "Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME"
+  lipo -extract "$ARCH" "$FRAMEWORK_EXECUTABLE_PATH" -o "$FRAMEWORK_EXECUTABLE_PATH-$ARCH"
+  EXTRACTED_ARCHS+=("$FRAMEWORK_EXECUTABLE_PATH-$ARCH")
+  done
+
+  echo "Merging extracted architectures: ${ARCHS}"
+  lipo -o "$FRAMEWORK_EXECUTABLE_PATH-merged" -create "${EXTRACTED_ARCHS[@]}"
+  rm "${EXTRACTED_ARCHS[@]}"
+
+  echo "Replacing original executable with thinned version"
+  rm "$FRAMEWORK_EXECUTABLE_PATH"
+  mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
+
+  done
+  ```
+  
+  <img src="screenShots/Install_pt15.png" width="600" />
+
 ### Adding a bridging header (Swift projects)
 The SDK is written in Objective-c. In addition to the previous steps, installing the SDK into a Swift project requires a bridging header. If your project doesn't already have a bridging header, you can add one easily. If you already have a bridging header due to another library or framework, you can go to [Configuring a Bridging header (Swift Projects)](#config-bridge)
 
