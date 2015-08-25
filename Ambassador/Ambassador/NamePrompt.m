@@ -37,7 +37,7 @@
     self.firstNameField.backgroundColor = [UIColor clearColor];
     self.lastNameField.backgroundColor = [UIColor clearColor];
     self.firstNameError.hidden = YES;
-    self.firstNameError.hidden = YES;
+    self.lastNameError.hidden = YES;
     self.firstNameField.textColor = [UIColor blackColor];
     self.lastNameField.textColor = [UIColor blackColor];
 }
@@ -49,7 +49,7 @@
 }
 - (IBAction)continueSending:(UIButton *)sender
 {
-    if ([self textFieldIsValid:self.firstNameField.text])
+    if ([self textFieldIsValid:self.firstNameField.text] && [self textFieldIsValid:self.lastNameField.text])
     {
         NSMutableDictionary *information = [[NSUserDefaults standardUserDefaults] objectForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
         DLog(@"This is what is stored before the name change %@", information)
@@ -66,6 +66,7 @@
     }
    
     self.firstNameField.delegate = self;
+    self.lastNameField.delegate = self;
     [self updateErrorLabelForFirstNameString:self.firstNameField.text lastNameString:self.lastNameField.text];
 }
 
@@ -80,24 +81,46 @@
 #pragma mark - TextFieldDelegate
 - (BOOL)textField:(nonnull UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(nonnull NSString *)string
 {
-    NSMutableString *text = [NSMutableString stringWithString:self.firstNameField.text];
-    [text replaceCharactersInRange:range withString:string];
-    [self updateErrorLabelForString:text];
+    NSMutableString *firstNameText = [NSMutableString stringWithString:self.firstNameField.text];
+    NSMutableString *lastNameText = [NSMutableString stringWithString:self.lastNameField.text];
+    if (textField == self.firstNameField) {
+        [firstNameText replaceCharactersInRange:range withString:string];
+    } else {
+        [lastNameText replaceCharactersInRange:range withString:string];
+    }
+    [self updateErrorLabelForFirstNameString:firstNameText lastNameString:lastNameText];
     return YES;
 }
 
-- (void)updateErrorLabelForFirstNameString:(NSString *)fisrtString lastNameString:(NSString *)lastString
+- (void)updateErrorLabelForFirstNameString:(NSString *)firstString lastNameString:(NSString *)lastString
 {
-    if ([self textFieldIsValid:string])
+    DLog(@"%@    %@",firstString, lastString);
+    if ([self textFieldIsValid:firstString])
     {
+        DLog();
         self.firstNameError.hidden = YES;
         self.firstNameField.backgroundColor = [UIColor clearColor];
     }
     else
     {
+        DLog();
         self.firstNameError.hidden = NO;
         self.firstNameField.backgroundColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.25];
 
+    }
+    
+    if ([self textFieldIsValid:lastString])
+    {
+        DLog();
+        self.lastNameError.hidden = YES;
+        self.lastNameField.backgroundColor = [UIColor clearColor];
+    }
+    else
+    {
+        DLog();
+        self.lastNameError.hidden = NO;
+        self.lastNameField.backgroundColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.25];
+        
     }
 }
 @end
