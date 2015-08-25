@@ -12,8 +12,10 @@
 
 @interface NamePrompt () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *continueButton;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
+@property (weak, nonatomic) IBOutlet UITextField *firstNameField;
+@property (weak, nonatomic) IBOutlet UITextField *lastNameField;
+@property (weak, nonatomic) IBOutlet UILabel *firstNameError;
+@property (weak, nonatomic) IBOutlet UILabel *lastNameError;
 
 @end
 
@@ -32,9 +34,12 @@
     // Do any additional setup after loading the view.
     self.continueButton.layer.cornerRadius = self.continueButton.frame.size.height/2;
     
-    self.textField.backgroundColor = [UIColor clearColor];
-    self.errorMessageLabel.hidden = YES;
-    self.textField.textColor = [UIColor blackColor];
+    self.firstNameField.backgroundColor = [UIColor clearColor];
+    self.lastNameField.backgroundColor = [UIColor clearColor];
+    self.firstNameError.hidden = YES;
+    self.firstNameError.hidden = YES;
+    self.firstNameField.textColor = [UIColor blackColor];
+    self.lastNameField.textColor = [UIColor blackColor];
 }
 
 #pragma mark - Navigation
@@ -44,32 +49,30 @@
 }
 - (IBAction)continueSending:(UIButton *)sender
 {
-    if ([self textFieldIsValid:self.textField.text])
+    if ([self textFieldIsValid:self.firstNameField.text])
     {
         NSMutableDictionary *information = [[NSUserDefaults standardUserDefaults] objectForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
         DLog(@"This is what is stored before the name change %@", information)
         if (information)
         {
-            NSArray *nameComponents = [self.textField.text componentsSeparatedByString:@" "];
+            NSArray *nameComponents = [self.firstNameField.text componentsSeparatedByString:@" "];
             information[@"first_name"] = [nameComponents firstObject];
             information[@"last_name"] = [nameComponents lastObject];
             
             [[NSUserDefaults standardUserDefaults] setObject:information forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
             DLog(@"Updating local cache %@", information);
         }
-        [self.delegate sendSMSPressedWithName:self.textField.text];
+        [self.delegate sendSMSPressedWithName:self.firstNameField.text];
     }
    
-    self.textField.delegate = self;
-    [self updateErrorLabelForString:self.textField.text];
+    self.firstNameField.delegate = self;
+    [self updateErrorLabelForFirstNameString:self.firstNameField.text lastNameString:self.lastNameField.text];
 }
 
 - (BOOL)textFieldIsValid:(NSString *)string
 {
-    NSArray *nameComponents = [string componentsSeparatedByString:@" "];
-    return (nameComponents.count == 2) &&
-    (![[nameComponents firstObject] isEqualToString:@""]) &&
-    (![[nameComponents lastObject] isEqualToString:@""])? YES : NO;
+    NSString *formattedString = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return ![formattedString isEqualToString:@""];
 }
 
 
@@ -77,23 +80,23 @@
 #pragma mark - TextFieldDelegate
 - (BOOL)textField:(nonnull UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(nonnull NSString *)string
 {
-    NSMutableString *text = [NSMutableString stringWithString:self.textField.text];
+    NSMutableString *text = [NSMutableString stringWithString:self.firstNameField.text];
     [text replaceCharactersInRange:range withString:string];
     [self updateErrorLabelForString:text];
     return YES;
 }
 
-- (void)updateErrorLabelForString:(NSString *)string
+- (void)updateErrorLabelForFirstNameString:(NSString *)fisrtString lastNameString:(NSString *)lastString
 {
     if ([self textFieldIsValid:string])
     {
-        self.errorMessageLabel.hidden = YES;
-        self.textField.backgroundColor = [UIColor clearColor];
+        self.firstNameError.hidden = YES;
+        self.firstNameField.backgroundColor = [UIColor clearColor];
     }
     else
     {
-        self.errorMessageLabel.hidden = NO;
-        self.textField.backgroundColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.25];
+        self.firstNameError.hidden = NO;
+        self.firstNameField.backgroundColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.25];
 
     }
 }
