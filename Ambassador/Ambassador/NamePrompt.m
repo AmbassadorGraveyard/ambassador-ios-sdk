@@ -74,6 +74,8 @@
         }
         [self.delegate sendSMSPressedWithFirstName:firstName lastName:lastName];
     }
+    self.firstNameEdited = YES;
+    self.lastNameEdited = YES;
     [self updateErrorLabelForFirstNameString:self.firstNameField.text lastNameString:self.lastNameField.text];
 }
 
