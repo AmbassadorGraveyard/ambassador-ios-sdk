@@ -60,13 +60,12 @@
 {
     if ([self textFieldIsValid:self.firstNameField.text] && [self textFieldIsValid:self.lastNameField.text])
     {
-        NSMutableDictionary *information = [[NSUserDefaults standardUserDefaults] objectForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
+        NSMutableDictionary *information = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY]];
         DLog(@"This is what is stored before the name change %@", information)
         if (information)
         {
-            NSArray *nameComponents = [self.firstNameField.text componentsSeparatedByString:@" "];
-            information[@"first_name"] = [nameComponents firstObject];
-            information[@"last_name"] = [nameComponents lastObject];
+            information[@"first_name"] = self.firstNameField.text;
+            information[@"last_name"] = self.lastNameField.text;
             
             [[NSUserDefaults standardUserDefaults] setObject:information forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
             DLog(@"Updating local cache %@", information);
