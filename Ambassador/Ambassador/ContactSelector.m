@@ -56,7 +56,7 @@ NSString * const SELECTED_CELL_IDENTIFIER = @"selectedCell";
 
 NSString * const NAME_PROMPT_SEGUE_IDENTIFIER = @"goToNamePrompt";
 
-float const COMPOSE_MESSAGE_VIEW_HEIGHT = 123.0;
+float const COMPOSE_MESSAGE_VIEW_HEIGHT = 100.0;
 float const SEND_BUTTON_HEIGHT = 42.0;
 
 
@@ -92,6 +92,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     self.fadeView.hidden = YES;
     
     self.composeMessageTextView.text = self.defaultMessage;
+    [self.composeMessageTextView scrollRangeToVisible:NSMakeRange(0, 0)];
     
     [self updateButton];
 }
