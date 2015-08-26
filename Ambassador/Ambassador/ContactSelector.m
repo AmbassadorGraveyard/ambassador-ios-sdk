@@ -425,11 +425,14 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     // the 'send to contacts' button
     if ([self.composeMessageTextView isFirstResponder])
     {
-        [self updateEditMessageButton];
-        
         CGRect frame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
         CGRect newFrame = [self.view convertRect:frame fromView:[[UIApplication sharedApplication] delegate].window];
         [self.view layoutIfNeeded];
+        
+        if (ABS(self.bottomViewBottomConstraint.constant - frame.size.height) > 100)
+        {
+            [self updateEditMessageButton];
+        }
         
         self.bottomViewBottomConstraint.constant = newFrame.size.height;
         

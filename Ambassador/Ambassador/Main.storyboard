@@ -589,7 +589,7 @@
                                             <action selector="doneSearchingButton:" destination="0Ev-V6-LY3" eventType="touchUpInside" id="4AH-U6-NLb"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h6l-PI-N0m">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h6l-PI-N0m" userLabel="Transparent View">
                                         <rect key="frame" x="0.0" y="0.0" width="608" height="413"/>
                                         <color key="backgroundColor" white="1" alpha="0.75" colorSpace="calibratedWhite"/>
                                     </view>
@@ -634,6 +634,7 @@
                                     <constraint firstItem="zwk-RT-ZLi" firstAttribute="leading" secondItem="0i3-IZ-LQ5" secondAttribute="leading" id="Ryf-La-N0h"/>
                                     <constraint firstItem="Qux-cd-7QL" firstAttribute="top" secondItem="0i3-IZ-LQ5" secondAttribute="top" constant="15" id="Sdm-bJ-81A"/>
                                     <constraint firstAttribute="bottom" secondItem="xhg-OK-rkK" secondAttribute="bottom" id="Uzc-eD-Aci"/>
+                                    <constraint firstItem="h6l-PI-N0m" firstAttribute="bottom" secondItem="iwe-lZ-xS4" secondAttribute="bottom" id="XIK-LR-rxv"/>
                                     <constraint firstItem="h6l-PI-N0m" firstAttribute="leading" secondItem="0i3-IZ-LQ5" secondAttribute="leading" id="Xod-dk-JmW"/>
                                     <constraint firstItem="x0i-aq-Swh" firstAttribute="top" secondItem="0i3-IZ-LQ5" secondAttribute="top" constant="60" id="c1j-VY-BiN"/>
                                     <constraint firstItem="zwk-RT-ZLi" firstAttribute="top" secondItem="iwe-lZ-xS4" secondAttribute="bottom" id="cdd-Th-T3I"/>
@@ -673,6 +674,7 @@
                                         <exclude reference="Uzc-eD-Aci"/>
                                         <exclude reference="n9h-wj-Knq"/>
                                         <exclude reference="Q5i-sc-Aiy"/>
+                                        <exclude reference="QCA-ZR-7PN"/>
                                         <exclude reference="qVa-x1-LDj"/>
                                         <exclude reference="scx-qm-P9j"/>
                                     </mask>
