@@ -60,20 +60,20 @@
 {
     if ([self textFieldIsValid:self.firstNameField.text] && [self textFieldIsValid:self.lastNameField.text])
     {
+        NSString *firstName = [self.firstNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *lastName = [self.lastNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSMutableDictionary *information = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY]];
         DLog(@"This is what is stored before the name change %@", information)
         if (information)
         {
-            information[@"first_name"] = self.firstNameField.text;
-            information[@"last_name"] = self.lastNameField.text;
+            information[@"first_name"] = firstName;
+            information[@"last_name"] = lastName;
             
             [[NSUserDefaults standardUserDefaults] setObject:information forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
             DLog(@"Updating local cache %@", information);
         }
-        [self.delegate sendSMSPressedWithName:self.firstNameField.text];
+        [self.delegate sendSMSPressedWithFirstName:firstName lastName:lastName];
     }
-   
-
     [self updateErrorLabelForFirstNameString:self.firstNameField.text lastNameString:self.lastNameField.text];
 }
 
@@ -138,6 +138,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

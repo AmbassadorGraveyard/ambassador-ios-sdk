@@ -432,7 +432,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 
 #pragma mark - ContactSelectorDelegate
-- (void)sendToContacts:(NSArray *)contacts forServiceType:(NSString *)serviceType fromName:(NSString *)name withMessage:(NSString *)message
+- (void)sendToContacts:(NSArray *)contacts forServiceType:(NSString *)serviceType fromFirstName:(NSString *)firstName lastName:(NSString *)lastName withMessage:(NSString *)message
 {
     __weak NSString *shortCode = self.shortCode;
     __weak ServiceSelector *weakSelf = self;
@@ -526,7 +526,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         NSArray *validContacts = [weakSelf validatePhoneNumbers:contacts];
         NSDictionary *payload = @{
                                   @"to" : validContacts,
-                                  @"name" : name,
+                                  @"name" : [NSString stringWithFormat:@"%@ %@", firstName, lastName],
                                   @"message" : message
                                   };
         
@@ -554,10 +554,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
         if (validContacts.count > 0 )
         {
-            NSArray *components = [name componentsSeparatedByString:@" "];
-            NSString *firstName = [components firstObject];
-            NSString *lastName = [components lastObject];
-            
             NSURL *url = [NSURL URLWithString:AMB_SMS_SHARE_URL];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             request.HTTPMethod = @"POST";

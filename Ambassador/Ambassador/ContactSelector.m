@@ -130,7 +130,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             else
             {
                 DLog(@"Sending first and last name");
-                [self sendSMSWithName:[NSString stringWithFormat:@"%@ %@", firstName, lastName]];
+                [self sendSMSWithFirstName:firstName lastName:lastName];
             }
         }
         else if ([self.serviceType isEqualToString:EMAIL_TITLE])
@@ -481,18 +481,17 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 
 #pragma mark - NamePromptDelegate
-- (void)sendSMSPressedWithName:(NSString *)name
+- (void)sendSMSPressedWithFirstName:(NSString *)firstName lastName:(NSString *)lastName
 {
     DLog();
     
-    [self sendSMSWithName:name];
+    [self sendSMSWithFirstName:firstName lastName:lastName];
 }
 
-- (void)sendSMSWithName:(NSString *)name
+- (void)sendSMSWithFirstName:(NSString *)firstName lastName:(NSString *)lastName
 {
     DLog();
-    
-    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:SMS_TITLE fromName:name withMessage:self.composeMessageTextView.text];
+    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:SMS_TITLE fromFirstName:firstName lastName:lastName withMessage:self.composeMessageTextView.text];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -500,7 +499,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 {
     DLog();
     
-    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:EMAIL_TITLE fromName:@"" withMessage:self.composeMessageTextView.text];
+    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:EMAIL_TITLE fromFirstName:@"" lastName:@"" withMessage:self.composeMessageTextView.text];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
