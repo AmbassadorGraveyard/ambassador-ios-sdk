@@ -177,24 +177,19 @@
     
     // If active text field is hidden by keyboard, scroll it so it's visible
     // Your application might not need or want this behavior.
-    self.view.frame = self.view.window.bounds;
     CGRect aRect = self.view.frame;
     aRect.size.height -= newFrame.size.height;
-    DLog(@"asdjklfasjdfl;kasdjf;asldkfjsad;lkfjasd;lkfjasd;fljasdf;kljsadf;lasjkdflk;sadjfsa;ldkfjsadlk;fjsadkl;f%ld", (long)newFrame.size.height);
     if (!CGRectContainsPoint(aRect, self.firstNameField.frame.origin) && [self.firstNameField isFirstResponder] ) {
-        CGPoint scrollPoint = CGPointMake(0.0, self.firstNameField.frame.origin.y-newFrame.size.height);
-        [self.scrollView setContentOffset:scrollPoint animated:YES];
+        [self.scrollView scrollRectToVisible:self.firstNameField.frame animated:YES];
     }
     if (!CGRectContainsPoint(aRect, self.lastNameField.frame.origin) && [self.lastNameField isFirstResponder]) {
-        CGPoint scrollPoint = CGPointMake(0.0, self.lastNameField.frame.origin.y-newFrame.size.height);
-        [self.scrollView setContentOffset:scrollPoint animated:YES];
+        [self.scrollView scrollRectToVisible:self.firstNameField.frame animated:YES];
     }
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    DLog(@"is this my problem??? oh prolly****************************************")
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     self.scrollView.contentInset = contentInsets;
     self.scrollView.scrollIndicatorInsets = contentInsets;
