@@ -21,7 +21,7 @@
     // Override point for customization after application launch.
 
     [AmbassadorSDK runWithKey:@"UniversalToken ***REMOVED***"];
-    [AmbassadorSDK identifyWithEmail:@"anonymous_test_1583@example.com"];
+    [AmbassadorSDK identifyWithEmail:@"anonymous_test_1584@example.com"];
     return YES;
 }
 
