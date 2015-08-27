@@ -161,13 +161,13 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         }
         
         // Get insights data
-        [self getInsightsDataForUID:self.identifyData[@"consumer"][@"UID"]];
+        [self getInsightsDataForUID:self.identifyData[@"consumer"][@"UID"] success:nil fail:nil];
         
         return YES;
     }
 }
 
-- (void)getInsightsDataForUID:(NSString *)UID
+- (void)getInsightsDataForUID:(NSString *)UID success:(void (^)(NSMutableDictionary *response))success fail:(void (^)(NSError *error))fail
 {
     DLog();
     
@@ -187,6 +187,9 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                                    };
         [[NSUserDefaults standardUserDefaults] setObject:insights
                                                   forKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
+        if (success) {
+            success([NSMutableDictionary dictionaryWithDictionary:insights]);
+        }
         return;
     }
     
@@ -213,23 +216,40 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                       [[NSUserDefaults standardUserDefaults] setObject:insightsData
                                                                 forKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
                       DLog(@"%@", insightsData);
-                      
-                      // Call the delegate
-                      [self.delegate insightsDataWasRecieved:insightsData];
+                      __autoreleasing NSError *err;
+                      NSMutableDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&e];
+                      if (err) {
+                          if (fail) {
+                              fail(err);
+                          }
+                      } else {
+                          if (success) {
+                              success(responseJSON);
+                          }
+                      }
                   }
                   else
                   {
                       DLog(@"Error serializing insights data - %@", e.localizedDescription);
+                      if (fail) {
+                          fail(e);
+                      }
                   }
               }
               else
               {
                   DLog(@"Insights network call returned status code - %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                  if (fail) {
+                      fail([NSError errorWithDomain:@"AmbassadorErrorDomain" code:(long)((NSHTTPURLResponse *)response).statusCode userInfo:nil]);
+                  }
               }
           }
           else
           {
               DLog(@"Error making insights call - %@", error.localizedDescription);
+              if (fail) {
+                  fail(error);
+              }
           }
       }] resume];
 }
