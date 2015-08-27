@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		DB1C58491B82583D0090D4C8 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB1C58481B82583D0090D4C8 /* Ambassador.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB1C584F1B82583D0090D4C8 /* Ambassador.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB1C58431B82583D0090D4C8 /* Ambassador.framework */; };
-		DB1C58561B82583D0090D4C8 /* AmbassadorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1C58551B82583D0090D4C8 /* AmbassadorTests.m */; };
 		DB1C589C1B8259F60090D4C8 /* AmbassadorSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = DB1C585F1B8259F60090D4C8 /* AmbassadorSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB1C589E1B8259F60090D4C8 /* AuthorizeLinkedIn.h in Headers */ = {isa = PBXBuildFile; fileRef = DB1C58611B8259F60090D4C8 /* AuthorizeLinkedIn.h */; };
 		DB1C589F1B8259F60090D4C8 /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = DB1C58621B8259F60090D4C8 /* Constants.h */; };
@@ -68,6 +67,7 @@
 		DB1C58D71B8259F60090D4C8 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DB1C589A1B8259F60090D4C8 /* Utilities.m */; };
 		DB1C58E61B825CCA0090D4C8 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB1C58E51B825CCA0090D4C8 /* libsqlite3.dylib */; };
 		DB1C58E81B8262BA0090D4C8 /* ImageAssets in Resources */ = {isa = PBXBuildFile; fileRef = DB1C58E71B8262BA0090D4C8 /* ImageAssets */; };
+		DB79490A1B8F48BA006E0ABB /* Identify Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB7949091B8F48BA006E0ABB /* Identify Tests.m */; };
 		E87B21CA14B32798E6DE79D7 /* libPods-Ambassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1198A36A0DE6B637889A9E6 /* libPods-Ambassador.a */; };
 /* End PBXBuildFile section */
 
@@ -88,7 +88,6 @@
 		DB1C58481B82583D0090D4C8 /* Ambassador.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ambassador.h; sourceTree = "<group>"; };
 		DB1C584E1B82583D0090D4C8 /* AmbassadorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB1C58541B82583D0090D4C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DB1C58551B82583D0090D4C8 /* AmbassadorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AmbassadorTests.m; sourceTree = "<group>"; };
 		DB1C585F1B8259F60090D4C8 /* AmbassadorSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmbassadorSDK.h; sourceTree = "<group>"; };
 		DB1C58611B8259F60090D4C8 /* AuthorizeLinkedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeLinkedIn.h; sourceTree = "<group>"; };
 		DB1C58621B8259F60090D4C8 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -147,6 +146,7 @@
 		DB1C589A1B8259F60090D4C8 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		DB1C58E51B825CCA0090D4C8 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		DB1C58E71B8262BA0090D4C8 /* ImageAssets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ImageAssets; sourceTree = "<group>"; };
+		DB7949091B8F48BA006E0ABB /* Identify Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Identify Tests.m"; sourceTree = "<group>"; };
 		EBB2BA0DDD2D013FC45489F9 /* Pods-Ambassador.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ambassador.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ambassador/Pods-Ambassador.debug.xcconfig"; sourceTree = "<group>"; };
 		F1198A36A0DE6B637889A9E6 /* libPods-Ambassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ambassador.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -241,8 +241,8 @@
 		DB1C58521B82583D0090D4C8 /* AmbassadorTests */ = {
 			isa = PBXGroup;
 			children = (
-				DB1C58551B82583D0090D4C8 /* AmbassadorTests.m */,
 				DB1C58531B82583D0090D4C8 /* Supporting Files */,
+				DB7949091B8F48BA006E0ABB /* Identify Tests.m */,
 			);
 			path = AmbassadorTests;
 			sourceTree = "<group>";
@@ -603,7 +603,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB1C58561B82583D0090D4C8 /* AmbassadorTests.m in Sources */,
+				DB79490A1B8F48BA006E0ABB /* Identify Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
