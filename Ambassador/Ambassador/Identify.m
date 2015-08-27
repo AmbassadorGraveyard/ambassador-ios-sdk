@@ -39,6 +39,7 @@ NSString * const SEND_IDENTIFY_EMAIL_KEY = @"email";
 NSString * const SEND_IDENTIFY_FP_KEY = @"fp";
 NSString * const SEND_IDENTIFY_MBSY_SOURCE_KEY = @"mbsy_source";
 NSString * const SEND_IDENTIFY_MBSY_COOKIE_CODE_KEY = @"mbsy_cookie_code";
+NSString * const SEND_IDENTIFY_SOURCE_KEY = @"source";
 
 NSString * const PUSHER_AUTH_AUTHTYPE_KEY = @"auth_type";
 NSString * const PUSHER_AUTH_CHANNEL_KEY = @"channel";
@@ -152,7 +153,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                      {
                          dictionary[@"last_name"] = @"";
                      }
-                     DLog(@"Pusher event - %@", event.data);
+                     NSLog(@"Pusher event - %@", event.data);
                      [[NSUserDefaults standardUserDefaults] setValue:dictionary forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
                      [self.delegate ambassadorDataWasRecieved:dictionary];
                  }];
@@ -161,13 +162,13 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         }
         
         // Get insights data
-        [self getInsightsDataForUID:self.identifyData[@"consumer"][@"UID"]];
+        [self getInsightsDataForUID:self.identifyData[@"consumer"][@"UID"] success:nil fail:nil];
         
         return YES;
     }
 }
 
-- (void)getInsightsDataForUID:(NSString *)UID
+- (void)getInsightsDataForUID:(NSString *)UID success:(void (^)(NSMutableDictionary *response))success fail:(void (^)(NSError *error))fail
 {
     DLog();
     
@@ -187,6 +188,9 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                                    };
         [[NSUserDefaults standardUserDefaults] setObject:insights
                                                   forKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
+        if (success) {
+            success([NSMutableDictionary dictionaryWithDictionary:insights]);
+        }
         return;
     }
     
@@ -213,23 +217,40 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                       [[NSUserDefaults standardUserDefaults] setObject:insightsData
                                                                 forKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
                       DLog(@"%@", insightsData);
-                      
-                      // Call the delegate
-                      [self.delegate insightsDataWasRecieved:insightsData];
+                      __autoreleasing NSError *err;
+                      NSMutableDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&e];
+                      if (err) {
+                          if (fail) {
+                              fail(err);
+                          }
+                      } else {
+                          if (success) {
+                              success(responseJSON);
+                          }
+                      }
                   }
                   else
                   {
                       DLog(@"Error serializing insights data - %@", e.localizedDescription);
+                      if (fail) {
+                          fail(e);
+                      }
                   }
               }
               else
               {
                   DLog(@"Insights network call returned status code - %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                  if (fail) {
+                      fail([NSError errorWithDomain:@"AmbassadorErrorDomain" code:(long)((NSHTTPURLResponse *)response).statusCode userInfo:nil]);
+                  }
               }
           }
           else
           {
               DLog(@"Error making insights call - %@", error.localizedDescription);
+              if (fail) {
+                  fail(error);
+              }
           }
       }] resume];
 }
@@ -243,9 +264,11 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                                                                                    SEND_IDENTIFY_EMAIL_KEY : self.email,
                                                                                    SEND_IDENTIFY_FP_KEY: self.identifyData,
                                                                                    SEND_IDENTIFY_MBSY_SOURCE_KEY : @"",
-                                                                                   SEND_IDENTIFY_MBSY_COOKIE_CODE_KEY : @""
+                                                                                   SEND_IDENTIFY_MBSY_COOKIE_CODE_KEY : @"",
+                                                                                   SEND_IDENTIFY_SOURCE_KEY : @"ios_sdk_pilot"
                                                                                    }];
     
+    DLog(@"%@", payload);
     //Create the POST request
     NSURL *url = [NSURL URLWithString:AMB_IDENTIFY_SEND_URL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -267,11 +290,11 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                   ((NSHTTPURLResponse *)response).statusCode < 300)
               {
                   // Looking for a "Polling" response
-                  DLog(@"Response from backend from sending identify (looking for 'polling'): %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                  NSLog(@"Response from backend from sending identify (looking for 'polling'): %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
               }
               else if (((NSHTTPURLResponse *)response).statusCode == 401)
               {
-                  DLog(@"AMBASSADOR ERROR: Unauthorized access encountered. Check the API Key provided.");
+                  NSLog(@"AMBASSADOR ERROR: Unauthorized access encountered. Check the API Key provided.");
               }
           }
           else
@@ -377,7 +400,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 
 - (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel
 {
-    DLog(@"Subscribed to: %@", channel.name);
+    NSLog(@"Subscribed to: %@", channel.name);
 }
 
 @end
