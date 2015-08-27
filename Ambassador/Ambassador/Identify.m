@@ -187,7 +187,9 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                                    };
         [[NSUserDefaults standardUserDefaults] setObject:insights
                                                   forKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
-        success([NSMutableDictionary dictionaryWithDictionary:insights]);
+        if (success) {
+            success([NSMutableDictionary dictionaryWithDictionary:insights]);
+        }
         return;
     }
     
@@ -217,27 +219,37 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                       __autoreleasing NSError *err;
                       NSMutableDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:0 error:&e];
                       if (err) {
-                          fail(err);
+                          if (fail) {
+                              fail(err);
+                          }
                       } else {
-                          success(responseJSON);
+                          if (success) {
+                              success(responseJSON);
+                          }
                       }
                   }
                   else
                   {
                       DLog(@"Error serializing insights data - %@", e.localizedDescription);
-                      fail(e);
+                      if (fail) {
+                          fail(e);
+                      }
                   }
               }
               else
               {
                   DLog(@"Insights network call returned status code - %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                  fail(nil);
+                  if (fail) {
+                      fail([NSError errorWithDomain:@"AmbassadorErrorDomain" code:(long)((NSHTTPURLResponse *)response).statusCode userInfo:nil]);
+                  }
               }
           }
           else
           {
               DLog(@"Error making insights call - %@", error.localizedDescription);
-              fail(error);
+              if (fail) {
+                  fail(error);
+              }
           }
       }] resume];
 }
