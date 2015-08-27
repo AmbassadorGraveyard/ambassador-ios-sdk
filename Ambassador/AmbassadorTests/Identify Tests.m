@@ -69,4 +69,15 @@
     }];
 }
 
+- (void)testInsightsFullUIDandNil {
+    
+    self.uid = @"7562a06d1d334b5940f657ddaad790a66788a96f2576b2d61296fd31";
+    [self.identify getInsightsDataForUID:self.uid success:nil fail:nil];
+    
+    for (int i = 0; i < 1000000000; ++i)
+    {}
+    NSLog(@"DONE!");
+}
+
+
 @end
