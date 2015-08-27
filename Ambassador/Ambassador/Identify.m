@@ -213,9 +213,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                       [[NSUserDefaults standardUserDefaults] setObject:insightsData
                                                                 forKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
                       DLog(@"%@", insightsData);
-                      
-                      // Call the delegate
-                      [self.delegate insightsDataWasRecieved:insightsData];
                   }
                   else
                   {
