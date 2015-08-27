@@ -56,7 +56,7 @@ NSString * const SELECTED_CELL_IDENTIFIER = @"selectedCell";
 
 NSString * const NAME_PROMPT_SEGUE_IDENTIFIER = @"goToNamePrompt";
 
-float const COMPOSE_MESSAGE_VIEW_HEIGHT = 123.0;
+float const COMPOSE_MESSAGE_VIEW_HEIGHT = 100.0;
 float const SEND_BUTTON_HEIGHT = 42.0;
 
 
@@ -92,6 +92,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     self.fadeView.hidden = YES;
     
     self.composeMessageTextView.text = self.defaultMessage;
+    [self.composeMessageTextView scrollRangeToVisible:NSMakeRange(0, 0)];
     
     [self updateButton];
 }
@@ -120,7 +121,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             firstName = (NSMutableString *)[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             
-            NSLog(@"User first and last name: %@ %@", firstName, lastName);
+            DLog(@"User first and last name: %@ %@", firstName, lastName);
             
             if ([firstName isEqualToString:@""] || [lastName isEqualToString:@""])
             {
@@ -128,8 +129,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             }
             else
             {
-                NSLog(@"Sending first and last name");
-                [self sendSMSWithName:[NSString stringWithFormat:@"%@ %@", firstName, lastName]];
+                DLog(@"Sending first and last name");
+                [self sendSMSWithFirstName:firstName lastName:lastName];
             }
         }
         else if ([self.serviceType isEqualToString:EMAIL_TITLE])
@@ -425,11 +426,14 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     // the 'send to contacts' button
     if ([self.composeMessageTextView isFirstResponder])
     {
-        [self updateEditMessageButton];
-        
         CGRect frame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
         CGRect newFrame = [self.view convertRect:frame fromView:[[UIApplication sharedApplication] delegate].window];
         [self.view layoutIfNeeded];
+        
+        if (ABS(self.bottomViewBottomConstraint.constant - frame.size.height) > 100)
+        {
+            [self updateEditMessageButton];
+        }
         
         self.bottomViewBottomConstraint.constant = newFrame.size.height;
         
@@ -477,18 +481,17 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 
 #pragma mark - NamePromptDelegate
-- (void)sendSMSPressedWithName:(NSString *)name
+- (void)sendSMSPressedWithFirstName:(NSString *)firstName lastName:(NSString *)lastName
 {
     DLog();
     
-    [self sendSMSWithName:name];
+    [self sendSMSWithFirstName:firstName lastName:lastName];
 }
 
-- (void)sendSMSWithName:(NSString *)name
+- (void)sendSMSWithFirstName:(NSString *)firstName lastName:(NSString *)lastName
 {
     DLog();
-    
-    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:SMS_TITLE fromName:name withMessage:self.composeMessageTextView.text];
+    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:SMS_TITLE fromFirstName:firstName lastName:lastName withMessage:self.composeMessageTextView.text];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -496,7 +499,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 {
     DLog();
     
-    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:EMAIL_TITLE fromName:@"" withMessage:self.composeMessageTextView.text];
+    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:EMAIL_TITLE fromFirstName:@"" lastName:@"" withMessage:self.composeMessageTextView.text];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
