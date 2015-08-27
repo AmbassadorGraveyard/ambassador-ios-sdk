@@ -39,6 +39,7 @@ NSString * const SEND_IDENTIFY_EMAIL_KEY = @"email";
 NSString * const SEND_IDENTIFY_FP_KEY = @"fp";
 NSString * const SEND_IDENTIFY_MBSY_SOURCE_KEY = @"mbsy_source";
 NSString * const SEND_IDENTIFY_MBSY_COOKIE_CODE_KEY = @"mbsy_cookie_code";
+NSString * const SEND_IDENTIFY_SOURCE_KEY = @"source";
 
 NSString * const PUSHER_AUTH_AUTHTYPE_KEY = @"auth_type";
 NSString * const PUSHER_AUTH_CHANNEL_KEY = @"channel";
@@ -263,9 +264,11 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                                                                                    SEND_IDENTIFY_EMAIL_KEY : self.email,
                                                                                    SEND_IDENTIFY_FP_KEY: self.identifyData,
                                                                                    SEND_IDENTIFY_MBSY_SOURCE_KEY : @"",
-                                                                                   SEND_IDENTIFY_MBSY_COOKIE_CODE_KEY : @""
+                                                                                   SEND_IDENTIFY_MBSY_COOKIE_CODE_KEY : @"",
+                                                                                   SEND_IDENTIFY_SOURCE_KEY : @"ios_sdk_pilot"
                                                                                    }];
     
+    DLog(@"%@", payload);
     //Create the POST request
     NSURL *url = [NSURL URLWithString:AMB_IDENTIFY_SEND_URL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
