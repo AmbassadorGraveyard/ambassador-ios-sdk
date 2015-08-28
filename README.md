@@ -9,7 +9,7 @@ ln -s ../../git-hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
 ## Documentation
 ## Installing the SDK
 Follow the steps to install the Ambassador SDK in your Objective-c or Swift project.
-* Download the framework and drag it into your project
+* Download the framework file, unzip it, and drag it into your project, as shown below, beneath the project file (the zip file is attached at the bottom of this article).
 
   <img src="screenShots/Install_pt1.png" width="300" />
 
