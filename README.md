@@ -43,37 +43,44 @@ You can still build using the fat binary by 'slicing' out the architectures spec
 
 * Copy and paste the following script.
 
-  ```shell
-  APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
+```shell
+APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
 
-  # This script loops through the frameworks embedded in the application and
-  # removes unused architectures.
-  find "$APP_PATH" -name '*.framework' -type d | while read -r FRAMEWORK
-  do
-  FRAMEWORK_EXECUTABLE_NAME=$(defaults read "$FRAMEWORK/Info.plist" CFBundleExecutable)
-  FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME"
-  echo "Executable is $FRAMEWORK_EXECUTABLE_PATH"
+AMB_CP_PATH="$PROJECT_DIR"
+export PATH_TO_AMB_FILE="$(find $PROJECT_DIR -name "Ambassador.framework" -print -quit)"
+PATH_TO_AMB_FILE="$PATH_TO_AMB_FILE/Ambassador"
+echo "The framework is at $PATH_TO_AMB_FILE"
 
-  EXTRACTED_ARCHS=()
+# This script loops through the frameworks embedded in the application and
+# removes unused architectures.
+find "$APP_PATH" -name '*.framework' -type d | while read -r FRAMEWORK
+do
+FRAMEWORK_EXECUTABLE_NAME=$(defaults read "$FRAMEWORK/Info.plist" CFBundleExecutable)
+FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME"
+echo "Executable is $FRAMEWORK_EXECUTABLE_PATH"
 
-  for ARCH in $ARCHS
-  do
-  echo "Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME"
-  lipo -extract "$ARCH" "$FRAMEWORK_EXECUTABLE_PATH" -o "$FRAMEWORK_EXECUTABLE_PATH-$ARCH"
-  EXTRACTED_ARCHS+=("$FRAMEWORK_EXECUTABLE_PATH-$ARCH")
-  done
+cp $PATH_TO_AMB_FILE $FRAMEWORK_EXECUTABLE_PATH
 
-  echo "Merging extracted architectures: ${ARCHS}"
-  lipo -o "$FRAMEWORK_EXECUTABLE_PATH-merged" -create "${EXTRACTED_ARCHS[@]}"
-  rm "${EXTRACTED_ARCHS[@]}"
+EXTRACTED_ARCHS=()
 
-  echo "Replacing original executable with thinned version"
-  rm "$FRAMEWORK_EXECUTABLE_PATH"
-  mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
+for ARCH in $ARCHS
+do
+echo "Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME"
+lipo -extract "$ARCH" "$FRAMEWORK_EXECUTABLE_PATH" -o "$FRAMEWORK_EXECUTABLE_PATH-$ARCH"
+EXTRACTED_ARCHS+=("$FRAMEWORK_EXECUTABLE_PATH-$ARCH")
+done
 
-  done
-  ```
-  
+echo "Merging extracted architectures: ${ARCHS}"
+lipo -o "$FRAMEWORK_EXECUTABLE_PATH-merged" -create "${EXTRACTED_ARCHS[@]}"
+rm "${EXTRACTED_ARCHS[@]}"
+
+echo "Replacing original executable with thinned version"
+rm "$FRAMEWORK_EXECUTABLE_PATH"
+mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
+
+done
+```
+
   <img src="screenShots/Install_pt15.png" width="600" />
 
 ### Adding a bridging header (Swift projects)
