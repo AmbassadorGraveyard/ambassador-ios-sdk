@@ -47,7 +47,9 @@ You can still build using the fat binary by 'slicing' out the architectures spec
 APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
 
 AMB_CP_PATH="$PROJECT_DIR"
-export PATH_TO_AMB_FILE="$(find $PROJECT_DIR -name "Ambassador.framework" -print -quit)"
+echo "$PROJECT_DIR"
+PATH_TO_AMB_FILE=$(find $PROJECT_DIR -name "Ambassador.framework" -print -quit)
+echo "Framework search directory is at $PATH_TO_AMB_FILE"
 PATH_TO_AMB_FILE="$PATH_TO_AMB_FILE/Ambassador"
 echo "The framework is at $PATH_TO_AMB_FILE"
 
