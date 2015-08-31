@@ -46,8 +46,6 @@ You can still build using the fat binary by 'slicing' out the architectures spec
 ```shell
 APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
 
-AMB_CP_PATH="$PROJECT_DIR"
-echo "$PROJECT_DIR"
 PATH_TO_AMB_FILE=$(find $PROJECT_DIR -name "Ambassador.framework" -print -quit)
 echo "Framework search directory is at $PATH_TO_AMB_FILE"
 PATH_TO_AMB_FILE="$PATH_TO_AMB_FILE/Ambassador"
@@ -55,7 +53,7 @@ echo "The framework is at $PATH_TO_AMB_FILE"
 
 # This script loops through the frameworks embedded in the application and
 # removes unused architectures.
-find "$APP_PATH" -name '*.framework' -type d | while read -r FRAMEWORK
+find "$APP_PATH" -name 'Ambassador.framework' -type d | while read -r FRAMEWORK
 do
 FRAMEWORK_EXECUTABLE_NAME=$(defaults read "$FRAMEWORK/Info.plist" CFBundleExecutable)
 FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME"
