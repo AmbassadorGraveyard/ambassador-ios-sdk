@@ -149,6 +149,7 @@
 				DB0F488E1B39DF7E00CCE614 /* Frameworks */,
 				DB0F488F1B39DF7E00CCE614 /* Resources */,
 				DB0F48BE1B39DFFE00CCE614 /* Embed Frameworks */,
+				DB170AB01B9636EC00578201 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -234,6 +235,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DB170AB01B9636EC00578201 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\nPATH_TO_AMB_FILE=$(find \"$PROJECT_DIR\" -name \"Ambassador.framework\" -print -quit)\necho \"Framework search directory is at $PATH_TO_AMB_FILE\"\nPATH_TO_AMB_FILE=\"$PATH_TO_AMB_FILE/Ambassador\"\necho \"The framework is at $PATH_TO_AMB_FILE\"\n\n# This script finds the Ambassador framework and removes unused architectures.\nFRAMEWORK_EXECUTABLE_PATH=$(find \"$APP_PATH\" -name \"Ambassador.framework\" -print -quit)\necho \"Executable folder is $FRAMEWORK_EXECUTABLE_PATH\"\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK_EXECUTABLE_PATH/Ambassador\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\n\ncp $PATH_TO_AMB_FILE $FRAMEWORK_EXECUTABLE_PATH\n\nEXTRACTED_ARCHS=()\n\nfor ARCH in $ARCHS\ndo\necho \"Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME\"\nlipo -extract \"$ARCH\" \"$FRAMEWORK_EXECUTABLE_PATH\" -o \"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\"\nEXTRACTED_ARCHS+=(\"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\")\ndone\n\necho \"Merging extracted architectures: ${ARCHS}\"\nlipo -o \"$FRAMEWORK_EXECUTABLE_PATH-merged\" -create \"${EXTRACTED_ARCHS[@]}\"\nrm \"${EXTRACTED_ARCHS[@]}\"\n\necho \"Replacing original executable with thinned version\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_EXECUTABLE_PATH-merged\" \"$FRAMEWORK_EXECUTABLE_PATH\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DB0F488D1B39DF7E00CCE614 /* Sources */ = {

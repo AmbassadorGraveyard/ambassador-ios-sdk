@@ -46,17 +46,15 @@ You can still build using the fat binary by 'slicing' out the architectures spec
 ```shell
 APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
 
-PATH_TO_AMB_FILE=$(find $PROJECT_DIR -name "Ambassador.framework" -print -quit)
+PATH_TO_AMB_FILE=$(find "$PROJECT_DIR" -name "Ambassador.framework" -print -quit)
 echo "Framework search directory is at $PATH_TO_AMB_FILE"
 PATH_TO_AMB_FILE="$PATH_TO_AMB_FILE/Ambassador"
 echo "The framework is at $PATH_TO_AMB_FILE"
 
-# This script loops through the frameworks embedded in the application and
-# removes unused architectures.
-find "$APP_PATH" -name 'Ambassador.framework' -type d | while read -r FRAMEWORK
-do
-FRAMEWORK_EXECUTABLE_NAME=$(defaults read "$FRAMEWORK/Info.plist" CFBundleExecutable)
-FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME"
+# This script finds the Ambassador framework and removes unused architectures.
+FRAMEWORK_EXECUTABLE_PATH=$(find "$APP_PATH" -name "Ambassador.framework" -print -quit)
+echo "Executable folder is $FRAMEWORK_EXECUTABLE_PATH"
+FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK_EXECUTABLE_PATH/Ambassador"
 echo "Executable is $FRAMEWORK_EXECUTABLE_PATH"
 
 cp $PATH_TO_AMB_FILE $FRAMEWORK_EXECUTABLE_PATH
@@ -77,8 +75,6 @@ rm "${EXTRACTED_ARCHS[@]}"
 echo "Replacing original executable with thinned version"
 rm "$FRAMEWORK_EXECUTABLE_PATH"
 mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
-
-done
 ```
 
   <img src="screenShots/Install_pt15.png" width="600" />
