@@ -33,7 +33,7 @@ Follow the steps to install the Ambassador SDK in your Objective-c or Swift proj
 For convenience, we distribute a fat binary that will work with both xCode simulators and physical devices. This is great for development, but is not acceptable for app submission to the iTunes store.
 You can still build using the fat binary by 'slicing' out the architectures specific to your build. This can be done with a simple run script.
 
-* In your project's **Build Phases**, add a new **Run Script Phase** (Make Sure that the runc script is placed *BELOW* **Embeded Frameworks**.
+* In your project's **Build Phases**, add a new **Run Script Phase** (Make sure that the run script is placed *BELOW* **Embeded Frameworks**.
 
   <img src="screenShots/Install_pt13.png" width="600" />
 
