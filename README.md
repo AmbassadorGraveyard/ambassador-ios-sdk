@@ -106,8 +106,6 @@ fi
 
 ```
 
-  <img src="screenShots/Install_pt15.png" width="600" />
-
 ### Adding a bridging header (Swift projects)
 The SDK is written in Objective-c. In addition to the previous steps, installing the SDK into a Swift project requires a bridging header. If your project doesn't already have a bridging header, you can add one easily. If you already have a bridging header due to another library or framework, you can go to [Configuring a Bridging header (Swift Projects)](#config-bridge)
 
