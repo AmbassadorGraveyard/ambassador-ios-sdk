@@ -306,7 +306,7 @@ The editable properties and their default strings are:
 **Objective-c**
 ```objective-c
 // STEP ONE: Create a share service preferences object
-ServiceSelectorPreferences *preferences = ServiceSelectorPreferences()
+ServiceSelectorPreferences *preferences = [[ServiceSelectorPreferences alloc] init]
 
 // STEP TWO: (optional) Set the properties
 preferences.navBarTitle = @"New navBar title"; // NSString
