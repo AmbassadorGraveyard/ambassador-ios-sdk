@@ -289,7 +289,7 @@ AmbassadorSDK.registerConversion(parameters)
 ```
 
 ## Presenting the 'Refer A Friend' Screen (RAF)
-### ShareService Preferences
+### Service Selector Preferences
 The RAF screen provides a UI component that allows users to share with their contacts and become part of your referral program.
 To allow customized messages, there is also a `ShareServicePreferences` object where you can set editable properties of the RAF.
 If you leave any property unset, the RAF will use the default strings shown below.
