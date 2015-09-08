@@ -305,7 +305,13 @@ parameters.mbsy_event_data3 = "eventdata3" // NSString
 parameters.mbsy_is_approved = true // BOOL (Defaults to true)
 
 // STEP FOUR: Register the conversion with the parameter object
-AmbassadorSDK.registerConversion(parameters)
+AmbassadorSDK.registerConversion(parameters)  { (error) -> Void in
+  if ((error) != nil) {
+      println("Error \(error)")
+  } else {
+       println("All conversion parameters are set properly")
+   }
+}
 ```
 
 ## Presenting the 'Refer A Friend' Screen (RAF)
