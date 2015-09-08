@@ -35,8 +35,13 @@
  
  @param key The key provided to you by Ambassador.
  @param parameters An instance of ConversionParameters with properties set for registering a conversion on the initial launch of the app.
+ @param a completion handler called upon registering the conversion
+ Error domain = AmbassadorSDKErrorDomain
+ Error codes :
+ 1   ConversionParameters required properties unset
+ 2   ConversionParameters property has nil value
  */
-+ (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information;
++ (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion;
 
 
 ///------------------------------------
@@ -54,8 +59,13 @@
  Registers a conversion with Ambassador per the properties set in 'parameters'
  
  @param parameters An instance of ConversionParameters with properties set for registering a conversion on the initial launch of the app.
+ @param a completion handler called upon registering the conversion. 
+ Error domain = AmbassadorSDKErrorDomain
+ Error codes :
+                1   ConversionParameters required properties unset 
+                2   ConversionParameters property has nil value
  */
-+ (void)registerConversion:(ConversionParameters *)information;
++ (void)registerConversion:(ConversionParameters *)information completion:(void (^)(NSError *error))completion;
 
 /**
  Presents a full-page modal 'Refer-A-Friend' (RAF) view controller

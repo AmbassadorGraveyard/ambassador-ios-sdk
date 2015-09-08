@@ -149,6 +149,7 @@
 				DB0F488E1B39DF7E00CCE614 /* Frameworks */,
 				DB0F488F1B39DF7E00CCE614 /* Resources */,
 				DB0F48BE1B39DFFE00CCE614 /* Embed Frameworks */,
+				DB388A5A1B9F3B300089D185 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -234,6 +235,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DB388A5A1B9F3B300089D185 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "code_sign() {\n    # Use the current code_sign_identitiy\n    echo \"Code Signing $1 with Identity ${EXPANDED_CODE_SIGN_IDENTITY_NAME}\"\n    echo \"/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements $1\"\n    /usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements \"$1\"\n}\n\nAPP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\n# Find the Ambassador binary in the project directory\nPATH_TO_AMB_FILE=$(find \"$PROJECT_DIR\" -name \"Ambassador.framework\" -print -quit)\nPATH_TO_AMB_FILE=\"$PATH_TO_AMB_FILE\"\necho \"Framework search directory is at $PATH_TO_AMB_FILE\"\nPATH_TO_AMB_FILE=\"$PATH_TO_AMB_FILE/Ambassador\"\necho \"The framework is at $PATH_TO_AMB_FILE\"\n\n# Log code signiture of the Ambassador binary in project directory\ncodesign -vv -d \"$PATH_TO_AMB_FILE\"\n\n# Find the Ambassador binary in the build directory\nFRAMEWORK_EXECUTABLE_PATH=$(find \"$APP_PATH\" -name \"Ambassador.framework\" -print -quit)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK_EXECUTABLE_PATH\"\necho \"Executable folder is $FRAMEWORK_EXECUTABLE_PATH\"\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK_EXECUTABLE_PATH/Ambassador\"\necho \"Executable folder is $FRAMEWORK_EXECUTABLE_PATH\"\n\n# Log code signiture of the Ambassador binary in build directory\ncodesign -vv -d \"$FRAMEWORK_EXECUTABLE_PATH\"\n\n# Copy a fresh binary from the project directory into build directory\ncp \"$PATH_TO_AMB_FILE\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n\n# Extract relevant architectures for this build\nEXTRACTED_ARCHS=()\nfor ARCH in $ARCHS\ndo\necho \"Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME\"\nlipo -extract \"$ARCH\" \"$FRAMEWORK_EXECUTABLE_PATH\" -o \"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\"\nEXTRACTED_ARCHS+=(\"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\")\ndone\n\n# Merge the extracted archetectures into single binary\necho \"Merging extracted architectures: ${ARCHS}\"\nlipo -o \"$FRAMEWORK_EXECUTABLE_PATH-merged\" -create \"${EXTRACTED_ARCHS[@]}\"\nrm \"${EXTRACTED_ARCHS[@]}\"\n\n# Replace old universal binary with new thin version\necho \"Replacing original executable with thinned version\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_EXECUTABLE_PATH-merged\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n\n# Sign the new binary with project's signing identity\nif [ $EXPANDED_CODE_SIGN_IDENTITY ]; then\necho \"A signing identity exists\"\ncode_sign \"$FRAMEWORK_EXECUTABLE_PATH\"\ncodesign -vv -d \"$FRAMEWORK_EXECUTABLE_PATH\"\nelse\necho \"A signing identity does not exist\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DB0F488D1B39DF7E00CCE614 /* Sources */ = {
