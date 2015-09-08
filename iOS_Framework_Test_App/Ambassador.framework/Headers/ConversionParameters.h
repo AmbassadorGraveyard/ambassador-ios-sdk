@@ -29,6 +29,6 @@
 @property (nonatomic, retain) NSString * mbsy_event_data3;
 @property (nonatomic, retain) NSNumber * mbsy_is_approved;
 
-- (BOOL)isValid;
+- (NSError *)isValid;
 
 @end

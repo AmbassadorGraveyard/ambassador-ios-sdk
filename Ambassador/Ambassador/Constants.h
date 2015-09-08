@@ -45,6 +45,9 @@ extern NSString * const AMB_UPDATE_IDENTIFY_URL;
 extern NSString * const AMB_PUSHER_KEY;
 extern NSString * const AMB_PUSHER_AUTHENTICATION_URL;
 
+extern NSString * const AMB_ERROR_DOMAIN;
 
+#define ECPNIL  1   /* ConversionParameters property has nil value */
+#define ECPPROP 2   /* ConversionParameters required properties unset */
 
 #endif
