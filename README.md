@@ -169,7 +169,7 @@ parameters in [Conversions](#conversions). Your API key will be provided to you 
 
   // If you don't want to register a conversion during the first launch of your
   // application, then pass nil for the convertOnInstall parameter
-  [AmbassadorSDK runWithKey:<your_API_key> convertOnInstall:nil];
+  [AmbassadorSDK runWithKey:<your_API_key>];
 
   //--OR--
 
@@ -177,7 +177,14 @@ parameters in [Conversions](#conversions). Your API key will be provided to you 
   // create a conversion object to pass for the convertOnInstall parameter
   ConversionParameters *parameters = [[ConversionParameters alloc] init];
   // ... set parameters' properties (more on this in the "Conversions" section)
-  [AmbassadorSDK runWithKey:<your_API_key> convertOnInstall:parameters];
+  [AmbassadorSDK runWithKey:<your_API_key> convertOnInstall:parameters completion:^(NSError *error) {
+    if (error) {
+        NSLog(@"Error %@", error);
+    }
+    else {
+        NSLog(@"All conversion parameters are set properly");
+    }
+}];
 
   return YES;
 }
@@ -199,7 +206,13 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     // create a conversion object to pass for the convertOnInstall parameter
     var parameters = ConversionParameters()
     // ... set parameters' properties (more on this in the "Conversions" section)
-    AmbassadorSDK.runWithKey(<your_API_key>, convertOnInstall: parameters)
+    AmbassadorSDK.runWithKey(<your_API_key>, convertOnInstall:parameters) { (error) -> Void in
+        if ((error) != nil) {
+            println("Error \(error)")
+        } else {
+            println("All conversion parameters are set properly")
+        }
+    }
 
     return true
 }
@@ -254,7 +267,14 @@ conversion.mbsy_event_data3 = @"eventdata3"; // NSString
 conversion.mbsy_is_approved = @YES; // BOOL (Defaults to @YES)
 
 // STEP FOUR: Register the conversion with the parameter object
-[AmbassadorSDK registerConversion:conversion];
+[AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
+    if (error) {
+        NSLog(@"Error %@", error);
+    }
+    else {
+        NSLog(@"All conversion parameters are set properly");
+    }
+}];
 ```
 
 **Swift**

@@ -20,7 +20,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     ConversionParameters *conversion = [[ConversionParameters alloc] init];
-    conversion.mbsy_add_to_group_id = @"134";
     conversion.mbsy_revenue = @1000;
     conversion.mbsy_campaign = @260;
     conversion.mbsy_first_name = @"test";
@@ -33,15 +32,30 @@
     conversion.mbsy_auto_create = @NO;
     conversion.mbsy_deactivate_new_ambassador = @YES;
     conversion.mbsy_transaction_uid = @"transuidtransuid";
-    conversion.mbsy_add_to_group_id = @"123456789";
+    conversion.mbsy_add_to_group_id = @"sadjkfl";
     conversion.mbsy_event_data1 = @"eventdata1";
     conversion.mbsy_event_data2 = @"eventdata2";
     conversion.mbsy_event_data3 = @"eventdata3";
     conversion.mbsy_is_approved = @YES;
-    conversion.mbsy_email = @"anonymous_test_1578@example.com";
+    conversion.mbsy_email = @"jake@getambassador.com";
 
-    [AmbassadorSDK runWithKey:@"UniversalToken ***REMOVED***" convertOnInstall:conversion];
-    [AmbassadorSDK registerConversion:conversion];
+    [AmbassadorSDK runWithKey:@"UniversalToken ***REMOVED***" convertOnInstall:conversion completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Error %@", error);
+        }
+        else {
+            NSLog(@"All conversion parameters are set properly");
+        }
+    }];
+    
+    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Error %@", error);
+        }
+        else {
+            NSLog(@"All conversion parameters are set properly");
+        }
+    }];
     return YES;
 }
 
