@@ -37,7 +37,7 @@
     conversion.mbsy_event_data1 = @"eventdata1";
     conversion.mbsy_event_data2 = @"eventdata2";
     conversion.mbsy_event_data3 = @"eventdata3";
-    conversion.mbsy_is_approved = @NO;
+    conversion.mbsy_is_approved = @YES;
     conversion.mbsy_email = @"anonymous_test_1578@example.com";
 
     [AmbassadorSDK runWithKey:@"UniversalToken ***REMOVED***" convertOnInstall:conversion];
