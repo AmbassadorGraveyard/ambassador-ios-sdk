@@ -12,7 +12,7 @@
 @interface Conversion : NSObject
 
 - (id)initWithKey:(NSString *)key;
-- (void)registerConversionWithParameters:(ConversionParameters *)parameters;
+- (void)registerConversionWithParameters:(ConversionParameters *)parameters completion:(void (^)(NSError *error))completion;
 - (void)sendConversions;
 
 @end

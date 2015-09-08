@@ -88,7 +88,7 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
 
 
 #pragma mark - API Functions
-- (void)registerConversionWithParameters:(ConversionParameters *)parameters
+- (void)registerConversionWithParameters:(ConversionParameters *)parameters completion:(void (^)(NSError *error))completion
 {
     DLog();
     
@@ -96,36 +96,41 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
     //  * mbsy_revenue
     //  * mbsy_campaign
     //  * mbsy_email
-    if (![parameters isValid])
-    {
-        [NSException raise:@"Invalid conversion parameters"
-                    format:@"Conversion parameters must have set values for 'mbsy_revenue' (NSNumber *), 'mbsy_campaign' (NSNumber *), and 'mbsy_email' (NSString *)"];
+    //  and check that all properties are non-nil
+    
+    __weak Conversion *weakSelf = self;
+    NSError *e = [parameters isValid];
+    if (!e) {
+        [weakSelf.databaseQueue inDatabase:^(FMDatabase *db)
+         {
+             [db executeUpdate:AMB_CONVERSION_INSERT_QUERY,
+              parameters.mbsy_campaign,
+              parameters.mbsy_email,
+              parameters.mbsy_first_name,
+              parameters.mbsy_last_name,
+              parameters.mbsy_email_new_ambassador,
+              parameters.mbsy_uid,
+              parameters.mbsy_custom1,
+              parameters.mbsy_custom2,
+              parameters.mbsy_custom3,
+              parameters.mbsy_auto_create,
+              parameters.mbsy_revenue,
+              parameters.mbsy_deactivate_new_ambassador,
+              parameters.mbsy_transaction_uid,
+              parameters.mbsy_add_to_group_id,
+              parameters.mbsy_event_data1,
+              parameters.mbsy_event_data2,
+              parameters.mbsy_event_data3,
+              parameters.mbsy_is_approved,
+              NULL];
+         }];
     }
     
-    // Insert new record into SQL database
-    [self.databaseQueue inDatabase:^(FMDatabase *db)
-    {
-        [db executeUpdate:AMB_CONVERSION_INSERT_QUERY,
-         parameters.mbsy_campaign,
-         parameters.mbsy_email,
-         parameters.mbsy_first_name,
-         parameters.mbsy_last_name,
-         parameters.mbsy_email_new_ambassador,
-         parameters.mbsy_uid,
-         parameters.mbsy_custom1,
-         parameters.mbsy_custom2,
-         parameters.mbsy_custom3,
-         parameters.mbsy_auto_create,
-         parameters.mbsy_revenue,
-         parameters.mbsy_deactivate_new_ambassador,
-         parameters.mbsy_transaction_uid,
-         parameters.mbsy_add_to_group_id,
-         parameters.mbsy_event_data1,
-         parameters.mbsy_event_data2,
-         parameters.mbsy_event_data3,
-         parameters.mbsy_is_approved,
-         NULL];
-    }];
+    if (completion) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(e);
+        });
+    }
 }
 
 - (void)sendConversions
