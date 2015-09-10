@@ -55,7 +55,8 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @property NSString *email;
 @property PTPusher *client;
 @property PTPusherPrivateChannel *channel;
-@property NSString *APIKey;
+@property NSString *universalToken;
+@property NSString *universalID;
 
 @end
 
@@ -64,7 +65,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @implementation Identify
 
 #pragma mark - Object lifecycle
-- (id)initWithKey:(NSString *)key
+- (id)initWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID
 {
     DLog();
     if ([super init])
@@ -72,7 +73,8 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         self.webview = [[UIWebView alloc] init];
         self.webview.delegate = self;
         self.email = @"";
-        self.APIKey = key;
+        self.universalToken = universalToken;
+        self.universalID = universalID;
         self.client = [PTPusher pusherWithKey:AMB_PUSHER_KEY delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:AMB_PUSHER_AUTHENTICATION_URL];
         [self.client connect];
@@ -84,7 +86,8 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 - (void)identify
 {
     DLog();
-    NSURL *url = [NSURL URLWithString:AMB_IDENTIFY_URL];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&universal_id=%@",AMB_IDENTIFY_URL, self.universalID]];
+    DLog(@"%@", [url absoluteString]);
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webview loadRequest:request];
 }
@@ -274,7 +277,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
+    [request setValue:self.universalToken forHTTPHeaderField:@"Authorization"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
@@ -368,7 +371,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     
     // Modify the default autheticate request that Pusher will make. The
     // HTTP body is set per Ambassador back end requirements
-    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
+    [request setValue:self.universalToken forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSMutableString *httpBodyString = [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding];
     NSMutableDictionary *httpBody = parseQueryString(httpBodyString);
