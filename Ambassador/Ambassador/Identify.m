@@ -17,18 +17,18 @@
 #pragma mark - Local Constants
 
 #if AMBPRODUCTION
-NSString * const AMB_IDENTIFY_URL = @"https://mbsy.co/universal/landing/?url=ambassador:ios/&universal_id=***REMOVED***";
+NSString * const AMB_IDENTIFY_URL = @"https://mbsy.co/universal/landing/?url=ambassador:ios/";
 #else
-NSString * const AMB_IDENTIFY_URL = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/&universal_id=***REMOVED***";
+NSString * const AMB_IDENTIFY_URL = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/";
 #endif
 
 NSString * const AMB_IDENTIFY_JS_VAR = @"JSON.stringify(augur.json)";
 NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
 
 #if AMBPRODUCTION
-NSString * const AMB_IDENTIFY_SEND_URL = @"https://api.ambassador.com/universal/action/identify/?u=***REMOVED***";
+NSString * const AMB_IDENTIFY_SEND_URL = @"https://api.ambassador.com/universal/action/identify/";
 #else
-NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/?u=***REMOVED***";
+NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/";
 #endif
 
 
