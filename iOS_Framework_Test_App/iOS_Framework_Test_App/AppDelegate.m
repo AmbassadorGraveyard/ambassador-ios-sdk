@@ -39,7 +39,14 @@
     conversion.mbsy_is_approved = @YES;
     conversion.mbsy_email = @"jake@getambassador.com";
 
-    [AmbassadorSDK runWithSDKToken:@"UniversalToken bdb49d2b9ae24b7b6bc5da122370f3517f98336f" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32"];
+    [AmbassadorSDK runWithSDKToken:@"UniversalToken bdb49d2b9ae24b7b6bc5da122370f3517f98336f" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32" convertOnInstall:conversion completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Error %@", error);
+        }
+        else {
+            NSLog(@"Required parameters are set");
+        }
+    }];
     
     [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
         if (error) {

@@ -168,13 +168,6 @@
     if (!nonNil)
     {
         NSLog(@"[Ambassador] Warning - ConversionPrameters object contained a nil property. Attempting to send anyway.");
-//        DLog(@"Nil was passed for parameter");
-//        NSDictionary *userInfo = @{
-//                                   NSLocalizedDescriptionKey: NSLocalizedString(@"ConversionParameters Error", nil),
-//                                   NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"One of the ConversionParameter's properties was nil", nil),
-//                                   NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Ensure that all properties are being set to non-nil values. (Optional values are non-nil by default)", nil)
-//                                   };
-//        e = [NSError errorWithDomain:AMB_ERROR_DOMAIN code:ECPNIL userInfo:userInfo];
     }
     
     BOOL reqProps = [self.mbsy_campaign intValue] > -1 && ![self.mbsy_email isEqualToString:@""] && [self.mbsy_revenue intValue] > -1;
