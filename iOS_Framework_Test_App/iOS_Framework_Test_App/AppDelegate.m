@@ -21,7 +21,7 @@
     // Override point for customization after application launch.
     ConversionParameters *conversion = [[ConversionParameters alloc] init];
     conversion.mbsy_revenue = @1000;
-    conversion.mbsy_campaign = @268980;
+    conversion.mbsy_campaign = @280;
     conversion.mbsy_first_name = @"";
     conversion.mbsy_last_name = @"one";
     conversion.mbsy_email_new_ambassador = @YES;
@@ -39,14 +39,7 @@
     conversion.mbsy_is_approved = @YES;
     conversion.mbsy_email = @"jake@getambassador.com";
 
-    [AmbassadorSDK runWithKey:@"UniversalToken ***REMOVED***" convertOnInstall:conversion completion:^(NSError *error) {
-        if (error) {
-            NSLog(@"Error %@", error);
-        }
-        else {
-            NSLog(@"All conversion parameters are set properly");
-        }
-    }];
+    [AmbassadorSDK runWithSDKToken:@"UniversalToken ***REMOVED***" universalID:@"***REMOVED***"];
     
     [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
         if (error) {

@@ -227,7 +227,7 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
                           [db executeUpdate:@"Delete from conversions where ID = ?",  sql_ID];
 
                       } else {
-                          NSLog(@"[Ambassador] Server reponse from sending conversion:%ld - %@", (long)((NSHTTPURLResponse *)response).statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                          NSLog(@"[Ambassador] Error - Server reponse from sending conversion:%ld - %@", (long)((NSHTTPURLResponse *)response).statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
                       }
                       
                       if (((NSHTTPURLResponse *)response).statusCode >= 400 &&
