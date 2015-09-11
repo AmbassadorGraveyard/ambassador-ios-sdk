@@ -33,7 +33,8 @@ NSString * const SHORT_CODE_URL_KEY = @"url";
 @implementation AmbassadorSDK
 
 #pragma mark - Static class variables
-static NSString *APIKey;
+static NSString *AMBSDKToken;
+static NSString *AMBuniversalID;
 static NSMutableDictionary *backEndData;
 static NSTimer *conversionTimer;
 static Identify *identify;
@@ -66,18 +67,16 @@ static ServiceSelector *raf;
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
 //
-+ (void)runWithKey:(NSString *)key
++ (void)runWithSDKToken:(NSString *)SDKToken universalID:(NSString *)universalID
 {
     DLog();
-    [[AmbassadorSDK sharedInstance] runWithKey:key
-                              convertOnInstall:nil completion:nil];
+    [[AmbassadorSDK sharedInstance] runWithSDKToken:SDKToken universalID:universalID convertOnInstall:nil completion:nil];
 }
 
-+ (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
++ (void)runWithSDKToken:(NSString *)SDKToken universalID:(NSString *)universalID convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
     DLog();
-    [[AmbassadorSDK sharedInstance] runWithKey:key
-                         convertOnInstall:information completion:completion];
+    [[AmbassadorSDK sharedInstance] runWithSDKToken:SDKToken universalID:universalID convertOnInstall:information completion:completion];
 }
 
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(ServiceSelectorPreferences*)parameters
@@ -105,7 +104,7 @@ static ServiceSelector *raf;
 
 
 #pragma mark - Internal API methods
-- (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
+- (void)runWithSDKToken:(NSString *)SDKToken universalID:(NSString *)universalID convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
 #if DEBUG
         DLog(@"Removing user defaults for testing");
@@ -115,15 +114,16 @@ static ServiceSelector *raf;
     
     //Initialize class variables
     DLog(@"Initializing class variables");
-    APIKey = key;
+    AMBuniversalID = universalID;
+    AMBSDKToken = SDKToken;
     conversionTimer = [NSTimer scheduledTimerWithTimeInterval:AMB_CONVERSION_FLUSH_TIME
                                                        target:self
                                                      selector:@selector(checkConversionQueue)
                                                      userInfo:nil
                                                       repeats:YES];
-    identify = [[Identify alloc] initWithKey:APIKey];
+    identify = [[Identify alloc] initWithUniversalToken:SDKToken universalID:universalID];
     identify.delegate = self;
-    conversion = [[Conversion alloc] initWithKey:APIKey];
+    conversion = [[Conversion alloc] initWithKey:SDKToken];
     
     DLog(@"Checking if conversion is made on app launch");
 
@@ -170,7 +170,7 @@ static ServiceSelector *raf;
     raf.shortURL = shortCodeURL;
     parameters.textFieldText = shortCodeURL;
     raf.prefs = parameters;
-    raf.APIKey = APIKey;
+    raf.APIKey = AMBSDKToken;
     raf.campaignID = ID;
 
     [viewController presentViewController:vc animated:YES completion:nil];

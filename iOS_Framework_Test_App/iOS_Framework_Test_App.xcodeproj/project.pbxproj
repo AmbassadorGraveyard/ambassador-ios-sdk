@@ -14,8 +14,8 @@
 		DB0F48A21B39DF7E00CCE614 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB0F48A11B39DF7E00CCE614 /* Images.xcassets */; };
 		DB0F48A51B39DF7E00CCE614 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB0F48A31B39DF7E00CCE614 /* LaunchScreen.xib */; };
 		DB0F48B11B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F48B01B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.m */; };
-		DB1C58EB1B8264E00090D4C8 /* Ambassador.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB1C58E91B8264D90090D4C8 /* Ambassador.framework */; };
-		DB1C58EC1B8264E00090D4C8 /* Ambassador.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DB1C58E91B8264D90090D4C8 /* Ambassador.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DB54412D1BA221C700A5C3A7 /* Ambassador.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB1C58E91B8264D90090D4C8 /* Ambassador.framework */; };
+		DB54412E1BA221C700A5C3A7 /* Ambassador.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DB1C58E91B8264D90090D4C8 /* Ambassador.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +29,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		DB0F48BE1B39DFFE00CCE614 /* Embed Frameworks */ = {
+		DB54412F1BA221C700A5C3A7 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				DB1C58EC1B8264E00090D4C8 /* Ambassador.framework in Embed Frameworks */,
+				DB54412E1BA221C700A5C3A7 /* Ambassador.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -64,7 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB1C58EB1B8264E00090D4C8 /* Ambassador.framework in Frameworks */,
+				DB54412D1BA221C700A5C3A7 /* Ambassador.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,8 +148,8 @@
 				DB0F488D1B39DF7E00CCE614 /* Sources */,
 				DB0F488E1B39DF7E00CCE614 /* Frameworks */,
 				DB0F488F1B39DF7E00CCE614 /* Resources */,
-				DB0F48BE1B39DFFE00CCE614 /* Embed Frameworks */,
 				DB388A5A1B9F3B300089D185 /* ShellScript */,
+				DB54412F1BA221C700A5C3A7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
