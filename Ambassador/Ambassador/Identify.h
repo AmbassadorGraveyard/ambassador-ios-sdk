@@ -7,24 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@protocol IdentifyDelegate <NSObject>
-
-@optional
-- (void)identifyDataWasRecieved:(NSMutableDictionary *)data;
-- (void)ambassadorDataWasRecieved:(NSMutableDictionary *)data;
-
-@end
-
+#import <CoreData/CoreData.h>
 
 
 @interface Identify : NSObject
-
-- (id)initWithKey:(NSString *)key;
-- (void)identifyWithEmail:(NSString *)email;
-@property NSMutableDictionary *identifyData;
-@property NSString *pusherChannelName;
-@property (nonatomic, weak) id<IdentifyDelegate>delegate;
-- (void)getInsightsDataForUID:(NSString *)UID success:(void (^)(NSMutableDictionary *response))success fail:(void (^)(NSError *error))fail;
-
+- (void)identifyWithURL:(NSString *)url completion:(void (^)(NSMutableDictionary *r, NSError *e))completion;
+@property (nonatomic, strong) NSManagedObjectContext *context;
 @end

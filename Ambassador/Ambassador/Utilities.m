@@ -47,3 +47,14 @@ void sendAlert(BOOL success, NSString *message, UIViewController *presenter)
     [presenter presentViewController:vc animated:YES completion:nil];
 }
 
+
+NSError *errorMake(NSString *locDes, NSString *failReason, NSString *recSuggest, NSInteger code) {
+    NSDictionary *userInfo =
+    @{
+      NSLocalizedDescriptionKey: NSLocalizedString(locDes, nil),
+      NSLocalizedFailureReasonErrorKey: NSLocalizedString(failReason, nil),
+      NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(recSuggest, nil)
+      };
+    return [NSError errorWithDomain:@"AmbassadorErrorDomain" code:code userInfo:userInfo];
+}
+

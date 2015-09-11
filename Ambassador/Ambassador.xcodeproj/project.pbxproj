@@ -1102,6 +1102,7 @@
 				DB5441231BA1F88C00A5C3A7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DB5441271BA1F88C00A5C3A7 /* Build configuration list for PBXNativeTarget "TestApplicationTests" */ = {
 			isa = XCConfigurationList;
@@ -1110,6 +1111,7 @@
 				DB5441251BA1F88C00A5C3A7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

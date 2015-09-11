@@ -23,5 +23,5 @@ UIColor* ColorFromRGB(float r, float g, float b);
 UIImage* imageFromBundleNamed(NSString *name);
 void simpleAlert(NSString *title, NSString *message, UIViewController *vc);
 void sendAlert(BOOL success, NSString *message, UIViewController *presenter);
-
+NSError *errorMake(NSString *locDes, NSString *failReason, NSString *recSuggest, NSInteger code);
 #endif
