@@ -26,15 +26,15 @@
 /**
  Runs an 'Ambassador' object with the specified API key.
  
- @param SDKToken The SDKToken provided to you by Ambassador.
+ @param universalToken The Universal Token provided to you by Ambassador.
  @param universalID The Universal ID provided to you by Ambassador.
  */
-+ (void)runWithSDKToken:(NSString *)SDKToken universalID:(NSString *)universalID;
++ (void)runWithUniversalToken:(NSString *)UniversalToken universalID:(NSString *)universalID;
 
 /**
  Runs an 'Ambassador' object with the specified API key and parameters for registering a conversion on launch
  
- @param SDKToken The SDKToken provided to you by Ambassador.
+ @param universalToken The Universal Token provided to you by Ambassador.
  @param universalID The Universal ID provided to you by Ambassador.
  @param parameters An instance of ConversionParameters with properties set for registering a conversion on the initial launch of the app.
  @param a completion handler called upon registering the conversion
@@ -43,7 +43,7 @@
  1   ConversionParameters required properties unset
  2   ConversionParameters property has nil value
  */
-+ (void)runWithSDKToken:(NSString *)SDKToken universalID:(NSString *)universalID convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion;
++ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion;
 
 
 ///------------------------------------
