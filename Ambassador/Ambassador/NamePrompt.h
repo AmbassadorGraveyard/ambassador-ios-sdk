@@ -10,7 +10,7 @@
 
 @protocol NamePromptDelegate <NSObject>
 
-- (void)sendSMSPressedWithName:(NSString *)name;
+- (void)sendSMSPressedWithFirstName:(NSString *)firstName lastName:(NSString *)lastName;
 
 @end
 

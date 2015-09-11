@@ -432,7 +432,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 
 #pragma mark - ContactSelectorDelegate
-- (void)sendToContacts:(NSArray *)contacts forServiceType:(NSString *)serviceType fromName:(NSString *)name withMessage:(NSString *)message
+- (void)sendToContacts:(NSArray *)contacts forServiceType:(NSString *)serviceType fromFirstName:(NSString *)firstName lastName:(NSString *)lastName withMessage:(NSString *)message
 {
     __weak NSString *shortCode = self.shortCode;
     __weak ServiceSelector *weakSelf = self;
@@ -480,7 +480,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                                   };
         
         
-        NSLog(@"Email data sent to servers: %@", payload);
+        DLog(@"Email data sent to servers: %@", payload);
         
         NSURL *url = [NSURL URLWithString:AMB_EMAIL_SHARE_URL];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -496,26 +496,26 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
           {
               if (!error)
               {
-                  NSLog(@"Status code for sending email: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                  DLog(@"Status code for sending email: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
                   
                   //Check for 2xx status codes
                   if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
                       ((NSHTTPURLResponse *)response).statusCode < 300)
                   {
                       // Looking for a "Qued" response
-                      NSLog(@"Response from backend from sending email: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                      DLog(@"Response from backend from sending email: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
                       [self sendSuccessMessageWithCount:validContacts.count];
                       [weakSelf bulkPostShareTrackWithShortCode:shortCode values:[weakSelf validateEmails:contacts] socialName:EMAIL_TITLE];
                   }
                   else
                   {
-                      NSLog(@"Error: %@", error.localizedDescription);
+                      DLog(@"Error: %@", error.localizedDescription);
                       sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
                   }
               }
               else
               {
-                  NSLog(@"Error: %@", error.localizedDescription);
+                  DLog(@"Error: %@", error.localizedDescription);
                    sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
               }
           }];
@@ -526,11 +526,11 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         NSArray *validContacts = [weakSelf validatePhoneNumbers:contacts];
         NSDictionary *payload = @{
                                   @"to" : validContacts,
-                                  @"name" : name,
+                                  @"name" : [NSString stringWithFormat:@"%@ %@", firstName, lastName],
                                   @"message" : message
                                   };
         
-        NSLog(@"SMS data sent to servers %@", payload);
+        DLog(@"SMS data sent to servers %@", payload);
         
         if (validContacts.count == 1)
         {
@@ -554,10 +554,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
         if (validContacts.count > 0 )
         {
-            NSArray *components = [name componentsSeparatedByString:@" "];
-            NSString *firstName = [components firstObject];
-            NSString *lastName = [components lastObject];
-            
             NSURL *url = [NSURL URLWithString:AMB_SMS_SHARE_URL];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             request.HTTPMethod = @"POST";
@@ -572,26 +568,26 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
               {
                   if (!error)
                   {
-                      NSLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                      DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
                       
                       //Check for 2xx status codes
                       if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
                           ((NSHTTPURLResponse *)response).statusCode < 300)
                       {
                           // Looking for an echo response
-                          NSLog(@"Response from backend from sending sms: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                          DLog(@"Response from backend from sending sms: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
                           [self sendSuccessMessageWithCount:validContacts.count];
                           [weakSelf bulkPostShareTrackWithShortCode:shortCode values:[weakSelf validatePhoneNumbers:contacts] socialName:SMS_TITLE];
                       }
                       else
                       {
-                          NSLog(@"Error: %@", error.localizedDescription);
+                          DLog(@"Error: %@", error.localizedDescription);
                            sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
                       }
                   }
                   else
                   {
-                      NSLog(@"Error: %@", error.localizedDescription);
+                      DLog(@"Error: %@", error.localizedDescription);
                       dispatch_async(dispatch_get_main_queue(), ^{
                            sendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
                       });
@@ -603,7 +599,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         }
         else
         {
-            NSLog(@"No valid numbers were selected");
+            DLog(@"No valid numbers were selected");
         }
     }
 }
@@ -646,19 +642,19 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
       {
           if (!error)
           {
-              NSLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+              DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
               
               //Check for 2xx status codes
               if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
                   ((NSHTTPURLResponse *)response).statusCode < 300)
               {
                   // Looking for a "echo" response
-                  NSLog(@"Response from backend from sending share track: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                  DLog(@"Response from backend from sending share track: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
               }
           }
           else
           {
-              NSLog(@"Error: %@", error.localizedDescription);
+              DLog(@"Error: %@", error.localizedDescription);
           }
       }];
     [task resume];
@@ -736,19 +732,19 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
       {
           if (!error)
           {
-              NSLog(@"Status code for share track: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+              DLog(@"Status code for share track: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
               
               //Check for 2xx status codes
               if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
                   ((NSHTTPURLResponse *)response).statusCode < 300)
               {
                   // Looking for a "Polling" response
-                  NSLog(@"Response from backend from sending bulk share track: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                  DLog(@"Response from backend from sending bulk share track: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
               }
           }
           else
           {
-              NSLog(@"Error: %@", error.localizedDescription);
+              DLog(@"Error: %@", error.localizedDescription);
           }
       }];
     [task resume];
@@ -766,7 +762,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     NSDictionary *ambassadorInfo = [[NSUserDefaults standardUserDefaults]
                        dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
     NSString *email = ambassadorInfo[@"email"];
-    NSLog(@"The user information during update: %@ %@ %@", email, firstName, lastName);
+    DLog(@"The user information during update: %@ %@ %@", email, firstName, lastName);
     
     NSMutableDictionary *payload = [[NSMutableDictionary alloc] init];
     [payload setValue:email forKey:@"email"];
@@ -784,19 +780,19 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
       {
           if (!error)
           {
-              NSLog(@"Status code for share track: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+              DLog(@"Status code for share track: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
               
               //Check for 2xx status codes
               if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
                   ((NSHTTPURLResponse *)response).statusCode < 300)
               {
                   // Looking for a "Polling" response
-                  NSLog(@"Response from backend from updating ambassador (looking for 'polling'): %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                  DLog(@"Response from backend from updating ambassador (looking for 'polling'): %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
               }
           }
           else
           {
-              NSLog(@"Error: %@", error.localizedDescription);
+              DLog(@"Error: %@", error.localizedDescription);
           }
       }];
     [task resume];
