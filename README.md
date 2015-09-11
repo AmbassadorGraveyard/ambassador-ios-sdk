@@ -9,7 +9,7 @@ ln -s ../../git-hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
 ## Documentation
 ## Installing the SDK
 Follow the steps to install the Ambassador SDK in your Objective-c or Swift project.
-* Download the framework and drag it into your project
+* Download the framework file, unzip it, and drag it into your project, as shown below, beneath the project file (the zip file is attached at the bottom of this article).
 
   <img src="screenShots/Install_pt1.png" width="300" />
 
@@ -33,7 +33,7 @@ Follow the steps to install the Ambassador SDK in your Objective-c or Swift proj
 For convenience, we distribute a fat binary that will work with both xCode simulators and physical devices. This is great for development, but is not acceptable for app submission to the iTunes store.
 You can still build using the fat binary by 'slicing' out the architectures specific to your build. This can be done with a simple run script.
 
-* In your project's **Build Phases**, add a new **Run Script Phase**.
+* In your project's **Build Phases**, add a new **Run Script Phase** (Make sure that the run script is placed *BELOW* **Embedded Frameworks**).
 
   <img src="screenShots/Install_pt13.png" width="600" />
 
@@ -43,38 +43,68 @@ You can still build using the fat binary by 'slicing' out the architectures spec
 
 * Copy and paste the following script.
 
-  ```shell
-  APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
+```shell
+code_sign() {
+    # Use the current code_sign_identitiy
+    echo "Code Signing $1 with Identity ${EXPANDED_CODE_SIGN_IDENTITY_NAME}"
+    echo "/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements $1"
+    /usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements "$1"
+}
 
-  # This script loops through the frameworks embedded in the application and
-  # removes unused architectures.
-  find "$APP_PATH" -name '*.framework' -type d | while read -r FRAMEWORK
-  do
-  FRAMEWORK_EXECUTABLE_NAME=$(defaults read "$FRAMEWORK/Info.plist" CFBundleExecutable)
-  FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME"
-  echo "Executable is $FRAMEWORK_EXECUTABLE_PATH"
+APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
 
-  EXTRACTED_ARCHS=()
+# Find the Ambassador binary in the project directory
+PATH_TO_AMB_FILE=$(find "$PROJECT_DIR" -name "Ambassador.framework" -print -quit)
+PATH_TO_AMB_FILE="$PATH_TO_AMB_FILE"
+echo "Framework search directory is at $PATH_TO_AMB_FILE"
+PATH_TO_AMB_FILE="$PATH_TO_AMB_FILE/Ambassador"
+echo "The framework is at $PATH_TO_AMB_FILE"
 
-  for ARCH in $ARCHS
-  do
-  echo "Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME"
-  lipo -extract "$ARCH" "$FRAMEWORK_EXECUTABLE_PATH" -o "$FRAMEWORK_EXECUTABLE_PATH-$ARCH"
-  EXTRACTED_ARCHS+=("$FRAMEWORK_EXECUTABLE_PATH-$ARCH")
-  done
+# Log code signiture of the Ambassador binary in project directory
+codesign -vv -d "$PATH_TO_AMB_FILE"
 
-  echo "Merging extracted architectures: ${ARCHS}"
-  lipo -o "$FRAMEWORK_EXECUTABLE_PATH-merged" -create "${EXTRACTED_ARCHS[@]}"
-  rm "${EXTRACTED_ARCHS[@]}"
+# Find the Ambassador binary in the build directory
+FRAMEWORK_EXECUTABLE_PATH=$(find "$APP_PATH" -name "Ambassador.framework" -print -quit)
+FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK_EXECUTABLE_PATH"
+echo "Executable folder is $FRAMEWORK_EXECUTABLE_PATH"
+FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK_EXECUTABLE_PATH/Ambassador"
+echo "Executable folder is $FRAMEWORK_EXECUTABLE_PATH"
 
-  echo "Replacing original executable with thinned version"
-  rm "$FRAMEWORK_EXECUTABLE_PATH"
-  mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
+# Log code signiture of the Ambassador binary in build directory
+codesign -vv -d "$FRAMEWORK_EXECUTABLE_PATH"
 
-  done
-  ```
-  
-  <img src="screenShots/Install_pt15.png" width="600" />
+# Copy a fresh binary from the project directory into build directory
+cp "$PATH_TO_AMB_FILE" "$FRAMEWORK_EXECUTABLE_PATH"
+
+# Extract relevant architectures for this build
+EXTRACTED_ARCHS=()
+for ARCH in $ARCHS
+do
+echo "Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME"
+lipo -extract "$ARCH" "$FRAMEWORK_EXECUTABLE_PATH" -o "$FRAMEWORK_EXECUTABLE_PATH-$ARCH"
+EXTRACTED_ARCHS+=("$FRAMEWORK_EXECUTABLE_PATH-$ARCH")
+done
+
+# Merge the extracted archetectures into single binary
+echo "Merging extracted architectures: ${ARCHS}"
+lipo -o "$FRAMEWORK_EXECUTABLE_PATH-merged" -create "${EXTRACTED_ARCHS[@]}"
+rm "${EXTRACTED_ARCHS[@]}"
+
+# Replace old universal binary with new thin version
+echo "Replacing original executable with thinned version"
+rm "$FRAMEWORK_EXECUTABLE_PATH"
+mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
+
+# Sign the new binary with project's signing identity
+if [ $EXPANDED_CODE_SIGN_IDENTITY ]; then
+echo "A signing identity exists"
+code_sign "$FRAMEWORK_EXECUTABLE_PATH"
+codesign -vv -d "$FRAMEWORK_EXECUTABLE_PATH"
+else
+echo "A signing identity does not exist"
+fi
+
+```
 
 ### Adding a bridging header (Swift projects)
 The SDK is written in Objective-c. In addition to the previous steps, installing the SDK into a Swift project requires a bridging header. If your project doesn't already have a bridging header, you can add one easily. If you already have a bridging header due to another library or framework, you can go to [Configuring a Bridging header (Swift Projects)](#config-bridge)
@@ -139,7 +169,7 @@ parameters in [Conversions](#conversions). Your API key will be provided to you 
 
   // If you don't want to register a conversion during the first launch of your
   // application, then pass nil for the convertOnInstall parameter
-  [AmbassadorSDK runWithKey:<your_API_key> convertOnInstall:nil];
+  [AmbassadorSDK runWithKey:<your_API_key>];
 
   //--OR--
 
@@ -147,7 +177,14 @@ parameters in [Conversions](#conversions). Your API key will be provided to you 
   // create a conversion object to pass for the convertOnInstall parameter
   ConversionParameters *parameters = [[ConversionParameters alloc] init];
   // ... set parameters' properties (more on this in the "Conversions" section)
-  [AmbassadorSDK runWithKey:<your_API_key> convertOnInstall:parameters];
+  [AmbassadorSDK runWithKey:<your_API_key> convertOnInstall:parameters completion:^(NSError *error) {
+    if (error) {
+        NSLog(@"Error %@", error);
+    }
+    else {
+        NSLog(@"All conversion parameters are set properly");
+    }
+}];
 
   return YES;
 }
@@ -169,7 +206,13 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     // create a conversion object to pass for the convertOnInstall parameter
     var parameters = ConversionParameters()
     // ... set parameters' properties (more on this in the "Conversions" section)
-    AmbassadorSDK.runWithKey(<your_API_key>, convertOnInstall: parameters)
+    AmbassadorSDK.runWithKey(<your_API_key>, convertOnInstall:parameters) { (error) -> Void in
+        if ((error) != nil) {
+            println("Error \(error)")
+        } else {
+            println("All conversion parameters are set properly")
+        }
+    }
 
     return true
 }
@@ -224,7 +267,14 @@ conversion.mbsy_event_data3 = @"eventdata3"; // NSString
 conversion.mbsy_is_approved = @YES; // BOOL (Defaults to @YES)
 
 // STEP FOUR: Register the conversion with the parameter object
-[AmbassadorSDK registerConversion:conversion];
+[AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
+    if (error) {
+        NSLog(@"Error %@", error);
+    }
+    else {
+        NSLog(@"All conversion parameters are set properly");
+    }
+}];
 ```
 
 **Swift**
@@ -255,11 +305,17 @@ parameters.mbsy_event_data3 = "eventdata3" // NSString
 parameters.mbsy_is_approved = true // BOOL (Defaults to true)
 
 // STEP FOUR: Register the conversion with the parameter object
-AmbassadorSDK.registerConversion(parameters)
+AmbassadorSDK.registerConversion(parameters)  { (error) -> Void in
+  if ((error) != nil) {
+      println("Error \(error)")
+  } else {
+       println("All conversion parameters are set properly")
+   }
+}
 ```
 
 ## Presenting the 'Refer A Friend' Screen (RAF)
-### ShareService Preferences
+### Service Selector Preferences
 The RAF screen provides a UI component that allows users to share with their contacts and become part of your referral program.
 To allow customized messages, there is also a `ShareServicePreferences` object where you can set editable properties of the RAF.
 If you leave any property unset, the RAF will use the default strings shown below.
@@ -276,7 +332,7 @@ The editable properties and their default strings are:
 **Objective-c**
 ```objective-c
 // STEP ONE: Create a share service preferences object
-ServiceSelectorPreferences *preferences = ServiceSelectorPreferences()
+ServiceSelectorPreferences *preferences = [[ServiceSelectorPreferences alloc] init]
 
 // STEP TWO: (optional) Set the properties
 preferences.navBarTitle = @"New navBar title"; // NSString

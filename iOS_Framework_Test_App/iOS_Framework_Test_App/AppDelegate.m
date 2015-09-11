@@ -19,9 +19,43 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    ConversionParameters *conversion = [[ConversionParameters alloc] init];
+    conversion.mbsy_revenue = @1000;
+    conversion.mbsy_campaign = @260;
+    conversion.mbsy_first_name = @"test";
+    conversion.mbsy_last_name = @"one";
+    conversion.mbsy_email_new_ambassador = @YES;
+    conversion.mbsy_uid = @"uiduiduiduiduiduiduid";
+    conversion.mbsy_custom1 = @"custom111";
+    conversion.mbsy_custom2 = @"custom222";
+    conversion.mbsy_custom3 = @"custom333";
+    conversion.mbsy_auto_create = @NO;
+    conversion.mbsy_deactivate_new_ambassador = @YES;
+    conversion.mbsy_transaction_uid = @"transuidtransuid";
+    conversion.mbsy_add_to_group_id = @"sadjkfl";
+    conversion.mbsy_event_data1 = @"eventdata1";
+    conversion.mbsy_event_data2 = @"eventdata2";
+    conversion.mbsy_event_data3 = @"eventdata3";
+    conversion.mbsy_is_approved = @YES;
+    conversion.mbsy_email = @"jake@getambassador.com";
 
-    [AmbassadorSDK runWithKey:@"UniversalToken bdb49d2b9ae24b7b6bc5da122370f3517f98336f"];
-    [AmbassadorSDK identifyWithEmail:@"anonymous_test_1584@example.com"];
+    [AmbassadorSDK runWithKey:@"UniversalToken bdb49d2b9ae24b7b6bc5da122370f3517f98336f" convertOnInstall:conversion completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Error %@", error);
+        }
+        else {
+            NSLog(@"All conversion parameters are set properly");
+        }
+    }];
+    
+    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Error %@", error);
+        }
+        else {
+            NSLog(@"All conversion parameters are set properly");
+        }
+    }];
     return YES;
 }
 
