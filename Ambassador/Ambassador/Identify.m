@@ -156,7 +156,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                      {
                          dictionary[@"last_name"] = @"";
                      }
-                     NSLog(@"Pusher event - %@", event.data);
+                     DLog(@"Pusher event - %@", event.data);
                      [[NSUserDefaults standardUserDefaults] setValue:dictionary forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
                      [self.delegate ambassadorDataWasRecieved:dictionary];
                  }];
@@ -293,7 +293,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                   ((NSHTTPURLResponse *)response).statusCode < 300)
               {
                   // Looking for a "Polling" response
-                  NSLog(@"Response from backend from sending identify (looking for 'polling'): %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                  DLog(@"Response from backend from sending identify (looking for 'polling'): %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
               }
               else if (((NSHTTPURLResponse *)response).statusCode == 401)
               {
@@ -403,7 +403,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 
 - (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel
 {
-    NSLog(@"Subscribed to: %@", channel.name);
+    DLog(@"Subscribed to: %@", channel.name);
 }
 
 @end
