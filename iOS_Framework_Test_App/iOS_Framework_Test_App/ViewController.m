@@ -18,7 +18,7 @@
 @implementation ViewController
 
 - (void)viewDidLoad {
-    [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com"];
+    [AmbassadorSDK identifyWithEmail:@"brain@getambassador.com"];
 
     //[self functionToIgnoreDuringCodeReview];
 }
