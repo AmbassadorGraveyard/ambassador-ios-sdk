@@ -11,7 +11,7 @@
 
 @protocol ContactSelectorDelegate <NSObject>
 
-- (void)sendToContacts:(NSArray*)values forServiceType:(NSString *)serviceType fromName:(NSString *)name withMessage:(NSString *)string;
+- (void)sendToContacts:(NSArray*)values forServiceType:(NSString *)serviceType fromFirstName:(NSString *)firstName lastName:(NSString *)lastName withMessage:(NSString *)string;
 
 @end
 
