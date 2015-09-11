@@ -486,7 +486,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         request.HTTPMethod = @"POST";
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
         [request setValue:weakSelf.APIKey forHTTPHeaderField:@"Authorization"];
         request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
         
@@ -558,7 +557,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             request.HTTPMethod = @"POST";
             [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-            [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
             [request setValue:weakSelf.APIKey forHTTPHeaderField:@"Authorization"];
             request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
             
@@ -632,7 +630,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
     [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
 
@@ -721,7 +718,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
     [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
@@ -756,7 +752,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
     [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     
     NSDictionary *ambassadorInfo = [[NSUserDefaults standardUserDefaults]
@@ -780,7 +775,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
       {
           if (!error)
           {
-              DLog(@"Status code for share track: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+              DLog(@"Status code for update name: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
               
               //Check for 2xx status codes
               if (((NSHTTPURLResponse *)response).statusCode >= 200 &&

@@ -17,18 +17,18 @@
 #pragma mark - Local Constants
 
 #if AMBPRODUCTION
-NSString * const AMB_IDENTIFY_URL = @"https://mbsy.co/universal/landing/?url=ambassador:ios/&universal_id=***REMOVED***";
+NSString * const AMB_IDENTIFY_URL = @"https://mbsy.co/universal/landing/?url=ambassador:ios/";
 #else
-NSString * const AMB_IDENTIFY_URL = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/&universal_id=***REMOVED***";
+NSString * const AMB_IDENTIFY_URL = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/";
 #endif
 
 NSString * const AMB_IDENTIFY_JS_VAR = @"JSON.stringify(augur.json)";
 NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
 
 #if AMBPRODUCTION
-NSString * const AMB_IDENTIFY_SEND_URL = @"https://api.ambassador.com/universal/action/identify/?u=***REMOVED***";
+NSString * const AMB_IDENTIFY_SEND_URL = @"https://api.ambassador.com/universal/action/identify/";
 #else
-NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/?u=***REMOVED***";
+NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/";
 #endif
 
 
@@ -55,7 +55,8 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @property NSString *email;
 @property PTPusher *client;
 @property PTPusherPrivateChannel *channel;
-@property NSString *APIKey;
+@property NSString *universalToken;
+@property NSString *universalID;
 
 @end
 
@@ -64,7 +65,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @implementation Identify
 
 #pragma mark - Object lifecycle
-- (id)initWithKey:(NSString *)key
+- (id)initWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID
 {
     DLog();
     if ([super init])
@@ -72,7 +73,8 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         self.webview = [[UIWebView alloc] init];
         self.webview.delegate = self;
         self.email = @"";
-        self.APIKey = key;
+        self.universalToken = universalToken;
+        self.universalID = universalID;
         self.client = [PTPusher pusherWithKey:AMB_PUSHER_KEY delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:AMB_PUSHER_AUTHENTICATION_URL];
         [self.client connect];
@@ -84,7 +86,8 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 - (void)identify
 {
     DLog();
-    NSURL *url = [NSURL URLWithString:AMB_IDENTIFY_URL];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&universal_id=%@",AMB_IDENTIFY_URL, self.universalID]];
+    DLog(@"%@", [url absoluteString]);
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webview loadRequest:request];
 }
@@ -153,7 +156,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                      {
                          dictionary[@"last_name"] = @"";
                      }
-                     NSLog(@"Pusher event - %@", event.data);
+                     DLog(@"Pusher event - %@", event.data);
                      [[NSUserDefaults standardUserDefaults] setValue:dictionary forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
                      [self.delegate ambassadorDataWasRecieved:dictionary];
                  }];
@@ -274,7 +277,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
+    [request setValue:self.universalToken forHTTPHeaderField:@"Authorization"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
@@ -290,7 +293,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                   ((NSHTTPURLResponse *)response).statusCode < 300)
               {
                   // Looking for a "Polling" response
-                  NSLog(@"Response from backend from sending identify (looking for 'polling'): %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                  DLog(@"Response from backend from sending identify (looking for 'polling'): %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
               }
               else if (((NSHTTPURLResponse *)response).statusCode == 401)
               {
@@ -368,7 +371,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     
     // Modify the default autheticate request that Pusher will make. The
     // HTTP body is set per Ambassador back end requirements
-    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
+    [request setValue:self.universalToken forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSMutableString *httpBodyString = [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding];
     NSMutableDictionary *httpBody = parseQueryString(httpBodyString);
@@ -400,7 +403,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 
 - (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel
 {
-    NSLog(@"Subscribed to: %@", channel.name);
+    DLog(@"Subscribed to: %@", channel.name);
 }
 
 @end
