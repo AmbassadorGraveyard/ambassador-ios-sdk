@@ -39,7 +39,7 @@
     conversion.mbsy_is_approved = @YES;
     conversion.mbsy_email = @"jake@getambassador.com";
 
-    [AmbassadorSDK runWithSDKToken:@"UniversalToken ***REMOVED***" universalID:@"***REMOVED***" convertOnInstall:conversion completion:^(NSError *error) {
+    [AmbassadorSDK runWithSDKToken:@"SDKToken ***REMOVED***" universalID:@"***REMOVED***" convertOnInstall:conversion completion:^(NSError *error) {
         if (error) {
             NSLog(@"Error %@", error);
         }

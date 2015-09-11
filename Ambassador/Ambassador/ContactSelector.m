@@ -120,7 +120,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             firstName = (NSMutableString *)[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             
-            NSLog(@"User first and last name: %@ %@", firstName, lastName);
+            DLog(@"User first and last name: %@ %@", firstName, lastName);
             
             if ([firstName isEqualToString:@""] || [lastName isEqualToString:@""])
             {
@@ -128,7 +128,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             }
             else
             {
-                NSLog(@"Sending first and last name");
+                DLog(@"Sending first and last name");
                 [self sendSMSWithName:[NSString stringWithFormat:@"%@ %@", firstName, lastName]];
             }
         }
