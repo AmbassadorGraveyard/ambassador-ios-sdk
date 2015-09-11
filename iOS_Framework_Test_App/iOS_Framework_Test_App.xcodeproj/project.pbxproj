@@ -13,20 +13,9 @@
 		DB0F48A01B39DF7E00CCE614 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB0F489E1B39DF7E00CCE614 /* Main.storyboard */; };
 		DB0F48A21B39DF7E00CCE614 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB0F48A11B39DF7E00CCE614 /* Images.xcassets */; };
 		DB0F48A51B39DF7E00CCE614 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB0F48A31B39DF7E00CCE614 /* LaunchScreen.xib */; };
-		DB0F48B11B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0F48B01B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.m */; };
 		DB54412D1BA221C700A5C3A7 /* Ambassador.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB1C58E91B8264D90090D4C8 /* Ambassador.framework */; };
 		DB54412E1BA221C700A5C3A7 /* Ambassador.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DB1C58E91B8264D90090D4C8 /* Ambassador.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		DB0F48AB1B39DF7E00CCE614 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DB0F48891B39DF7E00CCE614 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DB0F48901B39DF7E00CCE614;
-			remoteInfo = iOS_Framework_Test_App;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		DB54412F1BA221C700A5C3A7 /* Embed Frameworks */ = {
@@ -53,7 +42,6 @@
 		DB0F489F1B39DF7E00CCE614 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB0F48A11B39DF7E00CCE614 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DB0F48A41B39DF7E00CCE614 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		DB0F48AA1B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOS_Framework_Test_AppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB0F48AF1B39DF7E00CCE614 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB0F48B01B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_Framework_Test_AppTests.m; sourceTree = "<group>"; };
 		DB1C58E91B8264D90090D4C8 /* Ambassador.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Ambassador.framework; sourceTree = "<group>"; };
@@ -65,13 +53,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB54412D1BA221C700A5C3A7 /* Ambassador.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DB0F48A71B39DF7E00CCE614 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,7 +73,6 @@
 			isa = PBXGroup;
 			children = (
 				DB0F48911B39DF7E00CCE614 /* iOS_Framework_Test_App.app */,
-				DB0F48AA1B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -160,24 +140,6 @@
 			productReference = DB0F48911B39DF7E00CCE614 /* iOS_Framework_Test_App.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DB0F48A91B39DF7E00CCE614 /* iOS_Framework_Test_AppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DB0F48B71B39DF7E00CCE614 /* Build configuration list for PBXNativeTarget "iOS_Framework_Test_AppTests" */;
-			buildPhases = (
-				DB0F48A61B39DF7E00CCE614 /* Sources */,
-				DB0F48A71B39DF7E00CCE614 /* Frameworks */,
-				DB0F48A81B39DF7E00CCE614 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DB0F48AC1B39DF7E00CCE614 /* PBXTargetDependency */,
-			);
-			name = iOS_Framework_Test_AppTests;
-			productName = iOS_Framework_Test_AppTests;
-			productReference = DB0F48AA1B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -190,10 +152,6 @@
 					DB0F48901B39DF7E00CCE614 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = Q4HD565996;
-					};
-					DB0F48A91B39DF7E00CCE614 = {
-						CreatedOnToolsVersion = 6.3.1;
-						TestTargetID = DB0F48901B39DF7E00CCE614;
 					};
 				};
 			};
@@ -211,7 +169,6 @@
 			projectRoot = "";
 			targets = (
 				DB0F48901B39DF7E00CCE614 /* iOS_Framework_Test_App */,
-				DB0F48A91B39DF7E00CCE614 /* iOS_Framework_Test_AppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -224,13 +181,6 @@
 				DB0F48A01B39DF7E00CCE614 /* Main.storyboard in Resources */,
 				DB0F48A51B39DF7E00CCE614 /* LaunchScreen.xib in Resources */,
 				DB0F48A21B39DF7E00CCE614 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DB0F48A81B39DF7E00CCE614 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,23 +213,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DB0F48A61B39DF7E00CCE614 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DB0F48B11B39DF7E00CCE614 /* iOS_Framework_Test_AppTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		DB0F48AC1B39DF7E00CCE614 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DB0F48901B39DF7E00CCE614 /* iOS_Framework_Test_App */;
-			targetProxy = DB0F48AB1B39DF7E00CCE614 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		DB0F489E1B39DF7E00CCE614 /* Main.storyboard */ = {
@@ -422,40 +356,6 @@
 			};
 			name = Release;
 		};
-		DB0F48B81B39DF7E00CCE614 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = iOS_Framework_Test_AppTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS_Framework_Test_App.app/iOS_Framework_Test_App";
-			};
-			name = Debug;
-		};
-		DB0F48B91B39DF7E00CCE614 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = iOS_Framework_Test_AppTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS_Framework_Test_App.app/iOS_Framework_Test_App";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -473,15 +373,6 @@
 			buildConfigurations = (
 				DB0F48B51B39DF7E00CCE614 /* Debug */,
 				DB0F48B61B39DF7E00CCE614 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DB0F48B71B39DF7E00CCE614 /* Build configuration list for PBXNativeTarget "iOS_Framework_Test_AppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DB0F48B81B39DF7E00CCE614 /* Debug */,
-				DB0F48B91B39DF7E00CCE614 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

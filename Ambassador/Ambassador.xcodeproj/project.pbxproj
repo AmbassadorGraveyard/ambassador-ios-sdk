@@ -117,7 +117,7 @@
 		DB1C587B1B8259F60090D4C8 /* ShareServicesConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareServicesConstants.h; sourceTree = "<group>"; };
 		DB1C587C1B8259F60090D4C8 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		DB1C587E1B8259F60090D4C8 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		DB1C587F1B8259F60090D4C8 /* AmbassadorSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorSDK.m; sourceTree = "<group>"; };
+		DB1C587F1B8259F60090D4C8 /* AmbassadorSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AmbassadorSDK.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		DB1C58811B8259F60090D4C8 /* AuthorizeLinkedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeLinkedIn.m; sourceTree = "<group>"; };
 		DB1C58821B8259F60090D4C8 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		DB1C58831B8259F60090D4C8 /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
