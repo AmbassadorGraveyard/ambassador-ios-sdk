@@ -131,6 +131,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             {
                 DLog(@"Sending first and last name");
                 [self sendSMSWithFirstName:firstName lastName:lastName];
+
             }
         }
         else if ([self.serviceType isEqualToString:EMAIL_TITLE])

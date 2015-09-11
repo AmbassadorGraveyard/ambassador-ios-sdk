@@ -20,9 +20,9 @@ NSString * const AMB_CONVERSION_DB_NAME = @"conversions.db";
 NSString * const AMB_CONVERSION_SQL_TABLE_NAME = @"conversions";
 
 #if AMBPRODUCTION
-NSString * const AMB_CONVERSION_URL = @"https://api.ambassador.com/universal/action/conversion/?u=***REMOVED***";
+NSString * const AMB_CONVERSION_URL = @"https://api.ambassador.com/universal/action/conversion/";
 #else
-NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/?u=***REMOVED***";
+NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/";
 #endif
 NSString * const AMB_CONVERSION_INSERT_QUERY = @"INSERT INTO Conversions VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions (ID INTEGER PRIMARY KEY AUTOINCREMENT, mbsy_campaign INTEGER, mbsy_email TEXT, mbsy_first_name TEXT, mbsy_last_name TEXT, mbsy_email_new_ambassador INTEGER, mbsy_uid TEXT, mbsy_custom1 TEXT, mbsy_custom2 TEXT, mbsy_custom3 TEXT, mbsy_auto_create INTEGER, mbsy_revenue REAL, mbsy_deactivate_new_ambassador INTEGER, mbsy_transaction_uid TEXT, mbsy_add_to_group_id INTEGER, mbsy_event_data1 TEXT, mbsy_event_data2 TEXT, mbsy_event_data3 TEXT, mbsy_is_approved INTEGER, insights_data BLOB)";
@@ -205,7 +205,6 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             request.HTTPMethod = @"POST";
             [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-           // [request setValue:AMB_MBSY_UNIVERSAL_ID forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
             [request setValue:self.key forHTTPHeaderField:@"Authorization"];
             request.HTTPBody = JSONData;
         
@@ -226,6 +225,14 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
                       {
                           DLog(@"Response from backend for record ID %@: %@", sql_ID, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
                           [db executeUpdate:@"Delete from conversions where ID = ?",  sql_ID];
+
+                      } else {
+                          NSLog(@"[Ambassador] Error - Server reponse from sending conversion:%ld - %@", (long)((NSHTTPURLResponse *)response).statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                      }
+                      
+                      if (((NSHTTPURLResponse *)response).statusCode >= 400 &&
+                          ((NSHTTPURLResponse *)response).statusCode < 500) {
+                           [db executeUpdate:@"Delete from conversions where ID = ?",  sql_ID];
                       }
                   }
                   else
