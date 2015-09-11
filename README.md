@@ -198,7 +198,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
     // If you don't want to register a conversion during the first launch of your
     // application, then pass nil for the convertOnInstall parameter
-    AmbassadorSDK.runWithSDKToken(<your_SDKToken>, universalID:<your_universal_id)
+    AmbassadorSDK.runWithSDKToken(<your_SDKToken>, universalID:<your_universal_id>)
 
     //--OR--
 
@@ -206,7 +206,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     // create a conversion object to pass for the convertOnInstall parameter
     var parameters = ConversionParameters()
     // ... set parameters' properties (more on this in the "Conversions" section)
-    AmbassadorSDK.runWithSDKToken(<your_SDKToken>, universalID:<your_universal_id, convertOnInstall:parameters) { (error) -> Void in
+    AmbassadorSDK.runWithSDKToken(<your_SDKToken>, universalID:<your_universal_id>, convertOnInstall:parameters) { (error) -> Void in
         if ((error) != nil) {
             println("Error \(error)")
         } else {
