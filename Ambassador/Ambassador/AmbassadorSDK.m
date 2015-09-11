@@ -70,14 +70,14 @@ static ServiceSelector *raf;
 {
     DLog();
     [[AmbassadorSDK sharedInstance] runWithKey:key
-                              convertOnInstall:nil];
+                              convertOnInstall:nil completion:nil];
 }
 
-+ (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information
++ (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
     DLog();
     [[AmbassadorSDK sharedInstance] runWithKey:key
-                         convertOnInstall:information];
+                         convertOnInstall:information completion:completion];
 }
 
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(ServiceSelectorPreferences*)parameters
@@ -90,10 +90,10 @@ static ServiceSelector *raf;
     [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withRAFParameters:parameters];
 }
 
-+ (void)registerConversion:(ConversionParameters *)information
++ (void)registerConversion:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
     DLog();
-    [[AmbassadorSDK sharedInstance] registerConversion:information];
+    [[AmbassadorSDK sharedInstance] registerConversion:information completion:completion];
 }
 
 + (void)identifyWithEmail:(NSString *)email
@@ -105,7 +105,7 @@ static ServiceSelector *raf;
 
 
 #pragma mark - Internal API methods
-- (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information
+- (void)runWithKey:(NSString *)key convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
 #if DEBUG
         DLog(@"Removing user defaults for testing");
@@ -132,7 +132,7 @@ static ServiceSelector *raf;
         // Check if this is the first time opening
         if (![[NSUserDefaults standardUserDefaults] objectForKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]) {
             DLog(@"\tSending conversion on app launch");
-            [self registerConversion:information];
+            [self registerConversion:information completion:completion];
         }
     }
     
@@ -176,10 +176,10 @@ static ServiceSelector *raf;
     [viewController presentViewController:vc animated:YES completion:nil];
 }
 
-- (void)registerConversion:(ConversionParameters *)information
+- (void)registerConversion:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
     DLog();
-    [conversion registerConversionWithParameters:information];
+    [conversion registerConversionWithParameters:information completion:completion];
 }
 
 - (void)identifyWithEmail:(NSString *)email

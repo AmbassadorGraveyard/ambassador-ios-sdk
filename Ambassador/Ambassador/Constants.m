@@ -73,3 +73,7 @@ NSString * const AMB_UPDATE_IDENTIFY_URL = @"http://api.ambassador.com/universal
 #else
 NSString * const AMB_UPDATE_IDENTIFY_URL = @"http://dev-ambassador-api.herokuapp.com/universal/action/identify/"; //Change to production
 #endif
+
+
+NSString * const AMB_ERROR_DOMAIN = @"AmbassadorSDKErrorDomain";
+
