@@ -160,7 +160,7 @@ In the bridging header, add an import statement for the Ambassador SDK.
 You run Ambassador inside `application:didFinishLaunchingWithOptions:`
 and have the option to convert on install. This will register a conversion
 the first time the app is launched. More on conversions and setting their
-parameters in [Conversions](#conversions). Your API key will be provided to you by Ambassador.
+parameters in [Conversions](#conversions). Your SDKToken and Universal ID will be provided to you by Ambassador.
 
 **Objective-c**
 ```objective-c
@@ -169,7 +169,7 @@ parameters in [Conversions](#conversions). Your API key will be provided to you 
 
   // If you don't want to register a conversion during the first launch of your
   // application, then pass nil for the convertOnInstall parameter
-  [AmbassadorSDK runWithKey:<your_API_key>];
+  [AmbassadorSDK runWithSDKToken:<your_SDKToken> universalID:<your_universal_id>];
 
   //--OR--
 
@@ -177,14 +177,14 @@ parameters in [Conversions](#conversions). Your API key will be provided to you 
   // create a conversion object to pass for the convertOnInstall parameter
   ConversionParameters *parameters = [[ConversionParameters alloc] init];
   // ... set parameters' properties (more on this in the "Conversions" section)
-  [AmbassadorSDK runWithKey:<your_API_key> convertOnInstall:parameters completion:^(NSError *error) {
-    if (error) {
-        NSLog(@"Error %@", error);
-    }
-    else {
-        NSLog(@"All conversion parameters are set properly");
-    }
-}];
+  [AmbassadorSDK runWithSDKToken:<your_SDKToken> universalID:<your_universal_id> convertOnInstall:conversion completion:^(NSError *error) {
+       if (error) {
+           NSLog(@"Error %@", error);
+       }
+       else {
+           NSLog(@"Required parameters are set");
+       }
+   }];
 
   return YES;
 }
@@ -198,7 +198,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
     // If you don't want to register a conversion during the first launch of your
     // application, then pass nil for the convertOnInstall parameter
-    AmbassadorSDK.runWithKey(<your_API_key>)
+    AmbassadorSDK.runWithSDKToken(<your_SDKToken>, universalID:<your_universal_id>)
 
     //--OR--
 
@@ -206,7 +206,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     // create a conversion object to pass for the convertOnInstall parameter
     var parameters = ConversionParameters()
     // ... set parameters' properties (more on this in the "Conversions" section)
-    AmbassadorSDK.runWithKey(<your_API_key>, convertOnInstall:parameters) { (error) -> Void in
+    AmbassadorSDK.runWithSDKToken(<your_SDKToken>, universalID:<your_universal_id>, convertOnInstall:parameters) { (error) -> Void in
         if ((error) != nil) {
             println("Error \(error)")
         } else {

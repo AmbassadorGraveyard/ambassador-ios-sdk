@@ -21,11 +21,11 @@
     // Override point for customization after application launch.
     ConversionParameters *conversion = [[ConversionParameters alloc] init];
     conversion.mbsy_revenue = @1000;
-    conversion.mbsy_campaign = @260;
-    conversion.mbsy_first_name = @"test";
+    conversion.mbsy_campaign = @280;
+    conversion.mbsy_first_name = @"";
     conversion.mbsy_last_name = @"one";
     conversion.mbsy_email_new_ambassador = @YES;
-    conversion.mbsy_uid = @"uiduiduiduiduiduiduid";
+    conversion.mbsy_uid = @"";
     conversion.mbsy_custom1 = @"custom111";
     conversion.mbsy_custom2 = @"custom222";
     conversion.mbsy_custom3 = @"custom333";
@@ -39,12 +39,12 @@
     conversion.mbsy_is_approved = @YES;
     conversion.mbsy_email = @"jake@getambassador.com";
 
-    [AmbassadorSDK runWithKey:@"UniversalToken bdb49d2b9ae24b7b6bc5da122370f3517f98336f" convertOnInstall:conversion completion:^(NSError *error) {
+    [AmbassadorSDK runWithSDKToken:@"SDKToken 9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32" convertOnInstall:conversion completion:^(NSError *error) {
         if (error) {
             NSLog(@"Error %@", error);
         }
         else {
-            NSLog(@"All conversion parameters are set properly");
+            NSLog(@"Required parameters are set");
         }
     }];
     
@@ -53,7 +53,7 @@
             NSLog(@"Error %@", error);
         }
         else {
-            NSLog(@"All conversion parameters are set properly");
+            NSLog(@"Required parameters are set");
         }
     }];
     return YES;
