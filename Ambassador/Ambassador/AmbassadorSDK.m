@@ -33,7 +33,7 @@ NSString * const SHORT_CODE_URL_KEY = @"url";
 @implementation AmbassadorSDK
 
 #pragma mark - Static class variables
-static NSString *AMBSDKToken;
+static NSString *AMBuniversalToken;
 static NSString *AMBuniversalID;
 static NSMutableDictionary *backEndData;
 static NSTimer *conversionTimer;
@@ -67,16 +67,16 @@ static ServiceSelector *raf;
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
 //
-+ (void)runWithSDKToken:(NSString *)SDKToken universalID:(NSString *)universalID
++ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID
 {
     DLog();
-    [[AmbassadorSDK sharedInstance] runWithSDKToken:SDKToken universalID:universalID convertOnInstall:nil completion:nil];
+    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:nil completion:nil];
 }
 
-+ (void)runWithSDKToken:(NSString *)SDKToken universalID:(NSString *)universalID convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
++ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
     DLog();
-    [[AmbassadorSDK sharedInstance] runWithSDKToken:SDKToken universalID:universalID convertOnInstall:information completion:completion];
+    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:information completion:completion];
 }
 
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(ServiceSelectorPreferences*)parameters
@@ -104,7 +104,7 @@ static ServiceSelector *raf;
 
 
 #pragma mark - Internal API methods
-- (void)runWithSDKToken:(NSString *)SDKToken universalID:(NSString *)universalID convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
+- (void)runWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
 #if DEBUG
         DLog(@"Removing user defaults for testing");
@@ -115,15 +115,15 @@ static ServiceSelector *raf;
     //Initialize class variables
     DLog(@"Initializing class variables");
     AMBuniversalID = universalID;
-    AMBSDKToken = SDKToken;
+    AMBuniversalToken = universalToken;
     conversionTimer = [NSTimer scheduledTimerWithTimeInterval:AMB_CONVERSION_FLUSH_TIME
                                                        target:self
                                                      selector:@selector(checkConversionQueue)
                                                      userInfo:nil
                                                       repeats:YES];
-    identify = [[Identify alloc] initWithUniversalToken:SDKToken universalID:universalID];
+    identify = [[Identify alloc] initWithUniversalToken:universalToken universalID:universalID];
     identify.delegate = self;
-    conversion = [[Conversion alloc] initWithKey:SDKToken];
+    conversion = [[Conversion alloc] initWithKey:universalToken];
     
     DLog(@"Checking if conversion is made on app launch");
 
@@ -170,7 +170,7 @@ static ServiceSelector *raf;
     raf.shortURL = shortCodeURL;
     parameters.textFieldText = shortCodeURL;
     raf.prefs = parameters;
-    raf.APIKey = AMBSDKToken;
+    raf.APIKey = AMBuniversalToken;
     raf.campaignID = ID;
 
     [viewController presentViewController:vc animated:YES completion:nil];
