@@ -1,4 +1,9 @@
 PODS:
+  - FMDB (2.5):
+    - FMDB/standard (= 2.5)
+  - FMDB/common (2.5)
+  - FMDB/standard (2.5):
+    - FMDB/common
   - libPusher (1.6):
     - libPusher/Core (= 1.6)
   - libPusher/Core (1.6):
@@ -6,9 +11,11 @@ PODS:
   - SocketRocket (0.3.1-beta2)
 
 DEPENDENCIES:
+  - FMDB
   - libPusher (~> 1.6)
 
 SPEC CHECKSUMS:
+  FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   libPusher: f9367ede8f5141e74adc90ba20536cbc3c7b68e1
   SocketRocket: 7284ab9370a06c99aba92b2fe3a32aedd0f9a6fa
 
