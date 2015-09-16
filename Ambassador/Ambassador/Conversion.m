@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
 //
 
+//#import "NamespacedDependencies.h"
 #import "Conversion.h"
 #import "FMResultSet.h"
 #import "FMDatabase.h"

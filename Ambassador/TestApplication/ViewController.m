@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import <Ambassador/Ambassador.h>
+#import "FMResultSet.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -19,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[FMResultSet alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
