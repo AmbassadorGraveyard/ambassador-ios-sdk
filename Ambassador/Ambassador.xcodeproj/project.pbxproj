@@ -23,7 +23,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; };
+		DB68F50C1BA9C473009FF1B2 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DB68F50B1BA9C473009FF1B2 /* FMResultSet.m */; };
+		DB68F5111BA9D9BA009FF1B2 /* NamespacedDependencies.h in Headers */ = {isa = PBXBuildFile; fileRef = DB68F5101BA9D9BA009FF1B2 /* NamespacedDependencies.h */; };
+		DB68F5171BAA117C009FF1B2 /* NamespacedDependencies.h in Copy Files */ = {isa = PBXBuildFile; fileRef = DB68F5101BA9D9BA009FF1B2 /* NamespacedDependencies.h */; };
+		DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in Copy Files */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; };
 		DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB844D261BA75BB8003FD7A9 /* libAmbassador.a */; };
 		DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB844D5C1BA767FA003FD7A9 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = DB844D5B1BA767FA003FD7A9 /* back.png */; };
@@ -204,19 +207,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		DB844D241BA75BB8003FD7A9 /* CopyFiles */ = {
+		DB844D241BA75BB8003FD7A9 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in CopyFiles */,
+				DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in Copy Files */,
+				DB68F5171BAA117C009FF1B2 /* NamespacedDependencies.h in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DB68F50A1BA9C473009FF1B2 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		DB68F50B1BA9C473009FF1B2 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		DB68F5101BA9D9BA009FF1B2 /* NamespacedDependencies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NamespacedDependencies.h; path = ext/NamespacedDependencies.h; sourceTree = "<group>"; };
 		DB844D261BA75BB8003FD7A9 /* libAmbassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAmbassador.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB844D291BA75BB8003FD7A9 /* Ambassador.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ambassador.h; sourceTree = "<group>"; };
 		DB844D311BA75BB8003FD7A9 /* AmbassadorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -426,6 +434,7 @@
 		DB844D1D1BA75BB8003FD7A9 = {
 			isa = PBXGroup;
 			children = (
+				DB68F5101BA9D9BA009FF1B2 /* NamespacedDependencies.h */,
 				DB844D281BA75BB8003FD7A9 /* Ambassador */,
 				DB844D351BA75BB8003FD7A9 /* AmbassadorTests */,
 				DB844D531BA7622D003FD7A9 /* AmbassadorResources */,
@@ -558,6 +567,8 @@
 				DB844D681BA76BDE003FD7A9 /* AppDelegate.m */,
 				DB844D6A1BA76BDE003FD7A9 /* ViewController.h */,
 				DB844D6B1BA76BDE003FD7A9 /* ViewController.m */,
+				DB68F50A1BA9C473009FF1B2 /* FMResultSet.h */,
+				DB68F50B1BA9C473009FF1B2 /* FMResultSet.m */,
 				DB844D6D1BA76BDE003FD7A9 /* Main.storyboard */,
 				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
 				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
@@ -739,6 +750,7 @@
 				DBA3FC1A1BA8AA1D00672D82 /* PTPusherEvent.h in Headers */,
 				DBA3FB751BA8A23C00672D82 /* Constants.h in Headers */,
 				DBA3FB8E1BA8A23C00672D82 /* Identify.h in Headers */,
+				DB68F5111BA9D9BA009FF1B2 /* NamespacedDependencies.h in Headers */,
 				DBA3FB731BA8A23C00672D82 /* AuthorizeLinkedIn.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -752,7 +764,8 @@
 			buildPhases = (
 				DB844D221BA75BB8003FD7A9 /* Sources */,
 				DB844D231BA75BB8003FD7A9 /* Frameworks */,
-				DB844D241BA75BB8003FD7A9 /* CopyFiles */,
+				DB844D241BA75BB8003FD7A9 /* Copy Files */,
+				DB68F5161BAA115A009FF1B2 /* Generate Namespace */,
 				DB844D401BA75CDC003FD7A9 /* Headers */,
 				DB844D421BA75E54003FD7A9 /* Prepare Framework */,
 			);
@@ -943,6 +956,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		DB68F5161BAA115A009FF1B2 /* Generate Namespace */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Namespace";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script is a modified version of this: https://github.com/jverkoey/nimbus/blob/master/scripts/generate_namespace_header\n\nheader=$SRCROOT/ext/NamespacedDependencies.h\nprefix=\"YOUR_PREFIX_HERE\"\n\n# CODESIGNING_FOLDER_PATH=\"$CODESIGNING_FOLDER_PATH/libAmbassador.a\"\n\necho \"Generating $header from $CODESIGNING_FOLDER_PATH...\"\n\necho \"// Namespaced Header\n\n#ifndef __NS_SYMBOL\n// We need to have multiple levels of macros here so that __NAMESPACE_PREFIX_ is\n// properly replaced by the time we concatenate the namespace prefix.\n#define __NS_REWRITE(ns, symbol) ns ## _ ## symbol\n#define __NS_BRIDGE(ns, symbol) __NS_REWRITE(ns, symbol)\n#define __NS_SYMBOL(symbol) __NS_BRIDGE($prefix, symbol)\n#endif\n\n\" > $header\n\n# The following one-liner is a bit of a pain in the ass.\n# Breakdown:\n#\n# nm $CODESIGNING_FOLDER_PATH -j\n# Dump all of the symbols from the compiled library. This will include all UIKit\n# and Foundation symbols as well.\n#\n# | grep \"^_OBJC_CLASS_$_\"\n# Filter out the interfaces.\n#\n# | grep -v \"\\$_NS\"\n# Remove all Foundation classes.\n#\n# | grep -v \"\\$_UI\"\n# Remove all UIKit classes.\n#\n# | sed -e 's/_OBJC_CLASS_\\$_\\(.*\\)/#ifndef \\1\\'$'\\n''#define \\1 __NS_SYMBOL(\\1)\\'$'\\n''#endif/g'\n# I use the syntax outlined here:\n# http://stackoverflow.com/questions/6761796/bash-perl-or-sed-insert-on-new-line-after-found-phrase\n# to create newlines so that we can write the following on separate lines:\n#\n#  #ifndef ...\n#  #define ...\n#  #endif\n#\n\necho \"// Classes\" >> $header\n\nnm $CODESIGNING_FOLDER_PATH -j | sort | uniq | grep \"^_OBJC_CLASS_\\$_\" | grep -v \"\\$_AGSGT\" | grep -v \"\\$_CL\" | grep -v \"\\$_NS\" | grep -v \"\\$_UI\" | sed -e 's/_OBJC_CLASS_\\$_\\(.*\\)/#ifndef \\1\\'$'\\n''#define \\1 __NS_SYMBOL(\\1)\\'$'\\n''#endif\\'$'\\n''/g' >> $header\n\necho \"// Functions\" >> $header\n\nnm $CODESIGNING_FOLDER_PATH | sort | uniq | grep \" T \" | cut -d' ' -f3 | grep -v \"\\$_NS\" | grep -v \"\\$_UI\" | sed -e 's/_\\(.*\\)/#ifndef \\1\\'$'\\n''#define \\1 __NS_SYMBOL(\\1)\\'$'\\n''#endif\\'$'\\n''/g' >> $header\n\necho \"// Externs\" >> $header\n\nnm $CODESIGNING_FOLDER_PATH | sort | uniq | grep \" D \" | cut -d' ' -f3 | grep -v \"\\$_NS\" | grep -v \"\\$_UI\" | sed -e 's/_\\(.*\\)/#ifndef \\1\\'$'\\n''#define \\1 __NS_SYMBOL(\\1)\\'$'\\n''#endif\\'$'\\n''/g' >> $header\n\nnm $CODESIGNING_FOLDER_PATH | sort | uniq | grep \" S \" | cut -d' ' -f3 | grep -v \"\\$_NS\" | grep -v \".eh\" | grep -v \"\\$_UI\" | grep -v \"OBJC_\" | sed -e 's/_\\(.*\\)/#ifndef \\1\\'$'\\n''#define \\1 __NS_SYMBOL(\\1)\\'$'\\n''#endif\\'$'\\n''/g' >> $header\n\n";
+		};
 		DB844D421BA75E54003FD7A9 /* Prepare Framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1046,6 +1073,7 @@
 			files = (
 				DB844D6C1BA76BDE003FD7A9 /* ViewController.m in Sources */,
 				DB844D691BA76BDE003FD7A9 /* AppDelegate.m in Sources */,
+				DB68F50C1BA9C473009FF1B2 /* FMResultSet.m in Sources */,
 				DB844D661BA76BDE003FD7A9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
