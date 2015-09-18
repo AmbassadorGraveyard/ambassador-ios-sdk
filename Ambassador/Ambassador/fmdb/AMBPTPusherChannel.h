@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PTPusherEventPublisher.h"
-#import "PTEventListener.h"
-#import "PTPusherPresenceChannelDelegate.h"
-#import "PTPusherMacros.h"
+#import "AMBPTPusherEventPublisher.h"
+#import "AMBPTEventListener.h"
+#import "AMBPTPusherPresenceChannelDelegate.h"
+#import "AMBPTPusherMacros.h"
 
 @class AMBPTPusher;
 @class AMBPTPusherEventDispatcher;
@@ -102,7 +102,7 @@
  
  Only private and presence channels support client triggered events.
  */
-@interface PTPusherPrivateChannel : AMBPTPusherChannel
+@interface AMBPTPusherPrivateChannel : AMBPTPusherChannel
 
 ///------------------------------------------------------------------------------------/
 /// @name Triggering events
@@ -129,7 +129,7 @@
 
 @end
 
-@class PTPusherChannelMembers;
+@class AMBPTPusherChannelMembers;
 
 /** A PTPusherPresenceChannel object represents a Pusher presence channel.
  
@@ -145,7 +145,7 @@
  
  @see PTPusherPresenceChannelDelegate
  */
-@interface AMBPTPusherPresenceChannel : PTPusherPrivateChannel
+@interface AMBPTPusherPresenceChannel : AMBPTPusherPrivateChannel
 
 ///------------------------------------------------------------------------------------/
 /// @name Properties
@@ -160,7 +160,7 @@
 
 /** Returns the channel member list.
  */
-@property (nonatomic, readonly) PTPusherChannelMembers *members;
+@property (nonatomic, readonly) AMBPTPusherChannelMembers *members;
 
 @end
 
@@ -196,7 +196,7 @@
  * you should implement the presence delegate methods and maintain your own ordered list.
  *
  */
-@interface PTPusherChannelMembers : NSObject
+@interface AMBPTPusherChannelMembers : NSObject
 
 /** The number of members in the channel.
  */

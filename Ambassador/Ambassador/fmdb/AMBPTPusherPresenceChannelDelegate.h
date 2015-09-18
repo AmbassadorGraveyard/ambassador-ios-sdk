@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PTPusherMacros.h"
+#import "AMBPTPusherMacros.h"
 
 @class AMBPTPusherChannelMember;
 @class AMBPTPusherPresenceChannel;

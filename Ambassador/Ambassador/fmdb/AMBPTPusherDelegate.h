@@ -6,7 +6,7 @@
 //  Copyright 2010 LJR Software Limited. All rights reserved.
 //
 
-#import "PTPusherMacros.h"
+#import "AMBPTPusherMacros.h"
 
 @class AMBPTPusher;
 @class AMBPTPusherConnection;

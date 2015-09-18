@@ -18,15 +18,15 @@
 #import <Security/SecCertificate.h>
 
 typedef enum {
-    SR_CONNECTING   = 0,
-    SR_OPEN         = 1,
-    SR_CLOSING      = 2,
-    SR_CLOSED       = 3,
-} SRReadyState;
+    AMBSR_CONNECTING   = 0,
+    AMBSR_OPEN         = 1,
+    AMBSR_CLOSING      = 2,
+    AMBSR_CLOSED       = 3,
+} AMBSRReadyState;
 
 @class AMBSRWebSocket;
 
-extern NSString *const SRWebSocketErrorDomain;
+extern NSString *const AMBSRWebSocketErrorDomain;
 
 #pragma mark - SRWebSocketDelegate
 
@@ -38,7 +38,7 @@ extern NSString *const SRWebSocketErrorDomain;
 
 @property (nonatomic, assign) id <SRWebSocketDelegate> delegate;
 
-@property (nonatomic, readonly) SRReadyState readyState;
+@property (nonatomic, readonly) AMBSRReadyState readyState;
 @property (nonatomic, readonly, retain) NSURL *url;
 
 // This returns the negotiated protocol.

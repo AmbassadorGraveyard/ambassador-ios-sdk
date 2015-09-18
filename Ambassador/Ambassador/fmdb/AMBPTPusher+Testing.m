@@ -6,16 +6,16 @@
 //  Copyright (c) 2012 LJR Software Limited. All rights reserved.
 //
 
-#import "PTPusher+Testing.h"
+#import "AMBPTPusher+Testing.h"
 #import "AMBPTPusherChannelAuthorizationOperation.h"
 
-NSString *const PTPusherAuthorizationBypassURL = @"libpusher://auth/bypass/url";
+NSString *const AMBPTPusherAuthorizationBypassURL = @"libpusher://auth/bypass/url";
 
 @implementation AMBPTPusher (Testing)
 
 - (void)enableChannelAuthorizationBypassMode
 {
-  self.authorizationURL = [NSURL URLWithString:PTPusherAuthorizationBypassURL];
+  self.authorizationURL = [NSURL URLWithString:AMBPTPusherAuthorizationBypassURL];
 }
 
 @end

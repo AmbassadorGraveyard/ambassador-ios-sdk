@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AMBPTPusher.h"
 
-extern NSString *const PTPusherAuthorizationBypassURL;
+extern NSString *const AMBPTPusherAuthorizationBypassURL;
 
 @interface AMBPTPusher (Testing)
 

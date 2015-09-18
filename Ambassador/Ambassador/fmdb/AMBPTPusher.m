@@ -7,51 +7,51 @@
 //
 
 #import "AMBPTPusher.h"
-#import "PTEventListener.h"
+#import "AMBPTEventListener.h"
 #import "AMBPTPusherEvent.h"
 #import "AMBPTPusherChannel.h"
 #import "AMBPTPusherEventDispatcher.h"
-#import "PTTargetActionEventListener.h"
-#import "PTBlockEventListener.h"
-#import "PTPusherErrors.h"
+#import "AMBPTTargetActionEventListener.h"
+#import "AMBPTBlockEventListener.h"
+#import "AMBPTPusherErrors.h"
 #import "AMBPTPusherChannelAuthorizationOperation.h"
 #import "AMBPTPusherChannel_Private.h"
 
 #define kPUSHER_HOST @"ws.pusherapp.com"
 
-typedef NS_ENUM(NSUInteger, PTPusherAutoReconnectMode) {
-  PTPusherAutoReconnectModeNoReconnect,
-  PTPusherAutoReconnectModeReconnectImmediately,
-  PTPusherAutoReconnectModeReconnectWithConfiguredDelay,
-  PTPusherAutoReconnectModeReconnectWithBackoffDelay
+typedef NS_ENUM(NSUInteger, AMBPTPusherAutoReconnectMode) {
+  AMBPTPusherAutoReconnectModeNoReconnect,
+  AMBPTPusherAutoReconnectModeReconnectImmediately,
+  AMBPTPusherAutoReconnectModeReconnectWithConfiguredDelay,
+  AMBPTPusherAutoReconnectModeReconnectWithBackoffDelay
 };
 
-NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, BOOL secure);
+NSURL *AMBPTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, BOOL secure);
 
 NSString *const AMBPTPusherEventReceivedNotification = @"PTPusherEventReceivedNotification";
 NSString *const AMBPTPusherEventUserInfoKey          = @"PTPusherEventUserInfoKey";
-NSString *const PTPusherErrorDomain               = @"PTPusherErrorDomain";
+NSString *const AMBPTPusherErrorDomain               = @"PTPusherErrorDomain";
 NSString *const AMBPTPusherFatalErrorDomain          = @"PTPusherFatalErrorDomain";
-NSString *const PTPusherErrorUnderlyingEventKey   = @"PTPusherErrorUnderlyingEventKey";
+NSString *const AMBPTPusherErrorUnderlyingEventKey   = @"PTPusherErrorUnderlyingEventKey";
 
 /** The Pusher protocol version, used to determined which features
  are supported.
  */
-#define kPTPusherClientProtocolVersion 6
+#define AMBkPTPusherClientProtocolVersion 6
 
-NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, BOOL encrypted)
+NSURL *AMBPTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, BOOL encrypted)
 {
   NSString *scheme = ((encrypted == YES) ? @"wss" : @"ws");
   NSString *URLString = [NSString stringWithFormat:@"%@://%@/app/%@?client=%@&protocol=%d&version=%@", 
-                         scheme, host, key, clientID, kPTPusherClientProtocolVersion, @"1.6"];
+                         scheme, host, key, clientID, AMBkPTPusherClientProtocolVersion, @"1.6"];
   return [NSURL URLWithString:URLString];
 }
 
-#define kPTPusherDefaultReconnectDelay 5.0
+#define AMBkPTPusherDefaultReconnectDelay 5.0
 
 @interface AMBPTPusher ()
 @property (nonatomic, strong, readwrite) AMBPTPusherConnection *connection;
-@property (nonatomic, assign) PTPusherAutoReconnectMode autoReconnectMode;
+@property (nonatomic, assign) AMBPTPusherAutoReconnectMode autoReconnectMode;
 @end
 
 #pragma mark -
@@ -76,7 +76,7 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
     
     self.connection = connection;
     self.connection.delegate = self;
-    self.reconnectDelay = kPTPusherDefaultReconnectDelay;
+    self.reconnectDelay = AMBkPTPusherDefaultReconnectDelay;
     
     /* Three reconnection attempts should be more than enough attempts
      * to reconnect where the user has simply locked their device or
@@ -112,7 +112,7 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
         hostURL = [NSString stringWithFormat:@"ws-%@.pusher.com", cluster];
     }
 
-    NSURL *serviceURL = PTPusherConnectionURL(hostURL, key, @"libPusher", isEncrypted);
+    NSURL *serviceURL = AMBPTPusherConnectionURL(hostURL, key, @"libPusher", isEncrypted);
     AMBPTPusherConnection *connection = [[AMBPTPusherConnection alloc] initWithURL:serviceURL];
     AMBPTPusher *pusher = [[self alloc] initWithConnection:connection];
     pusher.delegate = delegate;
@@ -135,14 +135,14 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
 - (void)connect
 {
   _numberOfReconnectAttempts = 0;
-  self.autoReconnectMode = PTPusherAutoReconnectModeReconnectWithConfiguredDelay;
+  self.autoReconnectMode = AMBPTPusherAutoReconnectModeReconnectWithConfiguredDelay;
   [self.connection connect];
 }
 
 - (void)disconnect
 {
   // we do not want to reconnect if a user explicitly disconnects
-  self.autoReconnectMode = PTPusherAutoReconnectModeNoReconnect;
+  self.autoReconnectMode = AMBPTPusherAutoReconnectModeNoReconnect;
   [self.connection disconnect];
 }
 
@@ -189,9 +189,9 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
   return channel;
 }
 
-- (PTPusherPrivateChannel *)subscribeToPrivateChannelNamed:(NSString *)name
+- (AMBPTPusherPrivateChannel *)subscribeToPrivateChannelNamed:(NSString *)name
 {
-  return (PTPusherPrivateChannel *)[self subscribeToChannelNamed:[NSString stringWithFormat:@"private-%@", name]];
+  return (AMBPTPusherPrivateChannel *)[self subscribeToChannelNamed:[NSString stringWithFormat:@"private-%@", name]];
 }
 
 - (AMBPTPusherPresenceChannel *)subscribeToPresenceChannelNamed:(NSString *)name
@@ -257,7 +257,7 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
     }
     else {
       if (error == nil) {
-        error = [NSError errorWithDomain:PTPusherErrorDomain code:PTPusherSubscriptionUnknownAuthorisationError userInfo:nil];
+        error = [NSError errorWithDomain:AMBPTPusherErrorDomain code:AMBPTPusherSubscriptionUnknownAuthorisationError userInfo:nil];
       }
       
       if ([self.delegate respondsToSelector:@selector(pusher:didFailToSubscribeToChannel:withError:)]) {
@@ -291,14 +291,14 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
   }
   
   NSMutableDictionary *payload = [NSMutableDictionary dictionary];  
-  payload[PTPusherEventKey] = name;
+  payload[AMBPTPusherEventKey] = name;
   
   if (data) {
-    payload[PTPusherDataKey] = data;
+    payload[AMBPTPusherDataKey] = data;
   }
   
   if (channelName) {
-    payload[PTPusherChannelKey] = channelName;
+    payload[AMBPTPusherChannelKey] = channelName;
   }
   [self.connection send:payload];
 }
@@ -333,7 +333,7 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
         reason = @"Unknown error"; // not sure what could cause this to be nil, but just playing it safe
     }
     
-    NSString *errorDomain = PTPusherErrorDomain;
+    NSString *errorDomain = AMBPTPusherErrorDomain;
 
     if (errorCode >= 400 && errorCode <= 4099) {
       errorDomain = AMBPTPusherFatalErrorDomain;
@@ -344,16 +344,16 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
     
     // 4000-4099 -> The connection SHOULD NOT be re-established unchanged.
     if (errorCode >= 4000 && errorCode <= 4099) {
-      [self handleDisconnection:connection error:error reconnectMode:PTPusherAutoReconnectModeNoReconnect];
+      [self handleDisconnection:connection error:error reconnectMode:AMBPTPusherAutoReconnectModeNoReconnect];
     } else
     // 4200-4299 -> The connection SHOULD be re-established immediately.
     if(errorCode >= 4200 && errorCode <= 4299) {
-      [self handleDisconnection:connection error:error reconnectMode:PTPusherAutoReconnectModeReconnectImmediately];
+      [self handleDisconnection:connection error:error reconnectMode:AMBPTPusherAutoReconnectModeReconnectImmediately];
     }
     
     else {
       // i.e. 4100-4199 -> The connection SHOULD be re-established after backing off.
-      [self handleDisconnection:connection error:error reconnectMode:PTPusherAutoReconnectModeReconnectWithBackoffDelay];
+      [self handleDisconnection:connection error:error reconnectMode:AMBPTPusherAutoReconnectModeReconnectWithBackoffDelay];
     }
   }
   else {
@@ -364,7 +364,7 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
 - (void)pusherConnection:(AMBPTPusherConnection *)connection didFailWithError:(NSError *)error wasConnected:(BOOL)wasConnected
 {
   if (wasConnected) {
-    [self handleDisconnection:connection error:error reconnectMode:PTPusherAutoReconnectModeReconnectImmediately];
+    [self handleDisconnection:connection error:error reconnectMode:AMBPTPusherAutoReconnectModeReconnectImmediately];
   }
   else {
     if ([self.delegate respondsToSelector:@selector(pusher:connection:failedWithError:)]) {
@@ -392,7 +392,7 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
      userInfo:@{AMBPTPusherEventUserInfoKey: event}];
 }
 
-- (void)handleDisconnection:(AMBPTPusherConnection *)connection error:(NSError *)error reconnectMode:(PTPusherAutoReconnectMode)reconnectMode
+- (void)handleDisconnection:(AMBPTPusherConnection *)connection error:(NSError *)error reconnectMode:(AMBPTPusherAutoReconnectMode)reconnectMode
 {
   [authorizationQueue cancelAllOperations];
   
@@ -402,7 +402,7 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
   
   BOOL willReconnect = NO;
   
-  if (reconnectMode > PTPusherAutoReconnectModeNoReconnect && _numberOfReconnectAttempts < _maximumNumberOfReconnectAttempts) {
+  if (reconnectMode > AMBPTPusherAutoReconnectModeNoReconnect && _numberOfReconnectAttempts < _maximumNumberOfReconnectAttempts) {
     willReconnect = YES;
   }
     
@@ -422,20 +422,20 @@ NSURL *PTPusherConnectionURL(NSString *host, NSString *key, NSString *clientID, 
   [authorizationQueue addOperation:operation];
 }
 
-- (void)reconnectUsingMode:(PTPusherAutoReconnectMode)reconnectMode
+- (void)reconnectUsingMode:(AMBPTPusherAutoReconnectMode)reconnectMode
 {
   _numberOfReconnectAttempts++;
   
   NSTimeInterval delay;
   
   switch (reconnectMode) {
-    case PTPusherAutoReconnectModeReconnectImmediately:
+    case AMBPTPusherAutoReconnectModeReconnectImmediately:
       delay = 0;
       break;
-    case PTPusherAutoReconnectModeReconnectWithConfiguredDelay:
+    case AMBPTPusherAutoReconnectModeReconnectWithConfiguredDelay:
       delay = self.reconnectDelay;
       break;
-    case PTPusherAutoReconnectModeReconnectWithBackoffDelay:
+    case AMBPTPusherAutoReconnectModeReconnectWithBackoffDelay:
       delay = self.reconnectDelay * _numberOfReconnectAttempts;
       break;
     default:

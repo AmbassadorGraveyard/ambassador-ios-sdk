@@ -7,9 +7,9 @@
 //
 
 #import "AMBPTJSON.h"
-#import "PTPusherMacros.h"
+#import "AMBPTPusherMacros.h"
 
-@interface PTNSJSONParser : NSObject <PTJSONParser>
+@interface AMBPTNSJSONParser : NSObject <PTJSONParser>
 + (instancetype)NSJSONParser;
 @end
 
@@ -17,12 +17,12 @@
 
 + (id<PTJSONParser>)JSONParser
 {
-  return [PTNSJSONParser NSJSONParser];
+  return [AMBPTNSJSONParser NSJSONParser];
 }
 
 @end
 
-@implementation PTNSJSONParser 
+@implementation AMBPTNSJSONParser 
 
 + (instancetype)NSJSONParser
 {

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PTPusherMacros.h"
+#import "AMBPTPusherMacros.h"
 
 @class AMBPTPusherConnection;
 @class AMBPTPusherEvent;
@@ -20,8 +20,8 @@
 - (void)pusherConnection:(AMBPTPusherConnection *)connection didReceiveEvent:(AMBPTPusherEvent *)event;
 @end
 
-extern NSString *const PTPusherConnectionEstablishedEvent;
-extern NSString *const PTPusherConnectionPingEvent;
+extern NSString *const AMBPTPusherConnectionEstablishedEvent;
+extern NSString *const AMBPTPusherConnectionPingEvent;
 
 typedef enum {
   PTPusherConnectionDisconnecting = 0,

@@ -23,7 +23,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		DB68F50C1BA9C473009FF1B2 /* AMBFMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DB68F50B1BA9C473009FF1B2 /* AMBFMResultSet.m */; };
 		DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in Copy Files */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; };
 		DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB844D261BA75BB8003FD7A9 /* libAmbassador.a */; };
 		DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -95,19 +94,17 @@
 		DBA3FC011BA8AA1D00672D82 /* NSString+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBDA1BA8AA1D00672D82 /* NSString+Hashing.m */; };
 		DBA3FC021BA8AA1D00672D82 /* NSDictionary+QueryString.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBDC1BA8AA1D00672D82 /* NSDictionary+QueryString.h */; };
 		DBA3FC031BA8AA1D00672D82 /* NSString+Hashing.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBDD1BA8AA1D00672D82 /* NSString+Hashing.h */; };
-		DBA3FC041BA8AA1D00672D82 /* PTBlockEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBDE1BA8AA1D00672D82 /* PTBlockEventListener.h */; };
+		DBA3FC041BA8AA1D00672D82 /* AMBPTBlockEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBDE1BA8AA1D00672D82 /* AMBPTBlockEventListener.h */; };
 		DBA3FC051BA8AA1D00672D82 /* AMBPTJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBDF1BA8AA1D00672D82 /* AMBPTJSON.h */; };
 		DBA3FC061BA8AA1D00672D82 /* AMBPTPusherChannel_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE01BA8AA1D00672D82 /* AMBPTPusherChannel_Private.h */; };
 		DBA3FC071BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE11BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h */; };
-		DBA3FC081BA8AA1D00672D82 /* PTTargetActionEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE21BA8AA1D00672D82 /* PTTargetActionEventListener.h */; };
+		DBA3FC081BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE21BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h */; };
 		DBA3FC091BA8AA1D00672D82 /* AMBPTURLRequestOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE31BA8AA1D00672D82 /* AMBPTURLRequestOperation.h */; };
 		DBA3FC0A1BA8AA1D00672D82 /* AMBPTBlockEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBE41BA8AA1D00672D82 /* AMBPTBlockEventListener.m */; };
-		DBA3FC0B1BA8AA1D00672D82 /* PTEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE51BA8AA1D00672D82 /* PTEventListener.h */; };
+		DBA3FC0B1BA8AA1D00672D82 /* AMBPTEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE51BA8AA1D00672D82 /* AMBPTEventListener.h */; };
 		DBA3FC0C1BA8AA1D00672D82 /* AMBPTJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBE61BA8AA1D00672D82 /* AMBPTJSON.m */; };
 		DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE71BA8AA1D00672D82 /* AMBPTPusher.h */; };
 		DBA3FC0E1BA8AA1D00672D82 /* AMBPTPusher.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBE81BA8AA1D00672D82 /* AMBPTPusher.m */; };
-		DBA3FC0F1BA8AA1D00672D82 /* PTPusher+Testing.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE91BA8AA1D00672D82 /* PTPusher+Testing.h */; };
-		DBA3FC101BA8AA1D00672D82 /* PTPusher+Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBEA1BA8AA1D00672D82 /* PTPusher+Testing.m */; };
 		DBA3FC111BA8AA1D00672D82 /* AMBPTPusherAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBEB1BA8AA1D00672D82 /* AMBPTPusherAPI.h */; };
 		DBA3FC121BA8AA1D00672D82 /* AMBPTPusherAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBEC1BA8AA1D00672D82 /* AMBPTPusherAPI.m */; };
 		DBA3FC131BA8AA1D00672D82 /* AMBPTPusherChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBED1BA8AA1D00672D82 /* AMBPTPusherChannel.h */; };
@@ -115,17 +112,17 @@
 		DBA3FC151BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBEF1BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m */; };
 		DBA3FC161BA8AA1D00672D82 /* AMBPTPusherConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF01BA8AA1D00672D82 /* AMBPTPusherConnection.h */; };
 		DBA3FC171BA8AA1D00672D82 /* AMBPTPusherConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBF11BA8AA1D00672D82 /* AMBPTPusherConnection.m */; };
-		DBA3FC181BA8AA1D00672D82 /* PTPusherDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF21BA8AA1D00672D82 /* PTPusherDelegate.h */; };
-		DBA3FC191BA8AA1D00672D82 /* PTPusherErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF31BA8AA1D00672D82 /* PTPusherErrors.h */; };
+		DBA3FC181BA8AA1D00672D82 /* AMBPTPusherDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF21BA8AA1D00672D82 /* AMBPTPusherDelegate.h */; };
+		DBA3FC191BA8AA1D00672D82 /* AMBPTPusherErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF31BA8AA1D00672D82 /* AMBPTPusherErrors.h */; };
 		DBA3FC1A1BA8AA1D00672D82 /* AMBPTPusherEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF41BA8AA1D00672D82 /* AMBPTPusherEvent.h */; };
 		DBA3FC1B1BA8AA1D00672D82 /* AMBPTPusherEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBF51BA8AA1D00672D82 /* AMBPTPusherEvent.m */; };
 		DBA3FC1C1BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF61BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.h */; };
 		DBA3FC1D1BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBF71BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m */; };
-		DBA3FC1E1BA8AA1D00672D82 /* PTPusherEventPublisher.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF81BA8AA1D00672D82 /* PTPusherEventPublisher.h */; };
-		DBA3FC1F1BA8AA1D00672D82 /* PTPusherMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF91BA8AA1D00672D82 /* PTPusherMacros.h */; };
+		DBA3FC1E1BA8AA1D00672D82 /* AMBPTPusherEventPublisher.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF81BA8AA1D00672D82 /* AMBPTPusherEventPublisher.h */; };
+		DBA3FC1F1BA8AA1D00672D82 /* AMBPTPusherMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF91BA8AA1D00672D82 /* AMBPTPusherMacros.h */; };
 		DBA3FC201BA8AA1D00672D82 /* AMBPTPusherMockConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBFA1BA8AA1D00672D82 /* AMBPTPusherMockConnection.h */; };
 		DBA3FC211BA8AA1D00672D82 /* AMBPTPusherMockConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBFB1BA8AA1D00672D82 /* AMBPTPusherMockConnection.m */; };
-		DBA3FC221BA8AA1D00672D82 /* PTPusherPresenceChannelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBFC1BA8AA1D00672D82 /* PTPusherPresenceChannelDelegate.h */; };
+		DBA3FC221BA8AA1D00672D82 /* AMBPTPusherPresenceChannelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBFC1BA8AA1D00672D82 /* AMBPTPusherPresenceChannelDelegate.h */; };
 		DBA3FC231BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBFD1BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m */; };
 		DBA3FC241BA8AA1D00672D82 /* AMBPTURLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBFE1BA8AA1D00672D82 /* AMBPTURLRequestOperation.m */; };
 		DBA3FC251BA8AA1D00672D82 /* Pusher.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBFF1BA8AA1D00672D82 /* Pusher.h */; };
@@ -140,6 +137,8 @@
 		DBA3FC431BA8BE2C00672D82 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA3FC421BA8BE2C00672D82 /* CFNetwork.framework */; };
 		DBA3FC441BA8BE3800672D82 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA3FC3B1BA8AC5400672D82 /* Security.framework */; };
 		DBA3FC461BA8BE4000672D82 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA3FC451BA8BE4000672D82 /* Foundation.framework */; };
+		DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */ = {isa = PBXBuildFile; fileRef = DBB8BD081BAC6B6D00B87896 /* AMBPTPusher+Testing.h */; settings = {ASSET_TAGS = (); }; };
+		DBB8BD0B1BAC6B6D00B87896 /* AMBPTPusher+Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = DBB8BD091BAC6B6D00B87896 /* AMBPTPusher+Testing.m */; settings = {ASSET_TAGS = (); }; };
 		DBEB6FE21BA9AD04005EE0D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FE11BA9AD04005EE0D0 /* Main.storyboard */; };
 		DBEB6FF21BA9B2D8005EE0D0 /* blank.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FE31BA9B2D8005EE0D0 /* blank.png */; };
 		DBEB6FF31BA9B2D8005EE0D0 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FE41BA9B2D8005EE0D0 /* check.png */; };
@@ -219,8 +218,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		DB68F50A1BA9C473009FF1B2 /* AMBFMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMResultSet.h; sourceTree = "<group>"; };
-		DB68F50B1BA9C473009FF1B2 /* AMBFMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFMResultSet.m; sourceTree = "<group>"; };
 		DB844D261BA75BB8003FD7A9 /* libAmbassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAmbassador.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB844D291BA75BB8003FD7A9 /* Ambassador.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ambassador.h; sourceTree = "<group>"; };
 		DB844D311BA75BB8003FD7A9 /* AmbassadorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -299,19 +296,17 @@
 		DBA3FBDA1BA8AA1D00672D82 /* NSString+Hashing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hashing.m"; sourceTree = "<group>"; };
 		DBA3FBDC1BA8AA1D00672D82 /* NSDictionary+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+QueryString.h"; sourceTree = "<group>"; };
 		DBA3FBDD1BA8AA1D00672D82 /* NSString+Hashing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Hashing.h"; sourceTree = "<group>"; };
-		DBA3FBDE1BA8AA1D00672D82 /* PTBlockEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTBlockEventListener.h; sourceTree = "<group>"; };
+		DBA3FBDE1BA8AA1D00672D82 /* AMBPTBlockEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTBlockEventListener.h; sourceTree = "<group>"; };
 		DBA3FBDF1BA8AA1D00672D82 /* AMBPTJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTJSON.h; sourceTree = "<group>"; };
 		DBA3FBE01BA8AA1D00672D82 /* AMBPTPusherChannel_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherChannel_Private.h; sourceTree = "<group>"; };
 		DBA3FBE11BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherChannelAuthorizationOperation.h; sourceTree = "<group>"; };
-		DBA3FBE21BA8AA1D00672D82 /* PTTargetActionEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTTargetActionEventListener.h; sourceTree = "<group>"; };
+		DBA3FBE21BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTTargetActionEventListener.h; sourceTree = "<group>"; };
 		DBA3FBE31BA8AA1D00672D82 /* AMBPTURLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTURLRequestOperation.h; sourceTree = "<group>"; };
 		DBA3FBE41BA8AA1D00672D82 /* AMBPTBlockEventListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTBlockEventListener.m; sourceTree = "<group>"; };
-		DBA3FBE51BA8AA1D00672D82 /* PTEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTEventListener.h; sourceTree = "<group>"; };
+		DBA3FBE51BA8AA1D00672D82 /* AMBPTEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTEventListener.h; sourceTree = "<group>"; };
 		DBA3FBE61BA8AA1D00672D82 /* AMBPTJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTJSON.m; sourceTree = "<group>"; };
 		DBA3FBE71BA8AA1D00672D82 /* AMBPTPusher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusher.h; sourceTree = "<group>"; };
 		DBA3FBE81BA8AA1D00672D82 /* AMBPTPusher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusher.m; sourceTree = "<group>"; };
-		DBA3FBE91BA8AA1D00672D82 /* PTPusher+Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PTPusher+Testing.h"; sourceTree = "<group>"; };
-		DBA3FBEA1BA8AA1D00672D82 /* PTPusher+Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PTPusher+Testing.m"; sourceTree = "<group>"; };
 		DBA3FBEB1BA8AA1D00672D82 /* AMBPTPusherAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherAPI.h; sourceTree = "<group>"; };
 		DBA3FBEC1BA8AA1D00672D82 /* AMBPTPusherAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherAPI.m; sourceTree = "<group>"; };
 		DBA3FBED1BA8AA1D00672D82 /* AMBPTPusherChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherChannel.h; sourceTree = "<group>"; };
@@ -319,17 +314,17 @@
 		DBA3FBEF1BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherChannelAuthorizationOperation.m; sourceTree = "<group>"; };
 		DBA3FBF01BA8AA1D00672D82 /* AMBPTPusherConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherConnection.h; sourceTree = "<group>"; };
 		DBA3FBF11BA8AA1D00672D82 /* AMBPTPusherConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherConnection.m; sourceTree = "<group>"; };
-		DBA3FBF21BA8AA1D00672D82 /* PTPusherDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherDelegate.h; sourceTree = "<group>"; };
-		DBA3FBF31BA8AA1D00672D82 /* PTPusherErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherErrors.h; sourceTree = "<group>"; };
+		DBA3FBF21BA8AA1D00672D82 /* AMBPTPusherDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherDelegate.h; sourceTree = "<group>"; };
+		DBA3FBF31BA8AA1D00672D82 /* AMBPTPusherErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherErrors.h; sourceTree = "<group>"; };
 		DBA3FBF41BA8AA1D00672D82 /* AMBPTPusherEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherEvent.h; sourceTree = "<group>"; };
 		DBA3FBF51BA8AA1D00672D82 /* AMBPTPusherEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherEvent.m; sourceTree = "<group>"; };
 		DBA3FBF61BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherEventDispatcher.h; sourceTree = "<group>"; };
 		DBA3FBF71BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherEventDispatcher.m; sourceTree = "<group>"; };
-		DBA3FBF81BA8AA1D00672D82 /* PTPusherEventPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherEventPublisher.h; sourceTree = "<group>"; };
-		DBA3FBF91BA8AA1D00672D82 /* PTPusherMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherMacros.h; sourceTree = "<group>"; };
+		DBA3FBF81BA8AA1D00672D82 /* AMBPTPusherEventPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherEventPublisher.h; sourceTree = "<group>"; };
+		DBA3FBF91BA8AA1D00672D82 /* AMBPTPusherMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherMacros.h; sourceTree = "<group>"; };
 		DBA3FBFA1BA8AA1D00672D82 /* AMBPTPusherMockConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherMockConnection.h; sourceTree = "<group>"; };
 		DBA3FBFB1BA8AA1D00672D82 /* AMBPTPusherMockConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherMockConnection.m; sourceTree = "<group>"; };
-		DBA3FBFC1BA8AA1D00672D82 /* PTPusherPresenceChannelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherPresenceChannelDelegate.h; sourceTree = "<group>"; };
+		DBA3FBFC1BA8AA1D00672D82 /* AMBPTPusherPresenceChannelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherPresenceChannelDelegate.h; sourceTree = "<group>"; };
 		DBA3FBFD1BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTTargetActionEventListener.m; sourceTree = "<group>"; };
 		DBA3FBFE1BA8AA1D00672D82 /* AMBPTURLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTURLRequestOperation.m; sourceTree = "<group>"; };
 		DBA3FBFF1BA8AA1D00672D82 /* Pusher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pusher.h; sourceTree = "<group>"; };
@@ -347,6 +342,8 @@
 		DBA3FC401BA8BE2300672D82 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		DBA3FC421BA8BE2C00672D82 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		DBA3FC451BA8BE4000672D82 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DBB8BD081BAC6B6D00B87896 /* AMBPTPusher+Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AMBPTPusher+Testing.h"; sourceTree = "<group>"; };
+		DBB8BD091BAC6B6D00B87896 /* AMBPTPusher+Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AMBPTPusher+Testing.m"; sourceTree = "<group>"; };
 		DBEB6FE11BA9AD04005EE0D0 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		DBEB6FE31BA9B2D8005EE0D0 /* blank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blank.png; sourceTree = "<group>"; };
 		DBEB6FE41BA9B2D8005EE0D0 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
@@ -562,8 +559,6 @@
 				DB844D681BA76BDE003FD7A9 /* AppDelegate.m */,
 				DB844D6A1BA76BDE003FD7A9 /* ViewController.h */,
 				DB844D6B1BA76BDE003FD7A9 /* ViewController.m */,
-				DB68F50A1BA9C473009FF1B2 /* AMBFMResultSet.h */,
-				DB68F50B1BA9C473009FF1B2 /* AMBFMResultSet.m */,
 				DB844D6D1BA76BDE003FD7A9 /* Main.storyboard */,
 				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
 				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
@@ -624,30 +619,30 @@
 				DBA3FBDA1BA8AA1D00672D82 /* NSString+Hashing.m */,
 				DBA3FBDB1BA8AA1D00672D82 /* Private Headers */,
 				DBA3FBE41BA8AA1D00672D82 /* AMBPTBlockEventListener.m */,
-				DBA3FBE51BA8AA1D00672D82 /* PTEventListener.h */,
+				DBA3FBE51BA8AA1D00672D82 /* AMBPTEventListener.h */,
 				DBA3FBE61BA8AA1D00672D82 /* AMBPTJSON.m */,
 				DBA3FBE71BA8AA1D00672D82 /* AMBPTPusher.h */,
 				DBA3FBE81BA8AA1D00672D82 /* AMBPTPusher.m */,
-				DBA3FBE91BA8AA1D00672D82 /* PTPusher+Testing.h */,
-				DBA3FBEA1BA8AA1D00672D82 /* PTPusher+Testing.m */,
 				DBA3FBEB1BA8AA1D00672D82 /* AMBPTPusherAPI.h */,
 				DBA3FBEC1BA8AA1D00672D82 /* AMBPTPusherAPI.m */,
 				DBA3FBED1BA8AA1D00672D82 /* AMBPTPusherChannel.h */,
 				DBA3FBEE1BA8AA1D00672D82 /* AMBPTPusherChannel.m */,
+				DBB8BD081BAC6B6D00B87896 /* AMBPTPusher+Testing.h */,
+				DBB8BD091BAC6B6D00B87896 /* AMBPTPusher+Testing.m */,
 				DBA3FBEF1BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m */,
 				DBA3FBF01BA8AA1D00672D82 /* AMBPTPusherConnection.h */,
 				DBA3FBF11BA8AA1D00672D82 /* AMBPTPusherConnection.m */,
-				DBA3FBF21BA8AA1D00672D82 /* PTPusherDelegate.h */,
-				DBA3FBF31BA8AA1D00672D82 /* PTPusherErrors.h */,
+				DBA3FBF21BA8AA1D00672D82 /* AMBPTPusherDelegate.h */,
+				DBA3FBF31BA8AA1D00672D82 /* AMBPTPusherErrors.h */,
 				DBA3FBF41BA8AA1D00672D82 /* AMBPTPusherEvent.h */,
 				DBA3FBF51BA8AA1D00672D82 /* AMBPTPusherEvent.m */,
 				DBA3FBF61BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.h */,
 				DBA3FBF71BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m */,
-				DBA3FBF81BA8AA1D00672D82 /* PTPusherEventPublisher.h */,
-				DBA3FBF91BA8AA1D00672D82 /* PTPusherMacros.h */,
+				DBA3FBF81BA8AA1D00672D82 /* AMBPTPusherEventPublisher.h */,
+				DBA3FBF91BA8AA1D00672D82 /* AMBPTPusherMacros.h */,
 				DBA3FBFA1BA8AA1D00672D82 /* AMBPTPusherMockConnection.h */,
 				DBA3FBFB1BA8AA1D00672D82 /* AMBPTPusherMockConnection.m */,
-				DBA3FBFC1BA8AA1D00672D82 /* PTPusherPresenceChannelDelegate.h */,
+				DBA3FBFC1BA8AA1D00672D82 /* AMBPTPusherPresenceChannelDelegate.h */,
 				DBA3FBFD1BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m */,
 				DBA3FBFE1BA8AA1D00672D82 /* AMBPTURLRequestOperation.m */,
 				DBA3FBFF1BA8AA1D00672D82 /* Pusher.h */,
@@ -661,11 +656,11 @@
 			children = (
 				DBA3FBDC1BA8AA1D00672D82 /* NSDictionary+QueryString.h */,
 				DBA3FBDD1BA8AA1D00672D82 /* NSString+Hashing.h */,
-				DBA3FBDE1BA8AA1D00672D82 /* PTBlockEventListener.h */,
+				DBA3FBDE1BA8AA1D00672D82 /* AMBPTBlockEventListener.h */,
 				DBA3FBDF1BA8AA1D00672D82 /* AMBPTJSON.h */,
 				DBA3FBE01BA8AA1D00672D82 /* AMBPTPusherChannel_Private.h */,
 				DBA3FBE11BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h */,
-				DBA3FBE21BA8AA1D00672D82 /* PTTargetActionEventListener.h */,
+				DBA3FBE21BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h */,
 				DBA3FBE31BA8AA1D00672D82 /* AMBPTURLRequestOperation.h */,
 			);
 			path = "Private Headers";
@@ -696,11 +691,10 @@
 				DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */,
 				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
 				DBA3FC051BA8AA1D00672D82 /* AMBPTJSON.h in Headers */,
-				DBA3FC0F1BA8AA1D00672D82 /* PTPusher+Testing.h in Headers */,
 				DBA3FC131BA8AA1D00672D82 /* AMBPTPusherChannel.h in Headers */,
 				DBA3FBBB1BA8A24F00672D82 /* AMBShareServiceCell.h in Headers */,
-				DBA3FC081BA8AA1D00672D82 /* PTTargetActionEventListener.h in Headers */,
-				DBA3FC041BA8AA1D00672D82 /* PTBlockEventListener.h in Headers */,
+				DBA3FC081BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h in Headers */,
+				DBA3FC041BA8AA1D00672D82 /* AMBPTBlockEventListener.h in Headers */,
 				DBA3FBCD1BA8A9C000672D82 /* AMBFMDatabase.h in Headers */,
 				DBA3FBAF1BA8A24F00672D82 /* AMBRemoveButton.h in Headers */,
 				DBA3FC071BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h in Headers */,
@@ -709,19 +703,20 @@
 				DBA3FBB91BA8A24F00672D82 /* AMBShareService.h in Headers */,
 				DBA3FBD51BA8A9C000672D82 /* FMDB.h in Headers */,
 				DBA3FC021BA8AA1D00672D82 /* NSDictionary+QueryString.h in Headers */,
-				DBA3FC221BA8AA1D00672D82 /* PTPusherPresenceChannelDelegate.h in Headers */,
-				DBA3FC1F1BA8AA1D00672D82 /* PTPusherMacros.h in Headers */,
+				DBA3FC221BA8AA1D00672D82 /* AMBPTPusherPresenceChannelDelegate.h in Headers */,
+				DBA3FC1F1BA8AA1D00672D82 /* AMBPTPusherMacros.h in Headers */,
 				DBA3FBD31BA8A9C000672D82 /* AMBFMDatabaseQueue.h in Headers */,
 				DBA3FBA91BA8A24F00672D82 /* AMBLinkedInAPIConstants.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
 				DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */,
-				DBA3FC191BA8AA1D00672D82 /* PTPusherErrors.h in Headers */,
+				DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */,
+				DBA3FC191BA8AA1D00672D82 /* AMBPTPusherErrors.h in Headers */,
 				DBA3FBD11BA8A9C000672D82 /* AMBFMDatabasePool.h in Headers */,
 				DBA3FB7B1BA8A23C00672D82 /* AMBContactLoader.h in Headers */,
 				DBA3FC091BA8AA1D00672D82 /* AMBPTURLRequestOperation.h in Headers */,
-				DBA3FC1E1BA8AA1D00672D82 /* PTPusherEventPublisher.h in Headers */,
+				DBA3FC1E1BA8AA1D00672D82 /* AMBPTPusherEventPublisher.h in Headers */,
 				DBA3FC251BA8AA1D00672D82 /* Pusher.h in Headers */,
-				DBA3FC0B1BA8AA1D00672D82 /* PTEventListener.h in Headers */,
+				DBA3FC0B1BA8AA1D00672D82 /* AMBPTEventListener.h in Headers */,
 				DBA3FB7F1BA8A23C00672D82 /* AMBConversion.h in Headers */,
 				DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */,
 				DBA3FB771BA8A23C00672D82 /* AMBContact.h in Headers */,
@@ -734,7 +729,7 @@
 				DBA3FBAD1BA8A24F00672D82 /* AMBNamePrompt.h in Headers */,
 				DBA3FC111BA8AA1D00672D82 /* AMBPTPusherAPI.h in Headers */,
 				DBA3FC2E1BA8AA5600672D82 /* base64.h in Headers */,
-				DBA3FC181BA8AA1D00672D82 /* PTPusherDelegate.h in Headers */,
+				DBA3FC181BA8AA1D00672D82 /* AMBPTPusherDelegate.h in Headers */,
 				DBA3FBB11BA8A24F00672D82 /* AMBSelectedCell.h in Headers */,
 				DBA3FBBF1BA8A24F00672D82 /* AMBUtilities.h in Headers */,
 				DBA3FC2F1BA8AA5600672D82 /* NSData+SRB64Additions.h in Headers */,
@@ -1002,6 +997,7 @@
 				DBA3FBCE1BA8A9C000672D82 /* AMBFMDatabase.m in Sources */,
 				DBA3FB7C1BA8A23C00672D82 /* AMBContactLoader.m in Sources */,
 				DBA3FBBC1BA8A24F00672D82 /* AMBShareServiceCell.m in Sources */,
+				DBB8BD0B1BAC6B6D00B87896 /* AMBPTPusher+Testing.m in Sources */,
 				DBA3FC241BA8AA1D00672D82 /* AMBPTURLRequestOperation.m in Sources */,
 				DBA3FBAA1BA8A24F00672D82 /* AMBLinkedInAPIConstants.m in Sources */,
 				DBA3FBD21BA8A9C000672D82 /* AMBFMDatabasePool.m in Sources */,
@@ -1025,7 +1021,6 @@
 				DBA3FBB21BA8A24F00672D82 /* AMBSelectedCell.m in Sources */,
 				DBA3FC171BA8AA1D00672D82 /* AMBPTPusherConnection.m in Sources */,
 				DBA3FC1D1BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m in Sources */,
-				DBA3FC101BA8AA1D00672D82 /* PTPusher+Testing.m in Sources */,
 				DBA3FC321BA8AA5600672D82 /* AMBSRWebSocket.m in Sources */,
 				DBA3FB761BA8A23C00672D82 /* AMBConstants.m in Sources */,
 				DBA3FBD01BA8A9C000672D82 /* AMBFMDatabaseAdditions.m in Sources */,
@@ -1052,7 +1047,6 @@
 			files = (
 				DB844D6C1BA76BDE003FD7A9 /* ViewController.m in Sources */,
 				DB844D691BA76BDE003FD7A9 /* AppDelegate.m in Sources */,
-				DB68F50C1BA9C473009FF1B2 /* AMBFMResultSet.m in Sources */,
 				DB844D661BA76BDE003FD7A9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1155,7 +1149,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
@@ -1193,7 +1187,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
