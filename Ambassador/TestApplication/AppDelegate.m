@@ -17,7 +17,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    ConversionParameters *conversion = [[ConversionParameters alloc] init];
+    AMBConversionParameters *conversion = [[AMBConversionParameters alloc] init];
     conversion.mbsy_revenue = @1000;
     conversion.mbsy_campaign = @280;
     conversion.mbsy_first_name = @"";

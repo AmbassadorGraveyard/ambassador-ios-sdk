@@ -34,7 +34,7 @@
   
   NSInteger socketID = (NSInteger)[NSDate timeIntervalSinceReferenceDate];
 
-  [self simulateServerEventNamed:PTPusherConnectionEstablishedEvent 
+  [self simulateServerEventNamed:AMBPTPusherConnectionEstablishedEvent 
                             data:@{@"socket_id": @(socketID)}];
 }
 
@@ -59,14 +59,14 @@
 {
   NSMutableDictionary *event = [NSMutableDictionary dictionary];
   
-  event[PTPusherEventKey] = name;
+  event[AMBPTPusherEventKey] = name;
   
   if (data) {
-    event[PTPusherDataKey] = data;
+    event[AMBPTPusherDataKey] = data;
   }
   
   if (channelName) {
-    event[PTPusherChannelKey] = channelName;
+    event[AMBPTPusherChannelKey] = channelName;
   }
   
   NSString *message = [[AMBPTJSON JSONParser] JSONStringFromObject:event];
@@ -96,7 +96,7 @@
 {
   [self simulateServerEventNamed:@"pusher_internal:subscription_succeeded" 
                             data:nil
-                         channel:(subscribeEvent.data)[PTPusherChannelKey]];
+                         channel:(subscribeEvent.data)[AMBPTPusherChannelKey]];
 }
 
 @end

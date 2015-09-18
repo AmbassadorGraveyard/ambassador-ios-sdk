@@ -6,7 +6,7 @@
 //  Copyright 2011 LJR Software Limited. All rights reserved.
 //
 
-#import "PTBlockEventListener.h"
+#import "AMBPTBlockEventListener.h"
 
 @interface AMBPTBlockEventListener : NSObject <AMBPTEventListener>
 @end

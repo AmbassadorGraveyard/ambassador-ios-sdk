@@ -10,10 +10,10 @@
 #import "AMBPTPusher.h"
 #import "AMBPTPusherEvent.h"
 #import "AMBPTPusherEventDispatcher.h"
-#import "PTTargetActionEventListener.h"
-#import "PTBlockEventListener.h"
+#import "AMBPTTargetActionEventListener.h"
+#import "AMBPTBlockEventListener.h"
 #import "AMBPTPusherChannelAuthorizationOperation.h"
-#import "PTPusherErrors.h"
+#import "AMBPTPusherErrors.h"
 #import "AMBPTJSON.h"
 
 @interface AMBPTPusher ()
@@ -35,7 +35,7 @@
 + (instancetype)channelWithName:(NSString *)name pusher:(AMBPTPusher *)pusher
 {
   if ([name hasPrefix:@"private-"]) {
-    return [[PTPusherPrivateChannel alloc] initWithName:name pusher:pusher];
+    return [[AMBPTPusherPrivateChannel alloc] initWithName:name pusher:pusher];
   }
   if ([name hasPrefix:@"presence-"]) {
     return [[AMBPTPusherPresenceChannel alloc] initWithName:name pusher:pusher];
@@ -106,8 +106,8 @@
 - (void)handleSubcribeErrorEvent:(AMBPTPusherEvent *)event
 {
   if ([self.pusher.delegate respondsToSelector:@selector(pusher:didFailToSubscribeToChannel:withError:)]) {
-    NSDictionary *userInfo = @{PTPusherErrorUnderlyingEventKey: event};
-    NSError *error = [NSError errorWithDomain:AMBPTPusherErrorDomain code:PTPusherSubscriptionError userInfo:userInfo];
+    NSDictionary *userInfo = @{AMBPTPusherErrorUnderlyingEventKey: event};
+    NSError *error = [NSError errorWithDomain:AMBPTPusherErrorDomain code:AMBPTPusherSubscriptionError userInfo:userInfo];
     [self.pusher.delegate pusher:self.pusher didFailToSubscribeToChannel:self withError:error];
   }
 }
@@ -197,7 +197,7 @@
 
 #pragma mark -
 
-@implementation PTPusherPrivateChannel {
+@implementation AMBPTPusherPrivateChannel {
   NSOperationQueue *_clientEventQueue;
 }
 
@@ -275,7 +275,7 @@
 
 #pragma mark -
 
-@interface PTPusherChannelMembers ()
+@interface AMBPTPusherChannelMembers ()
 
 @property (nonatomic, copy, readwrite) NSString *myID;
 
@@ -291,7 +291,7 @@
 - (id)initWithName:(NSString *)channelName pusher:(AMBPTPusher *)aPusher
 {
   if ((self = [super initWithName:channelName pusher:aPusher])) {
-    _members = [[PTPusherChannelMembers alloc] init];
+    _members = [[AMBPTPusherChannelMembers alloc] init];
 
     /* Set up event handlers for pre-defined channel events.
      As above, use blocks as proxies to a weak channel reference to avoid retain cycles.
@@ -381,7 +381,7 @@
 
 @end
 
-@implementation PTPusherChannelMembers {
+@implementation AMBPTPusherChannelMembers {
   NSMutableDictionary *_members;
 }
 

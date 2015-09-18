@@ -6,7 +6,7 @@
 //  Copyright 2011 LJR Software Limited. All rights reserved.
 //
 
-#import "PTTargetActionEventListener.h"
+#import "AMBPTTargetActionEventListener.h"
 
 @interface AMBPTTargetActionEventListener : NSObject <AMBPTEventListener>
 @end

@@ -54,7 +54,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @property UIView *view;
 @property NSString *email;
 @property AMBPTPusher *client;
-@property PTPusherPrivateChannel *channel;
+@property AMBPTPusherPrivateChannel *channel;
 @property NSString *universalToken;
 @property NSString *universalID;
 

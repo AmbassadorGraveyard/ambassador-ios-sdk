@@ -223,7 +223,7 @@
 //       C function causes problems; the rest don't. Anyway, ignoring the .m
 //       files with appledoc will prevent this problem from occurring.
 
-static int FMDBDatabaseBusyHandler(void *f, int count) {
+static int AMBFMDBDatabaseBusyHandler(void *f, int count) {
     AMBFMDatabase *self = (__bridge AMBFMDatabase*)f;
     
     if (count == 0) {
@@ -254,7 +254,7 @@ static int FMDBDatabaseBusyHandler(void *f, int count) {
     }
     
     if (timeout > 0) {
-        sqlite3_busy_handler(_db, &FMDBDatabaseBusyHandler, (__bridge void *)(self));
+        sqlite3_busy_handler(_db, &AMBFMDBDatabaseBusyHandler, (__bridge void *)(self));
     }
     else {
         // turn it off otherwise
@@ -1139,8 +1139,8 @@ static int FMDBDatabaseBusyHandler(void *f, int count) {
 }
 
 
-int FMDBExecuteBulkSQLCallback(void *theBlockAsVoid, int columns, char **values, char **names); // shhh clang.
-int FMDBExecuteBulkSQLCallback(void *theBlockAsVoid, int columns, char **values, char **names) {
+int AMBFMDBExecuteBulkSQLCallback(void *theBlockAsVoid, int columns, char **values, char **names); // shhh clang.
+int AMBFMDBExecuteBulkSQLCallback(void *theBlockAsVoid, int columns, char **values, char **names) {
     
     if (!theBlockAsVoid) {
         return SQLITE_OK;
@@ -1168,7 +1168,7 @@ int FMDBExecuteBulkSQLCallback(void *theBlockAsVoid, int columns, char **values,
     int rc;
     char *errmsg = nil;
     
-    rc = sqlite3_exec([self sqliteHandle], [sql UTF8String], block ? FMDBExecuteBulkSQLCallback : nil, (__bridge void *)(block), &errmsg);
+    rc = sqlite3_exec([self sqliteHandle], [sql UTF8String], block ? AMBFMDBExecuteBulkSQLCallback : nil, (__bridge void *)(block), &errmsg);
     
     if (errmsg && [self logsErrors]) {
         NSLog(@"Error inserting batch: %s", errmsg);
@@ -1252,7 +1252,7 @@ int FMDBExecuteBulkSQLCallback(void *theBlockAsVoid, int columns, char **values,
 
 #if SQLITE_VERSION_NUMBER >= 3007000
 
-static NSString *FMDBEscapeSavePointName(NSString *savepointName) {
+static NSString *AMBFMDBEscapeSavePointName(NSString *savepointName) {
     return [savepointName stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
 }
 
@@ -1260,7 +1260,7 @@ static NSString *FMDBEscapeSavePointName(NSString *savepointName) {
     
     NSParameterAssert(name);
     
-    NSString *sql = [NSString stringWithFormat:@"savepoint '%@';", FMDBEscapeSavePointName(name)];
+    NSString *sql = [NSString stringWithFormat:@"savepoint '%@';", AMBFMDBEscapeSavePointName(name)];
     
     if (![self executeUpdate:sql]) {
 
@@ -1278,7 +1278,7 @@ static NSString *FMDBEscapeSavePointName(NSString *savepointName) {
     
     NSParameterAssert(name);
     
-    NSString *sql = [NSString stringWithFormat:@"release savepoint '%@';", FMDBEscapeSavePointName(name)];
+    NSString *sql = [NSString stringWithFormat:@"release savepoint '%@';", AMBFMDBEscapeSavePointName(name)];
     BOOL worked = [self executeUpdate:sql];
     
     if (!worked && outErr) {
@@ -1292,7 +1292,7 @@ static NSString *FMDBEscapeSavePointName(NSString *savepointName) {
     
     NSParameterAssert(name);
     
-    NSString *sql = [NSString stringWithFormat:@"rollback transaction to savepoint '%@';", FMDBEscapeSavePointName(name)];
+    NSString *sql = [NSString stringWithFormat:@"rollback transaction to savepoint '%@';", AMBFMDBEscapeSavePointName(name)];
     BOOL worked = [self executeUpdate:sql];
     
     if (!worked && outErr) {
@@ -1351,8 +1351,8 @@ static NSString *FMDBEscapeSavePointName(NSString *savepointName) {
 
 #pragma mark Callback function
 
-void FMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3_value **argv); // -Wmissing-prototypes
-void FMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3_value **argv) {
+void AMBFMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3_value **argv); // -Wmissing-prototypes
+void AMBFMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3_value **argv) {
 #if ! __has_feature(objc_arc)
     void (^block)(sqlite3_context *context, int argc, sqlite3_value **argv) = (id)sqlite3_user_data(context);
 #else
@@ -1378,7 +1378,7 @@ void FMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3
 #if ! __has_feature(objc_arc)
     sqlite3_create_function([self sqliteHandle], [name UTF8String], count, SQLITE_UTF8, (void*)b, &FMDBBlockSQLiteCallBackFunction, 0x00, 0x00);
 #else
-    sqlite3_create_function([self sqliteHandle], [name UTF8String], count, SQLITE_UTF8, (__bridge void*)b, &FMDBBlockSQLiteCallBackFunction, 0x00, 0x00);
+    sqlite3_create_function([self sqliteHandle], [name UTF8String], count, SQLITE_UTF8, (__bridge void*)b, &AMBFMDBBlockSQLiteCallBackFunction, 0x00, 0x00);
 #endif
 }
 

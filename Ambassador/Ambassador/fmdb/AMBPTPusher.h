@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PTPusherDelegate.h"
+#import "AMBPTPusherDelegate.h"
 #import "AMBPTPusherConnection.h"
-#import "PTPusherEventPublisher.h"
-#import "PTPusherPresenceChannelDelegate.h"
+#import "AMBPTPusherEventPublisher.h"
+#import "AMBPTPusherPresenceChannelDelegate.h"
 
 /** The name of the notification posted when PTPusher receives an event.
  */
@@ -40,11 +40,11 @@ extern NSString *const AMBPTPusherFatalErrorDomain;
 
 /** The key for any underlying PTPusherEvent associated with a PTPusher error's userInfo dictionary.
  */
-extern NSString *const PTPusherErrorUnderlyingEventKey;
+extern NSString *const AMBPTPusherErrorUnderlyingEventKey;
 
 @class AMBPTPusherChannel;
 @class AMBPTPusherPresenceChannel;
-@class PTPusherPrivateChannel;
+@class AMBPTPusherPrivateChannel;
 @class AMBPTPusherEventDispatcher;
 
 /** A PTPusher object provides a high level API for communicating with the Pusher service.
@@ -225,7 +225,7 @@ extern NSString *const PTPusherErrorUnderlyingEventKey;
  
  @param name The name of the channel (without the private prefix) to subscribe to.
  */
-- (PTPusherPrivateChannel *)subscribeToPrivateChannelNamed:(NSString *)name;
+- (AMBPTPusherPrivateChannel *)subscribeToPrivateChannelNamed:(NSString *)name;
 
 /** Subscribes to the named presence channel.
  

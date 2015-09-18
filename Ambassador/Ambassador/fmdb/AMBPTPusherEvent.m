@@ -9,18 +9,18 @@
 #import "AMBPTPusherEvent.h"
 #import "AMBPTJSON.h"
 
-NSString *const PTPusherDataKey    = @"data";
-NSString *const PTPusherEventKey   = @"event";
-NSString *const PTPusherChannelKey = @"channel";
+NSString *const AMBPTPusherDataKey    = @"data";
+NSString *const AMBPTPusherEventKey   = @"event";
+NSString *const AMBPTPusherChannelKey = @"channel";
 
 @implementation AMBPTPusherEvent
 
 + (instancetype)eventFromMessageDictionary:(NSDictionary *)dictionary
 {
-  if ([dictionary[PTPusherEventKey] isEqualToString:@"pusher:error"]) {
-    return [[AMBPTPusherErrorEvent alloc] initWithEventName:dictionary[PTPusherEventKey] channel:nil data:dictionary[PTPusherDataKey]];
+  if ([dictionary[AMBPTPusherEventKey] isEqualToString:@"pusher:error"]) {
+    return [[AMBPTPusherErrorEvent alloc] initWithEventName:dictionary[AMBPTPusherEventKey] channel:nil data:dictionary[AMBPTPusherDataKey]];
   }
-  return [[self alloc] initWithEventName:dictionary[PTPusherEventKey] channel:dictionary[PTPusherChannelKey] data:dictionary[PTPusherDataKey]];
+  return [[self alloc] initWithEventName:dictionary[AMBPTPusherEventKey] channel:dictionary[AMBPTPusherChannelKey] data:dictionary[AMBPTPusherDataKey]];
 }
 
 - (id)initWithEventName:(NSString *)name channel:(NSString *)channel data:(id)data

@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const PTPusherDataKey;
-extern NSString *const PTPusherEventKey;
-extern NSString *const PTPusherChannelKey;
+extern NSString *const AMBPTPusherDataKey;
+extern NSString *const AMBPTPusherEventKey;
+extern NSString *const AMBPTPusherChannelKey;
 
 /** A value object representing a Pusher event.
  

@@ -12,9 +12,9 @@
 #import "AMBSRWebSocket.h"
 #import "AMBPTJSON.h"
 
-NSString *const PTPusherConnectionEstablishedEvent = @"pusher:connection_established";
-NSString *const PTPusherConnectionPingEvent        = @"pusher:ping";
-NSString *const PTPusherConnectionPongEvent        = @"pusher:pong";
+NSString *const AMBPTPusherConnectionEstablishedEvent = @"pusher:connection_established";
+NSString *const AMBPTPusherConnectionPingEvent        = @"pusher:ping";
+NSString *const AMBPTPusherConnectionPongEvent        = @"pusher:pong";
 
 @interface AMBPTPusherConnection () <SRWebSocketDelegate>
 @property (nonatomic, copy) NSString *socketID;
@@ -141,14 +141,14 @@ NSString *const PTPusherConnectionPongEvent        = @"pusher:pong";
   NSDictionary *messageDictionary = [[AMBPTJSON JSONParser] objectFromJSONString:message];
   AMBPTPusherEvent *event = [AMBPTPusherEvent eventFromMessageDictionary:messageDictionary];
   
-  if ([event.name isEqualToString:PTPusherConnectionPongEvent]) {
+  if ([event.name isEqualToString:AMBPTPusherConnectionPongEvent]) {
 #ifdef DEBUG
     NSLog(@"[pusher] Server responded to ping (pong!)");
 #endif
     return;
   }
   
-  if ([event.name isEqualToString:PTPusherConnectionEstablishedEvent]) {
+  if ([event.name isEqualToString:AMBPTPusherConnectionEstablishedEvent]) {
     self.socketID = (event.data)[@"socket_id"];
     self.state = PTPusherConnectionConnected;
     

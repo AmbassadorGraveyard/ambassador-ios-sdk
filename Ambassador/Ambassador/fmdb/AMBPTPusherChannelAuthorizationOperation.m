@@ -9,7 +9,7 @@
 #import "AMBPTPusherChannelAuthorizationOperation.h"
 #import "NSDictionary+QueryString.h"
 #import "AMBPTJSON.h"
-#import "PTPusher+Testing.h"
+#import "AMBPTPusher+Testing.h"
 
 @interface AMBPTPusherChannelAuthorizationBypassOperation : NSOperation
 @property (nonatomic, readwrite) NSError *error;
@@ -33,7 +33,7 @@
   NSAssert(URL, @"URL is required for authorization! (Did you set PTPusher.authorizationURL?)");
   
   // a short-circuit for testing, using a special URL
-  if ([[URL absoluteString] isEqualToString:PTPusherAuthorizationBypassURL]) {
+  if ([[URL absoluteString] isEqualToString:AMBPTPusherAuthorizationBypassURL]) {
     return [[AMBPTPusherChannelAuthorizationBypassOperation alloc] init];
   }
   
@@ -132,7 +132,7 @@
 
 - (NSMutableURLRequest *)mutableURLRequest
 {
-  return [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:PTPusherAuthorizationBypassURL]];
+  return [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:AMBPTPusherAuthorizationBypassURL]];
 }
 
 - (NSError *)connectionError
