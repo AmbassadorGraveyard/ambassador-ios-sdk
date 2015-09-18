@@ -7,13 +7,13 @@
 //
 
 #import "AmbassadorSDK.h"
-#import "Constants.h"
-#import "Identify.h"
-#import "Conversion.h"
-#import "ConversionParameters.h"
-#import "Utilities.h"
-#import "ServiceSelector.h"
-#import "ServiceSelectorPreferences.h"
+#import "AMBConstants.h"
+#import "AMBIdentify.h"
+#import "AMBConversion.h"
+#import "AMBConversionParameters.h"
+#import "AMBUtilities.h"
+#import "AMBServiceSelector.h"
+#import "AMBServiceSelectorPreferences.h"
 
 
 
@@ -25,7 +25,7 @@ NSString * const SHORT_CODE_KEY = @"short_code";
 NSString * const SHORT_CODE_URL_KEY = @"url";
 #pragma mark -
 
-@interface AmbassadorSDK () <IdentifyDelegate>
+@interface AmbassadorSDK () <AMBIdentifyDelegate>
 
 @end
 
@@ -37,9 +37,9 @@ static NSString *AMBuniversalToken;
 static NSString *AMBuniversalID;
 static NSMutableDictionary *backEndData;
 static NSTimer *conversionTimer;
-static Identify *identify;
-static Conversion *conversion;
-static ServiceSelector *raf;
+static AMBIdentify *identify;
+static AMBConversion *conversion;
+static AMBServiceSelector *raf;
 
 
 
@@ -73,23 +73,23 @@ static ServiceSelector *raf;
     [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:nil completion:nil];
 }
 
-+ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
++ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
     DLog();
     [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:information completion:completion];
 }
 
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(ServiceSelectorPreferences*)parameters
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(AMBServiceSelectorPreferences*)parameters
 {
     DLog();
     if (!parameters) {
-        parameters = [[ServiceSelectorPreferences alloc] init];
+        parameters = [[AMBServiceSelectorPreferences alloc] init];
     }
     
     [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withRAFParameters:parameters];
 }
 
-+ (void)registerConversion:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
++ (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
     DLog();
     [[AmbassadorSDK sharedInstance] registerConversion:information completion:completion];
@@ -104,7 +104,7 @@ static ServiceSelector *raf;
 
 
 #pragma mark - Internal API methods
-- (void)runWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
+- (void)runWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
 #if DEBUG
         DLog(@"Removing user defaults for testing");
@@ -121,9 +121,9 @@ static ServiceSelector *raf;
                                                      selector:@selector(checkConversionQueue)
                                                      userInfo:nil
                                                       repeats:YES];
-    identify = [[Identify alloc] initWithUniversalToken:universalToken universalID:universalID];
+    identify = [[AMBIdentify alloc] initWithUniversalToken:universalToken universalID:universalID];
     identify.delegate = self;
-    conversion = [[Conversion alloc] initWithKey:universalToken];
+    conversion = [[AMBConversion alloc] initWithKey:universalToken];
     
     DLog(@"Checking if conversion is made on app launch");
 
@@ -141,7 +141,7 @@ static ServiceSelector *raf;
 
 }
 
-- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withRAFParameters:(ServiceSelectorPreferences*)parameters
+- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withRAFParameters:(AMBServiceSelectorPreferences*)parameters
 {
     DLog();
     NSString *shortCodeURL = @"";
@@ -162,10 +162,9 @@ static ServiceSelector *raf;
     }
 
     // Initialize root view controller
-    NSLog(@"%@", frameworkBundle());
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:frameworkBundle()];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
     UINavigationController *vc = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
-    raf = (ServiceSelector *)vc.childViewControllers[0];
+    raf = (AMBServiceSelector *)vc.childViewControllers[0];
     DLog(@"ShortCodeURL: %@    ShortCode: %@", shortCodeURL, shortCode);
     raf.shortCode = shortCode;
     raf.shortURL = shortCodeURL;
@@ -177,7 +176,7 @@ static ServiceSelector *raf;
     [viewController presentViewController:vc animated:YES completion:nil];
 }
 
-- (void)registerConversion:(ConversionParameters *)information completion:(void (^)(NSError *error))completion
+- (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
     DLog();
     [conversion registerConversionWithParameters:information completion:completion];

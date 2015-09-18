@@ -7,8 +7,8 @@
 //
 
 #import "AuthorizeLinkedIn.h"
-#import "LinkedInAPIConstants.h"
-#import "Constants.h"
+#import "AMBLinkedInAPIConstants.h"
+#import "AMBConstants.h"
 
 
 @interface AuthorizeLinkedIn () <UIWebViewDelegate>
@@ -27,7 +27,7 @@ NSString * const TITLE = @"Authorize LinkedIn";
     
     self.navigationItem.title = TITLE;
     self.webView.delegate = self;
-    NSString * addressString = LKDN_AUTH_URL;
+    NSString * addressString = AMB_LKDN_AUTH_URL;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:addressString]]];
     [self.view addSubview:self.webView];
 }
@@ -45,7 +45,7 @@ NSString * const TITLE = @"Authorize LinkedIn";
     //Parse the URL string delimiting at "?"
     NSString *urlRequestString = [[request URL] absoluteString];
     NSArray *urlRequestComponents = [urlRequestString componentsSeparatedByString:@"?"];
-    if ([[urlRequestComponents firstObject] isEqualToString:LKDN_AUTH_CALLBACK_URL])
+    if ([[urlRequestComponents firstObject] isEqualToString:AMB_LKDN_AUTH_CALLBACK_URL])
     {
         self.webView.hidden = YES;
         if (urlRequestComponents.count > 1)
@@ -54,11 +54,11 @@ NSString * const TITLE = @"Authorize LinkedIn";
             for (int i = 0; i < queryParameters.count; ++i)
             {
                 NSArray *queryPair = [queryParameters[i] componentsSeparatedByString:@"="];
-                if ([[queryPair firstObject] isEqualToString:LKDN_ERROR_DICT_KEY])
+                if ([[queryPair firstObject] isEqualToString:AMB_LKDN_ERROR_DICT_KEY])
                 {
                     [self.navigationController popViewControllerAnimated:YES];
                 }
-                if ([[queryPair firstObject] isEqualToString:LKDN_CODE_DICT_KEY])
+                if ([[queryPair firstObject] isEqualToString:AMB_LKDN_CODE_DICT_KEY])
                 {
                     [self getRequestTokenWithKey:[NSString stringWithString:[queryPair lastObject]]];
                 }
@@ -71,11 +71,11 @@ NSString * const TITLE = @"Authorize LinkedIn";
 
 - (void)getRequestTokenWithKey:(NSString *)key
 {
-    NSURL *url = [NSURL URLWithString:LKDN_REQUEST_OAUTH_TOKEN_URL];
+    NSURL *url = [NSURL URLWithString:AMB_LKDN_REQUEST_OAUTH_TOKEN_URL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    NSString *body = lkdnBuildRequestTokenHTTPBody(key);
+    NSString *body = AMBlkdnBuildRequestTokenHTTPBody(key);
     request.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
                                   dataTaskWithRequest:request
@@ -93,9 +93,9 @@ NSString * const TITLE = @"Authorize LinkedIn";
                                                                                   options:0
                                                                                   error:nil]];
                   
-                  int offset = [(NSNumber *)tokenResponse[LKDN_EXPIRES_DICT_KEY] intValue];
+                  int offset = [(NSNumber *)tokenResponse[AMB_LKDN_EXPIRES_DICT_KEY] intValue];
                   NSDate * date = [NSDate dateWithTimeIntervalSinceNow:offset - 1000];
-                  tokenResponse[LKDN_EXPIRES_DICT_KEY] = date;
+                  tokenResponse[AMB_LKDN_EXPIRES_DICT_KEY] = date;
                   
                   [[NSUserDefaults standardUserDefaults] setObject:tokenResponse
                                                             forKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
