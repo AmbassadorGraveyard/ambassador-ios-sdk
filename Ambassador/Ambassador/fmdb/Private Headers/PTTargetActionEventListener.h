@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "PTEventListener.h"
-#import "PTPusherEventDispatcher.h"
+#import "AMBPTPusherEventDispatcher.h"
 
-@interface PTPusherEventDispatcher (PTTargetActionFactory)
-- (PTPusherEventBinding *)addEventListenerForEventNamed:(NSString *)eventName target:(id)target action:(SEL)action;
+@interface AMBPTPusherEventDispatcher (PTTargetActionFactory)
+- (AMBPTPusherEventBinding *)addEventListenerForEventNamed:(NSString *)eventName target:(id)target action:(SEL)action;
 @end

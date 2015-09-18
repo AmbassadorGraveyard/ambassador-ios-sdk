@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 
 
-@class PTPusherEvent;
+@class AMBPTPusherEvent;
 
-@protocol PTEventListener <NSObject>
+@protocol AMBPTEventListener <NSObject>
 
-- (void)dispatchEvent:(PTPusherEvent *)event;
+- (void)dispatchEvent:(AMBPTPusherEvent *)event;
 
 @optional
 

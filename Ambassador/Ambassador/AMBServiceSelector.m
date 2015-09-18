@@ -12,7 +12,7 @@
 #import "AMBShareServicesConstants.h"
 #import "AMBContactSelector.h"
 #import "AMBContactLoader.h"
-#import "AuthorizeLinkedIn.h"
+#import "AMBAuthorizeLinkedIn.h"
 #import "AMBUtilities.h"
 #import "AMBLinkedInAPIConstants.h"
 #import "AMBConstants.h"
@@ -330,7 +330,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     }
     else if ([segue.identifier isEqualToString:LKND_AUTHORIZE_SEGUE])
     {
-        AuthorizeLinkedIn *vc = (AuthorizeLinkedIn *)segue.destinationViewController;
+        AMBAuthorizeLinkedIn *vc = (AMBAuthorizeLinkedIn *)segue.destinationViewController;
         vc.delegate = self;
     }
 }

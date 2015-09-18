@@ -8,11 +8,11 @@
 
 #import "PTPusherMacros.h"
 
-@class PTPusher;
-@class PTPusherConnection;
-@class PTPusherChannel;
-@class PTPusherEvent;
-@class PTPusherErrorEvent;
+@class AMBPTPusher;
+@class AMBPTPusherConnection;
+@class AMBPTPusherChannel;
+@class AMBPTPusherEvent;
+@class AMBPTPusherErrorEvent;
 
 /** Implementing the PTPusherDelegate protocol lets you react to important events in the Pusher client's
   lifetime, such as connection and disconnection, channel subscription and errors.
@@ -22,7 +22,7 @@
  It may be useful to assign a delegate to monitor the status of the connection; you could use this to update
  your user interface accordingly.
  */
-@protocol PTPusherDelegate <NSObject>
+@protocol AMBPTPusherDelegate <NSObject>
 
 @optional
 
@@ -36,14 +36,14 @@
  @param connection The connection for the pusher instance.
  @return NO to abort the connection attempt.
  */
-- (BOOL)pusher:(PTPusher *)pusher connectionWillConnect:(PTPusherConnection *)connection;
+- (BOOL)pusher:(AMBPTPusher *)pusher connectionWillConnect:(AMBPTPusherConnection *)connection;
 
 /** Notifies the delegate that the PTPusher instance has connected to the Pusher service successfully.
  
  @param pusher The PTPusher instance that has connected.
  @param connection The connection for the pusher instance.
  */
-- (void)pusher:(PTPusher *)pusher connectionDidConnect:(PTPusherConnection *)connection;
+- (void)pusher:(AMBPTPusher *)pusher connectionDidConnect:(AMBPTPusherConnection *)connection;
 
 /** Notifies the delegate that the PTPusher instance has disconnected from the Pusher service.
  
@@ -63,7 +63,7 @@
  @param error If the connection disconnected abnormally, error will be non-nil.
  @param willAttemptReconnect YES if the client will try and reconnect automatically.
  */
-- (void)pusher:(PTPusher *)pusher connection:(PTPusherConnection *)connection didDisconnectWithError:(NSError *)error willAttemptReconnect:(BOOL)willAttemptReconnect;
+- (void)pusher:(AMBPTPusher *)pusher connection:(AMBPTPusherConnection *)connection didDisconnectWithError:(NSError *)error willAttemptReconnect:(BOOL)willAttemptReconnect;
 
 /** Notifies the delegate that the PTPusher instance failed to connect to the Pusher service.
  
@@ -75,7 +75,7 @@
  @param connection The connection for the pusher instance.
  @param error The connection error.
  */
-- (void)pusher:(PTPusher *)pusher connection:(PTPusherConnection *)connection failedWithError:(NSError *)error;
+- (void)pusher:(AMBPTPusher *)pusher connection:(AMBPTPusherConnection *)connection failedWithError:(NSError *)error;
 
 /** Notifies the delegate that the PTPusher instance will attempt to automatically reconnect.
  
@@ -85,7 +85,7 @@
  @param connection The connection for the pusher instance.
  @return NO if you do not want the client to attempt an automatic reconnection.
  */
-- (BOOL)pusher:(PTPusher *)pusher connectionWillAutomaticallyReconnect:(PTPusherConnection *)connection afterDelay:(NSTimeInterval)delay;
+- (BOOL)pusher:(AMBPTPusher *)pusher connectionWillAutomaticallyReconnect:(AMBPTPusherConnection *)connection afterDelay:(NSTimeInterval)delay;
 
 ///------------------------------------------------------------------------------------/
 /// @name Channel subscription and authorization
@@ -107,7 +107,7 @@
  @param channel The channel that requires authorizing
  @param request A mutable URL request that will be POSTed to the configured `authorizationURL`
  */
-- (void)pusher:(PTPusher *)pusher willAuthorizeChannel:(PTPusherChannel *)channel withRequest:(NSMutableURLRequest *)request;
+- (void)pusher:(AMBPTPusher *)pusher willAuthorizeChannel:(AMBPTPusherChannel *)channel withRequest:(NSMutableURLRequest *)request;
 
 /** Allows the delegate to return authorization data in the format required by Pusher from a
  non-standard respnse.
@@ -122,7 +122,7 @@
  If implemented, Pusher will call this method with the response data returned from the authorization
  URL and will use whatever dictionary is returned instead.
 */
- - (NSDictionary *)pusher:(PTPusher *)pusher authorizationPayloadFromResponseData:(NSDictionary *)responseData;
+ - (NSDictionary *)pusher:(AMBPTPusher *)pusher authorizationPayloadFromResponseData:(NSDictionary *)responseData;
 
 /** Notifies the delegate that the PTPusher instance has subscribed to the specified channel.
  
@@ -131,7 +131,7 @@
  @param pusher The PTPusher instance that has connected.
  @param channel The channel that was subscribed to.
  */
-- (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel;
+- (void)pusher:(AMBPTPusher *)pusher didSubscribeToChannel:(AMBPTPusherChannel *)channel;
 
 /** Notifies the delegate that the PTPusher instance has unsubscribed from the specified channel.
  
@@ -140,7 +140,7 @@
  @param pusher The PTPusher instance that has connected.
  @param channel The channel that was unsubscribed from.
  */
-- (void)pusher:(PTPusher *)pusher didUnsubscribeFromChannel:(PTPusherChannel *)channel;
+- (void)pusher:(AMBPTPusher *)pusher didUnsubscribeFromChannel:(AMBPTPusherChannel *)channel;
 
 /** Notifies the delegate that the PTPusher instance failed to subscribe to the specified channel.
  
@@ -150,7 +150,7 @@
  @param channel The channel that was subscribed to.
  @param error The error returned when attempting to subscribe.
  */
-- (void)pusher:(PTPusher *)pusher didFailToSubscribeToChannel:(PTPusherChannel *)channel withError:(NSError *)error;
+- (void)pusher:(AMBPTPusher *)pusher didFailToSubscribeToChannel:(AMBPTPusherChannel *)channel withError:(NSError *)error;
 
 ///------------------------------------------------------------------------------------/
 /// @name Errors
@@ -164,6 +164,6 @@
  @param pusher The PTPusher instance that received the event.
  @param errorEvent The error event.
  */
-- (void)pusher:(PTPusher *)pusher didReceiveErrorEvent:(PTPusherErrorEvent *)errorEvent;
+- (void)pusher:(AMBPTPusher *)pusher didReceiveErrorEvent:(AMBPTPusherErrorEvent *)errorEvent;
 
 @end

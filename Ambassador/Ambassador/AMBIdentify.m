@@ -48,12 +48,12 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 
 
 
-@interface AMBIdentify () <UIWebViewDelegate, PTPusherDelegate>
+@interface AMBIdentify () <UIWebViewDelegate, AMBPTPusherDelegate>
 
 @property UIWebView *webview;
 @property UIView *view;
 @property NSString *email;
-@property PTPusher *client;
+@property AMBPTPusher *client;
 @property PTPusherPrivateChannel *channel;
 @property NSString *universalToken;
 @property NSString *universalID;
@@ -75,7 +75,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         self.email = @"";
         self.universalToken = universalToken;
         self.universalID = universalID;
-        self.client = [PTPusher pusherWithKey:AMB_PUSHER_KEY delegate:self encrypted:YES];
+        self.client = [AMBPTPusher pusherWithKey:AMB_PUSHER_KEY delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:AMB_PUSHER_AUTHENTICATION_URL];
         [self.client connect];
     }
@@ -138,7 +138,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.channel = [self.client subscribeToPrivateChannelNamed:[NSString stringWithFormat:@"snippet-channel@user=%@", self.identifyData[@"device"][@"ID"]]];
-                [self.channel bindToEventNamed:@"identify_action" handleWithBlock:^(PTPusherEvent *event)
+                [self.channel bindToEventNamed:@"identify_action" handleWithBlock:^(AMBPTPusherEvent *event)
                  {
                      NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:event.data];
                      NSString *phone = dictionary[@"phone"];
@@ -365,7 +365,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 
 
 #pragma mark - PTPusherDelegate
-- (void)pusher:(PTPusher *)pusher willAuthorizeChannel:(PTPusherChannel *)channel withRequest:(NSMutableURLRequest *)request
+- (void)pusher:(AMBPTPusher *)pusher willAuthorizeChannel:(AMBPTPusherChannel *)channel withRequest:(NSMutableURLRequest *)request
 {
     DLog(@"Channel: %@\nRequest body: %@", channel.name, [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding]);
     
@@ -396,12 +396,12 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     }
 }
 
-- (void)pusher:(PTPusher *)pusher didFailToSubscribeToChannel:(PTPusherChannel *)channel withError:(NSError *)error
+- (void)pusher:(AMBPTPusher *)pusher didFailToSubscribeToChannel:(AMBPTPusherChannel *)channel withError:(NSError *)error
 {
     DLog(@"%@ - %@",channel.name, error.debugDescription);
 }
 
-- (void)pusher:(PTPusher *)pusher didSubscribeToChannel:(PTPusherChannel *)channel
+- (void)pusher:(AMBPTPusher *)pusher didSubscribeToChannel:(AMBPTPusherChannel *)channel
 {
     DLog(@"Subscribed to: %@", channel.name);
 }

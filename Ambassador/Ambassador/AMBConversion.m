@@ -8,9 +8,9 @@
 
 //#import "NamespacedDependencies.h"
 #import "AMBConversion.h"
-#import "FMResultSet.h"
-#import "FMDatabase.h"
-#import "FMDatabaseQueue.h"
+#import "AMBFMResultSet.h"
+#import "AMBFMDatabase.h"
+#import "AMBFMDatabaseQueue.h"
 #import "AMBConstants.h"
 #import "AMBUtilities.h"
 
@@ -36,8 +36,8 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
 @property NSString *databaseName;
 @property NSString *libraryDirectoryPath;
 @property NSString *databaseFilePath;
-@property FMDatabaseQueue *databaseQueue;
-@property FMDatabase *database;
+@property AMBFMDatabaseQueue *databaseQueue;
+@property AMBFMDatabase *database;
 @property NSString * key;
 
 @end
@@ -64,7 +64,7 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
         if (![[NSFileManager defaultManager] fileExistsAtPath:self.databaseFilePath])
         {
             DLog(@"Database file needs to be created");
-            self.database = [FMDatabase databaseWithPath:self.databaseFilePath];
+            self.database = [AMBFMDatabase databaseWithPath:self.databaseFilePath];
             [self.database open];
             
             // Run the SQL query to create the Conversions table
@@ -80,7 +80,7 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
         }
         
         // Set the database queue to point to database file
-        self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:self.databaseFilePath];
+        self.databaseQueue = [AMBFMDatabaseQueue databaseQueueWithPath:self.databaseFilePath];
     }
     
     return self;
@@ -102,7 +102,7 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
     __weak AMBConversion *weakSelf = self;
     NSError *e = [parameters isValid];
     if (!e) {
-        [weakSelf.databaseQueue inDatabase:^(FMDatabase *db)
+        [weakSelf.databaseQueue inDatabase:^(AMBFMDatabase *db)
          {
              [db executeUpdate:AMB_CONVERSION_INSERT_QUERY,
               parameters.mbsy_campaign,
@@ -143,10 +143,10 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
     //Check if insights and identify data exist to send. Else don't send
     if (!userDefaultsInsights || !userDefaultsIdentify) { return; }
     
-    [self.databaseQueue inDatabase:^(FMDatabase *db)
+    [self.databaseQueue inDatabase:^(AMBFMDatabase *db)
     {
         DLog(@"Getting all database records");
-        FMResultSet *resultSet = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM %@", AMB_CONVERSION_SQL_TABLE_NAME]];
+        AMBFMResultSet *resultSet = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM %@", AMB_CONVERSION_SQL_TABLE_NAME]];
 
         while ([resultSet next])
         {

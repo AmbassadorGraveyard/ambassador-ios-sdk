@@ -7,11 +7,11 @@
 //
 
 #import "PTPusher+Testing.h"
-#import "PTPusherChannelAuthorizationOperation.h"
+#import "AMBPTPusherChannelAuthorizationOperation.h"
 
 NSString *const PTPusherAuthorizationBypassURL = @"libpusher://auth/bypass/url";
 
-@implementation PTPusher (Testing)
+@implementation AMBPTPusher (Testing)
 
 - (void)enableChannelAuthorizationBypassMode
 {

@@ -23,7 +23,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		DB68F50C1BA9C473009FF1B2 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DB68F50B1BA9C473009FF1B2 /* FMResultSet.m */; };
+		DB68F50C1BA9C473009FF1B2 /* AMBFMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DB68F50B1BA9C473009FF1B2 /* AMBFMResultSet.m */; };
 		DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in Copy Files */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; };
 		DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB844D261BA75BB8003FD7A9 /* libAmbassador.a */; };
 		DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -39,8 +39,8 @@
 		DB844D8E1BA76CB9003FD7A9 /* Ambassador.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DB844D521BA7622D003FD7A9 /* Ambassador.bundle */; };
 		DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB521BA8A23B00672D82 /* AmbassadorSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DBA3FB721BA8A23C00672D82 /* AmbassadorSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB531BA8A23B00672D82 /* AmbassadorSDK.m */; };
-		DBA3FB731BA8A23C00672D82 /* AuthorizeLinkedIn.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB541BA8A23B00672D82 /* AuthorizeLinkedIn.h */; };
-		DBA3FB741BA8A23C00672D82 /* AuthorizeLinkedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB551BA8A23B00672D82 /* AuthorizeLinkedIn.m */; };
+		DBA3FB731BA8A23C00672D82 /* AMBAuthorizeLinkedIn.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB541BA8A23B00672D82 /* AMBAuthorizeLinkedIn.h */; };
+		DBA3FB741BA8A23C00672D82 /* AMBAuthorizeLinkedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB551BA8A23B00672D82 /* AMBAuthorizeLinkedIn.m */; };
 		DBA3FB751BA8A23C00672D82 /* AMBConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB561BA8A23B00672D82 /* AMBConstants.h */; };
 		DBA3FB761BA8A23C00672D82 /* AMBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB571BA8A23B00672D82 /* AMBConstants.m */; };
 		DBA3FB771BA8A23C00672D82 /* AMBContact.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB581BA8A23B00672D82 /* AMBContact.h */; };
@@ -81,61 +81,60 @@
 		DBA3FBBE1BA8A24F00672D82 /* AMBShareServicesConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA61BA8A24F00672D82 /* AMBShareServicesConstants.m */; };
 		DBA3FBBF1BA8A24F00672D82 /* AMBUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */; };
 		DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA81BA8A24F00672D82 /* AMBUtilities.m */; };
-		DBA3FBCD1BA8A9C000672D82 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC21BA8A9C000672D82 /* FMDatabase.h */; };
-		DBA3FBCE1BA8A9C000672D82 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC31BA8A9C000672D82 /* FMDatabase.m */; };
-		DBA3FBCF1BA8A9C000672D82 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC41BA8A9C000672D82 /* FMDatabaseAdditions.h */; };
-		DBA3FBD01BA8A9C000672D82 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC51BA8A9C000672D82 /* FMDatabaseAdditions.m */; };
-		DBA3FBD11BA8A9C000672D82 /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC61BA8A9C000672D82 /* FMDatabasePool.h */; };
-		DBA3FBD21BA8A9C000672D82 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC71BA8A9C000672D82 /* FMDatabasePool.m */; };
-		DBA3FBD31BA8A9C000672D82 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC81BA8A9C000672D82 /* FMDatabaseQueue.h */; };
-		DBA3FBD41BA8A9C000672D82 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC91BA8A9C000672D82 /* FMDatabaseQueue.m */; };
+		DBA3FBCD1BA8A9C000672D82 /* AMBFMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC21BA8A9C000672D82 /* AMBFMDatabase.h */; };
+		DBA3FBCE1BA8A9C000672D82 /* AMBFMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC31BA8A9C000672D82 /* AMBFMDatabase.m */; };
+		DBA3FBCF1BA8A9C000672D82 /* AMBFMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC41BA8A9C000672D82 /* AMBFMDatabaseAdditions.h */; };
+		DBA3FBD01BA8A9C000672D82 /* AMBFMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC51BA8A9C000672D82 /* AMBFMDatabaseAdditions.m */; };
+		DBA3FBD11BA8A9C000672D82 /* AMBFMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC61BA8A9C000672D82 /* AMBFMDatabasePool.h */; };
+		DBA3FBD21BA8A9C000672D82 /* AMBFMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC71BA8A9C000672D82 /* AMBFMDatabasePool.m */; };
+		DBA3FBD31BA8A9C000672D82 /* AMBFMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC81BA8A9C000672D82 /* AMBFMDatabaseQueue.h */; };
+		DBA3FBD41BA8A9C000672D82 /* AMBFMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC91BA8A9C000672D82 /* AMBFMDatabaseQueue.m */; };
 		DBA3FBD51BA8A9C000672D82 /* FMDB.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBCA1BA8A9C000672D82 /* FMDB.h */; };
-		DBA3FBD61BA8A9C000672D82 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBCB1BA8A9C000672D82 /* FMResultSet.h */; };
-		DBA3FBD71BA8A9C000672D82 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBCC1BA8A9C000672D82 /* FMResultSet.m */; };
+		DBA3FBD71BA8A9C000672D82 /* AMBFMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBCC1BA8A9C000672D82 /* AMBFMResultSet.m */; };
 		DBA3FC001BA8AA1D00672D82 /* NSDictionary+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBD91BA8AA1D00672D82 /* NSDictionary+QueryString.m */; };
 		DBA3FC011BA8AA1D00672D82 /* NSString+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBDA1BA8AA1D00672D82 /* NSString+Hashing.m */; };
 		DBA3FC021BA8AA1D00672D82 /* NSDictionary+QueryString.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBDC1BA8AA1D00672D82 /* NSDictionary+QueryString.h */; };
 		DBA3FC031BA8AA1D00672D82 /* NSString+Hashing.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBDD1BA8AA1D00672D82 /* NSString+Hashing.h */; };
 		DBA3FC041BA8AA1D00672D82 /* PTBlockEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBDE1BA8AA1D00672D82 /* PTBlockEventListener.h */; };
-		DBA3FC051BA8AA1D00672D82 /* PTJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBDF1BA8AA1D00672D82 /* PTJSON.h */; };
-		DBA3FC061BA8AA1D00672D82 /* PTPusherChannel_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE01BA8AA1D00672D82 /* PTPusherChannel_Private.h */; };
-		DBA3FC071BA8AA1D00672D82 /* PTPusherChannelAuthorizationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE11BA8AA1D00672D82 /* PTPusherChannelAuthorizationOperation.h */; };
+		DBA3FC051BA8AA1D00672D82 /* AMBPTJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBDF1BA8AA1D00672D82 /* AMBPTJSON.h */; };
+		DBA3FC061BA8AA1D00672D82 /* AMBPTPusherChannel_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE01BA8AA1D00672D82 /* AMBPTPusherChannel_Private.h */; };
+		DBA3FC071BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE11BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h */; };
 		DBA3FC081BA8AA1D00672D82 /* PTTargetActionEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE21BA8AA1D00672D82 /* PTTargetActionEventListener.h */; };
-		DBA3FC091BA8AA1D00672D82 /* PTURLRequestOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE31BA8AA1D00672D82 /* PTURLRequestOperation.h */; };
-		DBA3FC0A1BA8AA1D00672D82 /* PTBlockEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBE41BA8AA1D00672D82 /* PTBlockEventListener.m */; };
+		DBA3FC091BA8AA1D00672D82 /* AMBPTURLRequestOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE31BA8AA1D00672D82 /* AMBPTURLRequestOperation.h */; };
+		DBA3FC0A1BA8AA1D00672D82 /* AMBPTBlockEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBE41BA8AA1D00672D82 /* AMBPTBlockEventListener.m */; };
 		DBA3FC0B1BA8AA1D00672D82 /* PTEventListener.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE51BA8AA1D00672D82 /* PTEventListener.h */; };
-		DBA3FC0C1BA8AA1D00672D82 /* PTJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBE61BA8AA1D00672D82 /* PTJSON.m */; };
-		DBA3FC0D1BA8AA1D00672D82 /* PTPusher.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE71BA8AA1D00672D82 /* PTPusher.h */; };
-		DBA3FC0E1BA8AA1D00672D82 /* PTPusher.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBE81BA8AA1D00672D82 /* PTPusher.m */; };
+		DBA3FC0C1BA8AA1D00672D82 /* AMBPTJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBE61BA8AA1D00672D82 /* AMBPTJSON.m */; };
+		DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE71BA8AA1D00672D82 /* AMBPTPusher.h */; };
+		DBA3FC0E1BA8AA1D00672D82 /* AMBPTPusher.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBE81BA8AA1D00672D82 /* AMBPTPusher.m */; };
 		DBA3FC0F1BA8AA1D00672D82 /* PTPusher+Testing.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBE91BA8AA1D00672D82 /* PTPusher+Testing.h */; };
 		DBA3FC101BA8AA1D00672D82 /* PTPusher+Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBEA1BA8AA1D00672D82 /* PTPusher+Testing.m */; };
-		DBA3FC111BA8AA1D00672D82 /* PTPusherAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBEB1BA8AA1D00672D82 /* PTPusherAPI.h */; };
-		DBA3FC121BA8AA1D00672D82 /* PTPusherAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBEC1BA8AA1D00672D82 /* PTPusherAPI.m */; };
-		DBA3FC131BA8AA1D00672D82 /* PTPusherChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBED1BA8AA1D00672D82 /* PTPusherChannel.h */; };
-		DBA3FC141BA8AA1D00672D82 /* PTPusherChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBEE1BA8AA1D00672D82 /* PTPusherChannel.m */; };
-		DBA3FC151BA8AA1D00672D82 /* PTPusherChannelAuthorizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBEF1BA8AA1D00672D82 /* PTPusherChannelAuthorizationOperation.m */; };
-		DBA3FC161BA8AA1D00672D82 /* PTPusherConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF01BA8AA1D00672D82 /* PTPusherConnection.h */; };
-		DBA3FC171BA8AA1D00672D82 /* PTPusherConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBF11BA8AA1D00672D82 /* PTPusherConnection.m */; };
+		DBA3FC111BA8AA1D00672D82 /* AMBPTPusherAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBEB1BA8AA1D00672D82 /* AMBPTPusherAPI.h */; };
+		DBA3FC121BA8AA1D00672D82 /* AMBPTPusherAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBEC1BA8AA1D00672D82 /* AMBPTPusherAPI.m */; };
+		DBA3FC131BA8AA1D00672D82 /* AMBPTPusherChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBED1BA8AA1D00672D82 /* AMBPTPusherChannel.h */; };
+		DBA3FC141BA8AA1D00672D82 /* AMBPTPusherChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBEE1BA8AA1D00672D82 /* AMBPTPusherChannel.m */; };
+		DBA3FC151BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBEF1BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m */; };
+		DBA3FC161BA8AA1D00672D82 /* AMBPTPusherConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF01BA8AA1D00672D82 /* AMBPTPusherConnection.h */; };
+		DBA3FC171BA8AA1D00672D82 /* AMBPTPusherConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBF11BA8AA1D00672D82 /* AMBPTPusherConnection.m */; };
 		DBA3FC181BA8AA1D00672D82 /* PTPusherDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF21BA8AA1D00672D82 /* PTPusherDelegate.h */; };
 		DBA3FC191BA8AA1D00672D82 /* PTPusherErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF31BA8AA1D00672D82 /* PTPusherErrors.h */; };
-		DBA3FC1A1BA8AA1D00672D82 /* PTPusherEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF41BA8AA1D00672D82 /* PTPusherEvent.h */; };
-		DBA3FC1B1BA8AA1D00672D82 /* PTPusherEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBF51BA8AA1D00672D82 /* PTPusherEvent.m */; };
-		DBA3FC1C1BA8AA1D00672D82 /* PTPusherEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF61BA8AA1D00672D82 /* PTPusherEventDispatcher.h */; };
-		DBA3FC1D1BA8AA1D00672D82 /* PTPusherEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBF71BA8AA1D00672D82 /* PTPusherEventDispatcher.m */; };
+		DBA3FC1A1BA8AA1D00672D82 /* AMBPTPusherEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF41BA8AA1D00672D82 /* AMBPTPusherEvent.h */; };
+		DBA3FC1B1BA8AA1D00672D82 /* AMBPTPusherEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBF51BA8AA1D00672D82 /* AMBPTPusherEvent.m */; };
+		DBA3FC1C1BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF61BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.h */; };
+		DBA3FC1D1BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBF71BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m */; };
 		DBA3FC1E1BA8AA1D00672D82 /* PTPusherEventPublisher.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF81BA8AA1D00672D82 /* PTPusherEventPublisher.h */; };
 		DBA3FC1F1BA8AA1D00672D82 /* PTPusherMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBF91BA8AA1D00672D82 /* PTPusherMacros.h */; };
-		DBA3FC201BA8AA1D00672D82 /* PTPusherMockConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBFA1BA8AA1D00672D82 /* PTPusherMockConnection.h */; };
-		DBA3FC211BA8AA1D00672D82 /* PTPusherMockConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBFB1BA8AA1D00672D82 /* PTPusherMockConnection.m */; };
+		DBA3FC201BA8AA1D00672D82 /* AMBPTPusherMockConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBFA1BA8AA1D00672D82 /* AMBPTPusherMockConnection.h */; };
+		DBA3FC211BA8AA1D00672D82 /* AMBPTPusherMockConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBFB1BA8AA1D00672D82 /* AMBPTPusherMockConnection.m */; };
 		DBA3FC221BA8AA1D00672D82 /* PTPusherPresenceChannelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBFC1BA8AA1D00672D82 /* PTPusherPresenceChannelDelegate.h */; };
-		DBA3FC231BA8AA1D00672D82 /* PTTargetActionEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBFD1BA8AA1D00672D82 /* PTTargetActionEventListener.m */; };
-		DBA3FC241BA8AA1D00672D82 /* PTURLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBFE1BA8AA1D00672D82 /* PTURLRequestOperation.m */; };
+		DBA3FC231BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBFD1BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m */; };
+		DBA3FC241BA8AA1D00672D82 /* AMBPTURLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBFE1BA8AA1D00672D82 /* AMBPTURLRequestOperation.m */; };
 		DBA3FC251BA8AA1D00672D82 /* Pusher.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBFF1BA8AA1D00672D82 /* Pusher.h */; };
 		DBA3FC2D1BA8AA5600672D82 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FC271BA8AA5600672D82 /* base64.c */; };
 		DBA3FC2E1BA8AA5600672D82 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FC281BA8AA5600672D82 /* base64.h */; };
 		DBA3FC2F1BA8AA5600672D82 /* NSData+SRB64Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FC291BA8AA5600672D82 /* NSData+SRB64Additions.h */; };
 		DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FC2A1BA8AA5600672D82 /* NSData+SRB64Additions.m */; };
-		DBA3FC311BA8AA5600672D82 /* SRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FC2B1BA8AA5600672D82 /* SRWebSocket.h */; };
-		DBA3FC321BA8AA5600672D82 /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FC2C1BA8AA5600672D82 /* SRWebSocket.m */; };
+		DBA3FC311BA8AA5600672D82 /* AMBSRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FC2B1BA8AA5600672D82 /* AMBSRWebSocket.h */; };
+		DBA3FC321BA8AA5600672D82 /* AMBSRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FC2C1BA8AA5600672D82 /* AMBSRWebSocket.m */; };
 		DBA3FC361BA8AB9200672D82 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA3FC331BA8AAA500672D82 /* libsqlite3.dylib */; };
 		DBA3FC411BA8BE2300672D82 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA3FC401BA8BE2300672D82 /* libicucore.dylib */; };
 		DBA3FC431BA8BE2C00672D82 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA3FC421BA8BE2C00672D82 /* CFNetwork.framework */; };
@@ -157,6 +156,7 @@
 		DBEB6FFE1BA9B2D8005EE0D0 /* sms.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FEF1BA9B2D8005EE0D0 /* sms.png */; };
 		DBEB6FFF1BA9B2D8005EE0D0 /* successIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FF01BA9B2D8005EE0D0 /* successIcon.png */; };
 		DBEB70001BA9B2D8005EE0D0 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */; };
+		EF2EC3351BAC60CC003CAA43 /* AMBFMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = EF2EC3341BAC60CC003CAA43 /* AMBFMResultSet.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -219,8 +219,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		DB68F50A1BA9C473009FF1B2 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
-		DB68F50B1BA9C473009FF1B2 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		DB68F50A1BA9C473009FF1B2 /* AMBFMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMResultSet.h; sourceTree = "<group>"; };
+		DB68F50B1BA9C473009FF1B2 /* AMBFMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFMResultSet.m; sourceTree = "<group>"; };
 		DB844D261BA75BB8003FD7A9 /* libAmbassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAmbassador.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB844D291BA75BB8003FD7A9 /* Ambassador.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ambassador.h; sourceTree = "<group>"; };
 		DB844D311BA75BB8003FD7A9 /* AmbassadorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -243,8 +243,8 @@
 		DB844D7F1BA76BDE003FD7A9 /* TestApplicationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestApplicationTests.m; sourceTree = "<group>"; };
 		DBA3FB521BA8A23B00672D82 /* AmbassadorSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmbassadorSDK.h; sourceTree = "<group>"; };
 		DBA3FB531BA8A23B00672D82 /* AmbassadorSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorSDK.m; sourceTree = "<group>"; };
-		DBA3FB541BA8A23B00672D82 /* AuthorizeLinkedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeLinkedIn.h; sourceTree = "<group>"; };
-		DBA3FB551BA8A23B00672D82 /* AuthorizeLinkedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeLinkedIn.m; sourceTree = "<group>"; };
+		DBA3FB541BA8A23B00672D82 /* AMBAuthorizeLinkedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBAuthorizeLinkedIn.h; sourceTree = "<group>"; };
+		DBA3FB551BA8A23B00672D82 /* AMBAuthorizeLinkedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBAuthorizeLinkedIn.m; sourceTree = "<group>"; };
 		DBA3FB561BA8A23B00672D82 /* AMBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBConstants.h; sourceTree = "<group>"; };
 		DBA3FB571BA8A23B00672D82 /* AMBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBConstants.m; sourceTree = "<group>"; };
 		DBA3FB581BA8A23B00672D82 /* AMBContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContact.h; sourceTree = "<group>"; };
@@ -285,61 +285,60 @@
 		DBA3FBA61BA8A24F00672D82 /* AMBShareServicesConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBShareServicesConstants.m; sourceTree = "<group>"; };
 		DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBUtilities.h; sourceTree = "<group>"; };
 		DBA3FBA81BA8A24F00672D82 /* AMBUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBUtilities.m; sourceTree = "<group>"; };
-		DBA3FBC21BA8A9C000672D82 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
-		DBA3FBC31BA8A9C000672D82 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
-		DBA3FBC41BA8A9C000672D82 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
-		DBA3FBC51BA8A9C000672D82 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
-		DBA3FBC61BA8A9C000672D82 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
-		DBA3FBC71BA8A9C000672D82 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
-		DBA3FBC81BA8A9C000672D82 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
-		DBA3FBC91BA8A9C000672D82 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		DBA3FBC21BA8A9C000672D82 /* AMBFMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMDatabase.h; sourceTree = "<group>"; };
+		DBA3FBC31BA8A9C000672D82 /* AMBFMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFMDatabase.m; sourceTree = "<group>"; };
+		DBA3FBC41BA8A9C000672D82 /* AMBFMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMDatabaseAdditions.h; sourceTree = "<group>"; };
+		DBA3FBC51BA8A9C000672D82 /* AMBFMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFMDatabaseAdditions.m; sourceTree = "<group>"; };
+		DBA3FBC61BA8A9C000672D82 /* AMBFMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMDatabasePool.h; sourceTree = "<group>"; };
+		DBA3FBC71BA8A9C000672D82 /* AMBFMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFMDatabasePool.m; sourceTree = "<group>"; };
+		DBA3FBC81BA8A9C000672D82 /* AMBFMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMDatabaseQueue.h; sourceTree = "<group>"; };
+		DBA3FBC91BA8A9C000672D82 /* AMBFMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFMDatabaseQueue.m; sourceTree = "<group>"; };
 		DBA3FBCA1BA8A9C000672D82 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
-		DBA3FBCB1BA8A9C000672D82 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
-		DBA3FBCC1BA8A9C000672D82 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		DBA3FBCC1BA8A9C000672D82 /* AMBFMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFMResultSet.m; sourceTree = "<group>"; };
 		DBA3FBD91BA8AA1D00672D82 /* NSDictionary+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+QueryString.m"; sourceTree = "<group>"; };
 		DBA3FBDA1BA8AA1D00672D82 /* NSString+Hashing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hashing.m"; sourceTree = "<group>"; };
 		DBA3FBDC1BA8AA1D00672D82 /* NSDictionary+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+QueryString.h"; sourceTree = "<group>"; };
 		DBA3FBDD1BA8AA1D00672D82 /* NSString+Hashing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Hashing.h"; sourceTree = "<group>"; };
 		DBA3FBDE1BA8AA1D00672D82 /* PTBlockEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTBlockEventListener.h; sourceTree = "<group>"; };
-		DBA3FBDF1BA8AA1D00672D82 /* PTJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTJSON.h; sourceTree = "<group>"; };
-		DBA3FBE01BA8AA1D00672D82 /* PTPusherChannel_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherChannel_Private.h; sourceTree = "<group>"; };
-		DBA3FBE11BA8AA1D00672D82 /* PTPusherChannelAuthorizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherChannelAuthorizationOperation.h; sourceTree = "<group>"; };
+		DBA3FBDF1BA8AA1D00672D82 /* AMBPTJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTJSON.h; sourceTree = "<group>"; };
+		DBA3FBE01BA8AA1D00672D82 /* AMBPTPusherChannel_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherChannel_Private.h; sourceTree = "<group>"; };
+		DBA3FBE11BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherChannelAuthorizationOperation.h; sourceTree = "<group>"; };
 		DBA3FBE21BA8AA1D00672D82 /* PTTargetActionEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTTargetActionEventListener.h; sourceTree = "<group>"; };
-		DBA3FBE31BA8AA1D00672D82 /* PTURLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTURLRequestOperation.h; sourceTree = "<group>"; };
-		DBA3FBE41BA8AA1D00672D82 /* PTBlockEventListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTBlockEventListener.m; sourceTree = "<group>"; };
+		DBA3FBE31BA8AA1D00672D82 /* AMBPTURLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTURLRequestOperation.h; sourceTree = "<group>"; };
+		DBA3FBE41BA8AA1D00672D82 /* AMBPTBlockEventListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTBlockEventListener.m; sourceTree = "<group>"; };
 		DBA3FBE51BA8AA1D00672D82 /* PTEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTEventListener.h; sourceTree = "<group>"; };
-		DBA3FBE61BA8AA1D00672D82 /* PTJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTJSON.m; sourceTree = "<group>"; };
-		DBA3FBE71BA8AA1D00672D82 /* PTPusher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusher.h; sourceTree = "<group>"; };
-		DBA3FBE81BA8AA1D00672D82 /* PTPusher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTPusher.m; sourceTree = "<group>"; };
+		DBA3FBE61BA8AA1D00672D82 /* AMBPTJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTJSON.m; sourceTree = "<group>"; };
+		DBA3FBE71BA8AA1D00672D82 /* AMBPTPusher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusher.h; sourceTree = "<group>"; };
+		DBA3FBE81BA8AA1D00672D82 /* AMBPTPusher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusher.m; sourceTree = "<group>"; };
 		DBA3FBE91BA8AA1D00672D82 /* PTPusher+Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PTPusher+Testing.h"; sourceTree = "<group>"; };
 		DBA3FBEA1BA8AA1D00672D82 /* PTPusher+Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PTPusher+Testing.m"; sourceTree = "<group>"; };
-		DBA3FBEB1BA8AA1D00672D82 /* PTPusherAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherAPI.h; sourceTree = "<group>"; };
-		DBA3FBEC1BA8AA1D00672D82 /* PTPusherAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTPusherAPI.m; sourceTree = "<group>"; };
-		DBA3FBED1BA8AA1D00672D82 /* PTPusherChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherChannel.h; sourceTree = "<group>"; };
-		DBA3FBEE1BA8AA1D00672D82 /* PTPusherChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTPusherChannel.m; sourceTree = "<group>"; };
-		DBA3FBEF1BA8AA1D00672D82 /* PTPusherChannelAuthorizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTPusherChannelAuthorizationOperation.m; sourceTree = "<group>"; };
-		DBA3FBF01BA8AA1D00672D82 /* PTPusherConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherConnection.h; sourceTree = "<group>"; };
-		DBA3FBF11BA8AA1D00672D82 /* PTPusherConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTPusherConnection.m; sourceTree = "<group>"; };
+		DBA3FBEB1BA8AA1D00672D82 /* AMBPTPusherAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherAPI.h; sourceTree = "<group>"; };
+		DBA3FBEC1BA8AA1D00672D82 /* AMBPTPusherAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherAPI.m; sourceTree = "<group>"; };
+		DBA3FBED1BA8AA1D00672D82 /* AMBPTPusherChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherChannel.h; sourceTree = "<group>"; };
+		DBA3FBEE1BA8AA1D00672D82 /* AMBPTPusherChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherChannel.m; sourceTree = "<group>"; };
+		DBA3FBEF1BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherChannelAuthorizationOperation.m; sourceTree = "<group>"; };
+		DBA3FBF01BA8AA1D00672D82 /* AMBPTPusherConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherConnection.h; sourceTree = "<group>"; };
+		DBA3FBF11BA8AA1D00672D82 /* AMBPTPusherConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherConnection.m; sourceTree = "<group>"; };
 		DBA3FBF21BA8AA1D00672D82 /* PTPusherDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherDelegate.h; sourceTree = "<group>"; };
 		DBA3FBF31BA8AA1D00672D82 /* PTPusherErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherErrors.h; sourceTree = "<group>"; };
-		DBA3FBF41BA8AA1D00672D82 /* PTPusherEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherEvent.h; sourceTree = "<group>"; };
-		DBA3FBF51BA8AA1D00672D82 /* PTPusherEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTPusherEvent.m; sourceTree = "<group>"; };
-		DBA3FBF61BA8AA1D00672D82 /* PTPusherEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherEventDispatcher.h; sourceTree = "<group>"; };
-		DBA3FBF71BA8AA1D00672D82 /* PTPusherEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTPusherEventDispatcher.m; sourceTree = "<group>"; };
+		DBA3FBF41BA8AA1D00672D82 /* AMBPTPusherEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherEvent.h; sourceTree = "<group>"; };
+		DBA3FBF51BA8AA1D00672D82 /* AMBPTPusherEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherEvent.m; sourceTree = "<group>"; };
+		DBA3FBF61BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherEventDispatcher.h; sourceTree = "<group>"; };
+		DBA3FBF71BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherEventDispatcher.m; sourceTree = "<group>"; };
 		DBA3FBF81BA8AA1D00672D82 /* PTPusherEventPublisher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherEventPublisher.h; sourceTree = "<group>"; };
 		DBA3FBF91BA8AA1D00672D82 /* PTPusherMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherMacros.h; sourceTree = "<group>"; };
-		DBA3FBFA1BA8AA1D00672D82 /* PTPusherMockConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherMockConnection.h; sourceTree = "<group>"; };
-		DBA3FBFB1BA8AA1D00672D82 /* PTPusherMockConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTPusherMockConnection.m; sourceTree = "<group>"; };
+		DBA3FBFA1BA8AA1D00672D82 /* AMBPTPusherMockConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPTPusherMockConnection.h; sourceTree = "<group>"; };
+		DBA3FBFB1BA8AA1D00672D82 /* AMBPTPusherMockConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTPusherMockConnection.m; sourceTree = "<group>"; };
 		DBA3FBFC1BA8AA1D00672D82 /* PTPusherPresenceChannelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPusherPresenceChannelDelegate.h; sourceTree = "<group>"; };
-		DBA3FBFD1BA8AA1D00672D82 /* PTTargetActionEventListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTTargetActionEventListener.m; sourceTree = "<group>"; };
-		DBA3FBFE1BA8AA1D00672D82 /* PTURLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTURLRequestOperation.m; sourceTree = "<group>"; };
+		DBA3FBFD1BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTTargetActionEventListener.m; sourceTree = "<group>"; };
+		DBA3FBFE1BA8AA1D00672D82 /* AMBPTURLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPTURLRequestOperation.m; sourceTree = "<group>"; };
 		DBA3FBFF1BA8AA1D00672D82 /* Pusher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pusher.h; sourceTree = "<group>"; };
 		DBA3FC271BA8AA5600672D82 /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		DBA3FC281BA8AA5600672D82 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
 		DBA3FC291BA8AA5600672D82 /* NSData+SRB64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+SRB64Additions.h"; sourceTree = "<group>"; };
 		DBA3FC2A1BA8AA5600672D82 /* NSData+SRB64Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+SRB64Additions.m"; sourceTree = "<group>"; };
-		DBA3FC2B1BA8AA5600672D82 /* SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRWebSocket.h; sourceTree = "<group>"; };
-		DBA3FC2C1BA8AA5600672D82 /* SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRWebSocket.m; sourceTree = "<group>"; };
+		DBA3FC2B1BA8AA5600672D82 /* AMBSRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBSRWebSocket.h; sourceTree = "<group>"; };
+		DBA3FC2C1BA8AA5600672D82 /* AMBSRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSRWebSocket.m; sourceTree = "<group>"; };
 		DBA3FC331BA8AAA500672D82 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		DBA3FC371BA8AC3100672D82 /* libsystem_coreservices.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsystem_coreservices.dylib; path = usr/lib/system/libsystem_coreservices.dylib; sourceTree = SDKROOT; };
 		DBA3FC391BA8AC3A00672D82 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
@@ -364,6 +363,7 @@
 		DBEB6FEF1BA9B2D8005EE0D0 /* sms.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sms.png; sourceTree = "<group>"; };
 		DBEB6FF01BA9B2D8005EE0D0 /* successIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = successIcon.png; sourceTree = "<group>"; };
 		DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
+		EF2EC3341BAC60CC003CAA43 /* AMBFMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMResultSet.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -460,8 +460,8 @@
 				DB844D291BA75BB8003FD7A9 /* Ambassador.h */,
 				DBA3FB521BA8A23B00672D82 /* AmbassadorSDK.h */,
 				DBA3FB531BA8A23B00672D82 /* AmbassadorSDK.m */,
-				DBA3FB541BA8A23B00672D82 /* AuthorizeLinkedIn.h */,
-				DBA3FB551BA8A23B00672D82 /* AuthorizeLinkedIn.m */,
+				DBA3FB541BA8A23B00672D82 /* AMBAuthorizeLinkedIn.h */,
+				DBA3FB551BA8A23B00672D82 /* AMBAuthorizeLinkedIn.m */,
 				DBA3FB561BA8A23B00672D82 /* AMBConstants.h */,
 				DBA3FB571BA8A23B00672D82 /* AMBConstants.m */,
 				DBA3FB581BA8A23B00672D82 /* AMBContact.h */,
@@ -562,8 +562,8 @@
 				DB844D681BA76BDE003FD7A9 /* AppDelegate.m */,
 				DB844D6A1BA76BDE003FD7A9 /* ViewController.h */,
 				DB844D6B1BA76BDE003FD7A9 /* ViewController.m */,
-				DB68F50A1BA9C473009FF1B2 /* FMResultSet.h */,
-				DB68F50B1BA9C473009FF1B2 /* FMResultSet.m */,
+				DB68F50A1BA9C473009FF1B2 /* AMBFMResultSet.h */,
+				DB68F50B1BA9C473009FF1B2 /* AMBFMResultSet.m */,
 				DB844D6D1BA76BDE003FD7A9 /* Main.storyboard */,
 				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
 				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
@@ -601,17 +601,17 @@
 		DBA3FBC11BA8A9C000672D82 /* fmdb */ = {
 			isa = PBXGroup;
 			children = (
-				DBA3FBC21BA8A9C000672D82 /* FMDatabase.h */,
-				DBA3FBC31BA8A9C000672D82 /* FMDatabase.m */,
-				DBA3FBC41BA8A9C000672D82 /* FMDatabaseAdditions.h */,
-				DBA3FBC51BA8A9C000672D82 /* FMDatabaseAdditions.m */,
-				DBA3FBC61BA8A9C000672D82 /* FMDatabasePool.h */,
-				DBA3FBC71BA8A9C000672D82 /* FMDatabasePool.m */,
-				DBA3FBC81BA8A9C000672D82 /* FMDatabaseQueue.h */,
-				DBA3FBC91BA8A9C000672D82 /* FMDatabaseQueue.m */,
+				DBA3FBC21BA8A9C000672D82 /* AMBFMDatabase.h */,
+				DBA3FBC31BA8A9C000672D82 /* AMBFMDatabase.m */,
+				DBA3FBC41BA8A9C000672D82 /* AMBFMDatabaseAdditions.h */,
+				DBA3FBC51BA8A9C000672D82 /* AMBFMDatabaseAdditions.m */,
+				DBA3FBC61BA8A9C000672D82 /* AMBFMDatabasePool.h */,
+				DBA3FBC71BA8A9C000672D82 /* AMBFMDatabasePool.m */,
+				DBA3FBC81BA8A9C000672D82 /* AMBFMDatabaseQueue.h */,
+				DBA3FBC91BA8A9C000672D82 /* AMBFMDatabaseQueue.m */,
 				DBA3FBCA1BA8A9C000672D82 /* FMDB.h */,
-				DBA3FBCB1BA8A9C000672D82 /* FMResultSet.h */,
-				DBA3FBCC1BA8A9C000672D82 /* FMResultSet.m */,
+				EF2EC3341BAC60CC003CAA43 /* AMBFMResultSet.h */,
+				DBA3FBCC1BA8A9C000672D82 /* AMBFMResultSet.m */,
 			);
 			path = fmdb;
 			sourceTree = "<group>";
@@ -623,33 +623,33 @@
 				DBA3FBD91BA8AA1D00672D82 /* NSDictionary+QueryString.m */,
 				DBA3FBDA1BA8AA1D00672D82 /* NSString+Hashing.m */,
 				DBA3FBDB1BA8AA1D00672D82 /* Private Headers */,
-				DBA3FBE41BA8AA1D00672D82 /* PTBlockEventListener.m */,
+				DBA3FBE41BA8AA1D00672D82 /* AMBPTBlockEventListener.m */,
 				DBA3FBE51BA8AA1D00672D82 /* PTEventListener.h */,
-				DBA3FBE61BA8AA1D00672D82 /* PTJSON.m */,
-				DBA3FBE71BA8AA1D00672D82 /* PTPusher.h */,
-				DBA3FBE81BA8AA1D00672D82 /* PTPusher.m */,
+				DBA3FBE61BA8AA1D00672D82 /* AMBPTJSON.m */,
+				DBA3FBE71BA8AA1D00672D82 /* AMBPTPusher.h */,
+				DBA3FBE81BA8AA1D00672D82 /* AMBPTPusher.m */,
 				DBA3FBE91BA8AA1D00672D82 /* PTPusher+Testing.h */,
 				DBA3FBEA1BA8AA1D00672D82 /* PTPusher+Testing.m */,
-				DBA3FBEB1BA8AA1D00672D82 /* PTPusherAPI.h */,
-				DBA3FBEC1BA8AA1D00672D82 /* PTPusherAPI.m */,
-				DBA3FBED1BA8AA1D00672D82 /* PTPusherChannel.h */,
-				DBA3FBEE1BA8AA1D00672D82 /* PTPusherChannel.m */,
-				DBA3FBEF1BA8AA1D00672D82 /* PTPusherChannelAuthorizationOperation.m */,
-				DBA3FBF01BA8AA1D00672D82 /* PTPusherConnection.h */,
-				DBA3FBF11BA8AA1D00672D82 /* PTPusherConnection.m */,
+				DBA3FBEB1BA8AA1D00672D82 /* AMBPTPusherAPI.h */,
+				DBA3FBEC1BA8AA1D00672D82 /* AMBPTPusherAPI.m */,
+				DBA3FBED1BA8AA1D00672D82 /* AMBPTPusherChannel.h */,
+				DBA3FBEE1BA8AA1D00672D82 /* AMBPTPusherChannel.m */,
+				DBA3FBEF1BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m */,
+				DBA3FBF01BA8AA1D00672D82 /* AMBPTPusherConnection.h */,
+				DBA3FBF11BA8AA1D00672D82 /* AMBPTPusherConnection.m */,
 				DBA3FBF21BA8AA1D00672D82 /* PTPusherDelegate.h */,
 				DBA3FBF31BA8AA1D00672D82 /* PTPusherErrors.h */,
-				DBA3FBF41BA8AA1D00672D82 /* PTPusherEvent.h */,
-				DBA3FBF51BA8AA1D00672D82 /* PTPusherEvent.m */,
-				DBA3FBF61BA8AA1D00672D82 /* PTPusherEventDispatcher.h */,
-				DBA3FBF71BA8AA1D00672D82 /* PTPusherEventDispatcher.m */,
+				DBA3FBF41BA8AA1D00672D82 /* AMBPTPusherEvent.h */,
+				DBA3FBF51BA8AA1D00672D82 /* AMBPTPusherEvent.m */,
+				DBA3FBF61BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.h */,
+				DBA3FBF71BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m */,
 				DBA3FBF81BA8AA1D00672D82 /* PTPusherEventPublisher.h */,
 				DBA3FBF91BA8AA1D00672D82 /* PTPusherMacros.h */,
-				DBA3FBFA1BA8AA1D00672D82 /* PTPusherMockConnection.h */,
-				DBA3FBFB1BA8AA1D00672D82 /* PTPusherMockConnection.m */,
+				DBA3FBFA1BA8AA1D00672D82 /* AMBPTPusherMockConnection.h */,
+				DBA3FBFB1BA8AA1D00672D82 /* AMBPTPusherMockConnection.m */,
 				DBA3FBFC1BA8AA1D00672D82 /* PTPusherPresenceChannelDelegate.h */,
-				DBA3FBFD1BA8AA1D00672D82 /* PTTargetActionEventListener.m */,
-				DBA3FBFE1BA8AA1D00672D82 /* PTURLRequestOperation.m */,
+				DBA3FBFD1BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m */,
+				DBA3FBFE1BA8AA1D00672D82 /* AMBPTURLRequestOperation.m */,
 				DBA3FBFF1BA8AA1D00672D82 /* Pusher.h */,
 			);
 			name = Pusher;
@@ -662,11 +662,11 @@
 				DBA3FBDC1BA8AA1D00672D82 /* NSDictionary+QueryString.h */,
 				DBA3FBDD1BA8AA1D00672D82 /* NSString+Hashing.h */,
 				DBA3FBDE1BA8AA1D00672D82 /* PTBlockEventListener.h */,
-				DBA3FBDF1BA8AA1D00672D82 /* PTJSON.h */,
-				DBA3FBE01BA8AA1D00672D82 /* PTPusherChannel_Private.h */,
-				DBA3FBE11BA8AA1D00672D82 /* PTPusherChannelAuthorizationOperation.h */,
+				DBA3FBDF1BA8AA1D00672D82 /* AMBPTJSON.h */,
+				DBA3FBE01BA8AA1D00672D82 /* AMBPTPusherChannel_Private.h */,
+				DBA3FBE11BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h */,
 				DBA3FBE21BA8AA1D00672D82 /* PTTargetActionEventListener.h */,
-				DBA3FBE31BA8AA1D00672D82 /* PTURLRequestOperation.h */,
+				DBA3FBE31BA8AA1D00672D82 /* AMBPTURLRequestOperation.h */,
 			);
 			path = "Private Headers";
 			sourceTree = "<group>";
@@ -678,8 +678,8 @@
 				DBA3FC281BA8AA5600672D82 /* base64.h */,
 				DBA3FC291BA8AA5600672D82 /* NSData+SRB64Additions.h */,
 				DBA3FC2A1BA8AA5600672D82 /* NSData+SRB64Additions.m */,
-				DBA3FC2B1BA8AA5600672D82 /* SRWebSocket.h */,
-				DBA3FC2C1BA8AA5600672D82 /* SRWebSocket.m */,
+				DBA3FC2B1BA8AA5600672D82 /* AMBSRWebSocket.h */,
+				DBA3FC2C1BA8AA5600672D82 /* AMBSRWebSocket.m */,
 			);
 			name = "Socket Rocket";
 			sourceTree = "<group>";
@@ -691,34 +691,34 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBA3FC161BA8AA1D00672D82 /* PTPusherConnection.h in Headers */,
-				DBA3FC0D1BA8AA1D00672D82 /* PTPusher.h in Headers */,
+				DBA3FC161BA8AA1D00672D82 /* AMBPTPusherConnection.h in Headers */,
+				EF2EC3351BAC60CC003CAA43 /* AMBFMResultSet.h in Headers */,
+				DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */,
 				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
-				DBA3FBD61BA8A9C000672D82 /* FMResultSet.h in Headers */,
-				DBA3FC051BA8AA1D00672D82 /* PTJSON.h in Headers */,
+				DBA3FC051BA8AA1D00672D82 /* AMBPTJSON.h in Headers */,
 				DBA3FC0F1BA8AA1D00672D82 /* PTPusher+Testing.h in Headers */,
-				DBA3FC131BA8AA1D00672D82 /* PTPusherChannel.h in Headers */,
+				DBA3FC131BA8AA1D00672D82 /* AMBPTPusherChannel.h in Headers */,
 				DBA3FBBB1BA8A24F00672D82 /* AMBShareServiceCell.h in Headers */,
 				DBA3FC081BA8AA1D00672D82 /* PTTargetActionEventListener.h in Headers */,
 				DBA3FC041BA8AA1D00672D82 /* PTBlockEventListener.h in Headers */,
-				DBA3FBCD1BA8A9C000672D82 /* FMDatabase.h in Headers */,
+				DBA3FBCD1BA8A9C000672D82 /* AMBFMDatabase.h in Headers */,
 				DBA3FBAF1BA8A24F00672D82 /* AMBRemoveButton.h in Headers */,
-				DBA3FC071BA8AA1D00672D82 /* PTPusherChannelAuthorizationOperation.h in Headers */,
-				DBA3FC201BA8AA1D00672D82 /* PTPusherMockConnection.h in Headers */,
-				DBA3FC1C1BA8AA1D00672D82 /* PTPusherEventDispatcher.h in Headers */,
+				DBA3FC071BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h in Headers */,
+				DBA3FC201BA8AA1D00672D82 /* AMBPTPusherMockConnection.h in Headers */,
+				DBA3FC1C1BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.h in Headers */,
 				DBA3FBB91BA8A24F00672D82 /* AMBShareService.h in Headers */,
 				DBA3FBD51BA8A9C000672D82 /* FMDB.h in Headers */,
 				DBA3FC021BA8AA1D00672D82 /* NSDictionary+QueryString.h in Headers */,
 				DBA3FC221BA8AA1D00672D82 /* PTPusherPresenceChannelDelegate.h in Headers */,
 				DBA3FC1F1BA8AA1D00672D82 /* PTPusherMacros.h in Headers */,
-				DBA3FBD31BA8A9C000672D82 /* FMDatabaseQueue.h in Headers */,
+				DBA3FBD31BA8A9C000672D82 /* AMBFMDatabaseQueue.h in Headers */,
 				DBA3FBA91BA8A24F00672D82 /* AMBLinkedInAPIConstants.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
 				DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */,
 				DBA3FC191BA8AA1D00672D82 /* PTPusherErrors.h in Headers */,
-				DBA3FBD11BA8A9C000672D82 /* FMDatabasePool.h in Headers */,
+				DBA3FBD11BA8A9C000672D82 /* AMBFMDatabasePool.h in Headers */,
 				DBA3FB7B1BA8A23C00672D82 /* AMBContactLoader.h in Headers */,
-				DBA3FC091BA8AA1D00672D82 /* PTURLRequestOperation.h in Headers */,
+				DBA3FC091BA8AA1D00672D82 /* AMBPTURLRequestOperation.h in Headers */,
 				DBA3FC1E1BA8AA1D00672D82 /* PTPusherEventPublisher.h in Headers */,
 				DBA3FC251BA8AA1D00672D82 /* Pusher.h in Headers */,
 				DBA3FC0B1BA8AA1D00672D82 /* PTEventListener.h in Headers */,
@@ -727,12 +727,12 @@
 				DBA3FB771BA8A23C00672D82 /* AMBContact.h in Headers */,
 				DBA3FBB31BA8A24F00672D82 /* AMBSendCompletionModal.h in Headers */,
 				DBA3FBAB1BA8A24F00672D82 /* AMBLinkedInShare.h in Headers */,
-				DBA3FC061BA8AA1D00672D82 /* PTPusherChannel_Private.h in Headers */,
-				DBA3FC311BA8AA5600672D82 /* SRWebSocket.h in Headers */,
-				DBA3FBCF1BA8A9C000672D82 /* FMDatabaseAdditions.h in Headers */,
+				DBA3FC061BA8AA1D00672D82 /* AMBPTPusherChannel_Private.h in Headers */,
+				DBA3FC311BA8AA5600672D82 /* AMBSRWebSocket.h in Headers */,
+				DBA3FBCF1BA8A9C000672D82 /* AMBFMDatabaseAdditions.h in Headers */,
 				DBA3FBBD1BA8A24F00672D82 /* AMBShareServicesConstants.h in Headers */,
 				DBA3FBAD1BA8A24F00672D82 /* AMBNamePrompt.h in Headers */,
-				DBA3FC111BA8AA1D00672D82 /* PTPusherAPI.h in Headers */,
+				DBA3FC111BA8AA1D00672D82 /* AMBPTPusherAPI.h in Headers */,
 				DBA3FC2E1BA8AA5600672D82 /* base64.h in Headers */,
 				DBA3FC181BA8AA1D00672D82 /* PTPusherDelegate.h in Headers */,
 				DBA3FBB11BA8A24F00672D82 /* AMBSelectedCell.h in Headers */,
@@ -742,10 +742,10 @@
 				DBA3FB7D1BA8A23C00672D82 /* AMBContactSelector.h in Headers */,
 				DBA3FC031BA8AA1D00672D82 /* NSString+Hashing.h in Headers */,
 				DBA3FB791BA8A23C00672D82 /* AMBContactCell.h in Headers */,
-				DBA3FC1A1BA8AA1D00672D82 /* PTPusherEvent.h in Headers */,
+				DBA3FC1A1BA8AA1D00672D82 /* AMBPTPusherEvent.h in Headers */,
 				DBA3FB751BA8A23C00672D82 /* AMBConstants.h in Headers */,
 				DBA3FB8E1BA8A23C00672D82 /* AMBIdentify.h in Headers */,
-				DBA3FB731BA8A23C00672D82 /* AuthorizeLinkedIn.h in Headers */,
+				DBA3FB731BA8A23C00672D82 /* AMBAuthorizeLinkedIn.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -759,7 +759,6 @@
 				DB844D221BA75BB8003FD7A9 /* Sources */,
 				DB844D231BA75BB8003FD7A9 /* Frameworks */,
 				DB844D241BA75BB8003FD7A9 /* Copy Files */,
-				DB68F5161BAA115A009FF1B2 /* Generate Namespace */,
 				DB844D401BA75CDC003FD7A9 /* Headers */,
 				DB844D421BA75E54003FD7A9 /* Prepare Framework */,
 			);
@@ -950,20 +949,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		DB68F5161BAA115A009FF1B2 /* Generate Namespace */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Generate Namespace";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script is a modified version of this: https://github.com/jverkoey/nimbus/blob/master/scripts/generate_namespace_header\n\nheader=$SRCROOT/ext/NamespacedDependencies.h\nprefix=\"YOUR_PREFIX_HERE\"\n\n# CODESIGNING_FOLDER_PATH=\"$CODESIGNING_FOLDER_PATH/libAmbassador.a\"\n\necho \"Generating $header from $CODESIGNING_FOLDER_PATH...\"\n\necho \"// Namespaced Header\n\n#ifndef __NS_SYMBOL\n// We need to have multiple levels of macros here so that __NAMESPACE_PREFIX_ is\n// properly replaced by the time we concatenate the namespace prefix.\n#define __NS_REWRITE(ns, symbol) ns ## _ ## symbol\n#define __NS_BRIDGE(ns, symbol) __NS_REWRITE(ns, symbol)\n#define __NS_SYMBOL(symbol) __NS_BRIDGE($prefix, symbol)\n#endif\n\n\" > $header\n\n# The following one-liner is a bit of a pain in the ass.\n# Breakdown:\n#\n# nm $CODESIGNING_FOLDER_PATH -j\n# Dump all of the symbols from the compiled library. This will include all UIKit\n# and Foundation symbols as well.\n#\n# | grep \"^_OBJC_CLASS_$_\"\n# Filter out the interfaces.\n#\n# | grep -v \"\\$_NS\"\n# Remove all Foundation classes.\n#\n# | grep -v \"\\$_UI\"\n# Remove all UIKit classes.\n#\n# | sed -e 's/_OBJC_CLASS_\\$_\\(.*\\)/#ifndef \\1\\'$'\\n''#define \\1 __NS_SYMBOL(\\1)\\'$'\\n''#endif/g'\n# I use the syntax outlined here:\n# http://stackoverflow.com/questions/6761796/bash-perl-or-sed-insert-on-new-line-after-found-phrase\n# to create newlines so that we can write the following on separate lines:\n#\n#  #ifndef ...\n#  #define ...\n#  #endif\n#\n\necho \"// Classes\" >> $header\n\nnm $CODESIGNING_FOLDER_PATH -j | sort | uniq | grep \"^_OBJC_CLASS_\\$_\" | grep -v \"\\$_AGSGT\" | grep -v \"\\$_CL\" | grep -v \"\\$_NS\" | grep -v \"\\$_UI\" | sed -e 's/_OBJC_CLASS_\\$_\\(.*\\)/#ifndef \\1\\'$'\\n''#define \\1 __NS_SYMBOL(\\1)\\'$'\\n''#endif\\'$'\\n''/g' >> $header\n\necho \"// Functions\" >> $header\n\nnm $CODESIGNING_FOLDER_PATH | sort | uniq | grep \" T \" | cut -d' ' -f3 | grep -v \"\\$_NS\" | grep -v \"\\$_UI\" | sed -e 's/_\\(.*\\)/#ifndef \\1\\'$'\\n''#define \\1 __NS_SYMBOL(\\1)\\'$'\\n''#endif\\'$'\\n''/g' >> $header\n\necho \"// Externs\" >> $header\n\nnm $CODESIGNING_FOLDER_PATH | sort | uniq | grep \" D \" | cut -d' ' -f3 | grep -v \"\\$_NS\" | grep -v \"\\$_UI\" | sed -e 's/_\\(.*\\)/#ifndef \\1\\'$'\\n''#define \\1 __NS_SYMBOL(\\1)\\'$'\\n''#endif\\'$'\\n''/g' >> $header\n\nnm $CODESIGNING_FOLDER_PATH | sort | uniq | grep \" S \" | cut -d' ' -f3 | grep -v \"\\$_NS\" | grep -v \".eh\" | grep -v \"\\$_UI\" | grep -v \"OBJC_\" | sed -e 's/_\\(.*\\)/#ifndef \\1\\'$'\\n''#define \\1 __NS_SYMBOL(\\1)\\'$'\\n''#endif\\'$'\\n''/g' >> $header\n\n";
-		};
 		DB844D421BA75E54003FD7A9 /* Prepare Framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -999,51 +984,51 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBA3FC0E1BA8AA1D00672D82 /* PTPusher.m in Sources */,
+				DBA3FC0E1BA8AA1D00672D82 /* AMBPTPusher.m in Sources */,
 				DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */,
 				DBA3FBB01BA8A24F00672D82 /* AMBRemoveButton.m in Sources */,
 				DBA3FB7E1BA8A23C00672D82 /* AMBContactSelector.m in Sources */,
 				DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */,
-				DBA3FC121BA8AA1D00672D82 /* PTPusherAPI.m in Sources */,
+				DBA3FC121BA8AA1D00672D82 /* AMBPTPusherAPI.m in Sources */,
 				DBA3FC001BA8AA1D00672D82 /* NSDictionary+QueryString.m in Sources */,
 				DBA3FBB81BA8A24F00672D82 /* AMBServiceSelectorPreferences.m in Sources */,
 				DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */,
-				DBA3FC231BA8AA1D00672D82 /* PTTargetActionEventListener.m in Sources */,
-				DBA3FC211BA8AA1D00672D82 /* PTPusherMockConnection.m in Sources */,
+				DBA3FC231BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m in Sources */,
+				DBA3FC211BA8AA1D00672D82 /* AMBPTPusherMockConnection.m in Sources */,
 				DBA3FBB41BA8A24F00672D82 /* AMBSendCompletionModal.m in Sources */,
-				DBA3FC141BA8AA1D00672D82 /* PTPusherChannel.m in Sources */,
+				DBA3FC141BA8AA1D00672D82 /* AMBPTPusherChannel.m in Sources */,
 				DBA3FBBA1BA8A24F00672D82 /* AMBShareService.m in Sources */,
 				DBA3FB7A1BA8A23C00672D82 /* AMBContactCell.m in Sources */,
-				DBA3FBCE1BA8A9C000672D82 /* FMDatabase.m in Sources */,
+				DBA3FBCE1BA8A9C000672D82 /* AMBFMDatabase.m in Sources */,
 				DBA3FB7C1BA8A23C00672D82 /* AMBContactLoader.m in Sources */,
 				DBA3FBBC1BA8A24F00672D82 /* AMBShareServiceCell.m in Sources */,
-				DBA3FC241BA8AA1D00672D82 /* PTURLRequestOperation.m in Sources */,
+				DBA3FC241BA8AA1D00672D82 /* AMBPTURLRequestOperation.m in Sources */,
 				DBA3FBAA1BA8A24F00672D82 /* AMBLinkedInAPIConstants.m in Sources */,
-				DBA3FBD21BA8A9C000672D82 /* FMDatabasePool.m in Sources */,
+				DBA3FBD21BA8A9C000672D82 /* AMBFMDatabasePool.m in Sources */,
 				DBA3FBBE1BA8A24F00672D82 /* AMBShareServicesConstants.m in Sources */,
 				DBA3FB781BA8A23C00672D82 /* AMBContact.m in Sources */,
-				DBA3FBD71BA8A9C000672D82 /* FMResultSet.m in Sources */,
+				DBA3FBD71BA8A9C000672D82 /* AMBFMResultSet.m in Sources */,
 				DBA3FB821BA8A23C00672D82 /* AMBConversionParameters.m in Sources */,
 				DBA3FB721BA8A23C00672D82 /* AmbassadorSDK.m in Sources */,
-				DBA3FBD41BA8A9C000672D82 /* FMDatabaseQueue.m in Sources */,
-				DBA3FC0A1BA8AA1D00672D82 /* PTBlockEventListener.m in Sources */,
-				DBA3FC151BA8AA1D00672D82 /* PTPusherChannelAuthorizationOperation.m in Sources */,
+				DBA3FBD41BA8A9C000672D82 /* AMBFMDatabaseQueue.m in Sources */,
+				DBA3FC0A1BA8AA1D00672D82 /* AMBPTBlockEventListener.m in Sources */,
+				DBA3FC151BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m in Sources */,
 				DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */,
 				DBA3FB801BA8A23C00672D82 /* AMBConversion.m in Sources */,
 				DBA3FB8F1BA8A23C00672D82 /* AMBIdentify.m in Sources */,
 				DBA3FC011BA8AA1D00672D82 /* NSString+Hashing.m in Sources */,
-				DBA3FC1B1BA8AA1D00672D82 /* PTPusherEvent.m in Sources */,
-				DBA3FB741BA8A23C00672D82 /* AuthorizeLinkedIn.m in Sources */,
-				DBA3FC0C1BA8AA1D00672D82 /* PTJSON.m in Sources */,
+				DBA3FC1B1BA8AA1D00672D82 /* AMBPTPusherEvent.m in Sources */,
+				DBA3FB741BA8A23C00672D82 /* AMBAuthorizeLinkedIn.m in Sources */,
+				DBA3FC0C1BA8AA1D00672D82 /* AMBPTJSON.m in Sources */,
 				DBA3FC2D1BA8AA5600672D82 /* base64.c in Sources */,
 				DBA3FBAE1BA8A24F00672D82 /* AMBNamePrompt.m in Sources */,
 				DBA3FBB21BA8A24F00672D82 /* AMBSelectedCell.m in Sources */,
-				DBA3FC171BA8AA1D00672D82 /* PTPusherConnection.m in Sources */,
-				DBA3FC1D1BA8AA1D00672D82 /* PTPusherEventDispatcher.m in Sources */,
+				DBA3FC171BA8AA1D00672D82 /* AMBPTPusherConnection.m in Sources */,
+				DBA3FC1D1BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m in Sources */,
 				DBA3FC101BA8AA1D00672D82 /* PTPusher+Testing.m in Sources */,
-				DBA3FC321BA8AA5600672D82 /* SRWebSocket.m in Sources */,
+				DBA3FC321BA8AA5600672D82 /* AMBSRWebSocket.m in Sources */,
 				DBA3FB761BA8A23C00672D82 /* AMBConstants.m in Sources */,
-				DBA3FBD01BA8A9C000672D82 /* FMDatabaseAdditions.m in Sources */,
+				DBA3FBD01BA8A9C000672D82 /* AMBFMDatabaseAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1067,7 +1052,7 @@
 			files = (
 				DB844D6C1BA76BDE003FD7A9 /* ViewController.m in Sources */,
 				DB844D691BA76BDE003FD7A9 /* AppDelegate.m in Sources */,
-				DB68F50C1BA9C473009FF1B2 /* FMResultSet.m in Sources */,
+				DB68F50C1BA9C473009FF1B2 /* AMBFMResultSet.m in Sources */,
 				DB844D661BA76BDE003FD7A9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

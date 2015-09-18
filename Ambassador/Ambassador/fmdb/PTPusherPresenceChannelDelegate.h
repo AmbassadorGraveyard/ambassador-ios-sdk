@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "PTPusherMacros.h"
 
-@class PTPusherChannelMember;
-@class PTPusherPresenceChannel;
+@class AMBPTPusherChannelMember;
+@class AMBPTPusherPresenceChannel;
 
-@protocol PTPusherPresenceChannelDelegate <NSObject>
+@protocol AMBPTPusherPresenceChannelDelegate <NSObject>
 
 /** Notifies the delegate that the presence channel subscribed successfully.
  
@@ -22,7 +22,7 @@
 
  @param channel The presence channel that was subscribed to.
  */
-- (void)presenceChannelDidSubscribe:(PTPusherPresenceChannel *)channel;
+- (void)presenceChannelDidSubscribe:(AMBPTPusherPresenceChannel *)channel;
 
 /** Notifies the delegate that a member has joined the channel.
  
@@ -30,13 +30,13 @@
  @param member The member that was removed.
  */
 
-- (void)presenceChannel:(PTPusherPresenceChannel *)channel memberAdded:(PTPusherChannelMember *)member;
+- (void)presenceChannel:(AMBPTPusherPresenceChannel *)channel memberAdded:(AMBPTPusherChannelMember *)member;
 
 /** Notifies the delegate that a member has left from the channel.
 
  @param channel The presence channel that was subscribed to.
  @param member The member that was removed.
  */
-- (void)presenceChannel:(PTPusherPresenceChannel *)channel memberRemoved:(PTPusherChannelMember *)member;
+- (void)presenceChannel:(AMBPTPusherPresenceChannel *)channel memberRemoved:(AMBPTPusherChannelMember *)member;
 
 @end
