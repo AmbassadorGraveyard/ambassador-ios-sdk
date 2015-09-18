@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PTPusher.h"
+#import "AMBPTPusher.h"
 
 extern NSString *const PTPusherAuthorizationBypassURL;
 
-@interface PTPusher (Testing)
+@interface AMBPTPusher (Testing)
 
 - (void)enableChannelAuthorizationBypassMode;
 

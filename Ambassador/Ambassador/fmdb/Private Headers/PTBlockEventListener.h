@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "PTEventListener.h"
-#import "PTPusherEventDispatcher.h"
+#import "AMBPTPusherEventDispatcher.h"
 
-typedef void (^PTBlockEventListenerBlock)(PTPusherEvent *);
+typedef void (^PTBlockEventListenerBlock)(AMBPTPusherEvent *);
 
-@interface PTPusherEventDispatcher (PTBlockEventFactory)
+@interface AMBPTPusherEventDispatcher (PTBlockEventFactory)
 
-- (PTPusherEventBinding *)addEventListenerForEventNamed:(NSString *)eventName 
+- (AMBPTPusherEventBinding *)addEventListenerForEventNamed:(NSString *)eventName 
                                 block:(PTBlockEventListenerBlock)block 
                                 queue:(dispatch_queue_t)queue;
 

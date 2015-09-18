@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@class PTPusherEvent;
-@class PTPusherEventBinding;
+@class AMBPTPusherEvent;
+@class AMBPTPusherEventBinding;
 
-typedef void (^PTPusherEventBlockHandler) (PTPusherEvent *);
+typedef void (^PTPusherEventBlockHandler) (AMBPTPusherEvent *);
 
 /** Describes an object that provides events that can be bound to.
  
@@ -43,7 +43,7 @@ typedef void (^PTPusherEventBlockHandler) (PTPusherEvent *);
       // do something with event
     }
  */
-- (PTPusherEventBinding *)bindToEventNamed:(NSString *)eventName target:(id)target action:(SEL)selector;
+- (AMBPTPusherEventBinding *)bindToEventNamed:(NSString *)eventName target:(id)target action:(SEL)selector;
 
 /** Binds to the named event using a block callback.
  
@@ -58,7 +58,7 @@ typedef void (^PTPusherEventBlockHandler) (PTPusherEvent *);
  
  The callback blocks will be dispatched asynchronously using Grand Central Dispatch on the main queue.
  */
-- (PTPusherEventBinding *)bindToEventNamed:(NSString *)eventName handleWithBlock:(PTPusherEventBlockHandler)block;
+- (AMBPTPusherEventBinding *)bindToEventNamed:(NSString *)eventName handleWithBlock:(PTPusherEventBlockHandler)block;
 
 /** Binds to the named event using a block callback.
  
@@ -67,13 +67,13 @@ typedef void (^PTPusherEventBlockHandler) (PTPusherEvent *);
  
  You can use this method if you wish to handle events in a background or custom priority queue.
  */
-- (PTPusherEventBinding *)bindToEventNamed:(NSString *)eventName handleWithBlock:(PTPusherEventBlockHandler)block queue:(dispatch_queue_t)queue;
+- (AMBPTPusherEventBinding *)bindToEventNamed:(NSString *)eventName handleWithBlock:(PTPusherEventBlockHandler)block queue:(dispatch_queue_t)queue;
 
 /** Removes the specified binding.
  
  Any further events will not trigger any callbacks after the binding has been removed.
  */
-- (void)removeBinding:(PTPusherEventBinding *)binding;
+- (void)removeBinding:(AMBPTPusherEventBinding *)binding;
 
 /** Removes all bindings that have been set up.
  
