@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="h1V-x8-bgO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="h1V-x8-bgO">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -10,7 +10,7 @@
         <!--Service Selector-->
         <scene sceneID="j6P-z8-92u">
             <objects>
-                <viewController storyboardIdentifier="serviceSelector" id="SGl-pp-yfW" customClass="ServiceSelector" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="serviceSelector" id="SGl-pp-yfW" customClass="AMBServiceSelector" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Psx-Td-l3L"/>
                         <viewControllerLayoutGuide type="bottom" id="sS7-Fg-yC9"/>
@@ -57,7 +57,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="serviceCell" id="WDV-O3-hNL" customClass="ShareServiceCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="serviceCell" id="WDV-O3-hNL" customClass="AMBShareServiceCell">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="105"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -186,7 +186,7 @@
         <!--Contact Selector-->
         <scene sceneID="Oe2-qh-BLk">
             <objects>
-                <viewController id="0Ev-V6-LY3" customClass="ContactSelector" sceneMemberID="viewController">
+                <viewController id="0Ev-V6-LY3" customClass="AMBContactSelector" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zxs-AM-BO1"/>
                         <viewControllerLayoutGuide type="bottom" id="lAH-ev-ce2"/>
@@ -202,7 +202,7 @@
                                         <rect key="frame" x="0.0" y="60" width="608" height="375"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" rowHeight="60" id="qnu-a1-5BV" customClass="ContactCell">
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" rowHeight="60" id="qnu-a1-5BV" customClass="AMBContactCell">
                                                 <rect key="frame" x="0.0" y="22" width="600" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qnu-a1-5BV" id="5Ap-fV-JNz">
@@ -463,7 +463,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="selectedCell" rowHeight="60" id="BRG-T0-Y0k" customClass="SelectedCell">
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="selectedCell" rowHeight="60" id="BRG-T0-Y0k" customClass="AMBSelectedCell">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BRG-T0-Y0k" id="ukp-TX-pW7">
@@ -489,7 +489,7 @@
                                                                 </mask>
                                                             </variation>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KAc-b0-nmv" customClass="RemoveButton">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KAc-b0-nmv" customClass="AMBRemoveButton">
                                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="12" id="Uin-0R-L33"/>
@@ -818,7 +818,7 @@
         <!--Name Prompt-->
         <scene sceneID="Mdi-3S-hak">
             <objects>
-                <viewController id="QAG-ZD-cG3" customClass="NamePrompt" sceneMemberID="viewController">
+                <viewController id="QAG-ZD-cG3" customClass="AMBNamePrompt" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xdB-VM-5zy"/>
                         <viewControllerLayoutGuide type="bottom" id="vOy-hB-ytc"/>
@@ -1011,7 +1011,7 @@
         <!--Send Completion Modal-->
         <scene sceneID="jMA-Rl-aCe">
             <objects>
-                <viewController storyboardIdentifier="sendCompletionModal" id="Tp4-IB-AAD" customClass="SendCompletionModal" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="sendCompletionModal" id="Tp4-IB-AAD" customClass="AMBSendCompletionModal" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xC3-uq-LMH"/>
                         <viewControllerLayoutGuide type="bottom" id="qye-EZ-gaQ"/>

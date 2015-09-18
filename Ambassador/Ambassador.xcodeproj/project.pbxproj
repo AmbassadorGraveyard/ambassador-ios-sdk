@@ -24,8 +24,6 @@
 
 /* Begin PBXBuildFile section */
 		DB68F50C1BA9C473009FF1B2 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DB68F50B1BA9C473009FF1B2 /* FMResultSet.m */; };
-		DB68F5111BA9D9BA009FF1B2 /* NamespacedDependencies.h in Headers */ = {isa = PBXBuildFile; fileRef = DB68F5101BA9D9BA009FF1B2 /* NamespacedDependencies.h */; };
-		DB68F5171BAA117C009FF1B2 /* NamespacedDependencies.h in Copy Files */ = {isa = PBXBuildFile; fileRef = DB68F5101BA9D9BA009FF1B2 /* NamespacedDependencies.h */; };
 		DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in Copy Files */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; };
 		DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB844D261BA75BB8003FD7A9 /* libAmbassador.a */; };
 		DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -43,46 +41,46 @@
 		DBA3FB721BA8A23C00672D82 /* AmbassadorSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB531BA8A23B00672D82 /* AmbassadorSDK.m */; };
 		DBA3FB731BA8A23C00672D82 /* AuthorizeLinkedIn.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB541BA8A23B00672D82 /* AuthorizeLinkedIn.h */; };
 		DBA3FB741BA8A23C00672D82 /* AuthorizeLinkedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB551BA8A23B00672D82 /* AuthorizeLinkedIn.m */; };
-		DBA3FB751BA8A23C00672D82 /* Constants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB561BA8A23B00672D82 /* Constants.h */; };
-		DBA3FB761BA8A23C00672D82 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB571BA8A23B00672D82 /* Constants.m */; };
-		DBA3FB771BA8A23C00672D82 /* Contact.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB581BA8A23B00672D82 /* Contact.h */; };
-		DBA3FB781BA8A23C00672D82 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB591BA8A23B00672D82 /* Contact.m */; };
-		DBA3FB791BA8A23C00672D82 /* ContactCell.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB5A1BA8A23B00672D82 /* ContactCell.h */; };
-		DBA3FB7A1BA8A23C00672D82 /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB5B1BA8A23B00672D82 /* ContactCell.m */; };
-		DBA3FB7B1BA8A23C00672D82 /* ContactLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB5C1BA8A23B00672D82 /* ContactLoader.h */; };
-		DBA3FB7C1BA8A23C00672D82 /* ContactLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB5D1BA8A23B00672D82 /* ContactLoader.m */; };
-		DBA3FB7D1BA8A23C00672D82 /* ContactSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB5E1BA8A23B00672D82 /* ContactSelector.h */; };
-		DBA3FB7E1BA8A23C00672D82 /* ContactSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB5F1BA8A23B00672D82 /* ContactSelector.m */; };
-		DBA3FB7F1BA8A23C00672D82 /* Conversion.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB601BA8A23B00672D82 /* Conversion.h */; };
-		DBA3FB801BA8A23C00672D82 /* Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB611BA8A23B00672D82 /* Conversion.m */; };
-		DBA3FB811BA8A23C00672D82 /* ConversionParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB621BA8A23B00672D82 /* ConversionParameters.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DBA3FB821BA8A23C00672D82 /* ConversionParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB631BA8A23C00672D82 /* ConversionParameters.m */; };
-		DBA3FB8E1BA8A23C00672D82 /* Identify.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB6F1BA8A23C00672D82 /* Identify.h */; };
-		DBA3FB8F1BA8A23C00672D82 /* Identify.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB701BA8A23C00672D82 /* Identify.m */; };
-		DBA3FBA91BA8A24F00672D82 /* LinkedInAPIConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB901BA8A24F00672D82 /* LinkedInAPIConstants.h */; };
-		DBA3FBAA1BA8A24F00672D82 /* LinkedInAPIConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB911BA8A24F00672D82 /* LinkedInAPIConstants.m */; };
-		DBA3FBAB1BA8A24F00672D82 /* LinkedInShare.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB921BA8A24F00672D82 /* LinkedInShare.h */; };
-		DBA3FBAC1BA8A24F00672D82 /* LinkedInShare.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB931BA8A24F00672D82 /* LinkedInShare.m */; };
-		DBA3FBAD1BA8A24F00672D82 /* NamePrompt.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB951BA8A24F00672D82 /* NamePrompt.h */; };
-		DBA3FBAE1BA8A24F00672D82 /* NamePrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB961BA8A24F00672D82 /* NamePrompt.m */; };
-		DBA3FBAF1BA8A24F00672D82 /* RemoveButton.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB971BA8A24F00672D82 /* RemoveButton.h */; };
-		DBA3FBB01BA8A24F00672D82 /* RemoveButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB981BA8A24F00672D82 /* RemoveButton.m */; };
-		DBA3FBB11BA8A24F00672D82 /* SelectedCell.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB991BA8A24F00672D82 /* SelectedCell.h */; };
-		DBA3FBB21BA8A24F00672D82 /* SelectedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9A1BA8A24F00672D82 /* SelectedCell.m */; };
-		DBA3FBB31BA8A24F00672D82 /* SendCompletionModal.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9B1BA8A24F00672D82 /* SendCompletionModal.h */; };
-		DBA3FBB41BA8A24F00672D82 /* SendCompletionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9C1BA8A24F00672D82 /* SendCompletionModal.m */; };
-		DBA3FBB51BA8A24F00672D82 /* ServiceSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9D1BA8A24F00672D82 /* ServiceSelector.h */; };
-		DBA3FBB61BA8A24F00672D82 /* ServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9E1BA8A24F00672D82 /* ServiceSelector.m */; };
-		DBA3FBB71BA8A24F00672D82 /* ServiceSelectorPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9F1BA8A24F00672D82 /* ServiceSelectorPreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DBA3FBB81BA8A24F00672D82 /* ServiceSelectorPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA01BA8A24F00672D82 /* ServiceSelectorPreferences.m */; };
-		DBA3FBB91BA8A24F00672D82 /* ShareService.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA11BA8A24F00672D82 /* ShareService.h */; };
-		DBA3FBBA1BA8A24F00672D82 /* ShareService.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA21BA8A24F00672D82 /* ShareService.m */; };
-		DBA3FBBB1BA8A24F00672D82 /* ShareServiceCell.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA31BA8A24F00672D82 /* ShareServiceCell.h */; };
-		DBA3FBBC1BA8A24F00672D82 /* ShareServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA41BA8A24F00672D82 /* ShareServiceCell.m */; };
-		DBA3FBBD1BA8A24F00672D82 /* ShareServicesConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA51BA8A24F00672D82 /* ShareServicesConstants.h */; };
-		DBA3FBBE1BA8A24F00672D82 /* ShareServicesConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA61BA8A24F00672D82 /* ShareServicesConstants.m */; };
-		DBA3FBBF1BA8A24F00672D82 /* Utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA71BA8A24F00672D82 /* Utilities.h */; };
-		DBA3FBC01BA8A24F00672D82 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA81BA8A24F00672D82 /* Utilities.m */; };
+		DBA3FB751BA8A23C00672D82 /* AMBConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB561BA8A23B00672D82 /* AMBConstants.h */; };
+		DBA3FB761BA8A23C00672D82 /* AMBConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB571BA8A23B00672D82 /* AMBConstants.m */; };
+		DBA3FB771BA8A23C00672D82 /* AMBContact.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB581BA8A23B00672D82 /* AMBContact.h */; };
+		DBA3FB781BA8A23C00672D82 /* AMBContact.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB591BA8A23B00672D82 /* AMBContact.m */; };
+		DBA3FB791BA8A23C00672D82 /* AMBContactCell.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB5A1BA8A23B00672D82 /* AMBContactCell.h */; };
+		DBA3FB7A1BA8A23C00672D82 /* AMBContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB5B1BA8A23B00672D82 /* AMBContactCell.m */; };
+		DBA3FB7B1BA8A23C00672D82 /* AMBContactLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB5C1BA8A23B00672D82 /* AMBContactLoader.h */; };
+		DBA3FB7C1BA8A23C00672D82 /* AMBContactLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB5D1BA8A23B00672D82 /* AMBContactLoader.m */; };
+		DBA3FB7D1BA8A23C00672D82 /* AMBContactSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB5E1BA8A23B00672D82 /* AMBContactSelector.h */; };
+		DBA3FB7E1BA8A23C00672D82 /* AMBContactSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB5F1BA8A23B00672D82 /* AMBContactSelector.m */; };
+		DBA3FB7F1BA8A23C00672D82 /* AMBConversion.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB601BA8A23B00672D82 /* AMBConversion.h */; };
+		DBA3FB801BA8A23C00672D82 /* AMBConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB611BA8A23B00672D82 /* AMBConversion.m */; };
+		DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB621BA8A23B00672D82 /* AMBConversionParameters.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DBA3FB821BA8A23C00672D82 /* AMBConversionParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB631BA8A23C00672D82 /* AMBConversionParameters.m */; };
+		DBA3FB8E1BA8A23C00672D82 /* AMBIdentify.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB6F1BA8A23C00672D82 /* AMBIdentify.h */; };
+		DBA3FB8F1BA8A23C00672D82 /* AMBIdentify.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB701BA8A23C00672D82 /* AMBIdentify.m */; };
+		DBA3FBA91BA8A24F00672D82 /* AMBLinkedInAPIConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB901BA8A24F00672D82 /* AMBLinkedInAPIConstants.h */; };
+		DBA3FBAA1BA8A24F00672D82 /* AMBLinkedInAPIConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB911BA8A24F00672D82 /* AMBLinkedInAPIConstants.m */; };
+		DBA3FBAB1BA8A24F00672D82 /* AMBLinkedInShare.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB921BA8A24F00672D82 /* AMBLinkedInShare.h */; };
+		DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */; };
+		DBA3FBAD1BA8A24F00672D82 /* AMBNamePrompt.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */; };
+		DBA3FBAE1BA8A24F00672D82 /* AMBNamePrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB961BA8A24F00672D82 /* AMBNamePrompt.m */; };
+		DBA3FBAF1BA8A24F00672D82 /* AMBRemoveButton.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB971BA8A24F00672D82 /* AMBRemoveButton.h */; };
+		DBA3FBB01BA8A24F00672D82 /* AMBRemoveButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB981BA8A24F00672D82 /* AMBRemoveButton.m */; };
+		DBA3FBB11BA8A24F00672D82 /* AMBSelectedCell.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB991BA8A24F00672D82 /* AMBSelectedCell.h */; };
+		DBA3FBB21BA8A24F00672D82 /* AMBSelectedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9A1BA8A24F00672D82 /* AMBSelectedCell.m */; };
+		DBA3FBB31BA8A24F00672D82 /* AMBSendCompletionModal.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9B1BA8A24F00672D82 /* AMBSendCompletionModal.h */; };
+		DBA3FBB41BA8A24F00672D82 /* AMBSendCompletionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */; };
+		DBA3FBB51BA8A24F00672D82 /* AMBServiceSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9D1BA8A24F00672D82 /* AMBServiceSelector.h */; };
+		DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9E1BA8A24F00672D82 /* AMBServiceSelector.m */; };
+		DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9F1BA8A24F00672D82 /* AMBServiceSelectorPreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DBA3FBB81BA8A24F00672D82 /* AMBServiceSelectorPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA01BA8A24F00672D82 /* AMBServiceSelectorPreferences.m */; };
+		DBA3FBB91BA8A24F00672D82 /* AMBShareService.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA11BA8A24F00672D82 /* AMBShareService.h */; };
+		DBA3FBBA1BA8A24F00672D82 /* AMBShareService.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA21BA8A24F00672D82 /* AMBShareService.m */; };
+		DBA3FBBB1BA8A24F00672D82 /* AMBShareServiceCell.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA31BA8A24F00672D82 /* AMBShareServiceCell.h */; };
+		DBA3FBBC1BA8A24F00672D82 /* AMBShareServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA41BA8A24F00672D82 /* AMBShareServiceCell.m */; };
+		DBA3FBBD1BA8A24F00672D82 /* AMBShareServicesConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA51BA8A24F00672D82 /* AMBShareServicesConstants.h */; };
+		DBA3FBBE1BA8A24F00672D82 /* AMBShareServicesConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA61BA8A24F00672D82 /* AMBShareServicesConstants.m */; };
+		DBA3FBBF1BA8A24F00672D82 /* AMBUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */; };
+		DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA81BA8A24F00672D82 /* AMBUtilities.m */; };
 		DBA3FBCD1BA8A9C000672D82 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC21BA8A9C000672D82 /* FMDatabase.h */; };
 		DBA3FBCE1BA8A9C000672D82 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC31BA8A9C000672D82 /* FMDatabase.m */; };
 		DBA3FBCF1BA8A9C000672D82 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC41BA8A9C000672D82 /* FMDatabaseAdditions.h */; };
@@ -214,7 +212,6 @@
 			dstSubfolderSpec = 16;
 			files = (
 				DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in Copy Files */,
-				DB68F5171BAA117C009FF1B2 /* NamespacedDependencies.h in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,7 +221,6 @@
 /* Begin PBXFileReference section */
 		DB68F50A1BA9C473009FF1B2 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		DB68F50B1BA9C473009FF1B2 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		DB68F5101BA9D9BA009FF1B2 /* NamespacedDependencies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NamespacedDependencies.h; path = ext/NamespacedDependencies.h; sourceTree = "<group>"; };
 		DB844D261BA75BB8003FD7A9 /* libAmbassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAmbassador.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB844D291BA75BB8003FD7A9 /* Ambassador.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ambassador.h; sourceTree = "<group>"; };
 		DB844D311BA75BB8003FD7A9 /* AmbassadorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -249,46 +245,46 @@
 		DBA3FB531BA8A23B00672D82 /* AmbassadorSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorSDK.m; sourceTree = "<group>"; };
 		DBA3FB541BA8A23B00672D82 /* AuthorizeLinkedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeLinkedIn.h; sourceTree = "<group>"; };
 		DBA3FB551BA8A23B00672D82 /* AuthorizeLinkedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthorizeLinkedIn.m; sourceTree = "<group>"; };
-		DBA3FB561BA8A23B00672D82 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		DBA3FB571BA8A23B00672D82 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
-		DBA3FB581BA8A23B00672D82 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
-		DBA3FB591BA8A23B00672D82 /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
-		DBA3FB5A1BA8A23B00672D82 /* ContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactCell.h; sourceTree = "<group>"; };
-		DBA3FB5B1BA8A23B00672D82 /* ContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactCell.m; sourceTree = "<group>"; };
-		DBA3FB5C1BA8A23B00672D82 /* ContactLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactLoader.h; sourceTree = "<group>"; };
-		DBA3FB5D1BA8A23B00672D82 /* ContactLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactLoader.m; sourceTree = "<group>"; };
-		DBA3FB5E1BA8A23B00672D82 /* ContactSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactSelector.h; sourceTree = "<group>"; };
-		DBA3FB5F1BA8A23B00672D82 /* ContactSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactSelector.m; sourceTree = "<group>"; };
-		DBA3FB601BA8A23B00672D82 /* Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversion.h; sourceTree = "<group>"; };
-		DBA3FB611BA8A23B00672D82 /* Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversion.m; sourceTree = "<group>"; };
-		DBA3FB621BA8A23B00672D82 /* ConversionParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversionParameters.h; sourceTree = "<group>"; };
-		DBA3FB631BA8A23C00672D82 /* ConversionParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversionParameters.m; sourceTree = "<group>"; };
-		DBA3FB6F1BA8A23C00672D82 /* Identify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Identify.h; sourceTree = "<group>"; };
-		DBA3FB701BA8A23C00672D82 /* Identify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Identify.m; sourceTree = "<group>"; };
-		DBA3FB901BA8A24F00672D82 /* LinkedInAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInAPIConstants.h; sourceTree = "<group>"; };
-		DBA3FB911BA8A24F00672D82 /* LinkedInAPIConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedInAPIConstants.m; sourceTree = "<group>"; };
-		DBA3FB921BA8A24F00672D82 /* LinkedInShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInShare.h; sourceTree = "<group>"; };
-		DBA3FB931BA8A24F00672D82 /* LinkedInShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedInShare.m; sourceTree = "<group>"; };
-		DBA3FB951BA8A24F00672D82 /* NamePrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NamePrompt.h; sourceTree = "<group>"; };
-		DBA3FB961BA8A24F00672D82 /* NamePrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NamePrompt.m; sourceTree = "<group>"; };
-		DBA3FB971BA8A24F00672D82 /* RemoveButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveButton.h; sourceTree = "<group>"; };
-		DBA3FB981BA8A24F00672D82 /* RemoveButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveButton.m; sourceTree = "<group>"; };
-		DBA3FB991BA8A24F00672D82 /* SelectedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedCell.h; sourceTree = "<group>"; };
-		DBA3FB9A1BA8A24F00672D82 /* SelectedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedCell.m; sourceTree = "<group>"; };
-		DBA3FB9B1BA8A24F00672D82 /* SendCompletionModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCompletionModal.h; sourceTree = "<group>"; };
-		DBA3FB9C1BA8A24F00672D82 /* SendCompletionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendCompletionModal.m; sourceTree = "<group>"; };
-		DBA3FB9D1BA8A24F00672D82 /* ServiceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceSelector.h; sourceTree = "<group>"; };
-		DBA3FB9E1BA8A24F00672D82 /* ServiceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceSelector.m; sourceTree = "<group>"; };
-		DBA3FB9F1BA8A24F00672D82 /* ServiceSelectorPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceSelectorPreferences.h; sourceTree = "<group>"; };
-		DBA3FBA01BA8A24F00672D82 /* ServiceSelectorPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceSelectorPreferences.m; sourceTree = "<group>"; };
-		DBA3FBA11BA8A24F00672D82 /* ShareService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareService.h; sourceTree = "<group>"; };
-		DBA3FBA21BA8A24F00672D82 /* ShareService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareService.m; sourceTree = "<group>"; };
-		DBA3FBA31BA8A24F00672D82 /* ShareServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareServiceCell.h; sourceTree = "<group>"; };
-		DBA3FBA41BA8A24F00672D82 /* ShareServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareServiceCell.m; sourceTree = "<group>"; };
-		DBA3FBA51BA8A24F00672D82 /* ShareServicesConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareServicesConstants.h; sourceTree = "<group>"; };
-		DBA3FBA61BA8A24F00672D82 /* ShareServicesConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareServicesConstants.m; sourceTree = "<group>"; };
-		DBA3FBA71BA8A24F00672D82 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
-		DBA3FBA81BA8A24F00672D82 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		DBA3FB561BA8A23B00672D82 /* AMBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBConstants.h; sourceTree = "<group>"; };
+		DBA3FB571BA8A23B00672D82 /* AMBConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBConstants.m; sourceTree = "<group>"; };
+		DBA3FB581BA8A23B00672D82 /* AMBContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContact.h; sourceTree = "<group>"; };
+		DBA3FB591BA8A23B00672D82 /* AMBContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContact.m; sourceTree = "<group>"; };
+		DBA3FB5A1BA8A23B00672D82 /* AMBContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContactCell.h; sourceTree = "<group>"; };
+		DBA3FB5B1BA8A23B00672D82 /* AMBContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCell.m; sourceTree = "<group>"; };
+		DBA3FB5C1BA8A23B00672D82 /* AMBContactLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContactLoader.h; sourceTree = "<group>"; };
+		DBA3FB5D1BA8A23B00672D82 /* AMBContactLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactLoader.m; sourceTree = "<group>"; };
+		DBA3FB5E1BA8A23B00672D82 /* AMBContactSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContactSelector.h; sourceTree = "<group>"; };
+		DBA3FB5F1BA8A23B00672D82 /* AMBContactSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactSelector.m; sourceTree = "<group>"; };
+		DBA3FB601BA8A23B00672D82 /* AMBConversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBConversion.h; sourceTree = "<group>"; };
+		DBA3FB611BA8A23B00672D82 /* AMBConversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBConversion.m; sourceTree = "<group>"; };
+		DBA3FB621BA8A23B00672D82 /* AMBConversionParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBConversionParameters.h; sourceTree = "<group>"; };
+		DBA3FB631BA8A23C00672D82 /* AMBConversionParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBConversionParameters.m; sourceTree = "<group>"; };
+		DBA3FB6F1BA8A23C00672D82 /* AMBIdentify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBIdentify.h; sourceTree = "<group>"; };
+		DBA3FB701BA8A23C00672D82 /* AMBIdentify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdentify.m; sourceTree = "<group>"; };
+		DBA3FB901BA8A24F00672D82 /* AMBLinkedInAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBLinkedInAPIConstants.h; sourceTree = "<group>"; };
+		DBA3FB911BA8A24F00672D82 /* AMBLinkedInAPIConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkedInAPIConstants.m; sourceTree = "<group>"; };
+		DBA3FB921BA8A24F00672D82 /* AMBLinkedInShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBLinkedInShare.h; sourceTree = "<group>"; };
+		DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkedInShare.m; sourceTree = "<group>"; };
+		DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNamePrompt.h; sourceTree = "<group>"; };
+		DBA3FB961BA8A24F00672D82 /* AMBNamePrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNamePrompt.m; sourceTree = "<group>"; };
+		DBA3FB971BA8A24F00672D82 /* AMBRemoveButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBRemoveButton.h; sourceTree = "<group>"; };
+		DBA3FB981BA8A24F00672D82 /* AMBRemoveButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBRemoveButton.m; sourceTree = "<group>"; };
+		DBA3FB991BA8A24F00672D82 /* AMBSelectedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBSelectedCell.h; sourceTree = "<group>"; };
+		DBA3FB9A1BA8A24F00672D82 /* AMBSelectedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSelectedCell.m; sourceTree = "<group>"; };
+		DBA3FB9B1BA8A24F00672D82 /* AMBSendCompletionModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBSendCompletionModal.h; sourceTree = "<group>"; };
+		DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSendCompletionModal.m; sourceTree = "<group>"; };
+		DBA3FB9D1BA8A24F00672D82 /* AMBServiceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBServiceSelector.h; sourceTree = "<group>"; };
+		DBA3FB9E1BA8A24F00672D82 /* AMBServiceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelector.m; sourceTree = "<group>"; };
+		DBA3FB9F1BA8A24F00672D82 /* AMBServiceSelectorPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBServiceSelectorPreferences.h; sourceTree = "<group>"; };
+		DBA3FBA01BA8A24F00672D82 /* AMBServiceSelectorPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelectorPreferences.m; sourceTree = "<group>"; };
+		DBA3FBA11BA8A24F00672D82 /* AMBShareService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBShareService.h; sourceTree = "<group>"; };
+		DBA3FBA21BA8A24F00672D82 /* AMBShareService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBShareService.m; sourceTree = "<group>"; };
+		DBA3FBA31BA8A24F00672D82 /* AMBShareServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBShareServiceCell.h; sourceTree = "<group>"; };
+		DBA3FBA41BA8A24F00672D82 /* AMBShareServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBShareServiceCell.m; sourceTree = "<group>"; };
+		DBA3FBA51BA8A24F00672D82 /* AMBShareServicesConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBShareServicesConstants.h; sourceTree = "<group>"; };
+		DBA3FBA61BA8A24F00672D82 /* AMBShareServicesConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBShareServicesConstants.m; sourceTree = "<group>"; };
+		DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBUtilities.h; sourceTree = "<group>"; };
+		DBA3FBA81BA8A24F00672D82 /* AMBUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBUtilities.m; sourceTree = "<group>"; };
 		DBA3FBC21BA8A9C000672D82 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		DBA3FBC31BA8A9C000672D82 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		DBA3FBC41BA8A9C000672D82 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -434,7 +430,6 @@
 		DB844D1D1BA75BB8003FD7A9 = {
 			isa = PBXGroup;
 			children = (
-				DB68F5101BA9D9BA009FF1B2 /* NamespacedDependencies.h */,
 				DB844D281BA75BB8003FD7A9 /* Ambassador */,
 				DB844D351BA75BB8003FD7A9 /* AmbassadorTests */,
 				DB844D531BA7622D003FD7A9 /* AmbassadorResources */,
@@ -467,46 +462,46 @@
 				DBA3FB531BA8A23B00672D82 /* AmbassadorSDK.m */,
 				DBA3FB541BA8A23B00672D82 /* AuthorizeLinkedIn.h */,
 				DBA3FB551BA8A23B00672D82 /* AuthorizeLinkedIn.m */,
-				DBA3FB561BA8A23B00672D82 /* Constants.h */,
-				DBA3FB571BA8A23B00672D82 /* Constants.m */,
-				DBA3FB581BA8A23B00672D82 /* Contact.h */,
-				DBA3FB591BA8A23B00672D82 /* Contact.m */,
-				DBA3FB5A1BA8A23B00672D82 /* ContactCell.h */,
-				DBA3FB5B1BA8A23B00672D82 /* ContactCell.m */,
-				DBA3FB5C1BA8A23B00672D82 /* ContactLoader.h */,
-				DBA3FB5D1BA8A23B00672D82 /* ContactLoader.m */,
-				DBA3FB5E1BA8A23B00672D82 /* ContactSelector.h */,
-				DBA3FB5F1BA8A23B00672D82 /* ContactSelector.m */,
-				DBA3FB601BA8A23B00672D82 /* Conversion.h */,
-				DBA3FB611BA8A23B00672D82 /* Conversion.m */,
-				DBA3FB621BA8A23B00672D82 /* ConversionParameters.h */,
-				DBA3FB631BA8A23C00672D82 /* ConversionParameters.m */,
-				DBA3FB6F1BA8A23C00672D82 /* Identify.h */,
-				DBA3FB701BA8A23C00672D82 /* Identify.m */,
-				DBA3FB901BA8A24F00672D82 /* LinkedInAPIConstants.h */,
-				DBA3FB911BA8A24F00672D82 /* LinkedInAPIConstants.m */,
-				DBA3FB921BA8A24F00672D82 /* LinkedInShare.h */,
-				DBA3FB931BA8A24F00672D82 /* LinkedInShare.m */,
-				DBA3FB951BA8A24F00672D82 /* NamePrompt.h */,
-				DBA3FB961BA8A24F00672D82 /* NamePrompt.m */,
-				DBA3FB971BA8A24F00672D82 /* RemoveButton.h */,
-				DBA3FB981BA8A24F00672D82 /* RemoveButton.m */,
-				DBA3FB991BA8A24F00672D82 /* SelectedCell.h */,
-				DBA3FB9A1BA8A24F00672D82 /* SelectedCell.m */,
-				DBA3FB9B1BA8A24F00672D82 /* SendCompletionModal.h */,
-				DBA3FB9C1BA8A24F00672D82 /* SendCompletionModal.m */,
-				DBA3FB9D1BA8A24F00672D82 /* ServiceSelector.h */,
-				DBA3FB9E1BA8A24F00672D82 /* ServiceSelector.m */,
-				DBA3FB9F1BA8A24F00672D82 /* ServiceSelectorPreferences.h */,
-				DBA3FBA01BA8A24F00672D82 /* ServiceSelectorPreferences.m */,
-				DBA3FBA11BA8A24F00672D82 /* ShareService.h */,
-				DBA3FBA21BA8A24F00672D82 /* ShareService.m */,
-				DBA3FBA31BA8A24F00672D82 /* ShareServiceCell.h */,
-				DBA3FBA41BA8A24F00672D82 /* ShareServiceCell.m */,
-				DBA3FBA51BA8A24F00672D82 /* ShareServicesConstants.h */,
-				DBA3FBA61BA8A24F00672D82 /* ShareServicesConstants.m */,
-				DBA3FBA71BA8A24F00672D82 /* Utilities.h */,
-				DBA3FBA81BA8A24F00672D82 /* Utilities.m */,
+				DBA3FB561BA8A23B00672D82 /* AMBConstants.h */,
+				DBA3FB571BA8A23B00672D82 /* AMBConstants.m */,
+				DBA3FB581BA8A23B00672D82 /* AMBContact.h */,
+				DBA3FB591BA8A23B00672D82 /* AMBContact.m */,
+				DBA3FB5A1BA8A23B00672D82 /* AMBContactCell.h */,
+				DBA3FB5B1BA8A23B00672D82 /* AMBContactCell.m */,
+				DBA3FB5C1BA8A23B00672D82 /* AMBContactLoader.h */,
+				DBA3FB5D1BA8A23B00672D82 /* AMBContactLoader.m */,
+				DBA3FB5E1BA8A23B00672D82 /* AMBContactSelector.h */,
+				DBA3FB5F1BA8A23B00672D82 /* AMBContactSelector.m */,
+				DBA3FB601BA8A23B00672D82 /* AMBConversion.h */,
+				DBA3FB611BA8A23B00672D82 /* AMBConversion.m */,
+				DBA3FB621BA8A23B00672D82 /* AMBConversionParameters.h */,
+				DBA3FB631BA8A23C00672D82 /* AMBConversionParameters.m */,
+				DBA3FB6F1BA8A23C00672D82 /* AMBIdentify.h */,
+				DBA3FB701BA8A23C00672D82 /* AMBIdentify.m */,
+				DBA3FB901BA8A24F00672D82 /* AMBLinkedInAPIConstants.h */,
+				DBA3FB911BA8A24F00672D82 /* AMBLinkedInAPIConstants.m */,
+				DBA3FB921BA8A24F00672D82 /* AMBLinkedInShare.h */,
+				DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */,
+				DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */,
+				DBA3FB961BA8A24F00672D82 /* AMBNamePrompt.m */,
+				DBA3FB971BA8A24F00672D82 /* AMBRemoveButton.h */,
+				DBA3FB981BA8A24F00672D82 /* AMBRemoveButton.m */,
+				DBA3FB991BA8A24F00672D82 /* AMBSelectedCell.h */,
+				DBA3FB9A1BA8A24F00672D82 /* AMBSelectedCell.m */,
+				DBA3FB9B1BA8A24F00672D82 /* AMBSendCompletionModal.h */,
+				DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */,
+				DBA3FB9D1BA8A24F00672D82 /* AMBServiceSelector.h */,
+				DBA3FB9E1BA8A24F00672D82 /* AMBServiceSelector.m */,
+				DBA3FB9F1BA8A24F00672D82 /* AMBServiceSelectorPreferences.h */,
+				DBA3FBA01BA8A24F00672D82 /* AMBServiceSelectorPreferences.m */,
+				DBA3FBA11BA8A24F00672D82 /* AMBShareService.h */,
+				DBA3FBA21BA8A24F00672D82 /* AMBShareService.m */,
+				DBA3FBA31BA8A24F00672D82 /* AMBShareServiceCell.h */,
+				DBA3FBA41BA8A24F00672D82 /* AMBShareServiceCell.m */,
+				DBA3FBA51BA8A24F00672D82 /* AMBShareServicesConstants.h */,
+				DBA3FBA61BA8A24F00672D82 /* AMBShareServicesConstants.m */,
+				DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */,
+				DBA3FBA81BA8A24F00672D82 /* AMBUtilities.m */,
 			);
 			path = Ambassador;
 			sourceTree = "<group>";
@@ -698,59 +693,58 @@
 			files = (
 				DBA3FC161BA8AA1D00672D82 /* PTPusherConnection.h in Headers */,
 				DBA3FC0D1BA8AA1D00672D82 /* PTPusher.h in Headers */,
-				DBA3FB811BA8A23C00672D82 /* ConversionParameters.h in Headers */,
+				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
 				DBA3FBD61BA8A9C000672D82 /* FMResultSet.h in Headers */,
 				DBA3FC051BA8AA1D00672D82 /* PTJSON.h in Headers */,
 				DBA3FC0F1BA8AA1D00672D82 /* PTPusher+Testing.h in Headers */,
 				DBA3FC131BA8AA1D00672D82 /* PTPusherChannel.h in Headers */,
-				DBA3FBBB1BA8A24F00672D82 /* ShareServiceCell.h in Headers */,
+				DBA3FBBB1BA8A24F00672D82 /* AMBShareServiceCell.h in Headers */,
 				DBA3FC081BA8AA1D00672D82 /* PTTargetActionEventListener.h in Headers */,
 				DBA3FC041BA8AA1D00672D82 /* PTBlockEventListener.h in Headers */,
 				DBA3FBCD1BA8A9C000672D82 /* FMDatabase.h in Headers */,
-				DBA3FBAF1BA8A24F00672D82 /* RemoveButton.h in Headers */,
+				DBA3FBAF1BA8A24F00672D82 /* AMBRemoveButton.h in Headers */,
 				DBA3FC071BA8AA1D00672D82 /* PTPusherChannelAuthorizationOperation.h in Headers */,
 				DBA3FC201BA8AA1D00672D82 /* PTPusherMockConnection.h in Headers */,
 				DBA3FC1C1BA8AA1D00672D82 /* PTPusherEventDispatcher.h in Headers */,
-				DBA3FBB91BA8A24F00672D82 /* ShareService.h in Headers */,
+				DBA3FBB91BA8A24F00672D82 /* AMBShareService.h in Headers */,
 				DBA3FBD51BA8A9C000672D82 /* FMDB.h in Headers */,
 				DBA3FC021BA8AA1D00672D82 /* NSDictionary+QueryString.h in Headers */,
 				DBA3FC221BA8AA1D00672D82 /* PTPusherPresenceChannelDelegate.h in Headers */,
 				DBA3FC1F1BA8AA1D00672D82 /* PTPusherMacros.h in Headers */,
 				DBA3FBD31BA8A9C000672D82 /* FMDatabaseQueue.h in Headers */,
-				DBA3FBA91BA8A24F00672D82 /* LinkedInAPIConstants.h in Headers */,
+				DBA3FBA91BA8A24F00672D82 /* AMBLinkedInAPIConstants.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
-				DBA3FBB71BA8A24F00672D82 /* ServiceSelectorPreferences.h in Headers */,
+				DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */,
 				DBA3FC191BA8AA1D00672D82 /* PTPusherErrors.h in Headers */,
 				DBA3FBD11BA8A9C000672D82 /* FMDatabasePool.h in Headers */,
-				DBA3FB7B1BA8A23C00672D82 /* ContactLoader.h in Headers */,
+				DBA3FB7B1BA8A23C00672D82 /* AMBContactLoader.h in Headers */,
 				DBA3FC091BA8AA1D00672D82 /* PTURLRequestOperation.h in Headers */,
 				DBA3FC1E1BA8AA1D00672D82 /* PTPusherEventPublisher.h in Headers */,
 				DBA3FC251BA8AA1D00672D82 /* Pusher.h in Headers */,
 				DBA3FC0B1BA8AA1D00672D82 /* PTEventListener.h in Headers */,
-				DBA3FB7F1BA8A23C00672D82 /* Conversion.h in Headers */,
+				DBA3FB7F1BA8A23C00672D82 /* AMBConversion.h in Headers */,
 				DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */,
-				DBA3FB771BA8A23C00672D82 /* Contact.h in Headers */,
-				DBA3FBB31BA8A24F00672D82 /* SendCompletionModal.h in Headers */,
-				DBA3FBAB1BA8A24F00672D82 /* LinkedInShare.h in Headers */,
+				DBA3FB771BA8A23C00672D82 /* AMBContact.h in Headers */,
+				DBA3FBB31BA8A24F00672D82 /* AMBSendCompletionModal.h in Headers */,
+				DBA3FBAB1BA8A24F00672D82 /* AMBLinkedInShare.h in Headers */,
 				DBA3FC061BA8AA1D00672D82 /* PTPusherChannel_Private.h in Headers */,
 				DBA3FC311BA8AA5600672D82 /* SRWebSocket.h in Headers */,
 				DBA3FBCF1BA8A9C000672D82 /* FMDatabaseAdditions.h in Headers */,
-				DBA3FBBD1BA8A24F00672D82 /* ShareServicesConstants.h in Headers */,
-				DBA3FBAD1BA8A24F00672D82 /* NamePrompt.h in Headers */,
+				DBA3FBBD1BA8A24F00672D82 /* AMBShareServicesConstants.h in Headers */,
+				DBA3FBAD1BA8A24F00672D82 /* AMBNamePrompt.h in Headers */,
 				DBA3FC111BA8AA1D00672D82 /* PTPusherAPI.h in Headers */,
 				DBA3FC2E1BA8AA5600672D82 /* base64.h in Headers */,
 				DBA3FC181BA8AA1D00672D82 /* PTPusherDelegate.h in Headers */,
-				DBA3FBB11BA8A24F00672D82 /* SelectedCell.h in Headers */,
-				DBA3FBBF1BA8A24F00672D82 /* Utilities.h in Headers */,
+				DBA3FBB11BA8A24F00672D82 /* AMBSelectedCell.h in Headers */,
+				DBA3FBBF1BA8A24F00672D82 /* AMBUtilities.h in Headers */,
 				DBA3FC2F1BA8AA5600672D82 /* NSData+SRB64Additions.h in Headers */,
-				DBA3FBB51BA8A24F00672D82 /* ServiceSelector.h in Headers */,
-				DBA3FB7D1BA8A23C00672D82 /* ContactSelector.h in Headers */,
+				DBA3FBB51BA8A24F00672D82 /* AMBServiceSelector.h in Headers */,
+				DBA3FB7D1BA8A23C00672D82 /* AMBContactSelector.h in Headers */,
 				DBA3FC031BA8AA1D00672D82 /* NSString+Hashing.h in Headers */,
-				DBA3FB791BA8A23C00672D82 /* ContactCell.h in Headers */,
+				DBA3FB791BA8A23C00672D82 /* AMBContactCell.h in Headers */,
 				DBA3FC1A1BA8AA1D00672D82 /* PTPusherEvent.h in Headers */,
-				DBA3FB751BA8A23C00672D82 /* Constants.h in Headers */,
-				DBA3FB8E1BA8A23C00672D82 /* Identify.h in Headers */,
-				DB68F5111BA9D9BA009FF1B2 /* NamespacedDependencies.h in Headers */,
+				DBA3FB751BA8A23C00672D82 /* AMBConstants.h in Headers */,
+				DBA3FB8E1BA8A23C00672D82 /* AMBIdentify.h in Headers */,
 				DBA3FB731BA8A23C00672D82 /* AuthorizeLinkedIn.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1006,49 +1000,49 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBA3FC0E1BA8AA1D00672D82 /* PTPusher.m in Sources */,
-				DBA3FBB61BA8A24F00672D82 /* ServiceSelector.m in Sources */,
-				DBA3FBB01BA8A24F00672D82 /* RemoveButton.m in Sources */,
-				DBA3FB7E1BA8A23C00672D82 /* ContactSelector.m in Sources */,
-				DBA3FBC01BA8A24F00672D82 /* Utilities.m in Sources */,
+				DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */,
+				DBA3FBB01BA8A24F00672D82 /* AMBRemoveButton.m in Sources */,
+				DBA3FB7E1BA8A23C00672D82 /* AMBContactSelector.m in Sources */,
+				DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */,
 				DBA3FC121BA8AA1D00672D82 /* PTPusherAPI.m in Sources */,
 				DBA3FC001BA8AA1D00672D82 /* NSDictionary+QueryString.m in Sources */,
-				DBA3FBB81BA8A24F00672D82 /* ServiceSelectorPreferences.m in Sources */,
+				DBA3FBB81BA8A24F00672D82 /* AMBServiceSelectorPreferences.m in Sources */,
 				DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */,
 				DBA3FC231BA8AA1D00672D82 /* PTTargetActionEventListener.m in Sources */,
 				DBA3FC211BA8AA1D00672D82 /* PTPusherMockConnection.m in Sources */,
-				DBA3FBB41BA8A24F00672D82 /* SendCompletionModal.m in Sources */,
+				DBA3FBB41BA8A24F00672D82 /* AMBSendCompletionModal.m in Sources */,
 				DBA3FC141BA8AA1D00672D82 /* PTPusherChannel.m in Sources */,
-				DBA3FBBA1BA8A24F00672D82 /* ShareService.m in Sources */,
-				DBA3FB7A1BA8A23C00672D82 /* ContactCell.m in Sources */,
+				DBA3FBBA1BA8A24F00672D82 /* AMBShareService.m in Sources */,
+				DBA3FB7A1BA8A23C00672D82 /* AMBContactCell.m in Sources */,
 				DBA3FBCE1BA8A9C000672D82 /* FMDatabase.m in Sources */,
-				DBA3FB7C1BA8A23C00672D82 /* ContactLoader.m in Sources */,
-				DBA3FBBC1BA8A24F00672D82 /* ShareServiceCell.m in Sources */,
+				DBA3FB7C1BA8A23C00672D82 /* AMBContactLoader.m in Sources */,
+				DBA3FBBC1BA8A24F00672D82 /* AMBShareServiceCell.m in Sources */,
 				DBA3FC241BA8AA1D00672D82 /* PTURLRequestOperation.m in Sources */,
-				DBA3FBAA1BA8A24F00672D82 /* LinkedInAPIConstants.m in Sources */,
+				DBA3FBAA1BA8A24F00672D82 /* AMBLinkedInAPIConstants.m in Sources */,
 				DBA3FBD21BA8A9C000672D82 /* FMDatabasePool.m in Sources */,
-				DBA3FBBE1BA8A24F00672D82 /* ShareServicesConstants.m in Sources */,
-				DBA3FB781BA8A23C00672D82 /* Contact.m in Sources */,
+				DBA3FBBE1BA8A24F00672D82 /* AMBShareServicesConstants.m in Sources */,
+				DBA3FB781BA8A23C00672D82 /* AMBContact.m in Sources */,
 				DBA3FBD71BA8A9C000672D82 /* FMResultSet.m in Sources */,
-				DBA3FB821BA8A23C00672D82 /* ConversionParameters.m in Sources */,
+				DBA3FB821BA8A23C00672D82 /* AMBConversionParameters.m in Sources */,
 				DBA3FB721BA8A23C00672D82 /* AmbassadorSDK.m in Sources */,
 				DBA3FBD41BA8A9C000672D82 /* FMDatabaseQueue.m in Sources */,
 				DBA3FC0A1BA8AA1D00672D82 /* PTBlockEventListener.m in Sources */,
 				DBA3FC151BA8AA1D00672D82 /* PTPusherChannelAuthorizationOperation.m in Sources */,
-				DBA3FBAC1BA8A24F00672D82 /* LinkedInShare.m in Sources */,
-				DBA3FB801BA8A23C00672D82 /* Conversion.m in Sources */,
-				DBA3FB8F1BA8A23C00672D82 /* Identify.m in Sources */,
+				DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */,
+				DBA3FB801BA8A23C00672D82 /* AMBConversion.m in Sources */,
+				DBA3FB8F1BA8A23C00672D82 /* AMBIdentify.m in Sources */,
 				DBA3FC011BA8AA1D00672D82 /* NSString+Hashing.m in Sources */,
 				DBA3FC1B1BA8AA1D00672D82 /* PTPusherEvent.m in Sources */,
 				DBA3FB741BA8A23C00672D82 /* AuthorizeLinkedIn.m in Sources */,
 				DBA3FC0C1BA8AA1D00672D82 /* PTJSON.m in Sources */,
 				DBA3FC2D1BA8AA5600672D82 /* base64.c in Sources */,
-				DBA3FBAE1BA8A24F00672D82 /* NamePrompt.m in Sources */,
-				DBA3FBB21BA8A24F00672D82 /* SelectedCell.m in Sources */,
+				DBA3FBAE1BA8A24F00672D82 /* AMBNamePrompt.m in Sources */,
+				DBA3FBB21BA8A24F00672D82 /* AMBSelectedCell.m in Sources */,
 				DBA3FC171BA8AA1D00672D82 /* PTPusherConnection.m in Sources */,
 				DBA3FC1D1BA8AA1D00672D82 /* PTPusherEventDispatcher.m in Sources */,
 				DBA3FC101BA8AA1D00672D82 /* PTPusher+Testing.m in Sources */,
 				DBA3FC321BA8AA5600672D82 /* SRWebSocket.m in Sources */,
-				DBA3FB761BA8A23C00672D82 /* Constants.m in Sources */,
+				DBA3FB761BA8A23C00672D82 /* AMBConstants.m in Sources */,
 				DBA3FBD01BA8A9C000672D82 /* FMDatabaseAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
