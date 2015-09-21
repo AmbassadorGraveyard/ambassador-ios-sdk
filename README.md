@@ -9,7 +9,7 @@ ln -s ../../git-hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
 ## Documentation
 ## Installing the SDK
 Follow the steps to install the Ambassador SDK in your Objective-c or Swift project.
-* Download the framework file, unzip it, and drag it into your project, as shown below, beneath the project file (the zip file is attached at the bottom of this article).
+* Download the framework zip file, unzip it, and drag Ambassador.framework and Ambassador.bundle into your project, as shown below, beneath the project file (the zip file is attached at the bottom of this article).
 
   <img src="screenShots/Install_pt1.png" width="300" />
 
@@ -17,17 +17,6 @@ Follow the steps to install the Ambassador SDK in your Objective-c or Swift proj
 
   <img src="screenShots/Install_pt2.png" width="600" />
 
-* Click **'+'** under the **Embedded Binaries** section under project settings to add a new binary.
-
-  <img src="screenShots/Install_pt3.png" width="600" />
-
-* Select **Ambassador.framework** and click **Add**
-
-  <img src="screenShots/Install_pt4.png" width="600" />
-
-* You may need to remove a duplicate instance of the framework file under **Linked Frameworks and Libraries**.  
-
-  <img src="screenShots/Install_pt5.png" width="600" />
 
 ### Slicing the framework
 For convenience, we distribute a fat binary that will work with both xCode simulators and physical devices. This is great for development, but is not acceptable for app submission to the iTunes store.
@@ -175,7 +164,7 @@ parameters in [Conversions](#conversions). Your Universal Token and Universal ID
 
   // If you would like to register a conversion for one of your campaigns,
   // create a conversion object to pass for the convertOnInstall parameter
-  ConversionParameters *parameters = [[ConversionParameters alloc] init];
+  AMBConversionParameters *parameters = [[AMBConversionParameters alloc] init];
   // ... set parameters' properties (more on this in the "Conversions" section)
   [AmbassadorSDK runWithUniversalToken:<your_universal_token> universalID:<your_universal_id> convertOnInstall:parameters completion:^(NSError *error) {
       if (error) {
@@ -204,7 +193,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
     // If you would like to register a conversion for one of your campaigns,
     // create a conversion object to pass for the convertOnInstall parameter
-    var parameters = ConversionParameters()
+    var parameters = AMBConversionParameters()
     // ... set parameters' properties (more on this in the "Conversions" section)
     AmbassadorSDK.runWithUniversalToken(<your_universal_token>, universalID:<your_universal_id>, convertOnInstall:parameters) { (error) -> Void in
         if ((error) != nil) {
@@ -242,7 +231,7 @@ Conversions can be triggered from anywhere. Common places could be a view contro
 **Objective-c**
 ```objective-c
 // STEP ONE: Create a conversion parameters object
-ConversionParameters *conversion = [[ConversionParameters alloc] init];
+AMBConversionParameters *conversion = [[AMBConversionParameters alloc] init];
 
 // STEP TWO: Set the required properties
 conversion.mbsy_revenue = @10; // NSNumber
@@ -280,7 +269,7 @@ conversion.mbsy_is_approved = @YES; // BOOL (Defaults to @YES)
 **Swift**
 ```objective-c
 // STEP ONE: Create a conversion parameters object
-var parameters = ConversionParameters()
+var parameters = AMBConversionParameters()
 
 // STEP TWO: Set the required properties
 parameters.mbsy_revenue = 10 // NSNumber
@@ -332,7 +321,7 @@ The editable properties and their default strings are:
 **Objective-c**
 ```objective-c
 // STEP ONE: Create a share service preferences object
-ServiceSelectorPreferences *preferences = [[ServiceSelectorPreferences alloc] init]
+AMBServiceSelectorPreferences *preferences = [[AMBServiceSelectorPreferences alloc] init]
 
 // STEP TWO: (optional) Set the properties
 preferences.navBarTitle = @"New navBar title"; // NSString
@@ -347,7 +336,7 @@ preferences.defaultShareMessage = @"Share this test please!"; // NSString
 **Swift**
 ```objective-c
 // STEP ONE: Create a share service preferences object
-var preferences = ServiceSelectorPreferences()
+var preferences = AMBServiceSelectorPreferences()
 
 // STEP TWO: (optional) Set the properties
 preferences.navBarTitle = "New navBar title" // NSString
