@@ -23,6 +23,10 @@ Follow the steps to install the Ambassador SDK in your Objective-c or Swift proj
 
   <img src="screenShots/Install_pt3.png" width="600" />
 
+* Add an `-ObjC` flag under `Build Settings > Other Linker Flags`
+
+<img src="screenShots/Install_pt4.png" width="600" />
+
 ### Adding a bridging header (Swift projects)
 The SDK is written in Objective-c. In addition to the previous steps, installing the SDK into a Swift project requires a bridging header. If your project doesn't already have a bridging header, you can add one easily. If you already have a bridging header due to another library or framework, you can go to [Configuring a Bridging header (Swift Projects)](#config-bridge)
 
@@ -61,16 +65,11 @@ In the bridging header, add an import statement for the Ambassador SDK.
 ## Initializing Ambassador
 
 ### Step 1
-  In your `AppDelegate.m` import the Ambassador framework.
+If you're using Objective-C, import the Ambassador framework in your `AppDelegate.m`.
 
   **Objective-c**
   ```objective-c
   #import <Ambassador/Ambassador.h>
-  ```
-
-  **Swift**
-  ```javascript
-  import Ambassador
   ```
 
 ### Step 2
