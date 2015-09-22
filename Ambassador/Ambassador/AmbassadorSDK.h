@@ -5,8 +5,8 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-#import "ConversionParameters.h"
-#import "ServiceSelectorPreferences.h"
+#import "AMBConversionParameters.h"
+#import "AMBServiceSelectorPreferences.h"
 
 /**
  `Ambassador` is the object that provides access to Ambassador's SDK functionality
@@ -43,7 +43,7 @@
  1   ConversionParameters required properties unset
  2   ConversionParameters property has nil value
  */
-+ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(ConversionParameters *)information completion:(void (^)(NSError *error))completion;
++ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion;
 
 
 ///------------------------------------
@@ -67,7 +67,7 @@
                 1   ConversionParameters required properties unset 
                 2   ConversionParameters property has nil value
  */
-+ (void)registerConversion:(ConversionParameters *)information completion:(void (^)(NSError *error))completion;
++ (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion;
 
 /**
  Presents a full-page modal 'Refer-A-Friend' (RAF) view controller
@@ -76,6 +76,6 @@
  @param viewController The view controller from which you would like to present the RAF.
  @param parameters An instance of ServiceSelectorpreferences with properties set to customize text properties of the RAF
  */
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(ServiceSelectorPreferences*)parameters;
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(AMBServiceSelectorPreferences*)parameters;
 
 @end
