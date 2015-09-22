@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gp1-NH-uRg">
+                                <rect key="frame" x="244" y="247" width="112" height="106"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="112" id="Q1A-RN-fJs"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cmo-c3-iIV">
+                                <rect key="frame" x="277" y="361" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showRAF:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sKB-YI-TGx"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test View Controller" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uUK-j1-rFY">
+                                <rect key="frame" x="224" y="218" width="152" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Cmo-c3-iIV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1ld-wh-UmZ"/>
+                            <constraint firstItem="gp1-NH-uRg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="4mw-ne-Dhe"/>
+                            <constraint firstItem="uUK-j1-rFY" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="198" id="6iK-wg-lRc"/>
+                            <constraint firstItem="Cmo-c3-iIV" firstAttribute="centerX" secondItem="gp1-NH-uRg" secondAttribute="centerX" id="78N-4O-aZk"/>
+                            <constraint firstItem="gp1-NH-uRg" firstAttribute="top" secondItem="uUK-j1-rFY" secondAttribute="bottom" constant="8" symbolic="YES" id="JHd-jh-Pvk"/>
+                            <constraint firstItem="gp1-NH-uRg" firstAttribute="centerX" secondItem="uUK-j1-rFY" secondAttribute="centerX" id="Vxk-KZ-lmI"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Cmo-c3-iIV" secondAttribute="bottom" constant="209" id="WmP-4H-lb8"/>
+                            <constraint firstItem="Cmo-c3-iIV" firstAttribute="top" secondItem="gp1-NH-uRg" secondAttribute="bottom" constant="8" symbolic="YES" id="xS8-K3-Md5"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="gp1-NH-uRg" id="D9L-jO-hCl"/>
+                        <outlet property="rafButton" destination="Cmo-c3-iIV" id="rZF-UE-WoG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>
