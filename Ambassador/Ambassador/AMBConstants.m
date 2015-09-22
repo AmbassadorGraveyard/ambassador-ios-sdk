@@ -65,9 +65,9 @@ NSString * const AMB_EMAIL_SHARE_URL = @"https://dev-ambassador-api.herokuapp.co
 #endif
 
 #if AMBPRODUCTION
-NSString * const AMB_UPDATE_IDENTIFY_URL = @"http://api.ambassador.com/universal/action/identify/";
+NSString * const AMB_UPDATE_IDENTIFY_URL = @"https://api.ambassador.com/universal/action/identify/";
 #else
-NSString * const AMB_UPDATE_IDENTIFY_URL = @"http://dev-ambassador-api.herokuapp.com/universal/action/identify/"; //Change to production
+NSString * const AMB_UPDATE_IDENTIFY_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/"; //Change to production
 #endif
 
 
