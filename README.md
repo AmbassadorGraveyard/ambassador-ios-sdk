@@ -17,83 +17,11 @@ Follow the steps to install the Ambassador SDK in your Objective-c or Swift proj
 
   <img src="screenShots/Install_pt2.png" width="600" />
 
+* Link to the following libraries:
+  * libsqlite3
+  * libicucore
 
-### Slicing the framework
-For convenience, we distribute a fat binary that will work with both xCode simulators and physical devices. This is great for development, but is not acceptable for app submission to the iTunes store.
-You can still build using the fat binary by 'slicing' out the architectures specific to your build. This can be done with a simple run script.
-
-* In your project's **Build Phases**, add a new **Run Script Phase** (Make sure that the run script is placed *BELOW* **Embedded Frameworks**).
-
-  <img src="screenShots/Install_pt13.png" width="600" />
-
-* Expand the newly added run script item.
-
-  <img src="screenShots/Install_pt14.png" width="600" />
-
-* Copy and paste the following script.
-
-```shell
-code_sign() {
-    # Use the current code_sign_identitiy
-    echo "Code Signing $1 with Identity ${EXPANDED_CODE_SIGN_IDENTITY_NAME}"
-    echo "/usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements $1"
-    /usr/bin/codesign --force --sign ${EXPANDED_CODE_SIGN_IDENTITY} --preserve-metadata=identifier,entitlements "$1"
-}
-
-APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
-
-# Find the Ambassador binary in the project directory
-PATH_TO_AMB_FILE=$(find "$PROJECT_DIR" -name "Ambassador.framework" -print -quit)
-PATH_TO_AMB_FILE="$PATH_TO_AMB_FILE"
-echo "Framework search directory is at $PATH_TO_AMB_FILE"
-PATH_TO_AMB_FILE="$PATH_TO_AMB_FILE/Ambassador"
-echo "The framework is at $PATH_TO_AMB_FILE"
-
-# Log code signiture of the Ambassador binary in project directory
-codesign -vv -d "$PATH_TO_AMB_FILE"
-
-# Find the Ambassador binary in the build directory
-FRAMEWORK_EXECUTABLE_PATH=$(find "$APP_PATH" -name "Ambassador.framework" -print -quit)
-FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK_EXECUTABLE_PATH"
-echo "Executable folder is $FRAMEWORK_EXECUTABLE_PATH"
-FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK_EXECUTABLE_PATH/Ambassador"
-echo "Executable folder is $FRAMEWORK_EXECUTABLE_PATH"
-
-# Log code signiture of the Ambassador binary in build directory
-codesign -vv -d "$FRAMEWORK_EXECUTABLE_PATH"
-
-# Copy a fresh binary from the project directory into build directory
-cp "$PATH_TO_AMB_FILE" "$FRAMEWORK_EXECUTABLE_PATH"
-
-# Extract relevant architectures for this build
-EXTRACTED_ARCHS=()
-for ARCH in $ARCHS
-do
-echo "Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME"
-lipo -extract "$ARCH" "$FRAMEWORK_EXECUTABLE_PATH" -o "$FRAMEWORK_EXECUTABLE_PATH-$ARCH"
-EXTRACTED_ARCHS+=("$FRAMEWORK_EXECUTABLE_PATH-$ARCH")
-done
-
-# Merge the extracted archetectures into single binary
-echo "Merging extracted architectures: ${ARCHS}"
-lipo -o "$FRAMEWORK_EXECUTABLE_PATH-merged" -create "${EXTRACTED_ARCHS[@]}"
-rm "${EXTRACTED_ARCHS[@]}"
-
-# Replace old universal binary with new thin version
-echo "Replacing original executable with thinned version"
-rm "$FRAMEWORK_EXECUTABLE_PATH"
-mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
-
-# Sign the new binary with project's signing identity
-if [ $EXPANDED_CODE_SIGN_IDENTITY ]; then
-echo "A signing identity exists"
-code_sign "$FRAMEWORK_EXECUTABLE_PATH"
-codesign -vv -d "$FRAMEWORK_EXECUTABLE_PATH"
-else
-echo "A signing identity does not exist"
-fi
-
-```
+  <img src="screenShots/Install_pt3.png" width="600" />
 
 ### Adding a bridging header (Swift projects)
 The SDK is written in Objective-c. In addition to the previous steps, installing the SDK into a Swift project requires a bridging header. If your project doesn't already have a bridging header, you can add one easily. If you already have a bridging header due to another library or framework, you can go to [Configuring a Bridging header (Swift Projects)](#config-bridge)
@@ -269,7 +197,7 @@ conversion.mbsy_is_approved = @YES; // BOOL (Defaults to @YES)
 **Swift**
 ```objective-c
 // STEP ONE: Create a conversion parameters object
-var parameters = AMBConversionParameters()
+let parameters = AMBConversionParameters()
 
 // STEP TWO: Set the required properties
 parameters.mbsy_revenue = 10 // NSNumber
@@ -336,7 +264,7 @@ preferences.defaultShareMessage = @"Share this test please!"; // NSString
 **Swift**
 ```objective-c
 // STEP ONE: Create a share service preferences object
-var preferences = AMBServiceSelectorPreferences()
+let preferences = AMBServiceSelectorPreferences()
 
 // STEP TWO: (optional) Set the properties
 preferences.navBarTitle = "New navBar title" // NSString
