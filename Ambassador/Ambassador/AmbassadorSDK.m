@@ -121,7 +121,10 @@ static AMBServiceSelector *raf;
                                                      selector:@selector(checkConversionQueue)
                                                      userInfo:nil
                                                       repeats:YES];
-    identify = [[AMBIdentify alloc] initWithUniversalToken:universalToken universalID:universalID];
+    
+    [[NSUserDefaults standardUserDefaults] setValue:universalToken forKey:AMB_UNIVERSAL_TOKEN_DEFAULTS_KEY];
+    [[NSUserDefaults standardUserDefaults] setValue:universalID forKey:AMB_UNIVERSAL_ID_DEFAULTS_KEY];
+    identify = [[AMBIdentify alloc] initForFullIdentify];
     identify.delegate = self;
     conversion = [[AMBConversion alloc] initWithKey:universalToken];
     
@@ -146,6 +149,7 @@ static AMBServiceSelector *raf;
     DLog();
     NSString *shortCodeURL = @"";
     NSString *shortCode = @"";
+    [[NSUserDefaults standardUserDefaults] setValue:ID forKey:AMB_CAMPAIGN_ID_DEFAULTS_KEY];
     NSDictionary *userInfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
     if (userInfo)
     {

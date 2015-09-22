@@ -35,6 +35,8 @@ NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.
 float const AMB_IDENTIFY_RETRY_TIME = 2.0;
 NSString * const AMB_INSIGHTS_URL = @"https://api.augur.io/v2/user?key=7g1a8dumog40o61y5irl1sscm4nu6g60&uid=";
 
+NSString * const SEND_IDENTIFY_ENROLL_KEY = @"enroll";
+NSString * const SEND_IDENTIFY_CAMPAIGN_ID_KEY = @"campaign_id";
 NSString * const SEND_IDENTIFY_EMAIL_KEY = @"email";
 NSString * const SEND_IDENTIFY_FP_KEY = @"fp";
 NSString * const SEND_IDENTIFY_MBSY_SOURCE_KEY = @"mbsy_source";
@@ -55,8 +57,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @property NSString *email;
 @property AMBPTPusher *client;
 @property AMBPTPusherPrivateChannel *channel;
-@property NSString *universalToken;
-@property NSString *universalID;
 
 @end
 
@@ -65,7 +65,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 @implementation AMBIdentify
 
 #pragma mark - Object lifecycle
-- (id)initWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID
+- (id)initForFullIdentify
 {
     DLog();
     if ([super init])
@@ -73,8 +73,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         self.webview = [[UIWebView alloc] init];
         self.webview.delegate = self;
         self.email = @"";
-        self.universalToken = universalToken;
-        self.universalID = universalID;
         self.client = [AMBPTPusher pusherWithKey:AMB_PUSHER_KEY delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:AMB_PUSHER_AUTHENTICATION_URL];
         [self.client connect];
@@ -86,7 +84,8 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 - (void)identify
 {
     DLog();
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&universal_id=%@",AMB_IDENTIFY_URL, self.universalID]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&universal_id=%@",AMB_IDENTIFY_URL,
+                                       [[NSUserDefaults standardUserDefaults] valueForKey:AMB_UNIVERSAL_ID_DEFAULTS_KEY]]];
     DLog(@"%@", [url absoluteString]);
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webview loadRequest:request];
@@ -96,6 +95,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 {
     DLog();
     self.email = email;
+    [[NSUserDefaults standardUserDefaults] setValue:email forKey:AMB_USER_EMAIL_DEFAULTS_KEY];
     [self identify];
 }
 
@@ -262,10 +262,19 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 {
     DLog(@"Preparig to send Identify data");
     
+    NSDictionary *fpDictionary = ([[NSUserDefaults standardUserDefaults] objectForKey:AMB_IDENTIFY_USER_DEFAULTS_KEY]) ? [[NSUserDefaults standardUserDefaults] objectForKey:AMB_IDENTIFY_USER_DEFAULTS_KEY] : @{};
+    
+    NSString *campId = ([[NSUserDefaults standardUserDefaults] objectForKey:AMB_CAMPAIGN_ID_DEFAULTS_KEY]) ?
+        [[NSUserDefaults standardUserDefaults] objectForKey:AMB_CAMPAIGN_ID_DEFAULTS_KEY] : @"";
+    
+    NSString *emailString = [[NSUserDefaults standardUserDefaults] objectForKey:AMB_USER_EMAIL_DEFAULTS_KEY];
+    
     // Create the payload to send
     NSMutableDictionary *payload = [NSMutableDictionary dictionaryWithDictionary:@{
-                                                                                   SEND_IDENTIFY_EMAIL_KEY : self.email,
-                                                                                   SEND_IDENTIFY_FP_KEY: self.identifyData,
+                                                                                   SEND_IDENTIFY_ENROLL_KEY: @YES,
+                                                                                   SEND_IDENTIFY_CAMPAIGN_ID_KEY:campId,
+                                                                                   SEND_IDENTIFY_EMAIL_KEY : emailString,
+                                                                                   SEND_IDENTIFY_FP_KEY: fpDictionary,
                                                                                    SEND_IDENTIFY_MBSY_SOURCE_KEY : @"",
                                                                                    SEND_IDENTIFY_MBSY_COOKIE_CODE_KEY : @"",
                                                                                    SEND_IDENTIFY_SOURCE_KEY : @"ios_sdk_pilot"
@@ -277,7 +286,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:self.universalToken forHTTPHeaderField:@"Authorization"];
+    [request setValue:[[NSUserDefaults standardUserDefaults] valueForKey:AMB_UNIVERSAL_TOKEN_DEFAULTS_KEY] forHTTPHeaderField:@"Authorization"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession]
@@ -371,7 +380,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     
     // Modify the default autheticate request that Pusher will make. The
     // HTTP body is set per Ambassador back end requirements
-    [request setValue:self.universalToken forHTTPHeaderField:@"Authorization"];
+    [request setValue:[[NSUserDefaults standardUserDefaults] valueForKey:AMB_UNIVERSAL_TOKEN_DEFAULTS_KEY] forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     NSMutableString *httpBodyString = [[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding];
     NSMutableDictionary *httpBody = AMBparseQueryString(httpBodyString);
