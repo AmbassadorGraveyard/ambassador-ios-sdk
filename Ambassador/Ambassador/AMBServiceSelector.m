@@ -21,6 +21,7 @@
 #import "AMBContact.h"
 #import "AMBSendCompletionModal.h"
 #import <MessageUI/MessageUI.h>
+#import "AMBIdentify.h"
 
 
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
@@ -146,15 +147,10 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     
     
     DLog(@"%@", self.shortURL);
-    if ((self.shortURL != nil) && ![self.shortURL isEqualToString:@""])
-    {
-        DLog();
-        self.waitView.hidden = YES;
-    }
-    else
-    {
-        self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
-    }
+
+    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
+    AMBIdentify *identify = [[AMBIdentify alloc] init];
+    [identify sendIdentifyData];
 }
 
 - (void)alertForNetworkTimeout
