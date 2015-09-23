@@ -54,7 +54,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 
 @property UIWebView *webview;
 @property UIView *view;
-@property NSString *email;
 @property AMBPTPusher *client;
 @property AMBPTPusherPrivateChannel *channel;
 
@@ -72,7 +71,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     {
         self.webview = [[UIWebView alloc] init];
         self.webview.delegate = self;
-        self.email = @"";
         self.client = [AMBPTPusher pusherWithKey:AMB_PUSHER_KEY delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:AMB_PUSHER_AUTHENTICATION_URL];
         [self.client connect];
@@ -94,7 +92,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 - (void)identifyWithEmail:(NSString *)email
 {
     DLog();
-    self.email = email;
     [[NSUserDefaults standardUserDefaults] setValue:email forKey:AMB_USER_EMAIL_DEFAULTS_KEY];
     [self identify];
 }
@@ -134,7 +131,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         
         
         // Send identify to backend if there is an email
-        if (![self.email isEqualToString:@""])
+        if (![[[NSUserDefaults standardUserDefaults] valueForKey:AMB_USER_EMAIL_DEFAULTS_KEY] isEqualToString:@""])
         {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.channel = [self.client subscribeToPrivateChannelNamed:[NSString stringWithFormat:@"snippet-channel@user=%@", self.identifyData[@"device"][@"ID"]]];
