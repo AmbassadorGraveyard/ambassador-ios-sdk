@@ -20,6 +20,10 @@ extern NSString * const AMB_IDENTIFY_NOTIFICATION_NAME;
 #pragma mark - UserDefaults
 extern NSString * const AMB_IDENTIFY_USER_DEFAULTS_KEY;
 extern NSString * const AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY;
+extern NSString * const AMB_USER_EMAIL_DEFAULTS_KEY;
+extern NSString * const AMB_UNIVERSAL_TOKEN_DEFAULTS_KEY;
+extern NSString * const AMB_UNIVERSAL_ID_DEFAULTS_KEY;
+extern NSString * const AMB_CAMPAIGN_ID_DEFAULTS_KEY;
 extern NSString * const AMB_INSIGHTS_USER_DEFAULTS_KEY;
 extern NSString * const AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY;
 extern NSString * const AMB_LINKEDIN_USER_DEFAULTS_KEY;
