@@ -25,7 +25,7 @@ NSString * const SHORT_CODE_KEY = @"short_code";
 NSString * const SHORT_CODE_URL_KEY = @"url";
 #pragma mark -
 
-@interface AmbassadorSDK () <AMBIdentifyDelegate>
+@interface AmbassadorSDK ()
 
 @end
 
@@ -124,8 +124,7 @@ static AMBServiceSelector *raf;
     
     [[NSUserDefaults standardUserDefaults] setValue:universalToken forKey:AMB_UNIVERSAL_TOKEN_DEFAULTS_KEY];
     [[NSUserDefaults standardUserDefaults] setValue:universalID forKey:AMB_UNIVERSAL_ID_DEFAULTS_KEY];
-    identify = [[AMBIdentify alloc] initForFullIdentify];
-    identify.delegate = self;
+    identify = [[AMBIdentify alloc] init];
     conversion = [[AMBConversion alloc] initWithKey:universalToken];
     
     DLog(@"Checking if conversion is made on app launch");
@@ -189,7 +188,7 @@ static AMBServiceSelector *raf;
 - (void)identifyWithEmail:(NSString *)email
 {
     DLog();
-    [identify identifyWithEmail:email];
+   // [identify identifyWithEmail:email];
 }
 
 

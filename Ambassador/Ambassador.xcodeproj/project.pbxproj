@@ -23,6 +23,19 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		DB62EBA81BB2EC9E00EA1E86 /* AMBAmbassadorNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = DB62EBA61BB2EC9E00EA1E86 /* AMBAmbassadorNetworking.h */; settings = {ASSET_TAGS = (); }; };
+		DB62EBA91BB2EC9E00EA1E86 /* AMBAmbassadorNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = DB62EBA71BB2EC9E00EA1E86 /* AMBAmbassadorNetworking.m */; settings = {ASSET_TAGS = (); }; };
+		DB62EC161BB2F2B200EA1E86 /* AMBNetworkObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DB62EC141BB2F2B200EA1E86 /* AMBNetworkObject.m */; settings = {ASSET_TAGS = (); }; };
+		DB62EC171BB2F2B200EA1E86 /* AMBNetworkObject.h in Headers */ = {isa = PBXBuildFile; fileRef = DB62EC151BB2F2B200EA1E86 /* AMBNetworkObject.h */; settings = {ASSET_TAGS = (); }; };
+		DB62EC1A1BB2F2D800EA1E86 /* AMBIdentifyNetworkObject.h in Headers */ = {isa = PBXBuildFile; fileRef = DB62EC181BB2F2D800EA1E86 /* AMBIdentifyNetworkObject.h */; settings = {ASSET_TAGS = (); }; };
+		DB62EC1B1BB2F2D800EA1E86 /* AMBIdentifyNetworkObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DB62EC191BB2F2D800EA1E86 /* AMBIdentifyNetworkObject.m */; settings = {ASSET_TAGS = (); }; };
+		DB62EC1D1BB2F4D700EA1E86 /* AMBErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = DB62EC1C1BB2F4D700EA1E86 /* AMBErrors.h */; settings = {ASSET_TAGS = (); }; };
+		DB62EC251BB2FB8800EA1E86 /* AMBIdentifyNetworkPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = DB62EC241BB2FB8800EA1E86 /* AMBIdentifyNetworkPreferences.m */; settings = {ASSET_TAGS = (); }; };
+		DB62EC291BB2FEC400EA1E86 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB62EC281BB2FEC400EA1E86 /* libicucore.tbd */; };
+		DB62EC2B1BB2FECB00EA1E86 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB62EC2A1BB2FECB00EA1E86 /* libsqlite3.tbd */; };
+		DB62EC2D1BB3125400EA1E86 /* AMBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = DB62EC2C1BB3125400EA1E86 /* AMBErrors.m */; settings = {ASSET_TAGS = (); }; };
+		DB62EC2F1BB3203500EA1E86 /* AMBAmbassadorNetworkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB62EC2E1BB3203500EA1E86 /* AMBAmbassadorNetworkingTests.m */; settings = {ASSET_TAGS = (); }; };
+		DB62EC311BB3291C00EA1E86 /* AMBIdentifyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB62EC301BB3291C00EA1E86 /* AMBIdentifyTests.m */; settings = {ASSET_TAGS = (); }; };
 		DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in Copy Files */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; };
 		DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB844D261BA75BB8003FD7A9 /* libAmbassador.a */; };
 		DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -156,6 +169,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		DB62EC261BB2FC7500EA1E86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB844D601BA76BDE003FD7A9;
+			remoteInfo = TestApplication;
+		};
 		DB844D331BA75BB8003FD7A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
@@ -215,6 +235,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DB62EBA61BB2EC9E00EA1E86 /* AMBAmbassadorNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBAmbassadorNetworking.h; sourceTree = "<group>"; };
+		DB62EBA71BB2EC9E00EA1E86 /* AMBAmbassadorNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBAmbassadorNetworking.m; sourceTree = "<group>"; };
+		DB62EC141BB2F2B200EA1E86 /* AMBNetworkObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworkObject.m; sourceTree = "<group>"; };
+		DB62EC151BB2F2B200EA1E86 /* AMBNetworkObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNetworkObject.h; sourceTree = "<group>"; };
+		DB62EC181BB2F2D800EA1E86 /* AMBIdentifyNetworkObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBIdentifyNetworkObject.h; sourceTree = "<group>"; };
+		DB62EC191BB2F2D800EA1E86 /* AMBIdentifyNetworkObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdentifyNetworkObject.m; sourceTree = "<group>"; };
+		DB62EC1C1BB2F4D700EA1E86 /* AMBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBErrors.h; sourceTree = "<group>"; };
+		DB62EC241BB2FB8800EA1E86 /* AMBIdentifyNetworkPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdentifyNetworkPreferences.m; sourceTree = "<group>"; };
+		DB62EC281BB2FEC400EA1E86 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		DB62EC2A1BB2FECB00EA1E86 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		DB62EC2C1BB3125400EA1E86 /* AMBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBErrors.m; sourceTree = "<group>"; };
+		DB62EC2E1BB3203500EA1E86 /* AMBAmbassadorNetworkingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBAmbassadorNetworkingTests.m; sourceTree = "<group>"; };
+		DB62EC301BB3291C00EA1E86 /* AMBIdentifyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdentifyTests.m; sourceTree = "<group>"; };
 		DB844D261BA75BB8003FD7A9 /* libAmbassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAmbassador.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB844D291BA75BB8003FD7A9 /* Ambassador.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ambassador.h; sourceTree = "<group>"; };
 		DB844D311BA75BB8003FD7A9 /* AmbassadorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -372,6 +405,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB62EC2B1BB2FECB00EA1E86 /* libsqlite3.tbd in Frameworks */,
+				DB62EC291BB2FEC400EA1E86 /* libicucore.tbd in Frameworks */,
 				DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -406,6 +441,8 @@
 		0D24CFB05292A555B6506D41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DB62EC2A1BB2FECB00EA1E86 /* libsqlite3.tbd */,
+				DB62EC281BB2FEC400EA1E86 /* libicucore.tbd */,
 				DBA3FC451BA8BE4000672D82 /* Foundation.framework */,
 				DBA3FC421BA8BE2C00672D82 /* CFNetwork.framework */,
 				DBA3FC401BA8BE2300672D82 /* libicucore.dylib */,
@@ -475,6 +512,14 @@
 				DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */,
 				DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */,
 				DBA3FB961BA8A24F00672D82 /* AMBNamePrompt.m */,
+				DB62EC1C1BB2F4D700EA1E86 /* AMBErrors.h */,
+				DB62EC2C1BB3125400EA1E86 /* AMBErrors.m */,
+				DB62EBA61BB2EC9E00EA1E86 /* AMBAmbassadorNetworking.h */,
+				DB62EBA71BB2EC9E00EA1E86 /* AMBAmbassadorNetworking.m */,
+				DB62EC141BB2F2B200EA1E86 /* AMBNetworkObject.m */,
+				DB62EC151BB2F2B200EA1E86 /* AMBNetworkObject.h */,
+				DB62EC181BB2F2D800EA1E86 /* AMBIdentifyNetworkObject.h */,
+				DB62EC191BB2F2D800EA1E86 /* AMBIdentifyNetworkObject.m */,
 				DBA3FB971BA8A24F00672D82 /* AMBRemoveButton.h */,
 				DBA3FB981BA8A24F00672D82 /* AMBRemoveButton.m */,
 				DBA3FB991BA8A24F00672D82 /* AMBSelectedCell.h */,
@@ -509,6 +554,9 @@
 			isa = PBXGroup;
 			children = (
 				DB844D371BA75BB8003FD7A9 /* Info.plist */,
+				DB62EC241BB2FB8800EA1E86 /* AMBIdentifyNetworkPreferences.m */,
+				DB62EC301BB3291C00EA1E86 /* AMBIdentifyTests.m */,
+				DB62EC2E1BB3203500EA1E86 /* AMBAmbassadorNetworkingTests.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -702,12 +750,15 @@
 				DBA3FBD31BA8A9C000672D82 /* AMBFMDatabaseQueue.h in Headers */,
 				DBA3FBA91BA8A24F00672D82 /* AMBLinkedInAPIConstants.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
+				DB62EC1D1BB2F4D700EA1E86 /* AMBErrors.h in Headers */,
 				DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */,
+				DB62EC1A1BB2F2D800EA1E86 /* AMBIdentifyNetworkObject.h in Headers */,
 				DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */,
 				DBA3FC191BA8AA1D00672D82 /* AMBPTPusherErrors.h in Headers */,
 				DBA3FBD11BA8A9C000672D82 /* AMBFMDatabasePool.h in Headers */,
 				DBA3FB7B1BA8A23C00672D82 /* AMBContactLoader.h in Headers */,
 				DBA3FC091BA8AA1D00672D82 /* AMBPTURLRequestOperation.h in Headers */,
+				DB62EBA81BB2EC9E00EA1E86 /* AMBAmbassadorNetworking.h in Headers */,
 				DBA3FC1E1BA8AA1D00672D82 /* AMBPTPusherEventPublisher.h in Headers */,
 				DBA3FC251BA8AA1D00672D82 /* Pusher.h in Headers */,
 				DBA3FC0B1BA8AA1D00672D82 /* AMBPTEventListener.h in Headers */,
@@ -716,6 +767,7 @@
 				DBA3FB771BA8A23C00672D82 /* AMBContact.h in Headers */,
 				DBA3FBB31BA8A24F00672D82 /* AMBSendCompletionModal.h in Headers */,
 				DBA3FBAB1BA8A24F00672D82 /* AMBLinkedInShare.h in Headers */,
+				DB62EC171BB2F2B200EA1E86 /* AMBNetworkObject.h in Headers */,
 				DBA3FC061BA8AA1D00672D82 /* AMBPTPusherChannel_Private.h in Headers */,
 				DBA3FC311BA8AA5600672D82 /* AMBSRWebSocket.h in Headers */,
 				DBA3FBCF1BA8A9C000672D82 /* AMBFMDatabaseAdditions.h in Headers */,
@@ -772,6 +824,7 @@
 			);
 			dependencies = (
 				DB844D341BA75BB8003FD7A9 /* PBXTargetDependency */,
+				DB62EC271BB2FC7500EA1E86 /* PBXTargetDependency */,
 			);
 			name = AmbassadorTests;
 			productName = AmbassadorTests;
@@ -991,9 +1044,12 @@
 				DBA3FBCE1BA8A9C000672D82 /* AMBFMDatabase.m in Sources */,
 				DBA3FB7C1BA8A23C00672D82 /* AMBContactLoader.m in Sources */,
 				DBA3FBBC1BA8A24F00672D82 /* AMBShareServiceCell.m in Sources */,
+				DB62EC1B1BB2F2D800EA1E86 /* AMBIdentifyNetworkObject.m in Sources */,
 				DBB8BD0B1BAC6B6D00B87896 /* AMBPTPusher+Testing.m in Sources */,
 				DBA3FC241BA8AA1D00672D82 /* AMBPTURLRequestOperation.m in Sources */,
+				DB62EC161BB2F2B200EA1E86 /* AMBNetworkObject.m in Sources */,
 				DBA3FBAA1BA8A24F00672D82 /* AMBLinkedInAPIConstants.m in Sources */,
+				DB62EBA91BB2EC9E00EA1E86 /* AMBAmbassadorNetworking.m in Sources */,
 				DBA3FBD21BA8A9C000672D82 /* AMBFMDatabasePool.m in Sources */,
 				DBA3FBBE1BA8A24F00672D82 /* AMBShareServicesConstants.m in Sources */,
 				DBA3FB781BA8A23C00672D82 /* AMBContact.m in Sources */,
@@ -1011,6 +1067,7 @@
 				DBA3FB741BA8A23C00672D82 /* AMBAuthorizeLinkedIn.m in Sources */,
 				DBA3FC0C1BA8AA1D00672D82 /* AMBPTJSON.m in Sources */,
 				DBA3FC2D1BA8AA5600672D82 /* base64.c in Sources */,
+				DB62EC2D1BB3125400EA1E86 /* AMBErrors.m in Sources */,
 				DBA3FBAE1BA8A24F00672D82 /* AMBNamePrompt.m in Sources */,
 				DBA3FBB21BA8A24F00672D82 /* AMBSelectedCell.m in Sources */,
 				DBA3FC171BA8AA1D00672D82 /* AMBPTPusherConnection.m in Sources */,
@@ -1025,6 +1082,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB62EC251BB2FB8800EA1E86 /* AMBIdentifyNetworkPreferences.m in Sources */,
+				DB62EC311BB3291C00EA1E86 /* AMBIdentifyTests.m in Sources */,
+				DB62EC2F1BB3203500EA1E86 /* AMBAmbassadorNetworkingTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1056,6 +1116,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		DB62EC271BB2FC7500EA1E86 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB844D601BA76BDE003FD7A9 /* TestApplication */;
+			targetProxy = DB62EC261BB2FC7500EA1E86 /* PBXContainerItemProxy */;
+		};
 		DB844D341BA75BB8003FD7A9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DB844D251BA75BB8003FD7A9 /* Ambassador */;

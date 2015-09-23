@@ -8,6 +8,7 @@
 
 #import "AMBUtilities.h"
 #import "AMBSendCompletionModal.h"
+#import "AMBErrors.h"
 
 NSMutableDictionary* AMBparseQueryString(NSString *string)
 {
@@ -59,3 +60,6 @@ NSBundle* AMBframeworkBundle() {
     return frameworkBundle;
 }
 
+NSError *error(int code, id sender, NSDictionary* userInfo) {
+    return [NSError errorWithDomain:@AMBErrorDomain code:code userInfo:userInfo];
+}
