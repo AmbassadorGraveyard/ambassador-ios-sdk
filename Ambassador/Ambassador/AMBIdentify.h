@@ -20,8 +20,9 @@
 
 @interface AMBIdentify : NSObject
 
-- (id)initWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID;
+- (id)initForFullIdentify;
 - (void)identifyWithEmail:(NSString *)email;
+- (void)sendIdentifyData;
 @property NSMutableDictionary *identifyData;
 @property NSString *pusherChannelName;
 @property (nonatomic, weak) id<AMBIdentifyDelegate>delegate;
