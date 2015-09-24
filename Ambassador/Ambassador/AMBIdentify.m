@@ -134,30 +134,20 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
         if (![[[NSUserDefaults standardUserDefaults] valueForKey:AMB_USER_EMAIL_DEFAULTS_KEY] isEqualToString:@""])
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.channel = [self.client subscribeToPrivateChannelNamed:[NSString stringWithFormat:@"snippet-channel@user=%@", self.identifyData[@"device"][@"ID"]]];
-                [self.channel bindToEventNamed:@"identify_action" handleWithBlock:^(AMBPTPusherEvent *event)
-                 {
-                     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:event.data];
-                     NSString *phone = dictionary[@"phone"];
-                     NSString *firstName = dictionary[@"first_name"];
-                     NSString *lastName = dictionary[@"last_name"];
-                     if ([phone isEqual:[NSNull null]])
+                if (!self.channel) {
+                    self.channel = [self.client subscribeToPrivateChannelNamed:[NSString stringWithFormat:@"snippet-channel@user=%@", self.identifyData[@"device"][@"ID"]]];
+                    [self.channel bindToEventNamed:@"identify_action" handleWithBlock:^(AMBPTPusherEvent *event)
                      {
-                         dictionary[@"phone"] = @"";
-                     }
-                     if ([firstName isEqual:[NSNull null]])
-                     {
-                         dictionary[@"first_name"] = @"";
-                     }
-                     if ([lastName isEqual:[NSNull null]])
-                     {
-                         dictionary[@"last_name"] = @"";
-                     }
-                     DLog(@"Pusher event - %@", event.data);
-                     [[NSUserDefaults standardUserDefaults] setValue:dictionary forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
-                     [self.delegate ambassadorDataWasRecieved:dictionary];
-                 }];
-                [self sendIdentifyData];
+                         NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:event.data];
+                         
+                         if ([[dictionary allKeys] containsObject:@"url"]) {
+                             [self getPusherPayloadFromURL:[dictionary valueForKey:@"url"]];
+                         } else {
+                             [self savePusherDataFromDictionary:dictionary];
+                         }
+                     }];
+                    [self sendIdentifyData];
+                }
             });
         }
         
@@ -410,6 +400,51 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
 - (void)pusher:(AMBPTPusher *)pusher didSubscribeToChannel:(AMBPTPusherChannel *)channel
 {
     DLog(@"Subscribed to: %@", channel.name);
+}
+
+#pragma mark - Pusher url call
+
+- (void)getPusherPayloadFromURL:(NSString*)urlString {
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *pusherRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    pusherRequest.HTTPMethod = @"GET";
+    [pusherRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [pusherRequest setValue:[[NSUserDefaults standardUserDefaults] valueForKey:AMB_UNIVERSAL_TOKEN_DEFAULTS_KEY] forHTTPHeaderField:@"Authorization"];
+    
+    NSURLSessionDataTask *pusherSession = [[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+                                                                    delegate:nil
+                                                                    delegateQueue:[NSOperationQueue mainQueue]]
+    dataTaskWithRequest:pusherRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (((NSHTTPURLResponse *)response).statusCode >= 200 && ((NSHTTPURLResponse *)response).statusCode < 300) {
+            NSMutableDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            [self savePusherDataFromDictionary:dictionary];
+        } else {
+            DLog(@"There was an error getting Pusher data from %@", urlString);
+        }
+    }];
+    
+    [pusherSession resume];
+}
+
+- (void)savePusherDataFromDictionary:(NSMutableDictionary*)dictionary {
+    NSString *phone = dictionary[@"phone"];
+    NSString *firstName = dictionary[@"first_name"];
+    NSString *lastName = dictionary[@"last_name"];
+    if ([phone isEqual:[NSNull null]]) {
+        dictionary[@"phone"] = @"";
+    }
+    
+    if ([firstName isEqual:[NSNull null]]) {
+        dictionary[@"first_name"] = @"";
+    }
+    
+    if ([lastName isEqual:[NSNull null]]) {
+        dictionary[@"last_name"] = @"";
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setValue:dictionary forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
+    [self.delegate ambassadorDataWasRecieved:dictionary];
 }
 
 @end
