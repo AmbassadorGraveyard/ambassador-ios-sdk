@@ -22,6 +22,7 @@
 #import "AMBSendCompletionModal.h"
 #import <MessageUI/MessageUI.h>
 #import "AMBIdentify.h"
+#import "AMBThemeManager.h"
 
 
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
@@ -64,6 +65,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         self.prefs = prefs;
         self.singleEmail = @"";
         self.singleSMS = @"";
+        
     }
     
     return self;
