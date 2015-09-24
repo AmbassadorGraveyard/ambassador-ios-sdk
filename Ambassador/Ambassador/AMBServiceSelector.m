@@ -365,7 +365,9 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     
     [alert addAction:okAction];
     
-    [self presentViewController:alert animated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:alert animated:YES completion:nil];
+    });
 }
 
 
