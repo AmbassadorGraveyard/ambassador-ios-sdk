@@ -58,11 +58,15 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 
 #pragma mark - Initialization
-- (id)initWithPreferences:(AMBServiceSelectorPreferences *)prefs
+- (id)init
 {
     if ([super init])
     {
-        self.prefs = prefs;
+//        self.prefs = [[AMBServiceSelectorPreferences alloc] init];
+//        self.prefs.titleLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFWelcomeTextMessage];
+//        self.prefs.descriptionLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFDescriptionTextMessage];
+//        self.prefs.defaultShareMessage = [[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage];
+//        self.prefs.navBarTitle = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
         self.singleEmail = @"";
         self.singleSMS = @"";
         
@@ -153,6 +157,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     AMBIdentify *identify = [[AMBIdentify alloc] init];
     [identify sendIdentifyData];
+    [self setUpColorTheme];
 }
 
 - (void)alertForNetworkTimeout
@@ -370,6 +375,23 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+- (void)setUpColorTheme {
+    // Setup NAV BAR
+    self.navigationController.navigationBar.barTintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarColor];
+    self.navigationController.navigationBar.titleTextAttributes = @{
+                NSForegroundColorAttributeName:[[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor],
+                NSFontAttributeName:[[AMBThemeManager sharedInstance] fontForKey:NavBarTextFont]};
+    self.navigationController.title = self.prefs.navBarTitle;
+    
+    // Setup RAF Background color
+    self.view.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:RAFBackgroundColor];
+    
+    // Setup RAF Labels
+    self.titleLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFWelcomeTextColor];
+    self.titleLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFWelcomeTextFont];
+    self.descriptionLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFDescriptionTextColor];
+    self.descriptionLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFDescriptionTextFont];
+}
 
 
 #pragma mark - Lkdn delegate
