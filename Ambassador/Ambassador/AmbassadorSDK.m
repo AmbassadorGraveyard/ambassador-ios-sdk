@@ -14,6 +14,7 @@
 #import "AMBUtilities.h"
 #import "AMBServiceSelector.h"
 #import "AMBServiceSelectorPreferences.h"
+#import "AMBThemeManager.h"
 
 
 
@@ -79,14 +80,11 @@ static AMBServiceSelector *raf;
     [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:information completion:completion];
 }
 
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController WithRAFParameters:(AMBServiceSelectorPreferences*)parameters
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
 {
     DLog();
-    if (!parameters) {
-        parameters = [[AMBServiceSelectorPreferences alloc] init];
-    }
     
-    [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withRAFParameters:parameters];
+    [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController];
 }
 
 + (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion
@@ -144,7 +142,7 @@ static AMBServiceSelector *raf;
 
 }
 
-- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withRAFParameters:(AMBServiceSelectorPreferences*)parameters
+- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
 {
     DLog();
     NSString *shortCodeURL = @"";
@@ -172,8 +170,14 @@ static AMBServiceSelector *raf;
     DLog(@"ShortCodeURL: %@    ShortCode: %@", shortCodeURL, shortCode);
     raf.shortCode = shortCode;
     raf.shortURL = shortCodeURL;
-    parameters.textFieldText = shortCodeURL;
-    raf.prefs = parameters;
+    
+    AMBServiceSelectorPreferences *prefs = [[AMBServiceSelectorPreferences alloc] init];
+    prefs.titleLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFWelcomeTextMessage];
+    prefs.descriptionLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFDescriptionTextMessage];
+    prefs.defaultShareMessage = [[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage];
+    prefs.navBarTitle = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
+    prefs.textFieldText = shortCodeURL;
+    raf.prefs = prefs;
     raf.APIKey = AMBuniversalToken;
     raf.campaignID = ID;
 

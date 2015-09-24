@@ -2,7 +2,59 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>RAFNavBarColor</key>
+	<key>NAVIGATION BAR -- - -- - - - - </key>
 	<string></string>
+	<key>NavBarColor</key>
+	<string>#1D4C7A</string>
+	<key>NavBarTextMessage</key>
+	<string>Refer your friends</string>
+	<key>NavBarTextColor</key>
+	<string>#FFFFFF</string>
+	<key>NavBarTextFont</key>
+	<string>HelveticaNeue-Light, 20</string>
+	<key>RAF PAGE ------------------------</key>
+	<string></string>
+	<key>RAFBackgroundColor</key>
+	<string>#FFCECA</string>
+	<key>RAF WELCOME LABEL ----------</key>
+	<string></string>
+	<key>RAFWelcomeTextMessage</key>
+	<string>Spread the WORD</string>
+	<key>RAFWelcomeTextColor</key>
+	<string>#1D4C7A</string>
+	<key>RAFWelcomeTextFont</key>
+	<string>HelveticaNeue-Light, 22</string>
+	<key>RAF DESCRIPTION LABEL ------</key>
+	<string></string>
+	<key>RAFDescriptionTextMessage</key>
+	<string>Refer a friend to get goodies</string>
+	<key>RAFDescriptionTextColor</key>
+	<string>#402221</string>
+	<key>RAFDescriptionTextFont</key>
+	<string>HelveticaNeue-Light, 18</string>
+	<key>DefaultShareMessage</key>
+	<string>I&apos;m a fan of this company, check them out!</string>
+	<key>CONTACT SEND BUTTON ---------</key>
+	<string></string>
+	<key>ContactSendButtonBackgroundColor</key>
+	<string>#0AC1A0</string>
+	<key>ContactSendButtonTextColor</key>
+	<string>#FFFFFF</string>
+	<key>ContactSendButtonTextFont</key>
+	<string>HelveticaNeue-Light, 20</string>
+	<key>CONTACT SEARCH BAR ----------</key>
+	<string></string>
+	<key>ContactSearchBackgroundColor</key>
+	<string>#0AC1A0</string>
+	<key>ContactSearchDoneButtonTextColor</key>
+	<string>#034539</string>
+	<key>CONTACT TABLEVIEW ------------</key>
+	<string></string>
+	<key>ContactTableCheckMarkColor</key>
+	<string>#0BD8BB</string>
+	<key>ContactTableNameTextFont</key>
+	<string>HelveticaNeue-Light, 17</string>
+	<key>ContactTableInfoTextFont</key>
+	<string>HelveticaNeue-Light, 12</string>
 </dict>
 </plist>

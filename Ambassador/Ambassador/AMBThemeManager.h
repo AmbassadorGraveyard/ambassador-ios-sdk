@@ -8,8 +8,53 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum ambassadorColors {
+    // Nav Bar
+    NavBarColor,
+    NavBarTextColor,
+    
+    // RAF ViewController
+    RAFBackgroundColor,
+    RAFWelcomeTextColor,
+    RAFDescriptionTextColor,
+    
+    // Contact Selector ViewController
+    ContactSendButtonBackgroundColor,
+    ContactSearchBackgroundColor,
+    ContactSendButtonTextColor,
+    ContactSearchDoneButtonTextColor,
+    ContactTableCheckMarkColor
+} AmbassadorColors;
+
+typedef enum ambassadorMessages {
+    // Nav Bar
+    NavBarTextMessage,
+    
+    // RAF ViewController
+    RAFWelcomeTextMessage,
+    RAFDescriptionTextMessage,
+    DefaultShareMessage
+} AmbassadorMessages;
+
+typedef enum ambassadorFonts {
+    // Nav bar
+    NavBarTextFont,
+    
+    // RAF ViewController
+    RAFWelcomeTextFont,
+    RAFDescriptionTextFont,
+    
+    // Contact Selector ViewController
+    ContactTableNameTextFont,
+    ContactTableInfoTextFont,
+    ContactSendButtonTextFont
+} AmbassadorFonts;
+
 @interface AMBThemeManager : NSObject
 
-@property (nonatomic, strong) NSDictionary * valuesDic;
++ (AMBThemeManager *)sharedInstance;
+- (UIColor*)colorForKey:(AmbassadorColors)colorName;
+- (NSString*)messageForKey:(AmbassadorMessages)messageName;
+- (UIFont*)fontForKey:(AmbassadorFonts)fontName;
 
 @end
