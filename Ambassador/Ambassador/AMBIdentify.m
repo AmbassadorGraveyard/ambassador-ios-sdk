@@ -417,6 +417,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                                                                     delegateQueue:[NSOperationQueue mainQueue]]
     dataTaskWithRequest:pusherRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (((NSHTTPURLResponse *)response).statusCode >= 200 && ((NSHTTPURLResponse *)response).statusCode < 300) {
+            DLog(@"External call to Pusher URL successful!");
             NSMutableDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             [self savePusherDataFromDictionary:dictionary];
         } else {
