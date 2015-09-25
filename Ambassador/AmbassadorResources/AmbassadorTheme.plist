@@ -5,56 +5,56 @@
 	<key>NAVIGATION BAR -- - -- - - - - </key>
 	<string></string>
 	<key>NavBarColor</key>
-	<string>#1D4C7A</string>
+	<string>#FFFFFF</string>
 	<key>NavBarTextMessage</key>
 	<string>Refer your friends</string>
 	<key>NavBarTextColor</key>
-	<string>#FFFFFF</string>
+	<string>#000000</string>
 	<key>NavBarTextFont</key>
-	<string>HelveticaNeue-Light, 20</string>
+	<string>HelveticaNeue, 20</string>
 	<key>RAF PAGE ------------------------</key>
 	<string></string>
 	<key>RAFBackgroundColor</key>
-	<string>#FFCECA</string>
+	<string>#FFFFFF</string>
 	<key>RAF WELCOME LABEL ----------</key>
 	<string></string>
 	<key>RAFWelcomeTextMessage</key>
-	<string>Spread the WORD</string>
+	<string>Spread the word</string>
 	<key>RAFWelcomeTextColor</key>
-	<string>#1D4C7A</string>
+	<string>#000000</string>
 	<key>RAFWelcomeTextFont</key>
-	<string>HelveticaNeue-Light, 22</string>
+	<string>HelveticaNeue, 22</string>
 	<key>RAF DESCRIPTION LABEL ------</key>
 	<string></string>
 	<key>RAFDescriptionTextMessage</key>
-	<string>Refer a friend to get goodies</string>
+	<string>Refer a friend to get rewards</string>
 	<key>RAFDescriptionTextColor</key>
-	<string>#402221</string>
+	<string>#C9C9C9</string>
 	<key>RAFDescriptionTextFont</key>
-	<string>HelveticaNeue-Light, 18</string>
+	<string>HelveticaNeue, 18</string>
 	<key>DefaultShareMessage</key>
 	<string>I&apos;m a fan of this company, check them out!</string>
 	<key>CONTACT SEND BUTTON ---------</key>
 	<string></string>
 	<key>ContactSendButtonBackgroundColor</key>
-	<string>#0AC1A0</string>
+	<string>#4199D1</string>
 	<key>ContactSendButtonTextColor</key>
 	<string>#FFFFFF</string>
 	<key>ContactSendButtonTextFont</key>
-	<string>HelveticaNeue-Light, 20</string>
+	<string>HelveticaNeue, 16</string>
 	<key>CONTACT SEARCH BAR ----------</key>
 	<string></string>
 	<key>ContactSearchBackgroundColor</key>
-	<string>#0AC1A0</string>
+	<string>#DEDEDE</string>
 	<key>ContactSearchDoneButtonTextColor</key>
-	<string>#034539</string>
+	<string>#000000</string>
 	<key>CONTACT TABLEVIEW ------------</key>
 	<string></string>
 	<key>ContactTableCheckMarkColor</key>
-	<string>#0BD8BB</string>
+	<string>#4199D1</string>
 	<key>ContactTableNameTextFont</key>
-	<string>HelveticaNeue-Light, 17</string>
+	<string>Helvetica, 17</string>
 	<key>ContactTableInfoTextFont</key>
-	<string>HelveticaNeue-Light, 12</string>
+	<string>Helvetica, 13</string>
 </dict>
 </plist>

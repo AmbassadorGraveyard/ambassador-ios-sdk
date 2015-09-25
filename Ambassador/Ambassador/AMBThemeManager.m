@@ -36,15 +36,15 @@ static NSDictionary * valuesDic;
 }
 
 - (UIColor*)colorForKey:(AmbassadorColors)colorName {
-    if ([[valuesDic allKeys] containsObject:[AMBThemeManager colorEnumStringValue:colorName]]) {
+    if ([[valuesDic allKeys] containsObject:[AMBThemeManager colorEnumStringValue:colorName]] && ![[valuesDic valueForKey:[AMBThemeManager colorEnumStringValue:colorName]] isEqual: @""]) {
         return [AMBThemeManager colorFromHexString:[valuesDic valueForKey:[AMBThemeManager colorEnumStringValue:colorName]]];
     }
     
-    return [UIColor whiteColor];
+    return [UIColor lightGrayColor];
 }
 
 - (NSString*)messageForKey:(AmbassadorMessages)messageName {
-    if ([[valuesDic allKeys] containsObject:[AMBThemeManager messageEnumStringValue:messageName]]) {
+    if ([[valuesDic allKeys] containsObject:[AMBThemeManager messageEnumStringValue:messageName]] && ![[valuesDic valueForKey:[AMBThemeManager messageEnumStringValue:messageName]] isEqualToString:@""]) {
         return [valuesDic valueForKey:[AMBThemeManager messageEnumStringValue:messageName]];
     }
     
@@ -52,7 +52,7 @@ static NSDictionary * valuesDic;
 }
 
 - (UIFont*)fontForKey:(AmbassadorFonts)fontName {
-    if ([[valuesDic allKeys] containsObject:[AMBThemeManager fontEnumStringValue:fontName]]) {
+    if ([[valuesDic allKeys] containsObject:[AMBThemeManager fontEnumStringValue:fontName]] && ![[valuesDic valueForKey:[AMBThemeManager fontEnumStringValue:fontName]] isEqualToString:@""]) {
         NSString *fontDescription = [valuesDic valueForKey:[AMBThemeManager fontEnumStringValue:fontName]];
         NSArray *fontArray = [fontDescription componentsSeparatedByString:@","];
         
