@@ -58,15 +58,11 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 
 #pragma mark - Initialization
+
 - (id)init
 {
     if ([super init])
     {
-//        self.prefs = [[AMBServiceSelectorPreferences alloc] init];
-//        self.prefs.titleLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFWelcomeTextMessage];
-//        self.prefs.descriptionLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFDescriptionTextMessage];
-//        self.prefs.defaultShareMessage = [[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage];
-//        self.prefs.navBarTitle = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
         self.singleEmail = @"";
         self.singleSMS = @"";
         

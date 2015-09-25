@@ -260,7 +260,7 @@ After some minor configurations, the RAF can easily be changed to look like this
 * **Colors must be entered as Hex Code values**
 * **Make sure when adding custom colors to the plist that you include a `#` in front of the Hex Code or it may result with incorrect colors**
 * **Fonts are typically entered as `<FontName>, <FontSize>`.  Ex: `Helvetica, 12`**
-* **If you leave out the font size, it will be defaulted to size 14**
+* **If you leave out the font size or if the font returns a nil value, it will be defaulted to size 14**
 
 ### Presenting the RAF
 **Objective-c**
