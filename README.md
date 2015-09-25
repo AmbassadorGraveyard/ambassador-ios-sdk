@@ -233,46 +233,46 @@ AmbassadorSDK.registerConversion(parameters)  { (error) -> Void in
 ## Presenting the 'Refer A Friend' Screen (RAF)
 ### Service Selector Preferences
 The RAF screen provides a UI component that allows users to share with their contacts and become part of your referral program.
-To allow customized messages, there is also a `ShareServicePreferences` object where you can set editable properties of the RAF.
-If you leave any property unset, the RAF will use the default strings shown below.
+To allow customization, there is an `AmbassadorTheme.plist` where you can set many editable properties of the RAF, including colors, messages, and fonts.
 
-<img src="screenShots/rafDemoImg.jpg" width="250" />   <img src="screenShots/contactShare.jpg" width="250"/>
+  <img src="screenShots/AmbassadorThemeSelection.png" width="250" />
 
-The editable properties and their default strings are:
-* `navBarTitle` - "Refer your friends"
-* `titleLableText` - "Spread the word"
-* `descriptionLabelText` - "Refer a friend to get rewards"
-* `defaultShareMessage` - "I'm a fan of this company, check them out!"
+If you leave any property unset, the RAF will use the default values shown below.
+Any blank or incorrect values inserted into the `AmbassadorTheme.plist` will default to:
+* Colors - White
+* Fonts - **System Font** of size **14**
+* Messages - **"NO PLIST VALUE FOUND"**
+
+The `AmbassadorTheme.plist` will come with preconfigured values looking like this:
+
+  <img src="screenShots/themePlist.png" width="1000" />
+
+This is what the default theme will look like with the preconfigured values in the `AmbassadorTheme.plist`.
+
+  <img src="screenShots/rafDemoImg.jpg" width="250" />   <img src="screenShots/contactShare.jpg" width="250"/>
+
+After some minor configurations, the RAF can easily be changed to look like this:
+
+  <img src="screenShots/changedRAFScreen.png" width="250" />   <img src="screenShots/changedContactScreen.png" width="250"/>
+
+**NOTES FOR CUSTOM THEMES**
+
+* **Colors must be entered as Hex Code values**
+* **Make sure when adding custom colors to the plist that you include a `#` in front of the Hex Code or it may result with incorrect colors**
+* **Fonts are typically entered as `<FontName>, <FontSize>`.  Ex: `Helvetica, 12`**
+* **If you leave out the font size or if the font returns a nil value, it will be defaulted to size 14**
 
 ### Presenting the RAF
 **Objective-c**
 ```objective-c
-// STEP ONE: Create a share service preferences object
-AMBServiceSelectorPreferences *preferences = [[AMBServiceSelectorPreferences alloc] init]
-
-// STEP TWO: (optional) Set the properties
-preferences.navBarTitle = @"New navBar title"; // NSString
-preferences.titleLabelText = @"New welcome title"; // NSString
-preferences.descriptionLabelText = @"This is test description"; // NSString
-preferences.defaultShareMessage = @"Share this test please!"; // NSString
-
-// STEP THREE: Present the RAF Modal View
-[AmbassadorSDK presentRAFForCampaign:@"877" FromViewController:self WithRAFParameters:preferences];
+// Present the RAF Modal View
+[AmbassadorSDK presentRAFForCampaign:@"877" FromViewController:self];
 ```
 
 **Swift**
 ```objective-c
-// STEP ONE: Create a share service preferences object
-let preferences = AMBServiceSelectorPreferences()
-
-// STEP TWO: (optional) Set the properties
-preferences.navBarTitle = "New navBar title" // NSString
-preferences.titleLabelText = "New welcome title" // NSString
-preferences.descriptionLabelText = "This is test description" // NSString
-preferences.defaultShareMessage = "Share this test please!" // NSString
-
-// STEP THREE: Present the RAF Modal View
-AmbassadorSDK.presentRAFForCampaign("877", fromViewController: self, withRAFParameters: preferences)
+// Present the RAF Modal View
+AmbassadorSDK.presentRAFForCampaign("877", fromViewController: self)
 ```
 
 **NOTES**
