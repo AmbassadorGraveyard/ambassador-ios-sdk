@@ -6,7 +6,6 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "AMBConversionParameters.h"
-#import "AMBServiceSelectorPreferences.h"
 
 /**
  `Ambassador` is the object that provides access to Ambassador's SDK functionality
