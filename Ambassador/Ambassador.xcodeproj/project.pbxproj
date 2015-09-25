@@ -70,7 +70,7 @@
 		DBA3FBB41BA8A24F00672D82 /* AMBSendCompletionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */; };
 		DBA3FBB51BA8A24F00672D82 /* AMBServiceSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9D1BA8A24F00672D82 /* AMBServiceSelector.h */; };
 		DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9E1BA8A24F00672D82 /* AMBServiceSelector.m */; };
-		DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9F1BA8A24F00672D82 /* AMBServiceSelectorPreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9F1BA8A24F00672D82 /* AMBServiceSelectorPreferences.h */; };
 		DBA3FBB81BA8A24F00672D82 /* AMBServiceSelectorPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA01BA8A24F00672D82 /* AMBServiceSelectorPreferences.m */; };
 		DBA3FBB91BA8A24F00672D82 /* AMBShareService.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA11BA8A24F00672D82 /* AMBShareService.h */; };
 		DBA3FBBA1BA8A24F00672D82 /* AMBShareService.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA21BA8A24F00672D82 /* AMBShareService.m */; };
