@@ -28,7 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *doneSearchingButton;
 @property (weak, nonatomic) IBOutlet UITextView *composeMessageTextView;
 @property (weak, nonatomic) IBOutlet UIView *fadeView;
-@property (strong, nonatomic) IBOutlet UIView * containerView;
+@property (weak, nonatomic) IBOutlet UIView * containerView;
 
 //iPad Specific
 @property (weak, nonatomic) IBOutlet UITableView *selectedTable;
@@ -104,7 +104,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 }
 
 - (void)setUpTheme {
-    self.containerView.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    self.containerView.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSearchBackgroundColor];
     [self.doneSearchingButton setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:ContactSearchDoneButtonTextColor] forState:UIControlStateNormal];
 
     self.sendButton.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
