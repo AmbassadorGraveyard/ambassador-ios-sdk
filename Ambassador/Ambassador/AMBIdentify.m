@@ -254,7 +254,7 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
     NSString *campId = ([[NSUserDefaults standardUserDefaults] objectForKey:AMB_CAMPAIGN_ID_DEFAULTS_KEY]) ?
         [[NSUserDefaults standardUserDefaults] objectForKey:AMB_CAMPAIGN_ID_DEFAULTS_KEY] : @"";
     
-    NSString *emailString = [[NSUserDefaults standardUserDefaults] objectForKey:AMB_USER_EMAIL_DEFAULTS_KEY];
+    NSString *emailString = ([[NSUserDefaults standardUserDefaults] objectForKey:AMB_USER_EMAIL_DEFAULTS_KEY]) ? [[NSUserDefaults standardUserDefaults] objectForKey:AMB_USER_EMAIL_DEFAULTS_KEY] : @"";
     
     // Create the payload to send
     NSMutableDictionary *payload = [NSMutableDictionary dictionaryWithDictionary:@{
