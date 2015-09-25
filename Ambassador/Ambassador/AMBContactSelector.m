@@ -14,6 +14,7 @@
 #import "AMBNamePrompt.h"
 #import "AMBShareServicesConstants.h"
 #import "AMBConstants.h"
+#import "AMBThemeManager.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                AMBSelectedCellDelegate, UITextFieldDelegate,
@@ -27,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *doneSearchingButton;
 @property (weak, nonatomic) IBOutlet UITextView *composeMessageTextView;
 @property (weak, nonatomic) IBOutlet UIView *fadeView;
+@property (weak, nonatomic) IBOutlet UIView * containerView;
 
 //iPad Specific
 @property (weak, nonatomic) IBOutlet UITableView *selectedTable;
@@ -66,7 +68,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
     // Set the navigation bar attributes (title and back button)
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
-    [backButton setImage:AMBimageFromBundleNamed(@"back", @"png") forState:UIControlStateNormal];
+    [backButton setImage:[AMBimageFromBundleNamed(@"back", @"png") imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    backButton.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
     [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     self.navigationItem.leftBarButtonItem = backBarButtonItem;
@@ -98,7 +101,17 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     [self.composeMessageTextView scrollRangeToVisible:NSMakeRange(0, 0)];
     
     [self updateButton];
+    [self setUpTheme];
 }
+
+- (void)setUpTheme {
+    self.containerView.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSearchBackgroundColor];
+    [self.doneSearchingButton setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:ContactSearchDoneButtonTextColor] forState:UIControlStateNormal];
+
+    self.sendButton.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    [self.sendButton.titleLabel setFont:[[AMBThemeManager sharedInstance] fontForKey:ContactSendButtonTextFont]];
+}
+
 - (IBAction)sendButtonPressed:(UIButton *)sender
 {
     if (self.selected.count > 0)
@@ -294,11 +307,14 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     
     AMBContactCell *cell = [tableView dequeueReusableCellWithIdentifier:CONTACT_CELL_IDENTIFIER];
     cell.name.text = [contact fullName];
+    cell.name.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableNameTextFont];
     cell.value.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
+    cell.value.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableInfoTextFont];
     
     if ([self.selected member:contact])
     {
-         cell.checkmarkView.image = AMBimageFromBundleNamed(@"check", @"png");
+        cell.checkmarkView.image = [AMBimageFromBundleNamed(@"check", @"png") imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        cell.checkmarkView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableCheckMarkColor];
     }
     else
     {

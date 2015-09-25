@@ -11,7 +11,6 @@
 
 @interface AMBServiceSelector : UIViewController
 
-- (id)initWithPreferences:(AMBServiceSelectorPreferences *)prefs;
 - (void)removeWaitView;
 
 @property (strong, nonatomic) AMBServiceSelectorPreferences *prefs;
