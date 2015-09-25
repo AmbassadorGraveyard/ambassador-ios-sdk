@@ -120,7 +120,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     
     // Set the navigation bar attributes (title and back button)
     UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
-    [closeButton setImage:AMBimageFromBundleNamed(@"close", @"png") forState:UIControlStateNormal];
+    [closeButton setImage:[AMBimageFromBundleNamed(@"close", @"png") imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    closeButton.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
     [closeButton addTarget:self action:@selector(closeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *closeBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
     self.navigationItem.leftBarButtonItem = closeBarButtonItem;
@@ -382,6 +383,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                 NSForegroundColorAttributeName:[[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor],
                 NSFontAttributeName:[[AMBThemeManager sharedInstance] fontForKey:NavBarTextFont]};
     self.navigationController.title = self.prefs.navBarTitle;
+    
     
     // Setup RAF Background color
     self.view.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:RAFBackgroundColor];
