@@ -37,7 +37,7 @@ static NSDictionary * valuesDic;
 
 - (UIColor*)colorForKey:(AmbassadorColors)colorName {
     if ([[valuesDic allKeys] containsObject:[AMBThemeManager colorEnumStringValue:colorName]] && ![[valuesDic valueForKey:[AMBThemeManager colorEnumStringValue:colorName]] isEqual: @""]) {
-        return [AMBThemeManager colorFromHexString:[valuesDic valueForKey:[AMBThemeManager colorEnumStringValue:colorName]]];
+        return ([AMBThemeManager colorFromHexString:[valuesDic valueForKey:[AMBThemeManager colorEnumStringValue:colorName]]]) ? [AMBThemeManager colorFromHexString:[valuesDic valueForKey:[AMBThemeManager colorEnumStringValue:colorName]]] : [UIColor whiteColor];
     }
     
     return [UIColor lightGrayColor];
@@ -58,14 +58,14 @@ static NSDictionary * valuesDic;
         
         NSString *fontName = fontArray[0];
         NSString *fontSizeString;
-        CGFloat fontSize = 11;
+        CGFloat fontSize = 14;
         
         if (fontArray.count > 1) {
             fontSizeString = fontArray[1];
             fontSize = [fontSizeString floatValue];
         }
-        
-        return [UIFont fontWithName:fontName size:fontSize];
+
+        return ([UIFont fontWithName:fontName size:fontSize]) ? [UIFont fontWithName:fontName size:fontSize] : [UIFont systemFontOfSize:14];
     }
     
     return [UIFont systemFontOfSize:11];

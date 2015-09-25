@@ -240,7 +240,7 @@ To allow customization, there is an `AmbassadorTheme.plist` where you can set ma
 If you leave any property unset, the RAF will use the default values shown below.
 Any blank or incorrect values inserted into the `AmbassadorTheme.plist` will default to:
 * Colors - White
-* Fonts - **System Font** of size **11**
+* Fonts - **System Font** of size **14**
 * Messages - **"NO PLIST VALUE FOUND"**
 
 The `AmbassadorTheme.plist` will come with preconfigured values looking like this:
@@ -260,7 +260,7 @@ After some minor configurations, the RAF can easily be changed to look like this
 * **Colors must be entered as Hex Code values**
 * **Make sure when adding custom colors to the plist that you include a `#` in front of the Hex Code or it may result with incorrect colors**
 * **Fonts are typically entered as `<FontName>, <FontSize>`.  Ex: `Helvetica, 12`**
-* **If you leave out the font size, it will be defaulted to size 11**
+* **If you leave out the font size, it will be defaulted to size 14**
 
 ### Presenting the RAF
 **Objective-c**
