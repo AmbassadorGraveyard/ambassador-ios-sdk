@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "AMBIdentifyNetworkObject.h"
+#import "AMBConversionNetworkObject.h"
 
 @interface AMBAmbassadorNetworking : NSObject
 + (instancetype)sharedInstance;
 - (void)sendIdentifyNetworkObj:(AMBIdentifyNetworkObject *)obj universalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void (^)(NSData *, NSURLResponse *, NSError *))completion;
+- (void)sendConversionObj:(AMBConversionNetworkObject *)obj universalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void (^)(NSData *, NSURLResponse *, NSError *))completion;
 @end

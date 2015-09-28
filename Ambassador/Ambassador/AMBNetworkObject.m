@@ -7,7 +7,6 @@
 //
 
 #import "AMBNetworkObject.h"
-#import <objc/runtime.h>
 
 @implementation AMBNetworkObject
 
@@ -24,5 +23,13 @@
 }
 
 - (NSError *)validate { return nil; }
+
+- (instancetype)fillFrom:(NSMutableDictionary *)dictionary {
+    NSArray *keys = [dictionary allKeys];
+    for (NSString *key in keys) {
+        [self setValue:[dictionary valueForKey:key] forKey:key];
+    }
+    return self;
+}
 
 @end

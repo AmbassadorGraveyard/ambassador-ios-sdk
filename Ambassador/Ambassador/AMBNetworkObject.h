@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "AMBErrors.h"
+#import <objc/runtime.h>
 
 @interface AMBNetworkObject : NSObject
 - (NSMutableDictionary *)dictionaryForm;
 - (NSError *)validate;
+- (instancetype)fillFrom:(NSMutableDictionary *)dictionary;
 @end

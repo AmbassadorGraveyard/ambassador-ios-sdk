@@ -43,6 +43,7 @@
     NSData *dataRaw = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
     NSError *e = nil;
     NSMutableDictionary *returnVal = [NSJSONSerialization JSONObjectWithData:dataRaw options:0 error:&e];
+    self.fp = returnVal;
     [self triggerCompletion:returnVal error:e];
 }
 

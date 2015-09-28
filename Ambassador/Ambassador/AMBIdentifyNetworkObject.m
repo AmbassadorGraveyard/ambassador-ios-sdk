@@ -15,7 +15,7 @@
     if (self = [super init]) {
         _email = @"";
         _campaign_id = @"";
-        _enroll = @"";
+        _enroll = YES;
         _source = @"ios_sdk_pilot";
         _fp = [NSMutableDictionary dictionaryWithDictionary:@{}];
     }

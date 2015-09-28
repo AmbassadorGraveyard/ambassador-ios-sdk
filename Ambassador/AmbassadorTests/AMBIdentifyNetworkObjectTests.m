@@ -8,12 +8,13 @@
 
 #import <XCTest/XCTest.h>
 #import "AMBIdentifyNetworkObject.h"
+#import "AMBNetworkObject.h"
 
-@interface AMBIdentifyNetworkPreferences : XCTestCase
+@interface AMBIdentifyNetworkObjectTests : XCTestCase
 
 @end
 
-@implementation AMBIdentifyNetworkPreferences
+@implementation AMBIdentifyNetworkObjectTests
 
 - (void)setUp { [super setUp]; }
 
@@ -24,7 +25,7 @@
     XCTAssertNotNil([obj validate]);
     NSMutableDictionary *json = [obj dictionaryForm];
     XCTAssertNotNil(json);
-    XCTAssertEqualObjects(json[@"enroll"], @"");
+    XCTAssertEqualObjects(json[@"enroll"], @YES);
     XCTAssertEqualObjects(json[@"email"], @"");
     XCTAssertEqualObjects(json[@"campaign_id"], @"");
     XCTAssertEqualObjects(json[@"source"], @"ios_sdk_pilot");
@@ -38,7 +39,7 @@
     XCTAssertNil([obj validate]);
     NSMutableDictionary *json = [obj dictionaryForm];
     XCTAssertNotNil(json);
-    XCTAssertEqualObjects(json[@"enroll"], @"");
+    XCTAssertEqualObjects(json[@"enroll"], @YES);
     XCTAssertEqualObjects(json[@"email"], email);
     XCTAssertEqualObjects(json[@"campaign_id"], @"");
     XCTAssertEqualObjects(json[@"source"], @"ios_sdk_pilot");
@@ -52,7 +53,26 @@
     XCTAssertNil([obj validate]);
     NSMutableDictionary *json = [obj dictionaryForm];
     XCTAssertNotNil(json);
-    XCTAssertEqualObjects(json[@"enroll"], @"");
+    XCTAssertEqualObjects(json[@"enroll"], @YES);
+    XCTAssertEqualObjects(json[@"email"], @"");
+    XCTAssertEqualObjects(json[@"campaign_id"], @"");
+    XCTAssertEqualObjects(json[@"source"], @"ios_sdk_pilot");
+    XCTAssertEqualObjects(json[@"fp"], fp);
+}
+
+- (void)testInitDictionary {
+    NSMutableDictionary *fp = [NSMutableDictionary dictionaryWithDictionary:@{ @"key" : @NO }];
+    AMBIdentifyNetworkObject *obj1 = [[AMBIdentifyNetworkObject alloc] init];
+    obj1.fp = fp;
+    XCTAssertNil([obj1 validate]);
+    NSMutableDictionary *json = [obj1 dictionaryForm];
+    
+    AMBIdentifyNetworkObject *obj2 = [[AMBIdentifyNetworkObject alloc] init];
+    [obj2 fillFrom:json];
+    
+    json = [obj2 dictionaryForm];
+    XCTAssertNotNil(json);
+    XCTAssertEqualObjects(json[@"enroll"], @YES);
     XCTAssertEqualObjects(json[@"email"], @"");
     XCTAssertEqualObjects(json[@"campaign_id"], @"");
     XCTAssertEqualObjects(json[@"source"], @"ios_sdk_pilot");

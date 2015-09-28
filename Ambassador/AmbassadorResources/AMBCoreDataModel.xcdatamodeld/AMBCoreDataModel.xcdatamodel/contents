@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14F27" minimumToolsVersion="Xcode 7.0">
+    <entity name="AMBConversionFieldsCoreDataObject" representedClassName="AMBConversionFieldsCoreDataObject" syncable="YES">
+        <attribute name="ambConversionFieldsNetworkObject" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <entity name="AMBIdentifyCoreDataObject" representedClassName="AMBIdentifyCoreDataObject" syncable="YES">
+        <attribute name="ambIdentifyNetworkObject" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <entity name="AMBUserCoreDataObject" representedClassName="AMBUserCoreDataObject" syncable="YES">
+        <attribute name="ambUserNetworkObject" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AMBIdentifyCoreDataObject" positionX="-63" positionY="-18" width="128" height="60"/>
+        <element name="AMBUserCoreDataObject" positionX="-63" positionY="-9" width="128" height="60"/>
+        <element name="AMBConversionFieldsCoreDataObject" positionX="-63" positionY="-9" width="128" height="60"/>
+    </elements>
+</model>

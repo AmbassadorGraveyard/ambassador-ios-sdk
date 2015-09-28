@@ -27,7 +27,7 @@
 }
 
 - (IBAction)showRAF:(UIButton *)sender {
-    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self WithRAFParameters:[[AMBServiceSelectorPreferences alloc]init]];
+   // [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self WithRAFParameters:[[AMBServiceSelectorPreferences alloc]init]];
     
 }
 

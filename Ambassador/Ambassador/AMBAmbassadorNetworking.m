@@ -8,6 +8,7 @@
 
 #import "AMBAmbassadorNetworking.h"
 #import "AMBErrors.h"
+#import "AMBConversionNetworkObject.h"
 
 @implementation AMBAmbassadorNetworking
 #pragma mark - Initialization
@@ -26,6 +27,10 @@
     [[AMBAmbassadorNetworking sharedInstance] sendNetworkObject:obj url:[[AMBAmbassadorNetworking sharedInstance] sendIdentifyURL] universalToken:uToken universalID:uID completion:completion];
 }
 
+- (void)sendConversionObj:(AMBConversionNetworkObject *)obj universalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void (^)(NSData *, NSURLResponse *, NSError *))completion {
+    [[AMBAmbassadorNetworking sharedInstance] sendNetworkObject:obj url:[[AMBAmbassadorNetworking sharedInstance] sendConversionURL] universalToken:uToken universalID:uID completion:completion];
+}
+
 
 #pragma mark - Network template functions
 - (void)sendNetworkObject:(AMBNetworkObject *)obj url:(NSString *)url universalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void (^)(NSData *, NSURLResponse *, NSError *))completion {    [[AMBAmbassadorNetworking sharedInstance] ambassadorURLRequestFor:url body:[obj dictionaryForm] universalToken:uToken universalID:uID completion:^(NSMutableURLRequest *request, NSError *e) {
@@ -35,11 +40,7 @@
             }
             return;
         }
-        [[AMBAmbassadorNetworking sharedInstance] createDataTaskForRequest:request completion:^(NSData *d, NSURLResponse *r, NSError *error) {
-            if (completion) {
-                dispatch_async(dispatch_get_main_queue(), ^{ completion(d, r, error); });
-            }
-        }];
+        [[AMBAmbassadorNetworking sharedInstance] createDataTaskForRequest:request completion:completion];
     }];
 }
 
@@ -60,7 +61,7 @@
     [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error) {
             if (completion) {
-                dispatch_async(dispatch_get_main_queue(), ^{ completion(nil, nil, error); });
+                dispatch_async(dispatch_get_main_queue(), ^{ completion(data, response, error); });
             }
             return;
         }
@@ -73,7 +74,7 @@
         } else {
             if (completion) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(nil, nil, AMBBADRESPError(code, response));
+                    completion(data, response, AMBBADRESPError(code, data));
                 });
             }
         }
@@ -87,6 +88,13 @@
         return @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/";
     else
         return @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/"; //TODO: change to production
+}
+
+- (NSString *)sendConversionURL {
+    if (YES)
+        return @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/";
+    else
+        return @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/"; //TODO: change to production
 }
 
 @end
