@@ -242,18 +242,28 @@ Any blank or incorrect values inserted into the `AmbassadorTheme.plist` will def
 * Colors - White
 * Fonts - **System Font** of size **14**
 * Messages - **"NO PLIST VALUE FOUND"**
+* Images - No image will be added
 
 The `AmbassadorTheme.plist` will come with preconfigured values looking like this:
 
-  <img src="screenShots/themePlist.png" width="1000" />
+  <img src="screenShots/themePlist.png" width="600" />
 
 This is what the default theme will look like with the preconfigured values in the `AmbassadorTheme.plist`.
 
-  <img src="screenShots/rafDemoImg.jpg" width="250" />   <img src="screenShots/contactShare.jpg" width="250"/>
+  <img src="screenShots/rafDemoImage.png" width="250" />   <img src="screenShots/contactsDemoImage.png" width="250"/>
 
-After some minor configurations, the RAF can easily be changed to look like this:
+To demonstrate how to change the default theme, here is the AmbassadorTheme.plist with some edited values:
 
-  <img src="screenShots/changedRAFScreen.png" width="250" />   <img src="screenShots/changedContactScreen.png" width="250"/>
+  <img src="screenShots/editedPlist.png" width="500" />
+
+The results from the minor changes will look like this:
+
+  <img src="screenShots/changedRAF.png" width="250" />   <img src="screenShots/changedContactScreen.png" width="250"/>
+
+You can also add an image to the RAF Widget by editing the **RAFLogo** plist value:
+* **Note**: The image you reference from the AmbassadorTheme.plist must be in your app's **Images.xcassets** folder
+
+  <img src="screenShots/logoAddPlist.png" width="500" />  <img src="screenShots/imageAddedRAF.png" width="250" />
 
 **NOTES FOR CUSTOM THEMES**
 
