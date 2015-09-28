@@ -17,7 +17,7 @@
 	<key>RAFBackgroundColor</key>
 	<string>#FFFFFF</string>
 	<key>RAFLogo</key>
-	<string></string>
+	<string>appleLogo,1</string>
 	<key>RAF WELCOME LABEL ----------</key>
 	<string></string>
 	<key>RAFWelcomeTextMessage</key>
