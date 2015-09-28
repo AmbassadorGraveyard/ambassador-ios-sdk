@@ -146,7 +146,6 @@ NSString * const PUSHER_AUTH_SOCKET_ID_KEY = @"socket_id";
                              [self savePusherDataFromDictionary:dictionary];
                          }
                      }];
-//                    [self sendIdentifyData];
                 }
             });
         }
