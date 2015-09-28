@@ -8,35 +8,29 @@
 
 #import "AMBUtilities.h"
 #import "AMBSendCompletionModal.h"
+#import "AMBErrors.h"
 
-NSMutableDictionary* AMBparseQueryString(NSString *string)
-{
+NSMutableDictionary* AMBparseQueryString(NSString *string) {
     string = [[string componentsSeparatedByString:@"?"] lastObject];
     NSArray *variables = [string componentsSeparatedByString:@"&"];
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
     
-    for (NSString *str in variables)
-    {
+    for (NSString *str in variables) {
         NSArray *pair = [str componentsSeparatedByString:@"="];
         [result setValue:[pair lastObject] forKey:[pair firstObject]];
     }
-    
-    DLog(@"%@", result);
     return result;
 }
 
-UIColor* AMBColorFromRGB(float r, float g, float b)
-{
+UIColor* AMBColorFromRGB(float r, float g, float b) {
     return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
 }
 
-UIImage* AMBimageFromBundleNamed(NSString *name, NSString *type)
-{
+UIImage* AMBimageFromBundleNamed(NSString *name, NSString *type) {
     return [UIImage imageWithContentsOfFile:[AMBframeworkBundle() pathForResource:name ofType:type]];
 }
 
-void AMBsendAlert(BOOL success, NSString *message, UIViewController *presenter)
-{
+void AMBsendAlert(BOOL success, NSString *message, UIViewController *presenter) {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
     AMBSendCompletionModal *vc = (AMBSendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
     vc.alertMessage = message;
@@ -59,3 +53,6 @@ NSBundle* AMBframeworkBundle() {
     return frameworkBundle;
 }
 
+NSError *error(int code, id sender, NSDictionary* userInfo) {
+    return [NSError errorWithDomain:@AMBErrorDomain code:code userInfo:userInfo];
+}

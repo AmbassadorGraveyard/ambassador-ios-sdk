@@ -25,4 +25,6 @@ void AMBsimpleAlert(NSString *title, NSString *message, UIViewController *vc);
 void AMBsendAlert(BOOL success, NSString *message, UIViewController *presenter);
 NSBundle* AMBframeworkBundle();
 
+
+NSError *error(int code, id sender, NSDictionary* userInfo);
 #endif
