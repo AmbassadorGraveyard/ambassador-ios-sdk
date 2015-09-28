@@ -60,6 +60,6 @@ typedef enum ambassadorImages {
 - (UIColor*)colorForKey:(AmbassadorColors)colorName;
 - (NSString*)messageForKey:(AmbassadorMessages)messageName;
 - (UIFont*)fontForKey:(AmbassadorFonts)fontName;
-- (UIImage*)imageForKey:(AmbassadorImages)imageName;
+- (NSMutableDictionary*)imageForKey:(AmbassadorImages)imageName;
 
 @end

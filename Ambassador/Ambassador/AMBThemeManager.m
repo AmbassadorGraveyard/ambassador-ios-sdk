@@ -71,13 +71,24 @@ static NSDictionary * valuesDic;
     return [UIFont systemFontOfSize:11];
 }
 
-- (UIImage*)imageForKey:(AmbassadorImages)imageName {
+- (NSMutableDictionary*)imageForKey:(AmbassadorImages)imageName {
+    NSMutableDictionary *returnDict = [[NSMutableDictionary alloc] init];
+    [returnDict setValue:@"0" forKey:@"imageSlotNumber"];
+    [returnDict setValue:[[UIImage alloc] init] forKey: @"image"];
+    
     if ([[valuesDic allKeys] containsObject:[AMBThemeManager imageEnumStringValue:imageName]] && ![[valuesDic valueForKey:[AMBThemeManager imageEnumStringValue:imageName]] isEqualToString:@""]) {
         
-        return [UIImage imageNamed:[valuesDic valueForKey:[AMBThemeManager imageEnumStringValue:imageName]]];
+        NSString *imageDescription = [valuesDic valueForKey:[AMBThemeManager imageEnumStringValue:imageName]];
+        NSArray *imageDescArray = [imageDescription componentsSeparatedByString:@","];
+        
+        [returnDict setValue:[UIImage imageNamed:[imageDescArray objectAtIndex:0]] forKey:@"image"];
+  
+        if (imageDescArray.count > 1) {
+            [returnDict setValue:[imageDescArray objectAtIndex:1] forKey:@"imageSlotNumber"];
+        }
     }
     
-    return [[UIImage alloc] init];
+    return returnDict;
 }
 
 + (NSString*)colorEnumStringValue:(AmbassadorColors)enumValue {

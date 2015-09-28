@@ -35,9 +35,18 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (strong, nonatomic) IBOutlet UIImageView *imgLogo;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgLogoHeight;
 
+@property (strong, nonatomic) IBOutlet UIImageView *imgSlot1;
+@property (strong, nonatomic) IBOutlet UIImageView *imgSlot2;
+@property (strong, nonatomic) IBOutlet UIImageView *imgSlot3;
+@property (strong, nonatomic) IBOutlet UIImageView *imgSlot4;
+@property (strong, nonatomic) IBOutlet UIImageView *imgSlot5;
+
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgSlotHeight1;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgSlotHeight2;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgSlotHeight3;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgSlotHeight4;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgSlotHeight5;
 
 @property (strong, nonatomic) NSMutableArray *services;
 @property (strong, nonatomic) AMBContactLoader *loader;
@@ -393,11 +402,48 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.titleLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFWelcomeTextFont];
     self.descriptionLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFDescriptionTextColor];
     self.descriptionLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFDescriptionTextFont];
+    [self applyImage];
+//    if ([[AMBThemeManager sharedInstance] imageForKey:RAFLogo].imageAsset) {
+//        self.imgLogo.image = [[AMBThemeManager sharedInstance] imageForKey:RAFLogo];
+//    } else {
+//        self.imgLogoHeight.constant = 0;
+//    }
+}
+
+- (void)applyImage {
+    NSMutableDictionary *imageDict = [[AMBThemeManager sharedInstance] imageForKey:RAFLogo];
+    UIImage *image = [imageDict valueForKey:@"image"];
     
-    if ([[AMBThemeManager sharedInstance] imageForKey:RAFLogo].imageAsset) {
-        self.imgLogo.image = [[AMBThemeManager sharedInstance] imageForKey:RAFLogo];
-    } else {
-        self.imgLogoHeight.constant = 0;
+    int slotNum = [[imageDict valueForKey:@"imageSlotNumber"] intValue];
+    
+    switch (slotNum) {
+        case 1:
+            self.imgSlot1.image = image;
+            self.imgSlotHeight1.constant = 50;
+            break;
+            
+        case 2:
+            self.imgSlot2.image = image;
+            self.imgSlotHeight2.constant = 50;
+            break;
+            
+        case 3:
+            self.imgSlot3.image = image;
+            self.imgSlotHeight3.constant = 50;
+            break;
+            
+        case 4:
+            self.imgSlot4.image = image;
+            self.imgSlotHeight4.constant = 50;
+            break;
+            
+        case 5:
+            self.imgSlot5.image = image;
+            self.imgSlotHeight5.constant = 50;
+            break;
+            
+        default:
+            break;
     }
 }
 
