@@ -35,6 +35,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic) IBOutlet UIImageView *imgLogo;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgLogoHeight;
 
 
 @property (strong, nonatomic) NSMutableArray *services;
@@ -151,10 +153,10 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     
     DLog(@"%@", self.shortURL);
 
-    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
+    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     AMBIdentify *identify = [[AMBIdentify alloc] init];
     [identify sendIdentifyData];
-    [self setUpColorTheme];
+    [self setUpTheme];
 }
 
 - (void)alertForNetworkTimeout
@@ -374,7 +376,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     });
 }
 
-- (void)setUpColorTheme {
+- (void)setUpTheme {
     // Setup NAV BAR
     self.navigationController.navigationBar.barTintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarColor];
     self.navigationController.navigationBar.titleTextAttributes = @{
@@ -391,6 +393,12 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.titleLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFWelcomeTextFont];
     self.descriptionLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFDescriptionTextColor];
     self.descriptionLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFDescriptionTextFont];
+    
+    if ([[AMBThemeManager sharedInstance] imageForKey:RAFLogo].imageAsset) {
+        self.imgLogo.image = [[AMBThemeManager sharedInstance] imageForKey:RAFLogo];
+    } else {
+        self.imgLogoHeight.constant = 0;
+    }
 }
 
 
