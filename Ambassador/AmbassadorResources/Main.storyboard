@@ -50,7 +50,7 @@
                             </textField>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1SX-w0-d2R">
                                 <rect key="frame" x="16" y="188" width="568" height="328"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="9Fb-4g-tDd">
                                     <size key="itemSize" width="80" height="105"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -207,7 +207,11 @@
                                                 <rect key="frame" x="0.0" y="22" width="608" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qnu-a1-5BV" id="5Ap-fV-JNz">
+<<<<<<< HEAD
                                                     <rect key="frame" x="0.0" y="0.0" width="608" height="59.5"/>
+=======
+                                                    <rect key="frame" x="0.0" y="0.0" width="608" height="60"/>
+>>>>>>> 51a335aab3189c0e5d8e0bdbe41cd4ce4a1bbd5e
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFY-Fk-jda">
@@ -657,7 +661,7 @@
                                         <variation key="widthClass=regular" constant="-8"/>
                                     </constraint>
                                     <constraint firstItem="Qux-cd-7QL" firstAttribute="trailing" secondItem="iwe-lZ-xS4" secondAttribute="trailing" constant="-8" id="rAb-GY-z9b"/>
-                                    <constraint firstItem="ijF-kz-cu9" firstAttribute="leading" secondItem="0i3-IZ-LQ5" secondAttribute="leading" constant="8" id="sEC-ao-eym"/>
+                                    <constraint firstItem="ijF-kz-cu9" firstAttribute="leading" secondItem="0i3-IZ-LQ5" secondAttribute="leading" constant="12" id="sEC-ao-eym"/>
                                     <constraint firstAttribute="centerY" secondItem="Qux-cd-7QL" secondAttribute="centerY" constant="238" id="scx-qm-P9j"/>
                                     <constraint firstItem="iwe-lZ-xS4" firstAttribute="leading" secondItem="0i3-IZ-LQ5" secondAttribute="leading" id="vGH-Eq-mha"/>
                                     <constraint firstItem="79A-Gp-VFS" firstAttribute="leading" secondItem="zwk-RT-ZLi" secondAttribute="leading" id="xpr-NH-Plf"/>
@@ -746,6 +750,7 @@
                         <outlet property="composeMessageTextView" destination="6Nf-63-bf7" id="bmd-dP-ygt"/>
                         <outlet property="composeMessageView" destination="zwk-RT-ZLi" id="tTu-jc-r4S"/>
                         <outlet property="contactsTable" destination="iwe-lZ-xS4" id="vXD-Ot-aSm"/>
+                        <outlet property="containerView" destination="0i3-IZ-LQ5" id="UeR-UV-S0k"/>
                         <outlet property="doneSearchingButton" destination="Qux-cd-7QL" id="9eN-eV-L2Q"/>
                         <outlet property="editMessageButton" destination="T8W-36-tpm" id="1XI-jn-f6g"/>
                         <outlet property="fadeView" destination="h6l-PI-N0m" id="3z1-gN-hfC"/>

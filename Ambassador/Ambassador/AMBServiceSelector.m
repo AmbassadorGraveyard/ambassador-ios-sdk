@@ -22,6 +22,7 @@
 #import "AMBSendCompletionModal.h"
 #import <MessageUI/MessageUI.h>
 #import "AMBIdentify.h"
+#import "AMBThemeManager.h"
 
 
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
@@ -57,13 +58,14 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 
 #pragma mark - Initialization
-- (id)initWithPreferences:(AMBServiceSelectorPreferences *)prefs
+
+- (id)init
 {
     if ([super init])
     {
-        self.prefs = prefs;
         self.singleEmail = @"";
         self.singleSMS = @"";
+        
     }
     
     return self;
@@ -114,7 +116,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     
     // Set the navigation bar attributes (title and back button)
     UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
-    [closeButton setImage:AMBimageFromBundleNamed(@"close", @"png") forState:UIControlStateNormal];
+    [closeButton setImage:[AMBimageFromBundleNamed(@"close", @"png") imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    closeButton.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
     [closeButton addTarget:self action:@selector(closeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *closeBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
     self.navigationItem.leftBarButtonItem = closeBarButtonItem;
@@ -150,7 +153,12 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     AMBIdentify *identify = [[AMBIdentify alloc] init];
+<<<<<<< HEAD
     //[identify sendIdentifyData];
+=======
+    [identify sendIdentifyData];
+    [self setUpColorTheme];
+>>>>>>> 51a335aab3189c0e5d8e0bdbe41cd4ce4a1bbd5e
 }
 
 - (void)alertForNetworkTimeout
@@ -365,9 +373,29 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     
     [alert addAction:okAction];
     
-    [self presentViewController:alert animated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self presentViewController:alert animated:YES completion:nil];
+    });
 }
 
+- (void)setUpColorTheme {
+    // Setup NAV BAR
+    self.navigationController.navigationBar.barTintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarColor];
+    self.navigationController.navigationBar.titleTextAttributes = @{
+                NSForegroundColorAttributeName:[[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor],
+                NSFontAttributeName:[[AMBThemeManager sharedInstance] fontForKey:NavBarTextFont]};
+    self.navigationController.title = self.prefs.navBarTitle;
+    
+    
+    // Setup RAF Background color
+    self.view.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:RAFBackgroundColor];
+    
+    // Setup RAF Labels
+    self.titleLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFWelcomeTextColor];
+    self.titleLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFWelcomeTextFont];
+    self.descriptionLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFDescriptionTextColor];
+    self.descriptionLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFDescriptionTextFont];
+}
 
 
 #pragma mark - Lkdn delegate
