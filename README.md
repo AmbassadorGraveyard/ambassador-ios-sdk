@@ -120,7 +120,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 
     // If you would like to register a conversion for one of your campaigns,
     // create a conversion object to pass for the convertOnInstall parameter
-    var parameters = AMBConversionParameters()
+    let parameters = AMBConversionParameters()
     // ... set parameters' properties (more on this in the "Conversions" section)
     AmbassadorSDK.runWithUniversalToken(<your_universal_token>, universalID:<your_universal_id>, convertOnInstall:parameters) { (error) -> Void in
         if ((error) != nil) {
