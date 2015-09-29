@@ -253,7 +253,7 @@ AmbassadorSDK.presentRAFForCampaign("877", fromViewController: self)
 
 ### Service Selector Preferences
 The RAF screen provides a UI component that allows users to share with their contacts and become part of your referral program.
-To allow customization, there is an `AmbassadorTheme.plist` where you can set many editable properties of the RAF, including colors, messages, and fonts.
+To allow customization, there is an `AmbassadorTheme.plist` where you can set many editable properties of the RAF, including colors, messages, fonts, and images.
 
   <img src="screenShots/AmbassadorThemeSelection.png" width="250" />
 
