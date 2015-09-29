@@ -231,36 +231,6 @@ AmbassadorSDK.registerConversion(parameters)  { (error) -> Void in
 ```
 
 ## Presenting the 'Refer A Friend' Screen (RAF)
-### Service Selector Preferences
-The RAF screen provides a UI component that allows users to share with their contacts and become part of your referral program.
-To allow customization, there is an `AmbassadorTheme.plist` where you can set many editable properties of the RAF, including colors, messages, and fonts.
-
-  <img src="screenShots/AmbassadorThemeSelection.png" width="250" />
-
-If you leave any property unset, the RAF will use the default values shown below.
-Any blank or incorrect values inserted into the `AmbassadorTheme.plist` will default to:
-* Colors - White
-* Fonts - **System Font** of size **14**
-* Messages - **"NO PLIST VALUE FOUND"**
-
-The `AmbassadorTheme.plist` will come with preconfigured values looking like this:
-
-  <img src="screenShots/themePlist.png" width="1000" />
-
-This is what the default theme will look like with the preconfigured values in the `AmbassadorTheme.plist`.
-
-  <img src="screenShots/rafDemoImg.jpg" width="250" />   <img src="screenShots/contactShare.jpg" width="250"/>
-
-After some minor configurations, the RAF can easily be changed to look like this:
-
-  <img src="screenShots/changedRAFScreen.png" width="250" />   <img src="screenShots/changedContactScreen.png" width="250"/>
-
-**NOTES FOR CUSTOM THEMES**
-
-* **Colors must be entered as Hex Code values**
-* **Make sure when adding custom colors to the plist that you include a `#` in front of the Hex Code or it may result with incorrect colors**
-* **Fonts are typically entered as `<FontName>, <FontSize>`.  Ex: `Helvetica, 12`**
-* **If you leave out the font size or if the font returns a nil value, it will be defaulted to size 14**
 
 ### Presenting the RAF
 **Objective-c**
@@ -280,3 +250,51 @@ AmbassadorSDK.presentRAFForCampaign("877", fromViewController: self)
 * **It is important that the view controller being passed is in the view hierarchy before the call is made. (If the RAF is going to be presented upon the launch of the view controller, but the method call in ```viewDidApprear:``` instead of ```viewDidLoad```)**
 
 * **Identify should also be called before any calls to present a RAF. Identify will need to generate/update the short urls, and therefore should not be placed immediately before any RAF presentation calls.  This will allow the share urls to be generated for your user. If identify is not called before, or a campaign ID that does not exist is passed, a warning will be logged to let you know**
+
+### Service Selector Preferences
+The RAF screen provides a UI component that allows users to share with their contacts and become part of your referral program.
+To allow customization, there is an `AmbassadorTheme.plist` where you can set many editable properties of the RAF, including colors, messages, fonts, and images.
+
+  <img src="screenShots/AmbassadorThemeSelection.png" width="250" />
+
+If you leave any property unset, the RAF will use the default values shown below.
+Any blank or incorrect values inserted into the `AmbassadorTheme.plist` will default to:
+* Colors - White
+* Fonts - **System Font** of size **14**
+* Messages - **"NO PLIST VALUE FOUND"**
+* Images - No image will be added
+
+The `AmbassadorTheme.plist` will come with preconfigured values looking like this:
+
+  <img src="screenShots/themePlist.png" width="600" />
+
+This is what the default theme will look like with the preconfigured values in the `AmbassadorTheme.plist`.
+
+  <img src="screenShots/rafDemoImage.png" width="250" />   <img src="screenShots/contactsDemoImage.png" width="250"/>
+
+To demonstrate how to change the default theme, here is the AmbassadorTheme.plist with some edited values:
+
+  <img src="screenShots/editedPlist.png" width="500" />
+
+The results from the minor changes will look like this:
+
+  <img src="screenShots/changedRAF.png" width="250" />   <img src="screenShots/changedContactScreen.png" width="250"/>
+
+### Adding an image to the RAF Page
+
+You can add an image to the RAF Widget by editing the **RAFLogo** plist value:
+* **NOTE**: The image you reference from the AmbassadorTheme.plist must be in your app's **Images.xcassets** folder
+
+  <img src="screenShots/imageAddPlist.png" width="500" />  <img src="screenShots/imgNoPos.png" width="250" />
+
+The way to enter an image will look like `<image name>, <position>`.  Ex: `appleLogo, 1`.  The 'postion' number after the name(in this case the '1') represents the position of the image on the screen.
+
+* **NOTE**: The position number must be 1-5
+
+  <img src="screenShots/imgPos1.png" width="250" /><img src="screenShots/imgPos2.png" width="250" /><img src="screenShots/imgPos3.png" width="250" /><img src="screenShots/imgPos4.png" width="250" /><img src="screenShots/imgPos5.png" width="250" />
+
+**NOTES FOR CUSTOM THEMES**
+* **Colors must be entered as Hex Code values**
+* **Make sure when adding custom colors to the plist that you include a `#` in front of the Hex Code or it may result with incorrect colors**
+* **Fonts are typically entered as `<FontName>, <FontSize>`.  Ex: `Helvetica, 12`**
+* **If you leave out the font size or if the font returns a nil value, it will be defaulted to size 14**

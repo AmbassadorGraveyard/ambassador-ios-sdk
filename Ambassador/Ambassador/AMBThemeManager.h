@@ -50,11 +50,16 @@ typedef enum ambassadorFonts {
     ContactSendButtonTextFont
 } AmbassadorFonts;
 
+typedef enum ambassadorImages {
+    RAFLogo
+} AmbassadorImages;
+
 @interface AMBThemeManager : NSObject
 
 + (AMBThemeManager *)sharedInstance;
 - (UIColor*)colorForKey:(AmbassadorColors)colorName;
 - (NSString*)messageForKey:(AmbassadorMessages)messageName;
 - (UIFont*)fontForKey:(AmbassadorFonts)fontName;
+- (NSMutableDictionary*)imageForKey:(AmbassadorImages)imageName;
 
 @end
