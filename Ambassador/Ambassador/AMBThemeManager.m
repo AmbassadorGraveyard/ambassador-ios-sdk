@@ -71,6 +71,26 @@ static NSDictionary * valuesDic;
     return [UIFont systemFontOfSize:11];
 }
 
+- (NSMutableDictionary*)imageForKey:(AmbassadorImages)imageName {
+    NSMutableDictionary *returnDict = [[NSMutableDictionary alloc] init];
+    [returnDict setValue:@"0" forKey:@"imageSlotNumber"];
+    [returnDict setValue:[[UIImage alloc] init] forKey: @"image"];
+    
+    if ([[valuesDic allKeys] containsObject:[AMBThemeManager imageEnumStringValue:imageName]] && ![[valuesDic valueForKey:[AMBThemeManager imageEnumStringValue:imageName]] isEqualToString:@""]) {
+        
+        NSString *imageDescription = [valuesDic valueForKey:[AMBThemeManager imageEnumStringValue:imageName]];
+        NSArray *imageDescArray = [imageDescription componentsSeparatedByString:@","];
+        
+        [returnDict setValue:[UIImage imageNamed:[imageDescArray objectAtIndex:0]] forKey:@"image"];
+  
+        if (imageDescArray.count > 1) {
+            [returnDict setValue:[imageDescArray objectAtIndex:1] forKey:@"imageSlotNumber"];
+        }
+    }
+    
+    return returnDict;
+}
+
 + (NSString*)colorEnumStringValue:(AmbassadorColors)enumValue {
     switch (enumValue) {
         case NavBarColor:
@@ -167,6 +187,18 @@ static NSDictionary * valuesDic;
             
         case ContactSendButtonTextFont:
             return @"ContactSendButtonTextFont";
+            break;
+            
+        default:
+            return @"Unavailable";
+            break;
+    }
+}
+
++ (NSString*)imageEnumStringValue:(AmbassadorImages)enumValue {
+    switch (enumValue) {
+        case RAFLogo:
+            return @"RAFLogo";
             break;
             
         default:
