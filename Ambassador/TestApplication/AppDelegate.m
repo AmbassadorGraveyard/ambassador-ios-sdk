@@ -49,6 +49,8 @@
         }
     }];
     
+    [AmbassadorSDK identifyWithEmail:@"test1293@getambassador.com"];
+    
     [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
         if (error) {
             NSLog(@"Error %@", error);
