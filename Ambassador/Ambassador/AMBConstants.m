@@ -28,7 +28,11 @@ NSString * const AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY = @"AMBAMBASSADORINFOSTOR
 
 NSString * const AMB_INSIGHTS_USER_DEFAULTS_KEY = @"AMBINSIGHTSSTORAGE";
 
+#if AMBPRODUCTION
+NSString * const AMB_PUSHER_KEY = @"79576dbee58121cac49a";
+# else
 NSString * const AMB_PUSHER_KEY = @"8bd3fe1994164f9b83f6";
+# endif
 
 #if AMBPRODUCTION
 NSString * const AMB_PUSHER_AUTHENTICATION_URL = @"https://api.getambassador.com/auth/subscribe/";
