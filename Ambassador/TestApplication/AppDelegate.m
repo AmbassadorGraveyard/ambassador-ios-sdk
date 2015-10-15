@@ -35,8 +35,11 @@
     conversion.mbsy_event_data2 = @"eventdata2";
     conversion.mbsy_event_data3 = @"eventdata3";
     conversion.mbsy_is_approved = @YES;
-    conversion.mbsy_email = @"jake@getambassador.com";
-    [AmbassadorSDK runWithUniversalToken:@"" universalID:@""];
+    conversion.mbsy_email = @"corey@getambassador.com";
+    
+    // the current keys are production keys. The original dev keys are:
+    // universalToken:SDKToken ***REMOVED***
+    // universalID:***REMOVED***
     [AmbassadorSDK runWithUniversalToken:@"SDKToken ***REMOVED***" universalID:@"***REMOVED***" convertOnInstall:conversion completion:^(NSError *error) {
         if (error) {
             NSLog(@"Error %@", error);
@@ -46,7 +49,7 @@
         }
     }];
     
-    [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com"];
+    [AmbassadorSDK identifyWithEmail:@"test1293@getambassador.com"];
     
     [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
         if (error) {

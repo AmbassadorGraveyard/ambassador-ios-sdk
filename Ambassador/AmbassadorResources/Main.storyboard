@@ -373,7 +373,7 @@
                                                 <state key="normal">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
-                                                <state key="selected" title="DONE" backgroundImage="ImageAssets/blank.png">
+                                                <state key="selected" title="DONE">
                                                     <color key="titleColor" red="0.19215686269999999" green="0.51372549020000002" blue="0.78823529410000004" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <variation key="widthClass=regular">
@@ -1162,7 +1162,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ImageAssets/blank.png" width="30" height="30"/>
         <image name="close.png" width="24" height="23"/>
     </resources>
 </document>
