@@ -23,3 +23,11 @@
 @property (nonatomic, strong) NSString *expires_at;
 - (NSDate *)expires_at;
 @end
+
+
+
+@interface AMBPusherAuthNetworkObject : AMBNetworkObject
+@property (nonatomic, strong) NSString *auth_type;
+@property (nonatomic, strong) NSString *channel;
+@property (nonatomic, strong) NSString *socket_id;
+@end
