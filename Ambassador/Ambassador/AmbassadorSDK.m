@@ -139,6 +139,8 @@ static AMBServiceSelector *raf;
     
     // Set launch flag in User Deafaults
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY];
+    
+    
 
 }
 
