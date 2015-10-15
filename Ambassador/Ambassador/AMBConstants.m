@@ -28,10 +28,14 @@ NSString * const AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY = @"AMBAMBASSADORINFOSTOR
 
 NSString * const AMB_INSIGHTS_USER_DEFAULTS_KEY = @"AMBINSIGHTSSTORAGE";
 
+#if AMBPRODUCTION
+NSString * const AMB_PUSHER_KEY = @"79576dbee58121cac49a";
+# else
 NSString * const AMB_PUSHER_KEY = @"8bd3fe1994164f9b83f6";
+# endif
 
 #if AMBPRODUCTION
-NSString * const AMB_PUSHER_AUTHENTICATION_URL = @"https://api.ambassador.com/auth/subscribe/";
+NSString * const AMB_PUSHER_AUTHENTICATION_URL = @"https://api.getambassador.com/auth/subscribe/";
 # else
 NSString * const AMB_PUSHER_AUTHENTICATION_URL = @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/"; //Change to production
 # endif
@@ -47,7 +51,7 @@ NSString * const AMB_BACK_BUTTON_NAME = @"back.png";
 NSString * const AMB_LINKEDIN_USER_DEFAULTS_KEY = @"AMBLINKEDINSTORAGE";
 
 #if AMBPRODUCTION
-NSString * const AMB_SHARE_TRACK_URL = @"https://api.ambassador.com/track/share/";
+NSString * const AMB_SHARE_TRACK_URL = @"https://api.getambassador.com/track/share/";
 #else
 NSString * const AMB_SHARE_TRACK_URL = @"https://dev-ambassador-api.herokuapp.com/track/share/"; //Change to production
 #endif
@@ -61,19 +65,19 @@ NSString * const AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY = @"social_name";
 NSString * const AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY = @"recipient_username";
 
 #if AMBPRODUCTION
-NSString * const AMB_SMS_SHARE_URL = @"https://api.ambassador.com/share/sms/";
+NSString * const AMB_SMS_SHARE_URL = @"https://api.getambassador.com/share/sms/";
 #else
 NSString * const AMB_SMS_SHARE_URL = @"https://dev-ambassador-api.herokuapp.com/share/sms/"; //Change to production
 #endif
 
 #if AMBPRODUCTION
-NSString * const AMB_EMAIL_SHARE_URL = @"https://api.ambassador.com/share/email/";
+NSString * const AMB_EMAIL_SHARE_URL = @"https://api.getambassador.com/share/email/";
 #else
 NSString * const AMB_EMAIL_SHARE_URL = @"https://dev-ambassador-api.herokuapp.com/share/email/"; //Change to production
 #endif
 
 #if AMBPRODUCTION
-NSString * const AMB_UPDATE_IDENTIFY_URL = @"https://api.ambassador.com/universal/action/identify/";
+NSString * const AMB_UPDATE_IDENTIFY_URL = @"https://api.getambassador.com/universal/action/identify/";
 #else
 NSString * const AMB_UPDATE_IDENTIFY_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/"; //Change to production
 #endif

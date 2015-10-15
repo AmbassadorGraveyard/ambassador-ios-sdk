@@ -21,7 +21,7 @@ NSString * const AMB_CONVERSION_DB_NAME = @"conversions.db";
 NSString * const AMB_CONVERSION_SQL_TABLE_NAME = @"conversions";
 
 #if AMBPRODUCTION
-NSString * const AMB_CONVERSION_URL = @"https://api.ambassador.com/universal/action/conversion/";
+NSString * const AMB_CONVERSION_URL = @"https://api.getambassador.com/universal/action/conversion/";
 #else
 NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/";
 #endif

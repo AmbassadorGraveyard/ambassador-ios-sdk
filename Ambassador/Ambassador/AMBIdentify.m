@@ -26,7 +26,7 @@ NSString * const AMB_IDENTIFY_JS_VAR = @"JSON.stringify(augur.json)";
 NSString * const AMB_IDENTIFY_SIGNAL_URL = @"ambassador";
 
 #if AMBPRODUCTION
-NSString * const AMB_IDENTIFY_SEND_URL = @"https://api.ambassador.com/universal/action/identify/";
+NSString * const AMB_IDENTIFY_SEND_URL = @"https://api.getambassador.com/universal/action/identify/";
 #else
 NSString * const AMB_IDENTIFY_SEND_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/";
 #endif
