@@ -34,6 +34,8 @@
 		DB6A246A1BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24691BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m */; settings = {ASSET_TAGS = (); }; };
 		DB6A246C1BD0319700CE3230 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
 		DB6A246E1BD031A100CE3230 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
+		DB6A24711BD04E3900CE3230 /* AMBPusherManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A246F1BD04E3900CE3230 /* AMBPusherManager.h */; settings = {ASSET_TAGS = (); }; };
+		DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24701BD04E3900CE3230 /* AMBPusherManager.m */; settings = {ASSET_TAGS = (); }; };
 		DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in Copy Files */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; };
 		DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB844D261BA75BB8003FD7A9 /* libAmbassador.a */; };
 		DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -240,6 +242,8 @@
 		DB6A24691BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBAmbassadorNetworkManagerTests.m; sourceTree = "<group>"; };
 		DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		DB6A246D1BD031A100CE3230 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		DB6A246F1BD04E3900CE3230 /* AMBPusherManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPusherManager.h; sourceTree = "<group>"; };
+		DB6A24701BD04E3900CE3230 /* AMBPusherManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPusherManager.m; sourceTree = "<group>"; };
 		DB844D261BA75BB8003FD7A9 /* libAmbassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAmbassador.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB844D291BA75BB8003FD7A9 /* Ambassador.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ambassador.h; sourceTree = "<group>"; };
 		DB844D311BA75BB8003FD7A9 /* AmbassadorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -501,6 +505,8 @@
 				DBA3FB631BA8A23C00672D82 /* AMBConversionParameters.m */,
 				DBA3FB6F1BA8A23C00672D82 /* AMBIdentify.h */,
 				DBA3FB701BA8A23C00672D82 /* AMBIdentify.m */,
+				DB6A246F1BD04E3900CE3230 /* AMBPusherManager.h */,
+				DB6A24701BD04E3900CE3230 /* AMBPusherManager.m */,
 				DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */,
 				DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */,
 				DB6A24611BD017A700CE3230 /* AMBErrors.h */,
@@ -736,6 +742,7 @@
 				DBA3FC041BA8AA1D00672D82 /* AMBPTBlockEventListener.h in Headers */,
 				DBA3FBCD1BA8A9C000672D82 /* AMBFMDatabase.h in Headers */,
 				DBA3FBAF1BA8A24F00672D82 /* AMBRemoveButton.h in Headers */,
+				DB6A24711BD04E3900CE3230 /* AMBPusherManager.h in Headers */,
 				DBA3FC071BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h in Headers */,
 				DBA3FC201BA8AA1D00672D82 /* AMBPTPusherMockConnection.h in Headers */,
 				DBA3FC1C1BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.h in Headers */,
@@ -1031,6 +1038,7 @@
 				DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */,
 				DBA3FC121BA8AA1D00672D82 /* AMBPTPusherAPI.m in Sources */,
 				DBA3FC001BA8AA1D00672D82 /* NSDictionary+QueryString.m in Sources */,
+				DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */,
 				DBA3FBB81BA8A24F00672D82 /* AMBServiceSelectorPreferences.m in Sources */,
 				DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */,
 				DBA3FC231BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m in Sources */,
