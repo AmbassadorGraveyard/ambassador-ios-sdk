@@ -15,7 +15,10 @@
 #import "AMBServiceSelector.h"
 #import "AMBServiceSelectorPreferences.h"
 #import "AMBThemeManager.h"
-
+#import "AMBPusherManager.h"
+#import "AMBAmbassadorNetworkManager.h"
+#import "AMBNetworkObject.h"
+#import "AMBPusher.h"
 
 
 #pragma mark - Local Constants
@@ -26,123 +29,152 @@ NSString * const SHORT_CODE_KEY = @"short_code";
 NSString * const SHORT_CODE_URL_KEY = @"url";
 #pragma mark -
 
-@interface AmbassadorSDK () <AMBIdentifyDelegate>
+@interface AmbassadorSDK () //<AMBIdentifyDelegate>
+@property AMBIdentify *identify;
+@property AMBPusherManager *pusherManager;
+@property AMBNetworkManager *ambassadorNetworkManager;
+@property NSTimer *conversionTimer;
+@property AMBConversion *conversion;
 
+@property AMBUserNetworkObject *user;
+
+@property NSString *email;
+@property NSString *universalToken;
+@property NSString *universalID;
 @end
 
 
 @implementation AmbassadorSDK
 
 #pragma mark - Static class variables
-static NSString *AMBuniversalToken;
-static NSString *AMBuniversalID;
-static NSMutableDictionary *backEndData;
-static NSTimer *conversionTimer;
-static AMBIdentify *identify;
-static AMBConversion *conversion;
 static AMBServiceSelector *raf;
 
 
 
 #pragma mark - Object lifecycle
-+ (AmbassadorSDK *)sharedInstance
-{
-    DLog();
++ (AmbassadorSDK *)sharedInstance {
     static AmbassadorSDK* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{
-        _sharedInsance = [[AmbassadorSDK alloc] init];
-    });
-    
+    dispatch_once(&oncePredicate, ^{ _sharedInsance = [[AmbassadorSDK alloc] init]; });
     return _sharedInsance;
 }
 
-- (void)dealloc
-{
-    DLog();
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+
+- (instancetype)init {
+    if (self = [super init]) {
+        self.identify = [[AMBIdentify alloc] init];
+        self.ambassadorNetworkManager = [AMBAmbassadorNetworkManager sharedInstance];
+        self.user = [AMBUserNetworkObject loadFromDisk];
+    }
+    return self;
+}
+
 
 #pragma mark - Class API method wrappers of instance API methods
 //This was done to allow [Ambassador some_method]
 //                                  vs
 //                 [[Ambassador sharedInstance] some_method]
 //
-+ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID
-{
-    DLog();
++ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID {
     [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:nil completion:nil];
 }
 
-+ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion
-{
-    DLog();
++ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
     [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:information completion:completion];
 }
 
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
-{
-    DLog();
-    
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController {
     [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController];
 }
 
-+ (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion
-{
-    DLog();
++ (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
     [[AmbassadorSDK sharedInstance] registerConversion:information completion:completion];
 }
 
-+ (void)identifyWithEmail:(NSString *)email
-{
-    DLog();
++ (void)identifyWithEmail:(NSString *)email {
     [[AmbassadorSDK sharedInstance] identifyWithEmail:email];
 }
 
 
 
 #pragma mark - Internal API methods
-- (void)runWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion
-{
-#if DEBUG
-        DLog(@"Removing user defaults for testing");
-//        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-//        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-#endif
-    
-    //Initialize class variables
-    DLog(@"Initializing class variables");
-    AMBuniversalID = universalID;
-    AMBuniversalToken = universalToken;
-    conversionTimer = [NSTimer scheduledTimerWithTimeInterval:AMB_CONVERSION_FLUSH_TIME
-                                                       target:self
-                                                     selector:@selector(checkConversionQueue)
-                                                     userInfo:nil
-                                                      repeats:YES];
-    
-    [[NSUserDefaults standardUserDefaults] setValue:universalToken forKey:AMB_UNIVERSAL_TOKEN_DEFAULTS_KEY];
-    [[NSUserDefaults standardUserDefaults] setValue:universalID forKey:AMB_UNIVERSAL_ID_DEFAULTS_KEY];
-    identify = [[AMBIdentify alloc] initForFullIdentify];
-    identify.delegate = self;
-    conversion = [[AMBConversion alloc] initWithKey:universalToken];
-    
-    DLog(@"Checking if conversion is made on app launch");
+- (void)runWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
+    universalToken = [NSString stringWithFormat:@"SDKToken %@", universalToken];
+    self.universalID = universalID;
+    self.universalToken = universalToken;
+    self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES];
+    self.conversion = [[AMBConversion alloc] initWithKey:universalToken];
 
-    if (information)
-    {
-        // Check if this is the first time opening
+    if (information) { // Check if this is the first time opening
         if (![[NSUserDefaults standardUserDefaults] objectForKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]) {
-            DLog(@"\tSending conversion on app launch");
+            DLog(@"Sending conversion on app launch");
             [self registerConversion:information completion:completion];
         }
     }
     
+    self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken];
+    [self startPusherUniversalToken:universalToken universalID:universalID completion:^(AMBUserNetworkObject *u, NSError *e) {
+        if (completion) {
+            dispatch_async(dispatch_get_main_queue(), ^{ completion(e); });
+        }
+    }];
+  
     // Set launch flag in User Deafaults
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY];
-    
-    
-
 }
+
+- (void)pusherChannel:(void(^)(NSString *, NSError *))c {
+    AMBPusherSessionSubscribeNetworkObject *o = [AMBPusherSessionSubscribeNetworkObject loadFromDisk];
+    if (o && !o.isExpired) {
+        if (c) {
+            dispatch_async(dispatch_get_main_queue(), ^{ c(o.channel_name, nil); }); }
+    } else {
+        [[AMBAmbassadorNetworkManager sharedInstance] pusherChannelNameUniversalToken:self.universalToken universalID:self.universalID completion:c];
+    }
+}
+
+- (void)startPusherUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(AMBUserNetworkObject* u, NSError* e))c {
+    __weak AmbassadorSDK *weakSelf = self;
+    [self pusherChannel:^(NSString *s, NSError *e) {
+        if (e) {
+             if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(nil, e); }); }
+        } else {
+            [weakSelf.pusherManager subscribeTo:s completion:^(AMBPTPusherChannel *chan, NSError *e) {
+                if (e) {
+                    if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(nil, e); }); }
+                } else {
+                    [weakSelf.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
+                        NSMutableDictionary *json = (NSMutableDictionary *)ev.data;
+                        AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
+                        if (json[@"url"]) {
+                            [user fillWithUrl:json[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
+                            [user save];
+                                if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(user, e); }); }
+                            }];
+                        } else {
+                            [user fillWithDictionary:json];
+                            [user save];
+                            if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(user, e); }); }
+                        }
+                    }];
+                }
+            }];
+        }
+    }];
+}
+
+- (void)sendIdentifyWithEmail:(NSString *)email campaign:(NSString *)campaign enroll:(BOOL)enroll {
+    AMBIdentifyNetworkObject *o = [[AMBIdentifyNetworkObject alloc] init];
+    o.email = AMBOptionalString(email);
+    o.campaign_id = AMBOptionalString(campaign);
+    o.enroll = enroll;
+}
+
+
 
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController
 {
@@ -180,7 +212,7 @@ static AMBServiceSelector *raf;
     prefs.navBarTitle = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
     prefs.textFieldText = shortCodeURL;
     raf.prefs = prefs;
-    raf.APIKey = AMBuniversalToken;
+    raf.APIKey = self.universalToken;
     raf.campaignID = ID;
 
     [viewController presentViewController:vc animated:YES completion:nil];
@@ -189,13 +221,13 @@ static AMBServiceSelector *raf;
 - (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion
 {
     DLog();
-    [conversion registerConversionWithParameters:information completion:completion];
+    [self.conversion registerConversionWithParameters:information completion:completion];
 }
 
 - (void)identifyWithEmail:(NSString *)email
 {
     DLog();
-    [identify identifyWithEmail:email];
+    //[identify identifyWithEmail:email];
 }
 
 
@@ -204,9 +236,12 @@ static AMBServiceSelector *raf;
 - (void)checkConversionQueue
 {
     DLog();
-    [conversion sendConversions];
+    [self.conversion sendConversions];
 }
 
+- (void)throwErrorBlock:(void(^)(NSError *))b error:(NSError *)e {
+    if (b) { dispatch_async(dispatch_get_main_queue(), ^{ b(e); }); }
+}
 
 
 #pragma mark - Identify Delegate

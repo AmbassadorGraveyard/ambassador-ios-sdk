@@ -53,7 +53,7 @@
     self.completion = completion;
     self.channel = [self.client subscribeToPrivateChannelNamed:chan];
     if (self.isAuthorized) {
-        self.completion([self.client subscribeToPrivateChannelNamed:chan], nil);
+        self.completion(self.channel, nil);
         return;
     }
 }
@@ -72,16 +72,17 @@
 }
 
 
+
 # pragma mark - PTPusher Delegate
 - (void)pusher:(AMBPTPusher *)pusher willAuthorizeChannel:(AMBPTPusherChannel *)channel withRequest:(NSMutableURLRequest *)request {
     AMBPusherAuthNetworkObject *pusherAuthObj = [[AMBPusherAuthNetworkObject alloc] init];
-    request = [self modifyPusherAuthRequest:request ambassadorKey:self.universalToken];
+    request = [self modifyPusherAuthRequest:request authorization:self.universalToken];
     NSMutableDictionary *httpBody = AMBparseQueryString([[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding]);
     pusherAuthObj.auth_type = @"private";
     pusherAuthObj.socket_id = httpBody[@"socket_id"];
     pusherAuthObj.channel = channel.name;
     NSError *e;
-    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:[pusherAuthObj dictionaryForm] options:0 error:&e];
+    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:[pusherAuthObj toDictionary] options:0 error:&e];
     if (e) {
         [self throwComletion:nil error:e];
     } else {
