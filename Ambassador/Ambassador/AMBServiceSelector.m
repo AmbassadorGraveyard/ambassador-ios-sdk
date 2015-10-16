@@ -164,7 +164,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     AMBIdentify *identify = [[AMBIdentify alloc] init];
-    [identify sendIdentifyData];
+    //[identify sendIdentifyData];
     [self setUpTheme];
 }
 

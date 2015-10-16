@@ -27,6 +27,18 @@
     [[AMBAmbassadorNetworkManager sharedInstance] dataTaskForRequest:[[AMBAmbassadorNetworkManager sharedInstance] urlRequestFor:u body:b authorization:uToken] session:[NSURLSession sharedSession] completion:c];
 }
 
+- (void)pusherChannelNameUniversalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void(^)(NSString *, NSError *))c {
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:uToken universalID:uID completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+        if (e) {
+            dispatch_async(dispatch_get_main_queue(), ^{ c(nil, e); });
+        } else {
+            AMBPusherSessionSubscribeNetworkObject* o = [[AMBPusherSessionSubscribeNetworkObject alloc] init];
+            [o fillWithDictionary:[NSJSONSerialization JSONObjectWithData:d options:0 error:&e]];
+            dispatch_async(dispatch_get_main_queue(), ^{ c(o.channel_name, e); });
+        }
+    }];
+}
+
 + (NSString *)baseUrl {
 //#if AMBPRODUCTION
 //    return @"https://dev-ambassador-api.herokuapp.com/";

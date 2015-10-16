@@ -59,3 +59,15 @@ NSBundle* AMBframeworkBundle() {
     return frameworkBundle;
 }
 
+
+NSString* AMBStringValFromDictionary(NSMutableDictionary *d, NSString *key) {
+    return (d[key] && d[key] != [NSNull null])? (NSString *)d[key] : @"";
+}
+
+NSArray *AMBArrayFromDicstionary(NSMutableDictionary *d, NSString *key) {
+    return (d[key] && d[key] != [NSNull null])? (NSArray *)d[key] : @[];
+}
+
+NSString* AMBOptionalString(NSString *s) {
+    return s? s :@"";
+}
