@@ -101,6 +101,8 @@ static AMBServiceSelector *raf;
     universalToken = [NSString stringWithFormat:@"SDKToken %@", universalToken];
     self.universalID = universalID;
     self.universalToken = universalToken;
+    [[NSUserDefaults standardUserDefaults] setValue:universalID forKey:AMB_UNIVERSAL_ID_DEFAULTS_KEY];
+    [[NSUserDefaults standardUserDefaults] setValue:universalToken forKey:AMB_UNIVERSAL_TOKEN_DEFAULTS_KEY];
     self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES];
     self.conversion = [[AMBConversion alloc] initWithKey:universalToken];
 
@@ -142,11 +144,11 @@ static AMBServiceSelector *raf;
 
 - (void)startPusherUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(AMBPTPusherChannel* chan, NSError* e))c {
     __weak AmbassadorSDK *weakSelf = self;
-    [self pusherChannelUniversalToken:uTok universalID:uID completion:^(NSString *s, NSError *e) {
+    [[AmbassadorSDK sharedInstance] pusherChannelUniversalToken:uTok universalID:uID completion:^(NSString *s, NSError *e) {
         if (e) {
              if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(nil, e); }); }
         } else {
-            [weakSelf.pusherManager subscribeTo:s completion:c];
+            [self.pusherManager subscribeTo:s completion:c];
         }
     }];
 }
@@ -157,7 +159,7 @@ static AMBServiceSelector *raf;
 
 - (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID {
     __weak AmbassadorSDK *weakSelf = self;
-    [weakSelf.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
+    [self.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
         NSMutableDictionary *json = (NSMutableDictionary *)ev.data;
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
         if (json[@"url"]) {
@@ -169,6 +171,7 @@ static AMBServiceSelector *raf;
             [user fillWithDictionary:json];
             [user save];
             [weakSelf callUserInfoDelegate:user];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
         }
     }];
 }
@@ -199,25 +202,25 @@ static AMBServiceSelector *raf;
     __weak AmbassadorSDK *weakSelf = self;
     self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken];
     [self startPusherUniversalToken:weakSelf.universalToken universalID:weakSelf.universalID completion:^(AMBPTPusherChannel* chan, NSError *e) {
-        [weakSelf bindToIdentifyActionUniversalToken:weakSelf.universalToken universalID:weakSelf.universalID];
+        [self bindToIdentifyActionUniversalToken:weakSelf.universalToken universalID:weakSelf.universalID];
         if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
     }];
 }
 
-+ (void)sendIdentifyWithEmail:(NSString *)email campaign:(NSString *)campaign enroll:(BOOL)enroll universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c {
-    [[AmbassadorSDK sharedInstance] sendIdentifyWithEmail:email campaign:campaign enroll:enroll universalToken:uTok universalID:uID completion:c];
++ (void)sendIdentifyWithCampaign:(NSString *)campaign enroll:(BOOL)enroll completion:(void(^)(NSError *))c {
+    [[AmbassadorSDK sharedInstance] sendIdentifyWithCampaign:campaign enroll:enroll completion:c];
 }
 
-- (void)sendIdentifyWithEmail:(NSString *)email campaign:(NSString *)campaign enroll:(BOOL)enroll universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c {
+- (void)sendIdentifyWithCampaign:(NSString *)campaign enroll:(BOOL)enroll completion:(void(^)(NSError *))c {
     AMBIdentifyNetworkObject *o = [[AMBIdentifyNetworkObject alloc] init];
-    o.email = AMBOptionalString(email);
+    o.email = AMBOptionalString([AmbassadorSDK sharedInstance].email);
     o.campaign_id = AMBOptionalString(campaign);
     o.enroll = enroll;
 
 
     NSMutableDictionary *extraHeaders = [[AMBPusherSessionSubscribeNetworkObject loadFromDisk] additionalNetworkHeaders];
     
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:o url:[AMBAmbassadorNetworkManager sendIdentifyUrl] universalToken:uTok universalID:uID additionParams:extraHeaders completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:o url:[AMBAmbassadorNetworkManager sendIdentifyUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:extraHeaders completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
     }];
 }
