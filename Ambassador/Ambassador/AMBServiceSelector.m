@@ -167,7 +167,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
         if (e) {
-            NSLog(@"There was an error - %@", e);
+            DLog(@"There was an error - %@", e);
         }
     }];
         
