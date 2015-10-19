@@ -161,9 +161,7 @@
 
 - (AMBUserUrlNetworkObject *)urlObjForCampaignID:(NSNumber *)cID {
     for (AMBUserUrlNetworkObject *url in self.urls) {
-        if ([url.campaign_uid isEqual:cID]) {
-            return url;
-        }
+        if ([url.campaign_uid isEqual:cID]) { return url; }
     }
     return nil;
 }
