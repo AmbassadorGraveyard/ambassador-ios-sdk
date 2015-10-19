@@ -29,7 +29,7 @@
         NSArray *keyArray = additParams.allKeys;
         
         for (int i = 0; i < additParams.count; i++) {
-            [r setValue:[additParams valueForKey:keyArray[i]] forKey:keyArray[i]];
+            [r setValue:[additParams valueForKey:keyArray[i]] forHTTPHeaderField:keyArray[i]];
         }
     }
     
