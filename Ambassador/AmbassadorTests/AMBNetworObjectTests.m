@@ -65,4 +65,16 @@
 }
 
 
+- (void)testAdditionalPusherHeaders {
+    AMBPusherSessionSubscribeNetworkObject *o = [[AMBPusherSessionSubscribeNetworkObject alloc] init];
+    o.client_session_uid = @"test_session_uid";
+    o.channel_name = @"test_channel_name";
+    o.expires_at = [NSDate date];
+    
+    NSMutableDictionary *dictionary = [o additionalNetworkHeaders];
+    
+    XCTAssertEqualObjects(o.client_session_uid, dictionary[@"X-Mbsy-Client-Session-ID"]);
+    XCTAssertNotNil(dictionary[@"X-Mbsy-Client-Request-ID"]);
+}
+
 @end
