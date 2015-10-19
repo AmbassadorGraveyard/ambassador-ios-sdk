@@ -30,6 +30,7 @@ NSString * const SHORT_CODE_KEY = @"short_code";
 NSString * const SHORT_CODE_URL_KEY = @"url";
 #pragma mark -
 
+
 @interface AmbassadorSDK ()
 @property AMBIdentify *identify;
 @property AMBPusherManager *pusherManager;
@@ -162,14 +163,20 @@ static AMBServiceSelector *raf;
         if (json[@"url"]) {
             [user fillWithUrl:json[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
                 [user save];
-                [weakSelf.delegate userInfoUpdated:user];
+                [weakSelf callUserInfoDelegate:user];
             }];
         } else {
             [user fillWithDictionary:json];
             [user save];
-            [weakSelf.delegate userInfoUpdated:user];
+            [weakSelf callUserInfoDelegate:user];
         }
     }];
+}
+
+- (void)callUserInfoDelegate:(AMBUserNetworkObject *)u {
+    if ([self.delegate respondsToSelector:@selector(userInfoUpdated:)]) {
+        [self.delegate userInfoUpdated:u];
+    }
 }
 
 
@@ -180,11 +187,20 @@ static AMBServiceSelector *raf;
 }
 
 - (void)identifyWithEmail:(NSString *)email {
+    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:nil];
+}
+
++ (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
+    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:c];
+}
+
+- (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
     self.email = email;
     __weak AmbassadorSDK *weakSelf = self;
     self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken];
     [self startPusherUniversalToken:weakSelf.universalToken universalID:weakSelf.universalID completion:^(AMBPTPusherChannel* chan, NSError *e) {
         [weakSelf bindToIdentifyActionUniversalToken:weakSelf.universalToken universalID:weakSelf.universalID];
+        if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
     }];
 }
 
