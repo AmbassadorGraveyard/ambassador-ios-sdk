@@ -34,6 +34,7 @@
         } else {
             AMBPusherSessionSubscribeNetworkObject* o = [[AMBPusherSessionSubscribeNetworkObject alloc] init];
             [o fillWithDictionary:[NSJSONSerialization JSONObjectWithData:d options:0 error:&e]];
+            
             dispatch_async(dispatch_get_main_queue(), ^{ c(o.channel_name, e); });
         }
     }];
@@ -57,7 +58,7 @@
 }
 
 + (NSString *)pusherSessionSubscribeUrl {
-    return [NSString stringWithFormat:@"%@session/subscribe/", [self baseUrl]];
+    return [NSString stringWithFormat:@"%@auth/session/", [self baseUrl]];
 }
 
 + (NSString *)sendIdentifyUrl {

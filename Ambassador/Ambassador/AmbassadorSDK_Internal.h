@@ -11,6 +11,8 @@
 #import "AMBPusher.h"
 
 @protocol AmbassadorDelegate <NSObject>
+
+@optional
 - (void)userInfoUpdated:(AMBUserNetworkObject *)user;
 - (void)recievedConversionError:(NSError *)error;
 - (void)recievedRafError:(NSError *)error;
@@ -21,6 +23,8 @@
 + (void)pusherChannelUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSString *, NSError *))c;
 + (void)startPusherUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(AMBPTPusherChannel* chan, NSError* e))c;
 + (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID;
+
++ (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c;
 
 @property id<AmbassadorDelegate>delegate;
 @end
