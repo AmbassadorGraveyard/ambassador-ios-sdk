@@ -23,6 +23,7 @@
 #import <MessageUI/MessageUI.h>
 #import "AMBIdentify.h"
 #import "AMBThemeManager.h"
+#import "AmbassadorSDK_Internal.h"
 
 
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
@@ -123,6 +124,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 }
 
 - (void)viewDidLoad {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeWaitView) name:@"PusherReceived" object:nil];
     [self addServices];
     
     // Set the navigation bar attributes (title and back button)
@@ -163,8 +165,12 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     DLog(@"%@", self.shortURL);
 
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
-    AMBIdentify *identify = [[AMBIdentify alloc] init];
-    //[identify sendIdentifyData];
+    [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+        if (e) {
+            NSLog(@"There was an error - %@", e);
+        }
+    }];
+        
     [self setUpTheme];
 }
 

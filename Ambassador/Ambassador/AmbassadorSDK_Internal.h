@@ -19,11 +19,11 @@
 @end
 
 @interface AmbassadorSDK ()
-+ (void)sendIdentifyWithEmail:(NSString *)email campaign:(NSString *)campaign enroll:(BOOL)enroll universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c;
++ (void)sendIdentifyWithCampaign:(NSString *)campaign enroll:(BOOL)enroll completion:(void(^)(NSError *))c;
 + (void)pusherChannelUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSString *, NSError *))c;
 + (void)startPusherUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(AMBPTPusherChannel* chan, NSError* e))c;
 + (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID;
-
++ (AmbassadorSDK*)sharedInstance;
 + (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c;
 
 @property id<AmbassadorDelegate>delegate;
