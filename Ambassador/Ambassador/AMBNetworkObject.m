@@ -96,6 +96,14 @@
     }
     return NO;
 }
+
+- (NSMutableDictionary *)additionalNetworkHeaders {
+    NSMutableDictionary *returnVal = [[NSMutableDictionary alloc] init];
+    [returnVal setValue:self.client_session_uid forKey:@"X-Mbsy-Client-Session-ID"];
+    NSString * timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
+    [returnVal setValue:timestamp forKey:@"X-Mbsy-Client-Request-ID"];
+    return returnVal;
+}
 @end
 
 
@@ -119,7 +127,7 @@
 @implementation AMBUserNetworkObject
 - (void)fillWithUrl:(NSString *)url universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c {
     __weak AMBUserNetworkObject *weakSelf = self;
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:url universalToken:uTok universalID:uID completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:url universalToken:uTok universalID:uID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         if (e) {
             if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
         } else {
@@ -165,7 +173,6 @@
 
 
 @implementation AMBIdentifyNetworkObject
-
 - (instancetype)init {
     if (self = [super init]) {
         self.email = @"";
@@ -175,5 +182,4 @@
     }
     return self;
 }
-
 @end

@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSString *client_session_uid;
 @property (nonatomic, strong) NSDate *expires_at;
 - (BOOL)isExpired;
+- (NSMutableDictionary *)additionalNetworkHeaders;
 @end
 
 
