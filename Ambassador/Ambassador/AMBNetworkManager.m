@@ -18,11 +18,21 @@
     return _sharedInsance;
 }
 
-- (NSMutableURLRequest *)urlRequestFor:(NSString *)url body:(NSData *)b authorization:(NSString *)a {
+- (NSMutableURLRequest *)urlRequestFor:(NSString *)url body:(NSData *)b authorization:(NSString *)a additionalParameters:(NSMutableDictionary*)additParams {
     NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     r.HTTPMethod = @"POST";
     [r setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [r setValue:a forHTTPHeaderField:@"Authorization"];
+    
+    // Sets header values passed in with dictionary to additionParameters
+    if (additParams || additParams.count > 0) {
+        NSArray *keyArray = additParams.allKeys;
+        
+        for (int i = 0; i < additParams.count; i++) {
+            [r setValue:[additParams valueForKey:keyArray[i]] forKey:keyArray[i]];
+        }
+    }
+    
     if (b) { r.HTTPBody = b; }
 
     return r;

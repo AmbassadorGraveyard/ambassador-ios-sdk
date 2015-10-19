@@ -197,8 +197,18 @@ static AMBServiceSelector *raf;
     o.email = AMBOptionalString(email);
     o.campaign_id = AMBOptionalString(campaign);
     o.enroll = enroll;
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:o url:[AMBAmbassadorNetworkManager sendIdentifyUrl] universalToken:uTok universalID:uID completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-        if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
+//    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:o url:[AMBAmbassadorNetworkManager sendIdentifyUrl] universalToken:uTok universalID:uID completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+//        if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
+//    }];
+
+    NSMutableDictionary *extraHeaders = [[AMBPusherAuthNetworkObject loadFromDisk] toDictionary];
+    
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:o url:[AMBAmbassadorNetworkManager sendIdentifyUrl] universalToken:uTok universalID:uID additionParams:extraHeaders completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+        if (c) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                c(e);
+            });
+        }
     }];
 }
 
