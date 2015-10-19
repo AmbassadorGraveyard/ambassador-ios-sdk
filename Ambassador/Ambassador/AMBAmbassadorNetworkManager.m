@@ -17,23 +17,35 @@
     return _sharedInsance;
 }
 
-- (void)sendNetworkObject:(AMBNetworkObject *)o url:(NSString *)u universalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void (^)(NSData *, NSURLResponse *, NSError *))c {
+- (void)sendNetworkObject:(AMBNetworkObject *)o url:(NSString *)u universalToken:(NSString *)uToken universalID:(NSString *)uID additionParams:(NSMutableDictionary*)additionalParams completion:(void (^)(NSData *, NSURLResponse *, NSError *))c {
     NSError *e;
     NSData *b = o? [o toDataError:&e] : nil;
     if (e) {
         if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(nil, nil, e); }); }
         return;
     }
-    [[AMBAmbassadorNetworkManager sharedInstance] dataTaskForRequest:[[AMBAmbassadorNetworkManager sharedInstance] urlRequestFor:u body:b authorization:uToken] session:[NSURLSession sharedSession] completion:c];
+
+    [[AMBAmbassadorNetworkManager sharedInstance] dataTaskForRequest:[[AMBAmbassadorNetworkManager sharedInstance] urlRequestFor:u body:b authorization:uToken additionalParameters:additionalParams] session:[NSURLSession sharedSession] completion:c];
 }
 
-- (void)pusherChannelNameUniversalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void(^)(NSString *, NSError *))c {
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:uToken universalID:uID completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+- (void)pusherChannelNameUniversalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void(^)(NSString *, NSError *e))c {
+//    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:uToken universalID:uID completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+//        if (e) {
+//            dispatch_async(dispatch_get_main_queue(), ^{ c(nil, e); });
+//        } else {
+//            AMBPusherSessionSubscribeNetworkObject* o = [[AMBPusherSessionSubscribeNetworkObject alloc] init];
+//            [o fillWithDictionary:[NSJSONSerialization JSONObjectWithData:d options:0 error:&e]];
+//            dispatch_async(dispatch_get_main_queue(), ^{ c(o.channel_name, e); });
+//        }
+//    }];
+    
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:uToken universalID:uID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         if (e) {
             dispatch_async(dispatch_get_main_queue(), ^{ c(nil, e); });
         } else {
             AMBPusherSessionSubscribeNetworkObject* o = [[AMBPusherSessionSubscribeNetworkObject alloc] init];
             [o fillWithDictionary:[NSJSONSerialization JSONObjectWithData:d options:0 error:&e]];
+            [o save];
             dispatch_async(dispatch_get_main_queue(), ^{ c(o.channel_name, e); });
         }
     }];
