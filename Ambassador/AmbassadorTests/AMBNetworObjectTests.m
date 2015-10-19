@@ -9,8 +9,9 @@
 #import <XCTest/XCTest.h>
 #import "AMBNetworkObject.h"
 #import "AMBMockObjects.h"
+#import "AMBTests.h"
 
-@interface AMBNetworObjectTests : XCTestCase
+@interface AMBNetworObjectTests : AMBTests
 
 @end
 

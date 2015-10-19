@@ -17,4 +17,5 @@
 - (void)pusherChannelNameUniversalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void(^)(NSString *, NSError *))c;
 + (NSString *)pusherSessionSubscribeUrl;
 + (NSString *)pusherAuthSubscribeUrl;
++ (NSString *)sendIdentifyUrl;
 @end

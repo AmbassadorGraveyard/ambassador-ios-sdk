@@ -60,4 +60,8 @@
     return [NSString stringWithFormat:@"%@session/subscribe/", [self baseUrl]];
 }
 
++ (NSString *)sendIdentifyUrl {
+    return [NSString stringWithFormat:@"%@universal/action/identify/", [self baseUrl]];
+}
+
 @end
