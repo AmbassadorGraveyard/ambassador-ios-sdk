@@ -40,7 +40,7 @@
     // the current keys are production keys. The original dev keys are:
     // universalToken:SDKToken 9de5757f801ca60916599fa3f3c92131b0e63c6a
     // universalID:abfd1c89-4379-44e2-8361-ee7b87332e32
-    [AmbassadorSDK runWithUniversalToken:@"SDKToken 9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32" convertOnInstall:conversion completion:^(NSError *error) {
+    [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32" convertOnInstall:conversion completion:^(NSError *error) {
         if (error) {
             NSLog(@"Error %@", error);
         }
