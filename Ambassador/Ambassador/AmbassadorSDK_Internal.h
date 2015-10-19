@@ -10,13 +10,7 @@
 #import "AMBNetworkObject.h"
 #import "AMBPusher.h"
 
-@protocol AmbassadorDelegate <NSObject>
 
-@optional
-- (void)userInfoUpdated:(AMBUserNetworkObject *)user;
-- (void)recievedConversionError:(NSError *)error;
-- (void)recievedRafError:(NSError *)error;
-@end
 
 @interface AmbassadorSDK ()
 + (void)sendIdentifyWithEmail:(NSString *)email campaign:(NSString *)campaign enroll:(BOOL)enroll universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c;
@@ -26,5 +20,7 @@
 
 + (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c;
 
-@property id<AmbassadorDelegate>delegate;
+
++ (void)setUpdatedUserInfoCompletion:(void(^)(AMBUserNetworkObject *, NSError *))c;
+
 @end

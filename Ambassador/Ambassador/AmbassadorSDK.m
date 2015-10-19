@@ -162,22 +162,17 @@ static AMBServiceSelector *raf;
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
         if (json[@"url"]) {
             [user fillWithUrl:json[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
-                [user save];
-                [weakSelf callUserInfoDelegate:user];
+                weakSelf.user = user;
+                // TODO: Notification Center
             }];
         } else {
             [user fillWithDictionary:json];
-            [user save];
-            [weakSelf callUserInfoDelegate:user];
+            weakSelf.user = user;
+            // TODO: Notification Center
         }
     }];
 }
 
-- (void)callUserInfoDelegate:(AMBUserNetworkObject *)u {
-    if ([self.delegate respondsToSelector:@selector(userInfoUpdated:)]) {
-        [self.delegate userInfoUpdated:u];
-    }
-}
 
 
 
@@ -213,7 +208,6 @@ static AMBServiceSelector *raf;
     o.email = AMBOptionalString(email);
     o.campaign_id = AMBOptionalString(campaign);
     o.enroll = enroll;
-
 
     NSMutableDictionary *extraHeaders = [[AMBPusherSessionSubscribeNetworkObject loadFromDisk] additionalNetworkHeaders];
     
@@ -271,6 +265,13 @@ static AMBServiceSelector *raf;
 #pragma mark - Helper functions
 - (void)throwErrorBlock:(void(^)(NSError *))b error:(NSError *)e {
     if (b) { dispatch_async(dispatch_get_main_queue(), ^{ b(e); }); }
+}
+
+
+
+#pragma mark - 
++ (void)setUpdatedUserInfoCompletion:(void(^)(AMBUserNetworkObject *, NSError *))c {
+    
 }
 
 @end
