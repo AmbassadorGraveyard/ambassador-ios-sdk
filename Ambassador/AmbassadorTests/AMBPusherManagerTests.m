@@ -29,7 +29,7 @@
     XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Auth Subscribe"];
     AMBPusherManager *o = [AMBPusherManager sharedInstanceWithAuthorization:self.devToken];
     [o subscribeTo:self.channelName completion:^(AMBPTPusherChannel *c, NSError *e) {
-        if (e) { XCTFail(); }
+        if (e) { XCTFail(@"%@",e); }
         XCTAssertNotNil(c);
         [exp fulfill];
         
@@ -45,7 +45,7 @@
     XCTestExpectation *exp = [self expectationWithDescription:@"Test Prod Pusher Auth Subscribe"];
     AMBPusherManager *o = [AMBPusherManager sharedInstanceWithAuthorization:self.prodToken];
     [o subscribeTo:self.channelName completion:^(AMBPTPusherChannel *c, NSError *e) {
-        if (e) { XCTFail(); }
+        if (e) { XCTFail(@"%@", e); }
         XCTAssertNotNil(c);
         [exp fulfill];
         
