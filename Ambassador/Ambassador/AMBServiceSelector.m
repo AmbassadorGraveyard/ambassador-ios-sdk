@@ -314,13 +314,20 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     AMBLinkedInShare * vc = [[AMBLinkedInShare alloc] init];
     DLog(@"%@", vc.debugDescription);
     vc.defaultMessage = self.prefs.defaultShareMessage;
-    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
     vc.shortCode = self.urlNetworkObj.short_code;
     vc.shortURL = self.urlNetworkObj.url;
     vc.delegate = self;
     [self presentViewController:vc animated:YES completion:^{
-        DLog(@"finished presenting linkedIN");
+//        [vc.view endEditing:YES];
+//        DLog(@"finished presenting linkedIN");
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.view layoutIfNeeded];
+//        });
     }];
+    
+    [vc didMoveToParentViewController:self];
+    
 }
 
 
