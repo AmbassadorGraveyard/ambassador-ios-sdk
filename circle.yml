@@ -19,8 +19,7 @@ general:
 test:
   override:
     - xctool
-      
-
+      -reporter junit:$CIRCLE_TEST_REPORTS/xcode/results.xml
       CODE_SIGNING_REQUIRED=NO
       CODE_SIGN_IDENTITY=
       PROVISIONING_PROFILE=
@@ -30,8 +29,7 @@ test:
       -scheme "Ambassador"
       run-tests
 
-      -reporter pretty
-      -reporter junit:$CIRCLE_TEST_REPORTS/xcode/results.xml
-      -reporter plain:$CIRCLE_ARTIFACTS/xctool.log
+      
+      # -reporter plain:$CIRCLE_ARTIFACTS/xctool.log
 
    
