@@ -23,8 +23,8 @@ test:
       -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
       -sdk iphonesimulator
       -project Ambassador.xcodeproj
-      -scheme "Framework"
-      run-tests
+      -scheme "Ambassador"
+      build-tests run-tests
 
       
       # -reporter plain:$CIRCLE_ARTIFACTS/xctool.log
