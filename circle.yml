@@ -19,7 +19,6 @@ general:
 test:
   override:
     - xctool
-      -reporter junit:$CIRCLE_TEST_REPORTS/xcode/results.xml
       -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
       -sdk iphonesimulator
       -project Ambassador.xcodeproj
