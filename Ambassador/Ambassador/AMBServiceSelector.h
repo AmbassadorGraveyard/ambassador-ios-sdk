@@ -14,8 +14,6 @@
 - (void)removeWaitView;
 
 @property (strong, nonatomic) AMBServiceSelectorPreferences *prefs;
-@property NSString *shortCode;
-@property NSString *shortURL;
 @property NSString *APIKey;
 @property NSString *campaignID;
 @property (weak, nonatomic) IBOutlet UIView *waitView;

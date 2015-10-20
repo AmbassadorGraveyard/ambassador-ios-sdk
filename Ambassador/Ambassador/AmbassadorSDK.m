@@ -37,7 +37,6 @@ NSString * const SHORT_CODE_URL_KEY = @"url";
 @property AMBNetworkManager *ambassadorNetworkManager;
 @property NSTimer *conversionTimer;
 @property AMBConversion *conversion;
-@property AMBUserNetworkObject *user;
 @property NSString *email;
 @property NSString *universalToken;
 @property NSString *universalID;
@@ -177,9 +176,6 @@ static AMBServiceSelector *raf;
     }];
 }
 
-
-
-
 #pragma mark - Identify
 + (void)identifyWithEmail:(NSString *)email {
     [[AmbassadorSDK sharedInstance] identifyWithEmail:email];
@@ -212,6 +208,7 @@ static AMBServiceSelector *raf;
     o.email = AMBOptionalString([AmbassadorSDK sharedInstance].email);
     o.campaign_id = AMBOptionalString(campaign);
     o.enroll = enroll;
+    o.fp = (self.identify.fp) ? self.identify.fp : (NSMutableDictionary*)@{};
 
     NSMutableDictionary *extraHeaders = [[AMBPusherSessionSubscribeNetworkObject loadFromDisk] additionalNetworkHeaders];
     
@@ -221,42 +218,22 @@ static AMBServiceSelector *raf;
 }
 
 
-
 #pragma mark - RAF
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController {
     [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController];
 }
 
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController {
-    NSString *shortCodeURL = @"";
-    NSString *shortCode = @"";
-    [[NSUserDefaults standardUserDefaults] setValue:ID forKey:AMB_CAMPAIGN_ID_DEFAULTS_KEY];
-    NSDictionary *userInfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
-    if (userInfo) {
-        NSArray* urls = userInfo[AMBASSADOR_INFO_URLS_KEY];
-        for (NSDictionary *url in urls) {
-            NSString *campaignID = [NSString stringWithFormat:@"%@", url[CAMPAIGN_UID_KEY]];
-            if ([campaignID isEqualToString:ID]) {
-                shortCodeURL = url[SHORT_CODE_URL_KEY];
-                shortCode = url[SHORT_CODE_KEY];
-            }
-        }
-    }
-
     // Initialize root view controller
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
     UINavigationController *vc = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
     raf = (AMBServiceSelector *)vc.childViewControllers[0];
-    DLog(@"ShortCodeURL: %@    ShortCode: %@", shortCodeURL, shortCode);
-    raf.shortCode = shortCode;
-    raf.shortURL = shortCodeURL;
     
     AMBServiceSelectorPreferences *prefs = [[AMBServiceSelectorPreferences alloc] init];
     prefs.titleLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFWelcomeTextMessage];
     prefs.descriptionLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFDescriptionTextMessage];
     prefs.defaultShareMessage = [[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage];
     prefs.navBarTitle = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
-    prefs.textFieldText = shortCodeURL;
     raf.prefs = prefs;
     raf.APIKey = self.universalToken;
     raf.campaignID = ID;
