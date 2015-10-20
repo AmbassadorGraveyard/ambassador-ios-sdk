@@ -59,8 +59,8 @@
 }
 
 - (void)bindToChannelEvent:(NSString *)event handler:(void(^)(AMBPTPusherEvent *))handler {
-    //[self.channel bindToEventNamed:event handleWithBlock:handler];
-    [self.channel bindToEventNamed:event handleWithBlock:handler queue:dispatch_get_main_queue()];
+    [self.channel bindToEventNamed:event handleWithBlock:handler];
+    //[self.channel bindToEventNamed:event handleWithBlock:handler queue:dispatch_get_main_queue()];
 }
 
 
@@ -103,6 +103,7 @@
 
 - (void)pusher:(AMBPTPusher *)pusher didSubscribeToChannel:(AMBPTPusherChannel *)channel {
     self.isAuthorized = YES;
+    DLog(@"Subscribed to chnnel %@", channel.name);
     [self throwComletion:channel error:nil];
 }
 

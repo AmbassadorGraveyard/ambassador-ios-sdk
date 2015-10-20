@@ -33,7 +33,7 @@ NSString * const SHORT_CODE_URL_KEY = @"url";
 
 @interface AmbassadorSDK ()
 @property AMBIdentify *identify;
-@property AMBPusherManager *pusherManager;
+@property (nonatomic, strong) AMBPusherManager *pusherManager;
 @property AMBNetworkManager *ambassadorNetworkManager;
 @property NSTimer *conversionTimer;
 @property AMBConversion *conversion;
@@ -129,8 +129,10 @@ static AMBServiceSelector *raf;
 }
 
 - (void)pusherChannelUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSString *, NSError *))c {
+    
     AMBPusherSessionSubscribeNetworkObject *o = [AMBPusherSessionSubscribeNetworkObject loadFromDisk];
-    if (o && !o.isExpired) {
+    //TODO:
+    if (NO) {//o && !o.isExpired) {
         if (c) {
             dispatch_async(dispatch_get_main_queue(), ^{ c(o.channel_name, nil); }); }
     } else {
@@ -267,13 +269,6 @@ static AMBServiceSelector *raf;
 #pragma mark - Helper functions
 - (void)throwErrorBlock:(void(^)(NSError *))b error:(NSError *)e {
     if (b) { dispatch_async(dispatch_get_main_queue(), ^{ b(e); }); }
-}
-
-
-
-#pragma mark - 
-+ (void)setUpdatedUserInfoCompletion:(void(^)(AMBUserNetworkObject *, NSError *))c {
-    
 }
 
 @end

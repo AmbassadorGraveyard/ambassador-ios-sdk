@@ -191,7 +191,7 @@ NSURL *AMBPTPusherConnectionURL(NSString *host, NSString *key, NSString *clientI
 
 - (AMBPTPusherPrivateChannel *)subscribeToPrivateChannelNamed:(NSString *)name
 {
-  return (AMBPTPusherPrivateChannel *)[self subscribeToChannelNamed:[NSString stringWithFormat:@"private-%@", name]];
+  return (AMBPTPusherPrivateChannel *)[self subscribeToChannelNamed:name];
 }
 
 - (AMBPTPusherPresenceChannel *)subscribeToPresenceChannelNamed:(NSString *)name
