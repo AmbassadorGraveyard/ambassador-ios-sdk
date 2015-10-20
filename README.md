@@ -20,6 +20,7 @@ Follow the steps to install the Ambassador SDK in your Objective-c or Swift proj
 * Link to the following libraries:
   * libsqlite3
   * libicucore
+  * WebKit.framework
 
   <img src="screenShots/Install_pt3.png" width="600" />
 

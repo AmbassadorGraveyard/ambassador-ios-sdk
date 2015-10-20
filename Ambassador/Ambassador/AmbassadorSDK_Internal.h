@@ -23,4 +23,5 @@
 
 + (void)setUpdatedUserInfoCompletion:(void(^)(AMBUserNetworkObject *, NSError *))c;
 
+@property AMBUserNetworkObject *user;
 @end
