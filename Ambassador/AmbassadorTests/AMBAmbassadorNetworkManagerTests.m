@@ -14,10 +14,19 @@
 @interface AMBAmbassadorNetworkManagerTests : AMBTests
 @end
 
+
 @implementation AMBAmbassadorNetworkManagerTests
+- (void)setUp {
+    [super setUp];
+}
+
+- (void)tearDown {
+    [super tearDown];
+}
+
 - (void)testDevPusherSessionSubscribe {
     XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Session Subscribe"];
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:self.devToken universalID:self.devID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:[NSString stringWithFormat:@"SDKToken %@",self.devToken] universalID:self.devID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         if (e) {
             XCTFail(@"%@", e);
         } else {
