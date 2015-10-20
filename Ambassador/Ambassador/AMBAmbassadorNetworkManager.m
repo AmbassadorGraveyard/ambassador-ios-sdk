@@ -52,16 +52,16 @@
 }
 
 + (NSString *)baseUrl {
-//#if AMBPRODUCTION
-//    return @"https://dev-ambassador-api.herokuapp.com/";
-//# else
-//    return @"https://api.getambassador.com/universal/";
-//#endif
-    
-    if (YES) {
-         return @"https://dev-ambassador-api.herokuapp.com/";
-    }
+#if AMBPRODUCTION
     return @"https://api.getambassador.com/universal/";
+# else
+    return @"https://dev-ambassador-api.herokuapp.com/";
+#endif
+//
+//    if (YES) {
+//         return @"https://dev-ambassador-api.herokuapp.com/";
+//    }
+//    return @"https://api.getambassador.com/universal/";
 }
 
 + (NSString *)pusherAuthSubscribeUrl {

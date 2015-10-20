@@ -32,7 +32,6 @@
             XCTAssertNotNil(o.channel_name);
             XCTAssertNotNil(o.expires_at);
             XCTAssertNotNil(o.client_session_uid);
-            NSLog(@"%@\n%@\n%@",o.channel_name, o.expires_at, o.client_session_uid);
             
             [exp fulfill];
         }

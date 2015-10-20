@@ -116,7 +116,6 @@ static AMBServiceSelector *raf;
     [self.identify identifyWithURL:[AMBIdentify identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
         // TODO: save id
         self.identify.fp  = resp;
-        NSLog(@"ghghghghghghghghghghghghghghghghghghghgh%@",resp);
     }];
   
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]; // Set launch flag in User Deafaults
@@ -210,6 +209,8 @@ static AMBServiceSelector *raf;
     o.campaign_id = AMBOptionalString(campaign);
     o.enroll = enroll;
     o.fp = (self.identify.fp) ? self.identify.fp : (NSMutableDictionary*)@{};
+    
+    DLog(@"The fingerprint getting sent in send identify: %@", o.fp);
 
     NSMutableDictionary *extraHeaders = [[AMBPusherSessionSubscribeNetworkObject loadFromDisk] additionalNetworkHeaders];
     

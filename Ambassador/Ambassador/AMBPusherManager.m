@@ -66,10 +66,11 @@
 
 #pragma mark - Url returns
 - (NSString *)pusherAuthUrl {
-    if (YES)
-        return  @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
-    else
-        return  @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/"; //TODO: change to production
+#if AMBPRODUCTION
+    return  @"https://api.getambassador.com//auth/subscribe/";
+#else
+    return  @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
+#endif
 }
 
 

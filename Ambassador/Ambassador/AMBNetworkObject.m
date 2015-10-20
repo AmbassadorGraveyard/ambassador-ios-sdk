@@ -68,12 +68,10 @@
 }
 
 - (void)save {
-    NSLog(@"%@", NSStringFromClass([self class]));
     [NSKeyedArchiver archiveRootObject:self toFile:[[self rootPath] stringByAppendingPathComponent:NSStringFromClass([self class])]];
 }
 
 + (instancetype)loadFromDisk {
-    NSLog(@"%@", NSStringFromClass([self class]));
     return [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:NSStringFromClass([self class])]];
 }
 
