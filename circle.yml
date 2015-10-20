@@ -1,0 +1,16 @@
+general:
+  build_dir: Ambassador 
+
+test:
+  override:
+    - xctool
+      CODE_SIGNING_REQUIRED=NO
+      CODE_SIGN_IDENTITY=
+      PROVISIONING_PROFILE=
+      -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
+      -sdk iphonesimulator
+      -project Ambassador.xcodeproj
+      -scheme "Ambassador"
+      run-tests
+
+   
