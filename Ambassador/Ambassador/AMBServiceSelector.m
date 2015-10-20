@@ -242,7 +242,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     {
         //TODO:facebook
         SLComposeViewController *vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        [vc addURL:[NSURL URLWithString:self.urlNetworkObj.short_code]];
+        [vc addURL:[NSURL URLWithString:self.urlNetworkObj.url]];
         vc.completionHandler = ^(SLComposeViewControllerResult result)
         {
             if (result == SLComposeViewControllerResultDone)
@@ -260,7 +260,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     else if ([service.title isEqualToString:AMB_TWITTER_TITLE])
     {
         SLComposeViewController *vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [vc addURL:[NSURL URLWithString:self.urlNetworkObj.short_code]];
+        [vc addURL:[NSURL URLWithString:self.urlNetworkObj.url]];
         vc.completionHandler = ^(SLComposeViewControllerResult result)
         {
             if (result == SLComposeViewControllerResultDone)
