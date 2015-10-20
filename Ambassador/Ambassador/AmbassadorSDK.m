@@ -203,7 +203,7 @@ static AMBServiceSelector *raf;
     [[AmbassadorSDK sharedInstance] sendIdentifyWithCampaign:campaign enroll:enroll completion:c];
 }
 
-- (void)sendIdentifyWithCampaign:(NSString *)campaign enroll:(BOOL)enroll completion:(void(^)(NSError *))c {
+- (void)sendIdentifyWithCampaign:(NSString *)campaign enroll:(BOOL)enroll completion:(void(^)(NSError *e))c {
     AMBIdentifyNetworkObject *o = [[AMBIdentifyNetworkObject alloc] init];
     o.email = AMBOptionalString([AmbassadorSDK sharedInstance].email);
     o.campaign_id = AMBOptionalString(campaign);

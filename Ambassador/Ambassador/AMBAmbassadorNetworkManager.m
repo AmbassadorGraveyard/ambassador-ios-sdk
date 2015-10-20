@@ -53,7 +53,7 @@
 
 + (NSString *)baseUrl {
 #if AMBPRODUCTION
-    return @"https://api.getambassador.com/universal/";
+    return @"https://api.getambassador.com/";
 # else
     return @"https://dev-ambassador-api.herokuapp.com/";
 #endif
