@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DB844D301BA75BB8003FD7A9"
+               BuildableName = "AmbassadorTests.xctest"
+               BlueprintName = "AmbassadorTests"
+               ReferencedContainer = "container:Ambassador.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "DB844D251BA75BB8003FD7A9"
+            BuildableName = "libAmbassador.a"
+            BlueprintName = "Ambassador"
+            ReferencedContainer = "container:Ambassador.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
