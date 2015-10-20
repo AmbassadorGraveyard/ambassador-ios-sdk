@@ -37,9 +37,14 @@
     conversion.mbsy_is_approved = @YES;
     conversion.mbsy_email = @"corey@getambassador.com";
     
-    // the current keys are production keys. The original dev keys are:
-    // universalToken:SDKToken ***REMOVED***
+    // The original dev keys are:
+    // universalToken:***REMOVED***
     // universalID:***REMOVED***
+    //
+    // The original product keys are:
+    // universalToken:***REMOVED***
+    // universalID:***REMOVED***
+    
     [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***" convertOnInstall:conversion completion:^(NSError *error) {
         if (error) {
             NSLog(@"Error %@", error);

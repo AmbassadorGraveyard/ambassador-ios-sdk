@@ -48,7 +48,6 @@
     __weak AMBIdentify *weakSelf = self;
     [self.webview evaluateJavaScript:js completionHandler:^(id _Nullable result,  NSError * _Nullable  error) {
         NSString *dataStr = (NSString *)result;
-        NSLog(@"%@", dataStr);
         if (dataStr == nil) {
             [weakSelf triggerCompletion:nil error:AMBNOVALError()];
             return;
@@ -64,12 +63,7 @@
 
 
 #pragma mark - WKNavigationDelegate
--(void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
-    NSLog(@"Committed Navigation");
-}
-
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    NSLog(@"Decide Policy For Navigation Action: %@", navigationAction.request.URL);
     if ([[navigationAction.request.URL absoluteString] isEqualToString:@"ambassador:ios/"]) {
         decisionHandler(WKNavigationActionPolicyCancel);
         [self extractVariable:@"augur.json"];
@@ -79,12 +73,10 @@
 }
 
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
-    NSLog(@"Decide Policy For Navigation Response: %@", navigationResponse.response.URL);
     decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
 - (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
-    NSLog(@"Recieved Authentication Challenge.");
     completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
 }
 
