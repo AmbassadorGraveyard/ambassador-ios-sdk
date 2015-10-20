@@ -25,6 +25,7 @@
         self.webview = [[WKWebView alloc] initWithFrame:CGRectZero configuration:[[WKWebViewConfiguration alloc] init]];
         self.webview.navigationDelegate = self;
         self.webview.hidden = YES;
+        self.fp = [[NSMutableDictionary alloc] init];
         [[[[UIApplication sharedApplication] delegate] window] addSubview:self.webview];
     }
     return self;
@@ -69,7 +70,7 @@
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     NSLog(@"Decide Policy For Navigation Action: %@", navigationAction.request.URL);
-    if ([[navigationAction.request.URL absoluteString] isEqualToString:@"ambassador:ios"]) {
+    if ([[navigationAction.request.URL absoluteString] isEqualToString:@"ambassador:ios/"]) {
         decisionHandler(WKNavigationActionPolicyCancel);
         [self extractVariable:@"augur.json"];
         return;

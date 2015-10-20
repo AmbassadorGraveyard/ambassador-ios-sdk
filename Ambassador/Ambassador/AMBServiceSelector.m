@@ -336,7 +336,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         vc.shortURL = self.urlNetworkObj.url;
         vc.shortCode = self.urlNetworkObj.short_code;
         vc.delegate = self;
-        vc.defaultMessage = [NSString stringWithFormat:@"%@ %@", self.prefs.defaultShareMessage, self.urlNetworkObj.short_code];
+        vc.defaultMessage = [NSString stringWithFormat:@"%@ %@", self.prefs.defaultShareMessage, self.urlNetworkObj.url];
         
         if ([serviceType isEqualToString:AMB_SMS_TITLE])
         {
