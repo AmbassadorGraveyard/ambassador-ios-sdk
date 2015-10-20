@@ -20,9 +20,6 @@ test:
   override:
     - xctool
       -reporter junit:$CIRCLE_TEST_REPORTS/xcode/results.xml
-      CODE_SIGNING_REQUIRED=NO
-      CODE_SIGN_IDENTITY=
-      PROVISIONING_PROFILE=
       -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
       -sdk iphonesimulator
       -project Ambassador.xcodeproj
