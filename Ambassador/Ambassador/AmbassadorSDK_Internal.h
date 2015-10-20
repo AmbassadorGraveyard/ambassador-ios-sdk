@@ -19,9 +19,5 @@
 + (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID;
 + (AmbassadorSDK*)sharedInstance;
 + (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c;
-
-
-+ (void)setUpdatedUserInfoCompletion:(void(^)(AMBUserNetworkObject *, NSError *))c;
-
 @property AMBUserNetworkObject *user;
 @end
