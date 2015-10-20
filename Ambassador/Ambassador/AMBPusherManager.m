@@ -59,7 +59,8 @@
 }
 
 - (void)bindToChannelEvent:(NSString *)event handler:(void(^)(AMBPTPusherEvent *))handler {
-    [self.channel bindToEventNamed:event handleWithBlock:handler];
+    //[self.channel bindToEventNamed:event handleWithBlock:handler];
+    [self.channel bindToEventNamed:event handleWithBlock:handler queue:dispatch_get_main_queue()];
 }
 
 

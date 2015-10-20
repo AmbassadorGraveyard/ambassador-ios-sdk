@@ -143,12 +143,11 @@ static AMBServiceSelector *raf;
 }
 
 - (void)startPusherUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(AMBPTPusherChannel* chan, NSError* e))c {
-    __weak AmbassadorSDK *weakSelf = self;
     [[AmbassadorSDK sharedInstance] pusherChannelUniversalToken:uTok universalID:uID completion:^(NSString *s, NSError *e) {
         if (e) {
              if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(nil, e); }); }
         } else {
-            [self.pusherManager subscribeTo:s completion:c];
+            [[AmbassadorSDK sharedInstance].pusherManager subscribeTo:s completion:c];
         }
     }];
 }
@@ -158,7 +157,7 @@ static AMBServiceSelector *raf;
 }
 
 - (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID {
-    __weak AmbassadorSDK *weakSelf = self;
+    
     [self.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
         NSMutableDictionary *json = (NSMutableDictionary *)ev.data;
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];

@@ -12,10 +12,10 @@
 
 - (void)setUp {
     [super setUp];
-    self.devToken = @"SDKToken ***REMOVED***";
+    self.devToken = @"***REMOVED***";
     self.devID = @"***REMOVED***";
     
-    self.prodToken = @"SDKToken ***REMOVED***";
+    self.prodToken = @"***REMOVED***";
     self.prodID = @"***REMOVED***";
 }
 
