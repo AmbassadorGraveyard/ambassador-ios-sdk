@@ -6,7 +6,6 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "AMBConversionParameters.h"
-#import "AMBNetworkObject.h"
 
 /**
  `Ambassador` is the object that provides access to Ambassador's SDK functionality
@@ -78,6 +77,5 @@
  */
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController;
 
-@property AMBUserNetworkObject *user;
 
 @end
