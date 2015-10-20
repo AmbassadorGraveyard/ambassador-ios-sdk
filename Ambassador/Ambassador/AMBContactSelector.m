@@ -15,6 +15,7 @@
 #import "AMBShareServicesConstants.h"
 #import "AMBConstants.h"
 #import "AMBThemeManager.h"
+#import "AmbassadorSDK_Internal.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                AMBSelectedCellDelegate, UITextFieldDelegate,
@@ -126,14 +127,9 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
         if ([self.serviceType isEqualToString:AMB_SMS_TITLE])
         {
-            NSDictionary *ambassadorInfo = [[NSUserDefaults standardUserDefaults]
-                                            dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
-            NSMutableString *firstName = [NSMutableString stringWithString:@""];
-            NSMutableString *lastName = [NSMutableString stringWithString:@""];
-            
-            firstName = ambassadorInfo[@"first_name"];
-            lastName = ambassadorInfo[@"last_name"];
-            
+            NSMutableString *firstName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.first_name];
+            NSMutableString *lastName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.last_name];
+
             firstName = (NSMutableString *)[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             
@@ -147,7 +143,6 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             {
                 DLog(@"Sending first and last name");
                 [self sendSMSWithFirstName:firstName lastName:lastName];
-
             }
         }
         else if ([self.serviceType isEqualToString:AMB_EMAIL_TITLE])

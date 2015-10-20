@@ -6,6 +6,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "AMBConversionParameters.h"
+#import "AMBNetworkObject.h"
 
 /**
  `Ambassador` is the object that provides access to Ambassador's SDK functionality
@@ -76,5 +77,7 @@
  @param parameters An instance of ServiceSelectorpreferences with properties set to customize text properties of the RAF
  */
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController;
+
+@property AMBUserNetworkObject *user;
 
 @end
