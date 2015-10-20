@@ -17,6 +17,7 @@
 
 - (void)setUp {
     [super setUp];
+
 }
 
 - (void)tearDown {
@@ -25,11 +26,14 @@
 }
 
 - (void)testDevSendIdentify {
+    [AmbassadorSDK runWithUniversalToken:self.devToken universalID:self.devID];
+    [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com"];
     XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Send Identify"];
-    [AmbassadorSDK sendIdentifyWithEmail:@"jake@getambassador.com" campaign:@"260" enroll:YES universalToken:self.devToken universalID:self.devID completion:^(NSError *e) {
+    [AmbassadorSDK sendIdentifyWithCampaign:@"260" enroll:YES completion:^(NSError *e) {
         if (e) { XCTFail(@"%@", e); }
         [exp fulfill];
     }];
+
     [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * __nullable error) {
         if (error) {
             XCTFail(@"Expectation failed with error: %@", error);
@@ -74,7 +78,7 @@
             
             [AmbassadorSDK bindToIdentifyActionUniversalToken:self.devToken universalID:self.devID];
             
-            [AmbassadorSDK sendIdentifyWithEmail:@"jake@getambassador.com" campaign:nil enroll:NO universalToken:self.devToken universalID:self.devID completion:^(NSError *e) {
+            [AmbassadorSDK sendIdentifyWithCampaign:@"260" enroll:YES completion:^(NSError *e) {
                 if (e) { XCTFail(@"%@",e); }
                 
                 [exp fulfill];
