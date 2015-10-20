@@ -115,6 +115,8 @@ static AMBServiceSelector *raf;
     
     [self.identify identifyWithURL:[AMBIdentify identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
         // TODO: save id
+        self.identify.fp  = resp;
+        NSLog(@"ghghghghghghghghghghghghghghghghghghghgh%@",resp);
     }];
   
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]; // Set launch flag in User Deafaults
@@ -130,8 +132,7 @@ static AMBServiceSelector *raf;
 - (void)pusherChannelUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSString *, NSError *))c {
     
     AMBPusherSessionSubscribeNetworkObject *o = [AMBPusherSessionSubscribeNetworkObject loadFromDisk];
-    //TODO:
-    if (NO) {//o && !o.isExpired) {
+    if (o && !o.isExpired) {
         if (c) {
             dispatch_async(dispatch_get_main_queue(), ^{ c(o.channel_name, nil); }); }
     } else {

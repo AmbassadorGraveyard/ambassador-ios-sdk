@@ -51,14 +51,14 @@
     
     [AmbassadorSDK identifyWithEmail:@"test1293@getambassador.com"];
     
-    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
-        if (error) {
-            NSLog(@"Error %@", error);
-        }
-        else {
-            NSLog(@"Required parameters are set");
-        }
-    }];
+//    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
+//        if (error) {
+//            NSLog(@"Error %@", error);
+//        }
+//        else {
+//            NSLog(@"Required parameters are set");
+//        }
+//    }];
     return YES;
     
 }
