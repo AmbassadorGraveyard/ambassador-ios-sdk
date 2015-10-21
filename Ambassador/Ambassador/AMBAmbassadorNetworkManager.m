@@ -76,4 +76,8 @@
     return [NSString stringWithFormat:@"%@universal/action/identify/", [self baseUrl]];
 }
 
++ (NSString *)sendShareTrackUrl {
+    return [NSString stringWithFormat:@"%@track/share/", [self baseUrl]];
+}
+
 @end

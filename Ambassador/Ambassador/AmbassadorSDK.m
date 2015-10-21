@@ -38,8 +38,6 @@ NSString * const SHORT_CODE_URL_KEY = @"url";
 @property NSTimer *conversionTimer;
 @property AMBConversion *conversion;
 @property NSString *email;
-@property NSString *universalToken;
-@property NSString *universalID;
 @end
 
 

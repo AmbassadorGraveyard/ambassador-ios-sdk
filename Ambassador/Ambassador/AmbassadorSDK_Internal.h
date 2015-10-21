@@ -20,4 +20,6 @@
 + (AmbassadorSDK*)sharedInstance;
 + (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c;
 @property AMBUserNetworkObject *user;
+@property NSString *universalToken;
+@property NSString *universalID;
 @end
