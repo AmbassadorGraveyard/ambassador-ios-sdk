@@ -166,12 +166,34 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     DLog(@"%@", self.urlNetworkObj.short_code);
 
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
-    [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+    
+    AMBPusherSessionSubscribeNetworkObject *o = [AMBPusherSessionSubscribeNetworkObject loadFromDisk];
+    if (o && !o.isExpired) {
+        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
         if (e) {
-            DLog(@"There was an error - %@", e);
-        }
-    }];
-        
+            NSLog(@"There was an error - %@, with error code - %li", e, (long)e.code);
+                [AMBPusherSessionSubscribeNetworkObject deleteFromDisk];
+            NSLog(@"deleted data from disk");
+                [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].user.email completion:^(NSError *e) {
+                    NSLog(@"Retried identifyWithEmail, email being - %@", [AmbassadorSDK sharedInstance].user.email);
+                    [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+                        if (e) {
+                            DLog(@"There was an error - %@", e);
+                        }
+                    }];
+                }];
+            }
+        }];
+    } else {
+        [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].user.email completion:^(NSError *e) {
+            [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+                if (e) {
+                    DLog(@"There was an error - %@", e);
+                }
+            }];
+        }];
+    }
+    
     [self setUpTheme];
 }
 

@@ -158,7 +158,6 @@ static AMBServiceSelector *raf;
 }
 
 - (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID {
-    
     [self.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
         NSMutableDictionary *json = (NSMutableDictionary *)ev.data;
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
