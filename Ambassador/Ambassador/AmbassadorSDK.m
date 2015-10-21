@@ -120,6 +120,7 @@ static AMBServiceSelector *raf;
     [self.identify identifyWithURL:[AMBIdentify identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
         // TODO: save id
         self.identify.fp  = resp;
+        DLog(@"Received identify fingerprint");
     }];
   
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]; // Set launch flag in User Deafaults
