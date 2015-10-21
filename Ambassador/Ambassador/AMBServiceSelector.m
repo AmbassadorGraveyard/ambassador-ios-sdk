@@ -167,25 +167,16 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     
-    AMBPusherSessionSubscribeNetworkObject *o = [AMBPusherSessionSubscribeNetworkObject loadFromDisk];
-    if (o && !o.isExpired) {
+    AMBPusherChannelObject *channelObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
+    
+    if (channelObject && !channelObject.isExpired) {
         [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-        if (e) {
-            NSLog(@"There was an error - %@, with error code - %li", e, (long)e.code);
-                [AMBPusherSessionSubscribeNetworkObject deleteFromDisk];
-            NSLog(@"deleted data from disk");
-                [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].user.email completion:^(NSError *e) {
-                    NSLog(@"Retried identifyWithEmail, email being - %@", [AmbassadorSDK sharedInstance].user.email);
-                    [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-                        if (e) {
-                            DLog(@"There was an error - %@", e);
-                        }
-                    }];
-                }];
+            if (e) {
+                DLog(@"There was an error - %@", e);
             }
         }];
     } else {
-        [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].user.email completion:^(NSError *e) {
+        [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
             [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
                 if (e) {
                     DLog(@"There was an error - %@", e);

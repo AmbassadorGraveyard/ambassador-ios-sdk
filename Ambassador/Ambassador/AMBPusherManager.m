@@ -10,6 +10,7 @@
 #import "AMBPTPusherChannel.h"
 #import "AMBNetworkObject.h"
 #import "AMBUtilities.h"
+#import "AmbassadorSDK_Internal.h"
 
 @interface AMBPusherManager () <AMBPTPusherDelegate>
 @property (nonatomic, strong) AMBPTPusher *client;
@@ -49,7 +50,9 @@
     return self;
 }
 
-- (void)subscribeTo:(NSString *)chan completion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
+- (void)subscribeTo:(NSString *)chan pusherChanDict:(NSMutableDictionary*)pushDict completion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
+//    [AmbassadorSDK sharedInstance].pusherChannelObj.channelName = chan;
+    [[AmbassadorSDK sharedInstance].pusherChannelObj createObjectFromDictionary:pushDict];
     self.completion = completion;
     self.channel = [self.client subscribeToPrivateChannelNamed:chan];
     if (self.isAuthorized) {
