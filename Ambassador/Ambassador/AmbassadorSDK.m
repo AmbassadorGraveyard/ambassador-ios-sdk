@@ -38,7 +38,6 @@ NSString * const SHORT_CODE_URL_KEY = @"url";
 @property (nonatomic, strong) AMBNetworkManager *ambassadorNetworkManager;
 @property (nonatomic, strong) NSTimer *conversionTimer;
 @property (nonatomic, strong) AMBConversion *conversion;
-
 @property (nonatomic, strong) NSString *universalToken;
 @property (nonatomic, strong) NSString *universalID;
 @property (nonatomic) BOOL hasBeenBoundToChannel;
@@ -77,6 +76,7 @@ static AMBServiceSelector *raf;
 
 
 #pragma mark - conversion
+
 + (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
     [[AmbassadorSDK sharedInstance] registerConversion:information completion:completion];
 }
@@ -90,8 +90,8 @@ static AMBServiceSelector *raf;
 }
 
 
-
 #pragma mark - runWith
+
 + (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID {
     [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:nil completion:nil];
 }
@@ -116,7 +116,6 @@ static AMBServiceSelector *raf;
         }
     }
 
-    
     [self.identify identifyWithURL:[AMBIdentify identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
         // TODO: save id
         self.identify.fp  = resp;
@@ -129,6 +128,7 @@ static AMBServiceSelector *raf;
 
 
 #pragma mark - pusher
+
 + (void)pusherChannelUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSString *, NSMutableDictionary *, NSError *))c {
     [[AmbassadorSDK sharedInstance] pusherChannelUniversalToken:uTok universalID:uID completion:c];
 }
@@ -177,6 +177,7 @@ static AMBServiceSelector *raf;
 }
 
 #pragma mark - Identify
+
 + (void)identifyWithEmail:(NSString *)email {
     [[AmbassadorSDK sharedInstance] identifyWithEmail:email];
 }
@@ -230,6 +231,7 @@ static AMBServiceSelector *raf;
 
 
 #pragma mark - RAF
+
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController {
     [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController];
 }
@@ -255,6 +257,7 @@ static AMBServiceSelector *raf;
 
 
 #pragma mark - Helper functions
+
 - (void)throwErrorBlock:(void(^)(NSError *))b error:(NSError *)e {
     if (b) { dispatch_async(dispatch_get_main_queue(), ^{ b(e); }); }
 }

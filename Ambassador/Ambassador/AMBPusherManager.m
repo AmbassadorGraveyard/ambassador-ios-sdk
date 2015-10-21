@@ -51,7 +51,6 @@
 }
 
 - (void)subscribeTo:(NSString *)chan pusherChanDict:(NSMutableDictionary*)pushDict completion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
-//    [AmbassadorSDK sharedInstance].pusherChannelObj.channelName = chan;
     [[AmbassadorSDK sharedInstance].pusherChannelObj createObjectFromDictionary:pushDict];
     self.completion = completion;
     self.channel = [self.client subscribeToPrivateChannelNamed:chan];
@@ -63,7 +62,6 @@
 
 - (void)bindToChannelEvent:(NSString *)event handler:(void(^)(AMBPTPusherEvent *))handler {
     [self.channel bindToEventNamed:event handleWithBlock:handler];
-    //[self.channel bindToEventNamed:event handleWithBlock:handler queue:dispatch_get_main_queue()];
 }
 
 
