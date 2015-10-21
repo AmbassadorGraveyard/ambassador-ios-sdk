@@ -12,8 +12,8 @@ test:
       PROVISIONING_PROFILE=
       -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
       -sdk iphonesimulator
-      -workspace MyWorkspace.xcworkspace
-      -scheme "My Scheme"
+      -workspace Ambassador.xcodeproj
+      -scheme "Ambassador"
       build build-tests run-tests
 
 # test:
