@@ -23,6 +23,7 @@
 #import <MessageUI/MessageUI.h>
 #import "AMBIdentify.h"
 #import "AMBThemeManager.h"
+#import "AmbassadorSDK_Internal.h"
 
 
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
@@ -51,6 +52,7 @@
 @property (strong, nonatomic) NSMutableArray *services;
 @property (strong, nonatomic) AMBContactLoader *loader;
 @property (strong, nonatomic) NSTimer *waitViewTimer;
+@property (strong, nonatomic) AMBUserUrlNetworkObject *urlNetworkObj;
 
 @property NSString *singleEmail;
 @property NSString *singleSMS;
@@ -123,6 +125,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 }
 
 - (void)viewDidLoad {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeWaitView) name:@"PusherReceived" object:nil];
     [self addServices];
     
     // Set the navigation bar attributes (title and back button)
@@ -160,12 +163,21 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.collectionView.dataSource = self;
     
     
-    DLog(@"%@", self.shortURL);
+    DLog(@"%@", self.urlNetworkObj.short_code);
 
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
-    AMBIdentify *identify = [[AMBIdentify alloc] init];
-    [identify sendIdentifyData];
+    [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+        if (e) {
+            DLog(@"There was an error - %@", e);
+        }
+    }];
+        
     [self setUpTheme];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.waitViewTimer invalidate];
 }
 
 - (void)alertForNetworkTimeout
@@ -194,7 +206,10 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     }
     
     self.waitView.hidden = YES;
-    self.textField.text = self.shortURL;
+    
+    NSNumber *campaingID = [NSNumber numberWithInt:self.campaignID.intValue];
+    self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
+    self.textField.text = self.urlNetworkObj.url;
 }
 
 
@@ -232,7 +247,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     {
         //TODO:facebook
         SLComposeViewController *vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        [vc addURL:[NSURL URLWithString:self.shortURL]];
+        [vc addURL:[NSURL URLWithString:self.urlNetworkObj.url]];
         vc.completionHandler = ^(SLComposeViewControllerResult result)
         {
             if (result == SLComposeViewControllerResultDone)
@@ -241,7 +256,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     AMBsendAlert(YES, @"Your link was successfully shared", self);
                 });
-                [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"facebook" recipientUsername:@""];
+                [self postShareTrackWithShortCode:self.urlNetworkObj.short_code recipientEmail:@"" socialName:@"facebook" recipientUsername:@""];
             }
         };
         [vc setInitialText:self.prefs.defaultShareMessage];
@@ -250,7 +265,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     else if ([service.title isEqualToString:AMB_TWITTER_TITLE])
     {
         SLComposeViewController *vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [vc addURL:[NSURL URLWithString:self.shortURL]];
+        [vc addURL:[NSURL URLWithString:self.urlNetworkObj.url]];
         vc.completionHandler = ^(SLComposeViewControllerResult result)
         {
             if (result == SLComposeViewControllerResultDone)
@@ -259,7 +274,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     AMBsendAlert(YES, @"Your link was successfully shared", self);
                 });
-                [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"twitter" recipientUsername:@""];
+                [self postShareTrackWithShortCode:self.urlNetworkObj.short_code recipientEmail:@"" socialName:@"twitter" recipientUsername:@""];
             }
         };
         [vc setInitialText:self.prefs.defaultShareMessage];
@@ -304,13 +319,20 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     AMBLinkedInShare * vc = [[AMBLinkedInShare alloc] init];
     DLog(@"%@", vc.debugDescription);
     vc.defaultMessage = self.prefs.defaultShareMessage;
-    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    vc.shortCode = self.shortCode;
-    vc.shortURL = self.shortURL;
+    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    vc.shortCode = self.urlNetworkObj.short_code;
+    vc.shortURL = self.urlNetworkObj.url;
     vc.delegate = self;
     [self presentViewController:vc animated:YES completion:^{
-        DLog(@"finished presenting linkedIN");
+//        [vc.view endEditing:YES];
+//        DLog(@"finished presenting linkedIN");
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.view layoutIfNeeded];
+//        });
     }];
+    
+    [vc didMoveToParentViewController:self];
+    
 }
 
 
@@ -323,10 +345,10 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         AMBContactSelector *vc = (AMBContactSelector *)segue.destinationViewController;
         NSString *serviceType = (NSString *)sender;
         vc.prefs = self.prefs;
-        vc.shortURL = self.shortURL;
-        vc.shortCode = self.shortCode;
+        vc.shortURL = self.urlNetworkObj.url;
+        vc.shortCode = self.urlNetworkObj.short_code;
         vc.delegate = self;
-        vc.defaultMessage = [NSString stringWithFormat:@"%@ %@", self.prefs.defaultShareMessage, self.shortURL];
+        vc.defaultMessage = [NSString stringWithFormat:@"%@ %@", self.prefs.defaultShareMessage, self.urlNetworkObj.url];
         
         if ([serviceType isEqualToString:AMB_SMS_TITLE])
         {
@@ -475,7 +497,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         dispatch_async(dispatch_get_main_queue(), ^{
             AMBsendAlert(YES, @"Your link was successfully shared", self);
         });
-        [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"linkedin" recipientUsername:@""];
+        [self postShareTrackWithShortCode:self.urlNetworkObj.short_code recipientEmail:@"" socialName:@"linkedin" recipientUsername:@""];
     }
 }
 
@@ -508,21 +530,21 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 #pragma mark - ContactSelectorDelegate
 - (void)sendToContacts:(NSArray *)contacts forServiceType:(NSString *)serviceType fromFirstName:(NSString *)firstName lastName:(NSString *)lastName withMessage:(NSString *)message
 {
-    __weak NSString *shortCode = self.shortCode;
+    __weak NSString *shortCode = self.urlNetworkObj.short_code;
     __weak AMBServiceSelector *weakSelf = self;
     
     if ([serviceType isEqualToString:AMB_EMAIL_TITLE])
     {
-        NSString *subjectLine = @"";
-        NSArray *urls = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY][@"urls"];
-        for (NSDictionary *url in urls)
-        {
-            if ([url[@"short_code"] isEqualToString:shortCode])
-            {
-                subjectLine = url[@"subject"];
-                break;
-            }
-        }
+        NSString *subjectLine = self.urlNetworkObj.subject;
+//        NSArray *urls = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY][@"urls"];
+//        for (NSDictionary *url in urls)
+//        {
+//            if ([url[@"short_code"] isEqualToString:shortCode])
+//            {
+//                subjectLine = self.urlNetworkObj.subject;
+//                break;
+//            }
+//        }
         
         NSArray *validContacts = [weakSelf validateEmails:contacts];
         
@@ -540,6 +562,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
             }
             else
             {
+                UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Email unavailable" message:@"Email is unavailble at the moment.  Please make sure you are signed in" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+                [errorAlert show];
                 //sendAlert(NO, @"Your device doesn't support sending email.", self);
             }
 
@@ -828,9 +852,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
     
-    NSDictionary *ambassadorInfo = [[NSUserDefaults standardUserDefaults]
-                       dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
-    NSString *email = ambassadorInfo[@"email"];
+    NSString *email = [AmbassadorSDK sharedInstance].user.email;
     DLog(@"The user information during update: %@ %@ %@", email, firstName, lastName);
     
     NSMutableDictionary *payload = [[NSMutableDictionary alloc] init];
@@ -879,7 +901,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     else if (result == MFMailComposeResultSent)
     {
         AMBsendAlert(NO, @"Your link was successfully shared", self);
-        [self postShareTrackWithShortCode:self.shortCode recipientEmail:self.singleEmail socialName:@"email" recipientUsername:@""];
+        [self postShareTrackWithShortCode:self.urlNetworkObj.short_code recipientEmail:self.singleEmail socialName:@"email" recipientUsername:@""];
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }
     else if (result == MFMailComposeResultSaved || result == MFMailComposeResultCancelled)
@@ -897,7 +919,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     else if (result == MessageComposeResultSent)
     {
         AMBsendAlert(NO, @"Your link was successfully shared", self);
-        [self postShareTrackWithShortCode:self.shortCode recipientEmail:@"" socialName:@"sms" recipientUsername:self.singleSMS];
+        [self postShareTrackWithShortCode:self.urlNetworkObj.short_code recipientEmail:@"" socialName:@"sms" recipientUsername:self.singleSMS];
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }
     else if (result == MessageComposeResultCancelled)

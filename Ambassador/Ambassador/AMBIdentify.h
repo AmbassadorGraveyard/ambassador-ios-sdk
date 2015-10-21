@@ -7,25 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@protocol AMBIdentifyDelegate <NSObject>
-
-@optional
-- (void)identifyDataWasRecieved:(NSMutableDictionary *)data;
-- (void)ambassadorDataWasRecieved:(NSMutableDictionary *)data;
-
-@end
-
-
+#import <UIKit/UIKit.h>
 
 @interface AMBIdentify : NSObject
-
-- (id)initForFullIdentify;
-- (void)identifyWithEmail:(NSString *)email;
-- (void)sendIdentifyData;
-@property NSMutableDictionary *identifyData;
-@property NSString *pusherChannelName;
-@property (nonatomic, weak) id<AMBIdentifyDelegate>delegate;
-- (void)getInsightsDataForUID:(NSString *)UID success:(void (^)(NSMutableDictionary *response))success fail:(void (^)(NSError *error))fail;
-
+@property NSMutableDictionary *fp;
+- (void)identifyWithURL:(NSString *)url completion:(void(^)(NSMutableDictionary *resp, NSError *e))completion;
++ (NSString *)identifyUrlWithUniversalID:(NSString *)uid;
 @end

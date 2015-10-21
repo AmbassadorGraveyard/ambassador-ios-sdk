@@ -15,7 +15,6 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     AMBConversionParameters *conversion = [[AMBConversionParameters alloc] init];
     conversion.mbsy_revenue = @1000;
@@ -37,10 +36,15 @@
     conversion.mbsy_is_approved = @YES;
     conversion.mbsy_email = @"corey@getambassador.com";
     
-    // the current keys are production keys. The original dev keys are:
-    // universalToken:SDKToken 9de5757f801ca60916599fa3f3c92131b0e63c6a
+    // The original dev keys are:
+    // universalToken:9de5757f801ca60916599fa3f3c92131b0e63c6a
     // universalID:abfd1c89-4379-44e2-8361-ee7b87332e32
-    [AmbassadorSDK runWithUniversalToken:@"SDKToken 84444f4022a8cd4fce299114bc2e323e57e32188" universalID:@"830883cd-b2a7-449c-8a3c-d1850aa8bc6b" convertOnInstall:conversion completion:^(NSError *error) {
+    //
+    // The original product keys are:
+    // universalToken:84444f4022a8cd4fce299114bc2e323e57e32188
+    // universalID:830883cd-b2a7-449c-8a3c-d1850aa8bc6b
+    
+    [AmbassadorSDK runWithUniversalToken:@"84444f4022a8cd4fce299114bc2e323e57e32188" universalID:@"830883cd-b2a7-449c-8a3c-d1850aa8bc6b" convertOnInstall:conversion completion:^(NSError *error) {
         if (error) {
             NSLog(@"Error %@", error);
         }
@@ -49,16 +53,16 @@
         }
     }];
     
-    [AmbassadorSDK identifyWithEmail:@"test1293@getambassador.com"];
+    [AmbassadorSDK identifyWithEmail:@"test1593@getambassador.com"];
     
-    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
-        if (error) {
-            NSLog(@"Error %@", error);
-        }
-        else {
-            NSLog(@"Required parameters are set");
-        }
-    }];
+//    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
+//        if (error) {
+//            NSLog(@"Error %@", error);
+//        }
+//        else {
+//            NSLog(@"Required parameters are set");
+//        }
+//    }];
     return YES;
     
 }

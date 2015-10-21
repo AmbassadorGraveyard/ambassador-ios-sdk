@@ -9,6 +9,7 @@
 #import "AMBNamePrompt.h"
 #import "AMBUtilities.h"
 #import "AMBConstants.h"
+#import "AmbassadorSDK_Internal.h"
 
 @interface AMBNamePrompt () <UITextFieldDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *continueButton;
@@ -64,16 +65,14 @@
     {
         NSString *firstName = [self.firstNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *lastName = [self.lastNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSMutableDictionary *information = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY]];
-        DLog(@"This is what is stored before the name change %@", information)
-        if (information)
+       
+        DLog(@"This is what is stored before the name change %@", [AmbassadorSDK sharedInstance].user);
+        if ([AmbassadorSDK sharedInstance].user)
         {
-            information[@"first_name"] = firstName;
-            information[@"last_name"] = lastName;
-            
-            [[NSUserDefaults standardUserDefaults] setObject:information forKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY];
-            DLog(@"Updating local cache %@", information);
+            [AmbassadorSDK sharedInstance].user.first_name = firstName;
+            [AmbassadorSDK sharedInstance].user.last_name = lastName;
         }
+        
         [self.delegate sendSMSPressedWithFirstName:firstName lastName:lastName];
     }
     self.firstNameEdited = YES;

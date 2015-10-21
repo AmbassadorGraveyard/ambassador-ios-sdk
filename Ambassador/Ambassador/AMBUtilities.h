@@ -25,4 +25,9 @@ void AMBsimpleAlert(NSString *title, NSString *message, UIViewController *vc);
 void AMBsendAlert(BOOL success, NSString *message, UIViewController *presenter);
 NSBundle* AMBframeworkBundle();
 
+NSString* AMBStringValFromDictionary(NSMutableDictionary *d, NSString *key);
+NSArray *AMBArrayFromDicstionary(NSMutableDictionary *d, NSString *key);
+
+NSString* AMBOptionalString(NSString *s);
+
 #endif
