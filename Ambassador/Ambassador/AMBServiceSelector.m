@@ -166,12 +166,25 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     DLog(@"%@", self.urlNetworkObj.short_code);
 
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
-    [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-        if (e) {
-            DLog(@"There was an error - %@", e);
-        }
-    }];
-        
+    
+    AMBPusherChannelObject *channelObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
+    
+    if (channelObject && !channelObject.isExpired) {
+        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+            if (e) {
+                DLog(@"There was an error - %@", e);
+            }
+        }];
+    } else {
+        [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
+            [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+                if (e) {
+                    DLog(@"There was an error - %@", e);
+                }
+            }];
+        }];
+    }
+    
     [self setUpTheme];
 }
 
