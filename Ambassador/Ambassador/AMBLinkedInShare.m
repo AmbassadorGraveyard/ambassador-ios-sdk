@@ -24,6 +24,10 @@
     self.textView.text = self.defaultMessage;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [self.textView becomeFirstResponder];
+}
+
 - (void)didSelectPost
 {
     DLog();

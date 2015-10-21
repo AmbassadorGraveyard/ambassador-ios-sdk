@@ -15,7 +15,6 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     AMBConversionParameters *conversion = [[AMBConversionParameters alloc] init];
     conversion.mbsy_revenue = @1000;
@@ -37,10 +36,15 @@
     conversion.mbsy_is_approved = @YES;
     conversion.mbsy_email = @"corey@getambassador.com";
     
-    // the current keys are production keys. The original dev keys are:
-    // universalToken:SDKToken ***REMOVED***
+    // The original dev keys are:
+    // universalToken:***REMOVED***
     // universalID:***REMOVED***
-    [AmbassadorSDK runWithUniversalToken:@"SDKToken ***REMOVED***" universalID:@"***REMOVED***" convertOnInstall:conversion completion:^(NSError *error) {
+    //
+    // The original product keys are:
+    // universalToken:***REMOVED***
+    // universalID:***REMOVED***
+    
+    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***" convertOnInstall:conversion completion:^(NSError *error) {
         if (error) {
             NSLog(@"Error %@", error);
         }
@@ -49,16 +53,16 @@
         }
     }];
     
-    [AmbassadorSDK identifyWithEmail:@"test1293@getambassador.com"];
+    [AmbassadorSDK identifyWithEmail:@"test1593@getambassador.com"];
     
-    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
-        if (error) {
-            NSLog(@"Error %@", error);
-        }
-        else {
-            NSLog(@"Required parameters are set");
-        }
-    }];
+//    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
+//        if (error) {
+//            NSLog(@"Error %@", error);
+//        }
+//        else {
+//            NSLog(@"Required parameters are set");
+//        }
+//    }];
     return YES;
     
 }
