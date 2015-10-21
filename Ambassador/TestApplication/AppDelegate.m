@@ -15,7 +15,6 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     AMBConversionParameters *conversion = [[AMBConversionParameters alloc] init];
     conversion.mbsy_revenue = @1000;

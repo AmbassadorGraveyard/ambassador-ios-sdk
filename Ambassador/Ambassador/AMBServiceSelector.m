@@ -175,6 +175,11 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     [self setUpTheme];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.waitViewTimer invalidate];
+}
+
 - (void)alertForNetworkTimeout
 {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
