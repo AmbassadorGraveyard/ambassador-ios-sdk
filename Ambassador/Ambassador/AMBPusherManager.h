@@ -11,7 +11,7 @@
 
 @interface AMBPusherManager : NSObject
 + (instancetype)sharedInstanceWithAuthorization:(NSString *)auth;
-- (void)subscribeTo:(NSString *)chan completion:(void(^)(AMBPTPusherChannel *, NSError *))completion;
+- (void)subscribeTo:(NSString *)chan pusherChanDict:(NSMutableDictionary*)pushDict completion:(void(^)(AMBPTPusherChannel *, NSError *))completion;
 - (void)bindToChannelEvent:(NSString *)event handler:(void(^)(AMBPTPusherEvent *))handler;
 @end
 
