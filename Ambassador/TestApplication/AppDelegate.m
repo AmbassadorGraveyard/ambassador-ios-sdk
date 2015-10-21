@@ -44,7 +44,7 @@
     // universalToken:***REMOVED***
     // universalID:***REMOVED***
     
-    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***ÓÓ" convertOnInstall:conversion completion:^(NSError *error) {
+    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***" convertOnInstall:conversion completion:^(NSError *error) {
         if (error) {
             NSLog(@"Error %@", error);
         }
