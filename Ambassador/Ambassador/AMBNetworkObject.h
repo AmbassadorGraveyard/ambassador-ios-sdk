@@ -70,3 +70,12 @@
 @property (strong, nonatomic) NSString *source;
 @property (strong, nonatomic) NSMutableDictionary *fp;
 @end
+
+
+
+@interface AMBShareTrackNetworkObject : AMBNetworkObject
+@property (nonatomic, strong) NSString *short_code;
+@property (nonatomic, strong) NSMutableArray *recipient_email;
+@property (nonatomic, strong) NSString *social_name;
+@property (nonatomic, strong) NSMutableArray *recipient_username;
+@end

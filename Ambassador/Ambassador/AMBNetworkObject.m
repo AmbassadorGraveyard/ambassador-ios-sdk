@@ -122,6 +122,8 @@
 }
 @end
 
+
+
 @implementation AMBUserNetworkObject
 - (void)fillWithUrl:(NSString *)url universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c {
     __weak AMBUserNetworkObject *weakSelf = self;
@@ -178,4 +180,9 @@
     }
     return self;
 }
+@end
+
+
+
+@implementation AMBShareTrackNetworkObject
 @end
