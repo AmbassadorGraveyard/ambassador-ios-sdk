@@ -238,15 +238,6 @@
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EF3EBFCB1BD99188005C8492 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -903,7 +894,6 @@
 				DB844D5D1BA76BDE003FD7A9 /* Sources */,
 				DB844D5E1BA76BDE003FD7A9 /* Frameworks */,
 				DB844D5F1BA76BDE003FD7A9 /* Resources */,
-				EF3EBFCB1BD99188005C8492 /* CopyFiles */,
 			);
 			buildRules = (
 			);
