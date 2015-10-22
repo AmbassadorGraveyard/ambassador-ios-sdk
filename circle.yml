@@ -8,7 +8,7 @@ test:
       -sdk iphonesimulator
       -project Ambassador.xcodeproj
       -scheme "Ambassador"
-      run-tests AmbassadorTest 
+      run-tests AmbassadorTests
 
 # test:
 #   override:
