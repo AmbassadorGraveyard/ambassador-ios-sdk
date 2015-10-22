@@ -165,7 +165,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     
     DLog(@"%@", self.urlNetworkObj.short_code);
 
-    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
+    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     
     [self performIdentify];
     
