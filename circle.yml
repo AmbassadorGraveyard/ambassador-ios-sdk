@@ -3,13 +3,11 @@ general:
 
 test:
   override:
-    -brew update
-    -brew upgrade xctool
     - xctool
       -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
       -sdk iphonesimulator
       -project Ambassador.xcodeproj
-      -scheme "Ambassador"
+      -scheme "AmbassadorTests"
       run-tests 
 
 # test:
