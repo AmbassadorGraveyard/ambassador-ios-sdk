@@ -139,11 +139,13 @@
 
 - (void)pusher:(AMBPTPusher *)pusher connectionDidConnect:(AMBPTPusherConnection *)connection {
     // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been CONNECTED
+    DLog(@"Pusher connection state changed to CONNECTED");
     self.connectionState = PTPusherConnectionConnected;
 }
 
 - (void)pusher:(AMBPTPusher *)pusher connection:(AMBPTPusherConnection *)connection didDisconnectWithError:(NSError *)error willAttemptReconnect:(BOOL)willAttemptReconnect {
     // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been DISCONNECTED
+    DLog(@"Pusher connection state changed to DISCONNECTED");
     self.connectionState = PTPusherConnectionDisconnected;
 }
 
