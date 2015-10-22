@@ -11,7 +11,7 @@
 
 @interface AMBPusherManager : NSObject
 
-@property (nonatomic) BOOL pusherIsConnected;
+@property (nonatomic) PTPusherConnectionState connectionState;
 
 + (instancetype)sharedInstanceWithAuthorization:(NSString *)auth;
 - (void)subscribeTo:(NSString *)chan pusherChanDict:(NSMutableDictionary*)pushDict completion:(void(^)(AMBPTPusherChannel *, NSError *))completion;

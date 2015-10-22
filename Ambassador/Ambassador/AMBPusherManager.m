@@ -50,7 +50,7 @@
         self.client = [AMBPTPusher pusherWithKey:[AMBPusherManager pusherKey] delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:[self pusherAuthUrl]];
         self.isAuthorized = NO;
-        self.pusherIsConnected = NO;
+        self.connectionState = PTPusherConnectionDisconnected;
         [self.client connect];
     }
     return self;
@@ -139,12 +139,12 @@
 
 - (void)pusher:(AMBPTPusher *)pusher connectionDidConnect:(AMBPTPusherConnection *)connection {
     // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been CONNECTED
-    self.pusherIsConnected = YES;
+    self.connectionState = PTPusherConnectionConnected;
 }
 
 - (void)pusher:(AMBPTPusher *)pusher connection:(AMBPTPusherConnection *)connection didDisconnectWithError:(NSError *)error willAttemptReconnect:(BOOL)willAttemptReconnect {
     // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been DISCONNECTED
-    self.pusherIsConnected = NO;
+    self.connectionState = PTPusherConnectionDisconnected;
 }
 
 @end
