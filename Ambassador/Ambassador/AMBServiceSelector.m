@@ -213,7 +213,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     AMBPusherChannelObject *channelObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
     
     // Checks if we are subscribed to a pusher channel and makes sure that the channel is not expired
-    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.pusherIsConnected) {
+    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState == PTPusherConnectionConnected) {
         // If we're SUBSCRIBED and NOT expired, then we will call the Identify
         [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
             if (e) { DLog(@"There was an error - %@", e); }
@@ -223,7 +223,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     }
     
     // Checks if we are subscribed, good with expiration, BUT Pusher got disconnected
-    if (channelObject && !channelObject.isExpired && ![AmbassadorSDK sharedInstance].pusherManager.pusherIsConnected) {
+    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState != PTPusherConnectionConnected) {
         // If pusher socket is NOT OPEN, then we attempt to RESUBSCRIBE to the existing channel
         [[AmbassadorSDK sharedInstance].pusherManager resubscribeToExistingChannelWithCompletion:^(AMBPTPusherChannel *channelName, NSError *error) {
             if (error) {
