@@ -19,7 +19,6 @@
 @property (nonatomic, copy) void (^completion)(AMBPTPusherChannel *c, NSError *e);
 @property (nonatomic, strong) NSString *universalToken;
 @property (nonatomic) BOOL isAuthorized;
-@property (nonatomic) BOOL pusherIsConnected;
 
 @end
 
@@ -64,6 +63,18 @@
     if (self.isAuthorized) {
         self.completion(self.channel, nil);
         return;
+    }
+}
+
+- (void)resubscribeToExistingChannelWithCompletion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
+    NSString *channelName = [AmbassadorSDK sharedInstance].pusherChannelObj.channelName;
+    self.completion = completion;
+    
+    if (channelName && ![channelName isEqualToString:@""]) {
+        self.channel = [self.client subscribeToPrivateChannelNamed:[AmbassadorSDK sharedInstance].pusherChannelObj.channelName];
+        self.completion(self.channel, nil);
+    } else {
+        self.completion(self.channel, [NSError errorWithDomain:@"Could not find existing channel name to subscribe!" code:1 userInfo:nil]);
     }
 }
 
