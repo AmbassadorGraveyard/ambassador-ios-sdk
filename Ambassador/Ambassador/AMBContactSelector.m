@@ -509,6 +509,9 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 {
     DLog();
     [self.delegate sendToContacts:[self.selected allObjects] forServiceType:AMB_SMS_TITLE fromFirstName:firstName lastName:lastName withMessage:self.composeMessageTextView.text];
+    [self sendShareTrack:[self validatePhoneNumbers:[self.selected allObjects]] completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+        DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+    }];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -517,6 +520,9 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     DLog();
     
     [self.delegate sendToContacts:[self.selected allObjects] forServiceType:AMB_EMAIL_TITLE fromFirstName:@"" lastName:@"" withMessage:self.composeMessageTextView.text];
+    [self sendShareTrack:[NSMutableArray arrayWithArray:[self.selected allObjects]] completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+        DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+    }];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -563,9 +569,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     share.short_code = self.urlNetworkObject.short_code;
     share.social_name = socialServiceTypeStringVal(self.type);
     
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-        DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
-    }];
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:nil completion:c];
 }
 
 - (NSMutableArray *)validatePhoneNumbers:(NSArray *)contacts
