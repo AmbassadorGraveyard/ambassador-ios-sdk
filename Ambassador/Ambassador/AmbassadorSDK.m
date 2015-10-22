@@ -20,6 +20,7 @@
 #import "AMBAmbassadorNetworkManager.h"
 #import "AMBNetworkObject.h"
 #import "AMBPusher.h"
+#import "AMBPusherChannelObject.h"
 
 
 #pragma mark - Local Constants
@@ -32,12 +33,13 @@ NSString * const SHORT_CODE_URL_KEY = @"url";
 
 
 @interface AmbassadorSDK ()
-@property AMBIdentify *identify;
+@property (nonatomic, strong) AMBIdentify *identify;
 @property (nonatomic, strong) AMBPusherManager *pusherManager;
-@property AMBNetworkManager *ambassadorNetworkManager;
-@property NSTimer *conversionTimer;
-@property AMBConversion *conversion;
-@property NSString *email;
+@property (nonatomic, strong) AMBNetworkManager *ambassadorNetworkManager;
+@property (nonatomic, strong) NSTimer *conversionTimer;
+@property (nonatomic, strong) AMBConversion *conversion;
+@property (nonatomic) BOOL hasBeenBoundToChannel;
+
 @end
 
 
@@ -65,12 +67,14 @@ static AMBServiceSelector *raf;
         self.identify = [[AMBIdentify alloc] init];
         self.ambassadorNetworkManager = [AMBAmbassadorNetworkManager sharedInstance];
         self.user = [AMBUserNetworkObject loadFromDisk];
+        self.pusherChannelObj = [[AMBPusherChannelObject alloc] init];
     }
     return self;
 }
 
 
 #pragma mark - conversion
+
 + (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
     [[AmbassadorSDK sharedInstance] registerConversion:information completion:completion];
 }
@@ -84,8 +88,8 @@ static AMBServiceSelector *raf;
 }
 
 
-
 #pragma mark - runWith
+
 + (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID {
     [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:nil completion:nil];
 }
@@ -110,7 +114,6 @@ static AMBServiceSelector *raf;
         }
     }
 
-    
     [self.identify identifyWithURL:[AMBIdentify identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
         // TODO: save id
         self.identify.fp  = resp;
@@ -123,19 +126,13 @@ static AMBServiceSelector *raf;
 
 
 #pragma mark - pusher
-+ (void)pusherChannelUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSString *, NSError *))c {
+
++ (void)pusherChannelUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSString *, NSMutableDictionary *, NSError *))c {
     [[AmbassadorSDK sharedInstance] pusherChannelUniversalToken:uTok universalID:uID completion:c];
 }
 
-- (void)pusherChannelUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSString *, NSError *))c {
-    
-    AMBPusherSessionSubscribeNetworkObject *o = [AMBPusherSessionSubscribeNetworkObject loadFromDisk];
-    if (o && !o.isExpired) {
-        if (c) {
-            dispatch_async(dispatch_get_main_queue(), ^{ c(o.channel_name, nil); }); }
-    } else {
-        [[AMBAmbassadorNetworkManager sharedInstance] pusherChannelNameUniversalToken:uTok universalID:uID completion:c];
-    }
+- (void)pusherChannelUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSString *, NSMutableDictionary *, NSError *))c {
+    [[AMBAmbassadorNetworkManager sharedInstance] pusherChannelNameUniversalToken:uTok universalID:uID completion:c];
 }
 
 + (void)startPusherUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(AMBPTPusherChannel* chan, NSError* e))c {
@@ -143,11 +140,13 @@ static AMBServiceSelector *raf;
 }
 
 - (void)startPusherUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(AMBPTPusherChannel* chan, NSError* e))c {
-    [[AmbassadorSDK sharedInstance] pusherChannelUniversalToken:uTok universalID:uID completion:^(NSString *s, NSError *e) {
+    [[AmbassadorSDK sharedInstance] pusherChannelUniversalToken:uTok universalID:uID completion:^(NSString *s, NSMutableDictionary *pusherChanDic, NSError *e) {
         if (e) {
              if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(nil, e); }); }
         } else {
-            [[AmbassadorSDK sharedInstance].pusherManager subscribeTo:s completion:c];
+            if (![AmbassadorSDK sharedInstance].pusherChannelObj.channelName || [[AmbassadorSDK sharedInstance].pusherChannelObj.channelName isEqualToString:@""]) {
+                [[AmbassadorSDK sharedInstance].pusherManager subscribeTo:s pusherChanDict:pusherChanDic completion:c];
+            }
         }
     }];
 }
@@ -157,7 +156,7 @@ static AMBServiceSelector *raf;
 }
 
 - (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID {
-    
+    [AmbassadorSDK sharedInstance].hasBeenBoundToChannel = YES;
     [self.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
         NSMutableDictionary *json = (NSMutableDictionary *)ev.data;
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
@@ -176,6 +175,7 @@ static AMBServiceSelector *raf;
 }
 
 #pragma mark - Identify
+
 + (void)identifyWithEmail:(NSString *)email {
     [[AmbassadorSDK sharedInstance] identifyWithEmail:email];
 }
@@ -191,11 +191,20 @@ static AMBServiceSelector *raf;
 - (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
     self.email = email;
     __weak AmbassadorSDK *weakSelf = self;
-    self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken];
+    if (!self.pusherManager) {
+        self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken];
+    }
+    
     [self startPusherUniversalToken:weakSelf.universalToken universalID:weakSelf.universalID completion:^(AMBPTPusherChannel* chan, NSError *e) {
-        [self bindToIdentifyActionUniversalToken:weakSelf.universalToken universalID:weakSelf.universalID];
+        if (![AmbassadorSDK sharedInstance].hasBeenBoundToChannel) {
+            [self bindToIdentifyActionUniversalToken:weakSelf.universalToken universalID:weakSelf.universalID];
+        }
+        
         if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
     }];
+    
+    NSError *error;
+    if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(error); }); }
 }
 
 + (void)sendIdentifyWithCampaign:(NSString *)campaign enroll:(BOOL)enroll completion:(void(^)(NSError *))c {
@@ -211,7 +220,7 @@ static AMBServiceSelector *raf;
     
     DLog(@"The fingerprint getting sent in send identify: %@", o.fp);
 
-    NSMutableDictionary *extraHeaders = [[AMBPusherSessionSubscribeNetworkObject loadFromDisk] additionalNetworkHeaders];
+    NSMutableDictionary *extraHeaders = [[AmbassadorSDK sharedInstance].pusherChannelObj createAdditionalNetworkHeaders];
     
     [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:o url:[AMBAmbassadorNetworkManager sendIdentifyUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:extraHeaders completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
@@ -220,6 +229,7 @@ static AMBServiceSelector *raf;
 
 
 #pragma mark - RAF
+
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController {
     [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController];
 }
@@ -245,6 +255,7 @@ static AMBServiceSelector *raf;
 
 
 #pragma mark - Helper functions
+
 - (void)throwErrorBlock:(void(^)(NSError *))b error:(NSError *)e {
     if (b) { dispatch_async(dispatch_get_main_queue(), ^{ b(e); }); }
 }

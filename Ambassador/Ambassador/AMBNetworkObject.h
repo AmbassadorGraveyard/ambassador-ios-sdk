@@ -15,6 +15,7 @@
 - (NSData *)toDataError:(NSError *__autoreleasing*)e;
 - (void)save;
 + (instancetype)loadFromDisk;
++ (void)deleteFromDisk;
 @end
 
 

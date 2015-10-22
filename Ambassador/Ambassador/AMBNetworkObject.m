@@ -75,6 +75,12 @@
     return [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:NSStringFromClass([self class])]];
 }
 
++ (void)deleteFromDisk {
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:rootPath error:&error];
+}
+
 @end
 
 
