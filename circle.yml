@@ -1,5 +1,5 @@
 general:
-  build_dir: Ambassador
+  build_dir: Ambassador/AmbassadorTests
 
 test:
   override:
@@ -8,7 +8,7 @@ test:
       -sdk iphonesimulator
       -project Ambassador.xcodeproj
       -scheme "Ambassador"
-      -p AmbassadorTests run-tests 
+      run-tests 
 
 # test:
 #   override:
