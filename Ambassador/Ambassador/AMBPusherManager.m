@@ -13,14 +13,19 @@
 #import "AmbassadorSDK_Internal.h"
 
 @interface AMBPusherManager () <AMBPTPusherDelegate>
+
 @property (nonatomic, strong) AMBPTPusher *client;
 @property (nonatomic, strong) AMBPTPusherPrivateChannel *channel;
 @property (nonatomic, copy) void (^completion)(AMBPTPusherChannel *c, NSError *e);
 @property (nonatomic, strong) NSString *universalToken;
-@property BOOL isAuthorized;
+@property (nonatomic) BOOL isAuthorized;
+@property (nonatomic) BOOL pusherIsConnected;
+
 @end
 
+
 @implementation AMBPusherManager
+
 + (instancetype)sharedInstanceWithAuthorization:(NSString *)auth {
     static AMBPusherManager* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
@@ -39,12 +44,14 @@
 
 
 #pragma mark - Initialization
+
 - (instancetype)initWithAuthorization:(NSString *)auth {
     if (self = [super init]) {
         self.universalToken = auth;
         self.client = [AMBPTPusher pusherWithKey:[AMBPusherManager pusherKey] delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:[self pusherAuthUrl]];
         self.isAuthorized = NO;
+        self.pusherIsConnected = NO;
         [self.client connect];
     }
     return self;
@@ -66,6 +73,7 @@
 
 
 #pragma mark - Url returns
+
 - (NSString *)pusherAuthUrl {
 #if AMBPRODUCTION
     return  @"https://api.getambassador.com/auth/subscribe/";
@@ -75,8 +83,8 @@
 }
 
 
-
 # pragma mark - PTPusher Delegate
+
 - (void)pusher:(AMBPTPusher *)pusher willAuthorizeChannel:(AMBPTPusherChannel *)channel withRequest:(NSMutableURLRequest *)request {
     AMBPusherAuthNetworkObject *pusherAuthObj = [[AMBPusherAuthNetworkObject alloc] init];
     request = [self modifyPusherAuthRequest:request authorization:self.universalToken];
@@ -116,6 +124,16 @@
             weakSelf.completion(c, e);
         });
     }
+}
+
+- (void)pusher:(AMBPTPusher *)pusher connectionDidConnect:(AMBPTPusherConnection *)connection {
+    // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been CONNECTED
+    self.pusherIsConnected = YES;
+}
+
+- (void)pusher:(AMBPTPusher *)pusher connection:(AMBPTPusherConnection *)connection didDisconnectWithError:(NSError *)error willAttemptReconnect:(BOOL)willAttemptReconnect {
+    // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been DISCONNECTED
+    self.pusherIsConnected = NO;
 }
 
 @end

@@ -167,23 +167,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     
-    AMBPusherChannelObject *channelObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
-    
-    if (channelObject && !channelObject.isExpired) {
-        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-            if (e) {
-                DLog(@"There was an error - %@", e);
-            }
-        }];
-    } else {
-        [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
-            [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-                if (e) {
-                    DLog(@"There was an error - %@", e);
-                }
-            }];
-        }];
-    }
+    [self performIdentify];
     
     [self setUpTheme];
 }
@@ -225,9 +209,32 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.textField.text = self.urlNetworkObj.url;
 }
 
+- (void)performIdentify {
+    AMBPusherChannelObject *channelObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
+    
+    // Checks if we are subscribed to a pusher channel and makes sure that the channel is not expired
+    if (channelObject && !channelObject.isExpired) {
+        // If we're SUBSCRIBED and NOT expired, then we will call the Identify
+        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+            if (e) {
+                DLog(@"There was an error - %@", e);
+            }
+        }];
+    } else {
+        // If we're NOT SUBSCRIBED or EXPIRED then we will do the whole pusher process over again (get channel name, connect to pusher, subscribe, identify)
+        [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
+            [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+                if (e) {
+                    DLog(@"There was an error - %@", e);
+                }
+            }];
+        }];
+    }
+}
 
 
 #pragma mark - CollectionViewDataSource
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.services.count;
@@ -249,9 +256,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 }
 
 
-
-
 #pragma mark - CollectionViewDelegate
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     AMBShareService *service = self.services[indexPath.row];
