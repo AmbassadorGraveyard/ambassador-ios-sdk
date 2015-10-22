@@ -2,10 +2,9 @@ general:
   build_dir: Ambassador
 
 test:
-  pre:
+  override:
     -brew update
     -brew upgrade xctool
-  override:
     - xctool
       -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
       -sdk iphonesimulator
