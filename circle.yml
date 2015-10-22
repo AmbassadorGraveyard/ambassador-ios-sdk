@@ -1,5 +1,5 @@
 general:
-  build_dir: Ambassador/AmbassadorTests
+  build_dir: Ambassador
 
 test:
   override:
