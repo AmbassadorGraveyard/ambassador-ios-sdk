@@ -23,8 +23,9 @@ test:
       -sdk iphonesimulator
       -project Ambassador.xcodeproj
       -scheme "Ambassador"
+      build-tests run-tests
 
       
 #       # -reporter plain:$CIRCLE_ARTIFACTS/xctool.log
 # dependencies:
-
+   
