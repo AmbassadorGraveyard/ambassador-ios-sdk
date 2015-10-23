@@ -181,6 +181,7 @@
 		EFCBFDBB1BDA859E0052DFB7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
 		EFED7B051BDA9F0A00F6C360 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EFED7B041BDA9F0A00F6C360 /* libz.tbd */; };
 		EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
+		EFED7B0D1BDAA31F00F6C360 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -423,6 +424,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFED7B0D1BDAA31F00F6C360 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
