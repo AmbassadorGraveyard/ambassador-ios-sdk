@@ -1308,6 +1308,7 @@
 			buildSettings = {
 				DEAD_CODE_STRIPPING = NO;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
@@ -1321,6 +1322,7 @@
 			buildSettings = {
 				DEAD_CODE_STRIPPING = NO;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
@@ -1393,6 +1395,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Ambassador;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1408,6 +1411,7 @@
 				INFOPLIST_FILE = AmbassadorResources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Ambassador;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1473,6 +1477,7 @@
 				INFOPLIST_FILE = TestApplicationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApplication.app/TestApplication";
 			};
@@ -1488,6 +1493,7 @@
 				);
 				INFOPLIST_FILE = TestApplicationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApplication.app/TestApplication";
 			};
