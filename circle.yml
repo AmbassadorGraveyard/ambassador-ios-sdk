@@ -1,3 +1,6 @@
+general:
+  build_dir: Ambassador
+
 test:
   override:
     - set -o pipefail &&
