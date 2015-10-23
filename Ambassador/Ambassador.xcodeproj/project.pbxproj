@@ -1366,6 +1366,7 @@
 		DB844D491BA75F9F003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1373,6 +1374,7 @@
 		DB844D4A1BA75F9F003FD7A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1431,6 +1433,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1449,6 +1452,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(SDKROOT)/usr/lib/system",
 				);
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
