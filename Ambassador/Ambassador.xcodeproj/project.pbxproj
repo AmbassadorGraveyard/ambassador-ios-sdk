@@ -180,8 +180,6 @@
 		EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */; settings = {ASSET_TAGS = (); }; };
 		EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */; settings = {ASSET_TAGS = (); }; };
 		EFCBFDBB1BDA859E0052DFB7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
-		EFD7FB951BDAC95D00436051 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
-		EFD7FB961BDAC96400436051 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
@@ -227,6 +225,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = DB844D471BA75F9F003FD7A9;
 			remoteInfo = Framework;
+		};
+		EFD7FB971BDACD3D00436051 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB844D511BA7622D003FD7A9;
+			remoteInfo = AmbassadorResources;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -425,8 +430,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFD7FB961BDAC96400436051 /* libicucore.tbd in Frameworks */,
-				EFD7FB951BDAC95D00436051 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,6 +862,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				EFD7FB981BDACD3D00436051 /* PBXTargetDependency */,
 			);
 			name = Ambassador;
 			productName = Ambassador;
@@ -1206,6 +1210,11 @@
 			isa = PBXTargetDependency;
 			target = DB844D471BA75F9F003FD7A9 /* Framework */;
 			targetProxy = DB844D8C1BA76C82003FD7A9 /* PBXContainerItemProxy */;
+		};
+		EFD7FB981BDACD3D00436051 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB844D511BA7622D003FD7A9 /* AmbassadorResources */;
+			targetProxy = EFD7FB971BDACD3D00436051 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
