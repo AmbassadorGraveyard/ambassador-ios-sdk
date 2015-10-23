@@ -30,7 +30,7 @@
                                AMBContactLoaderDelegate, LinkedInAuthorizeDelegate,
                                AMBShareServiceDelegate, AMBContactSelectorDelegate,
                                UITextFieldDelegate, MFMessageComposeViewControllerDelegate,
-                               MFMailComposeViewControllerDelegate>
+                               MFMailComposeViewControllerDelegate, AMBUtilitiesDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
@@ -197,16 +197,25 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 - (void)removeWaitView
 {
+    NSNumber *campaingID = [NSNumber numberWithInt:self.campaignID.intValue];
+    self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
+    
+    if (!self.urlNetworkObj) {
+        [self.waitViewTimer invalidate];
+        AMBUtilities *utilities = [[AMBUtilities alloc] init];
+        utilities.delegate = self;
+        [utilities presentErrorAlertWithMessage:@"No matching campaigns were found!" forViewController:self];
+        NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
+        return;
+    }
+    
+    self.waitView.hidden = YES;
+    self.textField.text = self.urlNetworkObj.url;
+    
     if (self.waitViewTimer)
     {
         [self.waitViewTimer invalidate];
     }
-    
-    self.waitView.hidden = YES;
-    
-    NSNumber *campaingID = [NSNumber numberWithInt:self.campaignID.intValue];
-    self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
-    self.textField.text = self.urlNetworkObj.url;
 }
 
 - (void)performIdentify {
@@ -969,6 +978,10 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 }
 
 
+#pragma mark - AMBUtilities Delegate
 
+- (void)okayButtonClicked {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end
