@@ -30,7 +30,7 @@
                                AMBContactLoaderDelegate, LinkedInAuthorizeDelegate,
                                AMBShareServiceDelegate, AMBContactSelectorDelegate,
                                UITextFieldDelegate, MFMessageComposeViewControllerDelegate,
-                               MFMailComposeViewControllerDelegate>
+                               MFMailComposeViewControllerDelegate, AMBUtilitiesDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
@@ -201,7 +201,9 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
     
     if (!self.urlNetworkObj) {
-        [self presentErrorWithTitle:@"Unable to present RAF" message:@"No matching campaigns could be found"];
+        AMBUtilities *utilities = [[AMBUtilities alloc] init];
+        utilities.delegate = self;
+        [utilities presentErrorAlertWithMessage:@"No matching campaigns were found!" forViewController:self];
         return;
     }
     
@@ -525,7 +527,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 
 #pragma mark - ShareServiceDelegate
-- (void)presentErrorWithTitle:(NSString *)title message:(NSString *)message
+- (void)networkError:(NSString *)title message:(NSString *)message
 {
     dispatch_async(dispatch_get_main_queue(), ^{
 //        [self simpleAlertWith:title message:message];
@@ -974,6 +976,11 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 }
 
 
+#pragma mark - AMBUtilities Delegate
 
+- (void)okayButtonClicked {
+    [self.waitViewTimer invalidate];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

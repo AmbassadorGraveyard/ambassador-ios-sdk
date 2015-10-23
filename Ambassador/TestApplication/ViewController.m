@@ -27,7 +27,7 @@
 }
 
 - (IBAction)showRAF:(UIButton *)sender {
-    [AmbassadorSDK presentRAFForCampaign:@"1" FromViewController:self];
+    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self];
     
 }
 
