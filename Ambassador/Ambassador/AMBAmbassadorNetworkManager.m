@@ -8,6 +8,7 @@
 
 #import "AMBAmbassadorNetworkManager.h"
 #import "AMBErrors.h"
+#import "AmbassadorSDK_Internal.h"
 
 @implementation AMBAmbassadorNetworkManager
 + (instancetype)sharedInstance {
@@ -28,7 +29,7 @@
     [[AMBAmbassadorNetworkManager sharedInstance] dataTaskForRequest:[[AMBAmbassadorNetworkManager sharedInstance] urlRequestFor:u body:b authorization:uToken additionalParameters:additionalParams] session:[NSURLSession sharedSession] completion:c];
 }
 
-- (void)pusherChannelNameUniversalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void(^)(NSString *, NSError *e))c {
+- (void)pusherChannelNameUniversalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void(^)(NSString *, NSMutableDictionary *, NSError *e))c {
 //    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:uToken universalID:uID completion:^(NSData *d, NSURLResponse *r, NSError *e) {
 //        if (e) {
 //            dispatch_async(dispatch_get_main_queue(), ^{ c(nil, e); });
@@ -41,19 +42,22 @@
     
     [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:uToken universalID:uID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         if (e) {
-            dispatch_async(dispatch_get_main_queue(), ^{ c(nil, e); });
+            dispatch_async(dispatch_get_main_queue(), ^{ c(nil, nil, e); });
         } else {
-            AMBPusherSessionSubscribeNetworkObject* o = [[AMBPusherSessionSubscribeNetworkObject alloc] init];
-            [o fillWithDictionary:[NSJSONSerialization JSONObjectWithData:d options:0 error:&e]];
-            [o save];
-            dispatch_async(dispatch_get_main_queue(), ^{ c(o.channel_name, e); });
+//            AMBPusherSessionSubscribeNetworkObject* o = [[AMBPusherSessionSubscribeNetworkObject alloc] init];
+//            [o fillWithDictionary:[NSJSONSerialization JSONObjectWithData:d options:0 error:&e]];
+            NSMutableDictionary *payloadDict = [NSJSONSerialization JSONObjectWithData:d options:0 error:&e];
+            
+            
+//            [o save];
+            dispatch_async(dispatch_get_main_queue(), ^{ c(payloadDict[@"channel_name"], payloadDict, e); });
         }
     }];
 }
 
 + (NSString *)baseUrl {
 #if AMBPRODUCTION
-    return @"https://api.getambassador.com/universal/";
+    return @"https://api.getambassador.com/";
 # else
     return @"https://dev-ambassador-api.herokuapp.com/";
 #endif

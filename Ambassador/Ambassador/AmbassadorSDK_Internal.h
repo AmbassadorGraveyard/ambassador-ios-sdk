@@ -9,19 +9,20 @@
 #import <Ambassador/Ambassador.h>
 #import "AMBNetworkObject.h"
 #import "AMBPusher.h"
+#import "AMBPusherChannelObject.h"
+#import "AMBPusherManager.h"
 
 
 
 @interface AmbassadorSDK ()
 + (void)sendIdentifyWithCampaign:(NSString *)campaign enroll:(BOOL)enroll completion:(void(^)(NSError *))c;
-+ (void)pusherChannelUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSString *, NSError *))c;
++ (void)pusherChannelUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSString *, NSMutableDictionary *, NSError *))c;
 + (void)startPusherUniversalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(AMBPTPusherChannel* chan, NSError* e))c;
 + (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID;
 + (AmbassadorSDK*)sharedInstance;
 + (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c;
-
-
-+ (void)setUpdatedUserInfoCompletion:(void(^)(AMBUserNetworkObject *, NSError *))c;
-
-@property AMBUserNetworkObject *user;
+@property (nonatomic, strong) AMBUserNetworkObject *user;
+@property (nonatomic, strong) NSString *email;
+@property (nonatomic, strong) AMBPusherChannelObject *pusherChannelObj;
+@property (nonatomic, strong) AMBPusherManager *pusherManager;
 @end

@@ -10,16 +10,21 @@
 #import "AMBPTPusherChannel.h"
 #import "AMBNetworkObject.h"
 #import "AMBUtilities.h"
+#import "AmbassadorSDK_Internal.h"
 
 @interface AMBPusherManager () <AMBPTPusherDelegate>
+
 @property (nonatomic, strong) AMBPTPusher *client;
 @property (nonatomic, strong) AMBPTPusherPrivateChannel *channel;
 @property (nonatomic, copy) void (^completion)(AMBPTPusherChannel *c, NSError *e);
 @property (nonatomic, strong) NSString *universalToken;
-@property BOOL isAuthorized;
+@property (nonatomic) BOOL isAuthorized;
+
 @end
 
+
 @implementation AMBPusherManager
+
 + (instancetype)sharedInstanceWithAuthorization:(NSString *)auth {
     static AMBPusherManager* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
@@ -38,18 +43,21 @@
 
 
 #pragma mark - Initialization
+
 - (instancetype)initWithAuthorization:(NSString *)auth {
     if (self = [super init]) {
         self.universalToken = auth;
         self.client = [AMBPTPusher pusherWithKey:[AMBPusherManager pusherKey] delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:[self pusherAuthUrl]];
         self.isAuthorized = NO;
+        self.connectionState = PTPusherConnectionDisconnected;
         [self.client connect];
     }
     return self;
 }
 
-- (void)subscribeTo:(NSString *)chan completion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
+- (void)subscribeTo:(NSString *)chan pusherChanDict:(NSMutableDictionary*)pushDict completion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
+    [[AmbassadorSDK sharedInstance].pusherChannelObj createObjectFromDictionary:pushDict];
     self.completion = completion;
     self.channel = [self.client subscribeToPrivateChannelNamed:chan];
     if (self.isAuthorized) {
@@ -58,24 +66,36 @@
     }
 }
 
+- (void)resubscribeToExistingChannelWithCompletion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
+    NSString *channelName = [AmbassadorSDK sharedInstance].pusherChannelObj.channelName;
+    self.completion = completion;
+    
+    if (channelName && ![channelName isEqualToString:@""]) {
+        self.channel = [self.client subscribeToPrivateChannelNamed:[AmbassadorSDK sharedInstance].pusherChannelObj.channelName];
+        self.completion(self.channel, nil);
+    } else {
+        self.completion(self.channel, [NSError errorWithDomain:@"Could not find existing channel name to subscribe!" code:1 userInfo:nil]);
+    }
+}
+
 - (void)bindToChannelEvent:(NSString *)event handler:(void(^)(AMBPTPusherEvent *))handler {
     [self.channel bindToEventNamed:event handleWithBlock:handler];
-    //[self.channel bindToEventNamed:event handleWithBlock:handler queue:dispatch_get_main_queue()];
 }
 
 
 #pragma mark - Url returns
+
 - (NSString *)pusherAuthUrl {
 #if AMBPRODUCTION
-    return  @"https://api.getambassador.com//auth/subscribe/";
+    return  @"https://api.getambassador.com/auth/subscribe/";
 #else
     return  @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
 #endif
 }
 
 
-
 # pragma mark - PTPusher Delegate
+
 - (void)pusher:(AMBPTPusher *)pusher willAuthorizeChannel:(AMBPTPusherChannel *)channel withRequest:(NSMutableURLRequest *)request {
     AMBPusherAuthNetworkObject *pusherAuthObj = [[AMBPusherAuthNetworkObject alloc] init];
     request = [self modifyPusherAuthRequest:request authorization:self.universalToken];
@@ -115,6 +135,18 @@
             weakSelf.completion(c, e);
         });
     }
+}
+
+- (void)pusher:(AMBPTPusher *)pusher connectionDidConnect:(AMBPTPusherConnection *)connection {
+    // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been CONNECTED
+    DLog(@"Pusher connection state changed to CONNECTED");
+    self.connectionState = PTPusherConnectionConnected;
+}
+
+- (void)pusher:(AMBPTPusher *)pusher connection:(AMBPTPusherConnection *)connection didDisconnectWithError:(NSError *)error willAttemptReconnect:(BOOL)willAttemptReconnect {
+    // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been DISCONNECTED
+    DLog(@"Pusher connection state changed to DISCONNECTED");
+    self.connectionState = PTPusherConnectionDisconnected;
 }
 
 @end

@@ -15,7 +15,6 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     AMBConversionParameters *conversion = [[AMBConversionParameters alloc] init];
     conversion.mbsy_revenue = @1000;
@@ -54,7 +53,7 @@
         }
     }];
     
-    [AmbassadorSDK identifyWithEmail:@"test1293@getambassador.com"];
+    [AmbassadorSDK identifyWithEmail:@"test1593@getambassador.com"];
     
 //    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
 //        if (error) {

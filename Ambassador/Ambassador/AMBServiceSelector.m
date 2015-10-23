@@ -165,14 +165,16 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     
     DLog(@"%@", self.urlNetworkObj.short_code);
 
-    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
-    [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-        if (e) {
-            DLog(@"There was an error - %@", e);
-        }
-    }];
-        
+    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
+    
+    [self performIdentify];
+    
     [self setUpTheme];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.waitViewTimer invalidate];
 }
 
 - (void)alertForNetworkTimeout
@@ -207,9 +209,53 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.textField.text = self.urlNetworkObj.url;
 }
 
+- (void)performIdentify {
+    AMBPusherChannelObject *channelObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
+    
+    // Checks if we are subscribed to a pusher channel and makes sure that the channel is not expired
+    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState == PTPusherConnectionConnected) {
+        // If we're SUBSCRIBED and NOT expired, then we will call the Identify
+        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+            if (e) { DLog(@"There was an error - %@", e); }
+        }];
+        
+        return;
+    }
+    
+    // Checks if we are subscribed, good with expiration, BUT Pusher got disconnected
+    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState != PTPusherConnectionConnected) {
+        // If pusher socket is NOT OPEN, then we attempt to RESUBSCRIBE to the existing channel
+        DLog(@"Attempting to resubscribe to previous Pusher channel");
+        [[AmbassadorSDK sharedInstance].pusherManager resubscribeToExistingChannelWithCompletion:^(AMBPTPusherChannel *channelName, NSError *error) {
+            if (error) {
+                DLog(@"Error resubscribing to channel - %@", error); // If there is an error trying to resubscribe, we will recall the whole identify process
+                [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
+                    [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+                        if (e) { DLog(@"There was an error - %@", e); }
+                    }];
+                }];
+            } else {
+                [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:nil]; // Everything is good to go and we can call identify
+            }
+        }];
+        
+        return;
+    }
+
+    // If we're NOT SUBSCRIBED or EXPIRED then we will do the whole pusher process over again (get channel name, connect to pusher, subscribe, identify)
+    DLog(@"The Pusher channel seems to be null or expired, restarting whole identify process");
+    [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
+        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+            if (e) {
+                DLog(@"There was an error - %@", e);
+            }
+        }];
+    }];
+}
 
 
 #pragma mark - CollectionViewDataSource
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.services.count;
@@ -231,9 +277,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 }
 
 
-
-
 #pragma mark - CollectionViewDelegate
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     AMBShareService *service = self.services[indexPath.row];
