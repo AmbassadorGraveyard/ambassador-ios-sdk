@@ -41,23 +41,24 @@
     }];
 }
 
-//- (void)testProdSendIdentify {
-//    XCTFail(); // NEEDS TO FLIP URLS FOR PROD
-////    XCTestExpectation *exp = [self expectationWithDescription:@"Test Prod Send Identify"];
-////    [AmbassadorSDK sendIdentifyWithEmail:@"jake@getambassador.com" campaign:@"260" enroll:YES universalToken:self.prodToken universalID:self.prodID completion:^(NSError *e) {
-////        if (e) { XCTFail("%@", e); }
-////        [exp fulfill];
-////    }];
-////    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * __nullable error) {
-////        if (error) {
-////            XCTFail(@"Expectation failed with error: %@", error);
-////        }
-////    }];
-//}
+- (void)testProdSendIdentify {
+    XCTFail();
+    XCTestExpectation *exp = [self expectationWithDescription:@"Test Prod Send Identify"];
+
+    [AmbassadorSDK sendIdentifyWithCampaign:@"260" enroll:YES completion:^(NSError *e) {
+        if (e) { XCTFail("%@", e); }
+        [exp fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * __nullable error) {
+        if (error) {
+            XCTFail(@"Expectation failed with error: %@", error);
+        }
+    }];
+}
 
 - (void)testDevPusherChannel {
     XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Channel"];
-    [AmbassadorSDK pusherChannelUniversalToken:self.devToken universalID:self.devID completion:^(NSString *s, NSError *e) {
+    [AmbassadorSDK pusherChannelUniversalToken:self.devToken universalID:self.devID completion:^(NSString *s, NSMutableDictionary *d, NSError *e) {
         if (e) { XCTFail(@"%@", e); }
         [exp fulfill];
     }];
@@ -68,7 +69,7 @@
     }];
 }
 
-- (void)testPusher {
+- (void)testDevPusher {
     XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Channel"];
     [AmbassadorSDK runWithUniversalToken:self.devToken universalID:self.devID];
     [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com" completion:^(NSError *e) {
@@ -85,7 +86,6 @@
             }];
         }];
     }];
-    
     [self waitForExpectationsWithTimeout:15.0 handler:^(NSError * __nullable error) {
         if (error) {
             XCTFail(@"Expectation failed with error: %@", error);

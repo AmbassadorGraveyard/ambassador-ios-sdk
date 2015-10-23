@@ -509,7 +509,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 {
     DLog();
     [self.delegate sendToContacts:[self.selected allObjects] forServiceType:AMB_SMS_TITLE fromFirstName:firstName lastName:lastName withMessage:self.composeMessageTextView.text];
-    [self sendShareTrack:[self validatePhoneNumbers:[self.selected allObjects]] completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+    [self sendShareTrack:[NSMutableArray arrayWithArray:[self.selected allObjects]] completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
     }];
     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -562,15 +562,24 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 - (void)sendShareTrack:(NSMutableArray *)contacts completion:(void (^)(NSData *, NSURLResponse *, NSError *))c {
     AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
     if (self.type == AMBSocialServiceTypeEmail) {
-        share.recipient_email = [NSMutableArray arrayWithArray:[self.selected allObjects]];
+        share.recipient_email = [self valuesFromContacts:[self.selected allObjects]];
     } else if (self.type == AMBSocialServiceTypeSMS) {
-        share.recipient_username = [self validatePhoneNumbers:[self.selected allObjects]];
+        share.recipient_username = [self validatePhoneNumbers:[self valuesFromContacts:[self.selected allObjects]]];
     }
     share.short_code = self.urlNetworkObject.short_code;
     share.social_name = socialServiceTypeStringVal(self.type);
     
     [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:nil completion:c];
 }
+
+- (NSMutableArray *)valuesFromContacts:(NSArray *)contacts {
+    NSMutableArray *returnVal = [[NSMutableArray alloc] init];
+    for (AMBContact *contact in contacts) {
+        [returnVal addObject:contact.value];
+    }
+    return returnVal;
+}
+
 
 - (NSMutableArray *)validatePhoneNumbers:(NSArray *)contacts
 {
