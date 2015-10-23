@@ -204,6 +204,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         AMBUtilities *utilities = [[AMBUtilities alloc] init];
         utilities.delegate = self;
         [utilities presentErrorAlertWithMessage:@"No matching campaigns were found!" forViewController:self];
+        NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
         return;
     }
     
