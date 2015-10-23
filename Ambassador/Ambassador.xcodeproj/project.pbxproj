@@ -178,7 +178,9 @@
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; settings = {ASSET_TAGS = (); }; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; settings = {ASSET_TAGS = (); }; };
 		EF407F211BB3449B0074D2AE /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */; settings = {ASSET_TAGS = (); }; };
-		EFCBFDB81BDA72010052DFB7 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A24771BD129A000CE3230 /* WebKit.framework */; };
+		EF9046AF1BD5549100256C5A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A24771BD129A000CE3230 /* WebKit.framework */; };
+		EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */; settings = {ASSET_TAGS = (); }; };
+		EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -411,6 +413,8 @@
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AmbassadorTheme.plist; path = AmbassadorResources/AmbassadorTheme.plist; sourceTree = SOURCE_ROOT; };
+		EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBPusherChannelObject.h; path = fmdb/AMBPusherChannelObject.h; sourceTree = "<group>"; };
+		EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMBPusherChannelObject.m; path = fmdb/AMBPusherChannelObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -516,6 +520,8 @@
 				DB6A24801BD1663F00CE3230 /* AMBStorageManager.m */,
 				DBA3FB541BA8A23B00672D82 /* AMBAuthorizeLinkedIn.h */,
 				DBA3FB551BA8A23B00672D82 /* AMBAuthorizeLinkedIn.m */,
+				EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */,
+				EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */,
 				DBA3FB561BA8A23B00672D82 /* AMBConstants.h */,
 				DBA3FB571BA8A23B00672D82 /* AMBConstants.m */,
 				DBA3FB581BA8A23B00672D82 /* AMBContact.h */,
@@ -769,6 +775,7 @@
 				DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */,
 				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
 				DBA3FC051BA8AA1D00672D82 /* AMBPTJSON.h in Headers */,
+				EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */,
 				DBA3FC131BA8AA1D00672D82 /* AMBPTPusherChannel.h in Headers */,
 				DB6A245F1BD00F3F00CE3230 /* AMBNetworkManager.h in Headers */,
 				DBA3FBBB1BA8A24F00672D82 /* AMBShareServiceCell.h in Headers */,
@@ -1070,6 +1077,7 @@
 				DBA3FC0E1BA8AA1D00672D82 /* AMBPTPusher.m in Sources */,
 				DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */,
 				DBA3FBB01BA8A24F00672D82 /* AMBRemoveButton.m in Sources */,
+				EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */,
 				DBA3FB7E1BA8A23C00672D82 /* AMBContactSelector.m in Sources */,
 				DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */,
 				DBA3FC121BA8AA1D00672D82 /* AMBPTPusherAPI.m in Sources */,
