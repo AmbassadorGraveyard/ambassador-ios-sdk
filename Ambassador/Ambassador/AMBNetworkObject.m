@@ -191,4 +191,13 @@
 
 
 @implementation AMBShareTrackNetworkObject
+-(instancetype)init {
+    if (self = [super init]) {
+        self.recipient_username = nil; //[NSMutableArray arrayWithArray:@[]];
+        self.recipient_email = nil; //[NSMutableArray arrayWithArray:@[]];
+        self.short_code = @"";
+        self.social_name = @"";
+    }
+    return self;
+}
 @end

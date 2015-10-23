@@ -7,7 +7,36 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AMBNetworkObject.h"
 
-@interface AMBMockUserObjects : NSObject
+@interface AMBMockObject : NSObject
+@end
+
+
+
+@interface AMBMockUserObjects : AMBMockObject
 - (NSMutableDictionary *)mockUser;
+@end
+
+
+
+@interface AMBMockShareTrackObject : AMBMockObject
+// valid objects
++ (AMBShareTrackNetworkObject *)validFacebookShare;
++ (AMBShareTrackNetworkObject *)validTwitterShare;
++ (AMBShareTrackNetworkObject *)validLinkedInShare;
++ (AMBShareTrackNetworkObject *)validSMSShare;
++ (AMBShareTrackNetworkObject *)validEmailShare;
+
+// invalid objects
++ (AMBShareTrackNetworkObject *)invalidServiceTypeShare;
++ (AMBShareTrackNetworkObject *)invalidShortCodeShare;
++ (AMBShareTrackNetworkObject *)invalidRecipientEmailShare;
++ (AMBShareTrackNetworkObject *)invalidRecipientUsernameShare;
+
++ (NSString *)shortCodeValid:(BOOL)valid;
++ (NSMutableArray *)recipientUsernameValid:(BOOL)valid;
++ (NSMutableArray *)recipientEmailValid:(BOOL)valid;
++ (NSString *)invalidSocialName;
+
 @end
