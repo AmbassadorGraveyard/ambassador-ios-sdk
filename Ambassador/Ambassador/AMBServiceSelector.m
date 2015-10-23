@@ -201,6 +201,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
     
     if (!self.urlNetworkObj) {
+        [self.waitViewTimer invalidate];
         AMBUtilities *utilities = [[AMBUtilities alloc] init];
         utilities.delegate = self;
         [utilities presentErrorAlertWithMessage:@"No matching campaigns were found!" forViewController:self];
@@ -980,7 +981,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 #pragma mark - AMBUtilities Delegate
 
 - (void)okayButtonClicked {
-    [self.waitViewTimer invalidate];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
