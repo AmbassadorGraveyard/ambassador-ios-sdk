@@ -14,7 +14,7 @@ test:
       -sdk iphonesimulator
       -project Ambassador.xcodeproj
       -scheme "Ambassador"
-      build-tests run-tests
+      build build-tests run-tests
 
 # test:
 #   override:
