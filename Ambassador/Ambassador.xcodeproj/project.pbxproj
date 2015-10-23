@@ -38,7 +38,6 @@
 		DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24701BD04E3900CE3230 /* AMBPusherManager.m */; settings = {ASSET_TAGS = (); }; };
 		DB6A24741BD1259000CE3230 /* AMBPusherManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24731BD1259000CE3230 /* AMBPusherManagerTests.m */; settings = {ASSET_TAGS = (); }; };
 		DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24751BD125FF00CE3230 /* AMBTests.m */; settings = {ASSET_TAGS = (); }; };
-		DB6A24781BD129A000CE3230 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A24771BD129A000CE3230 /* WebKit.framework */; };
 		DB6A247C1BD14BBB00CE3230 /* AMBMockObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A247B1BD14BBB00CE3230 /* AMBMockObjects.m */; settings = {ASSET_TAGS = (); }; };
 		DB6A247E1BD14F4900CE3230 /* AMBNetworObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A247D1BD14F4900CE3230 /* AMBNetworObjectTests.m */; settings = {ASSET_TAGS = (); }; };
 		DB6A24811BD1663F00CE3230 /* AMBStorageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A247F1BD1663F00CE3230 /* AMBStorageManager.h */; settings = {ASSET_TAGS = (); }; };
@@ -180,7 +179,6 @@
 		EF407F211BB3449B0074D2AE /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */; settings = {ASSET_TAGS = (); }; };
 		EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */; settings = {ASSET_TAGS = (); }; };
 		EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */; settings = {ASSET_TAGS = (); }; };
-		EFCBFDBA1BDA80840052DFB7 /* libsqlite3.tbd in CopyFiles */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -238,16 +236,6 @@
 				DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in Copy Files */,
 			);
 			name = "Copy Files";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EFCBFDB91BDA80780052DFB7 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				EFCBFDBA1BDA80840052DFB7 /* libsqlite3.tbd in CopyFiles */,
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -439,7 +427,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB6A24781BD129A000CE3230 /* WebKit.framework in Frameworks */,
 				DB6A246E1BD031A100CE3230 /* libicucore.tbd in Frameworks */,
 				DB6A246C1BD0319700CE3230 /* libsqlite3.tbd in Frameworks */,
 				DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */,
@@ -910,7 +897,6 @@
 				DB844D5D1BA76BDE003FD7A9 /* Sources */,
 				DB844D5E1BA76BDE003FD7A9 /* Frameworks */,
 				DB844D5F1BA76BDE003FD7A9 /* Resources */,
-				EFCBFDB91BDA80780052DFB7 /* CopyFiles */,
 			);
 			buildRules = (
 			);

@@ -16,16 +16,15 @@
 #       -scheme "Ambassador"
 #       run-tests
 
-# test:
-#   override:
-#     - xctool
-#       -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
-#       -sdk iphonesimulator
-#       -project Ambassador.xcodeproj
-#       -scheme "Ambassador"
-#       build-tests run-tests
+test:
+  override:
+    - xctool
+      -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
+      -sdk iphonesimulator
+      -project Ambassador.xcodeproj
+      -scheme "Ambassador"
 
       
 #       # -reporter plain:$CIRCLE_ARTIFACTS/xctool.log
 # dependencies:
-   
+
