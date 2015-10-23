@@ -57,7 +57,7 @@
 
 - (void)testDevPusherChannel {
     XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Channel"];
-    [AmbassadorSDK pusherChannelUniversalToken:self.devToken universalID:self.devID completion:^(NSString *s, NSError *e) {
+    [AmbassadorSDK pusherChannelUniversalToken:self.devToken universalID:self.devID completion:^(NSString *s, NSMutableDictionary *dict, NSError *e) {
         if (e) { XCTFail(@"%@", e); }
         [exp fulfill];
     }];

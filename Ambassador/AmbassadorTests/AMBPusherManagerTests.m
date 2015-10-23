@@ -28,7 +28,8 @@
 - (void)testDevPusherSubscribe {
     XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Auth Subscribe"];
     AMBPusherManager *o = [AMBPusherManager sharedInstanceWithAuthorization:self.devToken];
-    [o subscribeTo:self.channelName completion:^(AMBPTPusherChannel *c, NSError *e) {
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+    [o subscribeTo:self.channelName pusherChanDict:dictionary completion:^(AMBPTPusherChannel *c, NSError *e) {
         if (e) { XCTFail(@"%@",e); }
         XCTAssertNotNil(c);
         [exp fulfill];
@@ -44,8 +45,9 @@
 - (void)testProdPusherSubscribe {
     XCTestExpectation *exp = [self expectationWithDescription:@"Test Prod Pusher Auth Subscribe"];
     AMBPusherManager *o = [AMBPusherManager sharedInstanceWithAuthorization:self.prodToken];
-    [o subscribeTo:self.channelName completion:^(AMBPTPusherChannel *c, NSError *e) {
-        if (e) { XCTFail(@"%@", e); }
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+    [o subscribeTo:self.channelName pusherChanDict:dictionary completion:^(AMBPTPusherChannel *c, NSError *e) {
+        if (e) { XCTFail(@"%@",e); }
         XCTAssertNotNil(c);
         [exp fulfill];
         
