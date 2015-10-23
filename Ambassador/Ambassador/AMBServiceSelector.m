@@ -197,16 +197,21 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 - (void)removeWaitView
 {
+    NSNumber *campaingID = [NSNumber numberWithInt:self.campaignID.intValue];
+    self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
+    
+    if (!self.urlNetworkObj) {
+        [self presentErrorWithTitle:@"Unable to present RAF" message:@"No matching campaigns could be found"];
+        return;
+    }
+    
+    self.waitView.hidden = YES;
+    self.textField.text = self.urlNetworkObj.url;
+    
     if (self.waitViewTimer)
     {
         [self.waitViewTimer invalidate];
     }
-    
-    self.waitView.hidden = YES;
-    
-    NSNumber *campaingID = [NSNumber numberWithInt:self.campaignID.intValue];
-    self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
-    self.textField.text = self.urlNetworkObj.url;
 }
 
 - (void)performIdentify {
@@ -520,7 +525,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 
 #pragma mark - ShareServiceDelegate
-- (void)networkError:(NSString *)title message:(NSString *)message
+- (void)presentErrorWithTitle:(NSString *)title message:(NSString *)message
 {
     dispatch_async(dispatch_get_main_queue(), ^{
 //        [self simpleAlertWith:title message:message];
