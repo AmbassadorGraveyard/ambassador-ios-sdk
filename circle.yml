@@ -11,7 +11,7 @@ test:
       -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
       -sdk iphonesimulator
       -project Ambassador.xcodeproj
-      -scheme "Ambassador"
+      -scheme "AmbassadorTests"
       build-tests run-tests
 
 # test:
