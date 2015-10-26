@@ -8,6 +8,6 @@ general:
 test:
   override:
     - mkdir -p $CIRCLE_TEST_REPORTS/xctest
-    - Xctool -project Ambassador.xcodeproj -scheme Ambassador -sdk iphonesimulator -reporter junit:$CIRCLE_TEST_REPORTS/xctest/test-result.xml clean test
+    - Xctool -project Ambassador.xcodeproj -scheme AmbassadorTests -sdk iphonesimulator -reporter junit:$CIRCLE_TEST_REPORTS/xctest/test-result.xml clean test
     - Xctool -project Ambassador.xcodeproj -scheme Ambassador clean build
    
