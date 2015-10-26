@@ -18,9 +18,9 @@
     return _sharedInsance;
 }
 
-- (NSMutableURLRequest *)urlRequestFor:(NSString *)url body:(NSData *)b authorization:(NSString *)a additionalParameters:(NSMutableDictionary*)additParams {
+- (NSMutableURLRequest *)urlRequestFor:(NSString *)url body:(NSData *)b requestType:(NSString*)requestType authorization:(NSString *)a additionalParameters:(NSMutableDictionary*)additParams {
     NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    r.HTTPMethod = @"POST";
+    r.HTTPMethod = requestType;
     [r setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [r setValue:a forHTTPHeaderField:@"Authorization"];
     

@@ -133,7 +133,7 @@
 @implementation AMBUserNetworkObject
 - (void)fillWithUrl:(NSString *)url universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c {
     __weak AMBUserNetworkObject *weakSelf = self;
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:url universalToken:uTok universalID:uID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:url universalToken:uTok universalID:uID additionParams:nil requestType:@"GET" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         if (e) {
             if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
         } else {
@@ -200,4 +200,37 @@
     }
     return self;
 }
+@end
+
+
+#pragma mark - AMBBulkShareEmailObject
+
+@implementation AMBBulkShareEmailObject
+
+- (instancetype)initWithEmails:(NSMutableArray*)emails shortCode:(NSString*)shortCode message:(NSString*)message subjectLine:(NSString*)subjectLine {
+    self = [super init];
+    self.to_emails = [[NSArray alloc] initWithArray:emails];
+    self.short_code = shortCode;
+    self.message = message;
+    self.subject_line = subjectLine;
+    
+    return self;
+}
+
+@end
+
+
+#pragma mark - AMBBulkShareSMSObject
+
+@implementation AMBBulkShareSMSObject
+
+- (instancetype)initWithPhoneNumbers:(NSMutableArray*)phoneNumbers fromSender:(NSString*)sender message:(NSString*)message {
+    self = [super init];
+    self.to = [[NSArray alloc] initWithArray:phoneNumbers];
+    self.from = sender;
+    self.message = message;
+    
+    return self;
+}
+
 @end
