@@ -54,19 +54,19 @@
 }
 
 + (NSString *)pusherAuthSubscribeUrl {
-    return [NSString stringWithFormat:@"%@auth/subscribe/", [self baseUrl]];
+    return [NSString stringWithFormat:@"%@auth/subscribe/", [AMBAmbassadorNetworkManager baseUrl]];
 }
 
 + (NSString *)pusherSessionSubscribeUrl {
-    return [NSString stringWithFormat:@"%@auth/session/", [self baseUrl]];
+    return [NSString stringWithFormat:@"%@auth/session/", [AMBAmbassadorNetworkManager baseUrl]];
 }
 
 + (NSString *)sendIdentifyUrl {
-    return [NSString stringWithFormat:@"%@universal/action/identify/", [self baseUrl]];
+    return [NSString stringWithFormat:@"%@universal/action/identify/", [AMBAmbassadorNetworkManager baseUrl]];
 }
 
 + (NSString *)sendShareTrackUrl {
-    return [NSString stringWithFormat:@"%@track/share/", [self baseUrl]];
+    return [NSString stringWithFormat:@"%@track/share/", [AMBAmbassadorNetworkManager baseUrl]];
 }
 
 @end
