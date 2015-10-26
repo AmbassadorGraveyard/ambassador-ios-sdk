@@ -19,13 +19,13 @@
 
 @interface AMBContactSelector : UIViewController
 
-@property NSMutableArray *data;
-@property AMBServiceSelectorPreferences *prefs;
-@property NSString *defaultMessage;
-@property NSString *shortCode;
-@property NSString *shortURL;
-@property (weak)id<AMBContactSelectorDelegate>delegate;
-@property AMBSocialServiceType type;
-@property AMBUserUrlNetworkObject *urlNetworkObject;
+@property (nonatomic, strong) NSMutableArray *data;
+@property (nonatomic, strong) AMBServiceSelectorPreferences *prefs;
+@property (nonatomic, strong) NSString *defaultMessage;
+@property (nonatomic, strong) NSString *shortCode;
+@property (nonatomic, strong) NSString *shortURL;
+@property (nonatomic, weak)id<AMBContactSelectorDelegate>delegate;
+@property (nonatomic) AMBSocialServiceType type;
+@property (nonatomic, strong) AMBUserUrlNetworkObject *urlNetworkObject;
 
 @end
