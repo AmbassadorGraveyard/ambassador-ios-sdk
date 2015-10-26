@@ -7,8 +7,4 @@ test:
       -reporter pretty
       -reporter junit:$CIRCLE_TEST_REPORTS/xcode/results.xml
       -reporter plain:$CIRCLE_ARTIFACTS/xctool.log
-      -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
-      -sdk iphonesimulator
-      -project Ambassador.xcodeproj
-      -scheme "Ambassador"
       build build-tests run-tests
