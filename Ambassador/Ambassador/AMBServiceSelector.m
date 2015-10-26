@@ -357,7 +357,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
     share.short_code = weakSelf.urlNetworkObj.short_code;
     share.social_name = socialServiceTypeStringVal(type);
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:nil requestType:@"POST" completion:c];
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:c];
     
     
 }
@@ -866,7 +866,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         share.short_code = self.urlNetworkObj.short_code;
         share.social_name = socialServiceTypeStringVal(AMBSocialServiceTypeEmail);
         
-        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
             DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
         }];
         
@@ -893,7 +893,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         share.short_code = self.urlNetworkObj.short_code;
         share.social_name = socialServiceTypeStringVal(AMBSocialServiceTypeSMS);
         
-        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
             DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
         }];
 

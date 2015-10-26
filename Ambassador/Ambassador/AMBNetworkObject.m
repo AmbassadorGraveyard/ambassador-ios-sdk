@@ -133,7 +133,7 @@
 @implementation AMBUserNetworkObject
 - (void)fillWithUrl:(NSString *)url universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c {
     __weak AMBUserNetworkObject *weakSelf = self;
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:url universalToken:uTok universalID:uID additionParams:nil requestType:@"GET" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:url additionParams:nil requestType:@"GET" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         if (e) {
             if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
         } else {
