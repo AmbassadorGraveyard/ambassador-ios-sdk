@@ -73,10 +73,23 @@
 @end
 
 
-
+// Bulk Share Network objects
 @interface AMBShareTrackNetworkObject : AMBNetworkObject
 @property (nonatomic, strong) NSString *short_code;
 @property (nonatomic, strong) NSMutableArray *recipient_email;
 @property (nonatomic, strong) NSString *social_name;
 @property (nonatomic, strong) NSMutableArray *recipient_username;
+@end
+
+@interface AMBBulkShareEmailObject : AMBNetworkObject
+@property (nonatomic, strong) NSArray * to_emails;
+@property (nonatomic, strong) NSString * short_code;
+@property (nonatomic, strong) NSString * message;
+@property (nonatomic, strong) NSString * subject_line;
+@end
+
+@interface AMBBulkShareSMSObject : AMBNetworkObject
+@property (nonatomic, strong) NSArray * to;
+@property (nonatomic, strong) NSString * from;
+@property (nonatomic, strong) NSString * message;
 @end
