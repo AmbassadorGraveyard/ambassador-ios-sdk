@@ -1,6 +1,6 @@
 general:
   build_dir: Ambassador
-  
+
 test:
   override:
     - xctool
@@ -10,5 +10,5 @@ test:
       -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
       -sdk iphonesimulator
       -project Ambassador.xcodeproj
-      -scheme "Ambassador""
+      -scheme "Ambassador"
       build build-tests run-tests
