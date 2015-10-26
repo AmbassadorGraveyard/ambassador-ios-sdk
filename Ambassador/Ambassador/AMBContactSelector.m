@@ -512,11 +512,14 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 }
 
 - (void)sendEmail {
-    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:AMB_EMAIL_TITLE fromFirstName:@"" lastName:@"" withMessage:self.composeMessageTextView.text];
-    [self sendShareTrack:[NSMutableArray arrayWithArray:[self.selected allObjects]] completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-        DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
-    }];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+//    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:AMB_EMAIL_TITLE fromFirstName:@"" lastName:@"" withMessage:self.composeMessageTextView.text];
+//    [self sendShareTrack:[NSMutableArray arrayWithArray:[self.selected allObjects]] completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+//        DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+//    }];
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+//    AMBAmbassadorNetworkManager *networkManager = [[AMBAmbassadorNetworkManager alloc] init];
+//    [AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:<#(AMBNetworkObject *)#> url:<#(NSString *)#> universalToken:<#(NSString *)#> universalID:<#(NSString *)#> additionParams:<#(NSMutableDictionary *)#> requestType:<#(NSString *)#> completion:<#^(NSData *, NSURLResponse *, NSError *)c#>
 }
 
 
@@ -562,7 +565,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     share.short_code = self.urlNetworkObject.short_code;
     share.social_name = socialServiceTypeStringVal(self.type);
     
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:nil completion:c];
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:c];
 }
 
 - (NSMutableArray *)valuesFromContacts:(NSArray *)contacts {

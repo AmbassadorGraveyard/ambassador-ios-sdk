@@ -14,11 +14,14 @@
 + (instancetype)sharedInstance {
     static AMBAmbassadorNetworkManager* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{ _sharedInsance = [[AMBAmbassadorNetworkManager alloc] init]; });
+    dispatch_once(&oncePredicate, ^{
+        _sharedInsance = [[AMBAmbassadorNetworkManager alloc] init];
+        if ([AmbassadorSDK sharedInstance].universalToken) { _sharedInsance.universalToken = [AmbassadorSDK sharedInstance].universalToken; }
+    });
     return _sharedInsance;
 }
 
-- (void)sendNetworkObject:(AMBNetworkObject *)o url:(NSString *)u universalToken:(NSString *)uToken universalID:(NSString *)uID additionParams:(NSMutableDictionary*)additionalParams requestType:(NSString*)requestType completion:(void (^)(NSData *, NSURLResponse *, NSError *))c {
+- (void)sendNetworkObject:(AMBNetworkObject *)o url:(NSString *)u additionParams:(NSMutableDictionary*)additionalParams requestType:(NSString*)requestType completion:(void (^)(NSData *, NSURLResponse *, NSError *))c {
     NSError *e;
     NSData *b = o? [o toDataError:&e] : nil;
     if (e) {
@@ -26,11 +29,11 @@
         return;
     }
 
-    [[AMBAmbassadorNetworkManager sharedInstance] dataTaskForRequest:[[AMBAmbassadorNetworkManager sharedInstance] urlRequestFor:u body:b requestType:requestType authorization:uToken additionalParameters:additionalParams] session:[NSURLSession sharedSession] completion:c];
+    [[AMBAmbassadorNetworkManager sharedInstance] dataTaskForRequest:[[AMBAmbassadorNetworkManager sharedInstance] urlRequestFor:u body:b requestType:requestType authorization:self.universalToken additionalParameters:additionalParams] session:[NSURLSession sharedSession] completion:c];
 }
 
 - (void)pusherChannelNameUniversalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void(^)(NSString *, NSMutableDictionary *, NSError *e))c {
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:uToken universalID:uID additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         if (e) {
             dispatch_async(dispatch_get_main_queue(), ^{ c(nil, nil, e); });
         } else {
@@ -67,6 +70,14 @@
 
 + (NSString *)sendShareTrackUrl {
     return [NSString stringWithFormat:@"%@track/share/", [AMBAmbassadorNetworkManager baseUrl]];
+}
+
++ (NSString *)bulkShareEmailUrl {
+    return [NSString stringWithFormat:@"%@share/sms/", [AMBAmbassadorNetworkManager baseUrl]];
+}
+
++ (NSString *)bulkShareSMSUrl {
+    return [NSString stringWithFormat:@"%@share/email/", [AMBAmbassadorNetworkManager baseUrl]];
 }
 
 @end

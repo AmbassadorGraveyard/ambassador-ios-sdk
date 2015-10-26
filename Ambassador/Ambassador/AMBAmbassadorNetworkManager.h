@@ -11,12 +11,17 @@
 #import "AMBNetworkManager.h"
 
 @interface AMBAmbassadorNetworkManager : AMBNetworkManager
+
+@property (nonatomic, strong) NSString * universalToken;
+
 + (instancetype)sharedInstance;
 
-- (void)sendNetworkObject:(AMBNetworkObject *)o url:(NSString *)u universalToken:(NSString *)uToken universalID:(NSString *)uID additionParams:(NSMutableDictionary*)additionalParams requestType:(NSString*)requestType completion:(void (^)(NSData *, NSURLResponse *, NSError *))c;
+- (void)sendNetworkObject:(AMBNetworkObject *)o url:(NSString *)u additionParams:(NSMutableDictionary*)additionalParams requestType:(NSString*)requestType completion:(void (^)(NSData *, NSURLResponse *, NSError *))c;
 - (void)pusherChannelNameUniversalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void(^)(NSString *, NSMutableDictionary *, NSError *e))c;
 + (NSString *)pusherSessionSubscribeUrl;
 + (NSString *)pusherAuthSubscribeUrl;
 + (NSString *)sendIdentifyUrl;
 + (NSString *)sendShareTrackUrl;
++ (NSString *)bulkShareEmailUrl;
++ (NSString *)bulkShareSMSUrl;
 @end
