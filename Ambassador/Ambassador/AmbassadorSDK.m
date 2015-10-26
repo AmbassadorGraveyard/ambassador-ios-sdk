@@ -221,7 +221,7 @@ static AMBServiceSelector *raf;
 
     NSMutableDictionary *extraHeaders = [[AmbassadorSDK sharedInstance].pusherChannelObj createAdditionalNetworkHeaders];
     
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:o url:[AMBAmbassadorNetworkManager sendIdentifyUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:extraHeaders completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:o url:[AMBAmbassadorNetworkManager sendIdentifyUrl] additionParams:extraHeaders requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
     }];
 }
