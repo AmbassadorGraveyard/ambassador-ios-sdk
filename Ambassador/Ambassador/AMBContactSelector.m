@@ -498,16 +498,12 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 
 #pragma mark - NamePromptDelegate
-- (void)sendSMSPressedWithFirstName:(NSString *)firstName lastName:(NSString *)lastName
-{
-    DLog();
-    
+- (void)sendSMSPressedWithFirstName:(NSString *)firstName lastName:(NSString *)lastName {
     [self sendSMSWithFirstName:firstName lastName:lastName];
 }
 
-- (void)sendSMSWithFirstName:(NSString *)firstName lastName:(NSString *)lastName
-{
-    DLog();
+
+- (void)sendSMSWithFirstName:(NSString *)firstName lastName:(NSString *)lastName {
     [self.delegate sendToContacts:[self.selected allObjects] forServiceType:AMB_SMS_TITLE fromFirstName:firstName lastName:lastName withMessage:self.composeMessageTextView.text];
     [self sendShareTrack:[NSMutableArray arrayWithArray:[self.selected allObjects]] completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
@@ -515,10 +511,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-- (void)sendEmail
-{
-    DLog();
-    
+- (void)sendEmail {
     [self.delegate sendToContacts:[self.selected allObjects] forServiceType:AMB_EMAIL_TITLE fromFirstName:@"" lastName:@"" withMessage:self.composeMessageTextView.text];
     [self sendShareTrack:[NSMutableArray arrayWithArray:[self.selected allObjects]] completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
@@ -564,7 +557,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     if (self.type == AMBSocialServiceTypeEmail) {
         share.recipient_email = [self valuesFromContacts:[self.selected allObjects]];
     } else if (self.type == AMBSocialServiceTypeSMS) {
-        share.recipient_username = [self validatePhoneNumbers:[self valuesFromContacts:[self.selected allObjects]]];
+        share.recipient_username = [self validatePhoneNumbers:[self.selected allObjects]];
     }
     share.short_code = self.urlNetworkObject.short_code;
     share.social_name = socialServiceTypeStringVal(self.type);
@@ -581,16 +574,13 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 }
 
 
-- (NSMutableArray *)validatePhoneNumbers:(NSArray *)contacts
-{
+- (NSMutableArray *)validatePhoneNumbers:(NSArray *)contacts {
     NSMutableArray *validSet = [[NSMutableArray alloc] init];
-    for (AMBContact *contact in contacts)
-    {
+    for (AMBContact *contact in contacts) {
         NSString *number = [[contact.value componentsSeparatedByCharactersInSet:
                              [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]]
                             componentsJoinedByString:@""];
-        if (number.length == 11 || number.length == 10 || number.length == 7)
-        {
+        if (number.length == 11 || number.length == 10 || number.length == 7) {
             [validSet addObject:number];
         }
     }

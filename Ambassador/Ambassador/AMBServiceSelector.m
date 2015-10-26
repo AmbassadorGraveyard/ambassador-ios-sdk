@@ -567,6 +567,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     dispatch_async(dispatch_get_main_queue(), ^{
         DLog(@"Reauthenticate");
         AMBsendAlert(NO, @"You've been logged out of linkedIn. Log in and we will bring you back to the share screen.", self);
+        [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
     });
 }
 
