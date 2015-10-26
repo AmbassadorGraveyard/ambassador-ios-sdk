@@ -6,7 +6,7 @@ general:
 #     - ./daemon:
 #           background: true
 
-ttest:
+test:
   override:
     - xctool
       -reporter pretty
