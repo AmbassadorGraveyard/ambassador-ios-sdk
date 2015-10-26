@@ -12,7 +12,7 @@
 #define AMBErrorDomain      "AmbassadorErrorDomain"
 #define AMBINVNETOBJ        1   /* Invalid Network Object */
 #define AMBBADRESP          2   /* Non-200 Server Response */
-#define AMBCDINVMOC         3   /* Core Data Error */
+#define AMBSQLSAVEFAIL      3   /* SQL Save Failure */
 #define AMBNOPERMISS        4   /* Lacking Permission to Access Data */
 #define AMBINVSMSNUM        5   /* Invalid SMS Number */
 #define AMBNOIDENT          6   /* No Identify Error */
@@ -25,7 +25,7 @@
 
 NSError* AMBINVNETOBJError(id sender);
 NSError* AMBBADRESPError(NSUInteger code, NSData *data);
-NSError* AMBCDINVMOCError();
+NSError* AMBSQLSAVEFAILError();
 NSError* AMBNOPERMISSError(id sender);
 NSError* AMBINVSMSNUMError(NSMutableArray *badVals);
 NSError* AMBNOIDENTError();

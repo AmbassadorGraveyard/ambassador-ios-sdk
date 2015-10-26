@@ -23,6 +23,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		DB0B7A1D1BDEAC9600F7D148 /* AMBSQLManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0B7A1C1BDEAC9600F7D148 /* AMBSQLManagerTests.m */; settings = {ASSET_TAGS = (); }; };
 		DB6A245B1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24591BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h */; settings = {ASSET_TAGS = (); }; };
 		DB6A245C1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A245A1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m */; settings = {ASSET_TAGS = (); }; };
 		DB6A245F1BD00F3F00CE3230 /* AMBNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */; settings = {ASSET_TAGS = (); }; };
@@ -245,6 +246,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DB0B7A1C1BDEAC9600F7D148 /* AMBSQLManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSQLManagerTests.m; sourceTree = "<group>"; };
 		DB6A24591BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBAmbassadorNetworkManager.h; sourceTree = "<group>"; };
 		DB6A245A1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBAmbassadorNetworkManager.m; sourceTree = "<group>"; };
 		DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNetworkManager.h; sourceTree = "<group>"; };
@@ -604,6 +606,7 @@
 				DB6A24731BD1259000CE3230 /* AMBPusherManagerTests.m */,
 				DB6A247D1BD14F4900CE3230 /* AMBNetworObjectTests.m */,
 				DB6A24851BD1847900CE3230 /* AmbassadorSDKTests.m */,
+				DB0B7A1C1BDEAC9600F7D148 /* AMBSQLManagerTests.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1146,6 +1149,7 @@
 				DB6A24861BD1847900CE3230 /* AmbassadorSDKTests.m in Sources */,
 				DB6A24741BD1259000CE3230 /* AMBPusherManagerTests.m in Sources */,
 				DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */,
+				DB0B7A1D1BDEAC9600F7D148 /* AMBSQLManagerTests.m in Sources */,
 				DB6A247C1BD14BBB00CE3230 /* AMBMockObjects.m in Sources */,
 				DB6A247E1BD14F4900CE3230 /* AMBNetworObjectTests.m in Sources */,
 			);

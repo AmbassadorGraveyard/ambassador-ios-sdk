@@ -28,13 +28,13 @@ NSError* AMBBADRESPError(NSUInteger code, NSData *data) {
     return [NSError errorWithDomain:@AMBErrorDomain code:AMBBADRESP userInfo:usIn];
 }
 
-NSError* AMBCDINVMOCError() {
+NSError* AMBSQLSAVEFAILError() {
     NSDictionary *usIn =    @{
-                              NSLocalizedDescriptionKey: NSLocalizedString(@"Core Data Error", nil),
-                              NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"The managed object context was nil", nil),
+                              NSLocalizedDescriptionKey: NSLocalizedString(@"SQL Save Failure", nil),
+                              NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"SQL INSERT query execution failed", nil),
                               NSLocalizedRecoverySuggestionErrorKey:NSLocalizedString(@"", nil)
                               };
-    return [NSError errorWithDomain:@AMBErrorDomain code:AMBCDINVMOC userInfo:usIn];
+    return [NSError errorWithDomain:@AMBErrorDomain code:AMBNOIDENT userInfo:usIn];
 }
 
 NSError* AMBNOPERMISSError(id sender) {
@@ -101,5 +101,5 @@ NSError* AMBSQLINITFAILError(NSString *filePath) {
                               NSLocalizedFailureReasonErrorKey: NSLocalizedString(msg, nil),
                               NSLocalizedRecoverySuggestionErrorKey:NSLocalizedString(@"", nil)
                               };
-    return [NSError errorWithDomain:@AMBErrorDomain code:AMBINVLKDNAUTH userInfo:usIn];
+    return [NSError errorWithDomain:@AMBErrorDomain code:AMBSQLINITFAIL userInfo:usIn];
 }
