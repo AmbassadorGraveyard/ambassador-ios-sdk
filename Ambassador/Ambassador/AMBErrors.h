@@ -19,10 +19,11 @@
 #define AMBINVLKDNAUTH      7   /* LinkedIn Authentication Error */
 #define AMBINVPARAM         8   /* Invalid Method Parameters */
 #define AMBNOVAL            9   /* No Value Return */
+#define AMBSQLINITFAIL      10  /* SQL Load Failure */
 
 #import <Foundation/Foundation.h>
 
-NSError* AMBINVETOBJError(id sender);
+NSError* AMBINVNETOBJError(id sender);
 NSError* AMBBADRESPError(NSUInteger code, NSData *data);
 NSError* AMBCDINVMOCError();
 NSError* AMBNOPERMISSError(id sender);
@@ -31,5 +32,6 @@ NSError* AMBNOIDENTError();
 NSError* AMBINVLKDNAUTHError(NSString *msg);
 NSError* AMBINVPARAMError(NSString *methodName);
 NSError* AMBNOVALError();
+NSError* AMBSQLINITFAILError(NSString *filePath);
 
 #endif /* AMBErrors_h */

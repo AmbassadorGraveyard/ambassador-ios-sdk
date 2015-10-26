@@ -8,7 +8,7 @@
 
 #import "AMBErrors.h"
 
-NSError* AMBINVETOBJError(id sender) {
+NSError* AMBINVNETOBJError(id sender) {
     NSString *recStr = [NSString stringWithFormat:@"Check the class documentation for %@.", NSStringFromClass([sender class])];
     NSDictionary *usIn =    @{
                               NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid Network Object", nil),
@@ -94,3 +94,12 @@ NSError* AMBNOVALError() {
     return [NSError errorWithDomain:@AMBErrorDomain code:AMBNOVAL userInfo:usIn];
 }
 
+NSError* AMBSQLINITFAILError(NSString *filePath) {
+    NSString *msg = [NSString stringWithFormat:@"Filepath: %@", filePath];
+    NSDictionary *usIn =    @{
+                              NSLocalizedDescriptionKey: NSLocalizedString(@"SQL Initialization Failure", nil),
+                              NSLocalizedFailureReasonErrorKey: NSLocalizedString(msg, nil),
+                              NSLocalizedRecoverySuggestionErrorKey:NSLocalizedString(@"", nil)
+                              };
+    return [NSError errorWithDomain:@AMBErrorDomain code:AMBINVLKDNAUTH userInfo:usIn];
+}
