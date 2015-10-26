@@ -18,13 +18,27 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@protocol AMBUtilitiesDelegate <NSObject>
+
+@optional
+- (void)okayButtonClicked;
+
+@end
+
+@interface AMBUtilities : NSObject
+
+@property (nonatomic, weak)id <AMBUtilitiesDelegate> delegate;
+- (void)presentErrorAlertWithMessage:(NSString*)message forViewController:(UIViewController*)viewController;
+
+@end
+
 NSMutableDictionary* AMBparseQueryString(NSString *string);
 UIColor* AMBColorFromRGB(float r, float g, float b);
 UIImage* AMBimageFromBundleNamed(NSString *name, NSString *type);
 void AMBsimpleAlert(NSString *title, NSString *message, UIViewController *vc);
 void AMBsendAlert(BOOL success, NSString *message, UIViewController *presenter);
 NSBundle* AMBframeworkBundle();
-
+void AMBsendAlert(BOOL success, NSString *message, UIViewController*presenter);
 NSString* AMBStringValFromDictionary(NSMutableDictionary *d, NSString *key);
 NSArray *AMBArrayFromDicstionary(NSMutableDictionary *d, NSString *key);
 
