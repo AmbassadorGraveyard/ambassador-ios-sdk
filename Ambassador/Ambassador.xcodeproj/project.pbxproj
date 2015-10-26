@@ -32,13 +32,11 @@
 		DB6A24671BD01D8A00CE3230 /* AMBNetworkObject.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24651BD01D8A00CE3230 /* AMBNetworkObject.h */; settings = {ASSET_TAGS = (); }; };
 		DB6A24681BD01D8A00CE3230 /* AMBNetworkObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24661BD01D8A00CE3230 /* AMBNetworkObject.m */; settings = {ASSET_TAGS = (); }; };
 		DB6A246A1BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24691BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m */; settings = {ASSET_TAGS = (); }; };
-		DB6A246C1BD0319700CE3230 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
 		DB6A246E1BD031A100CE3230 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		DB6A24711BD04E3900CE3230 /* AMBPusherManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A246F1BD04E3900CE3230 /* AMBPusherManager.h */; settings = {ASSET_TAGS = (); }; };
 		DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24701BD04E3900CE3230 /* AMBPusherManager.m */; settings = {ASSET_TAGS = (); }; };
 		DB6A24741BD1259000CE3230 /* AMBPusherManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24731BD1259000CE3230 /* AMBPusherManagerTests.m */; settings = {ASSET_TAGS = (); }; };
 		DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24751BD125FF00CE3230 /* AMBTests.m */; settings = {ASSET_TAGS = (); }; };
-		DB6A24781BD129A000CE3230 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A24771BD129A000CE3230 /* WebKit.framework */; };
 		DB6A247C1BD14BBB00CE3230 /* AMBMockObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A247B1BD14BBB00CE3230 /* AMBMockObjects.m */; settings = {ASSET_TAGS = (); }; };
 		DB6A247E1BD14F4900CE3230 /* AMBNetworObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A247D1BD14F4900CE3230 /* AMBNetworObjectTests.m */; settings = {ASSET_TAGS = (); }; };
 		DB6A24811BD1663F00CE3230 /* AMBStorageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A247F1BD1663F00CE3230 /* AMBStorageManager.h */; settings = {ASSET_TAGS = (); }; };
@@ -180,9 +178,11 @@
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; settings = {ASSET_TAGS = (); }; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; settings = {ASSET_TAGS = (); }; };
 		EF407F211BB3449B0074D2AE /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */; settings = {ASSET_TAGS = (); }; };
-		EF9046AF1BD5549100256C5A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A24771BD129A000CE3230 /* WebKit.framework */; };
+		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */; settings = {ASSET_TAGS = (); }; };
 		EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */; settings = {ASSET_TAGS = (); }; };
+		EFCBFDBB1BDA859E0052DFB7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
+		EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -227,6 +227,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = DB844D471BA75F9F003FD7A9;
 			remoteInfo = Framework;
+		};
+		EFD7FB971BDACD3D00436051 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB844D511BA7622D003FD7A9;
+			remoteInfo = AmbassadorResources;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -419,6 +426,7 @@
 		EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AmbassadorTheme.plist; path = AmbassadorResources/AmbassadorTheme.plist; sourceTree = SOURCE_ROOT; };
 		EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBPusherChannelObject.h; path = fmdb/AMBPusherChannelObject.h; sourceTree = "<group>"; };
 		EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMBPusherChannelObject.m; path = fmdb/AMBPusherChannelObject.m; sourceTree = "<group>"; };
+		EFED7B041BDA9F0A00F6C360 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -433,9 +441,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB6A24781BD129A000CE3230 /* WebKit.framework in Frameworks */,
+				EFCBFDBB1BDA859E0052DFB7 /* libsqlite3.tbd in Frameworks */,
 				DB6A246E1BD031A100CE3230 /* libicucore.tbd in Frameworks */,
-				DB6A246C1BD0319700CE3230 /* libsqlite3.tbd in Frameworks */,
 				DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,6 +451,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */,
+				EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,7 +460,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF9046AF1BD5549100256C5A /* WebKit.framework in Frameworks */,
 				DBA3FC411BA8BE2300672D82 /* libicucore.dylib in Frameworks */,
 				DBA3FC361BA8AB9200672D82 /* libsqlite3.dylib in Frameworks */,
 				DB844D891BA76C1E003FD7A9 /* libAmbassador.a in Frameworks */,
@@ -471,6 +479,8 @@
 		0D24CFB05292A555B6506D41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DBA3FC331BA8AAA500672D82 /* libsqlite3.dylib */,
+				EFED7B041BDA9F0A00F6C360 /* libz.tbd */,
 				DB6A24771BD129A000CE3230 /* WebKit.framework */,
 				DB6A246D1BD031A100CE3230 /* libicucore.tbd */,
 				DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */,
@@ -481,7 +491,6 @@
 				DBA3FC3B1BA8AC5400672D82 /* Security.framework */,
 				DBA3FC391BA8AC3A00672D82 /* libcommonCrypto.dylib */,
 				DBA3FC371BA8AC3100672D82 /* libsystem_coreservices.dylib */,
-				DBA3FC331BA8AAA500672D82 /* libsqlite3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -860,6 +869,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				EFD7FB981BDACD3D00436051 /* PBXTargetDependency */,
 			);
 			name = Ambassador;
 			productName = Ambassador;
@@ -1209,6 +1219,11 @@
 			target = DB844D471BA75F9F003FD7A9 /* Framework */;
 			targetProxy = DB844D8C1BA76C82003FD7A9 /* PBXContainerItemProxy */;
 		};
+		EFD7FB981BDACD3D00436051 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB844D511BA7622D003FD7A9 /* AmbassadorResources */;
+			targetProxy = EFD7FB971BDACD3D00436051 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1274,6 +1289,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -1316,38 +1332,56 @@
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};
 		DB844D3B1BA75BB8003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
 		DB844D3C1BA75BB8003FD7A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				DEAD_CODE_STRIPPING = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};
 		DB844D3E1BA75BB8003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1359,13 +1393,16 @@
 				);
 				INFOPLIST_FILE = AmbassadorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
 		DB844D3F1BA75BB8003FD7A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1373,21 +1410,29 @@
 				);
 				INFOPLIST_FILE = AmbassadorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};
 		DB844D491BA75F9F003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
 		DB844D4A1BA75F9F003FD7A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -1405,6 +1450,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Ambassador;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1420,6 +1466,7 @@
 				INFOPLIST_FILE = AmbassadorResources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Ambassador;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1444,7 +1491,8 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1463,6 +1511,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(SDKROOT)/usr/lib/system",
 				);
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1483,6 +1532,7 @@
 				INFOPLIST_FILE = TestApplicationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApplication.app/TestApplication";
 			};
@@ -1498,6 +1548,7 @@
 				);
 				INFOPLIST_FILE = TestApplicationTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TestApplication.app/TestApplication";
 			};

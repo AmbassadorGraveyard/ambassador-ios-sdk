@@ -39,7 +39,7 @@
 }
 
 - (void)dataTaskForRequest:(NSMutableURLRequest *)r session:(NSURLSession *)s completion:( void(^)(NSData *d, NSURLResponse *r, NSError *e))c {
-    [[s dataTaskWithRequest:r completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[s dataTaskWithRequest:r completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
         NSUInteger code = ((NSHTTPURLResponse *)response).statusCode;
         NSError *e = (code >= 200 && code < 300)? nil : AMBBADRESPError(code, data);
         e = error? error : e;
