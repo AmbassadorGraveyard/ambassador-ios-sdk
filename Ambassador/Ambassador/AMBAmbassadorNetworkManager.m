@@ -16,7 +16,6 @@
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
         _sharedInsance = [[AMBAmbassadorNetworkManager alloc] init];
-        if ([AmbassadorSDK sharedInstance].universalToken) { _sharedInsance.universalToken = [AmbassadorSDK sharedInstance].universalToken; }
     });
     return _sharedInsance;
 }
@@ -29,7 +28,7 @@
         return;
     }
 
-    [[AMBAmbassadorNetworkManager sharedInstance] dataTaskForRequest:[[AMBAmbassadorNetworkManager sharedInstance] urlRequestFor:u body:b requestType:requestType authorization:self.universalToken additionalParameters:additionalParams] session:[NSURLSession sharedSession] completion:c];
+    [[AMBAmbassadorNetworkManager sharedInstance] dataTaskForRequest:[[AMBAmbassadorNetworkManager sharedInstance] urlRequestFor:u body:b requestType:requestType authorization:[AmbassadorSDK sharedInstance].universalToken additionalParameters:additionalParams] session:[NSURLSession sharedSession] completion:c];
 }
 
 - (void)pusherChannelNameUniversalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void(^)(NSString *, NSMutableDictionary *, NSError *e))c {

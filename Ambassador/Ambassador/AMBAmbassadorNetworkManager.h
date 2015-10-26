@@ -12,8 +12,6 @@
 
 @interface AMBAmbassadorNetworkManager : AMBNetworkManager
 
-@property (nonatomic, strong) NSString * universalToken;
-
 + (instancetype)sharedInstance;
 
 - (void)sendNetworkObject:(AMBNetworkObject *)o url:(NSString *)u additionParams:(NSMutableDictionary*)additionalParams requestType:(NSString*)requestType completion:(void (^)(NSData *, NSURLResponse *, NSError *))c;
