@@ -1331,6 +1331,10 @@
 		DB844D3B1BA75BB8003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					i386,
+				);
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
 				LIBRARY_SEARCH_PATHS = (
@@ -1351,6 +1355,10 @@
 		DB844D3C1BA75BB8003FD7A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					i386,
+				);
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
 				LIBRARY_SEARCH_PATHS = (
