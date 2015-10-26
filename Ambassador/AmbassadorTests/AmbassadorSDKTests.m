@@ -55,19 +55,19 @@
 //    }];
 //}
 
-- (void)testDevPusherChannel {
-    [AmbassadorSDK runWithUniversalToken:self.devToken universalID:self.devID];
-    XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Channel"];
-    [AmbassadorSDK pusherChannelUniversalToken:[NSString stringWithFormat:@"SDKToken %@", self.devToken] universalID:[NSString stringWithFormat:@"SDKToken %@", self.devID] completion:^(NSString *s, NSMutableDictionary *d, NSError *e) {
-        if (e) { XCTFail(@"%@", e); }
-        [exp fulfill];
-    }];
-    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * __nullable error) {
-        if (error) {
-            XCTFail(@"Expectation failed with error: %@", error);
-        }
-    }];
-}
+//- (void)testDevPusherChannel {
+//    [AmbassadorSDK runWithUniversalToken:self.devToken universalID:self.devID];
+//    XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Channel"];
+//    [AmbassadorSDK pusherChannelUniversalToken:[NSString stringWithFormat:@"SDKToken %@", self.devToken] universalID:[NSString stringWithFormat:@"SDKToken %@", self.devID] completion:^(NSString *s, NSMutableDictionary *d, NSError *e) {
+//        if (e) { XCTFail(@"%@", e); }
+//        [exp fulfill];
+//    }];
+//    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * __nullable error) {
+//        if (error) {
+//            XCTFail(@"Expectation failed with error: %@", error);
+//        }
+//    }];
+//}
 
 //- (void)testDevPusher {
 //    XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Channel"];
