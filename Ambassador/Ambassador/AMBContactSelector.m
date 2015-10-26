@@ -519,7 +519,13 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 //    [self.navigationController popToRootViewControllerAnimated:YES];
     
 //    AMBAmbassadorNetworkManager *networkManager = [[AMBAmbassadorNetworkManager alloc] init];
-//    [AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:<#(AMBNetworkObject *)#> url:<#(NSString *)#> universalToken:<#(NSString *)#> universalID:<#(NSString *)#> additionParams:<#(NSMutableDictionary *)#> requestType:<#(NSString *)#> completion:<#^(NSData *, NSURLResponse *, NSError *)c#>
+    AMBBulkShareEmailObject *emailObject = [[AMBBulkShareEmailObject alloc] initWithEmails:[self.selected allObjects] shortCode:self.urlNetworkObject.short_code message:self.composeMessageTextView.text subjectLine:self.urlNetworkObject.subject];
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:emailObject url:[AMBAmbassadorNetworkManager bulkShareEmailUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error) {
+            DLog(@"Error - %@", error);
+        }
+    }];
+    
 }
 
 

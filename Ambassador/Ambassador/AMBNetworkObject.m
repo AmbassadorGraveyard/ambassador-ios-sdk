@@ -207,7 +207,7 @@
 
 @implementation AMBBulkShareEmailObject
 
-- (instancetype)initWithEmails:(NSMutableArray*)emails shortCode:(NSString*)shortCode message:(NSString*)message subjectLine:(NSString*)subjectLine {
+- (instancetype)initWithEmails:(NSArray*)emails shortCode:(NSString*)shortCode message:(NSString*)message subjectLine:(NSString*)subjectLine {
     self = [super init];
     self.to_emails = [[NSArray alloc] initWithArray:emails];
     self.short_code = shortCode;
@@ -224,7 +224,7 @@
 
 @implementation AMBBulkShareSMSObject
 
-- (instancetype)initWithPhoneNumbers:(NSMutableArray*)phoneNumbers fromSender:(NSString*)sender message:(NSString*)message {
+- (instancetype)initWithPhoneNumbers:(NSArray*)phoneNumbers fromSender:(NSString*)sender message:(NSString*)message {
     self = [super init];
     self.to = [[NSArray alloc] initWithArray:phoneNumbers];
     self.from = sender;
