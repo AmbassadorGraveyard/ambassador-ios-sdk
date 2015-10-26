@@ -34,7 +34,6 @@ NSString * const SHORT_CODE_URL_KEY = @"url";
 
 @interface AmbassadorSDK ()
 @property (nonatomic, strong) AMBIdentify *identify;
-@property (nonatomic, strong) AMBPusherManager *pusherManager;
 @property (nonatomic, strong) AMBNetworkManager *ambassadorNetworkManager;
 @property (nonatomic, strong) NSTimer *conversionTimer;
 @property (nonatomic, strong) AMBConversion *conversion;

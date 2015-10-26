@@ -32,7 +32,7 @@
                                AMBContactLoaderDelegate, LinkedInAuthorizeDelegate,
                                AMBShareServiceDelegate, AMBContactSelectorDelegate,
                                UITextFieldDelegate, MFMessageComposeViewControllerDelegate,
-                               MFMailComposeViewControllerDelegate>
+                               MFMailComposeViewControllerDelegate, AMBUtilitiesDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
@@ -167,25 +167,9 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     
     DLog(@"%@", self.urlNetworkObj.short_code);
 
-    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
+    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     
-    AMBPusherChannelObject *channelObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
-    
-    if (channelObject && !channelObject.isExpired) {
-        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-            if (e) {
-                DLog(@"There was an error - %@", e);
-            }
-        }];
-    } else {
-        [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
-            [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-                if (e) {
-                    DLog(@"There was an error - %@", e);
-                }
-            }];
-        }];
-    }
+    [self performIdentify];
     
     [self setUpTheme];
 }
@@ -215,21 +199,74 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 - (void)removeWaitView
 {
+    NSNumber *campaingID = [NSNumber numberWithInt:self.campaignID.intValue];
+    self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
+    
+    if (!self.urlNetworkObj) {
+        [self.waitViewTimer invalidate];
+        AMBUtilities *utilities = [[AMBUtilities alloc] init];
+        utilities.delegate = self;
+        [utilities presentErrorAlertWithMessage:@"No matching campaigns were found!" forViewController:self];
+        NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
+        return;
+    }
+    
+    self.waitView.hidden = YES;
+    self.textField.text = self.urlNetworkObj.url;
+    
     if (self.waitViewTimer)
     {
         [self.waitViewTimer invalidate];
     }
+}
+
+- (void)performIdentify {
+    AMBPusherChannelObject *channelObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
     
-    self.waitView.hidden = YES;
+    // Checks if we are subscribed to a pusher channel and makes sure that the channel is not expired
+    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState == PTPusherConnectionConnected) {
+        // If we're SUBSCRIBED and NOT expired, then we will call the Identify
+        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+            if (e) { DLog(@"There was an error - %@", e); }
+        }];
+        
+        return;
+    }
     
-    NSNumber *campaingID = [NSNumber numberWithInt:self.campaignID.intValue];
-    self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
-    self.textField.text = self.urlNetworkObj.url;
+    // Checks if we are subscribed, good with expiration, BUT Pusher got disconnected
+    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState != PTPusherConnectionConnected) {
+        // If pusher socket is NOT OPEN, then we attempt to RESUBSCRIBE to the existing channel
+        DLog(@"Attempting to resubscribe to previous Pusher channel");
+        [[AmbassadorSDK sharedInstance].pusherManager resubscribeToExistingChannelWithCompletion:^(AMBPTPusherChannel *channelName, NSError *error) {
+            if (error) {
+                DLog(@"Error resubscribing to channel - %@", error); // If there is an error trying to resubscribe, we will recall the whole identify process
+                [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
+                    [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+                        if (e) { DLog(@"There was an error - %@", e); }
+                    }];
+                }];
+            } else {
+                [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:nil]; // Everything is good to go and we can call identify
+            }
+        }];
+        
+        return;
+    }
+
+    // If we're NOT SUBSCRIBED or EXPIRED then we will do the whole pusher process over again (get channel name, connect to pusher, subscribe, identify)
+    DLog(@"The Pusher channel seems to be null or expired, restarting whole identify process");
+    [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
+        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
+            if (e) {
+                DLog(@"There was an error - %@", e);
+            }
+        }];
+    }];
 }
 
 
-
 #pragma mark - CollectionViewDataSource
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.services.count;
@@ -251,9 +288,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 }
 
 
-
-
 #pragma mark - CollectionViewDelegate
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     AMBShareService *service = self.services[indexPath.row];
@@ -928,6 +964,13 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     {
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }
+}
+
+
+#pragma mark - AMBUtilities Delegate
+
+- (void)okayButtonClicked {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
