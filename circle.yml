@@ -1,8 +1,25 @@
-machine:
-  environment:
-    XCODE_SCHEME: Ambassador
-
 general:
   build_dir: Ambassador
+
+test:
+  override:
+    - xctool
+      -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
+      -sdk iphonesimulator
+      -project Ambassador.xcodeproj
+      -scheme "AmbassadorTests"
+      run-tests
+
+# test:
+#   override:
+#     - xctool
+#       -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
+#       -sdk iphonesimulator
+#       -project Ambassador.xcodeproj
+#       -scheme "Ambassador"
+#       build-tests run-tests
+
+      
+#       # -reporter plain:$CIRCLE_ARTIFACTS/xctool.log
 
    
