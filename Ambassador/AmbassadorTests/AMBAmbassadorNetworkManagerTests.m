@@ -27,35 +27,7 @@
     [super tearDown];
 }
 
-<<<<<<< HEAD
-//- (void)testDevPusherSessionSubscribe {
-//    XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Session Subscribe"];
-//    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:[NSString stringWithFormat:@"SDKToken %@",self.devToken] universalID:self.devID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-//        if (e) {
-//            XCTFail(@"%@", e);
-//        } else {
-//            NSUInteger code = ((NSHTTPURLResponse *)r).statusCode;
-//            XCTAssert(code >= 200 && code < 300);
-//            
-//            AMBPusherSessionSubscribeNetworkObject* o = [[AMBPusherSessionSubscribeNetworkObject alloc] init];
-//            NSError *err;
-//            [o fillWithDictionary:[NSJSONSerialization JSONObjectWithData:d options:0 error:&err]];
-//            if (err) { XCTFail(@"%@", err); }
-//            
-//            XCTAssertNotNil(o.channel_name);
-//            XCTAssertNotNil(o.expires_at);
-//            XCTAssertNotNil(o.client_session_uid);
-//            
-//            [exp fulfill];
-//        }
-//    }];
-//    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * __nullable error) {
-//        if (error) {
-//            XCTFail(@"Expectation failed with error: %@", error);
-//        }
-//    }];
-//}
-=======
+
 - (void)testDevPusherSessionSubscribe {
     XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Session Subscribe"];
     [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:self.devToken universalID:self.devID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
@@ -83,7 +55,6 @@
         }
     }];
 }
->>>>>>> d0a520ffc7800a47a3f14ff28e7570ae55553380
 
 - (void)testProdPusherSessionSubscribe {
     XCTFail();
