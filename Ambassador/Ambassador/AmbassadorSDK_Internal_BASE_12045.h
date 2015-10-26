@@ -10,7 +10,6 @@
 #import "AMBNetworkObject.h"
 #import "AMBPusher.h"
 #import "AMBPusherChannelObject.h"
-#import "AMBPusherManager.h"
 
 
 
@@ -21,11 +20,7 @@
 + (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID;
 + (AmbassadorSDK*)sharedInstance;
 + (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c;
-
-@property (nonatomic, strong) NSString *email;
-@property (nonatomic, strong) AMBPusherChannelObject *pusherChannelObj;
-@property (nonatomic, strong) AMBPusherManager *pusherManager;
-@property (nonatomic, strong) AMBUserNetworkObject *user;
-@property (nonatomic, strong) NSString *universalToken;
-@property (nonatomic, strong) NSString *universalID;
+@property AMBUserNetworkObject *user;
+@property NSString *email;
+@property AMBPusherChannelObject *pusherChannelObj;
 @end

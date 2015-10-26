@@ -37,8 +37,6 @@ NSString * const SHORT_CODE_URL_KEY = @"url";
 @property (nonatomic, strong) AMBNetworkManager *ambassadorNetworkManager;
 @property (nonatomic, strong) NSTimer *conversionTimer;
 @property (nonatomic, strong) AMBConversion *conversion;
-@property (nonatomic, strong) NSString *universalToken;
-@property (nonatomic, strong) NSString *universalID;
 @property (nonatomic) BOOL hasBeenBoundToChannel;
 
 @end

@@ -30,26 +30,11 @@
 }
 
 - (void)pusherChannelNameUniversalToken:(NSString *)uToken universalID:(NSString *)uID completion:(void(^)(NSString *, NSMutableDictionary *, NSError *e))c {
-//    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:uToken universalID:uID completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-//        if (e) {
-//            dispatch_async(dispatch_get_main_queue(), ^{ c(nil, e); });
-//        } else {
-//            AMBPusherSessionSubscribeNetworkObject* o = [[AMBPusherSessionSubscribeNetworkObject alloc] init];
-//            [o fillWithDictionary:[NSJSONSerialization JSONObjectWithData:d options:0 error:&e]];
-//            dispatch_async(dispatch_get_main_queue(), ^{ c(o.channel_name, e); });
-//        }
-//    }];
-    
     [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] universalToken:uToken universalID:uID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
         if (e) {
             dispatch_async(dispatch_get_main_queue(), ^{ c(nil, nil, e); });
         } else {
-//            AMBPusherSessionSubscribeNetworkObject* o = [[AMBPusherSessionSubscribeNetworkObject alloc] init];
-//            [o fillWithDictionary:[NSJSONSerialization JSONObjectWithData:d options:0 error:&e]];
             NSMutableDictionary *payloadDict = [NSJSONSerialization JSONObjectWithData:d options:0 error:&e];
-            
-            
-//            [o save];
             dispatch_async(dispatch_get_main_queue(), ^{ c(payloadDict[@"channel_name"], payloadDict, e); });
         }
     }];
@@ -78,6 +63,10 @@
 
 + (NSString *)sendIdentifyUrl {
     return [NSString stringWithFormat:@"%@universal/action/identify/", [self baseUrl]];
+}
+
++ (NSString *)sendShareTrackUrl {
+    return [NSString stringWithFormat:@"%@track/share/", [self baseUrl]];
 }
 
 @end

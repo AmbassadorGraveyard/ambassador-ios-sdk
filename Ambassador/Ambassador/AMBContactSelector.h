@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "AMBServiceSelectorPreferences.h"
+#import "AMBOptions.h"
+#import "AMBNetworkObject.h"
 
 @protocol AMBContactSelectorDelegate <NSObject>
 
@@ -23,6 +25,7 @@
 @property NSString *shortCode;
 @property NSString *shortURL;
 @property (weak)id<AMBContactSelectorDelegate>delegate;
-@property NSString *serviceType;
+@property AMBSocialServiceType type;
+@property AMBUserUrlNetworkObject *urlNetworkObject;
 
 @end
