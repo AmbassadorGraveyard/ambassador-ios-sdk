@@ -40,26 +40,12 @@
 //    }];
 //}
 
-- (void)testProdSendIdentify {
-    [AmbassadorSDK runWithUniversalToken:self.prodToken universalID:self.prodID];
-    XCTestExpectation *exp = [self expectationWithDescription:@"Test Prod Send Identify"];
-
-    [AmbassadorSDK sendIdentifyWithCampaign:@"260" enroll:YES completion:^(NSError *e) {
-        if (e) { XCTFail("%@", e); }
-        [exp fulfill];
-    }];
-    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * __nullable error) {
-        if (error) {
-            XCTFail(@"Expectation failed with error: %@", error);
-        }
-    }];
-}
-
-<<<<<<< HEAD
-//- (void)testDevPusherChannel {
-//    XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Channel"];
-//    [AmbassadorSDK pusherChannelUniversalToken:self.devToken universalID:self.devID completion:^(NSString *s, NSMutableDictionary *dict, NSError *e) {
-//        if (e) { XCTFail(@"%@", e); }
+//- (void)testProdSendIdentify {
+//    [AmbassadorSDK runWithUniversalToken:self.prodToken universalID:self.prodID];
+//    XCTestExpectation *exp = [self expectationWithDescription:@"Test Prod Send Identify"];
+//
+//    [AmbassadorSDK sendIdentifyWithCampaign:@"260" enroll:YES completion:^(NSError *e) {
+//        if (e) { XCTFail("%@", e); }
 //        [exp fulfill];
 //    }];
 //    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * __nullable error) {
@@ -69,31 +55,6 @@
 //    }];
 //}
 
-//- (void)testPusher {
-//    XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Channel"];
-//    [AmbassadorSDK runWithUniversalToken:self.devToken universalID:self.devID];
-//    [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com" completion:^(NSError *e) {
-//        if (e) { XCTFail(@"%@",e); }
-//        [AmbassadorSDK startPusherUniversalToken:self.devToken universalID:self.devID completion:^(AMBPTPusherChannel *chan, NSError *e) {
-//            if (e) { XCTFail(@"%@",e); }
-//            
-//            [AmbassadorSDK bindToIdentifyActionUniversalToken:self.devToken universalID:self.devID];
-//            
-//            [AmbassadorSDK sendIdentifyWithCampaign:@"260" enroll:YES completion:^(NSError *e) {
-//                if (e) { XCTFail(@"%@",e); }
-//                
-//                [exp fulfill];
-//            }];
-//        }];
-//    }];
-//    
-//    [self waitForExpectationsWithTimeout:15.0 handler:^(NSError * __nullable error) {
-//        if (error) {
-//            XCTFail(@"Expectation failed with error: %@", error);
-//        }
-//    }];
-//}
-=======
 - (void)testDevPusherChannel {
     [AmbassadorSDK runWithUniversalToken:self.devToken universalID:self.devID];
     XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Channel"];
@@ -108,29 +69,29 @@
     }];
 }
 
-- (void)testDevPusher {
-    XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Channel"];
-    [AmbassadorSDK runWithUniversalToken:self.devToken universalID:self.devID];
-    [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com" completion:^(NSError *e) {
-        if (e) { XCTFail(@"%@",e); }
-        [AmbassadorSDK startPusherUniversalToken:[NSString stringWithFormat:@"SDKToken %@", self.devToken] universalID:[NSString stringWithFormat:@"SDKToken %@", self.devID] completion:^(AMBPTPusherChannel *chan, NSError *e) {
-            if (e) { XCTFail(@"%@",e); }
-            
-            [AmbassadorSDK bindToIdentifyActionUniversalToken:self.devToken universalID:self.devID];
-            
-            [AmbassadorSDK sendIdentifyWithCampaign:@"260" enroll:YES completion:^(NSError *e) {
-                if (e) { XCTFail(@"%@",e); }
-                
-                [exp fulfill];
-            }];
-        }];
-    }];
-    [self waitForExpectationsWithTimeout:15.0 handler:^(NSError * __nullable error) {
-        if (error) {
-            XCTFail(@"Expectation failed with error: %@", error);
-        }
-    }];
-}
->>>>>>> d0a520ffc7800a47a3f14ff28e7570ae55553380
+//- (void)testDevPusher {
+//    XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Channel"];
+//    [AmbassadorSDK runWithUniversalToken:self.devToken universalID:self.devID];
+//    [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com" completion:^(NSError *e) {
+//        if (e) { XCTFail(@"%@",e); }
+//        [AmbassadorSDK startPusherUniversalToken:[NSString stringWithFormat:@"SDKToken %@", self.devToken] universalID:[NSString stringWithFormat:@"SDKToken %@", self.devID] completion:^(AMBPTPusherChannel *chan, NSError *e) {
+//            if (e) { XCTFail(@"%@",e); }
+//            
+//            [AmbassadorSDK bindToIdentifyActionUniversalToken:self.devToken universalID:self.devID];
+//            
+//            [AmbassadorSDK sendIdentifyWithCampaign:@"260" enroll:YES completion:^(NSError *e) {
+//                if (e) { XCTFail(@"%@",e); }
+//                
+//                [exp fulfill];
+//            }];
+//        }];
+//    }];
+//    [self waitForExpectationsWithTimeout:15.0 handler:^(NSError * __nullable error) {
+//        if (error) {
+//            XCTFail(@"Expectation failed with error: %@", error);
+//        }
+//    }];
+//}
+
 
 @end
