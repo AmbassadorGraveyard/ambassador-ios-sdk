@@ -16,6 +16,8 @@
 #import "AMBConstants.h"
 #import "AMBThemeManager.h"
 #import "AmbassadorSDK_Internal.h"
+#import "AMBAmbassadorNetworkManager.h"
+#import "AMBNetworkObject.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                AMBSelectedCellDelegate, UITextFieldDelegate,
@@ -125,7 +127,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             return;
         }
 
-        if ([self.serviceType isEqualToString:AMB_SMS_TITLE])
+        if (self.type == AMBSocialServiceTypeSMS)
         {
             NSMutableString *firstName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.first_name];
             NSMutableString *lastName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.last_name];
@@ -145,7 +147,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
                 [self sendSMSWithFirstName:firstName lastName:lastName];
             }
         }
-        else if ([self.serviceType isEqualToString:AMB_EMAIL_TITLE])
+        else if (self.type == AMBSocialServiceTypeEmail)
         {
             [self sendEmail];
         }
@@ -496,25 +498,24 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 
 #pragma mark - NamePromptDelegate
-- (void)sendSMSPressedWithFirstName:(NSString *)firstName lastName:(NSString *)lastName
-{
-    DLog();
-    
+- (void)sendSMSPressedWithFirstName:(NSString *)firstName lastName:(NSString *)lastName {
     [self sendSMSWithFirstName:firstName lastName:lastName];
 }
 
-- (void)sendSMSWithFirstName:(NSString *)firstName lastName:(NSString *)lastName
-{
-    DLog();
+
+- (void)sendSMSWithFirstName:(NSString *)firstName lastName:(NSString *)lastName {
     [self.delegate sendToContacts:[self.selected allObjects] forServiceType:AMB_SMS_TITLE fromFirstName:firstName lastName:lastName withMessage:self.composeMessageTextView.text];
+    [self sendShareTrack:[NSMutableArray arrayWithArray:[self.selected allObjects]] completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+        DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+    }];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-- (void)sendEmail
-{
-    DLog();
-    
+- (void)sendEmail {
     [self.delegate sendToContacts:[self.selected allObjects] forServiceType:AMB_EMAIL_TITLE fromFirstName:@"" lastName:@"" withMessage:self.composeMessageTextView.text];
+    [self sendShareTrack:[NSMutableArray arrayWithArray:[self.selected allObjects]] completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+        DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+    }];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -547,6 +548,43 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         AMBNamePrompt *vc = (AMBNamePrompt *)segue.destinationViewController;
         vc.delegate = self;
     }
+}
+
+
+#pragma mark - share track
+- (void)sendShareTrack:(NSMutableArray *)contacts completion:(void (^)(NSData *, NSURLResponse *, NSError *))c {
+    AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
+    if (self.type == AMBSocialServiceTypeEmail) {
+        share.recipient_email = [self valuesFromContacts:[self.selected allObjects]];
+    } else if (self.type == AMBSocialServiceTypeSMS) {
+        share.recipient_username = [self validatePhoneNumbers:[self.selected allObjects]];
+    }
+    share.short_code = self.urlNetworkObject.short_code;
+    share.social_name = socialServiceTypeStringVal(self.type);
+    
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:nil completion:c];
+}
+
+- (NSMutableArray *)valuesFromContacts:(NSArray *)contacts {
+    NSMutableArray *returnVal = [[NSMutableArray alloc] init];
+    for (AMBContact *contact in contacts) {
+        [returnVal addObject:contact.value];
+    }
+    return returnVal;
+}
+
+
+- (NSMutableArray *)validatePhoneNumbers:(NSArray *)contacts {
+    NSMutableArray *validSet = [[NSMutableArray alloc] init];
+    for (AMBContact *contact in contacts) {
+        NSString *number = [[contact.value componentsSeparatedByCharactersInSet:
+                             [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]]
+                            componentsJoinedByString:@""];
+        if (number.length == 11 || number.length == 10 || number.length == 7) {
+            [validSet addObject:number];
+        }
+    }
+    return validSet;
 }
 
 @end

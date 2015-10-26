@@ -83,8 +83,7 @@ parameters in [Conversions](#conversions). Your Universal Token and Universal ID
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Override point for customization after application launch.
 
-  // If you don't want to register a conversion during the first launch of your
-  // application, then pass nil for the convertOnInstall parameter
+  // If you don't want to register a conversion during the first launch of your application
   [AmbassadorSDK runWithUniversalToken:<your_universal_token> universalID:<your_universal_id>];
 
   //--OR--
@@ -112,8 +111,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 {
     // Override point for customization after application launch.
 
-    // If you don't want to register a conversion during the first launch of your
-    // application, then pass nil for the convertOnInstall parameter
+    // If you don't want to register a conversion during the first launch of your application
     AmbassadorSDK.runWithUniversalToken(<your_universal_token>, universalID:<your_universal_id>)
 
     //--OR--
@@ -158,32 +156,32 @@ Conversions can be triggered from anywhere. Common places could be a view contro
 **Objective-c**
 ```objective-c
 // STEP ONE: Create a conversion parameters object
-AMBConversionParameters *conversion = [[AMBConversionParameters alloc] init];
+AMBConversionParameters *parameters = [[AMBConversionParameters alloc] init];
 
 // STEP TWO: Set the required properties
-conversion.mbsy_revenue = @10; // NSNumber
-conversion.mbsy_campaign = @101; // NSNumber
-conversion.mbsy_email = @"user@example.com"; // NSString
+parameters.mbsy_revenue = @10; // NSNumber
+parameters.mbsy_campaign = @101; // NSNumber
+parameters.mbsy_email = @"user@example.com"; // NSString
 
 // STEP THREE: Set any optional properties
-conversion.mbsy_add_to_group_id = @"123"; // NSString
-conversion.mbsy_first_name = @"John"; // NSString
-conversion.mbsy_last_name = @"Doe"; // NSString
-conversion.mbsy_email_new_ambassador = @NO; // BOOL (Deafaults to @NO)
-conversion.mbsy_uid = @"mbsy_uid"; // NSString
-conversion.mbsy_custom1 = @"custom1"; // NSString
-conversion.mbsy_custom2 = @"custom2"; // NSString
-conversion.mbsy_custom3 = @"custom3"; // NSString
-conversion.mbsy_auto_create = @YES; // BOOL (Defaults to @YES)
-conversion.mbsy_deactivate_new_ambassador = @NO; // BOOL (Defaults to @NO)
-conversion.mbsy_transaction_uid = @"trans_uid"; // NSString
-conversion.mbsy_event_data1 = @"eventdata1"; // NSString
-conversion.mbsy_event_data2 = @"eventdata2"; // NSString
-conversion.mbsy_event_data3 = @"eventdata3"; // NSString
-conversion.mbsy_is_approved = @YES; // BOOL (Defaults to @YES)
+parameters.mbsy_add_to_group_id = @"123"; // NSString
+parameters.mbsy_first_name = @"John"; // NSString
+parameters.mbsy_last_name = @"Doe"; // NSString
+parameters.mbsy_email_new_ambassador = @NO; // BOOL (Deafaults to @NO)
+parameters.mbsy_uid = @"mbsy_uid"; // NSString
+parameters.mbsy_custom1 = @"custom1"; // NSString
+parameters.mbsy_custom2 = @"custom2"; // NSString
+parameters.mbsy_custom3 = @"custom3"; // NSString
+parameters.mbsy_auto_create = @YES; // BOOL (Defaults to @YES)
+parameters.mbsy_deactivate_new_ambassador = @NO; // BOOL (Defaults to @NO)
+parameters.mbsy_transaction_uid = @"trans_uid"; // NSString
+parameters.mbsy_event_data1 = @"eventdata1"; // NSString
+parameters.mbsy_event_data2 = @"eventdata2"; // NSString
+parameters.mbsy_event_data3 = @"eventdata3"; // NSString
+parameters.mbsy_is_approved = @YES; // BOOL (Defaults to @YES)
 
 // STEP FOUR: Register the conversion with the parameter object
-[AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
+[AmbassadorSDK registerConversion:parameters completion:^(NSError *error) {
     if (error) {
         NSLog(@"Error %@", error);
     }

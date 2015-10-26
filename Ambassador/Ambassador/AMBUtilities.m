@@ -9,6 +9,29 @@
 #import "AMBUtilities.h"
 #import "AMBSendCompletionModal.h"
 
+@implementation AMBUtilities : NSObject 
+
+- (void)presentErrorAlertWithMessage:(NSString*)message forViewController:(UIViewController*)viewController {
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
+    AMBSendCompletionModal *vc = (AMBSendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
+    vc.alertMessage = message;
+    [vc shouldUseSuccessIcon:NO];
+    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    __weak AMBSendCompletionModal *weakVC = vc;
+    vc.buttonAction = ^() {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(okayButtonClicked)]) {
+            [weakVC dismissViewControllerAnimated:NO completion:^{
+                [self.delegate okayButtonClicked];
+            }];
+        }
+    };
+    
+    [viewController presentViewController:vc animated:YES completion:nil];
+}
+    
+@end
+
 NSMutableDictionary* AMBparseQueryString(NSString *string)
 {
     string = [[string componentsSeparatedByString:@"?"] lastObject];
@@ -35,8 +58,7 @@ UIImage* AMBimageFromBundleNamed(NSString *name, NSString *type)
     return [UIImage imageWithContentsOfFile:[AMBframeworkBundle() pathForResource:name ofType:type]];
 }
 
-void AMBsendAlert(BOOL success, NSString *message, UIViewController *presenter)
-{
+void AMBsendAlert(BOOL success, NSString *message, UIViewController*presenter) {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
     AMBSendCompletionModal *vc = (AMBSendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
     vc.alertMessage = message;
