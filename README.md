@@ -289,7 +289,7 @@ The way to enter an image will look like `<image name>, <position>`.  Ex: `apple
 
 * **NOTE**: The position number must be 1-5
 
-  <img src="screenShots/imagePos1.png" width="250" />
+  <img src="screenShots/imagePos1.png" width="330" />
 
 **NOTES FOR CUSTOM THEMES**
 * **Colors must be entered as Hex Code values**
