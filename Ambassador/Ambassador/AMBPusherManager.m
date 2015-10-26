@@ -84,7 +84,6 @@
 
 
 #pragma mark - Url returns
-
 - (NSString *)pusherAuthUrl {
 #if AMBPRODUCTION
     return  @"https://api.getambassador.com/auth/subscribe/";

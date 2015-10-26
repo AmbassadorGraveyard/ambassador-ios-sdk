@@ -80,6 +80,7 @@
 @property (strong, nonatomic) NSMutableDictionary *fp;
 @end
 
+
 ///-----------------------------------------------------------------------------
 /// @name AMBConversionFields
 ///-----------------------------------------------------------------------------
@@ -104,4 +105,14 @@
 @property (nonatomic, retain) NSNumber * mbsy_is_approved;
 
 - (NSError *)isValid;
+@end
+
+///-----------------------------------------------------------------------------
+/// @name AMBShareTrackNetworkObject
+///-----------------------------------------------------------------------------
+@interface AMBShareTrackNetworkObject : AMBNetworkObject
+@property (nonatomic, strong) NSString *short_code;
+@property (nonatomic, strong) NSMutableArray *recipient_email;
+@property (nonatomic, strong) NSString *social_name;
+@property (nonatomic, strong) NSMutableArray *recipient_username;
 @end
