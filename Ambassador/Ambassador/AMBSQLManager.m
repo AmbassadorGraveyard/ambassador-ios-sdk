@@ -14,6 +14,9 @@
 #import "AMBOptions.h"
 #import "AMBNetworkObject.h"
 
+@implementation AMBSQLResult
+@end
+
 @interface AMBSQLManager ()
 @property AMBFMDatabase *database;
 @property AMBFMDatabaseQueue *databaseQueue;
@@ -38,11 +41,12 @@
     return self;
 }
 
-- (void)saveObject:(id)object ofType:(AMBSQLStorageType)type completion:(void (^)(NSError *))completion {
+- (void)saveObject:(id)object ofType:(AMBSQLStorageType)type completion:(void (^)(NSError *e))completion {
     __weak AMBSQLManager *weakSelf = self;
     [self.databaseQueue inDatabase:^(AMBFMDatabase *db) {
         NSError *e = nil;
-        if(![db executeUpdate:[weakSelf insertQueryForSQLStorageType:type],object]) {
+        NSData *objectData = [NSKeyedArchiver archivedDataWithRootObject:object];
+        if(![db executeUpdate:[weakSelf insertQueryForSQLStorageType:type], objectData]) {
             e = AMBSQLSAVEFAILError();
         }
         if (completion) {
@@ -51,11 +55,28 @@
     }];
 }
 
-- (void)deleteObjectOfType:(AMBSQLStorageType)type withID:(NSString *)ID completion:(void(^)(NSError *))completion {
+- (void)selectAllOfType:(AMBSQLStorageType)type completion:(void(^)(NSMutableArray *, NSError *))completion {
+    __weak AMBSQLManager *weakSelf = self;
+    [self.databaseQueue inDatabase:^(AMBFMDatabase *db) {
+        NSMutableArray *resultsArr = [[NSMutableArray alloc] init];
+        AMBFMResultSet *results = [db executeQuery:[weakSelf selectAllQueryForSQLStorageType:type]];
+        while ([results next]) {
+            AMBSQLResult *result = [[AMBSQLResult alloc] init];
+            result.ID = [results intForColumn:@"id"];
+            result.object = [results dataForColumn:@"object"];
+            [resultsArr addObject:result];
+        }
+        if (completion) {
+            dispatch_async(dispatch_get_main_queue(), ^{ completion(resultsArr, nil); });
+        }
+    }];
+}
+
+- (void)deleteObjectOfType:(AMBSQLStorageType)type withID:(int)ID completion:(void(^)(NSError *))completion {
     __weak AMBSQLManager *weakSelf = self;
     [self.databaseQueue inDatabase:^(AMBFMDatabase *db) {
         NSError *e = nil;
-        if(![db executeUpdate:[weakSelf insertQueryForSQLStorageType:type]]) {
+        if(![db executeUpdate:[weakSelf deleteQueryForSQLStorageType:type withID:ID]]) {
             e = AMBSQLSAVEFAILError();
         }
         if (completion) {
@@ -79,22 +100,27 @@
     return [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@ (id INTEGER PRIMARY KEY AUTOINCREMENT, object BLOB NOT NULL);", sqlStorageTypeStringVal(type)];
 }
 
-- (NSString *)deleteQueryForSQLStorageType:(AMBSQLStorageType)type withID:(NSString *)ID {
-    return [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@.id=%@;", sqlStorageTypeStringVal(type), sqlStorageTypeStringVal(type), ID];
+- (NSString *)deleteQueryForSQLStorageType:(AMBSQLStorageType)type withID:(int)ID {
+    return [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@.id=%i;", sqlStorageTypeStringVal(type), sqlStorageTypeStringVal(type), ID];
 }
+
+- (NSString *)selectAllQueryForSQLStorageType:(AMBSQLStorageType)type {
+    return [NSString stringWithFormat:@"SELECT * FROM %@;", sqlStorageTypeStringVal(type)];
+}
+
 
 
 #pragma mark - printing
 - (NSString *)stringVersionOfTableType:(AMBSQLStorageType)type {
     NSString *selectQuery = [NSString stringWithFormat:@"SELECT * FROM %@;", sqlStorageTypeStringVal(type)];
-
     [self.databaseQueue inDatabase:^(AMBFMDatabase *db) {
         AMBFMResultSet *resultSet = [db executeQuery:selectQuery];
         while ([resultSet next]) {
             NSData *obj = [resultSet dataForColumn:@"object"];
             AMBConversionFields *conversion = [NSKeyedUnarchiver unarchiveObjectWithData:obj];
-            NSLog(@"%@", conversion.mbsy_email);
+            NSLog(@"%i | %@", [resultSet intForColumn:@"id"], conversion);
         }
+        [resultSet close];
     }];
     return nil;
 }

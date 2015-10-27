@@ -42,15 +42,15 @@ NSString* sqlStorageTypeStringVal(AMBSQLStorageType type) {
     }
 }
 
-NSString* sqlUpdateTypeStringVal(AMBSQLUpdateType type) {
-    switch (type) {
-        case AMBSQLUpdateTypeInsert:
-            return @"INSERT";
-            break;
-        case AMBSQLUpdateTypeDelete:
-            return @"DELETE";
-            break;
-        default:
-            break;
-    }
-}
+//NSString* sqlUpdateTypeStringVal(AMBSQLUpdateType type) {
+//    switch (type) {
+//        case AMBSQLUpdateTypeInsert:
+//            return @"INSERT";
+//            break;
+//        case AMBSQLUpdateTypeDelete:
+//            return @"DELETE";
+//            break;
+//        default:
+//            break;
+//    }
+//}
