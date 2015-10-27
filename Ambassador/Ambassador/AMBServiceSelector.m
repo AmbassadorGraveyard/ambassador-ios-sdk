@@ -204,9 +204,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     
     if (!self.urlNetworkObj) {
         [self.waitViewTimer invalidate];
-        AMBUtilities *utilities = [[AMBUtilities alloc] init];
-        utilities.delegate = self;
-        [utilities presentErrorAlertWithMessage:@"No matching campaigns were found!" forViewController:self];
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" forViewController:self];
+        [AMBUtilities sharedInstance].delegate = self;
         NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
         return;
     }

@@ -9,13 +9,20 @@
 #import "AMBUtilities.h"
 #import "AMBSendCompletionModal.h"
 
-@implementation AMBUtilities : NSObject 
+@implementation AMBUtilities : NSObject
 
-- (void)presentErrorAlertWithMessage:(NSString*)message forViewController:(UIViewController*)viewController {
++ (AMBUtilities *)sharedInstance {
+    static AMBUtilities* _sharedInsance = nil;
+    static dispatch_once_t oncePredicate;
+    dispatch_once(&oncePredicate, ^{ _sharedInsance = [[AMBUtilities alloc] init]; });
+    return _sharedInsance;
+}
+
+- (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message forViewController:(UIViewController*)viewController {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
     AMBSendCompletionModal *vc = (AMBSendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
     vc.alertMessage = message;
-    [vc shouldUseSuccessIcon:NO];
+    [vc shouldUseSuccessIcon:successful];
     vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     __weak AMBSendCompletionModal *weakVC = vc;
