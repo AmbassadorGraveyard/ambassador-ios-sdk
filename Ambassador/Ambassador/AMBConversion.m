@@ -6,19 +6,48 @@
 //  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
 //
 
-//#import "NamespacedDependencies.h"
 #import "AMBConversion.h"
 #import "AMBFMResultSet.h"
 #import "AMBFMDatabase.h"
 #import "AMBFMDatabaseQueue.h"
+#import "AmbassadorSDK_Internal.h"
+#import "AMBSQLManager.h"
+#import "AMBOptions.h"
+#import "AMBAmbassadorNetworkManager.h"
 
 
 
-
+@interface AMBConversion ()
+@property AMBSQLManager *sqlManager;
+@end
 
 @implementation AMBConversion
 
+- (instancetype)init {
+    if (self = [super init]) {
+        self.sqlManager = [[AMBSQLManager alloc] init];
+    }
+    return self;
+}
+// JAKE THIS COULD BE A LAYER BETWEEN SQL AND AMBASSADORSDK
 
+
+- (void)sendConversionsWithCompletion:(void(^)(NSError *))completion {
+    // query for all conversions
+
+        // loop through the results
+
+        // send the results one by one
+
+            // delete on successful network call
+    if ([AmbassadorSDK sharedInstance].identify.fp) { return; }
+    [self.sqlManager selectAllOfType:AMBSQLStorageTypeConversions completion:^(NSMutableArray *results, NSError *e) {
+        for (AMBSQLResult *result in results) {
+
+//            [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:<#(AMBNetworkObject *)#> url:<#(NSString *)#> universalToken:<#(NSString *)#> universalID:<#(NSString *)#> additionParams:<#(NSMutableDictionary *)#> completion:<#^(NSData *, NSURLResponse *, NSError *)c#>]
+        }
+    }];
+}
 
 @end
 

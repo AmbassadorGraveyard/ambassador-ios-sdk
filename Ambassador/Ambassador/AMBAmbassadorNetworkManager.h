@@ -19,4 +19,5 @@
 + (NSString *)pusherAuthSubscribeUrl;
 + (NSString *)sendIdentifyUrl;
 + (NSString *)sendShareTrackUrl;
++ (NSString *)sendConversionUrl;
 @end

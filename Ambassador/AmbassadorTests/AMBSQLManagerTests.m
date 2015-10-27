@@ -32,9 +32,7 @@
     AMBConversionFields *fields = [[AMBConversionFields alloc] init];
     fields.mbsy_email = @"email@domain.com";
 
-   XCTestExpectation *exp = [self expectationWithDescription:@"Test Insert and Delete"];
-
-    [o stringVersionOfTableType:AMBSQLStorageTypeConversions];
+    XCTestExpectation *exp = [self expectationWithDescription:@"Test Insert and Delete"];
 
     [o saveObject:fields ofType:AMBSQLStorageTypeConversions completion:^(NSError *e) {
         if (e) { XCTFail(@"%@",e); }
@@ -43,11 +41,8 @@
 
     [o selectAllOfType:AMBSQLStorageTypeConversions completion:^(NSMutableArray *results, NSError *e) {
         NSLog(@"blah blah blah%@", results);
-
-        
         for (AMBSQLResult *result in results) {
             [o deleteObjectOfType:AMBSQLStorageTypeConversions withID:result.ID completion:^(NSError *e) {
-                [o stringVersionOfTableType:AMBSQLStorageTypeConversions];
                 if ([result isEqual:[results lastObject]]) {
                     [exp fulfill];
                 }

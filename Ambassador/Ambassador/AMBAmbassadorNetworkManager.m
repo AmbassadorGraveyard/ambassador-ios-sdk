@@ -69,4 +69,8 @@
     return [NSString stringWithFormat:@"%@track/share/", [self baseUrl]];
 }
 
++ (NSString *)sendConversionUrl {
+    return [NSString stringWithFormat:@"%@universal/action/conversion/", [self baseUrl]];
+}
+
 @end

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+
+//JAKE can be deleted and use AMBConversionFields in network objects
 @interface AMBConversionParameters : NSObject
 
 @property (nonatomic, retain) NSNumber * mbsy_campaign;

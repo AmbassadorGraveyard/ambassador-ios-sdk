@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+/// JAKE property names need the same as the fields in the JSON when you send
 
 ///-----------------------------------------------------------------------------
 /// @name AMBNetworkObject
@@ -105,6 +106,14 @@
 @property (nonatomic, retain) NSNumber * mbsy_is_approved;
 
 - (NSError *)isValid;
+@end
+
+///-----------------------------------------------------------------------------
+/// @name AMBConversionNetworkObject
+///-----------------------------------------------------------------------------
+@interface AMBConversionNetworkObject : AMBNetworkObject
+@property NSMutableDictionary *fp;
+@property AMBConversionFields *fields;
 @end
 
 ///-----------------------------------------------------------------------------

@@ -180,6 +180,8 @@
 @end
 
 #pragma mark - AMBConversionFields
+
+// JAKE can be called conversion parameters and delete the separate (old) .m .h
 @implementation AMBConversionFields
 - (instancetype)init {
     if ([super init]) {
@@ -306,9 +308,19 @@
 }
 @end
 
+#pragma mark - AMBConversionNetworkObject
+@implementation AMBConversionNetworkObject
+- (NSMutableDictionary *)toDictionary {
+    NSMutableDictionary *returnVal = [[NSMutableDictionary alloc] init];
+    [returnVal setValue:[self.fields toDictionary] forKey:@"fields"];
+    [returnVal setValue:self.fp forKey:@"fp"];
+    return returnVal;
+}
+@end
+
 #pragma mark - AMBShareTrackNetworkObject
 @implementation AMBShareTrackNetworkObject
--(instancetype)init {
+- (instancetype)init {
     if (self = [super init]) {
         self.recipient_username = nil; //[NSMutableArray arrayWithArray:@[]];
         self.recipient_email = nil; //[NSMutableArray arrayWithArray:@[]];

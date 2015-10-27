@@ -387,8 +387,6 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 - (BOOL)setActiveSearchFlag:(NSString *)searchText
 {
-    DLog();
-    
     self.activeSearch = [searchText isEqualToString:@""] ? NO : YES;
     self.doneSearchingButton.selected = self.activeSearch? YES : NO;
     return self.activeSearch;

@@ -139,4 +139,26 @@
     }
 }
 
+- (void)testDevSendConversion {
+    XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Send Conversion"];
+    AMBConversionNetworkObject *conversion = [[AMBConversionNetworkObject alloc] init];
+    AMBConversionFields *conversionFields = [[AMBConversionFields alloc] init];
+    conversionFields.mbsy_email = @"jake@getambassador.com";
+    conversionFields.mbsy_revenue = @0.0;
+    conversionFields.mbsy_campaign = @260;
+    conversion.fp = [NSMutableDictionary dictionaryWithDictionary:@{@"consumer" : @{},
+                                                                    @"device" : @ {@"ID" : @"4785d68586b2731afb1ac61ede0348245e7e117bda4aa44ef379e9b466f7426eba6f5812f699b02da0dea73dffad356f", @"type" : @"SmartPhone"}}];
+    conversion.fields = conversionFields;
+
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:conversion url:[AMBAmbassadorNetworkManager sendConversionUrl] universalToken:self.devToken universalID:self.devID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+        if (e) { XCTFail(@"%@",e); }
+        [exp fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * __nullable error) {
+        if (error) {
+            XCTFail(@"Expectation failed with error: %@", error);
+        }
+    }];
+}
+
 @end

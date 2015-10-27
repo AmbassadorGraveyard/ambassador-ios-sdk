@@ -47,7 +47,6 @@ extern NSString * const AMB_UPDATE_IDENTIFY_URL;
 #pragma mark - Pusher
 extern NSString * const AMB_PUSHER_KEY;
 extern NSString * const AMB_PUSHER_AUTHENTICATION_URL;
-
 extern NSString * const AMB_ERROR_DOMAIN;
 
 #define ECPNIL  1   /* ConversionParameters property has nil value */

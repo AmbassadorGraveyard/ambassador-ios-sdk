@@ -11,8 +11,7 @@
 #import "AMBPusher.h"
 #import "AMBPusherChannelObject.h"
 #import "AMBPusherManager.h"
-
-
+#import "AMBIdentify.h"
 
 @interface AmbassadorSDK ()
 + (void)sendIdentifyWithCampaign:(NSString *)campaign enroll:(BOOL)enroll completion:(void(^)(NSError *))c;
@@ -28,4 +27,5 @@
 @property (nonatomic, strong) AMBUserNetworkObject *user;
 @property (nonatomic, strong) NSString *universalToken;
 @property (nonatomic, strong) NSString *universalID;
+@property (nonatomic, strong) AMBIdentify *identify;
 @end

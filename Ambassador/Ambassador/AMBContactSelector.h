@@ -12,13 +12,10 @@
 #import "AMBNetworkObject.h"
 
 @protocol AMBContactSelectorDelegate <NSObject>
-
 - (void)sendToContacts:(NSArray*)values forServiceType:(NSString *)serviceType fromFirstName:(NSString *)firstName lastName:(NSString *)lastName withMessage:(NSString *)string;
-
 @end
 
 @interface AMBContactSelector : UIViewController
-
 @property NSMutableArray *data;
 @property AMBServiceSelectorPreferences *prefs;
 @property NSString *defaultMessage;
@@ -27,5 +24,4 @@
 @property (weak)id<AMBContactSelectorDelegate>delegate;
 @property AMBSocialServiceType type;
 @property AMBUserUrlNetworkObject *urlNetworkObject;
-
 @end
