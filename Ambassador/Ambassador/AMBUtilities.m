@@ -27,11 +27,9 @@
     vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     __weak AMBSendCompletionModal *weakVC = vc;
     vc.buttonAction = ^() {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(okayButtonClicked)]) {
-            [weakVC dismissViewControllerAnimated:NO completion:^{
-                [self.delegate okayButtonClicked];
-            }];
-        }
+        [weakVC dismissViewControllerAnimated:NO completion:^{
+            if (self.delegate && [self.delegate respondsToSelector:@selector(okayButtonClicked)]) { [self.delegate okayButtonClicked]; }
+        }];
     };
     
     [viewController presentViewController:vc animated:YES completion:nil];
