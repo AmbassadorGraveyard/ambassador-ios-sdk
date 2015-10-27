@@ -28,7 +28,7 @@
     for (AMBContact *contact in contacts) {
         NSString *number = [[contact.value componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]] componentsJoinedByString:@""];
         
-        if (number.length == 11 || number.length == 10 || number.length == 7) {
+        if ([AMBBulkShareHelper isValidPhoneNumber:number]) {
             [validSet addObject:number];
         }
     }
@@ -41,6 +41,14 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", laxString];
     
     return [emailTest evaluateWithObject:emailAddress];
+}
+
++ (BOOL)isValidPhoneNumber:(NSString*)phoneNumber {
+    if (phoneNumber.length == 11 || phoneNumber.length == 10 || phoneNumber.length == 7) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
                             
 
