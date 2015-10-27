@@ -247,7 +247,11 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         }
         else
         {
-            [self.selected addObject:contact];
+            if ([self checkValidationForString:contact.value]) {
+                [self.selected addObject:contact];
+            } else {
+                [self showInvalidValueAlertForValue:contact.value];
+            }
         }
     }
     if (tableView == self.selectedTable)
@@ -563,6 +567,38 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     } else {
         return YES;
     }
+}
+
+- (BOOL)checkValidationForString:(NSString*)valueString {
+    switch (self.type) {
+        case AMBSocialServiceTypeEmail:
+            return [AMBBulkShareHelper isValidEmail:valueString];
+            
+        case AMBSocialServiceTypeSMS:
+            return [AMBBulkShareHelper isValidPhoneNumber:valueString];
+            
+        default:
+            return NO;
+    }
+}
+
+- (void)showInvalidValueAlertForValue:(NSString*)valueString {
+    NSString *errorString;
+    
+    switch (self.type) {
+        case AMBSocialServiceTypeEmail:
+            errorString = [NSString stringWithFormat:@"The email address %@ is invalid.  Please change it to a valid email address. \n(Example: user.name@example.com)", valueString];
+            break;
+            
+        case AMBSocialServiceTypeSMS:
+            errorString = [NSString stringWithFormat:@"The phone number %@ is invalid.  Please changed it to a valid phone number. \n(Example: 555-555-5555, 1-555-555-5555, 555-5555)", valueString];
+            
+        default:
+            break;
+    }
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Unable to select!" message:errorString delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [alertView show];
 }
 
 
