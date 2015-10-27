@@ -99,3 +99,13 @@
 - (instancetype)initWithPhoneNumbers:(NSArray*)phoneNumbers fromSender:(NSString*)sender message:(NSString*)message;
 
 @end
+
+@interface AMBUpdateNameObject : AMBNetworkObject
+
+@property (nonatomic, strong) NSDictionary * update_data;
+@property (nonatomic, strong) NSString * email;
+
+- (instancetype)initWithFirstName:(NSString*)firstName lastName:(NSString*)lastName email:(NSString*)email;
+
+@end
+
