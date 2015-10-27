@@ -18,6 +18,7 @@
 #import "AmbassadorSDK_Internal.h"
 #import "AMBAmbassadorNetworkManager.h"
 #import "AMBNetworkObject.h"
+#import "AMBBulkShareHelper.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                AMBSelectedCellDelegate, UITextFieldDelegate,
@@ -519,13 +520,15 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 //    [self.navigationController popToRootViewControllerAnimated:YES];
     
 //    AMBAmbassadorNetworkManager *networkManager = [[AMBAmbassadorNetworkManager alloc] init];
-    AMBBulkShareEmailObject *emailObject = [[AMBBulkShareEmailObject alloc] initWithEmails:[self.selected allObjects] shortCode:self.urlNetworkObject.short_code message:self.composeMessageTextView.text subjectLine:self.urlNetworkObject.subject];
+    NSArray *validatedContacts = [AMBBulkShareHelper validateEmails:[self.selected allObjects]];
+    AMBBulkShareEmailObject *emailObject = [[AMBBulkShareEmailObject alloc] initWithEmails:validatedContacts shortCode:self.urlNetworkObject.short_code message:self.composeMessageTextView.text subjectLine:self.urlNetworkObject.subject];
     [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:emailObject url:[AMBAmbassadorNetworkManager bulkShareEmailUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
             DLog(@"Error - %@", error);
+        } else {
+            
         }
     }];
-    
 }
 
 

@@ -72,11 +72,11 @@
 }
 
 + (NSString *)bulkShareEmailUrl {
-    return [NSString stringWithFormat:@"%@share/sms/", [AMBAmbassadorNetworkManager baseUrl]];
+    return [NSString stringWithFormat:@"%@share/email/", [AMBAmbassadorNetworkManager baseUrl]];
 }
 
 + (NSString *)bulkShareSMSUrl {
-    return [NSString stringWithFormat:@"%@share/email/", [AMBAmbassadorNetworkManager baseUrl]];
+    return [NSString stringWithFormat:@"%@share/sms/", [AMBAmbassadorNetworkManager baseUrl]];
 }
 
 @end
