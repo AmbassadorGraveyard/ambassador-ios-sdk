@@ -20,10 +20,11 @@
 #import "AMBNetworkObject.h"
 #import "AMBBulkShareHelper.h"
 #import "AMBOptions.h"
+#import "AMBContactLoader.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                AMBSelectedCellDelegate, UITextFieldDelegate,
-                               AMBNamePromptDelegate, UITextViewDelegate, AMBUtilitiesDelegate>
+                               UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *contactsTable;
 
 @property (weak, nonatomic) IBOutlet UIView *composeMessageView;
@@ -51,6 +52,8 @@
 
 @property (strong, nonatomic) NSMutableSet *selected;
 @property (strong, nonatomic) NSMutableArray *filteredData;
+@property (nonatomic, strong) AMBContactLoader *contactLoader;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @property BOOL activeSearch;
 
@@ -105,8 +108,20 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     self.composeMessageTextView.text = self.defaultMessage;
     [self.composeMessageTextView scrollRangeToVisible:NSMakeRange(0, 0)];
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(viewDidAppear:) forControlEvents:UIControlEventValueChanged];
+    [self.contactsTable addSubview:self.refreshControl];
+    
     [self updateButton];
     [self setUpTheme];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self refreshContacts];
+    [self.contactsTable reloadData];
+    if (self.refreshControl.isRefreshing) {
+        [self.refreshControl endRefreshing];
+    }
 }
 
 - (void)setUpTheme {
@@ -574,8 +589,10 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         case AMBSocialServiceTypeEmail:
             return [AMBBulkShareHelper isValidEmail:valueString];
             
-        case AMBSocialServiceTypeSMS:
-            return [AMBBulkShareHelper isValidPhoneNumber:valueString];
+        case AMBSocialServiceTypeSMS: {
+            NSString *strippedString = [AMBBulkShareHelper stripPhoneNumber:valueString];
+            return [AMBBulkShareHelper isValidPhoneNumber:strippedString];
+        }
             
         default:
             return NO;
@@ -599,6 +616,21 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Unable to select!" message:errorString delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
     [alertView show];
+}
+
+- (void)refreshContacts {
+    self.contactLoader = [[AMBContactLoader alloc] initWithDelegate:self];
+    
+    switch (self.type) {
+        case AMBSocialServiceTypeEmail:
+            self.data = self.contactLoader.emailAddresses;
+            break;
+        case AMBSocialServiceTypeSMS:
+            self.data = self.contactLoader.phoneNumbers;
+            break;
+        default:
+            break;
+    }
 }
 
 
@@ -678,6 +710,16 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 - (void)namesUpdatedSuccessfully {
     [self sendSMS];
+}
+
+
+#pragma mark - AMBContactLoader Delegate
+
+- (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
+    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Unable to load contacts" message:@"There was an error loading your contact list." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [errorAlert show];
+    
+    DLog(@"Error loading contacts - %@", message);
 }
 
 @end
