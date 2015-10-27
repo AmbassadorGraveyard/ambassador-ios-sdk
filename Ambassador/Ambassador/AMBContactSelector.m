@@ -19,6 +19,7 @@
 #import "AMBAmbassadorNetworkManager.h"
 #import "AMBNetworkObject.h"
 #import "AMBBulkShareHelper.h"
+#import "AMBOptions.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                AMBSelectedCellDelegate, UITextFieldDelegate,
@@ -491,36 +492,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 }
 
 
-
-#pragma mark - NamePromptDelegate
-- (void)sendSMSPressedWithFirstName:(NSString *)firstName lastName:(NSString *)lastName {
-    [self sendSMSWithFirstName:firstName lastName:lastName];
-}
-
-
-- (void)sendSMSWithFirstName:(NSString *)firstName lastName:(NSString *)lastName {
-    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:AMB_SMS_TITLE fromFirstName:firstName lastName:lastName withMessage:self.composeMessageTextView.text];
-    [self sendShareTrack:[NSMutableArray arrayWithArray:[self.selected allObjects]] completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-        DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
-    }];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-
-
-- (BOOL)alreadyHaveNames {
-    NSMutableString *firstName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.first_name];
-    NSMutableString *lastName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.last_name];
-    
-    firstName = (NSMutableString *)[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    
-    if ([firstName isEqualToString:@""] || [lastName isEqualToString:@""]) {
-        return NO;
-    } else {
-        return YES;
-    }
-}
+#pragma mark - Send Functions
 
 - (void)sendSMS {
     NSArray *validatedNumbers = [AMBBulkShareHelper validatedPhoneNumbers:[self.selected allObjects]];
@@ -543,6 +515,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
                 [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." forViewController:self];
             } else {
                 DLog(@"BulkShare SMS Success with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                [self sendShareTrack:validatedNumbers];
                 [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" forViewController:self];
                 [AMBUtilities sharedInstance].delegate = self;
             }
@@ -566,6 +539,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
                 [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." forViewController:self];
             } else {
                 DLog(@"BulkShare Email Success with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                [self sendShareTrack:validatedContacts];
                 [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" forViewController:self];
                 [AMBUtilities sharedInstance].delegate = self;
             }
@@ -575,16 +549,21 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     }
 }
 
+#pragma mark - Helper Functions
 
-
-#pragma mark - UITextViewDelegate
-//- (void)textViewDidBeginEditing:(UITextView *)textView
-//{
-//    DLog();
-//    
-//    [self editMessageButton:self.editMessageButton];
-//}
-
+- (BOOL)alreadyHaveNames {
+    NSMutableString *firstName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.first_name];
+    NSMutableString *lastName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.last_name];
+    
+    firstName = (NSMutableString *)[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    if ([firstName isEqualToString:@""] || [lastName isEqualToString:@""]) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
 
 
 #pragma mark - Navigation
@@ -607,8 +586,9 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 }
 
 
-#pragma mark - share track
-- (void)sendShareTrack:(NSMutableArray *)contacts completion:(void (^)(NSData *, NSURLResponse *, NSError *))c {
+#pragma mark - Share Track 
+
+- (void)sendShareTrack:(NSArray *)contacts {
     AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
     if (self.type == AMBSocialServiceTypeEmail) {
         share.recipient_email = [self valuesFromContacts:[self.selected allObjects]];
@@ -618,7 +598,14 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     share.short_code = self.urlNetworkObject.short_code;
     share.social_name = socialServiceTypeStringVal(self.type);
     
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:c];
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+        if (error) {
+            DLog(@"Error for BulkShareTrack %@ with ResponseCode %li and Response %@", socialServiceTypeStringVal(self.type), (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+        } else {
+            DLog(@"Successfully shared BulkShareTrack %@ with ResponseCode %li and Response %@", socialServiceTypeStringVal(self.type), (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+        }
+    }];
 }
 
 - (NSMutableArray *)valuesFromContacts:(NSArray *)contacts {
