@@ -116,41 +116,30 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     [self.sendButton.titleLabel setFont:[[AMBThemeManager sharedInstance] fontForKey:ContactSendButtonTextFont]];
 }
 
-- (IBAction)sendButtonPressed:(UIButton *)sender
-{
+
+#pragma mark - IBActions
+
+- (IBAction)sendButtonPressed:(UIButton *)sender {
     if (self.selected.count > 0)
     {
         //TODO: validate short url is in there
-        if (![self validateString:self.shortURL inString:self.composeMessageTextView.text])
-        {
+        if (![self validateString:self.shortURL inString:self.composeMessageTextView.text]){
             NSString *message = [NSString stringWithFormat:@"Please include your url in the message: %@", self.shortURL];
             AMBsendAlert(NO, message, self);
             return;
         }
 
-        if (self.type == AMBSocialServiceTypeSMS)
-        {
-            NSMutableString *firstName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.first_name];
-            NSMutableString *lastName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.last_name];
-
-            firstName = (NSMutableString *)[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            
-            DLog(@"User first and last name: %@ %@", firstName, lastName);
-            
-            if ([firstName isEqualToString:@""] || [lastName isEqualToString:@""])
-            {
-                [self performSegueWithIdentifier:NAME_PROMPT_SEGUE_IDENTIFIER sender:self];
-            }
-            else
-            {
-                DLog(@"Sending first and last name");
-                [self sendSMSWithFirstName:firstName lastName:lastName];
-            }
-        }
-        else if (self.type == AMBSocialServiceTypeEmail)
-        {
-            [self sendEmail];
+        switch (self.type) {
+            case AMBSocialServiceTypeEmail:
+                [self sendEmail];
+                break;
+                
+            case AMBSocialServiceTypeSMS:
+                [self sendSMS];
+                break;
+                
+            default:
+                break;
         }
     }
 }
@@ -512,26 +501,65 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-- (void)sendEmail {
-//    [self.delegate sendToContacts:[self.selected allObjects] forServiceType:AMB_EMAIL_TITLE fromFirstName:@"" lastName:@"" withMessage:self.composeMessageTextView.text];
-//    [self sendShareTrack:[NSMutableArray arrayWithArray:[self.selected allObjects]] completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-//        DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
-//    }];
-//    [self.navigationController popToRootViewControllerAnimated:YES];
+
+
+- (BOOL)alreadyHaveNames {
+    return YES;
+}
+
+- (void)sendSMS {
+    NSArray *validatedNumbers = [AMBBulkShareHelper validatedPhoneNumbers:[self.selected allObjects]];
     
-//    AMBAmbassadorNetworkManager *networkManager = [[AMBAmbassadorNetworkManager alloc] init];
-    NSArray *validatedContacts = [AMBBulkShareHelper validateEmails:[self.selected allObjects]];
-    AMBBulkShareEmailObject *emailObject = [[AMBBulkShareEmailObject alloc] initWithEmails:validatedContacts shortCode:self.urlNetworkObject.short_code message:self.composeMessageTextView.text subjectLine:self.urlNetworkObject.subject];
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:emailObject url:[AMBAmbassadorNetworkManager bulkShareEmailUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
-        if (error) {
-            DLog(@"Error - %@", error);
-        } else {
-            DLog(@"BulkShare Email Success with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-            [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" forViewController:self];
-            [AMBUtilities sharedInstance].delegate = self;
-        }
-    }];
+    if (validatedNumbers.count > 0) {
+        NSMutableString *firstName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.first_name];
+        NSMutableString *lastName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.last_name];
+        
+        firstName = (NSMutableString *)[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        
+        NSString *senderName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+        
+        AMBBulkShareSMSObject *smsObject = [[AMBBulkShareSMSObject alloc] initWithPhoneNumbers:validatedNumbers fromSender:senderName message:self.composeMessageTextView.text];
+        
+        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:smsObject url:[AMBAmbassadorNetworkManager bulkShareSMSUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+            if (error) {
+                DLog(@"Error for BulkShare SMS with Response Code - %li and Response - %@", httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." forViewController:self];
+            } else {
+                DLog(@"BulkShare SMS Success with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" forViewController:self];
+                [AMBUtilities sharedInstance].delegate = self;
+            }
+        }];
+    } else {
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid phone number. Please check and try again." forViewController:self];
+    }
+    
+    
+}
+
+- (void)sendEmail {
+    NSArray *validatedContacts = [AMBBulkShareHelper validatedEmails:[self.selected allObjects]]; // Validate the contact list for emails
+
+    if (validatedContacts.count > 0) {
+        AMBBulkShareEmailObject *emailObject = [[AMBBulkShareEmailObject alloc] initWithEmails:validatedContacts
+           shortCode:self.urlNetworkObject.short_code message:self.composeMessageTextView.text subjectLine:self.urlNetworkObject.subject];
+        
+        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:emailObject url:[AMBAmbassadorNetworkManager bulkShareEmailUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+            if (error) {
+                DLog(@"Error for BulkShare Email with Response Code - %li and Response - %@", httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." forViewController:self];
+            } else {
+                DLog(@"BulkShare Email Success with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" forViewController:self];
+                [AMBUtilities sharedInstance].delegate = self;
+            }
+        }];
+    } else {
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid email address. Please check and try again." forViewController:self];
+    }
 }
 
 
