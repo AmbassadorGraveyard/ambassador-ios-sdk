@@ -12,24 +12,26 @@
 #define AMBErrorDomain      "AmbassadorErrorDomain"
 #define AMBINVNETOBJ        1   /* Invalid Network Object */
 #define AMBBADRESP          2   /* Non-200 Server Response */
-#define AMBCDINVMOC         3   /* Core Data Error */
+#define AMBSQLSAVEFAIL      3   /* SQL Save Failure */
 #define AMBNOPERMISS        4   /* Lacking Permission to Access Data */
 #define AMBINVSMSNUM        5   /* Invalid SMS Number */
 #define AMBNOIDENT          6   /* No Identify Error */
 #define AMBINVLKDNAUTH      7   /* LinkedIn Authentication Error */
 #define AMBINVPARAM         8   /* Invalid Method Parameters */
 #define AMBNOVAL            9   /* No Value Return */
+#define AMBSQLINITFAIL      10  /* SQL Load Failure */
 
 #import <Foundation/Foundation.h>
 
-NSError* AMBINVETOBJError(id sender);
+NSError* AMBINVNETOBJError(id sender);
 NSError* AMBBADRESPError(NSUInteger code, NSData *data);
-NSError* AMBCDINVMOCError();
+NSError* AMBSQLSAVEFAILError();
 NSError* AMBNOPERMISSError(id sender);
 NSError* AMBINVSMSNUMError(NSMutableArray *badVals);
 NSError* AMBNOIDENTError();
 NSError* AMBINVLKDNAUTHError(NSString *msg);
 NSError* AMBINVPARAMError(NSString *methodName);
 NSError* AMBNOVALError();
+NSError* AMBSQLINITFAILError(NSString *filePath);
 
 #endif /* AMBErrors_h */

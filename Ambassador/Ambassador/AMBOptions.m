@@ -31,3 +31,26 @@ NSString* socialServiceTypeStringVal(AMBSocialServiceType type) {
             break;
     }
 }
+
+NSString* sqlStorageTypeStringVal(AMBSQLStorageType type) {
+    switch (type) {
+        case AMBSQLStorageTypeConversions:
+            return @"conversions";
+            break;
+        default:
+            break;
+    }
+}
+
+//NSString* sqlUpdateTypeStringVal(AMBSQLUpdateType type) {
+//    switch (type) {
+//        case AMBSQLUpdateTypeInsert:
+//            return @"INSERT";
+//            break;
+//        case AMBSQLUpdateTypeDelete:
+//            return @"DELETE";
+//            break;
+//        default:
+//            break;
+//    }
+//}

@@ -13,10 +13,8 @@
 @implementation AMBConversionParameters
 
 #pragma mark - Initialization
-- (id)init
-{
-    if ([super init])
-    {
+- (id)init {
+    if ([super init]) {
         self.mbsy_campaign = @-1;
         self.mbsy_email = @"";
         self.mbsy_first_name = @"";
@@ -36,7 +34,6 @@
         self.mbsy_event_data3 = @"";
         self.mbsy_is_approved = @1;
     }
-    
     return self;
 }
 
@@ -69,9 +66,7 @@
 
 
 #pragma mark - Validation
-- (NSError *)isValid;
-{
-    DLog(@"Inside Validation");
+- (NSError *)isValid {
     NSError *e = nil;
     BOOL nonNil = YES;
     

@@ -10,7 +10,9 @@
 #import "AMBNetworkObject.h"
 #import "AMBUtilities.h"
 #import "AMBAmbassadorNetworkManager.h"
+#import "AMBErrors.h"
 
+#pragma mark - AMBNetworkObject
 @implementation AMBNetworkObject
 - (NSMutableDictionary *)toDictionary {
     NSMutableDictionary *returnDictionary = [[NSMutableDictionary alloc] init];
@@ -34,9 +36,7 @@
     return [NSJSONSerialization dataWithJSONObject:[self toDictionary] options:0 error:e];
 }
 
-
-
-#pragma mark - NSCoding
+// saving (encoding / decoding)
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     unsigned int numProperties = 0;
     objc_property_t *propertyArray = class_copyPropertyList([self class], &numProperties);
@@ -60,9 +60,7 @@
     return self;
 }
 
-
-
-#pragma mark - storage
+// storage
 - (NSString *)rootPath {
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
 }
@@ -80,11 +78,9 @@
     NSError *error;
     [[NSFileManager defaultManager] removeItemAtPath:rootPath error:&error];
 }
-
 @end
 
-
-
+#pragma mark - AMBPusherSessionSubscribeNetworkObject
 @implementation AMBPusherSessionSubscribeNetworkObject
 - (void)fillWithDictionary:(NSMutableDictionary *)d {
     self.channel_name = (NSString *)d[@"channel_name"];
@@ -110,13 +106,11 @@
 }
 @end
 
-
-
+#pragma mark - AMBPusherAuthNetworkObject
 @implementation AMBPusherAuthNetworkObject
 @end
 
-
-
+#pragma mark - AMBUserUrlNetworkObject
 @implementation AMBUserUrlNetworkObject
 - (void)fillWithDictionary:(NSMutableDictionary *)d {
     self.campaign_uid = (NSNumber *)d[@"campaign_uid"];
@@ -128,8 +122,7 @@
 }
 @end
 
-
-
+#pragma mark - AMBUserNetworkObject
 @implementation AMBUserNetworkObject
 - (void)fillWithUrl:(NSString *)url universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c {
     __weak AMBUserNetworkObject *weakSelf = self;
@@ -171,11 +164,9 @@
     }
     return nil;
 }
-
 @end
 
-
-
+#pragma mark - AMBIdentifyNetworkObject
 @implementation AMBIdentifyNetworkObject
 - (instancetype)init {
     if (self = [super init]) {
@@ -188,8 +179,134 @@
 }
 @end
 
+#pragma mark - AMBConversionFields
+@implementation AMBConversionFields
+- (instancetype)init {
+    if ([super init]) {
+        self.mbsy_campaign = @-1;
+        self.mbsy_email = @"";
+        self.mbsy_first_name = @"";
+        self.mbsy_last_name = @"";
+        self.mbsy_email_new_ambassador = @0;
+        self.mbsy_uid = @"";
+        self.mbsy_custom1 = @"";
+        self.mbsy_custom2 = @"";
+        self.mbsy_custom3 = @"";
+        self.mbsy_auto_create = @1;
+        self.mbsy_revenue = @-1;
+        self.mbsy_deactivate_new_ambassador = @0;
+        self.mbsy_transaction_uid = @"";
+        self.mbsy_add_to_group_id = @"";
+        self.mbsy_event_data1 = @"";
+        self.mbsy_event_data2 = @"";
+        self.mbsy_event_data3 = @"";
+        self.mbsy_is_approved = @1;
+    }
+    return self;
+}
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ |",
+            self.mbsy_campaign,                 self.mbsy_email,
+            self.mbsy_first_name,               self.mbsy_last_name,
+            self.mbsy_email_new_ambassador,     self.mbsy_uid,
+            self.mbsy_custom1,                  self.mbsy_custom2,
+            self.mbsy_custom3,                  self.mbsy_auto_create,
+            self.mbsy_revenue,                  self.mbsy_deactivate_new_ambassador,
+            self.mbsy_transaction_uid,          self.mbsy_add_to_group_id,
+            self.mbsy_event_data1,              self.mbsy_event_data2,
+            self.mbsy_event_data3,              self.mbsy_is_approved];
+}
 
+- (NSError *)isValid {
+    BOOL nonNil = YES;
+
+    if (!self.mbsy_campaign) {
+        self.mbsy_campaign = @-1;
+        nonNil = NO;
+    }
+    if (!self.mbsy_email) {
+        self.mbsy_email = @"";
+        nonNil = NO;
+    }
+    if (!self.mbsy_first_name) {
+        self.mbsy_first_name = @"";
+        nonNil = NO;
+    }
+    if (!self.mbsy_last_name) {
+        self.mbsy_last_name = @"";
+        nonNil = NO;
+    }
+    if (!self.mbsy_email_new_ambassador) {
+        self.mbsy_email_new_ambassador = @0;
+        nonNil = NO;
+    }
+    if (!self.mbsy_uid) {
+        self.mbsy_uid = @"";
+        nonNil = NO;
+    }
+    if (!self.mbsy_custom1) {
+        self.mbsy_custom1 = @"";
+        nonNil = NO;
+    }
+    if (!self.mbsy_custom2) {
+        self.mbsy_custom2 = @"";
+        nonNil = NO;
+    }
+    if (!self.mbsy_custom3) {
+        self.mbsy_custom3 = @"";
+        nonNil = NO;
+    }
+    if (!self.mbsy_auto_create) {
+        self.mbsy_auto_create = @1;
+        nonNil = NO;
+    }
+    if (!self.mbsy_revenue) {
+        self.mbsy_revenue = @-1;
+        nonNil = NO;
+    }
+    if (!self.mbsy_deactivate_new_ambassador) {
+        self.mbsy_deactivate_new_ambassador = @0;
+        nonNil = NO;
+    }
+    if (!self.mbsy_transaction_uid) {
+        self.mbsy_transaction_uid = @"";
+        nonNil = NO;
+    }
+    if (!self.mbsy_add_to_group_id) {
+        self.mbsy_add_to_group_id = @"";
+        nonNil = NO;
+    }
+    if (!self.mbsy_event_data1) {
+        self.mbsy_event_data1 = @"";
+        nonNil = NO;
+    }
+    if (!self.mbsy_event_data2) {
+        self.mbsy_event_data2 = @"";
+        nonNil = NO;
+    }
+    if (!self.mbsy_event_data3) {
+        self.mbsy_event_data3 = @"";
+        nonNil = NO;
+    }
+    if (!self.mbsy_is_approved) {
+        self.mbsy_is_approved = @1;
+        nonNil = NO;
+    }
+
+    if (!nonNil) {
+        NSLog(@"[Ambassador] Warning - ConversionPrameters object contained a nil property. Attempting to send anyway.");
+    }
+
+    BOOL reqProps = [self.mbsy_campaign intValue] > -1 &&
+                   ![self.mbsy_email isEqualToString:@""] &&
+                    [self.mbsy_revenue intValue] > -1;
+
+    return (!reqProps)? AMBINVNETOBJError(self) : nil;
+}
+@end
+
+#pragma mark - AMBShareTrackNetworkObject
 @implementation AMBShareTrackNetworkObject
 -(instancetype)init {
     if (self = [super init]) {

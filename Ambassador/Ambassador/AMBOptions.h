@@ -21,4 +21,21 @@ typedef NS_ENUM(NSUInteger, AMBSocialServiceType) {
 
 NSString* socialServiceTypeStringVal(AMBSocialServiceType type);
 
+
+
+typedef NS_ENUM(NSUInteger, AMBSQLStorageType) {
+    AMBSQLStorageTypeConversions
+};
+
+NSString* sqlStorageTypeStringVal(AMBSQLStorageType type);
+
+
+
+//typedef NS_ENUM(NSUInteger, AMBSQLUpdateType) {
+//    AMBSQLUpdateTypeInsert,
+//    AMBSQLUpdateTypeDelete
+//};
+//
+//NSString* sqlUpdateTypeStringVal(AMBSQLUpdateType type);
+
 #endif /* AMBOptions_h */

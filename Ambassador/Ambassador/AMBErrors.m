@@ -8,7 +8,7 @@
 
 #import "AMBErrors.h"
 
-NSError* AMBINVETOBJError(id sender) {
+NSError* AMBINVNETOBJError(id sender) {
     NSString *recStr = [NSString stringWithFormat:@"Check the class documentation for %@.", NSStringFromClass([sender class])];
     NSDictionary *usIn =    @{
                               NSLocalizedDescriptionKey: NSLocalizedString(@"Invalid Network Object", nil),
@@ -28,13 +28,13 @@ NSError* AMBBADRESPError(NSUInteger code, NSData *data) {
     return [NSError errorWithDomain:@AMBErrorDomain code:AMBBADRESP userInfo:usIn];
 }
 
-NSError* AMBCDINVMOCError() {
+NSError* AMBSQLSAVEFAILError() {
     NSDictionary *usIn =    @{
-                              NSLocalizedDescriptionKey: NSLocalizedString(@"Core Data Error", nil),
-                              NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"The managed object context was nil", nil),
+                              NSLocalizedDescriptionKey: NSLocalizedString(@"SQL Save Failure", nil),
+                              NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"SQL INSERT query execution failed", nil),
                               NSLocalizedRecoverySuggestionErrorKey:NSLocalizedString(@"", nil)
                               };
-    return [NSError errorWithDomain:@AMBErrorDomain code:AMBCDINVMOC userInfo:usIn];
+    return [NSError errorWithDomain:@AMBErrorDomain code:AMBNOIDENT userInfo:usIn];
 }
 
 NSError* AMBNOPERMISSError(id sender) {
@@ -94,3 +94,12 @@ NSError* AMBNOVALError() {
     return [NSError errorWithDomain:@AMBErrorDomain code:AMBNOVAL userInfo:usIn];
 }
 
+NSError* AMBSQLINITFAILError(NSString *filePath) {
+    NSString *msg = [NSString stringWithFormat:@"Filepath: %@", filePath];
+    NSDictionary *usIn =    @{
+                              NSLocalizedDescriptionKey: NSLocalizedString(@"SQL Initialization Failure", nil),
+                              NSLocalizedFailureReasonErrorKey: NSLocalizedString(msg, nil),
+                              NSLocalizedRecoverySuggestionErrorKey:NSLocalizedString(@"", nil)
+                              };
+    return [NSError errorWithDomain:@AMBErrorDomain code:AMBSQLINITFAIL userInfo:usIn];
+}
