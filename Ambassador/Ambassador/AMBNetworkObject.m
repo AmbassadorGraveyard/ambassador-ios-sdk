@@ -234,3 +234,19 @@
 }
 
 @end
+
+
+#pragma mark - AMBUpdateNameObject
+
+@implementation AMBUpdateNameObject
+
+- (instancetype)initWithFirstName:(NSString *)firstName lastName:(NSString *)lastName email:(NSString *)email {
+    self = [super init];
+    self.update_data = [[NSDictionary alloc] initWithObjectsAndKeys:firstName, @"first_name",
+                        lastName, @"last_name", nil];
+    self.email = email;
+    
+    return self;
+}
+
+@end

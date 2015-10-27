@@ -504,7 +504,18 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 
 - (BOOL)alreadyHaveNames {
-    return YES;
+    NSMutableString *firstName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.first_name];
+    NSMutableString *lastName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.last_name];
+    
+    firstName = (NSMutableString *)[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    if ([firstName isEqualToString:@""] || [lastName isEqualToString:@""]) {
+        [self performSegueWithIdentifier:NAME_PROMPT_SEGUE_IDENTIFIER sender:self];
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 - (void)sendSMS {
@@ -524,7 +535,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:smsObject url:[AMBAmbassadorNetworkManager bulkShareSMSUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
             if (error) {
-                DLog(@"Error for BulkShare SMS with Response Code - %li and Response - %@", httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                DLog(@"Error for BulkShare SMS with Response Code - %li and Response - %@", (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
                 [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." forViewController:self];
             } else {
                 DLog(@"BulkShare SMS Success with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
@@ -535,8 +546,6 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     } else {
         [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid phone number. Please check and try again." forViewController:self];
     }
-    
-    
 }
 
 - (void)sendEmail {
@@ -549,7 +558,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:emailObject url:[AMBAmbassadorNetworkManager bulkShareEmailUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
             if (error) {
-                DLog(@"Error for BulkShare Email with Response Code - %li and Response - %@", httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                DLog(@"Error for BulkShare Email with Response Code - %li and Response - %@", (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
                 [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." forViewController:self];
             } else {
                 DLog(@"BulkShare Email Success with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
@@ -635,6 +644,13 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 - (void)okayButtonClicked {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark - AMBNamePrompt Delegate 
+
+- (void)namesUpdatedSuccessfully {
+    [self sendSMS];
 }
 
 @end

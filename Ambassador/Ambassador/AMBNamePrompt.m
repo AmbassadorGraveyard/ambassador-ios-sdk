@@ -10,6 +10,7 @@
 #import "AMBUtilities.h"
 #import "AMBConstants.h"
 #import "AmbassadorSDK_Internal.h"
+#import "AMBAmbassadorNetworkManager.h"
 
 @interface AMBNamePrompt () <UITextFieldDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *continueButton;
@@ -66,14 +67,26 @@
         NSString *firstName = [self.firstNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *lastName = [self.lastNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
        
-        DLog(@"This is what is stored before the name change %@", [AmbassadorSDK sharedInstance].user);
-        if ([AmbassadorSDK sharedInstance].user)
-        {
-            [AmbassadorSDK sharedInstance].user.first_name = firstName;
-            [AmbassadorSDK sharedInstance].user.last_name = lastName;
-        }
+        AMBUpdateNameObject *nameUpdateObject = [[AMBUpdateNameObject alloc] initWithFirstName:firstName lastName:lastName email:[AmbassadorSDK sharedInstance].user.email];
         
-        [self.delegate sendSMSPressedWithFirstName:firstName lastName:lastName];
+        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nameUpdateObject url:[AMBAmbassadorNetworkManager sendIdentifyUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+            if (error) {
+                DLog(@"Error Updating Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to update names.  Please try again." forViewController:self];
+            } else {
+                DLog(@"Successfully Updated Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                if ([AmbassadorSDK sharedInstance].user) {
+                    [AmbassadorSDK sharedInstance].user.first_name = firstName;
+                    [AmbassadorSDK sharedInstance].user.last_name = lastName;
+                }
+                
+                [self.delegate namesUpdatedSuccessfully];
+            }
+        }];
+        
+        
+//        [self.delegate sendSMSPressedWithFirstName:firstName lastName:lastName];
     }
     self.firstNameEdited = YES;
     self.lastNameEdited = YES;
