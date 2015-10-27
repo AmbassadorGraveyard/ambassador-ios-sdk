@@ -30,7 +30,7 @@
 
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
                                AMBContactLoaderDelegate, LinkedInAuthorizeDelegate,
-                               AMBShareServiceDelegate, AMBContactSelectorDelegate,
+                               AMBShareServiceDelegate,
                                UITextFieldDelegate, MFMessageComposeViewControllerDelegate,
                                MFMailComposeViewControllerDelegate, AMBUtilitiesDelegate>
 
@@ -204,9 +204,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     
     if (!self.urlNetworkObj) {
         [self.waitViewTimer invalidate];
-        AMBUtilities *utilities = [[AMBUtilities alloc] init];
-        utilities.delegate = self;
-        [utilities presentErrorAlertWithMessage:@"No matching campaigns were found!" forViewController:self];
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" forViewController:self];
+        [AMBUtilities sharedInstance].delegate = self;
         NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
         return;
     }
@@ -357,7 +356,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
     share.short_code = weakSelf.urlNetworkObj.short_code;
     share.social_name = socialServiceTypeStringVal(type);
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:nil completion:c];
+    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:c];
     
     
 }
@@ -588,180 +587,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 }
 
 
-
-#pragma mark - ContactSelectorDelegate
-- (void)sendToContacts:(NSArray *)contacts forServiceType:(NSString *)serviceType fromFirstName:(NSString *)firstName lastName:(NSString *)lastName withMessage:(NSString *)message
-{
-    __weak NSString *shortCode = self.urlNetworkObj.short_code;
-    __weak AMBServiceSelector *weakSelf = self;
-    
-    if ([serviceType isEqualToString:AMB_EMAIL_TITLE])
-    {
-        NSString *subjectLine = self.urlNetworkObj.subject;
-//        NSArray *urls = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_AMBASSADOR_INFO_USER_DEFAULTS_KEY][@"urls"];
-//        for (NSDictionary *url in urls)
-//        {
-//            if ([url[@"short_code"] isEqualToString:shortCode])
-//            {
-//                subjectLine = self.urlNetworkObj.subject;
-//                break;
-//            }
-//        }
-        
-        NSArray *validContacts = [weakSelf validateEmails:contacts];
-        
-        if (validContacts.count == 1)
-        {
-            MFMailComposeViewController *vc = [[MFMailComposeViewController alloc] init];
-            if ([MFMailComposeViewController canSendMail]) {
-                vc.mailComposeDelegate = self;
-                [vc setMessageBody:message isHTML:NO];
-                [vc setSubject:subjectLine];
-                [vc setToRecipients:validContacts];
-                
-                [self presentViewController:vc animated:YES completion:nil];
-                self.singleEmail = [validContacts firstObject];
-            }
-            else
-            {
-                UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Email unavailable" message:@"Email is unavailble at the moment.  Please make sure you are signed in" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-                [errorAlert show];
-                //sendAlert(NO, @"Your device doesn't support sending email.", self);
-            }
-
-            return;
-        }
-        
-        NSDictionary *payload = @{
-                                  @"to_emails" : validContacts,
-                                  @"short_code" : shortCode,
-                                  @"message" : message,
-                                  @"subject_line" : subjectLine
-                                  };
-        
-        
-        DLog(@"Email data sent to servers: %@", payload);
-        
-        NSURL *url = [NSURL URLWithString:AMB_EMAIL_SHARE_URL];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-        request.HTTPMethod = @"POST";
-        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [request setValue:weakSelf.APIKey forHTTPHeaderField:@"Authorization"];
-        request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-        
-        NSURLSessionDataTask *task = [[NSURLSession sharedSession]
-                                      dataTaskWithRequest:request
-                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-          {
-              if (!error)
-              {
-                  DLog(@"Status code for sending email: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                  
-                  //Check for 2xx status codes
-                  if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-                      ((NSHTTPURLResponse *)response).statusCode < 300)
-                  {
-                      // Looking for a "Qued" response
-                      DLog(@"Response from backend from sending email: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                      [self sendSuccessMessageWithCount:validContacts.count];
-//                      [weakSelf bulkPostShareTrackWithShortCode:shortCode values:[weakSelf validateEmails:contacts] socialName:AMB_EMAIL_TITLE];
-                  }
-                  else
-                  {
-                      DLog(@"Error: %@", error.localizedDescription);
-                      AMBsendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
-                  }
-              }
-              else
-              {
-                  DLog(@"Error: %@", error.localizedDescription);
-                   AMBsendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
-              }
-          }];
-        [task resume];
-    }
-    else if ([serviceType isEqualToString:AMB_SMS_TITLE])
-    {
-        NSArray *validContacts = [weakSelf validatePhoneNumbers:contacts];
-        NSDictionary *payload = @{
-                                  @"to" : validContacts,
-                                  @"name" : [NSString stringWithFormat:@"%@ %@", firstName, lastName],
-                                  @"message" : message
-                                  };
-        
-        DLog(@"SMS data sent to servers %@", payload);
-        
-        if (validContacts.count == 1)
-        {
-            MFMessageComposeViewController *vc = [[MFMessageComposeViewController alloc] init];
-            if ([MFMessageComposeViewController canSendText])
-            {
-                DLog(@"%@", vc);
-                vc.messageComposeDelegate = self;
-                [vc setBody:message];
-                [vc setRecipients:validContacts];
-                
-                [self presentViewController:vc animated:YES completion:nil];
-                self.singleSMS = [validContacts firstObject];
-            }
-            else
-            {
-                //sendAlert(NO, @"Your device doesn't support sending SMS", self);
-            }
-            return;
-        }
-
-        if (validContacts.count > 0 )
-        {
-            NSURL *url = [NSURL URLWithString:AMB_SMS_SHARE_URL];
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-            request.HTTPMethod = @"POST";
-            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-            [request setValue:weakSelf.APIKey forHTTPHeaderField:@"Authorization"];
-            request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-            
-            NSURLSessionDataTask *task = [[NSURLSession sharedSession]
-                                          dataTaskWithRequest:request
-                                          completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-              {
-                  if (!error)
-                  {
-                      DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                      
-                      //Check for 2xx status codes
-                      if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-                          ((NSHTTPURLResponse *)response).statusCode < 300)
-                      {
-                          // Looking for an echo response
-                          DLog(@"Response from backend from sending sms: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                          [self sendSuccessMessageWithCount:validContacts.count];
-//                          [weakSelf bulkPostShareTrackWithShortCode:shortCode values:[weakSelf validatePhoneNumbers:contacts] socialName:AMB_SMS_TITLE];
-                      }
-                      else
-                      {
-                          DLog(@"Error: %@", error.localizedDescription);
-                           AMBsendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
-                      }
-                  }
-                  else
-                  {
-                      DLog(@"Error: %@", error.localizedDescription);
-                      dispatch_async(dispatch_get_main_queue(), ^{
-                           AMBsendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
-                      });
-                  }
-              }];
-            [task resume];
-            
-            [self updateFirstName:firstName lastName:lastName];
-        }
-        else
-        {
-            DLog(@"No valid numbers were selected");
-        }
-    }
-}
-
 - (void)sendSuccessMessageWithCount:(NSUInteger)count
 {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -775,142 +600,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         AMBsendAlert(YES, message, self);
     });
 }
-
-
-- (NSMutableArray *)validatePhoneNumbers:(NSArray *)contacts
-{
-    NSMutableArray *validSet = [[NSMutableArray alloc] init];
-    for (AMBContact *contact in contacts)
-    {
-        NSString *number = [[contact.value componentsSeparatedByCharactersInSet:
-                           [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]]
-                             componentsJoinedByString:@""];
-        if (number.length == 11 || number.length == 10 || number.length == 7)
-        {
-            [validSet addObject:number];
-        }
-    }
-    return validSet;
-}
-
-- (NSMutableArray *)validateEmails:(NSArray *)contacts
-{
-    NSMutableArray *validSet = [[NSMutableArray alloc] init];
-    for (AMBContact *contact in contacts)
-    {
-        NSString *number = contact.value;
-        [validSet addObject:number];
-    }
-    return validSet;
-}
-
-//- (void)bulkPostShareTrackWithShortCode:(NSString *)shortCode values:(NSArray *)values socialName:(NSString *)serviceType
-//{
-//    NSMutableArray *payload = [[NSMutableArray alloc] init];
-//    if ([serviceType isEqualToString:AMB_SMS_TITLE])
-//    {
-//        for (int i = 0; i < values.count; ++i)
-//        {
-//            NSDictionary* obj = @{
-//                                  AMB_SHARE_TRACK_SHORT_CODE_DICT_KEY : shortCode,
-//                                  AMB_SHARE_TRACK_RECIPIENT_EMAIL_DICT_KEY : @"",
-//                                  AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY : @"sms",
-//                                  AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY : values[i]
-//                                  };
-//            
-//            [payload addObject:obj];
-//        }
-//    }
-//    else if ([serviceType isEqualToString:AMB_EMAIL_TITLE])
-//    {
-//        for (int i = 0; i < values.count; ++i)
-//        {
-//            [payload addObject:@{
-//                                 AMB_SHARE_TRACK_SHORT_CODE_DICT_KEY : shortCode,
-//                                 AMB_SHARE_TRACK_RECIPIENT_EMAIL_DICT_KEY : values[i],
-//                                 AMB_SHARE_TRACK_SOCIAL_NAME_DICT_KEY : @"email",
-//                                 AMB_SHARE_TRACK_RECIPIENT_USERNAME_DICT_KEY : @""
-//                                 }];
-//        }
-//    }
-//    
-//    NSURL *url = [NSURL URLWithString:AMB_SHARE_TRACK_URL];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    request.HTTPMethod = @"POST";
-//    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
-//    
-//    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-//    
-//    NSURLSessionDataTask *task = [[NSURLSession sharedSession]
-//                                  dataTaskWithRequest:request
-//                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-//      {
-//          if (!error)
-//          {
-//              DLog(@"Status code for share track: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-//              
-//              //Check for 2xx status codes
-//              if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-//                  ((NSHTTPURLResponse *)response).statusCode < 300)
-//              {
-//                  // Looking for a "Polling" response
-//                  DLog(@"Response from backend from sending bulk share track: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-//              }
-//          }
-//          else
-//          {
-//              DLog(@"Error: %@", error.localizedDescription);
-//          }
-//      }];
-//    [task resume];
-//}
-
-- (void)updateFirstName:(NSString *)firstName lastName:(NSString *)lastName
-{
-    NSURL *url = [NSURL URLWithString:AMB_UPDATE_IDENTIFY_URL];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:self.APIKey forHTTPHeaderField:@"Authorization"];
-    
-    NSString *email = [AmbassadorSDK sharedInstance].user.email;
-    DLog(@"The user information during update: %@ %@ %@", email, firstName, lastName);
-    
-    NSMutableDictionary *payload = [[NSMutableDictionary alloc] init];
-    [payload setValue:email forKey:@"email"];
-    NSDictionary *updateData = @{
-                                   @"first_name" : firstName,
-                                   @"last_name" : lastName
-                                   };
-    [payload setValue:updateData forKey:@"update_data"];
-
-    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-    
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession]
-                                  dataTaskWithRequest:request
-                                  completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-      {
-          if (!error)
-          {
-              DLog(@"Status code for update name: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-              
-              //Check for 2xx status codes
-              if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-                  ((NSHTTPURLResponse *)response).statusCode < 300)
-              {
-                  // Looking for a "Polling" response
-                  DLog(@"Response from backend from updating ambassador (looking for 'polling'): %@", [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
-              }
-          }
-          else
-          {
-              DLog(@"Error: %@", error.localizedDescription);
-          }
-      }];
-    [task resume];
-}
-
 
 
 #pragma mark - MFComposeViewController Delegates
@@ -928,7 +617,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         share.short_code = self.urlNetworkObj.short_code;
         share.social_name = socialServiceTypeStringVal(AMBSocialServiceTypeEmail);
         
-        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
             DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
         }];
         
@@ -955,7 +644,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         share.short_code = self.urlNetworkObj.short_code;
         share.social_name = socialServiceTypeStringVal(AMBSocialServiceTypeSMS);
         
-        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] universalToken:[AmbassadorSDK sharedInstance].universalToken universalID:[AmbassadorSDK sharedInstance].universalID additionParams:nil completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
             DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
         }];
 

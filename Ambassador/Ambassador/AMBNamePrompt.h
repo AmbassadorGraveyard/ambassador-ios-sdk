@@ -11,6 +11,7 @@
 @protocol AMBNamePromptDelegate <NSObject>
 
 - (void)sendSMSPressedWithFirstName:(NSString *)firstName lastName:(NSString *)lastName;
+- (void)namesUpdatedSuccessfully;
 
 @end
 

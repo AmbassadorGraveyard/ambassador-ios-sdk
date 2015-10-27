@@ -18,6 +18,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+// Protocal
 @protocol AMBUtilitiesDelegate <NSObject>
 
 @optional
@@ -25,12 +26,17 @@
 
 @end
 
+
 @interface AMBUtilities : NSObject
 
 @property (nonatomic, weak)id <AMBUtilitiesDelegate> delegate;
-- (void)presentErrorAlertWithMessage:(NSString*)message forViewController:(UIViewController*)viewController;
+
++ (AMBUtilities *)sharedInstance;
+
+- (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message forViewController:(UIViewController*)viewController;
 
 @end
+
 
 NSMutableDictionary* AMBparseQueryString(NSString *string);
 UIColor* AMBColorFromRGB(float r, float g, float b);
