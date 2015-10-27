@@ -26,7 +26,7 @@
     NSMutableArray *validSet = [[NSMutableArray alloc] init];
     
     for (AMBContact *contact in contacts) {
-        NSString *number = [[contact.value componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]] componentsJoinedByString:@""];
+        NSString *number = [AMBBulkShareHelper stripPhoneNumber:contact.value];
         
         if ([AMBBulkShareHelper isValidPhoneNumber:number]) {
             [validSet addObject:number];
@@ -49,6 +49,10 @@
     } else {
         return NO;
     }
+}
+
++ (NSString*)stripPhoneNumber:(NSString*)phoneNumber {
+    return [[phoneNumber componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]] componentsJoinedByString:@""];
 }
                             
 
