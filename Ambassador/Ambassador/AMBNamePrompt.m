@@ -72,7 +72,12 @@
         [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nameUpdateObject url:[AMBAmbassadorNetworkManager sendIdentifyUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
             if (error) {
-                DLog(@"Error Updating Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                if (data) {
+                    DLog(@"Error Updating Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                } else {
+                    DLog(@"Error Updating Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], @"No data available");
+                }
+                
                 [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to update names.  Please try again." forViewController:self];
             } else {
                 DLog(@"Successfully Updated Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
@@ -81,6 +86,7 @@
                     [AmbassadorSDK sharedInstance].user.last_name = lastName;
                 }
                 
+                [self.navigationController popViewControllerAnimated:YES];
                 [self.delegate namesUpdatedSuccessfully];
             }
         }];

@@ -135,7 +135,12 @@ float const SEND_BUTTON_HEIGHT = 42.0;
                 break;
                 
             case AMBSocialServiceTypeSMS:
-                [self sendSMS];
+                if ([self alreadyHaveNames]) {
+                    [self sendSMS];
+                } else {
+                    [self performSegueWithIdentifier:NAME_PROMPT_SEGUE_IDENTIFIER sender:self];
+                }
+                
                 break;
                 
             default:
@@ -511,7 +516,6 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
     if ([firstName isEqualToString:@""] || [lastName isEqualToString:@""]) {
-        [self performSegueWithIdentifier:NAME_PROMPT_SEGUE_IDENTIFIER sender:self];
         return NO;
     } else {
         return YES;
