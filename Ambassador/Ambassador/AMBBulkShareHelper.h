@@ -12,5 +12,8 @@
 
 + (NSMutableArray *)validatedEmails:(NSArray *)contacts;
 + (NSMutableArray *)validatedPhoneNumbers:(NSArray *)contacts;
++ (BOOL)isValidPhoneNumber:(NSString*)phoneNumber;
++ (BOOL)isValidEmail:(NSString*)emailAddress;
++ (NSString*)stripPhoneNumber:(NSString*)phoneNumber;
 
 @end
