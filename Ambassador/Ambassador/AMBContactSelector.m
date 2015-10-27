@@ -22,7 +22,7 @@
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                AMBSelectedCellDelegate, UITextFieldDelegate,
-                               AMBNamePromptDelegate, UITextViewDelegate>
+                               AMBNamePromptDelegate, UITextViewDelegate, AMBUtilitiesDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *contactsTable;
 
 @property (weak, nonatomic) IBOutlet UIView *composeMessageView;
@@ -523,10 +523,13 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     NSArray *validatedContacts = [AMBBulkShareHelper validateEmails:[self.selected allObjects]];
     AMBBulkShareEmailObject *emailObject = [[AMBBulkShareEmailObject alloc] initWithEmails:validatedContacts shortCode:self.urlNetworkObject.short_code message:self.composeMessageTextView.text subjectLine:self.urlNetworkObject.subject];
     [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:emailObject url:[AMBAmbassadorNetworkManager bulkShareEmailUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
         if (error) {
             DLog(@"Error - %@", error);
         } else {
-            
+            DLog(@"BulkShare Email Success with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" forViewController:self];
+            [AMBUtilities sharedInstance].delegate = self;
         }
     }];
 }
@@ -597,6 +600,13 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         }
     }
     return validSet;
+}
+
+
+#pragma mark - AMBUtilites Delegate
+
+- (void)okayButtonClicked {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
