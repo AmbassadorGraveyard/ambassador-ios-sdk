@@ -10,4 +10,6 @@
 
 @interface AMBBulkShareHelper : NSObject
 
++ (NSMutableArray *)validateEmails:(NSArray *)contacts;
+
 @end

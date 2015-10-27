@@ -7,9 +7,20 @@
 //
 
 #import "AMBBulkShareHelper.h"
+#import "AMBContact.h"
 
 @implementation AMBBulkShareHelper
 
-
++ (NSMutableArray *)validateEmails:(NSArray *)contacts {
+    NSMutableArray *validSet = [[NSMutableArray alloc] init];
+    
+    for (AMBContact *contact in contacts)
+    {
+        NSString *number = contact.value;
+        [validSet addObject:number];
+    }
+    
+    return validSet;
+}
 
 @end
