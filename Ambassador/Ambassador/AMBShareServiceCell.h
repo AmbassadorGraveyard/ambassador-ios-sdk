@@ -10,8 +10,7 @@
 
 @interface AMBShareServiceCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *logo;
-@property (weak, nonatomic) IBOutlet UIView *logoBackground;
-@property (weak, nonatomic) IBOutlet UILabel *title;
+- (void)setUpCellWithTitle:(NSString*)title backgroundColor:(UIColor*)backgroundColor icon:(UIImage*)imageIcon;
+- (void)setupBorderCellWithTitle:(NSString*)title backgroundColor:(UIColor*)backgroundColor icon:(UIImage*)imageIcon borderColor:(UIColor*)borderColor;
 
 @end

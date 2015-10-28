@@ -28,6 +28,9 @@
 #import "AMBAmbassadorNetworkManager.h"
 
 
+
+
+
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
                                AMBContactLoaderDelegate, LinkedInAuthorizeDelegate,
                                AMBShareServiceDelegate,
@@ -70,61 +73,7 @@ NSString * const LKND_AUTHORIZE_SEGUE = @"goToAuthorizeLinkedIn";
 float const CELL_BORDER_WIDTH = 2.0;
 float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
-
-
-#pragma mark - Initialization
-
-//- (id)init
-//{
-//    if ([super init])
-//    {
-////        self.singleEmail = @"";
-//        self.singleSMS = @"";
-//        
-//    }
-//    
-//    return self;
-//}
-
-- (void)addServices
-{
-    if (!self.services) { self.services = [[NSMutableArray alloc] init]; }
-    
-    [self addServiceWithTitle:AMB_FACEBOOK_TITLE
-                     logoName:AMB_FACEBOOK_LOGO_IMAGE
-              backgroundColor:AMB_FACEBOOK_BACKGROUND_COLOR()
-                  borderColor:AMB_FACEBOOK_BORDER_COLOR()];
-    [self addServiceWithTitle:AMB_TWITTER_TITLE
-                     logoName:AMB_TWITTER_LOGO_IMAGE
-              backgroundColor:AMB_TWITTER_BACKGROUND_COLOR()
-                  borderColor:AMB_TWITTER_BORDER_COLOR()];
-    [self addServiceWithTitle:AMB_LINKEDIN_TITLE
-                     logoName:AMB_LINKEDIN_LOGO_IMAGE
-              backgroundColor:AMB_LINKEDIN_BACKGROUND_COLOR()
-                  borderColor:AMB_LINKEDIN_BORDER_COLOR()];
-    [self addServiceWithTitle:AMB_SMS_TITLE
-                     logoName:AMB_SMS_LOGO_IMAGE
-              backgroundColor:AMB_SMS_BACKGROUND_COLOR()
-                  borderColor:AMB_SMS_BORDER_COLOR()];
-    [self addServiceWithTitle:AMB_EMAIL_TITLE
-                     logoName:AMB_EMAIL_LOGO_IMAGE
-              backgroundColor:AMB_EMAIL_BACKGROUND_COLOR()
-                  borderColor:AMB_EMAIL_BORDER_COLOR()];
-}
-
-- (void)addServiceWithTitle:(NSString *)title
-                   logoName:(NSString *)logoName
-            backgroundColor:(UIColor *)backgroundColor
-                borderColor:(UIColor *)borderColor
-{
-    AMBShareService *service = [[AMBShareService alloc] init];
-    service.title = title;
-    service.backgroundColor = backgroundColor;
-    service.borderColor = borderColor;
-    service.logo =  AMBimageFromBundleNamed(logoName, @"png");
-    
-    [self.services addObject:service];
-}
+#pragma mark - LifeCycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -132,7 +81,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     [[AMBUtilities sharedInstance] showLoadingScreenWithText:@"Loading" forView:self.view];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeWaitView) name:@"PusherReceived" object:nil];
-    [self addServices];
     
     // Set the navigation bar attributes (title and back button)
     UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
@@ -150,11 +98,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 12)];
     self.textField.leftView = paddingView;
     self.textField.leftViewMode = UITextFieldViewModeAlways;
-    // Text field Right clipboard view
-//    UIButton *clipboardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 15)];
-//    [clipboardButton setImage:AMBimageFromBundleNamed(@"clipboard", @"png") forState:UIControlStateNormal];
-//    [clipboardButton addTarget:self action:@selector(clipboardButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-//    self.textField.rightView = clipboardButton;
+
     self.textField.rightViewMode = UITextFieldViewModeAlways;
     self.textField.delegate = self;
 
@@ -302,25 +246,36 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 }
 
 
-#pragma mark - CollectionViewDataSource
+#pragma mark - CollectionView DataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.services.count;
+    return 5;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    AMBShareServiceCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    AMBShareServiceCell *cell = (AMBShareServiceCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"serviceCell" forIndexPath:indexPath];
     
-    AMBShareService *service = self.services[indexPath.row];
+    switch (indexPath.row) {
+        case 0:
+            [cell setUpCellWithTitle:@"Facebook" backgroundColor:[UIColor faceBookBlue] icon:[AMBValues imageFromBundleWithName:@"facebook" type:@"png"]];
+            break;
+        case 1:
+            [cell setUpCellWithTitle:@"Twitter" backgroundColor:[UIColor twitterBlue] icon:[AMBValues imageFromBundleWithName:@"twitter" type:@"png"]];
+            break;
+        case 2:
+            [cell setUpCellWithTitle:@"LinkedIn" backgroundColor:[UIColor linkedInBlue] icon:[AMBValues imageFromBundleWithName:@"linkedin" type:@"png"]];
+            break;
+        case 3:
+            [cell setupBorderCellWithTitle:@"SMS" backgroundColor:[UIColor whiteColor] icon:[AMBValues imageFromBundleWithName:@"sms" type:@"png"] borderColor:[UIColor lightGrayColor]];
+            break;
+        case 4:
+            [cell setupBorderCellWithTitle:@"Email" backgroundColor:[UIColor whiteColor] icon:[AMBValues imageFromBundleWithName:@"email" type:@"png"] borderColor:[UIColor lightGrayColor]];
+            break;
+        default:
+            break;
+    }
     
-    cell.logoBackground.backgroundColor = service.backgroundColor;
-    cell.logo.image = service.logo;
-    cell.title .text= service.title;
-    cell.logoBackground.layer.borderColor = service.borderColor.CGColor;
-    cell.logoBackground.layer.borderWidth = CELL_BORDER_WIDTH;
-    cell.logoBackground.layer.cornerRadius = CELL_CORNER_RADIUS;
     return cell;
 }
 
