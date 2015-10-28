@@ -54,8 +54,8 @@
 @property (nonatomic, strong) AMBContactLoader *loader;
 @property (nonatomic, strong) NSTimer *waitViewTimer;
 @property (nonatomic, strong) AMBUserUrlNetworkObject *urlNetworkObj;
-@property (nonatomic, strong) NSString *singleEmail;
-@property (nonatomic, strong) NSString *singleSMS;
+//@property (nonatomic, strong) NSString *singleEmail;
+//@property (nonatomic, strong) NSString *singleSMS;
 @property (nonatomic, strong) UILabel * lblCopied;
 @property (nonatomic, strong) NSTimer * copiedAnimationTimer;
 
@@ -74,17 +74,17 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 
 #pragma mark - Initialization
 
-- (id)init
-{
-    if ([super init])
-    {
-        self.singleEmail = @"";
-        self.singleSMS = @"";
-        
-    }
-    
-    return self;
-}
+//- (id)init
+//{
+//    if ([super init])
+//    {
+////        self.singleEmail = @"";
+//        self.singleSMS = @"";
+//        
+//    }
+//    
+//    return self;
+//}
 
 - (void)addServices
 {
@@ -129,7 +129,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[AMBUtilities sharedInstance] showLoadingScreenWithText:@"Test" forView:self.view];
+    [[AMBUtilities sharedInstance] showLoadingScreenWithText:@"Loading" forView:self.view];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeWaitView) name:@"PusherReceived" object:nil];
     [self addServices];
@@ -630,60 +630,60 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     });
 }
 
-
-#pragma mark - MFComposeViewController Delegates
-- (void)mailComposeController:(nonnull MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(nullable NSError *)error
-{
-    if (result == MFMailComposeResultFailed)
-    {
-        AMBsendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
-    }
-    else if (result == MFMailComposeResultSent)
-    {
-        AMBsendAlert(NO, @"Your link was successfully shared", self);
-        AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
-        share.recipient_email = [NSMutableArray arrayWithObject:self.singleEmail];
-        share.short_code = self.urlNetworkObj.short_code;
-        share.social_name = socialServiceTypeStringVal(AMBSocialServiceTypeEmail);
-        
-        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-            DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
-        }];
-        
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }
-    else if (result == MFMailComposeResultSaved || result == MFMailComposeResultCancelled)
-    {
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }
-}
-
-- (void)messageComposeViewController:(nonnull MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
-{
-    if (result == MessageComposeResultFailed)
-    {
-        AMBsendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
-    }
-    else if (result == MessageComposeResultSent)
-    {
-        AMBsendAlert(NO, @"Your link was successfully shared", self);
-        
-        AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
-        share.recipient_username = [NSMutableArray arrayWithObject:self.singleSMS];
-        share.short_code = self.urlNetworkObj.short_code;
-        share.social_name = socialServiceTypeStringVal(AMBSocialServiceTypeSMS);
-        
-        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-            DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
-        }];
-
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }
-    else if (result == MessageComposeResultCancelled)
-    {
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }
-}
+//
+//#pragma mark - MFComposeViewController Delegates
+//- (void)mailComposeController:(nonnull MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(nullable NSError *)error
+//{
+//    if (result == MFMailComposeResultFailed)
+//    {
+//        AMBsendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
+//    }
+//    else if (result == MFMailComposeResultSent)
+//    {
+//        AMBsendAlert(NO, @"Your link was successfully shared", self);
+//        AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
+//        share.recipient_email = [NSMutableArray arrayWithObject:self.singleEmail];
+//        share.short_code = self.urlNetworkObj.short_code;
+//        share.social_name = socialServiceTypeStringVal(AMBSocialServiceTypeEmail);
+//        
+//        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+//            DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+//        }];
+//        
+//        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+//    }
+//    else if (result == MFMailComposeResultSaved || result == MFMailComposeResultCancelled)
+//    {
+//        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+//    }
+//}
+//
+//- (void)messageComposeViewController:(nonnull MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+//{
+//    if (result == MessageComposeResultFailed)
+//    {
+//        AMBsendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
+//    }
+//    else if (result == MessageComposeResultSent)
+//    {
+//        AMBsendAlert(NO, @"Your link was successfully shared", self);
+//        
+//        AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
+//        share.recipient_username = [NSMutableArray arrayWithObject:self.singleSMS];
+//        share.short_code = self.urlNetworkObj.short_code;
+//        share.social_name = socialServiceTypeStringVal(AMBSocialServiceTypeSMS);
+//        
+//        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+//            DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+//        }];
+//
+//        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+//    }
+//    else if (result == MessageComposeResultCancelled)
+//    {
+//        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+//    }
+//}
 
 
 #pragma mark - AMBUtilities Delegate
