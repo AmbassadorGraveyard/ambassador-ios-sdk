@@ -62,7 +62,11 @@
 
 - (void)hideLoadingView {
     if (self.loadingView) {
-        [self.loadingView removeFromSuperview];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.loadingView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [self.loadingView removeFromSuperview];
+        }];
     }
 }
     

@@ -35,7 +35,7 @@
 + (AMBUtilities *)sharedInstance;
 
 - (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message forViewController:(UIViewController*)viewController;
-- (void)showLoadingScreenWithText:(NSString*)loadingText forViewController:(UIViewController*)viewController;
+- (void)showLoadingScreenWithText:(NSString*)loadingText forView:(UIView*)view;
 - (void)hideLoadingView;
 
 @end

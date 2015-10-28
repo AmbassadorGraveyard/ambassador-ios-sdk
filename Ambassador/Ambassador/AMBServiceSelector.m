@@ -48,6 +48,7 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight3;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight4;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight5;
+@property (nonatomic, strong) IBOutlet UIButton * btnCopy;
 
 @property (nonatomic, strong) NSMutableArray *services;
 @property (nonatomic, strong) AMBContactLoader *loader;
@@ -55,6 +56,8 @@
 @property (nonatomic, strong) AMBUserUrlNetworkObject *urlNetworkObj;
 @property (nonatomic, strong) NSString *singleEmail;
 @property (nonatomic, strong) NSString *singleSMS;
+@property (nonatomic, strong) UILabel * lblCopied;
+@property (nonatomic, strong) NSTimer * copiedAnimationTimer;
 
 @end
 
@@ -126,7 +129,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[AMBUtilities sharedInstance] showLoadingScreenWithText:@"Test" forViewController:self];
+    [[AMBUtilities sharedInstance] showLoadingScreenWithText:@"Test" forView:self.view];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeWaitView) name:@"PusherReceived" object:nil];
     [self addServices];
@@ -148,10 +151,10 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.textField.leftView = paddingView;
     self.textField.leftViewMode = UITextFieldViewModeAlways;
     // Text field Right clipboard view
-    UIButton *clipboardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 15)];
-    [clipboardButton setImage:AMBimageFromBundleNamed(@"clipboard", @"png") forState:UIControlStateNormal];
-    [clipboardButton addTarget:self action:@selector(clipboardButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-    self.textField.rightView = clipboardButton;
+//    UIButton *clipboardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 15)];
+//    [clipboardButton setImage:AMBimageFromBundleNamed(@"clipboard", @"png") forState:UIControlStateNormal];
+//    [clipboardButton addTarget:self action:@selector(clipboardButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+//    self.textField.rightView = clipboardButton;
     self.textField.rightViewMode = UITextFieldViewModeAlways;
     self.textField.delegate = self;
 
@@ -163,6 +166,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
+//    self.lblCopied = [[UILabel alloc] initWithFrame:self.]
     
     DLog(@"%@", self.urlNetworkObj.short_code);
 
@@ -260,6 +264,40 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
                 DLog(@"There was an error - %@", e);
             }
         }];
+    }];
+}
+
+
+#pragma mark - IBActions
+
+- (IBAction)clipboardButtonPress:(UIButton *)button{
+    UIPasteboard *pb = [UIPasteboard generalPasteboard];
+    [pb setString:self.textField.text];
+    if (!self.copiedAnimationTimer.isValid) { [self confirmCopyAnimation]; }
+}
+
+- (void)confirmCopyAnimation {
+    if (!self.lblCopied) { self.lblCopied = [[UILabel alloc] initWithFrame:self.btnCopy.frame]; }
+    self.lblCopied.alpha = 0;
+    self.lblCopied.text = @"Copied!";
+    self.lblCopied.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
+    [self.view addSubview:self.lblCopied];
+    [self.view bringSubviewToFront:self.btnCopy];
+
+    self.copiedAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(hideConfirmCopyAnimation) userInfo:nil repeats:NO];
+    self.copiedAnimationTimer.fireDate = [NSDate dateWithTimeIntervalSinceNow:3];
+
+    [UIView animateWithDuration:0.3 animations:^{
+        self.lblCopied.frame = CGRectMake(self.btnCopy.frame.origin.x - self.lblCopied.frame.size.width - 7, self.lblCopied.frame.origin.y, 45, self.lblCopied.frame.size.height);
+        self.lblCopied.alpha = 1;
+    }];
+}
+
+- (void)hideConfirmCopyAnimation {
+    [self.copiedAnimationTimer invalidate];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.lblCopied.frame = self.btnCopy.frame;
+        self.lblCopied.alpha = 0;
     }];
 }
 
@@ -575,16 +613,7 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 #pragma mark - TextField Activity Functions
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField { return NO; }
 
-- (void)clipboardButtonPress:(UIButton *)button
-{
-    UIPasteboard *pb = [UIPasteboard generalPasteboard];
-    [pb setString:self.textField.text];
-    
-    UIButton *clipboardButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 15)];
-    [clipboardButton setImage:AMBimageFromBundleNamed(@"graycheck", @"png") forState:UIControlStateNormal];
-    [clipboardButton addTarget:self action:@selector(clipboardButtonPress:) forControlEvents:UIControlEventTouchUpInside];
-    self.textField.rightView = clipboardButton;
-}
+
 
 
 - (void)sendSuccessMessageWithCount:(NSUInteger)count
