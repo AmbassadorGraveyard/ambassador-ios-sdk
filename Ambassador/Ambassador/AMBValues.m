@@ -10,8 +10,13 @@
 
 @implementation AMBValues
 
-+ (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type {
-    return [UIImage imageWithContentsOfFile:[[AMBValues AMBframeworkBundle] pathForResource:name ofType:type]];
++ (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type tintable:(BOOL)tintable {
+    if (tintable) {
+        return [[UIImage imageWithContentsOfFile:[[AMBValues AMBframeworkBundle] pathForResource:name ofType:type]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    } else {
+        return [UIImage imageWithContentsOfFile:[[AMBValues AMBframeworkBundle] pathForResource:name ofType:type]];
+    }
+    
 }
 
 + (NSBundle*)AMBframeworkBundle {

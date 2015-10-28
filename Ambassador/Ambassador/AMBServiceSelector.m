@@ -80,69 +80,42 @@ int contactServiceType;
     [super viewDidLoad];
     
     [[AMBUtilities sharedInstance] showLoadingScreenWithText:@"Loading" forView:self.view];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeWaitView) name:@"PusherReceived" object:nil];
-    
-    // Set the navigation bar attributes (title and back button)
-    UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
-    [closeButton setImage:[AMBimageFromBundleNamed(@"close", @"png") imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    closeButton.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
-    [closeButton addTarget:self action:@selector(closeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *closeBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
-    self.navigationItem.leftBarButtonItem = closeBarButtonItem;
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        self.loader = [[AMBContactLoader alloc] initWithDelegate:self];
-    });
-    
-    // Text Field Left padding view
-    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 12)];
-    self.textField.leftView = paddingView;
-    self.textField.leftViewMode = UITextFieldViewModeAlways;
+    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
+    self.loader = [[AMBContactLoader alloc] initWithDelegate:self];
+    [self setUpCloseButton];
+    [self performIdentify];
+    [self setUpTheme];
 
-    self.textField.rightViewMode = UITextFieldViewModeAlways;
-    self.textField.delegate = self;
-
+    // Sets labels and navbarTitle based on plist
     self.titleLabel.text = self.prefs.titleLabelText;
     self.descriptionLabel.text = self.prefs.descriptionLabelText;
-    self.textField.text = self.prefs.textFieldText;
     self.title = self.prefs.navBarTitle;
-    
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    
-//    self.lblCopied = [[UILabel alloc] initWithFrame:self.]
-    
-    DLog(@"%@", self.urlNetworkObj.short_code);
-
-    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
-    
-    [self performIdentify];
-    
-    [self setUpTheme];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+//    [super viewWillDisappear:animated];
     [self.waitViewTimer invalidate];
 }
 
 - (void)alertForNetworkTimeout
 {
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
-    AMBSendCompletionModal *vc = (AMBSendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
-    vc.alertMessage = @"The network request timed out. Please check your connection and try again";
-    [vc shouldUseSuccessIcon:NO];
-    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    __weak AMBServiceSelector *weakSelf = self;
-    vc.buttonAction = ^() {
-        [weakSelf dismissViewControllerAnimated:YES completion:^{
-            [weakSelf.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-        }];
-    };
-    
-    [self presentViewController:vc animated:YES completion:nil];
+//    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
+//    AMBSendCompletionModal *vc = (AMBSendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
+//    vc.alertMessage = @"The network request timed out. Please check your connection and try again";
+//    [vc shouldUseSuccessIcon:NO];
+//    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+//    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    __weak AMBServiceSelector *weakSelf = self;
+//    vc.buttonAction = ^() {
+//        [weakSelf dismissViewControllerAnimated:YES completion:^{
+//            [weakSelf.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+//        }];
+//    };
+//    
+//    [self presentViewController:vc animated:YES completion:nil];
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"The network request has timed out. Please check your connection and try again." withUniqueID:@"networkTimeOut" forViewController:self];
+    [AMBUtilities sharedInstance].delegate = self;
 }
 
 - (void)removeWaitView
@@ -152,7 +125,7 @@ int contactServiceType;
     
     if (!self.urlNetworkObj) {
         [self.waitViewTimer invalidate];
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" forViewController:self];
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" withUniqueID:nil forViewController:self];
         [AMBUtilities sharedInstance].delegate = self;
         NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
         return;
@@ -259,19 +232,19 @@ int contactServiceType;
     
     switch (indexPath.row) {
         case 0:
-            [cell setUpCellWithTitle:@"Facebook" backgroundColor:[UIColor faceBookBlue] icon:[AMBValues imageFromBundleWithName:@"facebook" type:@"png"]];
+            [cell setUpCellWithTitle:@"Facebook" backgroundColor:[UIColor faceBookBlue] icon:[AMBValues imageFromBundleWithName:@"facebook" type:@"png" tintable:NO]];
             break;
         case 1:
-            [cell setUpCellWithTitle:@"Twitter" backgroundColor:[UIColor twitterBlue] icon:[AMBValues imageFromBundleWithName:@"twitter" type:@"png"]];
+            [cell setUpCellWithTitle:@"Twitter" backgroundColor:[UIColor twitterBlue] icon:[AMBValues imageFromBundleWithName:@"twitter" type:@"png" tintable:NO]];
             break;
         case 2:
-            [cell setUpCellWithTitle:@"LinkedIn" backgroundColor:[UIColor linkedInBlue] icon:[AMBValues imageFromBundleWithName:@"linkedin" type:@"png"]];
+            [cell setUpCellWithTitle:@"LinkedIn" backgroundColor:[UIColor linkedInBlue] icon:[AMBValues imageFromBundleWithName:@"linkedin" type:@"png" tintable:NO]];
             break;
         case 3:
-            [cell setupBorderCellWithTitle:@"SMS" backgroundColor:[UIColor whiteColor] icon:[AMBValues imageFromBundleWithName:@"sms" type:@"png"] borderColor:[UIColor lightGrayColor]];
+            [cell setupBorderCellWithTitle:@"SMS" backgroundColor:[UIColor whiteColor] icon:[AMBValues imageFromBundleWithName:@"sms" type:@"png" tintable:NO] borderColor:[UIColor lightGrayColor]];
             break;
         case 4:
-            [cell setupBorderCellWithTitle:@"Email" backgroundColor:[UIColor whiteColor] icon:[AMBValues imageFromBundleWithName:@"email" type:@"png"] borderColor:[UIColor lightGrayColor]];
+            [cell setupBorderCellWithTitle:@"Email" backgroundColor:[UIColor whiteColor] icon:[AMBValues imageFromBundleWithName:@"email" type:@"png" tintable:NO] borderColor:[UIColor lightGrayColor]];
             break;
         default:
             break;
@@ -327,7 +300,7 @@ int contactServiceType;
     {
         if (result == SLComposeViewControllerResultDone)
         {
-            [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was shared successfully!" forViewController:self];
+//            [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was shared successfully!" forViewController:self];
             
             [self sendShareTrackForServiceType:AMBSocialServiceTypeFacebook completion:^(NSData *d, NSURLResponse *r, NSError *e) {
                 DLog(@"Error for sending share track %@: %@\n Body returned for sending share track: %@", [AMBOptions serviceTypeStringValue:servicetype], e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
@@ -500,6 +473,16 @@ int contactServiceType;
     }
 }
 
+- (void)setUpCloseButton {
+    UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+    [closeButton setImage:[AMBValues imageFromBundleWithName:@"close" type:@"png" tintable:YES] forState:UIControlStateNormal];
+    closeButton.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
+    [closeButton addTarget:self action:@selector(closeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *closeBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
+    self.navigationItem.leftBarButtonItem = closeBarButtonItem;
+}
+
 
 #pragma mark - Lkdn delegate
 - (void)userDidContinue
@@ -568,7 +551,7 @@ int contactServiceType;
 
 #pragma mark - AMBUtilities Delegate
 
-- (void)okayButtonClicked {
+- (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

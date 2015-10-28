@@ -22,7 +22,7 @@
 @protocol AMBUtilitiesDelegate <NSObject>
 
 @optional
-- (void)okayButtonClicked;
+- (void)okayButtonClickedForUniqueID:(NSString*)uniqueID;
 
 @end
 
@@ -37,7 +37,7 @@
 
 + (AMBUtilities *)sharedInstance;
 
-- (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message forViewController:(UIViewController*)viewController;
+- (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController;
 - (void)showLoadingScreenWithText:(NSString*)loadingText forView:(UIView*)view;
 - (void)hideLoadingView;
 

@@ -18,7 +18,7 @@
     return _sharedInsance;
 }
 
-- (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message forViewController:(UIViewController*)viewController {
+- (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
     AMBSendCompletionModal *vc = (AMBSendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
     vc.alertMessage = message;
@@ -28,7 +28,7 @@
     __weak AMBSendCompletionModal *weakVC = vc;
     vc.buttonAction = ^() {
         [weakVC dismissViewControllerAnimated:NO completion:^{
-            if (self.delegate && [self.delegate respondsToSelector:@selector(okayButtonClicked)]) { [self.delegate okayButtonClicked]; }
+            if (self.delegate && [self.delegate respondsToSelector:@selector(okayButtonClickedForUniqueID:)]) { [self.delegate okayButtonClickedForUniqueID:uniqueID]; }
         }];
     };
     
@@ -41,7 +41,6 @@
         UIVisualEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         self.blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
         self.blurView.frame = view.frame;
-//        self.blurView.alpha = .97;
         self.lblLoading = [[UILabel alloc] init];
         self.lblLoading.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:22];
         self.animatingView = [[UIView alloc] init];
@@ -52,7 +51,6 @@
     self.loadingView.frame = view.frame;
     self.blurView.frame = view.frame;
     
-
     if (![self.blurView isDescendantOfView:self.loadingView]) { [self.loadingView addSubview:self.blurView]; }
     if (![self.lblLoading isDescendantOfView:self.loadingView]) { [self.loadingView addSubview:self.lblLoading]; }
     if (![self.animatingView isDescendantOfView:self.loadingView]) { [self.loadingView addSubview:self.animatingView]; }
@@ -60,7 +58,7 @@
     self.loadingView.alpha = 0;
     self.lblLoading.text = loadingText;
     [self.lblLoading sizeToFit];
-    self.lblLoading.frame = CGRectMake(self.loadingView.frame.size.width/2 - self.lblLoading.frame.size.width/2, self.loadingView.frame.size.height/2 - self.lblLoading.frame.size.height/2, self.lblLoading.frame.size.width, self.lblLoading.frame.size.height);
+    self.lblLoading.frame = CGRectMake(self.loadingView.frame.size.width/2 - self.lblLoading.frame.size.width/2, self.loadingView.frame.size.height - (self.loadingView.frame.size.height * .75), self.lblLoading.frame.size.width, self.lblLoading.frame.size.height);
     
     self.animatingView.frame = CGRectMake(self.lblLoading.frame.origin.x, self.lblLoading.frame.origin.y + self.lblLoading.frame.size.height + 5, 3, 3);
     

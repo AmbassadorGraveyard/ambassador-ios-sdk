@@ -11,6 +11,6 @@
 
 @interface AMBValues : NSObject
 
-+ (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type;
++ (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type tintable:(BOOL)tintable;
 
 @end
