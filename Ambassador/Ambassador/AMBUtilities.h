@@ -30,10 +30,13 @@
 @interface AMBUtilities : NSObject
 
 @property (nonatomic, weak)id <AMBUtilitiesDelegate> delegate;
+@property (nonatomic, strong) UIView *loadingView;
 
 + (AMBUtilities *)sharedInstance;
 
 - (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message forViewController:(UIViewController*)viewController;
+- (void)showLoadingScreenWithText:(NSString*)loadingText forViewController:(UIViewController*)viewController;
+- (void)hideLoadingView;
 
 @end
 

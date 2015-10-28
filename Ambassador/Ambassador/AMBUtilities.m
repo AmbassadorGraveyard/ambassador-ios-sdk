@@ -34,6 +34,37 @@
     
     [viewController presentViewController:vc animated:YES completion:nil];
 }
+
+- (void)showLoadingScreenWithText:(NSString*)loadingText forView:(UIView*)view {
+    if (!self.loadingView) {
+        self.loadingView = [[UIView alloc] initWithFrame:view.frame];
+    } else {
+        self.loadingView.frame = view.frame;
+    }
+    
+    UIVisualEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
+    blurView.frame = view.frame;
+    [self.loadingView addSubview:blurView];
+    UILabel *lblLoading = [[UILabel alloc] init];
+    lblLoading.text = loadingText;
+    [lblLoading sizeToFit];
+    lblLoading.frame = CGRectMake(self.loadingView.frame.size.width/2 - lblLoading.frame.size.width/2, self.loadingView.frame.size.height/2 - lblLoading.frame.size.height/2, lblLoading.frame.size.width, lblLoading.frame.size.height);
+    [self.loadingView addSubview:lblLoading];
+    self.loadingView.alpha = 0;
+    
+    [view addSubview:self.loadingView];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.loadingView.alpha = 1;
+    }];
+}
+
+- (void)hideLoadingView {
+    if (self.loadingView) {
+        [self.loadingView removeFromSuperview];
+    }
+}
     
 @end
 

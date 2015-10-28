@@ -34,30 +34,27 @@
                                UITextFieldDelegate, MFMessageComposeViewControllerDelegate,
                                MFMailComposeViewControllerDelegate, AMBUtilitiesDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) IBOutlet UILabel *descriptionLabel;
+@property (nonatomic, strong) IBOutlet UITextField *textField;
+@property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, strong) IBOutlet UIImageView *imgSlot1;
+@property (nonatomic, strong) IBOutlet UIImageView *imgSlot2;
+@property (nonatomic, strong) IBOutlet UIImageView *imgSlot3;
+@property (nonatomic, strong) IBOutlet UIImageView *imgSlot4;
+@property (nonatomic, strong) IBOutlet UIImageView *imgSlot5;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight1;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight2;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight3;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight4;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight5;
 
-@property (strong, nonatomic) IBOutlet UIImageView *imgSlot1;
-@property (strong, nonatomic) IBOutlet UIImageView *imgSlot2;
-@property (strong, nonatomic) IBOutlet UIImageView *imgSlot3;
-@property (strong, nonatomic) IBOutlet UIImageView *imgSlot4;
-@property (strong, nonatomic) IBOutlet UIImageView *imgSlot5;
-
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgSlotHeight1;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgSlotHeight2;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgSlotHeight3;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgSlotHeight4;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imgSlotHeight5;
-
-@property (strong, nonatomic) NSMutableArray *services;
-@property (strong, nonatomic) AMBContactLoader *loader;
-@property (strong, nonatomic) NSTimer *waitViewTimer;
-@property (strong, nonatomic) AMBUserUrlNetworkObject *urlNetworkObj;
-
-@property NSString *singleEmail;
-@property NSString *singleSMS;
+@property (nonatomic, strong) NSMutableArray *services;
+@property (nonatomic, strong) AMBContactLoader *loader;
+@property (nonatomic, strong) NSTimer *waitViewTimer;
+@property (nonatomic, strong) AMBUserUrlNetworkObject *urlNetworkObj;
+@property (nonatomic, strong) NSString *singleEmail;
+@property (nonatomic, strong) NSString *singleSMS;
 
 @end
 
@@ -127,6 +124,10 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 }
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [[AMBUtilities sharedInstance] showLoadingScreenWithText:@"Test" forViewController:self];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeWaitView) name:@"PusherReceived" object:nil];
     [self addServices];
     
@@ -154,8 +155,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
     self.textField.rightViewMode = UITextFieldViewModeAlways;
     self.textField.delegate = self;
 
-    
-    [super viewDidLoad];
     self.titleLabel.text = self.prefs.titleLabelText;
     self.descriptionLabel.text = self.prefs.descriptionLabelText;
     self.textField.text = self.prefs.textFieldText;
@@ -210,7 +209,8 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         return;
     }
     
-    self.waitView.hidden = YES;
+    [[AMBUtilities sharedInstance] hideLoadingView];
+    
     self.textField.text = self.urlNetworkObj.url;
     
     if (self.waitViewTimer)
