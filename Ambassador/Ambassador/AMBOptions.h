@@ -6,9 +6,6 @@
 //  Copyright © 2015 Ambassador. All rights reserved.
 //
 
-#ifndef AMBOptions_h
-#define AMBOptions_h
-
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSUInteger, AMBSocialServiceType) {
@@ -19,6 +16,12 @@ typedef NS_ENUM(NSUInteger, AMBSocialServiceType) {
     AMBSocialServiceTypeFacebook
 };
 
-NSString* socialServiceTypeStringVal(AMBSocialServiceType type);
+@interface AMBOptions : NSObject
 
-#endif /* AMBOptions_h */
++ (NSString*)serviceTypeStringValue:(AMBSocialServiceType)type;
+
+@end
+
+
+
+

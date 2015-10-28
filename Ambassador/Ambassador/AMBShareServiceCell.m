@@ -25,7 +25,8 @@
     self.logoBackground.backgroundColor = backgroundColor;
     self.logoBackground.layer.cornerRadius = 2;
     self.ivLogo.image = imageIcon;
-    self.ivLogo.layer.shadowOffset = CGSizeMake(10, 10);
+    self.ivLogo.layer.shadowOffset = CGSizeMake(2, 2);
+    self.ivLogo.layer.shadowOpacity = 0.6;
 }
 
 - (void)setupBorderCellWithTitle:(NSString*)title backgroundColor:(UIColor*)backgroundColor icon:(UIImage*)imageIcon borderColor:(UIColor*)borderColor {
@@ -35,7 +36,8 @@
     self.logoBackground.layer.borderWidth = 1.5;
     self.logoBackground.layer.cornerRadius = 2;
     self.ivLogo.image = imageIcon;
-    self.ivLogo.layer.shadowOffset = CGSizeMake(10, 10);
+    self.ivLogo.layer.shadowOffset = CGSizeMake(2, 2);
+    self.ivLogo.layer.shadowOpacity = 0.2;
 }
 
 @end
