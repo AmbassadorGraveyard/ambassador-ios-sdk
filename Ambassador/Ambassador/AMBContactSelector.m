@@ -664,14 +664,14 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         share.recipient_username = [self validatePhoneNumbers:[self.selected allObjects]];
     }
     share.short_code = self.urlNetworkObject.short_code;
-    share.social_name = socialServiceTypeStringVal(self.type);
+    share.social_name = [AMBOptions serviceTypeStringValue:self.type];
     
     [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
         if (error) {
-            DLog(@"Error for BulkShareTrack %@ with ResponseCode %li and Response %@", socialServiceTypeStringVal(self.type), (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            DLog(@"Error for BulkShareTrack %@ with ResponseCode %li and Response %@", [AMBOptions serviceTypeStringValue:self.type], (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
         } else {
-            DLog(@"Successfully shared BulkShareTrack %@ with ResponseCode %li and Response %@", socialServiceTypeStringVal(self.type), (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            DLog(@"Successfully shared BulkShareTrack %@ with ResponseCode %li and Response %@", [AMBOptions serviceTypeStringValue:self.type], (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
         }
     }];
 }

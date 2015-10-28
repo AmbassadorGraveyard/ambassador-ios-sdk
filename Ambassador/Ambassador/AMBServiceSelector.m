@@ -34,8 +34,7 @@
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate,
                                AMBContactLoaderDelegate, LinkedInAuthorizeDelegate,
                                AMBShareServiceDelegate,
-                               UITextFieldDelegate, MFMessageComposeViewControllerDelegate,
-                               MFMailComposeViewControllerDelegate, AMBUtilitiesDelegate>
+                               UITextFieldDelegate, AMBUtilitiesDelegate>
 
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *descriptionLabel;
@@ -72,6 +71,8 @@ NSString * const CONTACT_SELECTOR_SEGUE = @"goToContactSelector";
 NSString * const LKND_AUTHORIZE_SEGUE = @"goToAuthorizeLinkedIn";
 float const CELL_BORDER_WIDTH = 2.0;
 float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
+
+int contactServiceType;
 
 #pragma mark - LifeCycle
 
@@ -280,75 +281,66 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 }
 
 
-#pragma mark - CollectionViewDelegate
+#pragma mark - CollectionView Delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    AMBShareService *service = self.services[indexPath.row];
-    __weak AMBServiceSelector *weakSelf = self;
-    if ([service.title isEqualToString:AMB_FACEBOOK_TITLE])
+    switch (indexPath.row) {
+        case 0:
+            [self stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
+            break;
+        case 1:
+            [self stockShareWithSocialMediaType:AMBSocialServiceTypeTwitter];
+            break;
+        case 2:
+            [self checkLinkedInToken];
+            break;
+        case 3:
+            contactServiceType = AMBSocialServiceTypeSMS;
+            [self performSegueWithIdentifier:CONTACT_SELECTOR_SEGUE sender:self];
+            break;
+        case 4:
+            contactServiceType = AMBSocialServiceTypeEmail;
+            [self performSegueWithIdentifier:CONTACT_SELECTOR_SEGUE sender:self];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)stockShareWithSocialMediaType:(AMBSocialServiceType)servicetype {
+    SLComposeViewController *vc;
+    switch (servicetype) {
+        case AMBSocialServiceTypeFacebook:
+            vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+            break;
+        case AMBSocialServiceTypeTwitter:
+            vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        default:
+            break;
+    }
+    
+    [vc addURL:[NSURL URLWithString:self.urlNetworkObj.url]];
+    [vc setInitialText:self.prefs.defaultShareMessage];
+    [self presentViewController:vc animated:YES completion:nil];
+    vc.completionHandler = ^(SLComposeViewControllerResult result)
     {
-        //TODO:facebook
-        SLComposeViewController *vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        [vc addURL:[NSURL URLWithString:self.urlNetworkObj.url]];
-        __weak AMBServiceSelector *weakSelf = self;
-        vc.completionHandler = ^(SLComposeViewControllerResult result)
+        if (result == SLComposeViewControllerResultDone)
         {
-            if (result == SLComposeViewControllerResultDone)
-            {
-                DLog();
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    AMBsendAlert(YES, @"Your link was successfully shared", self);
-                });
-                
-                [weakSelf sendShareTrackForServiceType:AMBSocialServiceTypeFacebook completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-                    DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
-                }];
-            }
-        };
-        [vc setInitialText:self.prefs.defaultShareMessage];
-        [self presentViewController:vc animated:YES completion:nil];
-    }
-    else if ([service.title isEqualToString:AMB_TWITTER_TITLE])
-    {
-        SLComposeViewController *vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [vc addURL:[NSURL URLWithString:self.urlNetworkObj.url]];
-        vc.completionHandler = ^(SLComposeViewControllerResult result)
-        {
-            if (result == SLComposeViewControllerResultDone)
-            {
-                DLog();
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    AMBsendAlert(YES, @"Your link was successfully shared", self);
-                });
-                [weakSelf sendShareTrackForServiceType:AMBSocialServiceTypeTwitter completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-                    DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
-                }];
-            }
-        };
-        [vc setInitialText:self.prefs.defaultShareMessage];
-        [self presentViewController:vc animated:YES completion:nil];
-    }
-    else if ([service.title isEqualToString:AMB_LINKEDIN_TITLE])
-    {
-        DLog();
-        [self checkLinkedInToken];
-    }
-    else if ([service.title isEqualToString:AMB_SMS_TITLE])
-    {
-        [self performSegueWithIdentifier:CONTACT_SELECTOR_SEGUE sender:[NSNumber numberWithInt:AMBSocialServiceTypeSMS]];
-    }
-    else if ([service.title isEqualToString:AMB_EMAIL_TITLE])
-    {
-        [self performSegueWithIdentifier:CONTACT_SELECTOR_SEGUE sender:[NSNumber numberWithInt:AMBSocialServiceTypeEmail]];
-    }
+            [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was shared successfully!" forViewController:self];
+            
+            [self sendShareTrackForServiceType:AMBSocialServiceTypeFacebook completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+                DLog(@"Error for sending share track %@: %@\n Body returned for sending share track: %@", [AMBOptions serviceTypeStringValue:servicetype], e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+            }];
+        }
+    };
 }
 
 - (void)sendShareTrackForServiceType:(AMBSocialServiceType)type completion:(void(^)(NSData *, NSURLResponse *, NSError *))c {
     __weak AMBServiceSelector *weakSelf = self;
     AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
     share.short_code = weakSelf.urlNetworkObj.short_code;
-    share.social_name = socialServiceTypeStringVal(type);
+    share.social_name = [AMBOptions serviceTypeStringValue:type];
     [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:c];
     
     
@@ -391,29 +383,17 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
 #pragma mark - Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:CONTACT_SELECTOR_SEGUE])
-    {
-        NSNumber *serviceTypeNum = (NSNumber *)sender;
-        AMBSocialServiceType type = [serviceTypeNum intValue];
+    if ([segue.identifier isEqualToString:CONTACT_SELECTOR_SEGUE]) {
+
         AMBContactSelector *vc = (AMBContactSelector *)segue.destinationViewController;
         vc.prefs = self.prefs;
         vc.shortURL = self.urlNetworkObj.url;
         vc.shortCode = self.urlNetworkObj.short_code;
-        vc.delegate = self;
         vc.defaultMessage = [NSString stringWithFormat:@"%@ %@", self.prefs.defaultShareMessage, self.urlNetworkObj.url];
-        vc.type = type;
+        vc.type = contactServiceType;
         vc.urlNetworkObject = self.urlNetworkObj;
-        if (type == AMBSocialServiceTypeSMS)
-        {
-            vc.data = self.loader.phoneNumbers;
-        }
-        else if (type ==AMBSocialServiceTypeEmail)
-        {
-            vc.data = self.loader.emailAddresses;
-        }
-    }
-    else if ([segue.identifier isEqualToString:LKND_AUTHORIZE_SEGUE])
-    {
+        vc.data = (vc.type == AMBSocialServiceTypeSMS) ? self.loader.phoneNumbers : self.loader.emailAddresses;
+    } else if ([segue.identifier isEqualToString:LKND_AUTHORIZE_SEGUE]) {
         AMBAuthorizeLinkedIn *vc = (AMBAuthorizeLinkedIn *)segue.destinationViewController;
         vc.delegate = self;
     }
@@ -584,61 +564,6 @@ float const CELL_CORNER_RADIUS = CELL_BORDER_WIDTH;
         AMBsendAlert(YES, message, self);
     });
 }
-
-//
-//#pragma mark - MFComposeViewController Delegates
-//- (void)mailComposeController:(nonnull MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(nullable NSError *)error
-//{
-//    if (result == MFMailComposeResultFailed)
-//    {
-//        AMBsendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
-//    }
-//    else if (result == MFMailComposeResultSent)
-//    {
-//        AMBsendAlert(NO, @"Your link was successfully shared", self);
-//        AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
-//        share.recipient_email = [NSMutableArray arrayWithObject:self.singleEmail];
-//        share.short_code = self.urlNetworkObj.short_code;
-//        share.social_name = socialServiceTypeStringVal(AMBSocialServiceTypeEmail);
-//        
-//        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-//            DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
-//        }];
-//        
-//        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-//    }
-//    else if (result == MFMailComposeResultSaved || result == MFMailComposeResultCancelled)
-//    {
-//        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-//    }
-//}
-//
-//- (void)messageComposeViewController:(nonnull MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
-//{
-//    if (result == MessageComposeResultFailed)
-//    {
-//        AMBsendAlert(NO, @"We couldn't send your messages right now. Please check your network connection and try again.", self);
-//    }
-//    else if (result == MessageComposeResultSent)
-//    {
-//        AMBsendAlert(NO, @"Your link was successfully shared", self);
-//        
-//        AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
-//        share.recipient_username = [NSMutableArray arrayWithObject:self.singleSMS];
-//        share.short_code = self.urlNetworkObj.short_code;
-//        share.social_name = socialServiceTypeStringVal(AMBSocialServiceTypeSMS);
-//        
-//        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-//            DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
-//        }];
-//
-//        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-//    }
-//    else if (result == MessageComposeResultCancelled)
-//    {
-//        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-//    }
-//}
 
 
 #pragma mark - AMBUtilities Delegate
