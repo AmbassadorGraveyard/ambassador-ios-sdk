@@ -31,6 +31,9 @@
 
 @property (nonatomic, weak)id <AMBUtilitiesDelegate> delegate;
 @property (nonatomic, strong) UIView *loadingView;
+@property (nonatomic, strong) UIVisualEffectView *blurView;
+@property (nonatomic, strong) UILabel *lblLoading;
+@property (nonatomic, strong) UIView * animatingView;
 
 + (AMBUtilities *)sharedInstance;
 

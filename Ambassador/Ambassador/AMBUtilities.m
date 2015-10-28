@@ -38,26 +38,61 @@
 - (void)showLoadingScreenWithText:(NSString*)loadingText forView:(UIView*)view {
     if (!self.loadingView) {
         self.loadingView = [[UIView alloc] initWithFrame:view.frame];
-    } else {
-        self.loadingView.frame = view.frame;
+        UIVisualEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        self.blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
+        self.blurView.frame = view.frame;
+//        self.blurView.alpha = .97;
+        self.lblLoading = [[UILabel alloc] init];
+        self.lblLoading.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:22];
+        self.animatingView = [[UIView alloc] init];
+        self.animatingView.backgroundColor = [UIColor blackColor];
+        self.animatingView.layer.cornerRadius = 1.5;
     }
     
-    UIVisualEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
-    blurView.frame = view.frame;
-    [self.loadingView addSubview:blurView];
-    UILabel *lblLoading = [[UILabel alloc] init];
-    lblLoading.text = loadingText;
-    [lblLoading sizeToFit];
-    lblLoading.frame = CGRectMake(self.loadingView.frame.size.width/2 - lblLoading.frame.size.width/2, self.loadingView.frame.size.height/2 - lblLoading.frame.size.height/2, lblLoading.frame.size.width, lblLoading.frame.size.height);
-    [self.loadingView addSubview:lblLoading];
+    self.loadingView.frame = view.frame;
+    self.blurView.frame = view.frame;
+    
+
+    if (![self.blurView isDescendantOfView:self.loadingView]) { [self.loadingView addSubview:self.blurView]; }
+    if (![self.lblLoading isDescendantOfView:self.loadingView]) { [self.loadingView addSubview:self.lblLoading]; }
+    if (![self.animatingView isDescendantOfView:self.loadingView]) { [self.loadingView addSubview:self.animatingView]; }
+    
     self.loadingView.alpha = 0;
+    self.lblLoading.text = loadingText;
+    [self.lblLoading sizeToFit];
+    self.lblLoading.frame = CGRectMake(self.loadingView.frame.size.width/2 - self.lblLoading.frame.size.width/2, self.loadingView.frame.size.height/2 - self.lblLoading.frame.size.height/2, self.lblLoading.frame.size.width, self.lblLoading.frame.size.height);
+    
+    self.animatingView.frame = CGRectMake(self.lblLoading.frame.origin.x, self.lblLoading.frame.origin.y + self.lblLoading.frame.size.height + 5, 3, 3);
     
     [view addSubview:self.loadingView];
     
     [UIView animateWithDuration:0.3 animations:^{
         self.loadingView.alpha = 1;
+    } completion:^(BOOL finished) {
+        [self animateLoadingLabel];
     }];
+    
+    
+}
+
+- (void)animateLoadingLabel {
+    [UIView animateKeyframesWithDuration:2 delay:0 options:UIViewKeyframeAnimationOptionCalculationModePaced|UIViewKeyframeAnimationOptionRepeat animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.5 animations:^{
+            self.animatingView.frame = CGRectMake(self.lblLoading.frame.origin.x, self.lblLoading.frame.origin.y + self.lblLoading.frame.size.height + 5, self.lblLoading.frame.size.width, 3);
+        }];
+        
+        [UIView addKeyframeWithRelativeStartTime:0.5 relativeDuration:0.5 animations:^{
+            self.animatingView.frame = CGRectMake(self.lblLoading.frame.origin.x + self.lblLoading.frame.size.width - 3, self.lblLoading.frame.origin.y + self.lblLoading.frame.size.height + 5, 3, 3);
+        }];
+        
+        [UIView addKeyframeWithRelativeStartTime:1 relativeDuration:0.5 animations:^{
+            self.animatingView.frame = CGRectMake(self.lblLoading.frame.origin.x, self.lblLoading.frame.origin.y + self.lblLoading.frame.size.height + 5, self.lblLoading.frame.size.width, 3);
+        }];
+        
+        [UIView addKeyframeWithRelativeStartTime:1.5 relativeDuration:0.5 animations:^{
+            self.animatingView.frame = CGRectMake(self.lblLoading.frame.origin.x, self.lblLoading.frame.origin.y + self.lblLoading.frame.size.height + 5, 3, 3);
+        }];
+    } completion:nil];
 }
 
 - (void)hideLoadingView {
