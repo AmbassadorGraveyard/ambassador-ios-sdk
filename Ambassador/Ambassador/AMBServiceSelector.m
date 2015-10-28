@@ -38,7 +38,7 @@
 
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *descriptionLabel;
-@property (nonatomic, strong) IBOutlet UITextField *textField;
+@property (nonatomic, strong) IBOutlet UILabel * lblURL;
 @property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) IBOutlet UIImageView *imgSlot1;
 @property (nonatomic, strong) IBOutlet UIImageView *imgSlot2;
@@ -51,6 +51,7 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight4;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight5;
 @property (nonatomic, strong) IBOutlet UIButton * btnCopy;
+@property (nonatomic, strong) IBOutlet UIView * shortURLBackground;
 
 @property (nonatomic, strong) NSMutableArray *services;
 @property (nonatomic, strong) AMBContactLoader *loader;
@@ -78,9 +79,8 @@ int contactServiceType;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [[AMBUtilities sharedInstance] showLoadingScreenWithText:@"Loading" forView:self.view];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeWaitView) name:@"PusherReceived" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeWaitView) name:@"PusherReceived" object:nil]; // Subscribe to the notification that gets sent out when we get our pusher payload back
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     self.loader = [[AMBContactLoader alloc] initWithDelegate:self];
     [self setUpCloseButton];
@@ -94,32 +94,15 @@ int contactServiceType;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-//    [super viewWillDisappear:animated];
     [self.waitViewTimer invalidate];
 }
 
-- (void)alertForNetworkTimeout
-{
-//    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
-//    AMBSendCompletionModal *vc = (AMBSendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
-//    vc.alertMessage = @"The network request timed out. Please check your connection and try again";
-//    [vc shouldUseSuccessIcon:NO];
-//    vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-//    vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//    __weak AMBServiceSelector *weakSelf = self;
-//    vc.buttonAction = ^() {
-//        [weakSelf dismissViewControllerAnimated:YES completion:^{
-//            [weakSelf.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-//        }];
-//    };
-//    
-//    [self presentViewController:vc animated:YES completion:nil];
+- (void)alertForNetworkTimeout {
     [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"The network request has timed out. Please check your connection and try again." withUniqueID:@"networkTimeOut" forViewController:self];
     [AMBUtilities sharedInstance].delegate = self;
 }
 
-- (void)removeWaitView
-{
+- (void)removeWaitView {
     NSNumber *campaingID = [NSNumber numberWithInt:self.campaignID.intValue];
     self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
     
@@ -132,13 +115,8 @@ int contactServiceType;
     }
     
     [[AMBUtilities sharedInstance] hideLoadingView];
-    
-    self.textField.text = self.urlNetworkObj.url;
-    
-    if (self.waitViewTimer)
-    {
-        [self.waitViewTimer invalidate];
-    }
+    self.lblURL.text = self.urlNetworkObj.url;
+    if (self.waitViewTimer) { [self.waitViewTimer invalidate]; }
 }
 
 - (void)performIdentify {
@@ -190,7 +168,7 @@ int contactServiceType;
 
 - (IBAction)clipboardButtonPress:(UIButton *)button{
     UIPasteboard *pb = [UIPasteboard generalPasteboard];
-    [pb setString:self.textField.text];
+    [pb setString:self.lblURL.text];
     if (!self.copiedAnimationTimer.isValid) { [self confirmCopyAnimation]; }
 }
 
@@ -199,11 +177,10 @@ int contactServiceType;
     self.lblCopied.alpha = 0;
     self.lblCopied.text = @"Copied!";
     self.lblCopied.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
-    [self.view addSubview:self.lblCopied];
-    [self.view bringSubviewToFront:self.btnCopy];
+    [self.shortURLBackground addSubview:self.lblCopied];
+    [self.shortURLBackground bringSubviewToFront:self.btnCopy];
 
-    self.copiedAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(hideConfirmCopyAnimation) userInfo:nil repeats:NO];
-    self.copiedAnimationTimer.fireDate = [NSDate dateWithTimeIntervalSinceNow:3];
+    self.copiedAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(hideConfirmCopyAnimation) userInfo:nil repeats:NO];
 
     [UIView animateWithDuration:0.3 animations:^{
         self.lblCopied.frame = CGRectMake(self.btnCopy.frame.origin.x - self.lblCopied.frame.size.width - 7, self.lblCopied.frame.origin.y, 45, self.lblCopied.frame.size.height);
