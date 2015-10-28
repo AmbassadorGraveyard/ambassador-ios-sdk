@@ -8,6 +8,34 @@
 
 #import "AMBShareServiceCell.h"
 
+@interface AMBShareServiceCell ()
+
+// Local properties
+@property (nonatomic, strong) IBOutlet UIImageView * ivLogo;
+@property (nonatomic, strong) IBOutlet UIView * logoBackground;
+@property (nonatomic, strong) IBOutlet UILabel * lblTitle;
+
+@end
+
 
 @implementation AMBShareServiceCell
+
+- (void)setUpCellWithTitle:(NSString*)title backgroundColor:(UIColor*)backgroundColor icon:(UIImage*)imageIcon {
+    self.lblTitle.text = title;
+    self.logoBackground.backgroundColor = backgroundColor;
+    self.logoBackground.layer.cornerRadius = 2;
+    self.ivLogo.image = imageIcon;
+    self.ivLogo.layer.shadowOffset = CGSizeMake(10, 10);
+}
+
+- (void)setupBorderCellWithTitle:(NSString*)title backgroundColor:(UIColor*)backgroundColor icon:(UIImage*)imageIcon borderColor:(UIColor*)borderColor {
+    self.lblTitle.text = title;
+    self.logoBackground.backgroundColor = backgroundColor;
+    self.logoBackground.layer.borderColor = borderColor.CGColor;
+    self.logoBackground.layer.borderWidth = 1.5;
+    self.logoBackground.layer.cornerRadius = 2;
+    self.ivLogo.image = imageIcon;
+    self.ivLogo.layer.shadowOffset = CGSizeMake(10, 10);
+}
+
 @end

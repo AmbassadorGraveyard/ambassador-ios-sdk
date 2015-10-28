@@ -103,9 +103,9 @@
                                             <constraint firstItem="OER-zx-xkC" firstAttribute="top" secondItem="BcH-xJ-EyE" secondAttribute="bottom" constant="10" id="wcH-qV-iRO"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="logo" destination="Do0-0W-fIT" id="QFt-fW-CiD"/>
+                                            <outlet property="ivLogo" destination="Do0-0W-fIT" id="mDY-Py-aei"/>
+                                            <outlet property="lblTitle" destination="OER-zx-xkC" id="Swz-67-2w1"/>
                                             <outlet property="logoBackground" destination="BcH-xJ-EyE" id="51S-3t-BqF"/>
-                                            <outlet property="title" destination="OER-zx-xkC" id="eu3-uq-LYO"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
