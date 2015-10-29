@@ -179,6 +179,7 @@
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; settings = {ASSET_TAGS = (); }; };
 		EF407F211BB3449B0074D2AE /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */; settings = {ASSET_TAGS = (); }; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
+		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; settings = {ASSET_TAGS = (); }; };
 		EF64CF9E1BE25ECE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CF9D1BE25ECE0072014B /* spinner.png */; settings = {ASSET_TAGS = (); }; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */; settings = {ASSET_TAGS = (); }; };
@@ -439,6 +440,7 @@
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AmbassadorTheme.plist; path = AmbassadorResources/AmbassadorTheme.plist; sourceTree = SOURCE_ROOT; };
+		EF64CFAD1BE2AACE0072014B /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		EF64CF9D1BE25ECE0072014B /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
@@ -684,7 +686,7 @@
 				DBEB6FED1BA9B2D8005EE0D0 /* plus.png */,
 				DBEB6FEE1BA9B2D8005EE0D0 /* search.png */,
 				DBEB6FEF1BA9B2D8005EE0D0 /* sms.png */,
-				EF64CF9D1BE25ECE0072014B /* spinner.png */,
+				EF64CFAD1BE2AACE0072014B /* spinner.png */,
 				DBEB6FF01BA9B2D8005EE0D0 /* successIcon.png */,
 				DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */,
 				DB844D5B1BA767FA003FD7A9 /* back.png */,
@@ -1103,9 +1105,9 @@
 				DB844D5C1BA767FA003FD7A9 /* back.png in Resources */,
 				DBEB6FF81BA9B2D8005EE0D0 /* failIcon.png in Resources */,
 				DBEB6FFC1BA9B2D8005EE0D0 /* plus.png in Resources */,
+				EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */,
 				DBEB70001BA9B2D8005EE0D0 /* twitter.png in Resources */,
 				DBEB6FE21BA9AD04005EE0D0 /* Main.storyboard in Resources */,
-				EF64CF9E1BE25ECE0072014B /* spinner.png in Resources */,
 				DBEB6FF41BA9B2D8005EE0D0 /* clipboard.png in Resources */,
 				DBEB6FF31BA9B2D8005EE0D0 /* check.png in Resources */,
 				DBEB6FF21BA9B2D8005EE0D0 /* blank.png in Resources */,
