@@ -49,7 +49,15 @@ class AmbassadorUITests: XCTestCase {
         button.tap()
         referYourFriendsNavigationBar.tap()
         button.tap()
-
+        referYourFriendsNavigationBar.tap()
+        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).elementBoundByIndex(0).tap()
+        button.tap()
+        closeButton.tap()
+        button.tap()
+        closeButton.tap()
+        button.tap()
+        closeButton.tap()
+        button.tap()
         
         
     }
