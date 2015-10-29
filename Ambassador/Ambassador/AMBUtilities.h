@@ -32,13 +32,12 @@
 @property (nonatomic, weak)id <AMBUtilitiesDelegate> delegate;
 @property (nonatomic, strong) UIView *loadingView;
 @property (nonatomic, strong) UIVisualEffectView *blurView;
-@property (nonatomic, strong) UILabel *lblLoading;
-@property (nonatomic, strong) UIView * animatingView;
+@property (nonatomic, strong) UIImageView * animatingView;
 
 + (AMBUtilities *)sharedInstance;
 
 - (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController;
-- (void)showLoadingScreenWithText:(NSString*)loadingText forView:(UIView*)view;
+- (void)showLoadingScreenForView:(UIView*)view;
 - (void)hideLoadingView;
 
 @end
