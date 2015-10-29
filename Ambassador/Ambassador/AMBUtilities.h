@@ -36,7 +36,7 @@
 
 + (AMBUtilities *)sharedInstance;
 
-- (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController;
+- (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController shouldDismissVCImmediately:(BOOL)shouldDismiss;
 - (void)showLoadingScreenForView:(UIView*)view;
 - (void)hideLoadingView;
 
