@@ -238,6 +238,7 @@ static AMBServiceSelector *raf;
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
     UINavigationController *vc = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
     raf = (AMBServiceSelector *)vc.childViewControllers[0];
+    raf.campaignID = ID;
     
     AMBServiceSelectorPreferences *prefs = [[AMBServiceSelectorPreferences alloc] init];
     prefs.titleLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFWelcomeTextMessage];
@@ -245,8 +246,6 @@ static AMBServiceSelector *raf;
     prefs.defaultShareMessage = [[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage];
     prefs.navBarTitle = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
     raf.prefs = prefs;
-    raf.APIKey = self.universalToken;
-    raf.campaignID = ID;
 
     [viewController presentViewController:vc animated:YES completion:nil];
 }

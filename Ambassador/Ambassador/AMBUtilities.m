@@ -18,7 +18,7 @@
     return _sharedInsance;
 }
 
-- (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController {
+- (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController shouldDismissVCImmediately:(BOOL)shouldDismiss {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
     AMBSendCompletionModal *vc = (AMBSendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
     vc.alertMessage = message;
@@ -28,7 +28,11 @@
     __weak AMBSendCompletionModal *weakVC = vc;
     vc.buttonAction = ^() {
         [weakVC dismissViewControllerAnimated:NO completion:^{
-            if (self.delegate && [self.delegate respondsToSelector:@selector(okayButtonClickedForUniqueID:)]) { [self.delegate okayButtonClickedForUniqueID:uniqueID]; }
+            if (shouldDismiss) {
+                [viewController dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                if (self.delegate && [self.delegate respondsToSelector:@selector(okayButtonClickedForUniqueID:)]) { [self.delegate okayButtonClickedForUniqueID:uniqueID]; }
+            }
         }];
     };
     
