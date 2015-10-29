@@ -180,6 +180,7 @@
 		EF407F211BB3449B0074D2AE /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */; settings = {ASSET_TAGS = (); }; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CF9E1BE25ECE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CF9D1BE25ECE0072014B /* spinner.png */; settings = {ASSET_TAGS = (); }; };
+		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */; settings = {ASSET_TAGS = (); }; };
 		EF7BA1CD1BDEB17E00788160 /* AMBBulkShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */; settings = {ASSET_TAGS = (); }; };
 		EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */; settings = {ASSET_TAGS = (); }; };
@@ -234,6 +235,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = DB844D471BA75F9F003FD7A9;
 			remoteInfo = Framework;
+		};
+		EF64CFA81BE2A47D0072014B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB844D601BA76BDE003FD7A9;
+			remoteInfo = TestApplication;
 		};
 		EFD7FB971BDACD3D00436051 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -432,6 +440,9 @@
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AmbassadorTheme.plist; path = AmbassadorResources/AmbassadorTheme.plist; sourceTree = SOURCE_ROOT; };
 		EF64CF9D1BE25ECE0072014B /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
+		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
+		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBBulkShareHelper.h; sourceTree = "<group>"; };
 		EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBBulkShareHelper.m; sourceTree = "<group>"; };
 		EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBPusherChannelObject.h; path = fmdb/AMBPusherChannelObject.h; sourceTree = "<group>"; };
@@ -488,6 +499,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EF64CFA01BE2A47D0072014B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -518,6 +536,7 @@
 				DB844D531BA7622D003FD7A9 /* AmbassadorResources */,
 				DB844D621BA76BDE003FD7A9 /* TestApplication */,
 				DB844D7C1BA76BDE003FD7A9 /* TestApplicationTests */,
+				EF64CFA41BE2A47D0072014B /* AmbassadorUITests */,
 				DB844D271BA75BB8003FD7A9 /* Products */,
 				0D24CFB05292A555B6506D41 /* Frameworks */,
 			);
@@ -531,6 +550,7 @@
 				DB844D521BA7622D003FD7A9 /* Ambassador.bundle */,
 				DB844D611BA76BDE003FD7A9 /* TestApplication.app */,
 				DB844D791BA76BDE003FD7A9 /* TestApplicationTests.xctest */,
+				EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -801,6 +821,15 @@
 			name = "Socket Rocket";
 			sourceTree = "<group>";
 		};
+		EF64CFA41BE2A47D0072014B /* AmbassadorUITests */ = {
+			isa = PBXGroup;
+			children = (
+				EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */,
+				EF64CFA71BE2A47D0072014B /* Info.plist */,
+			);
+			path = AmbassadorUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -974,6 +1003,24 @@
 			productReference = DB844D791BA76BDE003FD7A9 /* TestApplicationTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		EF64CFA21BE2A47D0072014B /* AmbassadorUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF64CFAA1BE2A47D0072014B /* Build configuration list for PBXNativeTarget "AmbassadorUITests" */;
+			buildPhases = (
+				EF64CF9F1BE2A47D0072014B /* Sources */,
+				EF64CFA01BE2A47D0072014B /* Frameworks */,
+				EF64CFA11BE2A47D0072014B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EF64CFA91BE2A47D0072014B /* PBXTargetDependency */,
+			);
+			name = AmbassadorUITests;
+			productName = AmbassadorUITests;
+			productReference = EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1003,6 +1050,10 @@
 						CreatedOnToolsVersion = 6.4;
 						TestTargetID = DB844D601BA76BDE003FD7A9;
 					};
+					EF64CFA21BE2A47D0072014B = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = DB844D601BA76BDE003FD7A9;
+					};
 				};
 			};
 			buildConfigurationList = DB844D211BA75BB8003FD7A9 /* Build configuration list for PBXProject "Ambassador" */;
@@ -1024,6 +1075,7 @@
 				DB844D511BA7622D003FD7A9 /* AmbassadorResources */,
 				DB844D601BA76BDE003FD7A9 /* TestApplication */,
 				DB844D781BA76BDE003FD7A9 /* TestApplicationTests */,
+				EF64CFA21BE2A47D0072014B /* AmbassadorUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1074,6 +1126,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DB844D771BA76BDE003FD7A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF64CFA11BE2A47D0072014B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1216,6 +1275,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EF64CF9F1BE2A47D0072014B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1248,6 +1315,11 @@
 			isa = PBXTargetDependency;
 			target = DB844D471BA75F9F003FD7A9 /* Framework */;
 			targetProxy = DB844D8C1BA76C82003FD7A9 /* PBXContainerItemProxy */;
+		};
+		EF64CFA91BE2A47D0072014B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB844D601BA76BDE003FD7A9 /* TestApplication */;
+			targetProxy = EF64CFA81BE2A47D0072014B /* PBXContainerItemProxy */;
 		};
 		EFD7FB981BDACD3D00436051 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1592,6 +1664,36 @@
 			};
 			name = Release;
 		};
+		EF64CFAB1BE2A47D0072014B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				INFOPLIST_FILE = AmbassadorUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.AmbassadorUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TEST_TARGET_NAME = TestApplication;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		EF64CFAC1BE2A47D0072014B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = AmbassadorUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.AmbassadorUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = TestApplication;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1657,6 +1759,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		EF64CFAA1BE2A47D0072014B /* Build configuration list for PBXNativeTarget "AmbassadorUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF64CFAB1BE2A47D0072014B /* Debug */,
+				EF64CFAC1BE2A47D0072014B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
