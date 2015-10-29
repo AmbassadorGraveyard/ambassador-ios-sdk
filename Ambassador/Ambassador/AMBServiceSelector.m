@@ -79,7 +79,7 @@ int contactServiceType;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[AMBUtilities sharedInstance] showLoadingScreenWithText:@"Loading" forView:self.view];
+    [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeWaitView) name:@"PusherReceived" object:nil]; // Subscribe to the notification that gets sent out when we get our pusher payload back
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     self.loader = [[AMBContactLoader alloc] initWithDelegate:self];

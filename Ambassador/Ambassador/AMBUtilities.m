@@ -35,62 +35,43 @@
     [viewController presentViewController:vc animated:YES completion:nil];
 }
 
-- (void)showLoadingScreenWithText:(NSString*)loadingText forView:(UIView*)view {
+- (void)showLoadingScreenForView:(UIView*)view {
     if (!self.loadingView) {
         self.loadingView = [[UIView alloc] initWithFrame:view.frame];
-        UIVisualEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
         self.blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
         self.blurView.frame = view.frame;
-        self.lblLoading = [[UILabel alloc] init];
-        self.lblLoading.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:22];
-        self.animatingView = [[UIView alloc] init];
-        self.animatingView.backgroundColor = [UIColor blackColor];
-        self.animatingView.layer.cornerRadius = 1.5;
+        self.animatingView = [[UIImageView alloc] initWithImage:[AMBValues imageFromBundleWithName:@"spinner" type:@"png" tintable:YES]];
+        self.animatingView.tintColor = [UIColor whiteColor];
+        [self.animatingView setContentMode:UIViewContentModeScaleAspectFit];
     }
     
     self.loadingView.frame = view.frame;
     self.blurView.frame = view.frame;
     
     if (![self.blurView isDescendantOfView:self.loadingView]) { [self.loadingView addSubview:self.blurView]; }
-    if (![self.lblLoading isDescendantOfView:self.loadingView]) { [self.loadingView addSubview:self.lblLoading]; }
     if (![self.animatingView isDescendantOfView:self.loadingView]) { [self.loadingView addSubview:self.animatingView]; }
-    
-    self.loadingView.alpha = 0;
-    self.lblLoading.text = loadingText;
-    [self.lblLoading sizeToFit];
-    self.lblLoading.frame = CGRectMake(self.loadingView.frame.size.width/2 - self.lblLoading.frame.size.width/2, self.loadingView.frame.size.height - (self.loadingView.frame.size.height * .75), self.lblLoading.frame.size.width, self.lblLoading.frame.size.height);
-    
-    self.animatingView.frame = CGRectMake(self.lblLoading.frame.origin.x, self.lblLoading.frame.origin.y + self.lblLoading.frame.size.height + 5, 3, 3);
+
+    self.animatingView.frame = CGRectMake(self.loadingView.frame.size.width/2 - 50, self.loadingView.frame.size.height - (self.loadingView.frame.size.height * .75), 100, 100);
     
     [view addSubview:self.loadingView];
     
     [UIView animateWithDuration:0.3 animations:^{
         self.loadingView.alpha = 1;
     } completion:^(BOOL finished) {
-        [self animateLoadingLabel];
+        [self startSpinner];
     }];
-    
-    
 }
 
-- (void)animateLoadingLabel {
-    [UIView animateKeyframesWithDuration:2 delay:0 options:UIViewKeyframeAnimationOptionCalculationModePaced|UIViewKeyframeAnimationOptionRepeat animations:^{
-        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.5 animations:^{
-            self.animatingView.frame = CGRectMake(self.lblLoading.frame.origin.x, self.lblLoading.frame.origin.y + self.lblLoading.frame.size.height + 5, self.lblLoading.frame.size.width, 3);
-        }];
-        
-        [UIView addKeyframeWithRelativeStartTime:0.5 relativeDuration:0.5 animations:^{
-            self.animatingView.frame = CGRectMake(self.lblLoading.frame.origin.x + self.lblLoading.frame.size.width - 3, self.lblLoading.frame.origin.y + self.lblLoading.frame.size.height + 5, 3, 3);
-        }];
-        
-        [UIView addKeyframeWithRelativeStartTime:1 relativeDuration:0.5 animations:^{
-            self.animatingView.frame = CGRectMake(self.lblLoading.frame.origin.x, self.lblLoading.frame.origin.y + self.lblLoading.frame.size.height + 5, self.lblLoading.frame.size.width, 3);
-        }];
-        
-        [UIView addKeyframeWithRelativeStartTime:1.5 relativeDuration:0.5 animations:^{
-            self.animatingView.frame = CGRectMake(self.lblLoading.frame.origin.x, self.lblLoading.frame.origin.y + self.lblLoading.frame.size.height + 5, 3, 3);
-        }];
-    } completion:nil];
+- (void)startSpinner {
+    CABasicAnimation* rotationAnimation;
+    rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotationAnimation.toValue = [NSNumber numberWithFloat: M_PI * 2.0 * 1.5];
+    rotationAnimation.duration = 1.5;
+    rotationAnimation.cumulative = YES;
+    rotationAnimation.repeatCount = 100;
+    
+    [self.animatingView.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
 }
 
 - (void)hideLoadingView {
