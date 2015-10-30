@@ -30,6 +30,9 @@ NSString * const TITLE = @"Authorize LinkedIn";
     NSString * addressString = AMB_LKDN_AUTH_URL;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:addressString]]];
     [self.view addSubview:self.webView];
+    
+//    UIBarButtonItemleftBarButtonItem *blankBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+//    self.navigationItem. = blankBackButton;
 }
 
 - (void)didReceiveMemoryWarning {

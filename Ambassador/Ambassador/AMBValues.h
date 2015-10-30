@@ -12,5 +12,6 @@
 @interface AMBValues : NSObject
 
 + (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type tintable:(BOOL)tintable;
++ (NSBundle*)AMBframeworkBundle;
 
 @end
