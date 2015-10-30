@@ -11,11 +11,7 @@
 
 @interface AMBServiceSelector : UIViewController
 
-- (void)removeWaitView;
-
 @property (strong, nonatomic) AMBServiceSelectorPreferences *prefs;
-@property NSString *APIKey;
-@property NSString *campaignID;
-@property (weak, nonatomic) IBOutlet UIView *waitView;
+@property (nonatomic, strong) NSString *campaignID;
 
 @end

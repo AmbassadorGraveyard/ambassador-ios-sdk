@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "AMBOptions.h"
 
-NSString* socialServiceTypeStringVal(AMBSocialServiceType type) {
+@implementation AMBOptions
+
++ (NSString*)serviceTypeStringValue:(AMBSocialServiceType)type {
     switch (type) {
         case AMBSocialServiceTypeEmail:
             return @"email";
@@ -31,3 +33,6 @@ NSString* socialServiceTypeStringVal(AMBSocialServiceType type) {
             break;
     }
 }
+
+@end
+

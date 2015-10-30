@@ -142,6 +142,16 @@
     self.connectionState = PTPusherConnectionConnected;
 }
 
+- (BOOL)pusher:(AMBPTPusher *)pusher connectionWillAutomaticallyReconnect:(AMBPTPusherConnection *)connection afterDelay:(NSTimeInterval)delay {
+    return YES;
+}
+
+- (void)pusher:(AMBPTPusher *)pusher connection:(AMBPTPusherConnection *)connection failedWithError:(NSError *)error {
+    // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been DISCONNECTED
+    DLog(@"Pusher connection state changed to DISCONNECTED");
+    self.connectionState = PTPusherConnectionDisconnected;
+}
+
 - (void)pusher:(AMBPTPusher *)pusher connection:(AMBPTPusherConnection *)connection didDisconnectWithError:(NSError *)error willAttemptReconnect:(BOOL)willAttemptReconnect {
     // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been DISCONNECTED
     DLog(@"Pusher connection state changed to DISCONNECTED");

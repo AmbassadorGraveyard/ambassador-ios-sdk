@@ -22,7 +22,7 @@
 @protocol AMBUtilitiesDelegate <NSObject>
 
 @optional
-- (void)okayButtonClicked;
+- (void)okayButtonClickedForUniqueID:(NSString*)uniqueID;
 
 @end
 
@@ -30,10 +30,15 @@
 @interface AMBUtilities : NSObject
 
 @property (nonatomic, weak)id <AMBUtilitiesDelegate> delegate;
+@property (nonatomic, strong) UIView *loadingView;
+@property (nonatomic, strong) UIVisualEffectView *blurView;
+@property (nonatomic, strong) UIImageView * animatingView;
 
 + (AMBUtilities *)sharedInstance;
 
-- (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message forViewController:(UIViewController*)viewController;
+- (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController shouldDismissVCImmediately:(BOOL)shouldDismiss;
+- (void)showLoadingScreenForView:(UIView*)view;
+- (void)hideLoadingView;
 
 @end
 
