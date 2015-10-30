@@ -93,7 +93,11 @@ int contactServiceType;
 #pragma mark - UI Functions
 
 - (void)confirmCopyAnimation {
-    if (!self.lblCopied) { self.lblCopied = [[UILabel alloc] initWithFrame:self.btnCopy.frame]; }
+    if (!self.lblCopied) {
+        self.lblCopied = [[UILabel alloc] initWithFrame:self.btnCopy.frame];
+        self.lblCopied.accessibilityIdentifier = @"lblCopied";
+    }
+    
     self.lblCopied.alpha = 0;
     self.lblCopied.text = @"Copied!";
     self.lblCopied.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
@@ -338,6 +342,7 @@ int contactServiceType;
 
 
 #pragma mark - ContactLoaderDelegate
+
 - (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
     [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:@"contactsFailure" forViewController:self shouldDismissVCImmediately:NO];
 }
