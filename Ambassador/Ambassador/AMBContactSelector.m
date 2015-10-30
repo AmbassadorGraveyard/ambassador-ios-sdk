@@ -24,7 +24,7 @@
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                AMBSelectedCellDelegate, UITextFieldDelegate,
-                               UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate>
+                               UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate, AMBUtilitiesDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *contactsTable;
 
 @property (weak, nonatomic) IBOutlet UIView *composeMessageView;
@@ -531,16 +531,16 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
             if (error) {
                 DLog(@"Error for BulkShare SMS with Response Code - %li and Response - %@", (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." forViewController:self];
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
             } else {
                 DLog(@"BulkShare SMS Success with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
                 [self sendShareTrack:validatedNumbers];
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" forViewController:self];
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
                 [AMBUtilities sharedInstance].delegate = self;
             }
         }];
     } else {
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid phone number. Please check and try again." forViewController:self];
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid phone number. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
     }
 }
 
@@ -555,16 +555,16 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
             if (error) {
                 DLog(@"Error for BulkShare Email with Response Code - %li and Response - %@", (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." forViewController:self];
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
             } else {
                 DLog(@"BulkShare Email Success with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
                 [self sendShareTrack:validatedContacts];
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" forViewController:self];
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
                 [AMBUtilities sharedInstance].delegate = self;
             }
         }];
     } else {
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid email address. Please check and try again." forViewController:self];
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid email address. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
     }
 }
 
@@ -664,14 +664,14 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         share.recipient_username = [self validatePhoneNumbers:[self.selected allObjects]];
     }
     share.short_code = self.urlNetworkObject.short_code;
-    share.social_name = socialServiceTypeStringVal(self.type);
+    share.social_name = [AMBOptions serviceTypeStringValue:self.type];
     
     [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
         if (error) {
-            DLog(@"Error for BulkShareTrack %@ with ResponseCode %li and Response %@", socialServiceTypeStringVal(self.type), (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            DLog(@"Error for BulkShareTrack %@ with ResponseCode %li and Response %@", [AMBOptions serviceTypeStringValue:self.type], (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
         } else {
-            DLog(@"Successfully shared BulkShareTrack %@ with ResponseCode %li and Response %@", socialServiceTypeStringVal(self.type), (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            DLog(@"Successfully shared BulkShareTrack %@ with ResponseCode %li and Response %@", [AMBOptions serviceTypeStringValue:self.type], (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
         }
     }];
 }
@@ -698,14 +698,6 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     return validSet;
 }
 
-
-#pragma mark - AMBUtilites Delegate
-
-- (void)okayButtonClicked {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
 #pragma mark - AMBNamePrompt Delegate 
 
 - (void)namesUpdatedSuccessfully {
@@ -720,6 +712,13 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     [errorAlert show];
     
     DLog(@"Error loading contacts - %@", message);
+}
+
+
+#pragma mark - AMBUtitlites Delegate
+
+- (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

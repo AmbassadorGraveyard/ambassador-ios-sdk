@@ -1,0 +1,18 @@
+//
+//  PrefixHeader.pch
+//  Ambassador
+//
+//  Created by Jake Dunahee on 10/28/15.
+//  Copyright © 2015 Ambassador. All rights reserved.
+//
+
+#ifdef __OBJC__
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "UIColor+AMBColorValues.h"
+#import "AMBValues.h"
+#import "AMBOptions.h"
+
+#endif /* PrefixHeader_pch */

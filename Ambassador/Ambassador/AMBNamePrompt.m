@@ -78,7 +78,7 @@
                     DLog(@"Error Updating Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], @"No data available");
                 }
                 
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to update names.  Please try again." forViewController:self];
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to update names.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
             } else {
                 DLog(@"Successfully Updated Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
                 if ([AmbassadorSDK sharedInstance].user) {

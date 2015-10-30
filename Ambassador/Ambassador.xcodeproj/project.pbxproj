@@ -179,11 +179,16 @@
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; settings = {ASSET_TAGS = (); }; };
 		EF407F211BB3449B0074D2AE /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */; settings = {ASSET_TAGS = (); }; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
+		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; settings = {ASSET_TAGS = (); }; };
 		EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */; settings = {ASSET_TAGS = (); }; };
 		EF7BA1CD1BDEB17E00788160 /* AMBBulkShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */; settings = {ASSET_TAGS = (); }; };
 		EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */; settings = {ASSET_TAGS = (); }; };
 		EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */; settings = {ASSET_TAGS = (); }; };
 		EFCBFDBB1BDA859E0052DFB7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
+		EFDFA0CA1BE148A5002FA3ED /* AMBValues.h in Headers */ = {isa = PBXBuildFile; fileRef = EFDFA0C81BE148A5002FA3ED /* AMBValues.h */; settings = {ASSET_TAGS = (); }; };
+		EFDFA0CB1BE148A5002FA3ED /* AMBValues.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDFA0C91BE148A5002FA3ED /* AMBValues.m */; settings = {ASSET_TAGS = (); }; };
+		EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */ = {isa = PBXBuildFile; fileRef = EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */; settings = {ASSET_TAGS = (); }; };
+		EFDFA0D01BE154B8002FA3ED /* UIColor+AMBColorValues.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */; settings = {ASSET_TAGS = (); }; };
 		EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
@@ -426,10 +431,16 @@
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AmbassadorTheme.plist; path = AmbassadorResources/AmbassadorTheme.plist; sourceTree = SOURCE_ROOT; };
+		EF64CFAD1BE2AACE0072014B /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBBulkShareHelper.h; sourceTree = "<group>"; };
 		EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBBulkShareHelper.m; sourceTree = "<group>"; };
 		EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBPusherChannelObject.h; path = fmdb/AMBPusherChannelObject.h; sourceTree = "<group>"; };
 		EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMBPusherChannelObject.m; path = fmdb/AMBPusherChannelObject.m; sourceTree = "<group>"; };
+		EFDFA0C81BE148A5002FA3ED /* AMBValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBValues.h; sourceTree = "<group>"; };
+		EFDFA0C91BE148A5002FA3ED /* AMBValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValues.m; sourceTree = "<group>"; };
+		EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AMBColorValues.h"; sourceTree = "<group>"; };
+		EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AMBColorValues.m"; sourceTree = "<group>"; };
+		EFDFA0D11BE157D2002FA3ED /* Ambassador-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ambassador-Prefix.pch"; sourceTree = "<group>"; };
 		EFED7B041BDA9F0A00F6C360 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -595,6 +606,11 @@
 				EF407F1D1BB344500074D2AE /* AMBThemeManager.m */,
 				EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */,
 				EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */,
+				EFDFA0C81BE148A5002FA3ED /* AMBValues.h */,
+				EFDFA0C91BE148A5002FA3ED /* AMBValues.m */,
+				EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */,
+				EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */,
+				EFDFA0D11BE157D2002FA3ED /* Ambassador-Prefix.pch */,
 			);
 			path = Ambassador;
 			sourceTree = "<group>";
@@ -648,6 +664,7 @@
 				DBEB6FED1BA9B2D8005EE0D0 /* plus.png */,
 				DBEB6FEE1BA9B2D8005EE0D0 /* search.png */,
 				DBEB6FEF1BA9B2D8005EE0D0 /* sms.png */,
+				EF64CFAD1BE2AACE0072014B /* spinner.png */,
 				DBEB6FF01BA9B2D8005EE0D0 /* successIcon.png */,
 				DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */,
 				DB844D5B1BA767FA003FD7A9 /* back.png */,
@@ -832,7 +849,9 @@
 				DBA3FC251BA8AA1D00672D82 /* AMBPusher.h in Headers */,
 				DBA3FC0B1BA8AA1D00672D82 /* AMBPTEventListener.h in Headers */,
 				DBA3FB7F1BA8A23C00672D82 /* AMBConversion.h in Headers */,
+				EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */,
 				DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */,
+				EFDFA0CA1BE148A5002FA3ED /* AMBValues.h in Headers */,
 				DB6A24671BD01D8A00CE3230 /* AMBNetworkObject.h in Headers */,
 				DBA3FB771BA8A23C00672D82 /* AMBContact.h in Headers */,
 				DBA3FBB31BA8A24F00672D82 /* AMBSendCompletionModal.h in Headers */,
@@ -1032,6 +1051,7 @@
 				DB844D5C1BA767FA003FD7A9 /* back.png in Resources */,
 				DBEB6FF81BA9B2D8005EE0D0 /* failIcon.png in Resources */,
 				DBEB6FFC1BA9B2D8005EE0D0 /* plus.png in Resources */,
+				EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */,
 				DBEB70001BA9B2D8005EE0D0 /* twitter.png in Resources */,
 				DBEB6FE21BA9AD04005EE0D0 /* Main.storyboard in Resources */,
 				DBEB6FF41BA9B2D8005EE0D0 /* clipboard.png in Resources */,
@@ -1117,6 +1137,7 @@
 				DBA3FB7A1BA8A23C00672D82 /* AMBContactCell.m in Sources */,
 				DBA3FBCE1BA8A9C000672D82 /* AMBFMDatabase.m in Sources */,
 				DB6A245C1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m in Sources */,
+				EFDFA0D01BE154B8002FA3ED /* UIColor+AMBColorValues.m in Sources */,
 				DBA3FB7C1BA8A23C00672D82 /* AMBContactLoader.m in Sources */,
 				DBA3FBBC1BA8A24F00672D82 /* AMBShareServiceCell.m in Sources */,
 				DBB8BD0B1BAC6B6D00B87896 /* AMBPTPusher+Testing.m in Sources */,
@@ -1152,6 +1173,7 @@
 				DBA3FC1D1BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m in Sources */,
 				DBA3FC321BA8AA5600672D82 /* AMBSRWebSocket.m in Sources */,
 				DBA3FB761BA8A23C00672D82 /* AMBConstants.m in Sources */,
+				EFDFA0CB1BE148A5002FA3ED /* AMBValues.m in Sources */,
 				DBA3FBD01BA8A9C000672D82 /* AMBFMDatabaseAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1347,9 +1369,13 @@
 		DB844D3B1BA75BB8003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Ambassador/Ambassador-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1368,9 +1394,13 @@
 		DB844D3C1BA75BB8003FD7A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Ambassador/Ambassador-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
