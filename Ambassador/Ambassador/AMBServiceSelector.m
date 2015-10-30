@@ -27,7 +27,7 @@
 #import "AMBNetworkObject.h"
 #import "AMBAmbassadorNetworkManager.h"
 
-@interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, AMBContactLoaderDelegate, LinkedInAuthorizeDelegate,
+@interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, AMBContactLoaderDelegate, LinkedInAuthorizeDelegate,
                                     AMBShareServiceDelegate, UITextFieldDelegate, AMBUtilitiesDelegate>
 
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
@@ -71,6 +71,8 @@ int contactServiceType;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLoadingView) name:@"PusherReceived" object:nil]; // Subscribe to the notification that gets sent out when we get our pusher payload back
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     self.loader = [[AMBContactLoader alloc] initWithDelegate:self];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
+
     [self setUpCloseButton];
     [self performIdentify];
     [self setUpTheme];
@@ -374,6 +376,10 @@ int contactServiceType;
     }
     
     return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(collectionView.frame.size.width/3, 105);
 }
 
 
