@@ -206,7 +206,7 @@ int contactServiceType;
     vc.completionHandler = ^(SLComposeViewControllerResult result) {
         if (result == SLComposeViewControllerResultDone) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your linke was shared successfully!" withUniqueID:@"stockShare" forViewController:self shouldDismissVCImmediately:NO];
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was shared successfully!" withUniqueID:@"stockShare" forViewController:self shouldDismissVCImmediately:NO];
             });
             
             [self sendShareTrackForServiceType:AMBSocialServiceTypeFacebook completion:^(NSData *d, NSURLResponse *r, NSError *e) {
