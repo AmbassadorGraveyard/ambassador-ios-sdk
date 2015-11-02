@@ -11,15 +11,8 @@ import XCTest
 var app : XCUIApplication!
 
 class AmbassadorUITests: XCTestCase {
-    
-    
-    
     override func setUp() {
         super.setUp()
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
         if app == nil {
@@ -43,64 +36,157 @@ class AmbassadorUITests: XCTestCase {
     }
     
     func testLoadRAF() {
+        // When the RAF page is hit, we check to make sure that all of the correct labels are shown
         XCTAssert(app.staticTexts.elementMatchingType(XCUIElementType.StaticText, identifier: "urlLabel").exists)
         XCTAssert(app.staticTexts["Spread the word"].exists)
         XCTAssert(app.staticTexts["Refer a friend to get rewards"].exists)
     
+        // Check to make sure there are the correct number of cells in the collectionView
         XCTAssertEqual(app.collectionViews.cells.count, 5)
-        app.buttons["clipboard"].tap()
-        XCTAssertEqual(app.staticTexts["lblCopied"].exists, true)
     }
     
     func testCopyButton() {
+        // Tap the copy button and make sure that the copied label is shown on the screen
         app.buttons["clipboard"].tap()
         XCTAssertEqual(app.staticTexts["lblCopied"].exists, true)
     }
     
     func testFacebook() {
-        let cell = app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(0)
-        cell.tap()
+        // Tap the facebook cell
+        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(0).tap()
         
+        // First make sure that the cancel button functions correctly
         let facebookNavigationBar = app.navigationBars["Facebook"]
         facebookNavigationBar.buttons["Cancel"].tap()
         
-        cell.tap()
+        // Tap the facebook cell again, but this time post the message
+        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(0).tap()
         facebookNavigationBar.buttons["Post"].tap()
         
+        // Tap the OKAY button and assure that the success screen is hidden
         app.buttons["OKAY"].tap()
         XCTAssertEqual(app.buttons["OKAY"].exists, false)
     }
     
     func testTwitter() {
-        let cell = app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(1)
-        cell.tap()
+        // Tap the twitter cell
+        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(1).tap()
         
+        // Make sure that the cancel button works correctly with the twitter alertView
         let twitterNavigationBar = app.navigationBars["Twitter"]
         twitterNavigationBar.buttons["Cancel"].tap()
-        cell.tap()
         
+        // Now we tap the twitter cell again and Post
+        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(1).tap()
         twitterNavigationBar.buttons["Post"].tap()
-        app.buttons["OKAY"].tap()
         
+        // If we get an alert about duplicate tweets, we will press the OK button in the alertview
+        if app.alerts.elementBoundByIndex(0).exists { app.buttons["OK"].tap() }
+        
+        // Tap OKAY on the success message and check that the message went away
+        app.buttons["OKAY"].tap()
+        XCTAssertEqual(app.buttons["OKAY"].exists, false)
     }
     
     func testLinkedIn() {
-//        NSNull.setNilValueForKey("AMBLINKEDINSTORAGE")
-//        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "AMBLINKEDINSTORAGE")
-//        print("Value = %@", NSUserDefaults.standardUserDefaults().objectForKey("AMBLINKEDINSTORAGE"))
+        // Tap the linkedIn cell
         app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(2).tap()
         
+        // Since defaults get cleared, we will be brought to the login page -- here we login using meldium credentials
         let emailTextField = app.textFields["Email"]
         emailTextField.tap()
         emailTextField.typeText("developers@getambassador.com")
         
+        // Type password for linkedin
         let passwordSecureTextField = app.secureTextFields["Password"]
         passwordSecureTextField.tap()
         passwordSecureTextField.typeText("domorefaster")
+        
+        // Tap the sign in and allow button
         app.buttons["Sign in and allow"].tap()
-        app.tables["Empty list"].childrenMatchingType(.Other).elementBoundByIndex(0).childrenMatchingType(.TextView).element.tap()
+        
+        // After we get popped back to the ServiceSelector page, we tap cancel in the linkedin share vc
+        app.navigationBars["LinkedIn"].buttons["Cancel"].tap()
+        
+        // Now we tap the linkedinCell again and confirm that our credentials were saved to defaults
+        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(2).tap()
+
+        // We post and check for success and that it went away after tapping ok
         app.navigationBars["LinkedIn"].buttons["Post"].tap()
         app.buttons["OKAY"].tap()
+        XCTAssertEqual(app.buttons["OKAY"].exists, false)
+    }
+    
+    func testSMS() {
+        // Tap the SMS cell
+        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(3).tap()
         
+        // Select 3 contacts and then unselect one
+        let tablesQuery = app.tables
+        tablesQuery.staticTexts["Home - (555) 522-8243"].tap()
+        
+        let danielHigginsStaticText = tablesQuery.cells.containingType(.StaticText, identifier:"Home - (555) 478-7672").staticTexts["Daniel Higgins"]
+        danielHigginsStaticText.tap()
+        
+        tablesQuery.staticTexts["Mobile - (408) 555-5270"].tap()
+        danielHigginsStaticText.tap()
+        
+        tablesQuery.cells.containingType(.StaticText, identifier:"HomeFAX - (408) 555-3514").staticTexts["Daniel Higgins"].doubleTap()
+        
+        // Tap the send button
+        app.buttons["sendButton"].tap()
+        
+        // Make sure the call goes through by checking for success message
+        XCTAssertTrue(app.staticTexts["Message successfully shared!"].exists)
+        app.buttons["OKAY"].tap()
+    }
+    
+    func testEmail() {
+        // Tap email cell
+        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(4).tap()
+        
+        // Select some contacts
+        let tablesQuery = app.tables
+        tablesQuery.staticTexts["Home - anna-haro@mac.com"].tap()
+        tablesQuery.staticTexts["Home - d-higgins@mac.com"].tap()
+        
+        let homeFakeFakeComStaticText = tablesQuery.staticTexts["Work - hank-zakroff@mac.com"]
+        homeFakeFakeComStaticText.tap()
+        homeFakeFakeComStaticText.tap()
+        
+        // Tap the send button
+        app.buttons["sendButton"].tap()
+        
+        // Check for message success
+        XCTAssertTrue(app.staticTexts["Message successfully shared!"].exists)
+        app.buttons["OKAY"].tap()
+    }
+    
+    func testSearch() {
+        // Tap sms cell
+        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(3).tap()
+        
+        // Search for anna
+        let searchContactsTextField = app.textFields["Search Contacts"]
+        searchContactsTextField.tap()
+        searchContactsTextField.typeText("anna")
+        
+        // Make sure that only one contact is returned
+        XCTAssertEqual(app.tables.cells.count, 1)
+  
+        // Tap done to restart the search
+        let doneButton = app.buttons["DONE"]
+        doneButton.tap()
+
+        // Search for dani
+        searchContactsTextField.tap()
+        searchContactsTextField.typeText("dani")
+        
+        // Confirm that 3 contacts were returned
+        XCTAssertEqual(app.tables.cells.count, 3)
+        doneButton.tap()
+        
+        // Pop back to ServiceSelector
+        app.navigationBars.buttons["Back"].tap()
     }
 }
