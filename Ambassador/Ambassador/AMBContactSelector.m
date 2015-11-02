@@ -24,7 +24,7 @@
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                AMBSelectedCellDelegate, UITextFieldDelegate,
-                               UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate>
+                               UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate, AMBUtilitiesDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *contactsTable;
 
 @property (weak, nonatomic) IBOutlet UIView *composeMessageView;
@@ -535,7 +535,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             } else {
                 DLog(@"BulkShare SMS Success with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
                 [self sendShareTrack:validatedNumbers];
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:YES];
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
                 [AMBUtilities sharedInstance].delegate = self;
             }
         }];
@@ -559,7 +559,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             } else {
                 DLog(@"BulkShare Email Success with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
                 [self sendShareTrack:validatedContacts];
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:YES];
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
                 [AMBUtilities sharedInstance].delegate = self;
             }
         }];
@@ -712,6 +712,13 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     [errorAlert show];
     
     DLog(@"Error loading contacts - %@", message);
+}
+
+
+#pragma mark - AMBUtitlites Delegate
+
+- (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
