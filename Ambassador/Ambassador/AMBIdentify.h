@@ -12,5 +12,4 @@
 @interface AMBIdentify : NSObject
 @property NSMutableDictionary *fp;
 - (void)identifyWithURL:(NSString *)url completion:(void(^)(NSMutableDictionary *resp, NSError *e))completion;
-+ (NSString *)identifyUrlWithUniversalID:(NSString *)uid;
 @end

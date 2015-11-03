@@ -32,4 +32,16 @@
     return frameworkBundle;
 }
 
++ (NSString *)identifyUrlWithUniversalID:(NSString *)uid {
+    NSString *baseUrl;
+    
+#if AMBPRODUCTION
+    baseUrl = @"https://mbsy.co/universal/landing/?url=ambassador:ios/";
+#else
+    baseUrl = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/";
+#endif
+    
+    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"&universal_id=%@", uid]];
+}
+
 @end
