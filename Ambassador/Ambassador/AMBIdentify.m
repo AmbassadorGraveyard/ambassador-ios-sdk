@@ -11,43 +11,33 @@
 #import <UIKit/UIKit.h>
 #import <SafariServices/SafariServices.h>
 #import "AMBErrors.h"
+#import <WebKit/WebKit.h>
 
-@interface AMBIdentify () <SFSafariViewControllerDelegate>
-@property UIWebView *webview;
+@interface AMBIdentify () <SFSafariViewControllerDelegate, WKScriptMessageHandler, WKNavigationDelegate>
+//@property UIWebView *webview;
 
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
-//@property WKWebView *webview;
+@property (nonatomic, strong) WKWebView *webview;
 @property (nonatomic, strong) SFSafariViewController * safariVC;
 @property (nonatomic, strong) NSString *url;
 @end
 
 @implementation AMBIdentify
-//
-//- (instancetype)initWithUniversalID:(NSString*)universalID {
-//    if (self = [super init]) {
-//        NSURL *identifyURL = [NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:universalID]];
-//        self.safariVC = [[SFSafariViewController alloc] init]
-//    }
-//}
 
-- (void)identifyWithUniversalID:(NSString*)universalID completion:(void(^)(NSMutableDictionary *returnDict, NSError *error))completion {
-    NSURL *identifyURL = [NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:universalID]];
-    self.safariVC = [[SFSafariViewController alloc] initWithURL:identifyURL];
+- (void)identifyWithRootController:(UIViewController*)vc universalID:(NSString*)universalID completion:(void(^)(NSMutableDictionary *returnDict, NSError *error))completion {
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://staging.mbsy.co/embed/v2/getcookie/Developers"]];
+    self.safariVC = [[SFSafariViewController alloc] initWithURL:request.URL];
+    [vc presentViewController:self.safariVC animated:NO completion:nil];
 }
 
-- (NSArray<UIActivity *> *)safariViewController:(SFSafariViewController *)controller activityItemsForURL:(NSURL *)URL title:(NSString *)title {
-    NSString *urlRequestString = [URL absoluteString];
-    NSArray *urlRequestComponents = [urlRequestString componentsSeparatedByString:@":"];
-    
-    // Check if the URL is signal URL used in Augur javascript callback
-    if (urlRequestComponents.count > 1 &&
-        [(NSString *)urlRequestComponents[0] isEqualToString:@"ambassador"]) {
-        [self extractVariable:@"augur.json"];
-    }
-    
-    
-    return nil;
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [self.webview evaluateJavaScript:@"window.mbsy_short_code" completionHandler:^(NSString * javascript, NSError * _Nullable error) {
+        NSString *shortCodeString =  javascript;
+        NSLog(@"%@", shortCodeString);
+    }];
 }
+
 
 //- (instancetype)init {
 //    if (self = [super init]) {
@@ -70,19 +60,19 @@
 //    [self identifyWithURL:self.url completion:self.completion];
 //}
 //
-- (void)extractVariable:(NSString *)var {
-    NSString *js = [NSString stringWithFormat:@"JSON.stringify(%@)", var];
-    NSString *dataStr = [self.webview stringByEvaluatingJavaScriptFromString:js];
+//- (void)extractVariable:(NSString *)var {
+//    NSString *js = [NSString stringWithFormat:@"JSON.stringify(%@)", var];
+//    NSString *dataStr = [self.webview stringByEvaluatingJavaScriptFromString:js];
 //    if (dataStr == nil) {
 //        [self triggerCompletion:nil error:AMBNOVALError()];
 //        return;
 //    }
-    NSData *dataRaw = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *e = nil;
-    NSMutableDictionary *returnVal = [NSJSONSerialization JSONObjectWithData:dataRaw options:0 error:&e];
-    self.fp = returnVal;
+//    NSData *dataRaw = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
+//    NSError *e = nil;
+//    NSMutableDictionary *returnVal = [NSJSONSerialization JSONObjectWithData:dataRaw options:0 error:&e];
+//    self.fp = returnVal;
 //    [self triggerCompletion:returnVal error:e];
-}
+//}
 //
 //
 //
