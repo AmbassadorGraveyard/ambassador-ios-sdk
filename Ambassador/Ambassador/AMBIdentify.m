@@ -25,18 +25,18 @@
 @implementation AMBIdentify
 
 - (void)identifyWithRootController:(UIViewController*)vc universalID:(NSString*)universalID completion:(void(^)(NSMutableDictionary *returnDict, NSError *error))completion {
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://staging.mbsy.co/embed/v2/getcookie/Developers"]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://preview.augur.io/ci"]];
     self.safariVC = [[SFSafariViewController alloc] initWithURL:request.URL];
     [vc presentViewController:self.safariVC animated:NO completion:nil];
 }
 
-
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    [self.webview evaluateJavaScript:@"window.mbsy_short_code" completionHandler:^(NSString * javascript, NSError * _Nullable error) {
-        NSString *shortCodeString =  javascript;
-        NSLog(@"%@", shortCodeString);
-    }];
-}
+//
+//- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+//    [self.webview evaluateJavaScript:@"window.mbsy_short_code" completionHandler:^(NSString * javascript, NSError * _Nullable error) {
+//        NSString *shortCodeString =  javascript;
+//        NSLog(@"%@", shortCodeString);
+//    }];
+//}
 
 
 //- (instancetype)init {
