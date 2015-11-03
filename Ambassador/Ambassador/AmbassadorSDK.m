@@ -89,15 +89,15 @@ static AMBServiceSelector *raf;
 
 #pragma mark - runWith
 
-+ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID {
-    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:nil completion:nil];
++ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID viewController:(UIViewController*)viewController {
+    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID viewController:viewController convertOnInstall:nil completion:nil];
 }
 
 + (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
-    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:information completion:completion];
+//    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:information completion:completion];
 }
 
-- (void)runWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
+- (void)runWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID viewController:(UIViewController*)controller convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
     universalToken = [NSString stringWithFormat:@"SDKToken %@", universalToken];
     self.universalID = universalID;
     self.universalToken = universalToken;
@@ -113,10 +113,14 @@ static AMBServiceSelector *raf;
         }
     }
 
-    [self.identify identifyWithURL:[AMBIdentify identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
-        // TODO: save id
-        self.identify.fp  = resp;
-        DLog(@"Received identify fingerprint");
+//    [self.identify identifyWithURL:[AMBIdentify identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
+//        // TODO: save id
+//        self.identify.fp  = resp;
+//        DLog(@"Received identify fingerprint");
+//    }];
+    
+    [self.identify identifyWithRootController:controller universalID:universalID completion:^(NSMutableDictionary *returnDict, NSError *error) {
+        nil;
     }];
   
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]; // Set launch flag in User Deafaults
