@@ -14,4 +14,6 @@
 + (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type tintable:(BOOL)tintable;
 + (NSBundle*)AMBframeworkBundle;
 
++ (NSString *)identifyUrlWithUniversalID:(NSString *)uid;
+
 @end
