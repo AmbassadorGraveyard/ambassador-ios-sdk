@@ -161,16 +161,18 @@ static AMBServiceSelector *raf;
     [self.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
         NSMutableDictionary *json = (NSMutableDictionary *)ev.data;
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
-        if (json[@"url"]) {
-            [user fillWithUrl:json[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
+        if ([[AmbassadorSDK sharedInstance].pusherChannelObj.requestId isEqualToString:[json valueForKey:@"request_id"]]) {
+            if (json[@"url"]) {
+                [user fillWithUrl:json[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
+                    [AmbassadorSDK sharedInstance].user = user;
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
+                    // TODO: Notification Center
+                }];
+            } else {
+                [user fillWithDictionary:json];
                 [AmbassadorSDK sharedInstance].user = user;
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
-                // TODO: Notification Center
-            }];
-        } else {
-            [user fillWithDictionary:json];
-            [AmbassadorSDK sharedInstance].user = user;
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
+            }
         }
     }];
 }
