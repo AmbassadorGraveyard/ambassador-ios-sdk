@@ -7,6 +7,9 @@
 //
 
 #import "AMBValues.h"
+#import "AMBPusherChannelObject.h"
+#import "AMBUtilities.h"
+#import "AmbassadorSDK_Internal.h"
 
 @implementation AMBValues
 
@@ -33,21 +36,26 @@
 }
 
 + (NSString *)identifyUrlWithUniversalID:(NSString *)uid {
+    AMBPusherChannelObject *networkUrlObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
+    NSString *requestID = [AMBUtilities createRequestID];
+    [AmbassadorSDK sharedInstance].pusherChannelObj.requestId = requestID;
+    
     NSString *baseUrl;
     
 #if AMBPRODUCTION
-    baseUrl = @"https://mbsy.co/universal/landing/?url=ambassador:ios/";
+    baseUrl = @"https://mbsy.co/universal/landing?url=ambassador:ios";
 #else
-    baseUrl = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/";
+    baseUrl = @"https://staging.mbsy.co/universal/landing?url=ambassador:ios";
 #endif
     
-    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"&universal_id=%@", uid]];
+    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", uid, networkUrlObject.sessionId, requestID]];
 }
 
 + (NSUserDefaults*)ambUserDefaults {
     NSUserDefaults *ambDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AMBDEFAULTS"];
     return ambDefaults;
 }
+
 
 #pragma mark - Setter Methods
 
@@ -58,6 +66,7 @@
 + (void)setDeviceFingerPrintWithDictionary:(NSDictionary *)dictionary {
     [[AMBValues ambUserDefaults] setObject:dictionary forKey:@"device_fingerprint"];
 }
+
 
 #pragma mark - Getter Methods
 

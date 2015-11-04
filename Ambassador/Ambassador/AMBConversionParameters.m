@@ -41,7 +41,7 @@
         self.mbsy_event_data2 = @"";
         self.mbsy_event_data3 = @"";
         self.mbsy_is_approved = @1;
-        self.mbsy_short_code = @"";
+        self.mbsy_short_code = [AMBValues getMbsyCookieCode];
     }
     
     return self;

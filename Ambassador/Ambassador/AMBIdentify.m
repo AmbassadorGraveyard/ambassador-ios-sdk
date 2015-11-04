@@ -50,12 +50,13 @@
 }
 
 - (void)performIdentifyForiOS9:(UIViewController*)vc {
-    AMBPusherChannelObject *networkUrlObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
-    NSString *requestID = [AMBUtilities createRequestID];
-    [AmbassadorSDK sharedInstance].pusherChannelObj.requestId = requestID;
-    NSString *endPointString = [NSString stringWithFormat:@"https://dl.dropboxusercontent.com/u/5192417/ambassador-snippet/identify-test.html?mbsy_client_session_id=%@&mbsy_client_request_id=%@", networkUrlObject.sessionId, requestID];
-    self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:endPointString]];
-    [vc presentViewController:self.safariVC animated:NO completion:nil];
+//    AMBPusherChannelObject *networkUrlObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
+//    NSString *requestID = [AMBUtilities createRequestID];
+//    [AmbassadorSDK sharedInstance].pusherChannelObj.requestId = requestID;
+//    NSString *endPointString = [NSString stringWithFormat:@"https://dl.dropboxusercontent.com/u/5192417/ambassador-snippet/identify-test.html?mbsy_client_session_id=%@&mbsy_client_request_id=%@", networkUrlObject.sessionId, requestID];
+    self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]]];
+    self.safariVC.delegate = self;
+    [vc presentViewController:self.safariVC animated:YES completion:nil];
 }
 
 
@@ -81,6 +82,10 @@
     NSMutableDictionary *returnVal = [NSJSONSerialization JSONObjectWithData:dataRaw options:0 error:&e];
     self.fp = returnVal;
     [self triggerCompletion:returnVal error:e];
+}
+
+- (void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
+    [self.safariVC dismissViewControllerAnimated:YES completion:nil];
 }
 
 
