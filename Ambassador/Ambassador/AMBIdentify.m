@@ -30,7 +30,13 @@
 //    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://preview.augur.io/ci"]];
 //    self.safariVC = [[SFSafariViewController alloc] initWithURL:request.URL];
 //    [vc presentViewController:self.safariVC animated:NO completion:nil];
-    [self performIdentifyForiOS9:vc];
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
+        [self performIdentifyForiOS9:vc];
+    } else {
+        [self identifyWithURL:[AMBValues identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
+            [AMBValues setDeviceFingerPrintWithDictionary:resp];
+        }];
+    }
 }
 
 - (instancetype)init {

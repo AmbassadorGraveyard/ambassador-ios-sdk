@@ -10,6 +10,12 @@
 #import "AMBConstants.h"
 #import "AMBUtilities.h"
 
+@interface AMBConversionParameters ()
+
+@property (nonatomic, strong) NSString * mbsy_short_code;
+
+@end
+
 @implementation AMBConversionParameters
 
 #pragma mark - Initialization
@@ -35,6 +41,7 @@
         self.mbsy_event_data2 = @"";
         self.mbsy_event_data3 = @"";
         self.mbsy_is_approved = @1;
+        self.mbsy_short_code = @"";
     }
     
     return self;
@@ -45,7 +52,7 @@
 #pragma mark - Formatted printing
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ |",
+    return [NSString stringWithFormat:@"%@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ | %@ |",
             self.mbsy_campaign,
             self.mbsy_email,
             self.mbsy_first_name,
@@ -63,9 +70,14 @@
             self.mbsy_event_data1,
             self.mbsy_event_data2,
             self.mbsy_event_data3,
-            self.mbsy_is_approved];
+            self.mbsy_is_approved,
+            self.mbsy_short_code];
 }
 
+
+- (NSString*)getShortCode {
+    return self.mbsy_short_code;
+}
 
 
 #pragma mark - Validation
@@ -162,6 +174,11 @@
     
     if (!self.mbsy_is_approved) {
         self.mbsy_is_approved = @1;
+        nonNil = NO;
+    }
+    
+    if (!self.mbsy_short_code) {
+        self.mbsy_short_code = @"";
         nonNil = NO;
     }
     
