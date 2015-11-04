@@ -168,6 +168,9 @@ static AMBServiceSelector *raf;
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
                     // TODO: Notification Center
                 }];
+            } else if (json[@"mbsy_cookie_code"]) {
+                [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
+                [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
             } else {
                 [user fillWithDictionary:json];
                 [AmbassadorSDK sharedInstance].user = user;
