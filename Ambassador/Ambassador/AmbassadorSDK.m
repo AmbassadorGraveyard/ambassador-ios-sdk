@@ -119,9 +119,7 @@ static AMBServiceSelector *raf;
 //        DLog(@"Received identify fingerprint");
 //    }];
     
-    [self.identify identifyWithRootController:controller universalID:universalID completion:^(NSMutableDictionary *returnDict, NSError *error) {
-        nil;
-    }];
+    
   
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]; // Set launch flag in User Deafaults
 }
@@ -179,19 +177,19 @@ static AMBServiceSelector *raf;
 
 #pragma mark - Identify
 
-+ (void)identifyWithEmail:(NSString *)email {
-    [[AmbassadorSDK sharedInstance] identifyWithEmail:email];
++ (void)identifyWithEmail:(NSString *)email controller:(UIViewController*)controller {
+    [[AmbassadorSDK sharedInstance] identifyWithEmail:email controller:controller completion:nil];
 }
 
-- (void)identifyWithEmail:(NSString *)email {
-    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:nil];
-}
+//- (void)identifyWithEmail:(NSString *)email {
+//    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:nil];
+//}
 
-+ (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
-    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:c];
-}
+//+ (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
+//    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:c];
+//}
 
-- (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
+- (void)identifyWithEmail:(NSString *)email controller:(UIViewController*)controller completion:(void(^)(NSError *))c {
     self.email = email;
     __weak AmbassadorSDK *weakSelf = self;
     if (!self.pusherManager) {
@@ -202,6 +200,10 @@ static AMBServiceSelector *raf;
         if (![AmbassadorSDK sharedInstance].hasBeenBoundToChannel) {
             [self bindToIdentifyActionUniversalToken:weakSelf.universalToken universalID:weakSelf.universalID];
         }
+        
+        [self.identify identifyWithRootController:controller universalID:self.universalID completion:^(NSMutableDictionary *returnDict, NSError *error) {
+            nil;
+        }];
         
         if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
     }];

@@ -58,9 +58,9 @@
 //        }
 //    }];
     
-//    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***" viewController:self.window.rootViewController];
+    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***" viewController:self.window.rootViewController];
     
-    [AmbassadorSDK identifyWithEmail:@"test1703@getambassador.com"];
+    [AmbassadorSDK identifyWithEmail:@"test1703@getambassador.com" controller:self.window.rootViewController];
     
 //    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
 //        if (error) {
