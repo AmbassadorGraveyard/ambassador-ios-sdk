@@ -44,4 +44,29 @@
     return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"&universal_id=%@", uid]];
 }
 
++ (NSUserDefaults*)ambUserDefaults {
+    NSUserDefaults *ambDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AMBDEFAULTS"];
+    return ambDefaults;
+}
+
+#pragma mark - Setter Methods
+
++ (void)setMbsyCookieWithCode:(NSString*)cookieCode {
+    [[AMBValues ambUserDefaults] setValue:cookieCode forKey:@"mbsy_cookie_code"];
+}
+
++ (void)setDeviceFingerPrintWithDictionary:(NSDictionary *)dictionary {
+    [[AMBValues ambUserDefaults] setObject:dictionary forKey:@"device_fingerprint"];
+}
+
+#pragma mark - Getter Methods
+
++ (NSString*)getMbsyCookieCode {
+    return [[AMBValues ambUserDefaults] valueForKey:@"mbsy_cookie_code"];
+}
+
++ (NSDictionary *)getDeviceFingerPrint {
+    return [[AMBValues ambUserDefaults] valueForKey:@"device_fingerprint"];
+}
+
 @end

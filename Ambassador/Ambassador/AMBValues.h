@@ -13,7 +13,14 @@
 
 + (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type tintable:(BOOL)tintable;
 + (NSBundle*)AMBframeworkBundle;
-
 + (NSString *)identifyUrlWithUniversalID:(NSString *)uid;
+
+// Default setters
++ (void)setMbsyCookieWithCode:(NSString*)cookieCode;
++ (void)setDeviceFingerPrintWithDictionary:(NSDictionary*)dictionary;
+
+// Default getters
++ (NSString*)getMbsyCookieCode;
++ (NSDictionary*)getDeviceFingerPrint;
 
 @end
