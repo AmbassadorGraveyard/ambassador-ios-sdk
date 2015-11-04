@@ -16,7 +16,6 @@
     } else {
         return [UIImage imageWithContentsOfFile:[[AMBValues AMBframeworkBundle] pathForResource:name ofType:type]];
     }
-    
 }
 
 + (NSBundle*)AMBframeworkBundle {

@@ -1,5 +1,5 @@
 //
-//  AMBServiceSelectorUnitTests.m
+//  AMBValues.m
 //  Ambassador
 //
 //  Created by Jake Dunahee on 11/3/15.
@@ -7,15 +7,13 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "AMBServiceSelector.h"
+#import "AMBValues.h"
 
-@interface AMBServiceSelectorUnitTests : XCTestCase
-
-@property (nonatomic, strong) AMBServiceSelector * serviceSelector;
+@interface AMBValuesUnitTests : XCTestCase
 
 @end
 
-@implementation AMBServiceSelectorUnitTests
+@implementation AMBValuesUnitTests
 
 - (void)setUp {
     [super setUp];
@@ -39,8 +37,16 @@
     }];
 }
 
-- (void)testSendShareTrack {
+- (void)testImageFromBundle {
+    // ARRANGE
+    NSString *imageName = @"spinner";
+    NSString *imageType = @"png";
+    BOOL tintable = YES;
     
+    // ACT
+    UIImage *testImage = [AMBValues imageFromBundleWithName:imageName type:imageType tintable:tintable];
+    
+    // ASSERT
 }
 
 @end
