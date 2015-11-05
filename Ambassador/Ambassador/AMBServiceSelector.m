@@ -95,7 +95,11 @@ int contactServiceType;
 #pragma mark - UI Functions
 
 - (void)confirmCopyAnimation {
-    if (!self.lblCopied) { self.lblCopied = [[UILabel alloc] initWithFrame:self.btnCopy.frame]; }
+    if (!self.lblCopied) {
+        self.lblCopied = [[UILabel alloc] initWithFrame:self.btnCopy.frame];
+        self.lblCopied.accessibilityIdentifier = @"lblCopied";
+    }
+    
     self.lblCopied.alpha = 0;
     self.lblCopied.text = @"Copied!";
     self.lblCopied.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
@@ -204,7 +208,7 @@ int contactServiceType;
     vc.completionHandler = ^(SLComposeViewControllerResult result) {
         if (result == SLComposeViewControllerResultDone) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your linke was shared successfully!" withUniqueID:@"stockShare" forViewController:self shouldDismissVCImmediately:NO];
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was shared successfully!" withUniqueID:@"stockShare" forViewController:self shouldDismissVCImmediately:NO];
             });
             
             [self sendShareTrackForServiceType:AMBSocialServiceTypeFacebook completion:^(NSData *d, NSURLResponse *r, NSError *e) {
@@ -340,6 +344,7 @@ int contactServiceType;
 
 
 #pragma mark - ContactLoaderDelegate
+
 - (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
     [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:@"contactsFailure" forViewController:self shouldDismissVCImmediately:NO];
 }
@@ -422,7 +427,7 @@ int contactServiceType;
 #pragma mark - ShareServiceDelegate
 
 - (void)networkError:(NSString *)title message:(NSString *)message {
-    [[AMBUtilities sharedInstance] presentAlertWithSuccess:@NO message:message withUniqueID:@"linkedShareFail" forViewController:self shouldDismissVCImmediately:NO];
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:@"linkedShareFail" forViewController:self shouldDismissVCImmediately:NO];
 }
 
 - (void)userDidPostFromService:(NSString *)service {

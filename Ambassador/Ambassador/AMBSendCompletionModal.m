@@ -50,9 +50,9 @@
 - (void)setUpIcon
 {
     DLog();
-    NSString *imageName = self.successFlag? @"successIcon" : @"failIcon";
+    NSString *imageName = self.successFlag ? @"successIcon" : @"failIcon";
     DLog(@"%@", imageName);
-    self.icon.image = AMBimageFromBundleNamed(imageName, @"png");
+    self.icon.image = [AMBValues imageFromBundleWithName:imageName type:@"png" tintable:NO];
 }
 
 - (void)setUpButton
