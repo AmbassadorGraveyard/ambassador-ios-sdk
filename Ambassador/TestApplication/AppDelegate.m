@@ -58,7 +58,7 @@
 //        }
 //    }];
     
-    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***" viewController:self.window.rootViewController];
+    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"];
     
     [AmbassadorSDK identifyWithEmail:@"test1703@getambassador.com" controller:self.window.rootViewController];
     

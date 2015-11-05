@@ -26,7 +26,7 @@ NSString * const AMB_CONVERSION_URL = @"https://api.getambassador.com/universal/
 NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/";
 #endif
 NSString * const AMB_CONVERSION_INSERT_QUERY = @"INSERT INTO Conversions VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions (ID INTEGER PRIMARY KEY AUTOINCREMENT, mbsy_campaign INTEGER, mbsy_email TEXT, mbsy_first_name TEXT, mbsy_last_name TEXT, mbsy_email_new_ambassador INTEGER, mbsy_uid TEXT, mbsy_custom1 TEXT, mbsy_custom2 TEXT, mbsy_custom3 TEXT, mbsy_auto_create INTEGER, mbsy_revenue REAL, mbsy_deactivate_new_ambassador INTEGER, mbsy_transaction_uid TEXT, mbsy_add_to_group_id INTEGER, mbsy_event_data1 TEXT, mbsy_event_data2 TEXT, mbsy_event_data3 TEXT, mbsy_is_approved INTEGER, mbsy_short_code TEXT, insights_data BLOB)";
+NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions (ID INTEGER PRIMARY KEY AUTOINCREMENT, mbsy_campaign INTEGER, mbsy_email TEXT, mbsy_first_name TEXT, mbsy_last_name TEXT, mbsy_email_new_ambassador INTEGER, mbsy_uid TEXT, mbsy_custom1 TEXT, mbsy_custom2 TEXT, mbsy_custom3 TEXT, mbsy_auto_create INTEGER, mbsy_revenue REAL, mbsy_deactivate_new_ambassador INTEGER, mbsy_transaction_uid TEXT, mbsy_add_to_group_id INTEGER, mbsy_event_data1 TEXT, mbsy_event_data2 TEXT, mbsy_event_data3 TEXT, mbsy_is_approved INTEGER, insights_data BLOB)";
 
 NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUMN mbsy_short_code TEXT";
 #pragma mark -
@@ -126,7 +126,6 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
               parameters.mbsy_event_data2,
               parameters.mbsy_event_data3,
               parameters.mbsy_is_approved,
-              [parameters getShortCode],
               NULL];
          }];
     }
@@ -145,8 +144,8 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
     NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint];
 //    NSDictionary *userDefaultsInsights = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
     
-    // Checks if there is a short code or a device ID.  If there are neither then we wont send the conversion
-    if (![AMBValues getMbsyCookieCode] && !userDefaultsIdentify[@"device"][@"ID"]) { return; }
+    //Check if insights and identify data exist to send. Else don't send
+    if (![AMBValues getMbsyCookieCode] && [[AMBValues getMbsyCookieCode] isEqualToString:@""] && !userDefaultsIdentify[@"device"][@"ID"]) { return; }
     
     [self.databaseQueue inDatabase:^(AMBFMDatabase *db)
     {
@@ -176,15 +175,8 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
                     @"mbsy_event_data2" : [resultSet stringForColumn:@"mbsy_event_data2"],
                     @"mbsy_event_data3" : [resultSet stringForColumn:@"mbsy_event_data3"],
                     @"mbsy_is_approved" : [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_is_approved"]],
-                    @"mbsy_short_code"  : ([resultSet stringForColumn:@"mbsy_short_code"]) ? [resultSet stringForColumn:@"mbsy_short_code"] : [AMBValues getMbsyCookieCode]
+                    @"mbsy_short_code"  : [AMBValues getMbsyCookieCode]
                 }];
-            
-            //Remove 'status' key from insights before sending to the backend
-//            NSMutableDictionary *insightsDataCopy = [NSMutableDictionary dictionaryWithDictionary:userDefaultsInsights];
-//            if ([insightsDataCopy objectForKey:@"status"])
-//            {
-//                [insightsDataCopy removeObjectForKey:@"status"];
-//            }
 
             //Build the payload data to POST to the backend
             NSDictionary * consumer = @{

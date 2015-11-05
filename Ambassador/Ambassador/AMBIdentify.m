@@ -22,13 +22,16 @@
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
 @property (nonatomic, strong) SFSafariViewController * safariVC;
 @property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) NSTimer * identifyTimer;
+
 @end
 
 @implementation AMBIdentify
 
-- (void)identifyWithRootController:(UIViewController*)vc universalID:(NSString*)universalID completion:(void(^)(NSMutableDictionary *returnDict, NSError *error))completion {
+- (void)identifyWithUniversalID:(NSString*)universalID completion:(void(^)(NSMutableDictionary *returnDict, NSError *error))completion {
     if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
-        [self performIdentifyForiOS9:vc];
+        [self performIdentifyForiOS9];
+        self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
     } else {
         [self identifyWithURL:[AMBValues identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
             [AMBValues setDeviceFingerPrintWithDictionary:resp];
@@ -46,11 +49,18 @@
     return self;
 }
 
-- (void)performIdentifyForiOS9:(UIViewController*)vc {
+- (void)performIdentifyForiOS9 {
     self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]]];
+    DLog(@"URL = %@", [AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]);
     [self.safariVC.view setHidden:YES];
     self.safariVC.delegate = self;
-    [vc presentViewController:self.safariVC animated:YES completion:nil];
+    
+    UIViewController *rootVC = [UIApplication sharedApplication].windows[0].rootViewController;
+    
+    if (![self.safariVC.view isDescendantOfView:rootVC.view]) {
+        [rootVC.view addSubview:self.safariVC.view];
+        [rootVC addChildViewController:self.safariVC];
+    }
 }
 
 
@@ -79,9 +89,10 @@
 }
 
 - (void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
-    [self.safariVC dismissViewControllerAnimated:YES completion:nil];
+    [self.safariVC.view removeFromSuperview];
+    [self.safariVC removeFromParentViewController];
+    [self.identifyTimer invalidate];
 }
-
 
 
 #pragma mark - UIWebViewDelegate

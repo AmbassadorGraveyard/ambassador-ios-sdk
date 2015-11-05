@@ -89,22 +89,22 @@ static AMBServiceSelector *raf;
 
 #pragma mark - runWith
 
-+ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID viewController:(UIViewController*)viewController {
-    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID viewController:viewController convertOnInstall:nil completion:nil];
++ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID {
+    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:nil completion:nil];
 }
 
 + (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
-//    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:information completion:completion];
+    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:information completion:completion];
 }
 
-- (void)runWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID viewController:(UIViewController*)controller convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
+- (void)runWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
     [AMBValues clearAmbUserDefaults];
     universalToken = [NSString stringWithFormat:@"SDKToken %@", universalToken];
     self.universalID = universalID;
     self.universalToken = universalToken;
     [[NSUserDefaults standardUserDefaults] setValue:universalID forKey:AMB_UNIVERSAL_ID_DEFAULTS_KEY];
     [[NSUserDefaults standardUserDefaults] setValue:universalToken forKey:AMB_UNIVERSAL_TOKEN_DEFAULTS_KEY];
-    self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES];
+    if (!self.conversionTimer.isValid) { self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES]; }
     self.conversion = [[AMBConversion alloc] initWithKey:universalToken];
 
     if (information) { // Check if this is the first time opening
@@ -113,14 +113,6 @@ static AMBServiceSelector *raf;
             [self registerConversion:information completion:completion];
         }
     }
-
-//    [self.identify identifyWithURL:[AMBIdentify identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
-//        // TODO: save id
-//        self.identify.fp  = resp;
-//        DLog(@"Received identify fingerprint");
-//    }];
-    
-    
   
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]; // Set launch flag in User Deafaults
 }
@@ -162,21 +154,19 @@ static AMBServiceSelector *raf;
     [self.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
         NSMutableDictionary *json = (NSMutableDictionary *)ev.data;
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
-        if ([[AmbassadorSDK sharedInstance].pusherChannelObj.requestId isEqualToString:[json valueForKey:@"request_id"]]) {
-            if (json[@"url"]) {
-                [user fillWithUrl:json[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
-                    [AmbassadorSDK sharedInstance].user = user;
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
-                    // TODO: Notification Center
-                }];
-            } else if (json[@"mbsy_cookie_code"]) {
-                [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
-                [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
-            } else {
-                [user fillWithDictionary:json];
+        if (json[@"url"]) {
+            [user fillWithUrl:json[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
                 [AmbassadorSDK sharedInstance].user = user;
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
-            }
+                // TODO: Notification Center
+            }];
+        } else if (json[@"mbsy_cookie_code"]) {
+            [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
+            [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
+        } else {
+            [user fillWithDictionary:json];
+            [AmbassadorSDK sharedInstance].user = user;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
         }
     }];
 }
@@ -184,7 +174,7 @@ static AMBServiceSelector *raf;
 #pragma mark - Identify
 
 + (void)identifyWithEmail:(NSString *)email controller:(UIViewController*)controller {
-    [[AmbassadorSDK sharedInstance] identifyWithEmail:email controller:controller completion:nil];
+    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:nil];
 }
 
 //- (void)identifyWithEmail:(NSString *)email {
@@ -195,7 +185,7 @@ static AMBServiceSelector *raf;
 //    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:c];
 //}
 
-- (void)identifyWithEmail:(NSString *)email controller:(UIViewController*)controller completion:(void(^)(NSError *))c {
+- (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
     self.email = email;
     __weak AmbassadorSDK *weakSelf = self;
     if (!self.pusherManager) {
@@ -207,7 +197,7 @@ static AMBServiceSelector *raf;
             [self bindToIdentifyActionUniversalToken:weakSelf.universalToken universalID:weakSelf.universalID];
         }
         
-        [self.identify identifyWithRootController:controller universalID:self.universalID completion:^(NSMutableDictionary *returnDict, NSError *error) {
+        [self.identify identifyWithUniversalID:self.universalID completion:^(NSMutableDictionary *returnDict, NSError *error) {
             nil;
         }];
         
