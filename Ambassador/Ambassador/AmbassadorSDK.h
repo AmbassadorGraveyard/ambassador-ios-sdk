@@ -30,8 +30,6 @@
  */
 + (void)runWithUniversalToken:(NSString *)UniversalToken universalID:(NSString *)universalID;
 
-+ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID viewController:(UIViewController*)viewController;
-
 /**
  Runs an 'Ambassador' object with the specified API key and parameters for registering a conversion on launch
  

@@ -13,6 +13,9 @@
 
 @implementation AMBValues
 
+
+#pragma mark - Images
+
 + (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type tintable:(BOOL)tintable {
     if (tintable) {
         return [[UIImage imageWithContentsOfFile:[[AMBValues AMBframeworkBundle] pathForResource:name ofType:type]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -35,6 +38,9 @@
     return frameworkBundle;
 }
 
+
+#pragma mark - URLs
+
 + (NSString *)identifyUrlWithUniversalID:(NSString *)uid {
     AMBPusherChannelObject *networkUrlObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
     NSString *requestID = [AMBUtilities createRequestID];
@@ -42,14 +48,17 @@
     
     NSString *baseUrl;
     
-#if AMBPRODUCTION
-    baseUrl = @"https://mbsy.co/universal/landing?url=ambassador:ios";
-#else
-    baseUrl = @"https://staging.mbsy.co/universal/landing?url=ambassador:ios";
-#endif
+    #if AMBPRODUCTION
+        baseUrl = @"https://mbsy.co/universal/landing?url=ambassador:ios";
+    #else
+        baseUrl = @"https://staging.mbsy.co/universal/landing?url=ambassador:ios";
+    #endif
     
     return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", uid, networkUrlObject.sessionId, requestID]];
 }
+
+
+#pragma mark - AMB Defaults
 
 + (NSUserDefaults*)ambUserDefaults {
     NSUserDefaults *ambDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AMBDEFAULTS"];
@@ -57,7 +66,7 @@
 }
 
 + (void)clearAmbUserDefaults {
-    [[AMBValues ambUserDefaults] setNilValueForKey:@"mbsy_cookie_code"];
+    [[AMBValues ambUserDefaults] setValue:nil forKey:@"mbsy_cookie_code"];
 }
 
 
@@ -75,7 +84,7 @@
 #pragma mark - Getter Methods
 
 + (NSString*)getMbsyCookieCode {
-    return [[AMBValues ambUserDefaults] valueForKey:@"mbsy_cookie_code"];
+    return ([[AMBValues ambUserDefaults] valueForKey:@"mbsy_cookie_code"]) ? [[AMBValues ambUserDefaults] valueForKey:@"mbsy_cookie_code"] : @"";
 }
 
 + (NSDictionary *)getDeviceFingerPrint {

@@ -58,7 +58,7 @@
 //        }
 //    }];
     
-    [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32" viewController:self.window.rootViewController];
+    [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32"];
     
     [AmbassadorSDK identifyWithEmail:@"test1703@getambassador.com" controller:self.window.rootViewController];
     
