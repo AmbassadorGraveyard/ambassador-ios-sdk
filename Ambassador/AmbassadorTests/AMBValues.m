@@ -70,18 +70,40 @@
 - (void)testIdentifyURL {
     // ARRANGE
     NSString *mockSessionID = @"thisisafakechannelabcdefghijklmnop";
-    NSString *mockRequestID = @"546135435.4564";
     NSString *mockUniversalID = @"abfd1c89-4379-44e2-8361-ee7b87332e32";
-    
-    [AmbassadorSDK sharedInstance].pusherChannelObj.requestId = mockRequestID;
+    NSString *mockRequestID;
+    NSString *mockDevURL;
     [AmbassadorSDK sharedInstance].pusherChannelObj.sessionId = mockSessionID;
-    
-    NSString *mockDevURL = 
     
     // ACT
     NSString *identifyURL = [AMBValues identifyUrlWithUniversalID:mockUniversalID];
+    mockRequestID = [AmbassadorSDK sharedInstance].pusherChannelObj.requestId;
+    mockDevURL = [NSString stringWithFormat:@"https://staging.mbsy.co/universal/landing?url=ambassador:ios&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", mockUniversalID, mockSessionID, mockRequestID];
     
-    //ASSERT
+    // ASSERT
+    XCTAssert([mockDevURL isEqualToString:identifyURL], @"Expect %@ to equal %@", mockDevURL, identifyURL);
 }
+
+- (void)testSetAndGetMbsyCookie {
+    // ARRANGE
+    NSString *mockSuiteName = @"AMBDEFAULTS";
+    NSString *mockSaveKey = @"mbsy_cookie_code";
+    NSString *mockValue = @"testValue";
+    NSUserDefaults *mockDefaults = [[NSUserDefaults alloc] initWithSuiteName:mockSuiteName];
+    
+    NSString *mockReturnValue;
+    NSString *realReturnValue;
+    
+    // ACT
+    [mockDefaults setValue:mockValue forKey:mockSaveKey];
+    [AMBValues setMbsyCookieWithCode:mockValue];
+    
+    mockReturnValue = [mockDefaults valueForKey:mockSaveKey];
+    realReturnValue = [AMBValues getMbsyCookieCode];
+    
+    // ASSERT
+    XCTAssertEqual(mockReturnValue, realReturnValue);
+}
+
 
 @end
