@@ -33,6 +33,7 @@
         [self performIdentifyForiOS9];
         self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
     } else {
+        DLog(@"Performing Identify with UIWebView for iOS 8");
         [self identifyWithURL:[AMBValues identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
             [AMBValues setDeviceFingerPrintWithDictionary:resp];
         }];
@@ -51,7 +52,7 @@
 
 - (void)performIdentifyForiOS9 {
     self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]]];
-    DLog(@"URL = %@", [AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]);
+    DLog(@"Performing Identify with SAFARI VC for iOS 9");
     [self.safariVC.view setHidden:YES];
     self.safariVC.delegate = self;
     
