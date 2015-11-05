@@ -8,6 +8,8 @@
 
 #import <XCTest/XCTest.h>
 #import "AMBValues.h"
+#import "AMBMockObjects.h"
+#import "AmbassadorSDK_Internal.h"
 
 @interface AMBValuesUnitTests : XCTestCase
 
@@ -39,14 +41,47 @@
 
 - (void)testImageFromBundle {
     // ARRANGE
-    NSString *imageName = @"spinner";
-    NSString *imageType = @"png";
-    BOOL tintable = YES;
+//    NSString *imageName = @"spinner";
+//    NSString *imageType = @"png";
+//    BOOL tintable = YES;
+//    BOOL nonTintable = NO;
+//    
+//    // ACT
+//    UIImage *tintedTestImage = [AMBValues imageFromBundleWithName:imageName type:imageType tintable:tintable];
+//    UIImage *untintedTestImage = [AMBValues imageFromBundleWithName:imageName type:imageType tintable:nonTintable];
+//    
+//    // ASSERT
+//    XCTAssert(tintedTestImage.renderingMode == UIImageRenderingModeAlwaysTemplate);
+//    XCTAssertEqual(untintedTestImage.renderingMode, UIImageRenderingModeAutomatic);
+}
+
+- (void)testAmbFrameworkBundle {
+    // ARRANGE
+//    NSString *mockBundlePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Ambassador.bundle"];
+//    
+//    // ACT
+//    NSBundle *frameworkBundle = [AMBValues AMBframeworkBundle];
+//    
+//    // ASSERT
+//    XCTAssertFalse([mockBundlePath isEqualToString:frameworkBundle.bundlePath]);
+//    XCTAssertTrue([mockBundlePath isEqualToString:frameworkBundle.bundlePath], @"Expected %@ is equal to %@", mockBundlePath, [AMBMockObject mockAmbBundle].resourceURL);
+}
+
+- (void)testIdentifyURL {
+    // ARRANGE
+    NSString *mockSessionID = @"thisisafakechannelabcdefghijklmnop";
+    NSString *mockRequestID = @"546135435.4564";
+    NSString *mockUniversalID = @"abfd1c89-4379-44e2-8361-ee7b87332e32";
+    
+    [AmbassadorSDK sharedInstance].pusherChannelObj.requestId = mockRequestID;
+    [AmbassadorSDK sharedInstance].pusherChannelObj.sessionId = mockSessionID;
+    
+    NSString *mockDevURL = 
     
     // ACT
-    UIImage *testImage = [AMBValues imageFromBundleWithName:imageName type:imageType tintable:tintable];
+    NSString *identifyURL = [AMBValues identifyUrlWithUniversalID:mockUniversalID];
     
-    // ASSERT
+    //ASSERT
 }
 
 @end

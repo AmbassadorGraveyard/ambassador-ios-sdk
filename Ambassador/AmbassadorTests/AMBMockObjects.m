@@ -8,8 +8,14 @@
 
 #import "AMBMockObjects.h"
 #import "AMBOptions.h"
+#import "AMBValues.h"
 
 @implementation AMBMockObject
+
++ (NSBundle*)mockAmbBundle {
+    return [AMBValues AMBframeworkBundle];
+}
+
 @end
 
 
@@ -36,6 +42,7 @@
     [returnVal setValue:urls forKey:@"urls"];
     return returnVal;
 }
+
 @end
 
 @implementation AMBMockShareTrackObject
