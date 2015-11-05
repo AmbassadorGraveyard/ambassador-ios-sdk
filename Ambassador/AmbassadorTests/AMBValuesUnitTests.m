@@ -7,6 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "AMBValues.h"
+#import "AmbassadorSDK_Internal.h"
 
 @interface AMBValuesUnitTests : XCTestCase
 
