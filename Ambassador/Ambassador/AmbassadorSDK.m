@@ -98,6 +98,7 @@ static AMBServiceSelector *raf;
 }
 
 - (void)runWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID viewController:(UIViewController*)controller convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
+    [AMBValues clearAmbUserDefaults];
     universalToken = [NSString stringWithFormat:@"SDKToken %@", universalToken];
     self.universalID = universalID;
     self.universalToken = universalToken;

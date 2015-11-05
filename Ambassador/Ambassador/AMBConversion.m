@@ -145,8 +145,8 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
     NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint];
 //    NSDictionary *userDefaultsInsights = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
     
-    //Check if insights and identify data exist to send. Else don't send
-    if (!userDefaultsIdentify) { return; }
+    // Checks if there is a short code or a device ID.  If there are neither then we wont send the conversion
+    if (![AMBValues getMbsyCookieCode] && !userDefaultsIdentify[@"device"][@"ID"]) { return; }
     
     [self.databaseQueue inDatabase:^(AMBFMDatabase *db)
     {

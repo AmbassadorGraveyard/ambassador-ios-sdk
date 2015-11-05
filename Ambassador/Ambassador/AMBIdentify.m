@@ -27,9 +27,6 @@
 @implementation AMBIdentify
 
 - (void)identifyWithRootController:(UIViewController*)vc universalID:(NSString*)universalID completion:(void(^)(NSMutableDictionary *returnDict, NSError *error))completion {
-//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://preview.augur.io/ci"]];
-//    self.safariVC = [[SFSafariViewController alloc] initWithURL:request.URL];
-//    [vc presentViewController:self.safariVC animated:NO completion:nil];
     if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
         [self performIdentifyForiOS9:vc];
     } else {
@@ -50,11 +47,8 @@
 }
 
 - (void)performIdentifyForiOS9:(UIViewController*)vc {
-//    AMBPusherChannelObject *networkUrlObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
-//    NSString *requestID = [AMBUtilities createRequestID];
-//    [AmbassadorSDK sharedInstance].pusherChannelObj.requestId = requestID;
-//    NSString *endPointString = [NSString stringWithFormat:@"https://dl.dropboxusercontent.com/u/5192417/ambassador-snippet/identify-test.html?mbsy_client_session_id=%@&mbsy_client_request_id=%@", networkUrlObject.sessionId, requestID];
     self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]]];
+    [self.safariVC.view setHidden:YES];
     self.safariVC.delegate = self;
     [vc presentViewController:self.safariVC animated:YES completion:nil];
 }

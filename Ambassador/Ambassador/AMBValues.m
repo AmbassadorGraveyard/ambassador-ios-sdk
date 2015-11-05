@@ -56,6 +56,10 @@
     return ambDefaults;
 }
 
++ (void)clearAmbUserDefaults {
+    [[AMBValues ambUserDefaults] setNilValueForKey:@"mbsy_cookie_code"];
+}
+
 
 #pragma mark - Setter Methods
 
