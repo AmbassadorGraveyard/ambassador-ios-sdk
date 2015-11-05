@@ -10,12 +10,14 @@
 #import "AMBNetworkObject.h"
 
 @interface AMBMockObject : NSObject
++ (NSBundle*)mockAmbBundle;
 @end
 
 
 
 @interface AMBMockUserObjects : AMBMockObject
 - (NSMutableDictionary *)mockUser;
+
 @end
 
 
@@ -38,5 +40,7 @@
 + (NSMutableArray *)recipientUsernameValid:(BOOL)valid;
 + (NSMutableArray *)recipientEmailValid:(BOOL)valid;
 + (NSString *)invalidSocialName;
+
+
 
 @end

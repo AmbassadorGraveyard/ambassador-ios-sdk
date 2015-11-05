@@ -24,6 +24,10 @@
     [super tearDown];
 }
 
+- (void)testRegisterConversion {
+    
+}
+
 //- (void)testDevSendIdentify {
 //    [AmbassadorSDK runWithUniversalToken:self.devToken universalID:self.devID];
 //    [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com"];
@@ -92,6 +96,5 @@
 //        }
 //    }];
 //}
-
 
 @end
