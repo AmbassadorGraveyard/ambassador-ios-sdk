@@ -451,7 +451,7 @@
 		EFB5E1CB1BE973760038EBE2 /* AMBValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValues.m; sourceTree = "<group>"; };
 		EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBPusherChannelObject.h; path = fmdb/AMBPusherChannelObject.h; sourceTree = "<group>"; };
 		EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMBPusherChannelObject.m; path = fmdb/AMBPusherChannelObject.m; sourceTree = "<group>"; };
-		EFDFA0C81BE148A5002FA3ED /* AMBValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBValues.h; sourceTree = "<group>"; };
+		EFDFA0C81BE148A5002FA3ED /* AMBValues.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = AMBValues.h; sourceTree = "<group>"; };
 		EFDFA0C91BE148A5002FA3ED /* AMBValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValues.m; sourceTree = "<group>"; };
 		EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AMBColorValues.h"; sourceTree = "<group>"; };
 		EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AMBColorValues.m"; sourceTree = "<group>"; };
