@@ -42,6 +42,8 @@
 - (void)showLoadingScreenForView:(UIView*)view {
     if (!self.loadingView) {
         self.loadingView = [[UIView alloc] initWithFrame:view.frame];
+        self.loadingView.isAccessibilityElement = YES;
+        self.loadingView.accessibilityIdentifier = @"LoadingView";
         UIVisualEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
         self.blurView = [[UIVisualEffectView alloc] initWithEffect:blur];
         self.blurView.frame = view.frame;
