@@ -177,9 +177,6 @@
 		EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */; settings = {ASSET_TAGS = (); }; };
 		EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */; settings = {ASSET_TAGS = (); }; };
 		EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */; settings = {ASSET_TAGS = (); }; };
-		EF24D1E51BECFAC000561476 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF24D1E41BECFAC000561476 /* libOCMock.a */; };
-		EF24D1E71BECFB1400561476 /* OCMock in Resources */ = {isa = PBXBuildFile; fileRef = EF24D1E61BECFB1400561476 /* OCMock */; settings = {ASSET_TAGS = (); }; };
-		EF24D1E91BED017400561476 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF24D1E81BED017400561476 /* libOCMock.a */; settings = {ASSET_TAGS = (); }; };
 		EF2EC3351BAC60CC003CAA43 /* AMBFMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = EF2EC3341BAC60CC003CAA43 /* AMBFMResultSet.h */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; settings = {ASSET_TAGS = (); }; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; settings = {ASSET_TAGS = (); }; };
@@ -446,8 +443,6 @@
 		EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManagerUnitTests.m; sourceTree = "<group>"; };
 		EF24D1E21BECFA7A00561476 /* iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iOS; path = ../../../../Desktop/iOS; sourceTree = "<group>"; };
 		EF24D1E41BECFAC000561476 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = ../../../../Desktop/iOS/libOCMock.a; sourceTree = "<group>"; };
-		EF24D1E61BECFB1400561476 /* OCMock */ = {isa = PBXFileReference; lastKnownFileType = folder; path = OCMock; sourceTree = "<group>"; };
-		EF24D1E81BED017400561476 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
 		EF2EC3341BAC60CC003CAA43 /* AMBFMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMResultSet.h; sourceTree = "<group>"; };
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
@@ -480,11 +475,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF24D1E51BECFAC000561476 /* libOCMock.a in Frameworks */,
 				EFCBFDBB1BDA859E0052DFB7 /* libsqlite3.tbd in Frameworks */,
 				DB6A246E1BD031A100CE3230 /* libicucore.tbd in Frameworks */,
 				DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */,
-				EF24D1E91BED017400561476 /* libOCMock.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,8 +648,6 @@
 		DB844D351BA75BB8003FD7A9 /* AmbassadorTests */ = {
 			isa = PBXGroup;
 			children = (
-				EF24D1E81BED017400561476 /* libOCMock.a */,
-				EF24D1E61BECFB1400561476 /* OCMock */,
 				DB844D361BA75BB8003FD7A9 /* Supporting Files */,
 			);
 			path = AmbassadorTests;
@@ -1108,7 +1099,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF24D1E71BECFB1400561476 /* OCMock in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

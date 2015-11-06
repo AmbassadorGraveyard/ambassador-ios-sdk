@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import "AMBValues.h"
 #import "AmbassadorSDK_Internal.h"
-#import <OCMock/OCMock.h>
 
 @interface AMBValuesUnitTests : XCTestCase
 
@@ -39,26 +38,22 @@
     }];
 }
 
-- (void)testImageFromBundle {
-    // ARRANGE
-//    id valuesMock = OCMClassMock([AMBValues class]);
+//- (void)testImageFromBundle {
+//    // ARRANGE
+//    id imageMock = OCMClassMock([UIImage class]);
 //    
 //    
-////    id mockBundle = OCMClassMock([NSBundle class]);
+//    id mockBundle = OCMClassMock([NSBundle class]);
 //    
-//    UIImage *tintedImage;
-//    UIImage *untintedImage;
-//    NSString *mockImageName = @"spinner";
-//    NSString *mockFileType = @"png";
-//    
-//    BOOL shouldTint = YES;
-//    BOOL shouldNotTint = NO;
+//    UIImage *expectedImage;
 //    
 //    // ACT
-//    OCMStub([valuesMock ])
+//    OCMStub([])
+//    OCMStub([AMBValues AMBframeworkBundle]).andForwardToRealObject;
+//    expectedImage = [AMBValues imageFromBundleWithName:@"spinner" type:@"png" tintable:NO];
 //    
-//     ASSERT
-//    XCTAssertTrue(tintedImage.renderingMode == UIImageRenderingModeAlwaysTemplate);
-}
+//    // ASSERT
+//    XCTAssertNotNil(expectedImage);
+//}
 
 @end
