@@ -1,21 +1,19 @@
 //
-//  AMBValuesUnitTests.m
+//  AMBThemeManagerUnitTests.m
 //  Ambassador
 //
-//  Created by Jake Dunahee on 11/5/15.
+//  Created by Jake Dunahee on 11/6/15.
 //  Copyright © 2015 Ambassador. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
-#import "AMBValues.h"
-#import "AmbassadorSDK_Internal.h"
-#import <OCMock/OCMock.h>
+#import "AMBThemeManager.h"
 
-@interface AMBValuesUnitTests : XCTestCase
+@interface AMBThemeManagerUnitTests : XCTestCase
 
 @end
 
-@implementation AMBValuesUnitTests
+@implementation AMBThemeManagerUnitTests
 
 - (void)setUp {
     [super setUp];
@@ -39,26 +37,8 @@
     }];
 }
 
-- (void)testImageFromBundle {
-    // ARRANGE
-//    id valuesMock = OCMClassMock([AMBValues class]);
-//    
-//    
-////    id mockBundle = OCMClassMock([NSBundle class]);
-//    
-//    UIImage *tintedImage;
-//    UIImage *untintedImage;
-//    NSString *mockImageName = @"spinner";
-//    NSString *mockFileType = @"png";
-//    
-//    BOOL shouldTint = YES;
-//    BOOL shouldNotTint = NO;
-//    
-//    // ACT
-//    OCMStub([valuesMock ])
-//    
-//     ASSERT
-//    XCTAssertTrue(tintedImage.renderingMode == UIImageRenderingModeAlwaysTemplate);
+- (void)testColorForKey {
+    
 }
 
 @end
