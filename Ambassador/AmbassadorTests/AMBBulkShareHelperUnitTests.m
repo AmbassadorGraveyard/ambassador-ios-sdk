@@ -26,18 +26,6 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
-
 - (void)testValidatedEmails {
     // ARRANGE
     AMBContact *mockContactSuccess1 = [[AMBContact alloc] init];
@@ -83,6 +71,48 @@
     XCTAssertFalse([validatedArray containsObject:[AMBBulkShareHelper stripPhoneNumber:mockContactFailure.value]]);
 }
 
+- (void)testEmailValidationBool {
+    // ARRANGE
+    NSString *mockSuccessEmail = @"test@test.com";
+    NSString *mockFailureEmail = @"test.com@testcom";
+    
+    // ACT
+    BOOL test1 = [AMBBulkShareHelper isValidEmail:mockSuccessEmail];
+    BOOL test2 = [AMBBulkShareHelper isValidEmail:mockFailureEmail];
+    
+    // ASSERT
+    XCTAssertTrue(test1);
+    XCTAssertFalse(test2);
+}
 
+- (void)testPhoneNumberValidationBool {
+    // ARRANGE
+    NSString *mockSuccessPhoneNumber = @"(555)555-5555";
+    NSString *mockFailurePhoneNumber = @"(22)234-5555";
+    
+    // ACT
+    BOOL successTest = [AMBBulkShareHelper isValidPhoneNumber:[AMBBulkShareHelper stripPhoneNumber:mockSuccessPhoneNumber]];
+    BOOL failureTest = [AMBBulkShareHelper isValidPhoneNumber:[AMBBulkShareHelper stripPhoneNumber:mockFailurePhoneNumber]];
+    
+    // ASSERT
+    XCTAssertTrue(successTest);
+    XCTAssertFalse(failureTest);
+}
+
+- (void)testStripPhoneNumber {
+    // ARRANGE
+    NSString *mockPhoneNumber1 = @"(555)555-5555";
+    NSString *mockPhoneNumber2 = @"+1(555)555-5555";
+    NSString *expectedNumber1 = @"5555555555";
+    NSString *expectedNumber2 = @"15555555555";
+    
+    // ACT
+    NSString *strippedNumber1 = [AMBBulkShareHelper stripPhoneNumber:mockPhoneNumber1];
+    NSString *strippedNumber2 = [AMBBulkShareHelper stripPhoneNumber:mockPhoneNumber2];
+    
+    // ASSERT
+    XCTAssertTrue([strippedNumber1 isEqualToString:expectedNumber1]);
+    XCTAssertTrue([strippedNumber2 isEqualToString:expectedNumber2]);
+}
 
 @end
