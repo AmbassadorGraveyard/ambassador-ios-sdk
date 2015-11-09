@@ -153,15 +153,9 @@
 //}
 
 - (void)performDeepLink {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://staging.mbsy.co/universal/landing/?url=%@:/&universal_id=%@", [self getDeepLinkURL], [AmbassadorSDK sharedInstance].universalID]]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]]];
 }
 
-- (NSString*)getDeepLinkURL {
-    NSArray *urlArray = [[NSArray alloc] initWithArray:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleURLTypes"]];
-    NSDictionary *urlSchemeDict = [urlArray objectAtIndex:0];
-    NSString *scheme = [urlSchemeDict valueForKey:@"CFBundleURLSchemes"][0];
-    
-    return scheme;
-}
+
 
 @end
