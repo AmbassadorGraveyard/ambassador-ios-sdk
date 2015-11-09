@@ -26,34 +26,42 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+- (void)testImageFromBundle {
+    // GIVEN
+    UIImage *tintedImage;
+    UIImage *untintedImage;
+    NSString *imageName = @"unitTestImage";
+    NSString *imageExtension = @"png";
+    BOOL tinted = YES;
+    BOOL untinted = NO;
+    
+    // WHEN
+    tintedImage = [AMBValues imageFromBundleWithName:imageName type:imageExtension tintable:tinted];
+    untintedImage = [AMBValues imageFromBundleWithName:imageName type:imageExtension tintable:untinted];
+    
+    // THEN
+    XCTAssertNotNil(tintedImage);
+    XCTAssertNotNil(untintedImage);
+    XCTAssert(tintedImage.renderingMode == UIImageRenderingModeAlwaysTemplate);
+    XCTAssert(untintedImage.renderingMode == UIImageRenderingModeAutomatic);
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void)testAMBFrameworkBundle {
+    // GIVEN
+    NSBundle *mockBundle = [NSBundle bundleForClass:[self class]];
+    NSString *mockBundlePath = [mockBundle resourcePath];
+    NSBundle *realBundle;
+    NSString *realBundlePath;
+    
+    // WHEN
+    realBundle = [AMBValues AMBframeworkBundle];
+    realBundlePath = [realBundle resourcePath];
+    
+    // THEN
+    XCTAssertNotNil(realBundle);
+    XCTAssertEqual(mockBundle, realBundle);
+    XCTAssert([mockBundlePath isEqualToString:realBundlePath], @"Expected %@, but got %@", mockBundlePath, realBundlePath);
 }
-
-//- (void)testImageFromBundle {
-//    // ARRANGE
-//    id imageMock = OCMClassMock([UIImage class]);
-//    
-//    
-//    id mockBundle = OCMClassMock([NSBundle class]);
-//    
-//    UIImage *expectedImage;
-//    
-//    // ACT
-//    OCMStub([])
-//    OCMStub([AMBValues AMBframeworkBundle]).andForwardToRealObject;
-//    expectedImage = [AMBValues imageFromBundleWithName:@"spinner" type:@"png" tintable:NO];
-//    
-//    // ASSERT
-//    XCTAssertNotNil(expectedImage);
-//}
 
 @end
