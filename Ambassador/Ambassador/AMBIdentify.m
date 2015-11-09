@@ -18,11 +18,9 @@
 
 
 @interface AMBIdentify () <SFSafariViewControllerDelegate, UIWebViewDelegate>
-@property UIWebView *webview;
 
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
 @property (nonatomic, strong) SFSafariViewController * safariVC;
-@property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSTimer * identifyTimer;
 
 @end
@@ -57,16 +55,17 @@
     DLog(@"Performing DeepLink with Safari on iOS 8");
     NSString *identifyURLString = [AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID];
     NSURL *identifyURL = [NSURL URLWithString:identifyURLString];
-    [[UIApplication sharedApplication] openURL:identifyURL];
+    [[UIApplication sharedApplication] openURL:identifyURL]; // Tells the App Delegate to lauch the url in Safari which will eventually redirect us back
 }
 
 
 #pragma mark - SFSafari ViewController Delegate
 
 - (void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
+    // When the safari VC has finished loading our page, we silently remove it from the rootVC.
     [self.safariVC.view removeFromSuperview];
     [self.safariVC removeFromParentViewController];
-    [self.identifyTimer invalidate];
+    if (didLoadSuccessfully) { [self.identifyTimer invalidate]; } // If the load was successful, we kill the retry timer
 }
 
 @end
