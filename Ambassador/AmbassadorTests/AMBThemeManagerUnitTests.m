@@ -72,6 +72,38 @@
     XCTAssertTrue([mockWelcomeMessage isEqualToString:expectedWelcomeMessage], @"%@ is not equal to %@", mockWelcomeMessage, expectedWelcomeMessage);
 }
 
+- (void)testFontForKey {
+    // GIVEN
+    UIFont *mockNavBarFont = [UIFont fontWithName:@"Helvetica" size:20];
+    UIFont *mockWelcomeFont = [UIFont fontWithName:@"HelveticaNeue" size:22];
+    UIFont *expectedNavBarFont;
+    UIFont *expectedWelcomeFont;
+    
+    // WHEN
+    expectedNavBarFont = [self.themeManager fontForKey:NavBarTextFont];
+    expectedWelcomeFont = [self.themeManager fontForKey:RAFWelcomeTextFont];
+    
+    // THEN
+    XCTAssertEqualObjects(mockNavBarFont, expectedNavBarFont, @"%@ is not equal to %@", mockNavBarFont, expectedNavBarFont);
+    XCTAssertEqualObjects(mockWelcomeFont, expectedWelcomeFont, @"%@ is not equal to %@", mockWelcomeFont, expectedWelcomeFont);
+}
+
+- (void)testImageForKey {
+    // GIVEN
+    UIImage *mockAppleImage = [UIImage imageNamed:@"appleLogo"];
+    NSMutableDictionary *mockReturnValue = [[NSMutableDictionary alloc] initWithObjectsAndKeys:mockAppleImage, @"image", nil];
+    [mockReturnValue setValue:@"0" forKey:@"imageSlotNumber"];
+    NSMutableDictionary *expectedReturnValue;
+    
+    // WHEN
+    expectedReturnValue = [self.themeManager imageForKey:RAFLogo];
+    
+    // THEN
+    XCTAssertNotNil(expectedReturnValue);
+    XCTAssertEqualObjects(mockReturnValue[@"image"], expectedReturnValue[@"image"], @"%@ is not equal to %@", mockReturnValue[@"image"], expectedReturnValue[@"image"]);
+    XCTAssertEqualObjects(mockReturnValue[@"imageSlotNumber"], expectedReturnValue[@"imageSlotNumber"], @"%@ is not equal to %@", mockReturnValue[@"imageSlotNumber"], expectedReturnValue[@"imageSlotNumber"]);
+}
+
 // Helper function that returns a color from a hex code
 - (UIColor *)colorFromHexString:(NSString *)hexString {
     unsigned rgbValue = 0;
