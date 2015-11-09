@@ -54,8 +54,7 @@
  
  @param email The user's email to be used in identifying the Ambassador
  */
-//+ (void)identifyWithEmail:(NSString *)email;
-+ (void)identifyWithEmail:(NSString *)email controller:(UIViewController*)controller;
++ (void)identifyWithEmail:(NSString *)email;
 
 /**
  Registers a conversion with Ambassador per the properties set in 'parameters'
