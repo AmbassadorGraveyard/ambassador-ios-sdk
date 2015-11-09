@@ -49,16 +49,18 @@
     // universalToken:***REMOVED***
     // universalID:***REMOVED***
     
-    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***" convertOnInstall:conversion completion:^(NSError *error) {
-        if (error) {
-            NSLog(@"Error %@", error);
-        }
-        else {
-            NSLog(@"Required parameters are set");
-        }
-    }];
+//    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***" convertOnInstall:conversion completion:^(NSError *error) {
+//        if (error) {
+//            NSLog(@"Error %@", error);
+//        }
+//        else {
+//            NSLog(@"Required parameters are set");
+//        }
+//    }];
     
-    [AmbassadorSDK identifyWithEmail:@"test1703@getambassador.com"];
+    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"];
+    
+    [AmbassadorSDK identifyWithEmail:@"test1703@getambassador.com" controller:self.window.rootViewController];
     
 //    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
 //        if (error) {

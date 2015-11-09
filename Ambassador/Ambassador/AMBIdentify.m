@@ -9,18 +9,38 @@
 
 #import "AMBIdentify.h"
 #import <UIKit/UIKit.h>
+#import <SafariServices/SafariServices.h>
 #import "AMBErrors.h"
+#import "AMBNetworkObject.h"
+#import "AMBPusherChannelObject.h"
 #import "AmbassadorSDK_Internal.h"
-@import WebKit;
+#import "AMBUtilities.h"
 
-@interface AMBIdentify () <UIWebViewDelegate>
+
+@interface AMBIdentify () <SFSafariViewControllerDelegate, UIWebViewDelegate>
 @property UIWebView *webview;
+
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
-//@property WKWebView *webview;
+@property (nonatomic, strong) SFSafariViewController * safariVC;
 @property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) NSTimer * identifyTimer;
+
 @end
 
 @implementation AMBIdentify
+
+- (void)identifyWithUniversalID:(NSString*)universalID completion:(void(^)(NSMutableDictionary *returnDict, NSError *error))completion {
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
+        [self performIdentifyForiOS9];
+        self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
+    } else {
+        DLog(@"Performing Identify with UIWebView for iOS 8");
+        [self identifyWithURL:[AMBValues identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
+            [AMBValues setDeviceFingerPrintWithDictionary:resp];
+        }];
+    }
+}
+
 - (instancetype)init {
     if (self = [super init]) {
         self.webview = [[UIWebView alloc] init];
@@ -29,6 +49,20 @@
         self.fp = [[NSMutableDictionary alloc] init];
     }
     return self;
+}
+
+- (void)performIdentifyForiOS9 {
+    self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]]];
+    DLog(@"Performing Identify with SAFARI VC for iOS 9");
+    [self.safariVC.view setHidden:YES];
+    self.safariVC.delegate = self;
+    
+    UIViewController *rootVC = [UIApplication sharedApplication].windows[0].rootViewController;
+    
+    if (![self.safariVC.view isDescendantOfView:rootVC.view]) {
+        [rootVC.view addSubview:self.safariVC.view];
+        [rootVC addChildViewController:self.safariVC];
+    }
 }
 
 
@@ -57,6 +91,11 @@
     [self triggerCompletion:returnVal error:e];
 }
 
+- (void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
+    [self.safariVC.view removeFromSuperview];
+    [self.safariVC removeFromParentViewController];
+    [self.identifyTimer invalidate];
+}
 
 
 #pragma mark - UIWebViewDelegate
@@ -102,18 +141,16 @@
     }
 }
 
-
-
-#pragma mark -
-+ (NSString *)identifyUrlWithUniversalID:(NSString *)uid {
-    NSString *baseUrl;
-#if AMBPRODUCTION
-    baseUrl = @"https://mbsy.co/universal/landing/?url=ambassador:ios/";
-#else
-    baseUrl = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/";
-#endif
-    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"&universal_id=%@", uid]];
-}
+//#pragma mark -
+//+ (NSString *)identifyUrlWithUniversalID:(NSString *)uid {
+//    NSString *baseUrl;
+//#if AMBPRODUCTION
+//    baseUrl = @"https://mbsy.co/universal/landing/?url=ambassador:ios/";
+//#else
+//    baseUrl = @"https://staging.mbsy.co/universal/landing/?url=ambassador:ios/";
+//#endif
+//    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"&universal_id=%@", uid]];
+//}
 
 - (void)performDeepLink {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://staging.mbsy.co/universal/landing/?url=%@:/&universal_id=%@", [self getDeepLinkURL], [AmbassadorSDK sharedInstance].universalID]]];
