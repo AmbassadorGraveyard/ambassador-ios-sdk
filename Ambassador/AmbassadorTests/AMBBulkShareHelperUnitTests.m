@@ -27,7 +27,7 @@
 }
 
 - (void)testValidatedEmails {
-    // ARRANGE
+    // GIVEN
     AMBContact *mockContactSuccess1 = [[AMBContact alloc] init];
     AMBContact *mockContactSuccess2 = [[AMBContact alloc] init];
     AMBContact *mockContactFailure = [[AMBContact alloc] init];
@@ -37,10 +37,10 @@
     mockContactFailure.value = @"test.com";
     NSArray *mockContactArray = [[NSArray alloc] initWithObjects:mockContactSuccess1, mockContactSuccess2, mockContactFailure, nil];
     
-    // ACT
+    // WHEN
     NSMutableArray *validatedArray = [AMBBulkShareHelper validatedEmails:mockContactArray];
     
-    // ASSERT
+    // THEN
     XCTAssert(validatedArray.count == 2);
     XCTAssertEqual(mockContactSuccess1.value, validatedArray[0]);
     XCTAssertEqual(mockContactSuccess2.value, validatedArray[1]);
@@ -48,7 +48,7 @@
 }
 
 - (void)testValidatedPhoneNumbers {
-    // ARRANGE
+    // GIVEN
     AMBContact *mockContactSuccess1 = [[AMBContact alloc] init];
     AMBContact *mockContactSuccess2 = [[AMBContact alloc] init];
     AMBContact *mockContactSuccess3 = [[AMBContact alloc] init];
@@ -60,10 +60,10 @@
     mockContactFailure.value = @"123-45678";
     NSArray *mockContactArray = [[NSArray alloc] initWithObjects:mockContactSuccess1, mockContactSuccess2, mockContactSuccess3, mockContactFailure, nil];
     
-    // ACT
+    // WHEN
     NSMutableArray *validatedArray = [AMBBulkShareHelper validatedPhoneNumbers:mockContactArray];
     
-    // ASSERT
+    // THEN
     XCTAssert(validatedArray.count == 3);
     XCTAssert([[AMBBulkShareHelper stripPhoneNumber:mockContactSuccess1.value] isEqualToString:validatedArray[0]]);
     XCTAssert([[AMBBulkShareHelper stripPhoneNumber:mockContactSuccess2.value] isEqualToString:validatedArray[1]]);
@@ -72,45 +72,45 @@
 }
 
 - (void)testEmailValidationBool {
-    // ARRANGE
+    // GIVEN
     NSString *mockSuccessEmail = @"test@test.com";
     NSString *mockFailureEmail = @"test.com@testcom";
     
-    // ACT
+    // WHEN
     BOOL test1 = [AMBBulkShareHelper isValidEmail:mockSuccessEmail];
     BOOL test2 = [AMBBulkShareHelper isValidEmail:mockFailureEmail];
     
-    // ASSERT
+    // THEN
     XCTAssertTrue(test1);
     XCTAssertFalse(test2);
 }
 
 - (void)testPhoneNumberValidationBool {
-    // ARRANGE
+    // GIVEN
     NSString *mockSuccessPhoneNumber = @"(555)555-5555";
     NSString *mockFailurePhoneNumber = @"(22)234-5555";
     
-    // ACT
+    // WHEN
     BOOL successTest = [AMBBulkShareHelper isValidPhoneNumber:[AMBBulkShareHelper stripPhoneNumber:mockSuccessPhoneNumber]];
     BOOL failureTest = [AMBBulkShareHelper isValidPhoneNumber:[AMBBulkShareHelper stripPhoneNumber:mockFailurePhoneNumber]];
     
-    // ASSERT
+    // THEN
     XCTAssertTrue(successTest);
     XCTAssertFalse(failureTest);
 }
 
 - (void)testStripPhoneNumber {
-    // ARRANGE
+    // GIVEN
     NSString *mockPhoneNumber1 = @"(555)555-5555";
     NSString *mockPhoneNumber2 = @"+1(555)555-5555";
     NSString *expectedNumber1 = @"5555555555";
     NSString *expectedNumber2 = @"15555555555";
     
-    // ACT
+    // WHEN
     NSString *strippedNumber1 = [AMBBulkShareHelper stripPhoneNumber:mockPhoneNumber1];
     NSString *strippedNumber2 = [AMBBulkShareHelper stripPhoneNumber:mockPhoneNumber2];
     
-    // ASSERT
+    // THEN
     XCTAssertTrue([strippedNumber1 isEqualToString:expectedNumber1]);
     XCTAssertTrue([strippedNumber2 isEqualToString:expectedNumber2]);
 }

@@ -29,7 +29,7 @@
         frameworkBundle = [NSBundle bundleWithPath:frameworkBundlePath];
     });
     
-    return frameworkBundle;
+    return (frameworkBundle) ? frameworkBundle : [NSBundle bundleForClass:[self class]]; // This returns the framework bundle, but if unit testing, it will return the unit test's bundle
 }
 
 @end
