@@ -26,7 +26,6 @@
     [super tearDown];
 }
 
-
 - (void)testImageFromBundle {
     // GIVEN
     UIImage *tintedImage;
