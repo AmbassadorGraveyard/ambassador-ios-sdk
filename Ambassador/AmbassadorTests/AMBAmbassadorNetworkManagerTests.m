@@ -27,6 +27,10 @@
     [super tearDown];
 }
 
+- (void)testSendNetworkObject {
+    
+}
+
 
 //- (void)testDevPusherSessionSubscribe {
 //    XCTestExpectation *exp = [self expectationWithDescription:@"Test Dev Pusher Session Subscribe"];
