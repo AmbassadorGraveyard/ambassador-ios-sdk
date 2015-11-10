@@ -25,10 +25,10 @@
 - (void)setUp {
     [super setUp];
     self.networkManager = [AMBAmbassadorNetworkManager sharedInstance];
-    [AmbassadorSDK sharedInstance].universalToken = self.devToken;
     self.devToken = [NSString stringWithFormat:@"SDKToken %@",self.devToken];
     self.prodToken = [NSString stringWithFormat:@"SDKToken %@",self.prodToken];
-}
+    [AmbassadorSDK sharedInstance].universalToken = self.devToken;
+    [AmbassadorSDK sharedInstance].universalID = self.devID;}
 
 - (void)tearDown {
     [super tearDown];
@@ -37,15 +37,11 @@
 - (void)testSendNetworkObject {
     // GIVEN
     XCTestExpectation *shareTrackExpectation = [self expectationWithDescription:@"Share track completion handler called"];
-//    AMBShareTrackNetworkObject *shareTrackObject = [[AMBShareTrackNetworkObject alloc] init];
-//    shareTrackObject.social_name = @"twitter";
-//    shareTrackObject.short_code = @"lbBf";
-//    NSDictionary *postDict = [[AMBMockShareTrackObject validTwitterShare] toDictionary];
     __block NSError *expectedError;
     __block NSInteger statusCode;
     
     // WHEN
-    [self.networkManager sendNetworkObject:[AMBMockShareTrackObject validTwitterShare] url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
+    [self.networkManager sendNetworkObject:[AMBMockShareTrackObject validEmailShare] url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
         [shareTrackExpectation fulfill];
         expectedError = error;
         statusCode = ((NSHTTPURLResponse*)response).statusCode;
