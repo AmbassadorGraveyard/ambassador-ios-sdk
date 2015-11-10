@@ -3,7 +3,7 @@ general:
 
 machine:
   timezone:
-    America/Chicago
+    America/Detroit
   xcode:
     version: "7.0"
 checkout:
