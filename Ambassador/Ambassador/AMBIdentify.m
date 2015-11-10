@@ -32,7 +32,9 @@
         [self performIdentifyForiOS9];
         self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
     } else {
-        [self performDeepLink];
+        if (![AMBValues getDeviceFingerPrint] || ![AMBValues getMbsyCookieCode]) { // Checks to see if we already have the values
+            [self performDeepLink];
+        }
     }
 }
 
