@@ -83,7 +83,6 @@
     pusherChannelObj.requestId = @456789.100;
     
     NSString *mockSessionID = @"privatetestchannel";
-    NSString *mockRequestID = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
     NSMutableDictionary *expectedHeaderArray;
     
     // WHEN
@@ -92,7 +91,7 @@
     // THEN
     XCTAssertEqual(2, expectedHeaderArray.count, @"%i is not equal to %i", 2, (int)expectedHeaderArray.count);
     XCTAssertEqualObjects(mockSessionID, [expectedHeaderArray valueForKey:@"X-Mbsy-Client-Session-ID"], @"%@ is not equal to %@", mockSessionID, [expectedHeaderArray valueForKey:@"X-Mbsy-Client-Session-ID"]);
-    XCTAssertGreaterThan([expectedHeaderArray valueForKey:@"X-Mbsy-Client-Request-ID"], mockRequestID, @"%@ is not greater than %@", [expectedHeaderArray valueForKey:@"X-Mbsy-Client-Request-ID"], mockRequestID);
+    XCTAssertNotNil([expectedHeaderArray valueForKey:@"X-Mbsy-Client-Request-ID"]);
 }
 
 @end
