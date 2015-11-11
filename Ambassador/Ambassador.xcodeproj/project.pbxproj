@@ -174,6 +174,7 @@
 		DBEB6FFE1BA9B2D8005EE0D0 /* sms.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FEF1BA9B2D8005EE0D0 /* sms.png */; };
 		DBEB6FFF1BA9B2D8005EE0D0 /* successIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FF01BA9B2D8005EE0D0 /* successIcon.png */; };
 		DBEB70001BA9B2D8005EE0D0 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */; };
+		EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */; settings = {ASSET_TAGS = (); }; };
 		EF2EC3351BAC60CC003CAA43 /* AMBFMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = EF2EC3341BAC60CC003CAA43 /* AMBFMResultSet.h */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; settings = {ASSET_TAGS = (); }; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; settings = {ASSET_TAGS = (); }; };
@@ -436,6 +437,7 @@
 		DBEB6FEF1BA9B2D8005EE0D0 /* sms.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sms.png; sourceTree = "<group>"; };
 		DBEB6FF01BA9B2D8005EE0D0 /* successIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = successIcon.png; sourceTree = "<group>"; };
 		DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
+		EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBConversionsTests.m; sourceTree = "<group>"; };
 		EF2EC3341BAC60CC003CAA43 /* AMBFMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMResultSet.h; sourceTree = "<group>"; };
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
@@ -648,6 +650,7 @@
 		DB844D361BA75BB8003FD7A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */,
 				EF7CA9D11BF3EAB7006EBD6A /* AMBContactTests.m */,
 				DB844D371BA75BB8003FD7A9 /* Info.plist */,
 				DB6A247A1BD14BBB00CE3230 /* AMBMockObjects.h */,
@@ -1249,6 +1252,7 @@
 				DB6A246A1BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m in Sources */,
 				DB6A24861BD1847900CE3230 /* AmbassadorSDKTests.m in Sources */,
 				DB6A24741BD1259000CE3230 /* AMBPusherManagerTests.m in Sources */,
+				EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */,
 				DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */,
 				DB6A247C1BD14BBB00CE3230 /* AMBMockObjects.m in Sources */,
 				DB6A247E1BD14F4900CE3230 /* AMBNetworObjectTests.m in Sources */,
