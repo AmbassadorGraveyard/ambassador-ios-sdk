@@ -75,6 +75,78 @@
     XCTAssertTrue([returnString containsString:@"private-snippet-channel"], @"%@ did not contain private-snippet-channel", returnString);
 }
 
+- (void)testPusherAuthUrl {
+    // GIVEN
+    NSString *mockPusherAuthString = @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
+    NSString *expectedPusherAuthString;
+    
+    // WHEN
+    expectedPusherAuthString = [AMBAmbassadorNetworkManager pusherAuthSubscribeUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(mockPusherAuthString, expectedPusherAuthString, @"%@ is not equal to %@", mockPusherAuthString, expectedPusherAuthString);
+}
+
+
+- (void)testPusherSessionUrl {
+    // GIVEN
+    NSString *mockPusherSessionString = @"https://dev-ambassador-api.herokuapp.com/auth/session/";
+    NSString *expectedPusherSessionString;
+    
+    // WHEN
+    expectedPusherSessionString = [AMBAmbassadorNetworkManager pusherSessionSubscribeUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(mockPusherSessionString, expectedPusherSessionString, @"%@ is not equal to %@", mockPusherSessionString, expectedPusherSessionString);
+}
+
+- (void)testSendIdentifyUrl {
+    // GIVEN
+    NSString *mockSendIdentifyString = @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/";
+    NSString *expectedSendIdentifyString;
+    
+    // WHEN
+    expectedSendIdentifyString = [AMBAmbassadorNetworkManager sendIdentifyUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(mockSendIdentifyString, expectedSendIdentifyString, @"%@ is not equal to %@", mockSendIdentifyString, expectedSendIdentifyString);
+}
+
+- (void)testSendShareTrackUrl {
+    // GIVEN
+    NSString *mockSendTrackUrl = @"https://dev-ambassador-api.herokuapp.com/track/share/";
+    NSString *expectedSendTrackUrl;
+    
+    // WHEN
+    expectedSendTrackUrl = [AMBAmbassadorNetworkManager sendShareTrackUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(mockSendTrackUrl, expectedSendTrackUrl, @"%@ is not equal to %@", mockSendTrackUrl, expectedSendTrackUrl);
+}
+
+- (void)testBulkShareEmailUrl {
+    // GIVEN
+    NSString *mockBulkShareEmailUrl = @"https://dev-ambassador-api.herokuapp.com/share/email/";
+    NSString *expectedBulkShareEmailUrl;
+    
+    // WHEN
+    expectedBulkShareEmailUrl = [AMBAmbassadorNetworkManager bulkShareEmailUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(mockBulkShareEmailUrl, expectedBulkShareEmailUrl, @"%@ is not equal to %@", mockBulkShareEmailUrl, expectedBulkShareEmailUrl);
+}
+
+- (void)testBulkdShareSMSUrl {
+    // GIVEN
+    NSString *mockBulkShareSMSUrl = @"https://dev-ambassador-api.herokuapp.com/share/sms/";
+    NSString *expectedBulkShareSMSUrl;
+    
+    // WHEN
+    expectedBulkShareSMSUrl = [AMBAmbassadorNetworkManager bulkShareSMSUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(mockBulkShareSMSUrl, expectedBulkShareSMSUrl, @"%@ is not equal to %@", mockBulkShareSMSUrl, expectedBulkShareSMSUrl);
+}
 
 
 @end
