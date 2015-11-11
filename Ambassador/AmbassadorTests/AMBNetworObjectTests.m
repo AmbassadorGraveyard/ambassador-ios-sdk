@@ -25,56 +25,23 @@
     [super tearDown];
 }
 
-- (void)testFillWithDictionary {
-    AMBMockUserObjects *mockUser = [[AMBMockUserObjects alloc] init];
-    NSMutableDictionary *mockUserDictionary = [mockUser mockUser];
-    AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
-    [user fillWithDictionary:mockUserDictionary];
+- (void)testToDictionary {
+    // GIVEN
+    NSString *mockShortCode = @"lbBf";
+    NSString *mockMessage = @"Test message";
+    NSString *mockSubjectLine = @"Test subject line.";
+    NSArray *mockEmails = [[NSArray alloc] initWithObjects:@"test@test.com", @"test2@test.com", @"test3@gmail.com", nil];
+    AMBBulkShareEmailObject *mockShareEmailObj = [[AMBBulkShareEmailObject alloc] initWithEmails:mockEmails shortCode:mockShortCode message:mockMessage subjectLine:mockSubjectLine];
     
-    XCTAssert([user.first_name isEqualToString:mockUserDictionary[@"first_name"]]);
-    XCTAssert([user.last_name isEqualToString:mockUserDictionary[@"last_name"]]);
-    XCTAssert([user.phone isEqualToString:@""]);
-    AMBUserUrlNetworkObject *url = [user.urls firstObject];
-    XCTAssert([url.url isEqualToString:mockUserDictionary[@"urls"][0][@"url"]]);
+    // WHEN
+    NSMutableDictionary *expectedDictionary = [mockShareEmailObj toDictionary];
     
-    url = nil;
-    url = [user urlObjForCampaignID:@123];
-    XCTAssert(url);
-}
-
-//- (void)testSaveAndLoad {
-//    AMBMockUserObjects *mockUser = [[AMBMockUserObjects alloc] init];
-//    NSMutableDictionary *mockUserDictionary = [mockUser mockUser];
-//    AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
-//    [user fillWithDictionary:mockUserDictionary];
-//    
-//    [user save];
-//    user = nil;
-//    user = [AMBUserNetworkObject loadFromDisk];
-//    
-//    XCTAssert([user.first_name isEqualToString:mockUserDictionary[@"first_name"]]);
-//    XCTAssert([user.last_name isEqualToString:mockUserDictionary[@"last_name"]]);
-//    XCTAssert([user.phone isEqualToString:@""]);
-//    AMBUserUrlNetworkObject *url = [user.urls firstObject];
-//    XCTAssert([url.url isEqualToString:mockUserDictionary[@"urls"][0][@"url"]]);
-//    
-//    url = nil;
-//    url = [user urlObjForCampaignID:@123];
-//    XCTAssert(url);
-//
-//}
-
-
-- (void)testAdditionalPusherHeaders {
-    AMBPusherSessionSubscribeNetworkObject *o = [[AMBPusherSessionSubscribeNetworkObject alloc] init];
-    o.client_session_uid = @"test_session_uid";
-    o.channel_name = @"test_channel_name";
-    o.expires_at = [NSDate date];
-    
-    NSMutableDictionary *dictionary = [o additionalNetworkHeaders];
-    
-    XCTAssertEqualObjects(o.client_session_uid, dictionary[@"X-Mbsy-Client-Session-ID"]);
-    XCTAssertNotNil(dictionary[@"X-Mbsy-Client-Request-ID"]);
+    // THEN
+    XCTAssertEqual(4, expectedDictionary.count, @"Expect count was actually %i, not 4", (int)expectedDictionary.count);
+    XCTAssertEqualObjects(mockShortCode, expectedDictionary[@"short_code"], @"%@ is not equal to %@", mockShortCode, expectedDictionary[@"short_code"]);
+    XCTAssertEqualObjects(mockMessage, expectedDictionary[@"message"], @"%@ is not equal to %@", mockMessage, expectedDictionary[@"message"]);
+    XCTAssertEqualObjects(mockSubjectLine, expectedDictionary[@"subject_line"], @"%@ is not equal to %@", mockSubjectLine, expectedDictionary[@"subject_line"]);
+    XCTAssertEqualObjects(mockEmails, expectedDictionary[@"to_emails"], @"%@ is not equal to %@", mockEmails, expectedDictionary[@"to_emails"]);
 }
 
 @end
