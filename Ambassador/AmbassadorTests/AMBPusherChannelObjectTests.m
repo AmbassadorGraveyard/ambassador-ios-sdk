@@ -11,36 +11,18 @@
 
 @interface AMBPusherChannelObjectTests : XCTestCase
 
-@property (nonatomic, strong) AMBPusherChannelObject * pusherChannelObj;
-
 @end
 
 @implementation AMBPusherChannelObjectTests
 
 - (void)setUp {
     [super setUp];
-    self.pusherChannelObj = [[AMBPusherChannelObject alloc] init];
-    self.pusherChannelObj.channelName = @"private-snippet-channel@user=privatetestchannel";
-    self.pusherChannelObj.sessionId = @"privatetestchannel";
-    self.pusherChannelObj.expiresAt = [NSDate dateWithTimeIntervalSinceNow:10000];
-    self.pusherChannelObj.requestId = @456789.100;
+    
 }
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
-}
-
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
 }
 
 - (void)testCreateObjectFromDictionary {
@@ -90,6 +72,27 @@
     // THEN
     XCTAssertFalse(notExpired);
     XCTAssertTrue(expired);
+}
+
+- (void)testCreateAdditionalNetworkHeaders {
+    // GIVEN
+    AMBPusherChannelObject * pusherChannelObj = [[AMBPusherChannelObject alloc] init];
+    pusherChannelObj.channelName = @"private-snippet-channel@user=privatetestchannel";
+    pusherChannelObj.sessionId = @"privatetestchannel";
+    pusherChannelObj.expiresAt = [NSDate dateWithTimeIntervalSinceNow:10000];
+    pusherChannelObj.requestId = @456789.100;
+    
+    NSString *mockSessionID = @"privatetestchannel";
+    NSString *mockRequestID = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
+    NSMutableDictionary *expectedHeaderArray;
+    
+    // WHEN
+    expectedHeaderArray = [pusherChannelObj createAdditionalNetworkHeaders];
+    
+    // THEN
+    XCTAssertEqual(2, expectedHeaderArray.count, @"%i is not equal to %i", 2, (int)expectedHeaderArray.count);
+    XCTAssertEqualObjects(mockSessionID, [expectedHeaderArray valueForKey:@"X-Mbsy-Client-Session-ID"], @"%@ is not equal to %@", mockSessionID, [expectedHeaderArray valueForKey:@"X-Mbsy-Client-Session-ID"]);
+    XCTAssertGreaterThan([expectedHeaderArray valueForKey:@"X-Mbsy-Client-Request-ID"], mockRequestID, @"%@ is not greater than %@", [expectedHeaderArray valueForKey:@"X-Mbsy-Client-Request-ID"], mockRequestID);
 }
 
 @end
