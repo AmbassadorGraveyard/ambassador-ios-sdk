@@ -40,6 +40,8 @@
 - (void)showLoadingScreenForView:(UIView*)view;
 - (void)hideLoadingView;
 
++ (NSString*)createRequestID;
+
 @end
 
 
