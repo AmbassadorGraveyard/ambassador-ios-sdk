@@ -38,7 +38,6 @@ NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conv
 @property NSString *databaseFilePath;
 @property AMBFMDatabaseQueue *databaseQueue;
 @property AMBFMDatabase *database;
-@property NSString * key;
 
 @end
 
