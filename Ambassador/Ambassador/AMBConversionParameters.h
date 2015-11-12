@@ -31,4 +31,6 @@
 
 - (NSError *)isValid;
 
+- (NSString*)getShortCode;
+
 @end
