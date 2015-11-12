@@ -90,21 +90,21 @@
                                 <rect key="frame" x="15" y="111" width="570" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqW-y2-29e">
-                                        <rect key="frame" x="544" y="6" width="18" height="18"/>
+                                        <rect key="frame" x="545" y="6" width="17" height="18"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.90933948863636371" green="0.90933948863636371" blue="0.90933948863636371" alpha="1" colorSpace="calibratedRGB"/>
                                         <accessibility key="accessibilityConfiguration" identifier="btnEdit"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="18" id="0Xg-X5-lQG"/>
+                                            <constraint firstAttribute="width" constant="17" id="0Xg-X5-lQG"/>
                                             <constraint firstAttribute="height" constant="18" id="7YT-Io-aVr"/>
                                         </constraints>
-                                        <state key="normal" image="clipboard.png"/>
+                                        <state key="normal" image="clipboard"/>
                                         <connections>
                                             <action selector="clipboardButtonPress:" destination="SGl-pp-yfW" eventType="touchUpInside" id="LxK-Gr-sbH"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Acl-kl-6LS">
-                                        <rect key="frame" x="10" y="7" width="474" height="17"/>
+                                        <rect key="frame" x="10" y="7" width="475" height="17"/>
                                         <animations/>
                                         <accessibility key="accessibilityConfiguration" identifier="urlLabel"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1264,7 +1264,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="clipboard.png" width="45" height="28"/>
+        <image name="clipboard" width="43" height="55"/>
         <image name="close.png" width="24" height="23"/>
     </resources>
 </document>
