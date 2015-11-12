@@ -7,6 +7,8 @@
 //
 
 #import "AMBPusherChannelObject.h"
+#import "AMBUtilities.h"
+#import "AmbassadorSDK_Internal.h"
 
 @implementation AMBPusherChannelObject
 
@@ -28,8 +30,9 @@
 - (NSMutableDictionary *)createAdditionalNetworkHeaders {
     NSMutableDictionary *returnVal = [[NSMutableDictionary alloc] init];
     [returnVal setValue:self.sessionId forKey:@"X-Mbsy-Client-Session-ID"];
-    NSString * timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
-    [returnVal setValue:timestamp forKey:@"X-Mbsy-Client-Request-ID"];
+//    NSString * timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
+    [AmbassadorSDK sharedInstance].pusherChannelObj.requestId = [AMBUtilities createRequestID];
+    [returnVal setValue:[AmbassadorSDK sharedInstance].pusherChannelObj.requestId forKey:@"X-Mbsy-Client-Request-ID"];
     return returnVal;
 }
 
