@@ -54,7 +54,7 @@
         frameworkBundle = [NSBundle bundleWithPath:frameworkBundlePath];
     });
     
-    return frameworkBundle;
+    return (frameworkBundle) ? frameworkBundle : [NSBundle bundleForClass:[self class]]; // This returns the framework bundle, but if unit testing, it will return the unit test's bundle
 }
 
 
@@ -68,12 +68,14 @@
     NSString *baseUrl;
     
     #if AMBPRODUCTION
-        baseUrl = @"https://mbsy.co/universal/landing?url=ambassador:ios";
+        baseUrl = @"https://mbsy.co/universal/landing";
     #else
-        baseUrl = @"https://staging.mbsy.co/universal/landing?url=ambassador:ios";
+        baseUrl = @"https://staging.mbsy.co/universal/landing";
     #endif
     
-    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", uid, networkUrlObject.sessionId, requestID]];
+    DLog(@"%@", [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", [AMBValues getDeepLinkURL], uid, networkUrlObject.sessionId, requestID]]);
+    
+    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", [AMBValues getDeepLinkURL], uid, networkUrlObject.sessionId, requestID]];
 }
 
 
@@ -108,6 +110,14 @@
 
 + (NSDictionary *)getDeviceFingerPrint {
     return [[AMBValues ambUserDefaults] valueForKey:@"device_fingerprint"];
+}
+
++ (NSString*)getDeepLinkURL {
+    NSArray *urlArray = [[NSArray alloc] initWithArray:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleURLTypes"]];
+    NSDictionary *urlSchemeDict = [urlArray objectAtIndex:0];
+    NSString *scheme = [urlSchemeDict valueForKey:@"CFBundleURLSchemes"][0];
+    
+    return scheme;
 }
 
 @end

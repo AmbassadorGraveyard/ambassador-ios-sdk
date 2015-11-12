@@ -172,7 +172,7 @@ static AMBServiceSelector *raf;
 
 #pragma mark - Identify
 
-+ (void)identifyWithEmail:(NSString *)email controller:(UIViewController*)controller {
++ (void)identifyWithEmail:(NSString *)email {
     [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:nil];
 }
 
@@ -180,9 +180,9 @@ static AMBServiceSelector *raf;
 //    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:nil];
 //}
 
-//+ (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
-//    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:c];
-//}
++ (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
+    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:c];
+}
 
 - (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
     self.email = email;
