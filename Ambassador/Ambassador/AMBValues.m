@@ -17,12 +17,31 @@
 #pragma mark - Images
 
 + (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type tintable:(BOOL)tintable {
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 8.0) {
+        return [AMBValues imageFromAssetsWithName:name tintable:tintable];
+    } else {
+        return [AMBValues imageFromBundleWithName:name type:type tintable:tintable];
+    }
+}
+
+// FOR IOS 8 AND ABOVE **
++ (UIImage*)imageFromAssetsWithName:(NSString*)name tintable:(BOOL)tintable {
+    NSBundle *ambassadorBundle = [NSBundle bundleWithIdentifier:@"AmbassadorBundle"];
+    
+    if (tintable) {
+        return [[UIImage imageNamed:name inBundle:ambassadorBundle compatibleWithTraitCollection:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    } else {
+        return [UIImage imageNamed:name inBundle:ambassadorBundle compatibleWithTraitCollection:nil];
+    }
+}
+
+// FOR IOS 7 **
++ (UIImage*)imageFromResourcesWithName:(NSString*)name type:(NSString*)type tintable:(BOOL)tintable {
     if (tintable) {
         return [[UIImage imageWithContentsOfFile:[[AMBValues AMBframeworkBundle] pathForResource:name ofType:type]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     } else {
         return [UIImage imageWithContentsOfFile:[[AMBValues AMBframeworkBundle] pathForResource:name ofType:type]];
     }
-    
 }
 
 + (NSBundle*)AMBframeworkBundle {
