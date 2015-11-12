@@ -16,12 +16,11 @@
 #import "AmbassadorSDK_Internal.h"
 #import "AMBUtilities.h"
 
+
 @interface AMBIdentify () <SFSafariViewControllerDelegate, UIWebViewDelegate>
-@property UIWebView *webview;
 
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
 @property (nonatomic, strong) SFSafariViewController * safariVC;
-@property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSTimer * identifyTimer;
 
 @end
@@ -33,21 +32,10 @@
         [self performIdentifyForiOS9];
         self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
     } else {
-        DLog(@"Performing Identify with UIWebView for iOS 8");
-        [self identifyWithURL:[AMBValues identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
-            [AMBValues setDeviceFingerPrintWithDictionary:resp];
-        }];
+        if (![AMBValues getDeviceFingerPrint] || ![AMBValues getMbsyCookieCode]) { // Checks to see if we already have the values
+            [self performDeepLink];
+        }
     }
-}
-
-- (instancetype)init {
-    if (self = [super init]) {
-        self.webview = [[UIWebView alloc] init];
-        self.webview.delegate = self;
-        self.webview.hidden = YES;
-        self.fp = [[NSMutableDictionary alloc] init];
-    }
-    return self;
 }
 
 - (void)performIdentifyForiOS9 {
@@ -64,79 +52,22 @@
     }
 }
 
-
-- (void)identifyWithURL:(NSString *)url completion:(void(^)(NSMutableDictionary *resp, NSError *e))completion {
-    self.completion = completion;
-    [self.webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+- (void)performDeepLink {
+    // Opens identify URL in Safari and then deeplinks back to app on redirect
+    DLog(@"Performing DeepLink with Safari on iOS 8");
+    NSString *identifyURLString = [AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID];
+    NSURL *identifyURL = [NSURL URLWithString:identifyURLString];
+    [[UIApplication sharedApplication] openURL:identifyURL]; // Tells the App Delegate to lauch the url in Safari which will eventually redirect us back
 }
 
-- (void)identify {
-    if (!self.url || [self.url isEqualToString:@""]) { return; }
-    [self identifyWithURL:self.url completion:self.completion];
-}
 
-- (void)extractVariable:(NSString *)var {
-    NSString *js = [NSString stringWithFormat:@"JSON.stringify(%@)", var];
-    NSString *dataStr = [self.webview stringByEvaluatingJavaScriptFromString:js];
-    if (dataStr == nil) {
-        [self triggerCompletion:nil error:AMBNOVALError()];
-        return;
-    }
-    NSData *dataRaw = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *e = nil;
-    NSMutableDictionary *returnVal = [NSJSONSerialization JSONObjectWithData:dataRaw options:0 error:&e];
-    self.fp = returnVal;
-    [self triggerCompletion:returnVal error:e];
-}
+#pragma mark - SFSafari ViewController Delegate
 
 - (void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
+    // When the safari VC has finished loading our page, we silently remove it from the rootVC.
     [self.safariVC.view removeFromSuperview];
     [self.safariVC removeFromParentViewController];
-    [self.identifyTimer invalidate];
-}
-
-
-#pragma mark - UIWebViewDelegate
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    
-}
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    // Parse the URL string delimiting at ":"
-    NSString *urlRequestString = [[request URL] absoluteString];
-    NSArray *urlRequestComponents = [urlRequestString componentsSeparatedByString:@":"];
-
-    // Check if the URL is signal URL used in Augur javascript callback
-    if (urlRequestComponents.count > 1 &&
-        [(NSString *)urlRequestComponents[0] isEqualToString:@"ambassador"]) {
-        [self extractVariable:@"augur.json"];
-        return NO;
-    }
-    return YES;
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-     //Get the response code
-    NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] init];
-    NSCachedURLResponse *cachedResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:webView.request];
-    response = (NSHTTPURLResponse *)cachedResponse.response;
-    
-    // Check for a vaild response code
-    if (!(response.statusCode >= 200 && response.statusCode < 300)) {
-        [self performSelector:@selector(identify) withObject:self afterDelay:10]; // Try again
-        //[self triggerCompletion:nil error:AMBBADRESPError(response.statusCode, [[NSData alloc] init])];
-    }
-}
-
-
-#pragma mark -
-- (void)triggerCompletion:(NSMutableDictionary *)resp error:(NSError *)error {
-    __weak AMBIdentify *weakSelf = self;
-    if (weakSelf.completion) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            weakSelf.completion(resp, error);
-        });
-    }
+    if (didLoadSuccessfully) { [self.identifyTimer invalidate]; } // If the load was successful, we kill the retry timer
 }
 
 @end
