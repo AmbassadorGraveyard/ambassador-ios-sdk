@@ -13,7 +13,7 @@
 @property (nonatomic, strong) NSString * channelName;
 @property (nonatomic, strong) NSString * sessionId;
 @property (nonatomic, strong) NSDate * expiresAt;
-@property (nonatomic, strong) NSNumber * requestId;
+@property (nonatomic, strong) NSString * requestId;
 
 - (void)createObjectFromDictionary:(NSMutableDictionary *)payloadDic;
 - (BOOL)isExpired;
