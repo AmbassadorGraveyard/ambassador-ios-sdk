@@ -103,7 +103,7 @@ static AMBServiceSelector *raf;
     self.universalToken = universalToken;
     [[NSUserDefaults standardUserDefaults] setValue:universalID forKey:AMB_UNIVERSAL_ID_DEFAULTS_KEY];
     [[NSUserDefaults standardUserDefaults] setValue:universalToken forKey:AMB_UNIVERSAL_TOKEN_DEFAULTS_KEY];
-    self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES];
+    if (!self.conversionTimer.isValid) { self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES]; }
     self.conversion = [[AMBConversion alloc] initWithKey:universalToken];
 
     if (information) { // Check if this is the first time opening
@@ -112,12 +112,6 @@ static AMBServiceSelector *raf;
             [self registerConversion:information completion:completion];
         }
     }
-
-    [self.identify identifyWithURL:[AMBIdentify identifyUrlWithUniversalID:universalID] completion:^(NSMutableDictionary *resp, NSError *e) {
-        // TODO: save id
-        self.identify.fp  = resp;
-        DLog(@"Received identify fingerprint");
-    }];
   
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]; // Set launch flag in User Deafaults
 }
@@ -165,6 +159,9 @@ static AMBServiceSelector *raf;
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
                 // TODO: Notification Center
             }];
+        } else if (json[@"mbsy_cookie_code"]) {
+            [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
+            [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
         } else {
             [user fillWithDictionary:json];
             [AmbassadorSDK sharedInstance].user = user;
@@ -176,12 +173,12 @@ static AMBServiceSelector *raf;
 #pragma mark - Identify
 
 + (void)identifyWithEmail:(NSString *)email {
-    [[AmbassadorSDK sharedInstance] identifyWithEmail:email];
-}
-
-- (void)identifyWithEmail:(NSString *)email {
     [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:nil];
 }
+
+//- (void)identifyWithEmail:(NSString *)email {
+//    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:nil];
+//}
 
 + (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
     [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:c];
@@ -198,6 +195,10 @@ static AMBServiceSelector *raf;
         if (![AmbassadorSDK sharedInstance].hasBeenBoundToChannel) {
             [self bindToIdentifyActionUniversalToken:weakSelf.universalToken universalID:weakSelf.universalID];
         }
+        
+        [self.identify identifyWithUniversalID:self.universalID completion:^(NSMutableDictionary *returnDict, NSError *error) {
+            nil;
+        }];
         
         if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
     }];

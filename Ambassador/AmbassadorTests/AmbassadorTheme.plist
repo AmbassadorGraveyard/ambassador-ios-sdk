@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NAVIGATION BAR -- - -- - - - - </key>
+	<string></string>
+	<key>NavBarColor</key>
+	<string>#FFFFFF</string>
+	<key>NavBarTextMessage</key>
+	<string>Refer your friends</string>
+	<key>NavBarTextColor</key>
+	<string>#000000</string>
+	<key>NavBarTextFont</key>
+	<string>Helvetica, 20</string>
+	<key>RAF PAGE ------------------------</key>
+	<string></string>
+	<key>RAFBackgroundColor</key>
+	<string>#FFFFFF</string>
+	<key>RAFLogo</key>
+	<string>appleLogo,0</string>
+	<key>RAF WELCOME LABEL ----------</key>
+	<string></string>
+	<key>RAFWelcomeTextMessage</key>
+	<string>Spread the word</string>
+	<key>RAFWelcomeTextColor</key>
+	<string>#000000</string>
+	<key>RAFWelcomeTextFont</key>
+	<string>HelveticaNeue, 22</string>
+	<key>RAF DESCRIPTION LABEL ------</key>
+	<string></string>
+	<key>RAFDescriptionTextMessage</key>
+	<string>Refer a friend to get rewards</string>
+	<key>RAFDescriptionTextColor</key>
+	<string>#C9C9C9</string>
+	<key>RAFDescriptionTextFont</key>
+	<string>HelveticaNeue, 18</string>
+	<key>DefaultShareMessage</key>
+	<string>I&apos;m a fan of this company, check them out!</string>
+	<key>CONTACT SEND BUTTON ---------</key>
+	<string></string>
+	<key>ContactSendButtonBackgroundColor</key>
+	<string>#4199D1</string>
+	<key>ContactSendButtonTextColor</key>
+	<string>#FFFFFF</string>
+	<key>ContactSendButtonTextFont</key>
+	<string>HelveticaNeue, 16</string>
+	<key>CONTACT SEARCH BAR ----------</key>
+	<string></string>
+	<key>ContactSearchBackgroundColor</key>
+	<string>#DEDEDE</string>
+	<key>ContactSearchDoneButtonTextColor</key>
+	<string>#000000</string>
+	<key>CONTACT TABLEVIEW ------------</key>
+	<string></string>
+	<key>ContactTableCheckMarkColor</key>
+	<string>#4199D1</string>
+	<key>ContactTableNameTextFont</key>
+	<string>Helvetica, 17</string>
+	<key>ContactTableInfoTextFont</key>
+	<string>Helvetica, 13</string>
+</dict>
+</plist>
