@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AMBConversionParameters.h"
 
-@interface AMBConversion : NSObject
+@interface AMBConversion : NSObject <NSURLSessionDelegate>
 
 @property (nonatomic, strong) NSString * key;
 

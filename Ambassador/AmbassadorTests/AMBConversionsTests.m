@@ -89,12 +89,4 @@
     XCTAssertNotNil(mockParameters.isValid);
 }
 
-- (void)testSendConversions {
-    // GIVEN
-    
-    // WHEN
-    
-    // THEN
-}
-
 @end
