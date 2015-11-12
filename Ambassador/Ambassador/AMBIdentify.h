@@ -10,7 +10,9 @@
 #import <UIKit/UIKit.h>
 
 @interface AMBIdentify : NSObject
+
 @property NSMutableDictionary *fp;
-- (void)identifyWithURL:(NSString *)url completion:(void(^)(NSMutableDictionary *resp, NSError *e))completion;
-+ (NSString *)identifyUrlWithUniversalID:(NSString *)uid;
+
+- (void)identifyWithUniversalID:(NSString*)universalID completion:(void(^)(NSMutableDictionary *returnDict, NSError *error))completion;
+
 @end
