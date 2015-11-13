@@ -26,7 +26,7 @@
 
 // FOR IOS 8 AND ABOVE **
 + (UIImage*)imageFromAssetsWithName:(NSString*)name tintable:(BOOL)tintable {
-    NSBundle *ambassadorBundle = [NSBundle bundleWithIdentifier:@"AmbassadorBundle"];
+    NSBundle *ambassadorBundle = ([NSBundle bundleWithIdentifier:@"AmbassadorBundle"]) ? [NSBundle bundleWithIdentifier:@"AmbassadorBundle"] : [NSBundle bundleForClass:[self class]];
     
     if (tintable) {
         return [[UIImage imageNamed:name inBundle:ambassadorBundle compatibleWithTraitCollection:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
