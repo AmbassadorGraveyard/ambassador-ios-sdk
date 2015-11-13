@@ -226,7 +226,9 @@
     else
     {
         // simple number
-        [returnNumber insertString:@"-" atIndex:3];
+        if (number.length >= 4) {
+            [returnNumber insertString:@"-" atIndex:3];
+        }
     }
     return returnNumber;
 }
