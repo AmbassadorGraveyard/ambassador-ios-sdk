@@ -15,9 +15,10 @@
 #import "AMBPusherChannelObject.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBUtilities.h"
+#import <WebKit/WebKit.h>
 
 
-@interface AMBIdentify () <SFSafariViewControllerDelegate, UIWebViewDelegate>
+@interface AMBIdentify () <SFSafariViewControllerDelegate, UIWebViewDelegate, WKNavigationDelegate>
 
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
 @property (nonatomic, strong) SFSafariViewController * safariVC;
@@ -58,6 +59,10 @@
     NSString *identifyURLString = [AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID];
     NSURL *identifyURL = [NSURL URLWithString:identifyURLString];
     [[UIApplication sharedApplication] openURL:identifyURL]; // Tells the App Delegate to lauch the url in Safari which will eventually redirect us back
+}
+
+- (void)performIdentifyiOS8 {
+
 }
 
 
