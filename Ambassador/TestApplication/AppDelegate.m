@@ -57,6 +57,11 @@
 //            NSLog(@"Required parameters are set");
 //        }
 //    }];
+//    
+//    NSString *agentString = [NSString stringWithFormat:@"%@ Safari/600.1.4", [[[UIWebView alloc] init] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"]];
+//    
+//    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:agentString, @"UserAgent", nil];
+//    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
     
     [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32"];
     

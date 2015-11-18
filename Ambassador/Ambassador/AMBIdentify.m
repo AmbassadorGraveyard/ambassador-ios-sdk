@@ -23,21 +23,22 @@
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
 @property (nonatomic, strong) SFSafariViewController * safariVC;
 @property (nonatomic, strong) NSTimer * identifyTimer;
+@property (nonatomic, strong) WKWebView * webView;
 
 @end
 
 @implementation AMBIdentify
 
 - (void)identifyWithUniversalID:(NSString*)universalID completion:(void(^)(NSMutableDictionary *returnDict, NSError *error))completion {
-//    if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
-//        [self performIdentifyForiOS9];
-//        self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
-//    } else {
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
+        [self performIdentifyForiOS9];
+        self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
+    } else {
         [self performIdentifyiOS8];
 //        if (![AMBValues getDeviceFingerPrint] || ![AMBValues getMbsyCookieCode]) { // Checks to see if we already have the values
 //            [self performDeepLink];
 //        }
-//    }
+    }
 }
 
 - (void)performIdentifyForiOS9 {
@@ -63,10 +64,24 @@
 }
 
 - (void)performIdentifyiOS8 {
-    WKWebView *webkitWebview = [[WKWebView alloc] initWithFrame:[UIApplication sharedApplication].windows[0].rootViewController.view.frame];
-    [webkitWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://preview.augur.io/ci"]]];
-    
-    [[UIApplication sharedApplication].windows[0].rootViewController.view addSubview:webkitWebview];
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    self.webView.navigationDelegate = self;
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://preview.augur.io/ci"]]];
+}
+
+
+#pragma mark - WKWebview Delegate
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    if (![AMBValues getDeviceFingerPrint]) {
+        [self.webView evaluateJavaScript:@"JSON.stringify(augur.json)" completionHandler:^(NSString * _Nullable value, NSError * _Nullable error) {
+            if (value) {
+                NSData *stringData = [value dataUsingEncoding:NSUTF8StringEncoding];
+                [AMBValues setDeviceFingerPrintWithDictionary:[NSJSONSerialization JSONObjectWithData:stringData options:NSJSONReadingMutableContainers error:nil]];
+                NSLog(@"AUGUR VALUE = %@", value);
+            }
+        }];
+    }
 }
 
 
