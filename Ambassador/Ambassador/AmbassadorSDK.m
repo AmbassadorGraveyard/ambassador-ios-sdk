@@ -217,8 +217,6 @@ static AMBServiceSelector *raf;
     o.campaign_id = AMBOptionalString(campaign);
     o.enroll = enroll;
     o.fp = (self.identify.fp) ? self.identify.fp : (NSMutableDictionary*)@{};
-    
-    DLog(@"The fingerprint getting sent in send identify: %@", o.fp);
 
     NSMutableDictionary *extraHeaders = [[AmbassadorSDK sharedInstance].pusherChannelObj createAdditionalNetworkHeaders];
     

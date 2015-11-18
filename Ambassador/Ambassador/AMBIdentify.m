@@ -69,18 +69,25 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://preview.augur.io/ci"]]];
 }
 
+- (void)getDeviceFingerPrint {
+    if (![AMBValues getDeviceFingerPrint]) {
+        [self.webView evaluateJavaScript:@"JSON.stringify(augur.json)" completionHandler:^(NSString * _Nullable value, NSError * _Nullable error) {
+            if (value) {
+                [self.identifyTimer invalidate];
+                NSData *stringData = [value dataUsingEncoding:NSUTF8StringEncoding];
+                [AMBValues setDeviceFingerPrintWithDictionary:[NSJSONSerialization JSONObjectWithData:stringData options:NSJSONReadingMutableContainers error:nil]];
+                NSLog(@"AUGUR VALUE = %@", [AMBValues getDeviceFingerPrint]);
+            }
+        }];
+    }
+}
+
 
 #pragma mark - WKWebview Delegate
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    if (![AMBValues getDeviceFingerPrint]) {
-        [self.webView evaluateJavaScript:@"JSON.stringify(augur.json)" completionHandler:^(NSString * _Nullable value, NSError * _Nullable error) {
-            if (value) {
-                NSData *stringData = [value dataUsingEncoding:NSUTF8StringEncoding];
-                [AMBValues setDeviceFingerPrintWithDictionary:[NSJSONSerialization JSONObjectWithData:stringData options:NSJSONReadingMutableContainers error:nil]];
-                NSLog(@"AUGUR VALUE = %@", value);
-            }
-        }];
+    if (!self.identifyTimer) {
+        self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(getDeviceFingerPrint) userInfo:nil repeats:YES];
     }
 }
 
