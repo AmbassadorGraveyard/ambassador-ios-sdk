@@ -29,14 +29,15 @@
 @implementation AMBIdentify
 
 - (void)identifyWithUniversalID:(NSString*)universalID completion:(void(^)(NSMutableDictionary *returnDict, NSError *error))completion {
-    if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
-        [self performIdentifyForiOS9];
-        self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
-    } else {
-        if (![AMBValues getDeviceFingerPrint] || ![AMBValues getMbsyCookieCode]) { // Checks to see if we already have the values
-            [self performDeepLink];
-        }
-    }
+//    if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
+//        [self performIdentifyForiOS9];
+//        self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
+//    } else {
+        [self performIdentifyiOS8];
+//        if (![AMBValues getDeviceFingerPrint] || ![AMBValues getMbsyCookieCode]) { // Checks to see if we already have the values
+//            [self performDeepLink];
+//        }
+//    }
 }
 
 - (void)performIdentifyForiOS9 {
@@ -62,7 +63,10 @@
 }
 
 - (void)performIdentifyiOS8 {
-
+    WKWebView *webkitWebview = [[WKWebView alloc] initWithFrame:[UIApplication sharedApplication].windows[0].rootViewController.view.frame];
+    [webkitWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://preview.augur.io/ci"]]];
+    
+    [[UIApplication sharedApplication].windows[0].rootViewController.view addSubview:webkitWebview];
 }
 
 
