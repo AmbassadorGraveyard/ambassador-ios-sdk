@@ -95,7 +95,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     
     self.searchBar.delegate = self;
     
-    [self.editMessageButton setImage:AMBimageFromBundleNamed(@"pencil", @"png") forState:UIControlStateNormal];
+    [[self.editMessageButton imageView] setContentMode:UIViewContentModeScaleAspectFit];
+    [self.editMessageButton setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:NO] forState:UIControlStateNormal];
     [self.editMessageButton setImage:[[UIImage alloc] init] forState:UIControlStateSelected];
     
     //self.composeMessageTextView.editable = NO;

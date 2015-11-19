@@ -60,7 +60,7 @@
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nBM-iI-tni">
-                                <rect key="frame" x="300" y="96" width="0.0" height="0.0"/>
+                                <rect key="frame" x="300" y="95" width="0.0" height="0.0"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="GzU-VF-AqZ"/>
@@ -73,7 +73,7 @@
                                 </variation>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wCS-AA-Mui">
-                                <rect key="frame" x="300" y="156" width="0.0" height="0.0"/>
+                                <rect key="frame" x="300" y="155" width="0.0" height="0.0"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="USf-mf-a4k"/>
@@ -90,21 +90,21 @@
                                 <rect key="frame" x="15" y="111" width="570" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqW-y2-29e">
-                                        <rect key="frame" x="542" y="6" width="28" height="18"/>
+                                        <rect key="frame" x="545" y="6" width="17" height="18"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.90933948863636371" green="0.90933948863636371" blue="0.90933948863636371" alpha="1" colorSpace="calibratedRGB"/>
                                         <accessibility key="accessibilityConfiguration" identifier="btnEdit"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="28" id="0Xg-X5-lQG"/>
+                                            <constraint firstAttribute="width" constant="17" id="0Xg-X5-lQG"/>
                                             <constraint firstAttribute="height" constant="18" id="7YT-Io-aVr"/>
                                         </constraints>
-                                        <state key="normal" image="clipboard.png"/>
+                                        <state key="normal" image="clipboard"/>
                                         <connections>
                                             <action selector="clipboardButtonPress:" destination="SGl-pp-yfW" eventType="touchUpInside" id="LxK-Gr-sbH"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Acl-kl-6LS">
-                                        <rect key="frame" x="10" y="7" width="472" height="17"/>
+                                        <rect key="frame" x="10" y="7" width="475" height="17"/>
                                         <animations/>
                                         <accessibility key="accessibilityConfiguration" identifier="urlLabel"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -119,7 +119,7 @@
                                     <constraint firstAttribute="height" constant="30" id="LjQ-6y-AhA"/>
                                     <constraint firstItem="Acl-kl-6LS" firstAttribute="leading" secondItem="OxG-FT-zCk" secondAttribute="leading" constant="10" id="NGx-yv-9DJ"/>
                                     <constraint firstItem="lqW-y2-29e" firstAttribute="top" secondItem="OxG-FT-zCk" secondAttribute="top" constant="6" id="QSM-HE-w8q"/>
-                                    <constraint firstAttribute="trailing" secondItem="lqW-y2-29e" secondAttribute="trailing" id="c88-NL-cPb"/>
+                                    <constraint firstAttribute="trailing" secondItem="lqW-y2-29e" secondAttribute="trailing" constant="8" id="c88-NL-cPb"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="lqW-y2-29e" secondAttribute="bottom" constant="6" id="cZm-ZO-TZc"/>
                                     <constraint firstAttribute="bottom" secondItem="lqW-y2-29e" secondAttribute="bottom" constant="6" id="clp-7D-Wov"/>
                                     <constraint firstItem="Acl-kl-6LS" firstAttribute="top" secondItem="OxG-FT-zCk" secondAttribute="top" constant="7" id="nS6-Sv-w5H"/>
@@ -153,7 +153,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BcH-xJ-EyE">
                                                     <rect key="frame" x="10" y="8" width="60" height="60"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Do0-0W-fIT">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Do0-0W-fIT">
                                                             <rect key="frame" x="20" y="20" width="20" height="20"/>
                                                             <animations/>
                                                             <constraints>
@@ -386,7 +386,7 @@
                                         <rect key="frame" x="0.0" y="436" width="600" height="100"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" text="I'm a fan of this company. Check them out {share_url}" translatesAutoresizingMaskIntoConstraints="NO" id="6Nf-63-bf7">
-                                                <rect key="frame" x="15" y="9" width="515" height="40"/>
+                                                <rect key="frame" x="15" y="9" width="522" height="40"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -430,7 +430,7 @@
                                                     <action selector="sendButtonPressed:" destination="0Ev-V6-LY3" eventType="touchUpInside" id="EZP-aW-Lqc"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T8W-36-tpm">
+                                            <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T8W-36-tpm">
                                                 <rect key="frame" x="552" y="20" width="40" height="18"/>
                                                 <animations/>
                                                 <accessibility key="accessibilityConfiguration" identifier="btnEdit"/>
@@ -469,6 +469,7 @@
                                             <constraint firstItem="6Nf-63-bf7" firstAttribute="leading" secondItem="zwk-RT-ZLi" secondAttribute="leading" constant="15" id="gxU-Pc-Avb"/>
                                             <constraint firstItem="6Nf-63-bf7" firstAttribute="top" secondItem="zwk-RT-ZLi" secondAttribute="top" constant="20" id="jl3-14-fkh"/>
                                             <constraint firstAttribute="trailing" secondItem="6Nf-63-bf7" secondAttribute="trailing" constant="70" id="p0w-Ao-wIE"/>
+                                            <constraint firstItem="T8W-36-tpm" firstAttribute="leading" secondItem="6Nf-63-bf7" secondAttribute="trailing" constant="15" id="rlG-ET-4kX"/>
                                             <constraint firstAttribute="height" constant="100" id="tm0-AS-1Ek"/>
                                             <constraint firstItem="T8W-36-tpm" firstAttribute="top" secondItem="zwk-RT-ZLi" secondAttribute="top" constant="20" id="uuc-0i-Yzv"/>
                                             <constraint firstAttribute="trailing" secondItem="T8W-36-tpm" secondAttribute="trailing" constant="8" id="xNj-Zv-QXU"/>
@@ -478,6 +479,7 @@
                                                 <exclude reference="ThH-oQ-h3m"/>
                                                 <exclude reference="YzN-Ts-Pmo"/>
                                                 <exclude reference="jl3-14-fkh"/>
+                                                <exclude reference="p0w-Ao-wIE"/>
                                             </mask>
                                         </variation>
                                         <variation key="widthClass=regular">
@@ -1264,7 +1266,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="clipboard.png" width="45" height="28"/>
+        <image name="clipboard" width="43" height="55"/>
         <image name="close.png" width="24" height="23"/>
     </resources>
 </document>

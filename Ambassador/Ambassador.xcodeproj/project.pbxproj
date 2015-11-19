@@ -203,6 +203,7 @@
 		EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */ = {isa = PBXBuildFile; fileRef = EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */; };
 		EFDFA0D01BE154B8002FA3ED /* UIColor+AMBColorValues.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */; };
 		EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
+		EFF58FA01BF4F8F5001AB2DE /* AMBMedia.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -484,6 +485,7 @@
 		EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AMBColorValues.m"; sourceTree = "<group>"; };
 		EFDFA0D11BE157D2002FA3ED /* Ambassador-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ambassador-Prefix.pch"; sourceTree = "<group>"; };
 		EFED7B041BDA9F0A00F6C360 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AMBMedia.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -708,6 +710,7 @@
 			isa = PBXGroup;
 			children = (
 				DB844D541BA7622D003FD7A9 /* Supporting Files */,
+				EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */,
 			);
 			path = AmbassadorResources;
 			sourceTree = "<group>";
@@ -1146,6 +1149,7 @@
 				DBEB6FF51BA9B2D8005EE0D0 /* close.png in Resources */,
 				DBEB6FFE1BA9B2D8005EE0D0 /* sms.png in Resources */,
 				DBEB6FFF1BA9B2D8005EE0D0 /* successIcon.png in Resources */,
+				EFF58FA01BF4F8F5001AB2DE /* AMBMedia.xcassets in Resources */,
 				EF407F211BB3449B0074D2AE /* AmbassadorTheme.plist in Resources */,
 				DBEB6FFD1BA9B2D8005EE0D0 /* search.png in Resources */,
 				DBEB6FF71BA9B2D8005EE0D0 /* facebook.png in Resources */,
