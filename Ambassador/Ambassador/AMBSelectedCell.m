@@ -13,7 +13,7 @@
 
 - (IBAction)removeButtonPressed:(UIButton *)sender
 {
-    [self.delegate removeContact:self.removeButton.contact];
+    [self.delegate removeButtonTappedForContact:self.selectedContact];
 }
 
 @end
