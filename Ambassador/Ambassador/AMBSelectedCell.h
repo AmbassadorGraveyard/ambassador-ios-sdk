@@ -23,4 +23,6 @@
 @property (nonatomic, strong) AMBContact * selectedContact;
 @property (weak) id<AMBSelectedCellDelegate>delegate;
 
+- (void)setUpCellWithContact:(AMBContact*)contact;
+
 @end
