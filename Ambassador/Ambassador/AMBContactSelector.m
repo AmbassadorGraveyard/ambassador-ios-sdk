@@ -340,6 +340,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     
     AMBSelectedCell *cell = [tableView dequeueReusableCellWithIdentifier:SELECTED_CELL_IDENTIFIER];
     [cell setUpCellWithContact:contact];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     
     return cell;
