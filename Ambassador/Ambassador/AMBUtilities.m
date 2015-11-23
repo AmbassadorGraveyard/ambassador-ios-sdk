@@ -91,8 +91,8 @@
 }
 
 + (NSString*)createRequestID {
-    NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970] * 1000;
-    return [NSString stringWithFormat:@"%f", timeInMiliseconds];
+    NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970];
+    return [NSString stringWithFormat:@"%i", (int)timeInMiliseconds];
 }
     
 @end

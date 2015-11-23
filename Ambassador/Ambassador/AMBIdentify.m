@@ -106,4 +106,10 @@
     }
 }
 
+- (NSString*)createDeviceHashString {
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[AMBValues getDeviceFingerPrint] options:NSJSONWritingPrettyPrinted error:&error];
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
+
 @end
