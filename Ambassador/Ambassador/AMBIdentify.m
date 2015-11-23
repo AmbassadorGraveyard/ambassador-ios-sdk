@@ -41,6 +41,8 @@
     }
 }
 
+#pragma mark - Identify Functions
+
 - (void)performIdentifyForiOS9 {
     self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]]];
     DLog(@"Performing Identify with SAFARI VC for iOS 9");
@@ -69,19 +71,6 @@
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://preview.augur.io/ci"]]];
 }
 
-- (void)getDeviceFingerPrint {
-    if (![AMBValues getDeviceFingerPrint]) {
-        [self.webView evaluateJavaScript:@"JSON.stringify(augur.json)" completionHandler:^(NSString * _Nullable value, NSError * _Nullable error) {
-            if (value) {
-                [self.identifyTimer invalidate];
-                NSData *stringData = [value dataUsingEncoding:NSUTF8StringEncoding];
-                [AMBValues setDeviceFingerPrintWithDictionary:[NSJSONSerialization JSONObjectWithData:stringData options:NSJSONReadingMutableContainers error:nil]];
-                NSLog(@"AUGUR VALUE = %@", [AMBValues getDeviceFingerPrint]);
-            }
-        }];
-    }
-}
-
 
 #pragma mark - WKWebview Delegate
 
@@ -99,6 +88,22 @@
     [self.safariVC.view removeFromSuperview];
     [self.safariVC removeFromParentViewController];
     if (didLoadSuccessfully) { [self.identifyTimer invalidate]; } // If the load was successful, we kill the retry timer
+}
+
+
+#pragma mark - Helper Functions
+
+- (void)getDeviceFingerPrint {
+    if (![AMBValues getDeviceFingerPrint]) {
+        [self.webView evaluateJavaScript:@"JSON.stringify(augur.json)" completionHandler:^(NSString * _Nullable value, NSError * _Nullable error) {
+            if (value) {
+                [self.identifyTimer invalidate];
+                NSData *stringData = [value dataUsingEncoding:NSUTF8StringEncoding];
+                [AMBValues setDeviceFingerPrintWithDictionary:[NSJSONSerialization JSONObjectWithData:stringData options:NSJSONReadingMutableContainers error:nil]];
+                NSLog(@"AUGUR VALUE = %@", [AMBValues getDeviceFingerPrint]);
+            }
+        }];
+    }
 }
 
 @end
