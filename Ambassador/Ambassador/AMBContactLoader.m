@@ -223,7 +223,7 @@
         [returnNumber insertString:@" " atIndex:5];
         [returnNumber insertString:@"-" atIndex:9];
     }
-    else
+    else if (number.length >= 4) 
     {
         // simple number
         [returnNumber insertString:@"-" atIndex:3];

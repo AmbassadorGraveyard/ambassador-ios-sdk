@@ -10,7 +10,7 @@
 #import "AMBNetworkObject.h"
 #import "AMBNetworkManager.h"
 
-@interface AMBAmbassadorNetworkManager : AMBNetworkManager
+@interface AMBAmbassadorNetworkManager : AMBNetworkManager <NSURLConnectionDelegate>
 
 + (instancetype)sharedInstance;
 

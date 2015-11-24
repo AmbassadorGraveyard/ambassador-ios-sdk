@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "AMBConversionParameters.h"
 
-@interface AMBConversion : NSObject
+@interface AMBConversion : NSObject <NSURLSessionDelegate>
+
+@property (nonatomic, strong) NSString * key;
 
 - (id)initWithKey:(NSString *)key;
 - (void)registerConversionWithParameters:(AMBConversionParameters *)parameters completion:(void (^)(NSError *error))completion;
