@@ -72,7 +72,7 @@
     
     // THEN
     XCTAssertNil(expectedError, @"There was an error - %@", expectedError);
-    XCTAssertTrue([returnString containsString:@"private-snippet-channel"], @"%@ did not contain private-snippet-channel", returnString);
+    XCTAssertTrue([returnString containsString:@"private-channel"], @"%@ did not contain private-snippet-channel", returnString);
 }
 
 - (void)testPusherAuthUrl {
