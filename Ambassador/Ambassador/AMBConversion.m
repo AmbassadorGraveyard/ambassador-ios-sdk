@@ -40,7 +40,6 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
 @property NSString *databaseFilePath;
 @property AMBFMDatabaseQueue *databaseQueue;
 @property AMBFMDatabase *database;
-@property NSString * key;
 
 @end
 
@@ -209,8 +208,16 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
         
             //Get ID in order to remove upon sucessful network request
             NSNumber * sql_ID = [NSNumber numberWithInt:[resultSet intForColumn:@"ID"]];
-        
-            NSURLSessionDataTask *task = [[NSURLSession sharedSession]
+            
+            NSURLSession *urlSession;
+            
+            #if AMBPRODUCTION
+                urlSession = [NSURLSession sharedSession];
+            #else
+                urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
+            #endif
+            
+            NSURLSessionDataTask *task = [urlSession
                                           dataTaskWithRequest:request
                                           completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
               {
@@ -243,5 +250,19 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
         }
     }];
 }
+
+
+#pragma mark - NSURL Delegete
+
+// Allows certain requests to be made for dev servers when running in unit tests for Circle
+- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler{
+    if([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+        if([challenge.protectionSpace.host isEqualToString:@"dev-ambassador-api.herokuapp.com"]) { // Makes sure that it's our url being challenged
+            NSURLCredential *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+            completionHandler(NSURLSessionAuthChallengeUseCredential,credential);
+        }
+    }
+}
+
 
 @end
