@@ -60,7 +60,7 @@
     
     [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"];
     
-    [AmbassadorSDK identifyWithEmail:@"test1703@getambassador.com"];
+    [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com"];
     
 //    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
 //        if (error) {
