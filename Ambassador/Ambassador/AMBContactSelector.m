@@ -95,7 +95,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     
     self.searchBar.delegate = self;
     
-    [self.editMessageButton setImage:AMBimageFromBundleNamed(@"pencil", @"png") forState:UIControlStateNormal];
+    [[self.editMessageButton imageView] setContentMode:UIViewContentModeScaleAspectFit];
+    [self.editMessageButton setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:NO] forState:UIControlStateNormal];
     [self.editMessageButton setImage:[[UIImage alloc] init] forState:UIControlStateSelected];
     
     //self.composeMessageTextView.editable = NO;
@@ -603,7 +604,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             break;
             
         case AMBSocialServiceTypeSMS:
-            errorString = [NSString stringWithFormat:@"The phone number %@ is invalid.  Please changed it to a valid phone number. \n(Example: 1-(555)555-5555, (555)555-5555, 555-5555)", valueString];
+            errorString = [NSString stringWithFormat:@"The phone number %@ is invalid.  Please change it to a valid phone number. \n(Example: 1-(555)555-5555, (555)555-5555, 555-5555)", valueString];
             
         default:
             break;

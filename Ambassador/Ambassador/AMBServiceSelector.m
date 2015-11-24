@@ -109,7 +109,7 @@ int contactServiceType;
     self.copiedAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(hideConfirmCopyAnimation) userInfo:nil repeats:NO];
 
     [UIView animateWithDuration:0.3 animations:^{
-        self.lblCopied.frame = CGRectMake(self.btnCopy.frame.origin.x - self.lblCopied.frame.size.width - 7, self.lblCopied.frame.origin.y, 45, self.lblCopied.frame.size.height);
+        self.lblCopied.frame = CGRectMake(self.btnCopy.frame.origin.x - self.lblCopied.frame.size.width - 20, self.lblCopied.frame.origin.y, 45, self.lblCopied.frame.size.height);
         self.lblCopied.alpha = 1;
     }];
 }
