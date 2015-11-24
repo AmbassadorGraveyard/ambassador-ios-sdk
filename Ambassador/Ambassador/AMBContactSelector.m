@@ -608,7 +608,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             break;
             
         case AMBSocialServiceTypeSMS:
-            errorString = [NSString stringWithFormat:@"The phone number %@ is invalid.  Please changed it to a valid phone number. \n(Example: 1-(555)555-5555, (555)555-5555, 555-5555)", valueString];
+            errorString = [NSString stringWithFormat:@"The phone number %@ is invalid.  Please change it to a valid phone number. \n(Example: 1-(555)555-5555, (555)555-5555, 555-5555)", valueString];
             
         default:
             break;
