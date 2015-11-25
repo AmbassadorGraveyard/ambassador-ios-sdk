@@ -74,12 +74,19 @@ static AMBServiceSelector *raf;
 
 #pragma mark - conversion
 
-+ (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
-    [[AmbassadorSDK sharedInstance] registerConversion:information completion:completion];
++ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInsall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion {
+    [[AmbassadorSDK sharedInstance] localRegisterConversion:conversionParameters restrictToInstall:restrictToInstall completion:completion];
 }
 
-- (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
-    [self.conversion registerConversionWithParameters:information completion:completion];
+- (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion {
+    if (restrictToInstall && ![AMBValues getHasInstalledBoolean]) {
+        [self.conversion registerConversionWithParameters:conversionParameters completion:completion];
+        [AMBValues setHasInstalled];
+    }
+    
+    if (restrictToInstall && [AMBValues getHasInstalledBoolean]) { return; }
+    
+    if (!restrictToInstall) { [self.conversion registerConversionWithParameters:conversionParameters completion:completion]; }
 }
 
 - (void)checkConversionQueue {
