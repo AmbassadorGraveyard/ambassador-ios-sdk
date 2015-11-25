@@ -42,7 +42,6 @@
  1   ConversionParameters required properties unset
  2   ConversionParameters property has nil value
  */
-+ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion;
 
 
 ///------------------------------------
