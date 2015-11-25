@@ -169,10 +169,6 @@ static AMBServiceSelector *raf;
     [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:nil];
 }
 
-//- (void)identifyWithEmail:(NSString *)email {
-//    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:nil];
-//}
-
 + (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
     [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:c];
 }
