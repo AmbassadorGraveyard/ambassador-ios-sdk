@@ -87,17 +87,13 @@ static AMBServiceSelector *raf;
 }
 
 
-#pragma mark - runWith
+#pragma mark - RunWith Functions
 
 + (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID {
-    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:nil completion:nil];
+    [[AmbassadorSDK sharedInstance] localRunWithuniversalToken:universalToken universalID:universalID];
 }
 
-+ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
-    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:information completion:completion];
-}
-
-- (void)runWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
+- (void)localRunWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID {
     universalToken = [NSString stringWithFormat:@"SDKToken %@", universalToken];
     self.universalID = universalID;
     self.universalToken = universalToken;
@@ -105,17 +101,7 @@ static AMBServiceSelector *raf;
     [[NSUserDefaults standardUserDefaults] setValue:universalToken forKey:AMB_UNIVERSAL_TOKEN_DEFAULTS_KEY];
     if (!self.conversionTimer.isValid) { self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES]; }
     self.conversion = [[AMBConversion alloc] initWithKey:universalToken];
-
-    if (information) { // Check if this is the first time opening
-        if (![[NSUserDefaults standardUserDefaults] objectForKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]) {
-            DLog(@"Sending conversion on app launch");
-            [self registerConversion:information completion:completion];
-        }
-    }
-  
-    [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]; // Set launch flag in User Deafaults
 }
-
 
 
 #pragma mark - pusher
