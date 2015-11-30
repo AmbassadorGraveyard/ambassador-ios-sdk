@@ -84,7 +84,10 @@ static AMBServiceSelector *raf;
         [AMBValues setHasInstalled];
     }
     
-    if (restrictToInstall && [AMBValues getHasInstalledBoolean]) { return; }
+    if (restrictToInstall && [AMBValues getHasInstalledBoolean]) {
+        completion([NSError errorWithDomain:@"This conversion is restricted to install." code:0 userInfo:nil]);
+        return;
+    }
     
     if (!restrictToInstall) { [self.conversion registerConversionWithParameters:conversionParameters completion:completion]; }
 }
