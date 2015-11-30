@@ -195,8 +195,8 @@ AmbassadorSDK.registerConversion(conversion, restrictToInsall: false) { (error) 
   if ((error) != nil) {
       println("Error \(error)")
   } else {
-       println("All conversion parameters are set properly")
-   }
+      println("All conversion parameters are set properly")
+  }
 }
 ```
 
