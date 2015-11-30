@@ -34,7 +34,13 @@
     clickConversion.mbsy_revenue = @200;
     clickConversion.mbsy_email = @"corey@getambassador.com";
     
-    [AmbassadorSDK registerConversion:clickConversion restrictToInsall:NO completion:nil];
+    [AmbassadorSDK registerConversion:clickConversion restrictToInsall:NO completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Conversion not registered - %@", error);
+        } else {
+            NSLog(@"BUTTON TAP CONVERSION REGISTERED SUCCESSFULLY!");
+        }
+    }];
 }
 
 @end

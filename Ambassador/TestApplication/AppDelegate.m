@@ -25,6 +25,19 @@
 //    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // PROD CREDENTIALS
     
     [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com"];
+    
+    AMBConversionParameters *fakeInstallConversion = [[AMBConversionParameters alloc] init];
+    fakeInstallConversion.mbsy_campaign = @260;
+    fakeInstallConversion.mbsy_revenue = @200;
+    fakeInstallConversion.mbsy_email = @"greg@getambassador.com";
+    
+    [AmbassadorSDK registerConversion:fakeInstallConversion restrictToInsall:YES completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Conversion not registered - %@", error);
+        } else {
+            NSLog(@"INSTALL CONVERSION REGISTERED SUCCESSFULLY!");
+        }
+    }];
 
     return YES;
 }
