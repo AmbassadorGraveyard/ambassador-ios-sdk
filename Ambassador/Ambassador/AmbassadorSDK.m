@@ -82,6 +82,7 @@ static AMBServiceSelector *raf;
     if (restrictToInstall && ![AMBValues getHasInstalledBoolean]) {
         [self.conversion registerConversionWithParameters:conversionParameters completion:completion];
         [AMBValues setHasInstalled];
+        return;
     }
     
     if (restrictToInstall && [AMBValues getHasInstalledBoolean]) {
