@@ -25,6 +25,19 @@
 //    [AmbassadorSDK runWithUniversalToken:@"84444f4022a8cd4fce299114bc2e323e57e32188" universalID:@"830883cd-b2a7-449c-8a3c-d1850aa8bc6b"]; // PROD CREDENTIALS
     
     [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com"];
+    
+    AMBConversionParameters *fakeInstallConversion = [[AMBConversionParameters alloc] init];
+    fakeInstallConversion.mbsy_campaign = @260;
+    fakeInstallConversion.mbsy_revenue = @200;
+    fakeInstallConversion.mbsy_email = @"greg@getambassador.com";
+    
+    [AmbassadorSDK registerConversion:fakeInstallConversion restrictToInsall:YES completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Conversion not registered - %@", error);
+        } else {
+            NSLog(@"INSTALL CONVERSION REGISTERED SUCCESSFULLY!");
+        }
+    }];
 
     return YES;
 }
