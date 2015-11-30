@@ -105,10 +105,41 @@
 
 - (void)testSetAndGetHasInstalled {
     // GIVEN
+    BOOL notFirstLaunch = YES;
+    BOOL firstLaunch = NO;
     
     // WHEN
+    BOOL expectedFalseBool = [AMBValues getHasInstalledBoolean];
+    [AMBValues setHasInstalled];
+    BOOL expectedTrueBool = [AMBValues getHasInstalledBoolean];
     
     // THEN
+    XCTAssertEqual(notFirstLaunch, expectedTrueBool);
+    XCTAssertEqual(firstLaunch, expectedFalseBool);
+}
+
+- (void)testSetAndGetUniversalID {
+    // GIVE
+    NSString *mockUniversalID = @"testID";
+    
+    // WHEN
+    [AMBValues setUniversalIDWithID:mockUniversalID];
+    NSString *expectedID = [AMBValues getUniversalID];
+    
+    // THEN
+    XCTAssertEqualObjects(mockUniversalID, expectedID);
+}
+
+- (void)testSetAndGetUniversalToken {
+    // GIVEN
+    NSString *mockUniversalToken = @"testToken";
+    
+    // WHEN
+    [AMBValues setUniversalTokenWithToken:mockUniversalToken];
+    NSString *expectedToken = [AMBValues getUniversalToken];
+    
+    // THEN
+    XCTAssertEqualObjects(mockUniversalToken, expectedToken);
 }
 
 @end
