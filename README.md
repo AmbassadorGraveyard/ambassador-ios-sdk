@@ -158,7 +158,7 @@ parameters.mbsy_is_approved = @YES; // BOOL (Defaults to @YES)
     if (error) {
         NSLog(@"There was an error - %@", error);
     } else {
-        NSLog(@"Conversion registered successfully!");
+        NSLog(@"All conversion parameters are set properly");
     }
 }];
 ```
