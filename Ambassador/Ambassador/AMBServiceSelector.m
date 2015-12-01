@@ -218,6 +218,14 @@ int contactServiceType;
     };
 }
 
+- (BOOL)checkIfFacebookIsInstalled {
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb://"]]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 - (void)sendShareTrackForServiceType:(AMBSocialServiceType)type completion:(void(^)(NSData *, NSURLResponse *, NSError *))c {
     AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
     share.short_code = self.urlNetworkObj.short_code;
