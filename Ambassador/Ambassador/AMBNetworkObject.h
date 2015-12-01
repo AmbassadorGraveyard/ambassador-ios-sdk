@@ -93,7 +93,7 @@
 
 @interface AMBBulkShareSMSObject : AMBNetworkObject
 @property (nonatomic, strong) NSArray * to;
-@property (nonatomic, strong) NSString * from;
+@property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSString * message;
 
 - (instancetype)initWithPhoneNumbers:(NSArray*)phoneNumbers fromSender:(NSString*)sender message:(NSString*)message;

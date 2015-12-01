@@ -270,11 +270,6 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             }
         }
     }
-    if (tableView == self.selectedTable)
-    {
-        AMBSelectedCell *cell = (AMBSelectedCell *)[tableView cellForRowAtIndexPath:indexPath];
-        [self.selected removeObject:cell.removeButton.contact];
-    }
     
     [self refreshAll];
 }
@@ -340,13 +335,13 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 
 #pragma mark - SelectedTableView
-- (UITableViewCell *)tableView:(UITableView *)tableView selectedCellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+
+- (UITableViewCell *)tableView:(UITableView *)tableView selectedCellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AMBContact *contact = [self.selected allObjects][indexPath.row];
     
     AMBSelectedCell *cell = [tableView dequeueReusableCellWithIdentifier:SELECTED_CELL_IDENTIFIER];
-    cell.name.text = [NSString stringWithFormat:@"%@ - %@", contact.firstName, contact.value];
-    cell.removeButton.contact = contact;
+    [cell setUpCellWithContact:contact];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     
     return cell;
@@ -355,8 +350,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 
 #pragma mark - SelectedCellDelegate
-- (void)removeContact:(AMBContact *)contact
-{
+
+- (void)removeButtonTappedForContact:(AMBContact *)contact {
     [self.selected removeObject:contact];
     [self refreshAll];
 }
@@ -609,7 +604,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
             break;
             
         case AMBSocialServiceTypeSMS:
-            errorString = [NSString stringWithFormat:@"The phone number %@ is invalid.  Please changed it to a valid phone number. \n(Example: 1-(555)555-5555, (555)555-5555, 555-5555)", valueString];
+            errorString = [NSString stringWithFormat:@"The phone number %@ is invalid.  Please change it to a valid phone number. \n(Example: 1-(555)555-5555, (555)555-5555, 555-5555)", valueString];
             
         default:
             break;

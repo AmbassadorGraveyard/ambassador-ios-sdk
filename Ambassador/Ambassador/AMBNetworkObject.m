@@ -227,7 +227,7 @@
 - (instancetype)initWithPhoneNumbers:(NSArray*)phoneNumbers fromSender:(NSString*)sender message:(NSString*)message {
     self = [super init];
     self.to = [[NSArray alloc] initWithArray:phoneNumbers];
-    self.from = sender;
+    self.name = sender;
     self.message = message;
     
     return self;
