@@ -136,15 +136,14 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
     }
 }
 
-- (void)sendConversions
-{
-    DLog();
-//    NSDictionary *userDefaultsIdentify = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_IDENTIFY_USER_DEFAULTS_KEY];
+- (void)sendConversions {
+    // If no device fingerprint is available, an empty dictionary will be returned
     NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint];
-//    NSDictionary *userDefaultsInsights = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
-    
-    //Check if insights and identify data exist to send. Else don't send
-    if (![AMBValues getMbsyCookieCode] && [[AMBValues getMbsyCookieCode] isEqualToString:@""] && !userDefaultsIdentify[@"device"][@"ID"]) { return; }
+
+    // Checks to make sure we have either a short code OR device fingerprint before moving on
+    if ((![AMBValues getMbsyCookieCode] || [[AMBValues getMbsyCookieCode] isEqualToString:@""]) && (!userDefaultsIdentify || userDefaultsIdentify.count == 0)) {
+        return;
+    }
     
     [self.databaseQueue inDatabase:^(AMBFMDatabase *db)
     {
