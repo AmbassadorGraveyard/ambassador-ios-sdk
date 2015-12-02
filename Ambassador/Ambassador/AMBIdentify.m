@@ -35,9 +35,6 @@
         self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
     } else {
         [self performIdentifyiOS8];
-//        if (![AMBValues getDeviceFingerPrint] || ![AMBValues getMbsyCookieCode]) { // Checks to see if we already have the values
-//            [self performDeepLink];
-//        }
     }
 }
 
@@ -68,7 +65,7 @@
 - (void)performIdentifyiOS8 {
     self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     self.webView.navigationDelegate = self;
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://preview.augur.io/ci"]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]]]];
 }
 
 
