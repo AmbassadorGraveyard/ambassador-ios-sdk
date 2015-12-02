@@ -176,25 +176,8 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
                     @"mbsy_short_code"  : [AMBValues getMbsyCookieCode]
                 }];
 
-            //Build the payload data to POST to the backend
-            NSDictionary * consumer = @{
-                                        @"UID" : userDefaultsIdentify[@"consumer"][@"UID"],
-                                        @"insights" : (userDefaultsIdentify[@"consumer"][@"insights"]) ? userDefaultsIdentify[@"consumer"][@"insights"] : @{}
-                                        };
-            NSDictionary * device = @{
-                                      @"type" : userDefaultsIdentify[@"device"][@"type"],
-                                      @"ID" : userDefaultsIdentify[@"device"][@"ID"]
-                                      };
-            [fields removeObjectForKey:@"insights"];
-            NSDictionary * payload = @{
-                                       @"fp" : @{
-                                               @"consumer" : consumer,
-                                               @"device" : device
-                                               },
-                                       @"fields" : fields
-                                       };
             // Convert to NSData to attach to request's HTTPBody
-            NSData *JSONData = [NSJSONSerialization dataWithJSONObject:payload
+            NSData *JSONData = [NSJSONSerialization dataWithJSONObject:[self payloadForConversionCallWithFP:userDefaultsIdentify mbsyFields:fields]
                                                                options:0
                                                                  error:nil];
             //Create the POST request
@@ -276,6 +259,5 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
     
     return @{@"fp" : fingerPrintDict, @"fields" : mbsyFields };
 }
-
 
 @end
