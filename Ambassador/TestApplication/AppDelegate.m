@@ -21,6 +21,9 @@
         [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
     }
     
+    NSUserDefaults *ambDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AMBDEFAULTS"];
+    [ambDefaults removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
+    
     AMBConversionParameters *conversion = [[AMBConversionParameters alloc] init];
     conversion.mbsy_revenue = @1000;
     conversion.mbsy_campaign = @280;
