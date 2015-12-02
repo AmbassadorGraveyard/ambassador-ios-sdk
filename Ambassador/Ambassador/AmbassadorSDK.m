@@ -153,6 +153,10 @@ static AMBServiceSelector *raf;
     [self.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
         NSMutableDictionary *json = (NSMutableDictionary *)ev.data;
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
+        if ([json isKindOfClass:[NSString class]]) {
+            return;
+        }
+        
         if (json[@"url"]) {
             [user fillWithUrl:json[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
                 [AmbassadorSDK sharedInstance].user = user;
@@ -160,6 +164,7 @@ static AMBServiceSelector *raf;
                 // TODO: Notification Center
             }];
         } else if (json[@"mbsy_cookie_code"]) {
+            DLog(@"COOKIE = %@ and FINGERPRINT = %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
             [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
             [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
         } else {
@@ -217,8 +222,6 @@ static AMBServiceSelector *raf;
     o.campaign_id = AMBOptionalString(campaign);
     o.enroll = enroll;
     o.fp = (self.identify.fp) ? self.identify.fp : (NSMutableDictionary*)@{};
-    
-    DLog(@"The fingerprint getting sent in send identify: %@", o.fp);
 
     NSMutableDictionary *extraHeaders = [[AmbassadorSDK sharedInstance].pusherChannelObj createAdditionalNetworkHeaders];
     

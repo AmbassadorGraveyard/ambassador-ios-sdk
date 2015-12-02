@@ -15,13 +15,15 @@
 #import "AMBPusherChannelObject.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBUtilities.h"
+#import <WebKit/WebKit.h>
 
 
-@interface AMBIdentify () <SFSafariViewControllerDelegate, UIWebViewDelegate>
+@interface AMBIdentify () <SFSafariViewControllerDelegate, UIWebViewDelegate, WKNavigationDelegate>
 
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
 @property (nonatomic, strong) SFSafariViewController * safariVC;
 @property (nonatomic, strong) NSTimer * identifyTimer;
+@property (nonatomic, strong) WKWebView * webView;
 
 @end
 
@@ -32,11 +34,11 @@
         [self performIdentifyForiOS9];
         self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
     } else {
-        if (![AMBValues getDeviceFingerPrint] || ![AMBValues getMbsyCookieCode]) { // Checks to see if we already have the values
-            [self performDeepLink];
-        }
+        [self performIdentifyiOS8];
     }
 }
+
+#pragma mark - Identify Functions
 
 - (void)performIdentifyForiOS9 {
     self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]]];
@@ -60,6 +62,21 @@
     [[UIApplication sharedApplication] openURL:identifyURL]; // Tells the App Delegate to lauch the url in Safari which will eventually redirect us back
 }
 
+- (void)performIdentifyiOS8 {
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    self.webView.navigationDelegate = self;
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]]]];
+}
+
+
+#pragma mark - WKWebview Delegate
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    if (!self.identifyTimer) {
+        self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(getDeviceFingerPrint) userInfo:nil repeats:YES];
+    }
+}
+
 
 #pragma mark - SFSafari ViewController Delegate
 
@@ -68,6 +85,28 @@
     [self.safariVC.view removeFromSuperview];
     [self.safariVC removeFromParentViewController];
     if (didLoadSuccessfully) { [self.identifyTimer invalidate]; } // If the load was successful, we kill the retry timer
+}
+
+
+#pragma mark - Helper Functions
+
+- (void)getDeviceFingerPrint {
+    if (![AMBValues getDeviceFingerPrint]) {
+        [self.webView evaluateJavaScript:@"JSON.stringify(augur.json)" completionHandler:^(NSString * _Nullable value, NSError * _Nullable error) {
+            if (value) {
+                [self.identifyTimer invalidate];
+                NSData *stringData = [value dataUsingEncoding:NSUTF8StringEncoding];
+                [AMBValues setDeviceFingerPrintWithDictionary:[NSJSONSerialization JSONObjectWithData:stringData options:NSJSONReadingMutableContainers error:nil]];
+                NSLog(@"AUGUR VALUE = %@", [AMBValues getDeviceFingerPrint]);
+            }
+        }];
+    }
+}
+
+- (NSString*)createDeviceHashString {
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[AMBValues getDeviceFingerPrint] options:NSJSONWritingPrettyPrinted error:&error];
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
 @end
