@@ -29,7 +29,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *composeMessageView;
 @property (weak, nonatomic) IBOutlet UITextField *searchBar;
-@property (weak, nonatomic) IBOutlet UIButton *editMessageButton;
+@property (weak, nonatomic) IBOutlet UIButton *btnEditMessage;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet UIButton *doneSearchingButton;
 @property (weak, nonatomic) IBOutlet UITextView *composeMessageTextView;
@@ -56,6 +56,7 @@
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @property BOOL activeSearch;
+@property (nonatomic) BOOL isEditing;
 
 @end
 
@@ -79,7 +80,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     self.selected = [[NSMutableSet alloc] init];
     self.filteredData = [[NSMutableArray alloc] init];
     
-    [[self.editMessageButton imageView] setContentMode:UIViewContentModeScaleAspectFit];
+    [[self.btnEditMessage imageView] setContentMode:UIViewContentModeScaleAspectFit];
 
     self.composeMessageTextView.textColor = [UIColor lightGrayColor];
     
@@ -173,38 +174,45 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 {
     DLog();
     //self.composeMessageTextView.editable = !self.composeMessageTextView.editable;
-    if (self.editMessageButton.selected)
-    {
-        DLog();
-        
-        [self.composeMessageTextView resignFirstResponder];
-    }
-    else
-    {
-        DLog();
-        
+//    if (self.editMessageButton.selected)
+//    {
+//        DLog();
+//        
+//        [self.composeMessageTextView resignFirstResponder];
+//    }
+//    else
+//    {
+//        DLog();
+//        
+//        [self.composeMessageTextView becomeFirstResponder];
+//    }
+    if (!self.isEditing) {
         [self.composeMessageTextView becomeFirstResponder];
+        self.isEditing = YES;
+    } else {
+        [self.composeMessageTextView resignFirstResponder];
+        self.isEditing = NO;
     }
 }
 
-- (void)updateEditMessageButton
-{
-    DLog();
-    self.editMessageButton.selected = !self.editMessageButton.selected;
-    self.fadeView.hidden = !self.fadeView.hidden;
-    if (!self.editMessageButton.selected)
-    {
-        DLog();
-        
-        self.composeMessageTextView.textColor = [UIColor lightGrayColor];
-    }
-    else
-    {
-        DLog();
-        
-        self.composeMessageTextView.textColor = [UIColor blackColor];
-    }
-}
+//- (void)updateEditMessageButton
+//{
+//    DLog();
+//    self.editMessageButton.selected = !self.editMessageButton.selected;
+//    self.fadeView.hidden = !self.fadeView.hidden;
+//    if (!self.editMessageButton.selected)
+//    {
+//        DLog();
+//        
+//        self.composeMessageTextView.textColor = [UIColor lightGrayColor];
+//    }
+//    else
+//    {
+//        DLog();
+//        
+//        self.composeMessageTextView.textColor = [UIColor blackColor];
+//    }
+//}
 
 - (void)refreshAll
 {
@@ -439,7 +447,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
         
         if (ABS(self.bottomViewBottomConstraint.constant - frame.size.height) > 100)
         {
-            [self updateEditMessageButton];
+//            [self updateEditMessageButton];
         }
         
         self.bottomViewBottomConstraint.constant = newFrame.size.height;
@@ -469,7 +477,7 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     
     if ([self.composeMessageTextView isFirstResponder])
     {
-        [self updateEditMessageButton];
+//        [self updateEditMessageButton];
     }
     
     // Restore the compose box to the bottom of the screen, un-hide 'send to

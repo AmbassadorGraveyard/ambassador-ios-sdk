@@ -327,7 +327,7 @@
                                                 <rect key="frame" x="0.0" y="22" width="600" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qnu-a1-5BV" id="5Ap-fV-JNz">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFY-Fk-jda">
@@ -962,6 +962,7 @@
                     </view>
                     <connections>
                         <outlet property="bottomViewBottomConstraint" destination="Z2F-pg-6da" id="3Fi-Fy-zHv"/>
+                        <outlet property="btnEditMessage" destination="T8W-36-tpm" id="Yjt-kF-W1e"/>
                         <outlet property="composeBoxHeight" destination="tm0-AS-1Ek" id="Fgi-RV-plB"/>
                         <outlet property="composeBoxWidth" destination="pqj-WC-rdD" id="9yf-gh-cz3"/>
                         <outlet property="composeMessageTextView" destination="6Nf-63-bf7" id="bmd-dP-ygt"/>
@@ -969,7 +970,6 @@
                         <outlet property="contactsTable" destination="iwe-lZ-xS4" id="vXD-Ot-aSm"/>
                         <outlet property="containerView" destination="0i3-IZ-LQ5" id="UeR-UV-S0k"/>
                         <outlet property="doneSearchingButton" destination="Qux-cd-7QL" id="9eN-eV-L2Q"/>
-                        <outlet property="editMessageButton" destination="T8W-36-tpm" id="1XI-jn-f6g"/>
                         <outlet property="fadeView" destination="h6l-PI-N0m" id="3z1-gN-hfC"/>
                         <outlet property="searchBar" destination="ijF-kz-cu9" id="aAi-nd-zud"/>
                         <outlet property="selectedTable" destination="x0i-aq-Swh" id="MWz-1E-caB"/>
