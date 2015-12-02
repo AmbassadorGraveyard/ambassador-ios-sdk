@@ -73,14 +73,6 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 - (void)viewDidLoad
 {
     [self registerForKeyboardNotifications];
-
-    // Set the navigation bar attributes (title and back button)
-//    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
-//    [backButton setImage:[AMBimageFromBundleNamed(@"back", @"png") imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-//    backButton.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
-//    [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-//    self.navigationItem.leftBarButtonItem = backBarButtonItem;
     
     self.title = self.prefs.navBarTitle;
     
