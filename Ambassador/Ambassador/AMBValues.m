@@ -109,7 +109,7 @@
 }
 
 + (NSDictionary *)getDeviceFingerPrint {
-    return [[AMBValues ambUserDefaults] valueForKey:@"device_fingerprint"];
+    return ([[AMBValues ambUserDefaults] valueForKey:@"device_fingerprint"]) ? [[AMBValues ambUserDefaults] valueForKey:@"device_fingerprint"] : @{};
 }
 
 + (NSString*)getDeepLinkURL {
