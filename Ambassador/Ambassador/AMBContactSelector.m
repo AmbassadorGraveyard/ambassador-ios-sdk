@@ -88,12 +88,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     self.filteredData = [[NSMutableArray alloc] init];
     
     [[self.editMessageButton imageView] setContentMode:UIViewContentModeScaleAspectFit];
-    [self.editMessageButton setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:NO] forState:UIControlStateNormal];
-    [self.editMessageButton setImage:[[UIImage alloc] init] forState:UIControlStateSelected];
-    
-    //self.composeMessageTextView.editable = NO;
+
     self.composeMessageTextView.textColor = [UIColor lightGrayColor];
-    self.editMessageButton.selected = NO;
     
     self.fadeView.hidden = YES;
     
