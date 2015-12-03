@@ -249,6 +249,7 @@ float originalSendButtonHeight;
 
 
 #pragma mark - TableViewDataSource
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.contactsTable)
@@ -266,44 +267,17 @@ float originalSendButtonHeight;
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (tableView == self.contactsTable)
-    {
-        return [self tableView:tableView contactCellForRowAtIndexPath:indexPath];
-    }
-    else
-    {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.contactsTable) {
+        AMBContact *contact = self.activeSearch ? self.filteredData[indexPath.row] : self.data[indexPath.row];
+        AMBContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell"];
+        [cell setUpCellWithContact:contact isSelected:[self.selected containsObject:contact]];
+        
+        return cell;
+    } else {
         return [self tableView:tableView selectedCellForRowAtIndexPath:indexPath];
     }
 }
-
-
-
-#pragma mark - ContactsTableView
-- (UITableViewCell *)tableView:(UITableView *)tableView contactCellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    AMBContact *contact = self.activeSearch? self.filteredData[indexPath.row] : self.data[indexPath.row];
-    
-    AMBContactCell *cell = [tableView dequeueReusableCellWithIdentifier:CONTACT_CELL_IDENTIFIER];
-    cell.name.text = [contact fullName];
-    cell.name.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableNameTextFont];
-    cell.value.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
-    cell.value.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableInfoTextFont];
-    
-    if ([self.selected member:contact])
-    {
-        cell.checkmarkView.image = [AMBimageFromBundleNamed(@"check", @"png") imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        cell.checkmarkView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableCheckMarkColor];
-    }
-    else
-    {
-        cell.checkmarkView.image = [[UIImage alloc] init];
-    }
-   
-    return cell;
-}
-
 
 
 #pragma mark - SelectedTableView
