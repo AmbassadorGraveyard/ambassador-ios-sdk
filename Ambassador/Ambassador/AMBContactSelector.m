@@ -91,6 +91,8 @@ float originalSendButtonHeight;
     self.fadeView.hidden = YES;
     
     self.composeMessageTextView.text = self.defaultMessage;
+    self.doneSearchingButton.alpha = 0;
+    
 //    [self.composeMessageTextView scrollRangeToVisible:NSMakeRange(0, 0)];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -124,6 +126,7 @@ float originalSendButtonHeight;
     self.searchBarRightConstraint.constant = (self.searchBarRightConstraint.constant == 18) ? self.searchBarRightConstraint.constant + self.doneSearchingButton.frame.size.width + 18 : 18;
     [UIView animateKeyframesWithDuration:0.4 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
         [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.2 animations:^{
+            self.doneSearchingButton.alpha = (self.doneSearchingButton.alpha == 1) ? 0 : 1;
             [self.view layoutIfNeeded];
         }];
     } completion:nil];
@@ -275,24 +278,14 @@ float originalSendButtonHeight;
         
         return cell;
     } else {
-        return [self tableView:tableView selectedCellForRowAtIndexPath:indexPath];
+        AMBContact *contact = [self.selected allObjects][indexPath.row];
+        AMBSelectedCell *cell = [tableView dequeueReusableCellWithIdentifier:SELECTED_CELL_IDENTIFIER];
+        [cell setUpCellWithContact:contact];
+        cell.delegate = self;
+        
+        return cell;
     }
 }
-
-
-#pragma mark - SelectedTableView
-
-- (UITableViewCell *)tableView:(UITableView *)tableView selectedCellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AMBContact *contact = [self.selected allObjects][indexPath.row];
-    
-    AMBSelectedCell *cell = [tableView dequeueReusableCellWithIdentifier:SELECTED_CELL_IDENTIFIER];
-    [cell setUpCellWithContact:contact];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.delegate = self;
-    
-    return cell;
-}
-
 
 
 #pragma mark - SelectedCellDelegate
