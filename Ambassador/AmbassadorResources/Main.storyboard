@@ -862,7 +862,7 @@
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LTS-mD-3ev">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="LTS-mD-3ev">
                                                             <rect key="frame" x="566" y="23" width="18" height="14"/>
                                                             <animations/>
                                                             <constraints>
@@ -882,6 +882,7 @@
                                                     <constraints>
                                                         <constraint firstItem="UFY-Fk-jda" firstAttribute="leading" secondItem="5Ap-fV-JNz" secondAttribute="leadingMargin" constant="8" id="0mX-Pc-Yzt"/>
                                                         <constraint firstItem="LTS-mD-3ev" firstAttribute="leading" secondItem="UFY-Fk-jda" secondAttribute="trailing" constant="8" id="1yX-HF-hDL"/>
+                                                        <constraint firstAttribute="trailing" secondItem="LTS-mD-3ev" secondAttribute="trailing" constant="16" id="9fw-oC-nBa"/>
                                                         <constraint firstAttribute="centerY" secondItem="LTS-mD-3ev" secondAttribute="centerY" constant="-0.5" id="Ebq-kb-haV"/>
                                                         <constraint firstItem="nKa-Zo-lVt" firstAttribute="top" secondItem="5Ap-fV-JNz" secondAttribute="topMargin" id="F9w-Jv-qQL"/>
                                                         <constraint firstItem="UFY-Fk-jda" firstAttribute="top" secondItem="nKa-Zo-lVt" secondAttribute="bottom" constant="1" id="Tc5-Gv-ddb"/>
@@ -890,9 +891,15 @@
                                                         <constraint firstItem="UFY-Fk-jda" firstAttribute="bottom" secondItem="5Ap-fV-JNz" secondAttribute="bottomMargin" id="rmi-iK-Rii"/>
                                                         <constraint firstItem="LTS-mD-3ev" firstAttribute="leading" secondItem="nKa-Zo-lVt" secondAttribute="trailing" constant="8" id="wYP-Ew-jyX"/>
                                                     </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="oef-ue-Do5"/>
+                                                        </mask>
+                                                    </variation>
                                                 </tableViewCellContentView>
                                                 <animations/>
                                                 <connections>
+                                                    <outlet property="checkmarkConstraint" destination="9fw-oC-nBa" id="dTU-Oh-5y6"/>
                                                     <outlet property="checkmarkView" destination="LTS-mD-3ev" id="kGB-w9-FvV"/>
                                                     <outlet property="name" destination="nKa-Zo-lVt" id="oc0-IO-0ap"/>
                                                     <outlet property="value" destination="UFY-Fk-jda" id="ZE2-P0-pyX"/>
@@ -1474,6 +1481,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="check" width="61" height="55"/>
         <image name="clipboard" width="43" height="55"/>
         <image name="close.png" width="24" height="23"/>
         <image name="pencil" width="65" height="65"/>
