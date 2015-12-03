@@ -221,7 +221,35 @@ float originalSendButtonHeight;
 }
 
 
+#pragma mark - TableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (tableView == self.contactsTable) {
+        return (self.activeSearch) ? [self.filteredData count] : [self.data count];
+    }
+    
+    return self.selected.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView == self.contactsTable) {
+        AMBContact *contact = self.activeSearch ? self.filteredData[indexPath.row] : self.data[indexPath.row];
+        AMBContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell"];
+        [cell setUpCellWithContact:contact isSelected:[self.selected containsObject:contact]];
+        
+        return cell;
+    } else {
+        AMBContact *contact = [self.selected allObjects][indexPath.row];
+        AMBSelectedCell *cell = [tableView dequeueReusableCellWithIdentifier:SELECTED_CELL_IDENTIFIER];
+        [cell setUpCellWithContact:contact];
+        cell.delegate = self;
+        
+        return cell;
+    }
+}
+
 #pragma mark - TableViewDelegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contactsTable) {
         AMBContact *contact = self.activeSearch ? self.filteredData[indexPath.row] : self.data[indexPath.row];
@@ -245,43 +273,6 @@ float originalSendButtonHeight;
         
         // If the contact is invalid
         [self showInvalidValueAlertForValue:contact.value];
-    }
-}
-
-
-#pragma mark - TableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (tableView == self.contactsTable)
-    {
-        if (self.activeSearch)
-        {
-            return self.filteredData.count;
-        }
-        
-        return self.data.count;
-    }
-    else
-    {
-        return self.selected.count;
-    }
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == self.contactsTable) {
-        AMBContact *contact = self.activeSearch ? self.filteredData[indexPath.row] : self.data[indexPath.row];
-        AMBContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell"];
-        [cell setUpCellWithContact:contact isSelected:[self.selected containsObject:contact]];
-        
-        return cell;
-    } else {
-        AMBContact *contact = [self.selected allObjects][indexPath.row];
-        AMBSelectedCell *cell = [tableView dequeueReusableCellWithIdentifier:SELECTED_CELL_IDENTIFIER];
-        [cell setUpCellWithContact:contact];
-        cell.delegate = self;
-        
-        return cell;
     }
 }
 
