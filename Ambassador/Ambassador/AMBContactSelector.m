@@ -46,7 +46,7 @@
 
 
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *composeBoxWidth;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *composeBoxWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *composeBoxHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sendButtonHeight;
 
@@ -70,10 +70,13 @@ NSString * const NAME_PROMPT_SEGUE_IDENTIFIER = @"goToNamePrompt";
 float const COMPOSE_MESSAGE_VIEW_HEIGHT = 100.0;
 float const SEND_BUTTON_HEIGHT = 42.0;
 
+float originalSendButtonHeight;
+
 
 - (void)viewDidLoad
 {
     [self registerForKeyboardNotifications];
+    originalSendButtonHeight = self.sendButton.frame.size.height;
     
     self.title = self.prefs.navBarTitle;
     
@@ -170,49 +173,17 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     [self refreshAll];
 }
 
-- (IBAction)editMessageButton:(UIButton *)sender
-{
-    DLog();
-    //self.composeMessageTextView.editable = !self.composeMessageTextView.editable;
-//    if (self.editMessageButton.selected)
-//    {
-//        DLog();
-//        
-//        [self.composeMessageTextView resignFirstResponder];
-//    }
-//    else
-//    {
-//        DLog();
-//        
-//        [self.composeMessageTextView becomeFirstResponder];
-//    }
+- (IBAction)editMessageButton:(UIButton *)sender {
     if (!self.isEditing) {
-        [self.composeMessageTextView becomeFirstResponder];
         self.isEditing = YES;
+        [self.composeMessageTextView becomeFirstResponder];
+        self.composeMessageTextView.textColor = [UIColor blackColor];
     } else {
-        [self.composeMessageTextView resignFirstResponder];
         self.isEditing = NO;
+        [self.composeMessageTextView resignFirstResponder];
+        self.composeMessageTextView.textColor = [UIColor lightGrayColor];
     }
 }
-
-//- (void)updateEditMessageButton
-//{
-//    DLog();
-//    self.editMessageButton.selected = !self.editMessageButton.selected;
-//    self.fadeView.hidden = !self.fadeView.hidden;
-//    if (!self.editMessageButton.selected)
-//    {
-//        DLog();
-//        
-//        self.composeMessageTextView.textColor = [UIColor lightGrayColor];
-//    }
-//    else
-//    {
-//        DLog();
-//        
-//        self.composeMessageTextView.textColor = [UIColor blackColor];
-//    }
-//}
 
 - (void)refreshAll
 {
@@ -426,71 +397,30 @@ float const SEND_BUTTON_HEIGHT = 42.0;
     DLog();
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
+                                             selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)keyboardWasShown:(NSNotification*)sender
-{
-    DLog();
-    
-    // Animate compose box upward (and adjust to full width if iPad) and hide
-    // the 'send to contacts' button
-    if ([self.composeMessageTextView isFirstResponder])
-    {
-        CGRect frame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-        CGRect newFrame = [self.view convertRect:frame fromView:[[UIApplication sharedApplication] delegate].window];
-        [self.view layoutIfNeeded];
-        
-        if (ABS(self.bottomViewBottomConstraint.constant - frame.size.height) > 100)
-        {
-//            [self updateEditMessageButton];
-        }
-        
-        self.bottomViewBottomConstraint.constant = newFrame.size.height;
-        
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            self.composeBoxWidth.constant -= self.selectedTable.frame.size.width;
-        }
-        
-        self.composeBoxHeight.constant = COMPOSE_MESSAGE_VIEW_HEIGHT - SEND_BUTTON_HEIGHT;
+- (void)keyboardWillShow:(NSNotification*)sender {
+    if (self.isEditing) {
+        CGRect keyboardFrame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+        self.bottomViewBottomConstraint.constant = keyboardFrame.size.height;
+        self.composeBoxHeight.constant = self.composeMessageView.frame.size.height - originalSendButtonHeight;
         self.sendButtonHeight.constant = 0;
-    }
-
-    NSTimeInterval duration = 0.0;
-    float oldConstant = self.bottomViewBottomConstraint.constant;
-    
-    //Only animate slide slowly if full keyboard is appearing vs the sugguestion bar appearing
-    duration = (ABS(self.bottomViewBottomConstraint.constant - oldConstant) < 100) ? 0.1 : 1.5;
-    [UIView animateWithDuration:duration animations:^{
         [self.view layoutIfNeeded];
-    }];
+    }
 }
 
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
-{
-    DLog();
-    
-    if ([self.composeMessageTextView isFirstResponder])
-    {
-//        [self updateEditMessageButton];
-    }
-    
-    // Restore the compose box to the bottom of the screen, un-hide 'send to
-    // contacts' button and adjust the width if needed (on iPad)
-    self.bottomViewBottomConstraint.constant = 0;
-    self.composeBoxHeight.constant = COMPOSE_MESSAGE_VIEW_HEIGHT;
-    self.sendButtonHeight.constant = SEND_BUTTON_HEIGHT;
-    self.composeBoxWidth.constant = 0;
-
-    NSTimeInterval duration = 0.0;
-    [UIView animateWithDuration:duration animations:^{
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification {
+    if (self.bottomViewBottomConstraint.constant > 0) {
+        self.bottomViewBottomConstraint.constant = 0;
+        self.composeBoxHeight.constant = self.composeMessageView.frame.size.height + originalSendButtonHeight;
+        self.sendButtonHeight.constant = originalSendButtonHeight;
         [self.view layoutIfNeeded];
-    }];
+    }
 }
 
 
