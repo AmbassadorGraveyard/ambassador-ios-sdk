@@ -17,5 +17,7 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint * checkmarkConstraint;
 
 - (void)setUpCellWithContact:(AMBContact*)contact isSelected:(BOOL)selected;
+- (void)animateCheckmarkIn;
+- (void)animateCheckmarkOut;
 
 @end
