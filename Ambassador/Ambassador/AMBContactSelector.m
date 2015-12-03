@@ -118,6 +118,18 @@ float originalSendButtonHeight;
 }
 
 
+#pragma mark - UI Functions
+
+- (void)showOrHideSearchDoneButton {
+    self.searchBarRightConstraint.constant = (self.searchBarRightConstraint.constant == 18) ? self.searchBarRightConstraint.constant + self.doneSearchingButton.frame.size.width + 18 : 18;
+    [UIView animateKeyframesWithDuration:0.4 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.2 animations:^{
+            [self.view layoutIfNeeded];
+        }];
+    } completion:nil];
+}
+
+
 #pragma mark - IBActions
 
 - (IBAction)sendButtonPressed:(UIButton *)sender {
@@ -170,6 +182,7 @@ float originalSendButtonHeight;
     self.searchBar.text = @"";
     [self.searchBar resignFirstResponder];
     self.activeSearch = NO;
+    [self showOrHideSearchDoneButton];
     sender.selected = NO;
     [self refreshAll];
 }
@@ -317,10 +330,10 @@ float originalSendButtonHeight;
 
 
 #pragma mark - UITextFieldDelegate
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    [self setActiveSearchFlag:textField.text];
-    self.doneSearchingButton.selected = YES;
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.searchBar) {
+        [self showOrHideSearchDoneButton];
+    }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
