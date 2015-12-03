@@ -330,79 +330,28 @@ float originalSendButtonHeight;
 
 
 #pragma mark - UITextFieldDelegate
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if (textField == self.searchBar) {
         [self showOrHideSearchDoneButton];
     }
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    [self setActiveSearchFlag:textField.text];
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *fullSearchText =  [textField.text stringByReplacingCharactersInRange:range withString:string];
-    
-    [self setActiveSearchFlag:fullSearchText];
-
+    self.activeSearch = ([fullSearchText isEqualToString:@""]) ? NO : YES;
     [self searchWithText:fullSearchText];
     [self refreshAll];
+    
     return YES;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
 
-- (BOOL)textFieldShouldClear:(UITextField *)textField
-{
-    self.activeSearch = NO;
-    textField.text = @"";
-    [self refreshAll];
-    
-    return YES;
-}
 
-- (BOOL)setActiveSearchFlag:(NSString *)searchText
-{
-    DLog();
-    
-    self.activeSearch = [searchText isEqualToString:@""] ? NO : YES;
-    self.doneSearchingButton.selected = self.activeSearch? YES : NO;
-    return self.activeSearch;
-}
-
-- (void)searchWithText:(NSString *)searchText
-{
-    searchText = [searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    
-    NSArray *array = [searchText componentsSeparatedByString:@" "];
-    NSString *firstName = searchText;
-    NSString *lastName = searchText;
-    NSPredicate *predicate = nil;
-    
-    if ([array count] > 1)
-    {
-        firstName = array[0];
-        lastName = array[1];
-        predicate = [NSPredicate
-                     predicateWithFormat:@"(firstName CONTAINS[cd] %@ AND lastName CONTAINS[cd] %@) OR (firstName CONTAINS[cd] %@ AND lastName CONTAINS[cd] %@)",
-                     firstName, lastName, lastName, firstName];
-    }
-    else
-    {
-        predicate = [NSPredicate
-                     predicateWithFormat:@"firstName CONTAINS[cd] %@ OR lastName CONTAINS[cd] %@",
-                     firstName, lastName];
-    }
-    
-    self.filteredData = (NSMutableArray *)[self.data filteredArrayUsingPredicate:predicate];
-}
 
 
 #pragma mark - Keyboard Layout Adjustments
@@ -558,6 +507,17 @@ float originalSendButtonHeight;
         default:
             break;
     }
+}
+
+- (void)searchWithText:(NSString *)searchText {
+    searchText = [searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]; // Ignores any spacing before and after the string.. will NOT take out spaces
+    
+    NSArray *fullNameArray = [searchText componentsSeparatedByString:@" "];
+    NSString *firstName = ([fullNameArray count] == 1) ? searchText : fullNameArray[0];
+    NSString *lastName = ([fullNameArray count] == 1) ? searchText : fullNameArray[1];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"firstName CONTAINS[cd] %@ OR lastName CONTAINS[cd] %@", firstName, lastName];
+    self.filteredData = (NSMutableArray *)[self.data filteredArrayUsingPredicate:predicate];
 }
 
 
