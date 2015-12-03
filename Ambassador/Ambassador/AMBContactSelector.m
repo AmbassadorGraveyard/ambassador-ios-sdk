@@ -49,6 +49,7 @@
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *composeBoxWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *composeBoxHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sendButtonHeight;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * searchBarRightConstraint;
 
 @property (strong, nonatomic) NSMutableSet *selected;
 @property (strong, nonatomic) NSMutableArray *filteredData;
@@ -90,7 +91,7 @@ float originalSendButtonHeight;
     self.fadeView.hidden = YES;
     
     self.composeMessageTextView.text = self.defaultMessage;
-    [self.composeMessageTextView scrollRangeToVisible:NSMakeRange(0, 0)];
+//    [self.composeMessageTextView scrollRangeToVisible:NSMakeRange(0, 0)];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(viewDidAppear:) forControlEvents:UIControlEventValueChanged];
