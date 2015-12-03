@@ -15,6 +15,7 @@
 - (void)setUpCellWithContact:(AMBContact*)contact {
     self.selectedContact = contact;
     self.name.text = [NSString stringWithFormat:@"%@ - %@", contact.firstName, contact.value];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 
