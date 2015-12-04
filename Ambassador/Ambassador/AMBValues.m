@@ -101,6 +101,10 @@
     [[AMBValues ambUserDefaults] setObject:dictionary forKey:@"device_fingerprint"];
 }
 
++ (void)setUserInfoFromPusherDict:(AMBUserNetworkObject*)dictionary {
+    [[AMBValues ambUserDefaults] setObject:[dictionary toDictionary] forKey:@"pusher_user_info"];
+}
+
 
 #pragma mark - Getter Methods
 
@@ -118,6 +122,14 @@
     NSString *scheme = [urlSchemeDict valueForKey:@"CFBundleURLSchemes"][0];
     
     return scheme;
+}
+
++ (AMBUserNetworkObject*)getUserInfo {
+    AMBUserNetworkObject *networkObject;
+    NSMutableDictionary *pusherDict = [NSMutableDictionary dictionaryWithDictionary:[[AMBValues ambUserDefaults] dictionaryForKey:@"pusher_user_info"]];
+    [networkObject fillWithDictionary:pusherDict];
+    
+    return networkObject;
 }
 
 @end

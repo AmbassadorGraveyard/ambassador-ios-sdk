@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "AMBNetworkObject.h"
 
 @interface AMBValues : NSObject
 
@@ -19,9 +20,11 @@
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
 + (void)setDeviceFingerPrintWithDictionary:(NSDictionary*)dictionary;
++ (void)setUserInfoFromPusherDict:(AMBUserNetworkObject*)dictionary;
 
 // Default getters
 + (NSString*)getMbsyCookieCode;
 + (NSDictionary*)getDeviceFingerPrint;
++ (AMBUserNetworkObject*)getUserInfo;
 
 @end
