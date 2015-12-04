@@ -332,6 +332,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="0x0-gg-rSc"/>
                                                 </constraints>
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <variation key="default">

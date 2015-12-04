@@ -10,12 +10,8 @@
 #import "AMBContactCell.h"
 #import "AMBSelectedCell.h"
 #import "AMBContact.h"
-#import "AMBUtilities.h"
 #import "AMBNamePrompt.h"
-#import "AMBShareServicesConstants.h"
-#import "AMBConstants.h"
 #import "AMBThemeManager.h"
-#import "AmbassadorSDK_Internal.h"
 #import "AMBAmbassadorNetworkManager.h"
 #import "AMBNetworkObject.h"
 #import "AMBBulkShareHelper.h"
@@ -62,38 +58,25 @@ float originalSendButtonHeight;
 
 #pragma mark - LifeCycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [self registerForKeyboardNotifications];
     originalSendButtonHeight = self.sendButton.frame.size.height;
-    
     self.title = self.prefs.navBarTitle;
-    
     self.selected = [[NSMutableSet alloc] init];
     self.filteredData = [[NSMutableArray alloc] init];
-    
-    [[self.btnEditMessage imageView] setContentMode:UIViewContentModeScaleAspectFit];
-
-    self.composeMessageTextView.textColor = [UIColor lightGrayColor];
-    
-    self.fadeView.hidden = YES;
-    
     self.composeMessageTextView.text = self.defaultMessage;
+    [self setUpTheme];
     
+    // Sets up a 'Pull to refresh'
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(viewDidAppear:) forControlEvents:UIControlEventValueChanged];
     [self.contactsTable addSubview:self.refreshControl];
-    
-    [self updateButton];
-    [self setUpTheme];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    if (self.refreshControl.isRefreshing) { [self.refreshControl endRefreshing]; }
     [self refreshContacts];
     [self.contactsTable reloadData];
-    if (self.refreshControl.isRefreshing) {
-        [self.refreshControl endRefreshing];
-    }
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -114,8 +97,10 @@ float originalSendButtonHeight;
     [self.sendButton.titleLabel setFont:[[AMBThemeManager sharedInstance] fontForKey:ContactSendButtonTextFont]];
     
     [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
+    [[self.btnEditMessage imageView] setContentMode:UIViewContentModeScaleAspectFit];
     [self.btnEditMessage setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     self.btnEditMessage.tintColor = [UIColor lightGrayColor];
+    [self updateButton];
 }
 
 - (void)showOrHideSearchDoneButton {
