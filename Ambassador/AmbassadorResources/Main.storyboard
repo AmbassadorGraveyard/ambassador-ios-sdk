@@ -418,7 +418,7 @@
                                                     </mask>
                                                 </variation>
                                                 <connections>
-                                                    <action selector="editMessageButton:" destination="0Ev-V6-LY3" eventType="touchUpInside" id="pvV-Uh-12O"/>
+                                                    <action selector="editMessageButton" destination="0Ev-V6-LY3" eventType="touchUpInside" id="tbn-vw-Y60"/>
                                                 </connections>
                                             </button>
                                         </subviews>

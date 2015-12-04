@@ -29,7 +29,7 @@
 
 - (void)animateCheckmarkIn {
     self.checkmarkConstraint.constant = 16;
-    [UIView animateKeyframesWithDuration:0.2 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+    [UIView animateKeyframesWithDuration:0.3 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
         [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.2 animations:^{
             [self layoutIfNeeded];
         }];
@@ -38,7 +38,7 @@
 
 - (void)animateCheckmarkOut {
     self.checkmarkConstraint.constant = -self.checkmarkView.frame.size.width;
-    [UIView animateKeyframesWithDuration:0.2 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+    [UIView animateKeyframesWithDuration:0.3 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
         [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.2 animations:^{
             [self layoutIfNeeded];
         }];
