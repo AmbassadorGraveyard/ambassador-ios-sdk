@@ -10,10 +10,18 @@
 
 @implementation AMBSelectedCell
 
+#pragma mark - Setup Functionality
 
-- (IBAction)removeButtonPressed:(UIButton *)sender
-{
-    [self.delegate removeContact:self.removeButton.contact];
+- (void)setUpCellWithContact:(AMBContact*)contact {
+    self.selectedContact = contact;
+    self.name.text = [NSString stringWithFormat:@"%@ - %@", contact.firstName, contact.value];
+}
+
+
+#pragma mark - IBActions
+
+- (IBAction)removeButtonPressed:(UIButton *)sender {
+    [self.delegate removeButtonTappedForContact:self.selectedContact];
 }
 
 @end
