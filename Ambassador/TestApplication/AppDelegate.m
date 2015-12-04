@@ -21,57 +21,25 @@
         [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
     }
     
-    AMBConversionParameters *conversion = [[AMBConversionParameters alloc] init];
-    conversion.mbsy_revenue = @1000;
-    conversion.mbsy_campaign = @280;
-    conversion.mbsy_first_name = @"";
-    conversion.mbsy_last_name = @"one";
-    conversion.mbsy_email_new_ambassador = @YES;
-    conversion.mbsy_uid = @"";
-    conversion.mbsy_custom1 = @"custom111";
-    conversion.mbsy_custom2 = @"custom222";
-    conversion.mbsy_custom3 = @"custom333";
-    conversion.mbsy_auto_create = @NO;
-    conversion.mbsy_deactivate_new_ambassador = @YES;
-    conversion.mbsy_transaction_uid = @"transuidtransuid";
-    conversion.mbsy_add_to_group_id = @"sadjkfl";
-    conversion.mbsy_event_data1 = @"eventdata1";
-    conversion.mbsy_event_data2 = @"eventdata2";
-    conversion.mbsy_event_data3 = @"eventdata3";
-    conversion.mbsy_is_approved = @YES;
-    conversion.mbsy_email = @"corey@getambassador.com";
-    
-    // The original dev keys are:
-    // universalToken:9de5757f801ca60916599fa3f3c92131b0e63c6a
-    // universalID:abfd1c89-4379-44e2-8361-ee7b87332e32
-    //
-    // The original product keys are:
-    // universalToken:84444f4022a8cd4fce299114bc2e323e57e32188
-    // universalID:830883cd-b2a7-449c-8a3c-d1850aa8bc6b
-    
-//    [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32" convertOnInstall:conversion completion:^(NSError *error) {
-//        if (error) {
-//            NSLog(@"Error %@", error);
-//        }
-//        else {
-//            NSLog(@"Required parameters are set");
-//        }
-//    }];
-    
-    [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32"];
-    
+    [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32"]; // DEV CREDENTIALS
+//    [AmbassadorSDK runWithUniversalToken:@"84444f4022a8cd4fce299114bc2e323e57e32188" universalID:@"830883cd-b2a7-449c-8a3c-d1850aa8bc6b"]; // PROD CREDENTIALS
+
     [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com"];
     
-//    [AmbassadorSDK registerConversion:conversion completion:^(NSError *error) {
-//        if (error) {
-//            NSLog(@"Error %@", error);
-//        }
-//        else {
-//            NSLog(@"Required parameters are set");
-//        }
-//    }];
-    return YES;
+    AMBConversionParameters *fakeInstallConversion = [[AMBConversionParameters alloc] init];
+    fakeInstallConversion.mbsy_campaign = @260;
+    fakeInstallConversion.mbsy_revenue = @200;
+    fakeInstallConversion.mbsy_email = @"greg@getambassador.com";
     
+    [AmbassadorSDK registerConversion:fakeInstallConversion restrictToInsall:YES completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Conversion not registered - %@", error);
+        } else {
+            NSLog(@"INSTALL CONVERSION REGISTERED SUCCESSFULLY!");
+        }
+    }];
+
+    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
