@@ -84,8 +84,6 @@
 		DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */; };
 		DBA3FBAD1BA8A24F00672D82 /* AMBNamePrompt.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */; };
 		DBA3FBAE1BA8A24F00672D82 /* AMBNamePrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB961BA8A24F00672D82 /* AMBNamePrompt.m */; };
-		DBA3FBAF1BA8A24F00672D82 /* AMBRemoveButton.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB971BA8A24F00672D82 /* AMBRemoveButton.h */; };
-		DBA3FBB01BA8A24F00672D82 /* AMBRemoveButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB981BA8A24F00672D82 /* AMBRemoveButton.m */; };
 		DBA3FBB11BA8A24F00672D82 /* AMBSelectedCell.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB991BA8A24F00672D82 /* AMBSelectedCell.h */; };
 		DBA3FBB21BA8A24F00672D82 /* AMBSelectedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9A1BA8A24F00672D82 /* AMBSelectedCell.m */; };
 		DBA3FBB31BA8A24F00672D82 /* AMBSendCompletionModal.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9B1BA8A24F00672D82 /* AMBSendCompletionModal.h */; };
@@ -201,6 +199,7 @@
 		EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */ = {isa = PBXBuildFile; fileRef = EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */; };
 		EFDFA0D01BE154B8002FA3ED /* UIColor+AMBColorValues.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */; };
 		EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
+		EFF58FA01BF4F8F5001AB2DE /* AMBMedia.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -356,8 +355,6 @@
 		DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkedInShare.m; sourceTree = "<group>"; };
 		DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNamePrompt.h; sourceTree = "<group>"; };
 		DBA3FB961BA8A24F00672D82 /* AMBNamePrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNamePrompt.m; sourceTree = "<group>"; };
-		DBA3FB971BA8A24F00672D82 /* AMBRemoveButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBRemoveButton.h; sourceTree = "<group>"; };
-		DBA3FB981BA8A24F00672D82 /* AMBRemoveButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBRemoveButton.m; sourceTree = "<group>"; };
 		DBA3FB991BA8A24F00672D82 /* AMBSelectedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBSelectedCell.h; sourceTree = "<group>"; };
 		DBA3FB9A1BA8A24F00672D82 /* AMBSelectedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSelectedCell.m; sourceTree = "<group>"; };
 		DBA3FB9B1BA8A24F00672D82 /* AMBSendCompletionModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBSendCompletionModal.h; sourceTree = "<group>"; };
@@ -482,6 +479,7 @@
 		EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AMBColorValues.m"; sourceTree = "<group>"; };
 		EFDFA0D11BE157D2002FA3ED /* Ambassador-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ambassador-Prefix.pch"; sourceTree = "<group>"; };
 		EFED7B041BDA9F0A00F6C360 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AMBMedia.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -635,8 +633,6 @@
 				DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */,
 				DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */,
 				DBA3FB961BA8A24F00672D82 /* AMBNamePrompt.m */,
-				DBA3FB971BA8A24F00672D82 /* AMBRemoveButton.h */,
-				DBA3FB981BA8A24F00672D82 /* AMBRemoveButton.m */,
 				DBA3FB991BA8A24F00672D82 /* AMBSelectedCell.h */,
 				DBA3FB9A1BA8A24F00672D82 /* AMBSelectedCell.m */,
 				DBA3FB9B1BA8A24F00672D82 /* AMBSendCompletionModal.h */,
@@ -704,6 +700,7 @@
 			isa = PBXGroup;
 			children = (
 				DB844D541BA7622D003FD7A9 /* Supporting Files */,
+				EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */,
 			);
 			path = AmbassadorResources;
 			sourceTree = "<group>";
@@ -890,7 +887,6 @@
 				DBA3FC081BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h in Headers */,
 				DBA3FC041BA8AA1D00672D82 /* AMBPTBlockEventListener.h in Headers */,
 				DBA3FBCD1BA8A9C000672D82 /* AMBFMDatabase.h in Headers */,
-				DBA3FBAF1BA8A24F00672D82 /* AMBRemoveButton.h in Headers */,
 				DB6A24711BD04E3900CE3230 /* AMBPusherManager.h in Headers */,
 				DBA3FC071BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h in Headers */,
 				DBA3FC201BA8AA1D00672D82 /* AMBPTPusherMockConnection.h in Headers */,
@@ -1142,6 +1138,7 @@
 				DBEB6FF51BA9B2D8005EE0D0 /* close.png in Resources */,
 				DBEB6FFE1BA9B2D8005EE0D0 /* sms.png in Resources */,
 				DBEB6FFF1BA9B2D8005EE0D0 /* successIcon.png in Resources */,
+				EFF58FA01BF4F8F5001AB2DE /* AMBMedia.xcassets in Resources */,
 				EF407F211BB3449B0074D2AE /* AmbassadorTheme.plist in Resources */,
 				DBEB6FFD1BA9B2D8005EE0D0 /* search.png in Resources */,
 				DBEB6FF71BA9B2D8005EE0D0 /* facebook.png in Resources */,
@@ -1224,7 +1221,6 @@
 			files = (
 				DBA3FC0E1BA8AA1D00672D82 /* AMBPTPusher.m in Sources */,
 				DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */,
-				DBA3FBB01BA8A24F00672D82 /* AMBRemoveButton.m in Sources */,
 				EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */,
 				DBA3FB7E1BA8A23C00672D82 /* AMBContactSelector.m in Sources */,
 				DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */,

@@ -7,20 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AMBRemoveButton.h"
 #import "AMBContact.h"
 
 @protocol AMBSelectedCellDelegate <NSObject>
 
-- (void)removeContact:(AMBContact *)contact;
+- (void)removeButtonTappedForContact:(AMBContact *)contact;
 
 @end
 
 
 @interface AMBSelectedCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *name;
-@property (weak, nonatomic) IBOutlet AMBRemoveButton *removeButton;
+@property (nonatomic, strong) IBOutlet UILabel *name;
+@property (nonatomic, strong) IBOutlet UIButton *removeButton;
+@property (nonatomic, strong) AMBContact * selectedContact;
 @property (weak) id<AMBSelectedCellDelegate>delegate;
+
+- (void)setUpCellWithContact:(AMBContact*)contact;
 
 @end
