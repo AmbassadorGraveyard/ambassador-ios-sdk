@@ -157,6 +157,7 @@ static AMBServiceSelector *raf;
                 // TODO: Notification Center
             }];
         } else if (json[@"mbsy_cookie_code"]) {
+            DLog(@"MBSY COOKIE - %@ and %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
             [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
             [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
         } else {

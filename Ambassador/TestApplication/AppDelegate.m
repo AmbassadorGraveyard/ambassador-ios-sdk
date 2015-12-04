@@ -23,7 +23,7 @@
     
     [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // DEV CREDENTIALS
 //    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // PROD CREDENTIALS
-    
+
     [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com"];
     
     AMBConversionParameters *fakeInstallConversion = [[AMBConversionParameters alloc] init];
