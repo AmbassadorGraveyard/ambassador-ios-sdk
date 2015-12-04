@@ -158,8 +158,7 @@ float originalSendButtonHeight;
 
 - (IBAction)clearAllButtonTapped:(id)sender {
     [self.selected removeAllObjects];
-    [self refreshAll];
-    [self.contactsTable reloadData];
+    [self refreshAllIncludingContacts:YES];
 }
 
 - (IBAction)doneSearchingButtonTapped:(id)sender {
@@ -226,7 +225,7 @@ float originalSendButtonHeight;
         if ([self.selected containsObject:contact]) {
             [self.selected removeObject:contact];
             [cell animateCheckmarkOut];
-            [self refreshAll];
+            [self refreshAllIncludingContacts:NO];
             return;
         }
         
@@ -234,7 +233,7 @@ float originalSendButtonHeight;
         if ([self checkValidationForString:contact.value]) {
             [self.selected addObject:contact];
             [cell animateCheckmarkIn];
-            [self refreshAll];
+            [self refreshAllIncludingContacts:NO];
             return;
         }
         
@@ -248,7 +247,7 @@ float originalSendButtonHeight;
 
 - (void)removeButtonTappedForContact:(AMBContact *)contact {
     [self.selected removeObject:contact];
-    [self refreshAll];
+    [self refreshAllIncludingContacts:YES];
 }
 
 
@@ -477,8 +476,8 @@ float originalSendButtonHeight;
     }
 }
 
-- (void)refreshAll
-{
+- (void)refreshAllIncludingContacts:(BOOL)refreshContactsTable {
+    if (refreshContactsTable) { [self.contactsTable reloadData]; }
     [self.selectedTable reloadData];
     [self updateButton];
 }
