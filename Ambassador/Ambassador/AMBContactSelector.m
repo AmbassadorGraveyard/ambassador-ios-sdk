@@ -137,7 +137,7 @@ float originalSendButtonHeight;
 
 #pragma mark - IBActions
 
-- (IBAction)sendButtonPressed:(UIButton *)sender {
+- (IBAction)sendButtonTapped:(id)sender {
     if (self.selected.count > 0 && ![self validateString:self.shortURL inString:self.composeMessageTextView.text]) {
         NSString *message = [NSString stringWithFormat:@"Please include your url in the message: %@", self.shortURL];
         [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
@@ -156,27 +156,21 @@ float originalSendButtonHeight;
     }
 }
 
-- (IBAction)clearAllButton:(UIButton *)sender
-{
-    DLog();
-    
+- (IBAction)clearAllButtonTapped:(id)sender {
     [self.selected removeAllObjects];
     [self refreshAll];
+    [self.contactsTable reloadData];
 }
 
-- (IBAction)doneSearchingButton:(UIButton *)sender
-{
-    DLog();
-    
+- (IBAction)doneSearchingButtonTapped:(id)sender {
     self.searchBar.text = @"";
     [self.searchBar resignFirstResponder];
     self.activeSearch = NO;
     [self showOrHideSearchDoneButton];
-    sender.selected = NO;
     [self.contactsTable reloadData];
 }
 
-- (IBAction)editMessageButton {
+- (IBAction)editMessageButtonTapped:(id)sender {
     if (!self.isEditing) {
         self.isEditing = YES;
         [self.composeMessageTextView becomeFirstResponder];
@@ -284,7 +278,7 @@ float originalSendButtonHeight;
 #pragma mark - UITextView Delegate
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-    if (!self.isEditing) { [self editMessageButton]; }
+    if (!self.isEditing) { [self editMessageButtonTapped:nil]; }
     return YES;
 }
 
