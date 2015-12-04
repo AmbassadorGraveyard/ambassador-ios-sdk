@@ -136,15 +136,14 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
     }
 }
 
-- (void)sendConversions
-{
-    DLog();
-//    NSDictionary *userDefaultsIdentify = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_IDENTIFY_USER_DEFAULTS_KEY];
+- (void)sendConversions {
+    // If no device fingerprint is available, an empty dictionary will be returned
     NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint];
-//    NSDictionary *userDefaultsInsights = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_INSIGHTS_USER_DEFAULTS_KEY];
-    
-    //Check if insights and identify data exist to send. Else don't send
-    if (![AMBValues getMbsyCookieCode] && [[AMBValues getMbsyCookieCode] isEqualToString:@""] && !userDefaultsIdentify[@"device"][@"ID"]) { return; }
+
+    // Checks to make sure we have either a short code OR device fingerprint before moving on
+    if ((![AMBValues getMbsyCookieCode] || [[AMBValues getMbsyCookieCode] isEqualToString:@""]) && (!userDefaultsIdentify || userDefaultsIdentify.count == 0)) {
+        return;
+    }
     
     [self.databaseQueue inDatabase:^(AMBFMDatabase *db)
     {
@@ -177,25 +176,8 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
                     @"mbsy_short_code"  : [AMBValues getMbsyCookieCode]
                 }];
 
-            //Build the payload data to POST to the backend
-            NSDictionary * consumer = @{
-                                        @"UID" : userDefaultsIdentify[@"consumer"][@"UID"],
-                                        @"insights" : (userDefaultsIdentify[@"consumer"][@"insights"]) ? userDefaultsIdentify[@"consumer"][@"insights"] : @{}
-                                        };
-            NSDictionary * device = @{
-                                      @"type" : userDefaultsIdentify[@"device"][@"type"],
-                                      @"ID" : userDefaultsIdentify[@"device"][@"ID"]
-                                      };
-            [fields removeObjectForKey:@"insights"];
-            NSDictionary * payload = @{
-                                       @"fp" : @{
-                                               @"consumer" : consumer,
-                                               @"device" : device
-                                               },
-                                       @"fields" : fields
-                                       };
             // Convert to NSData to attach to request's HTTPBody
-            NSData *JSONData = [NSJSONSerialization dataWithJSONObject:payload
+            NSData *JSONData = [NSJSONSerialization dataWithJSONObject:[self payloadForConversionCallWithFP:userDefaultsIdentify mbsyFields:fields]
                                                                options:0
                                                                  error:nil];
             //Create the POST request
@@ -264,5 +246,18 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
     }
 }
 
+
+#pragma mark - Helper Functions
+
+- (NSDictionary*)payloadForConversionCallWithFP:(NSDictionary*)deviceFingerprint mbsyFields:(NSMutableDictionary*)mbsyFields {
+    // If we DON'T have a device fingerprint, we set the 'fp' value to empty set the fields to the mbsy fields
+    if (!deviceFingerprint || deviceFingerprint.count == 0) { return @{@"fp" : @{}, @"fields" : mbsyFields}; }
+    
+    NSDictionary *consumerDict = @{@"UID" : deviceFingerprint[@"consumer"][@"UID"], @"insights" : (deviceFingerprint[@"consumer"][@"insights"]) ? deviceFingerprint[@"consumer"][@"insights"] : @{}};
+    NSDictionary *deviceDict = @{@"type" : deviceFingerprint[@"device"][@"type"], @"ID" : deviceFingerprint[@"device"][@"ID"]};
+    NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
+    
+    return @{@"fp" : fingerPrintDict, @"fields" : mbsyFields };
+}
 
 @end
