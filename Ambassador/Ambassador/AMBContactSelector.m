@@ -374,12 +374,10 @@ float originalSendButtonHeight;
     switch (self.type) {
         case AMBSocialServiceTypeEmail:
             return [AMBBulkShareHelper isValidEmail:valueString];
-            
         case AMBSocialServiceTypeSMS: {
             NSString *strippedString = [AMBBulkShareHelper stripPhoneNumber:valueString];
             return [AMBBulkShareHelper isValidPhoneNumber:strippedString];
         }
-            
         default:
             return NO;
     }
@@ -392,10 +390,8 @@ float originalSendButtonHeight;
         case AMBSocialServiceTypeEmail:
             errorString = [NSString stringWithFormat:@"The email address %@ is invalid.  Please change it to a valid email address. \n(Example: user.name@example.com)", valueString];
             break;
-            
         case AMBSocialServiceTypeSMS:
             errorString = [NSString stringWithFormat:@"The phone number %@ is invalid.  Please change it to a valid phone number. \n(Example: 1-(555)555-5555, (555)555-5555, 555-5555)", valueString];
-            
         default:
             break;
     }
@@ -435,12 +431,6 @@ float originalSendButtonHeight;
 }
 
 #pragma mark - Navigation
-- (void)backButtonPressed:(UIButton *)button
-{
-    DLog();
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
 {
