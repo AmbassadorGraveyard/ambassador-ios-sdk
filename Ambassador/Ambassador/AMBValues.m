@@ -133,7 +133,7 @@
 }
 
 + (BOOL)getHasInstalledBoolean {
-    return (BOOL)[[AMBValues ambUserDefaults] valueForKey:@"AMBFIRSTLAUNCHSTORAGE"];
+    return ([[AMBValues ambUserDefaults] valueForKey:@"AMBFIRSTLAUNCHSTORAGE"]) ? (BOOL)[[AMBValues ambUserDefaults] valueForKey:@"AMBFIRSTLAUNCHSTORAGE"] : NO;
 }
 
 + (NSString*)getUniversalID {
