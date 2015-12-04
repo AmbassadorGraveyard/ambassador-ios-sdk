@@ -24,7 +24,7 @@
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                AMBSelectedCellDelegate, UITextFieldDelegate,
-                               UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate, AMBUtilitiesDelegate, UIGestureRecognizerDelegate>
+                               UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate, AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *contactsTable;
 
 @property (weak, nonatomic) IBOutlet UIView *composeMessageView;
@@ -114,7 +114,6 @@ float originalSendButtonHeight;
     self.composeMessageTextView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     self.searchBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
 
-    self.sendButton.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     [self.sendButton.titleLabel setFont:[[AMBThemeManager sharedInstance] fontForKey:ContactSendButtonTextFont]];
     
     [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
@@ -132,6 +131,23 @@ float originalSendButtonHeight;
             [self.view layoutIfNeeded];
         }];
     } completion:nil];
+}
+
+- (void)updateButton {
+    self.sendButton.enabled = self.selected.count ? YES : NO;
+    self.sendButton.backgroundColor = self.sendButton.enabled ? [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor] : [UIColor lightGrayColor];
+    
+    switch (self.selected.count) {
+        case 0:
+            [self.sendButton setTitle:@"Select Contacts" forState:UIControlStateNormal];
+            break;
+        case 1:
+            [self.sendButton setTitle:@"Send to 1 contact" forState:UIControlStateNormal];
+            break;
+        default:
+            [self.sendButton setTitle:[NSString stringWithFormat:@"Send to %i contacts", (int)self.selected.count] forState:UIControlStateNormal];
+            break;
+    }
 }
 
 
@@ -430,38 +446,19 @@ float originalSendButtonHeight;
     return [inString rangeOfString:string].location != NSNotFound;
 }
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender
-{
-    DLog();
-    
-    if ([segue.identifier isEqualToString:NAME_PROMPT_SEGUE_IDENTIFIER])
-    {
-        AMBNamePrompt *vc = (AMBNamePrompt *)segue.destinationViewController;
-        vc.delegate = self;
-    }
-}
-
 - (void)refreshAllIncludingContacts:(BOOL)refreshContactsTable {
     if (refreshContactsTable) { [self.contactsTable reloadData]; }
     [self.selectedTable reloadData];
     [self updateButton];
 }
 
-- (void)updateButton
-{
-    self.sendButton.enabled = self.selected.count? YES : NO;
-    [self.sendButton setTitle:@"Select Contacts" forState:UIControlStateNormal];
-    
-    if (self.selected.count)
-    {
-        NSMutableString *buttonTitle = [NSMutableString stringWithFormat:@"Send to %i contact", (int)self.selected.count];
-        if (self.selected.count > 1)
-        {
-            [buttonTitle appendString:@"s"];
-        }
-        [self.sendButton  setTitle:buttonTitle forState:UIControlStateNormal];
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender {
+    if ([segue.identifier isEqualToString:@"goToNamePrompt"]) {
+        AMBNamePrompt *vc = (AMBNamePrompt*)segue.destinationViewController;
+        vc.delegate = self;
     }
 }
 
