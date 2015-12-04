@@ -23,54 +23,40 @@
 #import "AMBContactLoader.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
-                               AMBSelectedCellDelegate, UITextFieldDelegate,
-                               UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate, AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate>
-@property (weak, nonatomic) IBOutlet UITableView *contactsTable;
+                                AMBSelectedCellDelegate, UITextFieldDelegate,
+                                UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate,
+                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *composeMessageView;
-@property (weak, nonatomic) IBOutlet UITextField *searchBar;
-@property (weak, nonatomic) IBOutlet UIButton *btnEditMessage;
-@property (weak, nonatomic) IBOutlet UIButton *sendButton;
-@property (weak, nonatomic) IBOutlet UIButton *doneSearchingButton;
-@property (weak, nonatomic) IBOutlet UITextView *composeMessageTextView;
-@property (weak, nonatomic) IBOutlet UIView * containerView;
-
-//iPad Specific
-@property (weak, nonatomic) IBOutlet UITableView *selectedTable;
-@property (weak, nonatomic) IBOutlet UILabel *selectedTableLabel;
-//-------------
-
-//Dynamic AutoLayout constraints
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomViewBottomConstraint;
-
-
-
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *composeBoxWidth;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *composeBoxHeight;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sendButtonHeight;
+// IBOutlets
+@property (nonatomic, strong) IBOutlet UITableView *contactsTable;
+@property (nonatomic, strong) IBOutlet UIView *composeMessageView;
+@property (nonatomic, strong) IBOutlet UITextField *searchBar;
+@property (nonatomic, strong) IBOutlet UIButton *btnEditMessage;
+@property (nonatomic, strong) IBOutlet UIButton *sendButton;
+@property (nonatomic, strong) IBOutlet UIButton *doneSearchingButton;
+@property (nonatomic, strong) IBOutlet UITextView *composeMessageTextView;
+@property (nonatomic, strong) IBOutlet UIView * containerView;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *bottomViewBottomConstraint;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *composeBoxHeight;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *sendButtonHeight;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * searchBarRightConstraint;
+@property (nonatomic, strong) IBOutlet UITableView *selectedTable; // iPad Specific
 
-@property (strong, nonatomic) NSMutableSet *selected;
-@property (strong, nonatomic) NSMutableArray *filteredData;
+// Properties
+@property (nonatomic, strong) NSMutableSet *selected;
+@property (nonatomic, strong) NSMutableArray *filteredData;
 @property (nonatomic, strong) AMBContactLoader *contactLoader;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) UIView * fadeView;
-
-@property BOOL activeSearch;
+@property (nonatomic) BOOL activeSearch;
 @property (nonatomic) BOOL isEditing;
 
 @end
 
+
 @implementation AMBContactSelector
 
-NSString * const CONTACT_CELL_IDENTIFIER = @"contactCell";
-NSString * const SELECTED_CELL_IDENTIFIER = @"selectedCell";
-
 NSString * const NAME_PROMPT_SEGUE_IDENTIFIER = @"goToNamePrompt";
-
-float const COMPOSE_MESSAGE_VIEW_HEIGHT = 100.0;
-float const SEND_BUTTON_HEIGHT = 42.0;
-
 float originalSendButtonHeight;
 
 
@@ -253,7 +239,7 @@ float originalSendButtonHeight;
         return cell;
     } else {
         AMBContact *contact = [self.selected allObjects][indexPath.row];
-        AMBSelectedCell *cell = [tableView dequeueReusableCellWithIdentifier:SELECTED_CELL_IDENTIFIER];
+        AMBSelectedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"selectedCell"];
         [cell setUpCellWithContact:contact];
         cell.delegate = self;
         
@@ -488,7 +474,7 @@ float originalSendButtonHeight;
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender {
-    if ([segue.identifier isEqualToString:@"goToNamePrompt"]) {
+    if ([segue.identifier isEqualToString:NAME_PROMPT_SEGUE_IDENTIFIER]) {
         AMBNamePrompt *vc = (AMBNamePrompt*)segue.destinationViewController;
         vc.delegate = self;
     }
