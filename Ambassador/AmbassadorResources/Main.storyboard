@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -321,7 +322,7 @@
                                         <rect key="frame" x="0.0" y="426" width="600" height="110"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" text="I'm a fan of this company. Check them out {share_url}" translatesAutoresizingMaskIntoConstraints="NO" id="6Nf-63-bf7">
-                                                <rect key="frame" x="15" y="10" width="529" height="48"/>
+                                                <rect key="frame" x="15" y="10" width="522" height="48"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -379,7 +380,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T8W-36-tpm">
-                                                <rect key="frame" x="552" y="24" width="40" height="20"/>
+                                                <rect key="frame" x="542" y="24" width="50" height="20"/>
                                                 <animations/>
                                                 <accessibility key="accessibilityConfiguration" identifier="btnEdit"/>
                                                 <constraints>
@@ -387,7 +388,7 @@
                                                     <constraint firstAttribute="height" constant="20" id="klL-in-ZR4"/>
                                                     <constraint firstAttribute="height" constant="18" id="nno-WJ-O3V"/>
                                                     <constraint firstAttribute="width" constant="40" id="sB6-iY-5jR"/>
-                                                    <constraint firstAttribute="width" constant="40" id="xAS-L6-Tst"/>
+                                                    <constraint firstAttribute="width" constant="50" id="xAS-L6-Tst"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -436,7 +437,7 @@
                                             <constraint firstItem="6Nf-63-bf7" firstAttribute="top" secondItem="zwk-RT-ZLi" secondAttribute="top" constant="20" id="jl3-14-fkh"/>
                                             <constraint firstAttribute="trailing" secondItem="6Nf-63-bf7" secondAttribute="trailing" constant="70" id="p0w-Ao-wIE"/>
                                             <constraint firstItem="T8W-36-tpm" firstAttribute="centerY" secondItem="zwk-RT-ZLi" secondAttribute="centerY" id="rI2-vm-XX5"/>
-                                            <constraint firstItem="T8W-36-tpm" firstAttribute="leading" secondItem="6Nf-63-bf7" secondAttribute="trailing" constant="8" id="rlG-ET-4kX"/>
+                                            <constraint firstItem="T8W-36-tpm" firstAttribute="leading" secondItem="6Nf-63-bf7" secondAttribute="trailing" constant="5" id="rlG-ET-4kX"/>
                                             <constraint firstAttribute="height" constant="110" id="tm0-AS-1Ek"/>
                                             <constraint firstItem="T8W-36-tpm" firstAttribute="top" secondItem="zwk-RT-ZLi" secondAttribute="top" constant="20" id="uuc-0i-Yzv"/>
                                             <constraint firstAttribute="trailing" secondItem="T8W-36-tpm" secondAttribute="trailing" constant="8" id="xNj-Zv-QXU"/>
@@ -652,7 +653,7 @@
                                                         <animations/>
                                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="0Ev-V6-LY3" id="cTv-wZ-Ug9"/>
                                                         </connections>

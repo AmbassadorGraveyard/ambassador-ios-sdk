@@ -96,6 +96,9 @@ float originalSendButtonHeight;
     [self.refreshControl addTarget:self action:@selector(viewDidAppear:) forControlEvents:UIControlEventValueChanged];
     [self.contactsTable addSubview:self.refreshControl];
     
+    UITapGestureRecognizer *textFieldTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editMessageButton:)];
+    [self.composeMessageTextView addGestureRecognizer:textFieldTap];
+    
     [self updateButton];
     [self setUpTheme];
 }
@@ -114,6 +117,10 @@ float originalSendButtonHeight;
 
     self.sendButton.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     [self.sendButton.titleLabel setFont:[[AMBThemeManager sharedInstance] fontForKey:ContactSendButtonTextFont]];
+    
+    [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
+    [self.btnEditMessage setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    self.btnEditMessage.tintColor = [UIColor lightGrayColor];
 }
 
 
@@ -191,10 +198,14 @@ float originalSendButtonHeight;
         self.isEditing = YES;
         [self.composeMessageTextView becomeFirstResponder];
         self.composeMessageTextView.textColor = [UIColor blackColor];
+        [self.btnEditMessage setImage:nil forState:UIControlStateNormal];
+        [self.btnEditMessage setTitle:@"DONE" forState:UIControlStateNormal];
     } else {
-        self.isEditing = NO;
         [self.composeMessageTextView resignFirstResponder];
         self.composeMessageTextView.textColor = [UIColor lightGrayColor];
+        [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
+        [self.btnEditMessage setTitle:@"" forState:UIControlStateNormal];
+        self.isEditing = NO;
     }
 }
 
@@ -309,8 +320,6 @@ float originalSendButtonHeight;
 }
 
 
-
-
 #pragma mark - Keyboard Layout Adjustments
 - (void)registerForKeyboardNotifications
 {
@@ -328,14 +337,14 @@ float originalSendButtonHeight;
     if (self.isEditing) {
         CGRect keyboardFrame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
         self.bottomViewBottomConstraint.constant = keyboardFrame.size.height;
-        self.composeBoxHeight.constant = self.composeMessageView.frame.size.height - originalSendButtonHeight;
+        self.composeBoxHeight.constant = self.composeMessageView.frame.size.height - self.sendButton.frame.size.height;
         self.sendButtonHeight.constant = 0;
         [self.view layoutIfNeeded];
     }
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification {
-    if (self.bottomViewBottomConstraint.constant > 0) {
+    if (self.isEditing) {
         self.bottomViewBottomConstraint.constant = 0;
         self.composeBoxHeight.constant = self.composeMessageView.frame.size.height + originalSendButtonHeight;
         self.sendButtonHeight.constant = originalSendButtonHeight;
