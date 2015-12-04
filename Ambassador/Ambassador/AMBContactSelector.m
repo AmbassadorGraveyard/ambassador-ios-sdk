@@ -24,7 +24,7 @@
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                AMBSelectedCellDelegate, UITextFieldDelegate,
-                               UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate, AMBUtilitiesDelegate>
+                               UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate, AMBUtilitiesDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *contactsTable;
 
 @property (weak, nonatomic) IBOutlet UIView *composeMessageView;
@@ -96,9 +96,6 @@ float originalSendButtonHeight;
     [self.refreshControl addTarget:self action:@selector(viewDidAppear:) forControlEvents:UIControlEventValueChanged];
     [self.contactsTable addSubview:self.refreshControl];
     
-    UITapGestureRecognizer *textFieldTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editMessageButton:)];
-    [self.composeMessageTextView addGestureRecognizer:textFieldTap];
-    
     [self updateButton];
     [self setUpTheme];
 }
@@ -114,6 +111,8 @@ float originalSendButtonHeight;
 - (void)setUpTheme {
     self.containerView.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSearchBackgroundColor];
     [self.doneSearchingButton setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:ContactSearchDoneButtonTextColor] forState:UIControlStateNormal];
+    self.composeMessageTextView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    self.searchBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
 
     self.sendButton.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     [self.sendButton.titleLabel setFont:[[AMBThemeManager sharedInstance] fontForKey:ContactSendButtonTextFont]];
@@ -193,7 +192,7 @@ float originalSendButtonHeight;
     [self.contactsTable reloadData];
 }
 
-- (IBAction)editMessageButton:(UIButton *)sender {
+- (IBAction)editMessageButton {
     if (!self.isEditing) {
         self.isEditing = YES;
         [self.composeMessageTextView becomeFirstResponder];
@@ -208,6 +207,7 @@ float originalSendButtonHeight;
         self.isEditing = NO;
     }
 }
+
 
 - (void)refreshAll
 {
@@ -316,6 +316,14 @@ float originalSendButtonHeight;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    return YES;
+}
+
+
+#pragma mark - UITextView Delegate
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    if (!self.isEditing) { [self editMessageButton]; }
     return YES;
 }
 
