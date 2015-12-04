@@ -101,8 +101,12 @@
     [[AMBValues ambUserDefaults] setObject:dictionary forKey:@"device_fingerprint"];
 }
 
-+ (void)setUserInfoFromPusherDict:(AMBUserNetworkObject*)dictionary {
-    [[AMBValues ambUserDefaults] setObject:[dictionary toDictionary] forKey:@"pusher_user_info"];
++ (void)setUserFirstNameWithString:(NSString*)firstName {
+    [[AMBValues ambUserDefaults] setValue:[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] forKey:@"first_name"];
+}
+
++ (void)setUserLastNameWithString:(NSString*)lastName {
+    [[AMBValues ambUserDefaults] setValue:[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] forKey:@"last_name"];
 }
 
 
@@ -124,12 +128,12 @@
     return scheme;
 }
 
-+ (AMBUserNetworkObject*)getUserInfo {
-    AMBUserNetworkObject *networkObject;
-    NSMutableDictionary *pusherDict = [NSMutableDictionary dictionaryWithDictionary:[[AMBValues ambUserDefaults] dictionaryForKey:@"pusher_user_info"]];
-    [networkObject fillWithDictionary:pusherDict];
-    
-    return networkObject;
++ (NSString*)getUserFirstName {
+    return ([[AMBValues ambUserDefaults] valueForKey:@"first_name"]) ? [[AMBValues ambUserDefaults] valueForKey:@"first_name"] : @"";
+}
+
++ (NSString*)getUserLastName {
+    return ([[AMBValues ambUserDefaults] valueForKey:@"last_name"]) ? [[AMBValues ambUserDefaults] valueForKey:@"last_name"] : @"";
 }
 
 @end

@@ -318,14 +318,7 @@ float originalSendButtonHeight;
     NSArray *validatedNumbers = [AMBBulkShareHelper validatedPhoneNumbers:[self.selected allObjects]];
     
     if (validatedNumbers.count > 0) {
-        NSMutableString *firstName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.first_name];
-        NSMutableString *lastName = [[NSMutableString alloc] initWithString:[AmbassadorSDK sharedInstance].user.last_name];
-        
-        firstName = (NSMutableString *)[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        lastName = (NSMutableString *)[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        
-        NSString *senderName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
-        
+        NSString *senderName = [NSString stringWithFormat:@"%@ %@", [AMBValues getUserFirstName], [AMBValues getUserLastName]];
         AMBBulkShareSMSObject *smsObject = [[AMBBulkShareSMSObject alloc] initWithPhoneNumbers:validatedNumbers fromSender:senderName message:self.composeMessageTextView.text];
         
         [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:smsObject url:[AMBAmbassadorNetworkManager bulkShareSMSUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
