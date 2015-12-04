@@ -33,7 +33,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet UIButton *doneSearchingButton;
 @property (weak, nonatomic) IBOutlet UITextView *composeMessageTextView;
-@property (weak, nonatomic) IBOutlet UIView *fadeView;
 @property (weak, nonatomic) IBOutlet UIView * containerView;
 
 //iPad Specific
@@ -55,6 +54,7 @@
 @property (strong, nonatomic) NSMutableArray *filteredData;
 @property (nonatomic, strong) AMBContactLoader *contactLoader;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) UIView * fadeView;
 
 @property BOOL activeSearch;
 @property (nonatomic) BOOL isEditing;
@@ -73,6 +73,8 @@ float const SEND_BUTTON_HEIGHT = 42.0;
 
 float originalSendButtonHeight;
 
+
+#pragma mark - LifeCycle
 
 - (void)viewDidLoad
 {
@@ -108,21 +110,27 @@ float originalSendButtonHeight;
     }
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    if ([self.fadeView isDescendantOfView:self.containerView]) {
+        self.fadeView.frame = self.containerView.frame;
+    }
+}
+
+
+#pragma mark - UI Functions
+
 - (void)setUpTheme {
     self.containerView.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSearchBackgroundColor];
     [self.doneSearchingButton setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:ContactSearchDoneButtonTextColor] forState:UIControlStateNormal];
     self.composeMessageTextView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     self.searchBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
-
+    
     [self.sendButton.titleLabel setFont:[[AMBThemeManager sharedInstance] fontForKey:ContactSendButtonTextFont]];
     
     [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
     [self.btnEditMessage setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     self.btnEditMessage.tintColor = [UIColor lightGrayColor];
 }
-
-
-#pragma mark - UI Functions
 
 - (void)showOrHideSearchDoneButton {
     self.searchBarRightConstraint.constant = (self.searchBarRightConstraint.constant == 18) ? self.searchBarRightConstraint.constant + self.doneSearchingButton.frame.size.width + 18 : 18;
@@ -147,6 +155,28 @@ float originalSendButtonHeight;
         default:
             [self.sendButton setTitle:[NSString stringWithFormat:@"Send to %i contacts", (int)self.selected.count] forState:UIControlStateNormal];
             break;
+    }
+}
+
+- (void)showHideFadeView {
+    if (!self.fadeView) {
+        self.fadeView = [[UIView alloc] initWithFrame:self.containerView.frame];
+        self.fadeView.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
+        self.fadeView.alpha = 0;
+    }
+    
+    if ([self.fadeView isDescendantOfView:self.containerView]) {
+        [UIView animateWithDuration:0.3 animations:^{
+            self.fadeView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [self.fadeView removeFromSuperview];
+        }];
+    } else {
+        [self.containerView addSubview:self.fadeView];
+        [self.containerView bringSubviewToFront:self.composeMessageView];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.fadeView.alpha = 1;
+        } completion:0];
     }
 }
 
@@ -188,11 +218,13 @@ float originalSendButtonHeight;
 - (IBAction)editMessageButtonTapped:(id)sender {
     if (!self.isEditing) {
         self.isEditing = YES;
+        [self showHideFadeView];
         [self.composeMessageTextView becomeFirstResponder];
         self.composeMessageTextView.textColor = [UIColor blackColor];
         [self.btnEditMessage setImage:nil forState:UIControlStateNormal];
         [self.btnEditMessage setTitle:@"DONE" forState:UIControlStateNormal];
     } else {
+        [self showHideFadeView];
         [self.composeMessageTextView resignFirstResponder];
         self.composeMessageTextView.textColor = [UIColor lightGrayColor];
         [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
