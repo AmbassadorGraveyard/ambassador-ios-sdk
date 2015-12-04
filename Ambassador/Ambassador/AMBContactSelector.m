@@ -36,6 +36,7 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *composeBoxHeight;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *sendButtonHeight;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * searchBarRightConstraint;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * contactTableBottomConstraint;
 @property (nonatomic, strong) IBOutlet UITableView *selectedTable; // iPad Specific
 
 // Properties
@@ -307,11 +308,16 @@ float originalSendButtonHeight;
 }
 
 - (void)keyboardWillShow:(NSNotification*)sender {
+    CGRect keyboardFrame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
     if (self.isEditing) {
-        CGRect keyboardFrame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
         self.bottomViewBottomConstraint.constant = keyboardFrame.size.height;
         self.composeBoxHeight.constant = self.composeMessageView.frame.size.height - self.sendButton.frame.size.height;
         self.sendButtonHeight.constant = 0;
+        [self.view layoutIfNeeded];
+        return;
+    } else {
+        self.contactTableBottomConstraint.constant = keyboardFrame.size.height - self.composeMessageView.frame.size.height;
         [self.view layoutIfNeeded];
     }
 }
@@ -322,6 +328,8 @@ float originalSendButtonHeight;
         self.composeBoxHeight.constant = self.composeMessageView.frame.size.height + originalSendButtonHeight;
         self.sendButtonHeight.constant = originalSendButtonHeight;
         [self.view layoutIfNeeded];
+    } else {
+        self.contactTableBottomConstraint.constant = 0;
     }
 }
 
