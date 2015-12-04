@@ -28,12 +28,19 @@
 
 - (IBAction)showRAF:(UIButton *)sender {
     [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self];
+    
     AMBConversionParameters *clickConversion = [[AMBConversionParameters alloc] init];
     clickConversion.mbsy_campaign = @260;
     clickConversion.mbsy_revenue = @200;
-    clickConversion.mbsy_email = @"jake@getambassador.com";
+    clickConversion.mbsy_email = @"corey@getambassador.com";
     
-    [AmbassadorSDK registerConversion:clickConversion completion:nil];
+    [AmbassadorSDK registerConversion:clickConversion restrictToInsall:NO completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Conversion not registered - %@", error);
+        } else {
+            NSLog(@"BUTTON TAP CONVERSION REGISTERED SUCCESSFULLY!");
+        }
+    }];
 }
 
 @end
