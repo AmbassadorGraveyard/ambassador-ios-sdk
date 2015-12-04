@@ -12,13 +12,15 @@
 
 @interface AMBValuesUnitTests : XCTestCase
 
+@property (nonatomic, strong) NSUserDefaults *mockDefaults;
+
 @end
 
 @implementation AMBValuesUnitTests
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    self.mockDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AMBDEFAULTS"];
 }
 
 - (void)tearDown {
@@ -61,6 +63,83 @@
     XCTAssertNotNil(realBundle);
     XCTAssertEqual(mockBundle, realBundle);
     XCTAssert([mockBundlePath isEqualToString:realBundlePath], @"Expected %@, but got %@", mockBundlePath, realBundlePath);
+}
+
+- (void)testSetAndGetMbsyCookie {
+    // GIVEN
+    NSString *mockSaveKey = @"mbsy_cookie_code";
+    NSString *mockValue = @"testValue";
+    
+    NSString *mockReturnValue;
+    NSString *realReturnValue;
+    
+    // WHEN
+    [self.mockDefaults setValue:mockValue forKey:mockSaveKey];
+    [AMBValues setMbsyCookieWithCode:mockValue];
+    
+    mockReturnValue = [self.mockDefaults valueForKey:mockSaveKey];
+    realReturnValue = [AMBValues getMbsyCookieCode];
+    
+    // THEN
+    XCTAssertEqual(mockReturnValue, realReturnValue);
+}
+
+- (void)testSetAndGetDeviceFingerPrint {
+    // GIVEN
+    NSString *mockSaveKey = @"device_fingerprint";
+    NSDictionary *mockDictionary = @{@"testValue" : @"value"};
+    
+    NSDictionary *mockReturnValue;
+    NSDictionary *realReturnValue;
+    
+    // WHEN
+    [self.mockDefaults setValue:mockDictionary forKey:mockSaveKey];
+    [AMBValues setDeviceFingerPrintWithDictionary:mockDictionary];
+    
+    mockReturnValue = [self.mockDefaults valueForKey:mockSaveKey];
+    realReturnValue = [AMBValues getDeviceFingerPrint];
+    
+    // THEN
+    XCTAssertEqual(mockReturnValue, realReturnValue);
+}
+
+- (void)testSetAndGetHasInstalled {
+    // GIVEN
+    BOOL notFirstLaunch = YES;
+    BOOL firstLaunch = NO;
+    
+    // WHEN
+    BOOL expectedFalseBool = [AMBValues getHasInstalledBoolean];
+    [AMBValues setHasInstalled];
+    BOOL expectedTrueBool = [AMBValues getHasInstalledBoolean];
+    
+    // THEN
+    XCTAssertEqual(notFirstLaunch, expectedTrueBool);
+    XCTAssertEqual(firstLaunch, expectedFalseBool);
+}
+
+- (void)testSetAndGetUniversalID {
+    // GIVE
+    NSString *mockUniversalID = @"testID";
+    
+    // WHEN
+    [AMBValues setUniversalIDWithID:mockUniversalID];
+    NSString *expectedID = [AMBValues getUniversalID];
+    
+    // THEN
+    XCTAssertEqualObjects(mockUniversalID, expectedID);
+}
+
+- (void)testSetAndGetUniversalToken {
+    // GIVEN
+    NSString *mockUniversalToken = @"testToken";
+    
+    // WHEN
+    [AMBValues setUniversalTokenWithToken:mockUniversalToken];
+    NSString *expectedToken = [AMBValues getUniversalToken];
+    
+    // THEN
+    XCTAssertEqualObjects(mockUniversalToken, expectedToken);
 }
 
 @end

@@ -74,12 +74,23 @@ static AMBServiceSelector *raf;
 
 #pragma mark - conversion
 
-+ (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
-    [[AmbassadorSDK sharedInstance] registerConversion:information completion:completion];
++ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInsall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion {
+    [[AmbassadorSDK sharedInstance] localRegisterConversion:conversionParameters restrictToInstall:restrictToInstall completion:completion];
 }
 
-- (void)registerConversion:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
-    [self.conversion registerConversionWithParameters:information completion:completion];
+- (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion {
+    if (restrictToInstall && ![AMBValues getHasInstalledBoolean]) {
+        [self.conversion registerConversionWithParameters:conversionParameters completion:completion];
+        [AMBValues setHasInstalled];
+        return;
+    }
+    
+    if (restrictToInstall && [AMBValues getHasInstalledBoolean]) {
+        completion([NSError errorWithDomain:@"This conversion is restricted to install." code:0 userInfo:nil]);
+        return;
+    }
+    
+    if (!restrictToInstall) { [self.conversion registerConversionWithParameters:conversionParameters completion:completion]; }
 }
 
 - (void)checkConversionQueue {
@@ -87,35 +98,21 @@ static AMBServiceSelector *raf;
 }
 
 
-#pragma mark - runWith
+#pragma mark - RunWith Functions
 
 + (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID {
-    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:nil completion:nil];
+    [[AmbassadorSDK sharedInstance] localRunWithuniversalToken:universalToken universalID:universalID];
 }
 
-+ (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
-    [[AmbassadorSDK sharedInstance] runWithuniversalToken:universalToken universalID:universalID convertOnInstall:information completion:completion];
-}
-
-- (void)runWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID convertOnInstall:(AMBConversionParameters *)information completion:(void (^)(NSError *error))completion {
+- (void)localRunWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID {
     universalToken = [NSString stringWithFormat:@"SDKToken %@", universalToken];
     self.universalID = universalID;
     self.universalToken = universalToken;
-    [[NSUserDefaults standardUserDefaults] setValue:universalID forKey:AMB_UNIVERSAL_ID_DEFAULTS_KEY];
-    [[NSUserDefaults standardUserDefaults] setValue:universalToken forKey:AMB_UNIVERSAL_TOKEN_DEFAULTS_KEY];
+    [AMBValues setUniversalIDWithID:universalID];
+    [AMBValues setUniversalTokenWithToken:universalToken];
     if (!self.conversionTimer.isValid) { self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES]; }
     self.conversion = [[AMBConversion alloc] initWithKey:universalToken];
-
-    if (information) { // Check if this is the first time opening
-        if (![[NSUserDefaults standardUserDefaults] objectForKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]) {
-            DLog(@"Sending conversion on app launch");
-            [self registerConversion:information completion:completion];
-        }
-    }
-  
-    [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:AMB_FIRST_LAUNCH_USER_DEFAULTS_KEY]; // Set launch flag in User Deafaults
 }
-
 
 
 #pragma mark - pusher
@@ -175,10 +172,6 @@ static AMBServiceSelector *raf;
 + (void)identifyWithEmail:(NSString *)email {
     [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:nil];
 }
-
-//- (void)identifyWithEmail:(NSString *)email {
-//    [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:nil];
-//}
 
 + (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
     [[AmbassadorSDK sharedInstance] identifyWithEmail:email completion:c];
