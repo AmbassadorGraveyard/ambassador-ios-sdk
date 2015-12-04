@@ -19,9 +19,15 @@
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
 + (void)setDeviceFingerPrintWithDictionary:(NSDictionary*)dictionary;
++ (void)setHasInstalled;
++ (void)setUniversalIDWithID:(NSString*)universalID;
++ (void)setUniversalTokenWithToken:(NSString*)universalToken;
 
 // Default getters
 + (NSString*)getMbsyCookieCode;
 + (NSDictionary*)getDeviceFingerPrint;
++ (BOOL)getHasInstalledBoolean;
++ (NSString*)getUniversalID;
++ (NSString*)getUniversalToken;
 
 @end

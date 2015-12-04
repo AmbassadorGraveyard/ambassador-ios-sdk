@@ -83,23 +83,7 @@ parameters in [Conversions](#conversions). Your Universal Token and Universal ID
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Override point for customization after application launch.
 
-  // If you don't want to register a conversion during the first launch of your application
   [AmbassadorSDK runWithUniversalToken:<your_universal_token> universalID:<your_universal_id>];
-
-  //--OR--
-
-  // If you would like to register a conversion for one of your campaigns,
-  // create a conversion object to pass for the convertOnInstall parameter
-  AMBConversionParameters *parameters = [[AMBConversionParameters alloc] init];
-  // ... set parameters' properties (more on this in the "Conversions" section)
-  [AmbassadorSDK runWithUniversalToken:<your_universal_token> universalID:<your_universal_id> convertOnInstall:parameters completion:^(NSError *error) {
-      if (error) {
-         NSLog(@"Error %@", error);
-     }
-     else {
-         NSLog(@"All conversion parameters are set properly");
-     }
- }];
 
   return YES;
 }
@@ -111,22 +95,7 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
 {
     // Override point for customization after application launch.
 
-    // If you don't want to register a conversion during the first launch of your application
     AmbassadorSDK.runWithUniversalToken(<your_universal_token>, universalID:<your_universal_id>)
-
-    //--OR--
-
-    // If you would like to register a conversion for one of your campaigns,
-    // create a conversion object to pass for the convertOnInstall parameter
-    let parameters = AMBConversionParameters()
-    // ... set parameters' properties (more on this in the "Conversions" section)
-    AmbassadorSDK.runWithUniversalToken(<your_universal_token>, universalID:<your_universal_id>, convertOnInstall:parameters) { (error) -> Void in
-        if ((error) != nil) {
-            println("Error \(error)")
-        } else {
-            println("All conversion parameters are set properly")
-        }
-    }
 
     return true
 }
@@ -152,6 +121,10 @@ AmbassadorSDK.identifyWithEmail("user@example.com")
 
 ## Conversions
 Conversions can be triggered from anywhere. Common places could be a view controller's ```viewDidLoad``` or on a button event.
+
+** Note:** The **restrictToInsall** boolean should only be set to YES
+ when converting on install.  An ideal place to register an install conversion
+ would be right after obtaining the user's email address
 
 **Objective-c**
 ```objective-c
@@ -180,12 +153,11 @@ parameters.mbsy_event_data2 = @"eventdata2"; // NSString
 parameters.mbsy_event_data3 = @"eventdata3"; // NSString
 parameters.mbsy_is_approved = @YES; // BOOL (Defaults to @YES)
 
-// STEP FOUR: Register the conversion with the parameter object
-[AmbassadorSDK registerConversion:parameters completion:^(NSError *error) {
+// STEP FOUR: Register the conversion with the parameter object.  
+[AmbassadorSDK registerConversion:parameters restrictToInsall:NO completion:^(NSError *error) {
     if (error) {
-        NSLog(@"Error %@", error);
-    }
-    else {
+        NSLog(@"There was an error - %@", error);
+    } else {
         NSLog(@"All conversion parameters are set properly");
     }
 }];
@@ -219,12 +191,12 @@ parameters.mbsy_event_data3 = "eventdata3" // NSString
 parameters.mbsy_is_approved = true // BOOL (Defaults to true)
 
 // STEP FOUR: Register the conversion with the parameter object
-AmbassadorSDK.registerConversion(parameters)  { (error) -> Void in
+AmbassadorSDK.registerConversion(parameters, restrictToInsall: false) { (error) -> Void in
   if ((error) != nil) {
       println("Error \(error)")
   } else {
-       println("All conversion parameters are set properly")
-   }
+      println("All conversion parameters are set properly")
+  }
 }
 ```
 

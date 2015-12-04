@@ -101,6 +101,18 @@
     [[AMBValues ambUserDefaults] setObject:dictionary forKey:@"device_fingerprint"];
 }
 
++ (void)setHasInstalled {
+    [[AMBValues ambUserDefaults] setValue:@YES forKey:@"AMBFIRSTLAUNCHSTORAGE"];
+}
+
++ (void)setUniversalIDWithID:(NSString*)universalID {
+    [[AMBValues ambUserDefaults] setValue:universalID forKey:@"universal_id"];
+}
+
++ (void)setUniversalTokenWithToken:(NSString*)universalToken {
+    [[AMBValues ambUserDefaults] setValue:universalToken forKey:@"universal_token"];
+}
+
 
 #pragma mark - Getter Methods
 
@@ -110,6 +122,18 @@
 
 + (NSDictionary *)getDeviceFingerPrint {
     return ([[AMBValues ambUserDefaults] valueForKey:@"device_fingerprint"]) ? [[AMBValues ambUserDefaults] valueForKey:@"device_fingerprint"] : @{};
+}
+
++ (BOOL)getHasInstalledBoolean {
+    return (BOOL)[[AMBValues ambUserDefaults] valueForKey:@"AMBFIRSTLAUNCHSTORAGE"];
+}
+
++ (NSString*)getUniversalID {
+    return ([[AMBValues ambUserDefaults] valueForKey:@"universal_id"]) ? [[AMBValues ambUserDefaults] valueForKey:@"universal_id"] : @"";
+}
+
++ (NSString*)getUniversalToken {
+    return ([[AMBValues ambUserDefaults] valueForKey:@"universal_token"]) ? [[AMBValues ambUserDefaults] valueForKey:@"universal_token"] : @"";
 }
 
 + (NSString*)getDeepLinkURL {
