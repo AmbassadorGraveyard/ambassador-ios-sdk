@@ -138,38 +138,22 @@ float originalSendButtonHeight;
 #pragma mark - IBActions
 
 - (IBAction)sendButtonPressed:(UIButton *)sender {
-    if (self.selected.count > 0)
-    {
-        //TODO: validate short url is in there
-        if (![self validateString:self.shortURL inString:self.composeMessageTextView.text]){
-            NSString *message = [NSString stringWithFormat:@"Please include your url in the message: %@", self.shortURL];
-            AMBsendAlert(NO, message, self);
-            return;
-        }
-
+    if (self.selected.count > 0 && ![self validateString:self.shortURL inString:self.composeMessageTextView.text]) {
+        NSString *message = [NSString stringWithFormat:@"Please include your url in the message: %@", self.shortURL];
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+        return;
+    } else if ([self.selected count] > 0 && [self validateString:self.shortURL inString:self.composeMessageTextView.text]) {
         switch (self.type) {
             case AMBSocialServiceTypeEmail:
                 [self sendEmail];
                 break;
-                
             case AMBSocialServiceTypeSMS:
-                if ([self alreadyHaveNames]) {
-                    [self sendSMS];
-                } else {
-                    [self performSegueWithIdentifier:NAME_PROMPT_SEGUE_IDENTIFIER sender:self];
-                }
-                
+                [self sendSMS];
                 break;
-                
             default:
                 break;
         }
     }
-}
-
-- (BOOL)validateString:(NSString *)string inString:(NSString *)inString
-{
-    return [inString rangeOfString:string].location != NSNotFound;
 }
 
 - (IBAction)clearAllButton:(UIButton *)sender
@@ -205,29 +189,6 @@ float originalSendButtonHeight;
         [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
         [self.btnEditMessage setTitle:@"" forState:UIControlStateNormal];
         self.isEditing = NO;
-    }
-}
-
-
-- (void)refreshAll
-{
-    [self.selectedTable reloadData];
-    [self updateButton];
-}
-
-- (void)updateButton
-{
-    self.sendButton.enabled = self.selected.count? YES : NO;
-    [self.sendButton setTitle:@"Select Contacts" forState:UIControlStateNormal];
-    
-    if (self.selected.count)
-    {
-        NSMutableString *buttonTitle = [NSMutableString stringWithFormat:@"Send to %i contact", (int)self.selected.count];
-        if (self.selected.count > 1)
-        {
-            [buttonTitle appendString:@"s"];
-        }
-        [self.sendButton  setTitle:buttonTitle forState:UIControlStateNormal];
     }
 }
 
@@ -289,7 +250,7 @@ float originalSendButtonHeight;
 }
 
 
-#pragma mark - SelectedCellDelegate
+#pragma mark - SelectedCell Delegate
 
 - (void)removeButtonTappedForContact:(AMBContact *)contact {
     [self.selected removeObject:contact];
@@ -364,6 +325,11 @@ float originalSendButtonHeight;
 #pragma mark - Send Functions
 
 - (void)sendSMS {
+    if (![self alreadyHaveNames]) {
+        [self performSegueWithIdentifier:NAME_PROMPT_SEGUE_IDENTIFIER sender:self];
+        return;
+    }
+    
     NSArray *validatedNumbers = [AMBBulkShareHelper validatedPhoneNumbers:[self.selected allObjects]];
     
     if (validatedNumbers.count > 0) {
@@ -494,6 +460,9 @@ float originalSendButtonHeight;
     self.filteredData = (NSMutableArray *)[self.data filteredArrayUsingPredicate:predicate];
 }
 
+- (BOOL)validateString:(NSString *)string inString:(NSString *)inString {
+    return [inString rangeOfString:string].location != NSNotFound;
+}
 
 #pragma mark - Navigation
 - (void)backButtonPressed:(UIButton *)button
@@ -511,6 +480,28 @@ float originalSendButtonHeight;
     {
         AMBNamePrompt *vc = (AMBNamePrompt *)segue.destinationViewController;
         vc.delegate = self;
+    }
+}
+
+- (void)refreshAll
+{
+    [self.selectedTable reloadData];
+    [self updateButton];
+}
+
+- (void)updateButton
+{
+    self.sendButton.enabled = self.selected.count? YES : NO;
+    [self.sendButton setTitle:@"Select Contacts" forState:UIControlStateNormal];
+    
+    if (self.selected.count)
+    {
+        NSMutableString *buttonTitle = [NSMutableString stringWithFormat:@"Send to %i contact", (int)self.selected.count];
+        if (self.selected.count > 1)
+        {
+            [buttonTitle appendString:@"s"];
+        }
+        [self.sendButton  setTitle:buttonTitle forState:UIControlStateNormal];
     }
 }
 
