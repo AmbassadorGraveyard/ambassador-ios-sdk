@@ -928,6 +928,7 @@
                                     <constraint firstItem="x0i-aq-Swh" firstAttribute="width" secondItem="hsH-lL-lpx" secondAttribute="width" id="6go-7j-9mZ"/>
                                     <constraint firstItem="hsH-lL-lpx" firstAttribute="leading" secondItem="wgW-OC-WJb" secondAttribute="trailing" id="7cC-l0-dZO"/>
                                     <constraint firstItem="hsH-lL-lpx" firstAttribute="leading" secondItem="MC2-8v-QOj" secondAttribute="trailing" id="7rP-Vj-SLa"/>
+                                    <constraint firstItem="79A-Gp-VFS" firstAttribute="top" secondItem="iwe-lZ-xS4" secondAttribute="bottom" id="8Wn-2e-ArS"/>
                                     <constraint firstItem="MC2-8v-QOj" firstAttribute="top" secondItem="0i3-IZ-LQ5" secondAttribute="top" id="8mX-aO-GBw"/>
                                     <constraint firstItem="x0i-aq-Swh" firstAttribute="leading" secondItem="wgW-OC-WJb" secondAttribute="trailing" id="Ach-2U-NWF"/>
                                     <constraint firstItem="79A-Gp-VFS" firstAttribute="top" secondItem="iwe-lZ-xS4" secondAttribute="bottom" id="Acy-cH-WEX"/>
@@ -935,6 +936,8 @@
                                     <constraint firstItem="zwk-RT-ZLi" firstAttribute="top" secondItem="79A-Gp-VFS" secondAttribute="bottom" id="DrV-wb-ark"/>
                                     <constraint firstItem="wgW-OC-WJb" firstAttribute="leading" secondItem="iwe-lZ-xS4" secondAttribute="trailing" id="FNX-Ch-oaN"/>
                                     <constraint firstItem="x0i-aq-Swh" firstAttribute="leading" secondItem="iwe-lZ-xS4" secondAttribute="trailing" id="FeT-AE-fuW"/>
+                                    <constraint firstItem="79A-Gp-VFS" firstAttribute="top" secondItem="iwe-lZ-xS4" secondAttribute="bottom" id="HR5-KO-qcC"/>
+                                    <constraint firstItem="79A-Gp-VFS" firstAttribute="top" secondItem="iwe-lZ-xS4" secondAttribute="bottom" id="J5V-kP-GG9"/>
                                     <constraint firstAttribute="bottom" secondItem="zwk-RT-ZLi" secondAttribute="bottom" id="JLP-bo-Bqn"/>
                                     <constraint firstItem="79A-Gp-VFS" firstAttribute="leading" secondItem="0i3-IZ-LQ5" secondAttribute="leading" constant="-42" id="M9c-jL-vlQ"/>
                                     <constraint firstItem="zwk-RT-ZLi" firstAttribute="top" secondItem="x0i-aq-Swh" secondAttribute="bottom" id="Q5i-sc-Aiy"/>
@@ -1010,10 +1013,13 @@
                                         <exclude reference="oWf-bQ-83R"/>
                                         <exclude reference="3oh-m3-2fJ"/>
                                         <exclude reference="6W7-7d-Z6k"/>
+                                        <exclude reference="8Wn-2e-ArS"/>
                                         <exclude reference="Acy-cH-WEX"/>
+                                        <exclude reference="HR5-KO-qcC"/>
                                         <exclude reference="Qul-Vx-lsH"/>
                                         <exclude reference="gFa-CE-XUO"/>
                                         <exclude reference="njg-tw-cFh"/>
+                                        <exclude reference="ws8-Ga-Cx4"/>
                                         <exclude reference="xpr-NH-Plf"/>
                                     </mask>
                                 </variation>
@@ -1103,6 +1109,7 @@
                         <outlet property="composeBoxHeight" destination="tm0-AS-1Ek" id="RyX-dW-Sxg"/>
                         <outlet property="composeMessageTextView" destination="6Nf-63-bf7" id="bmd-dP-ygt"/>
                         <outlet property="composeMessageView" destination="zwk-RT-ZLi" id="tTu-jc-r4S"/>
+                        <outlet property="contactTableBottomConstraint" destination="J5V-kP-GG9" id="Opx-IG-cbu"/>
                         <outlet property="contactsTable" destination="iwe-lZ-xS4" id="vXD-Ot-aSm"/>
                         <outlet property="containerView" destination="0i3-IZ-LQ5" id="UeR-UV-S0k"/>
                         <outlet property="doneSearchingButton" destination="t9c-Xc-hOs" id="JNM-AE-wjK"/>
