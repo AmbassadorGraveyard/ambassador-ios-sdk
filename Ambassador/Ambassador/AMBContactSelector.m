@@ -467,20 +467,21 @@ float originalSendButtonHeight;
 
 - (void)sendShareTrack:(NSArray *)contacts {
     AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
+    
     if (self.type == AMBSocialServiceTypeEmail) {
         share.recipient_email = [self valuesFromContacts:[self.selected allObjects]];
     } else if (self.type == AMBSocialServiceTypeSMS) {
-        share.recipient_username = [self validatePhoneNumbers:[self.selected allObjects]];
+        share.recipient_username = [self valuesFromContacts:[self.selected allObjects]];
     }
+    
     share.short_code = self.urlNetworkObject.short_code;
     share.social_name = [AMBOptions serviceTypeStringValue:self.type];
     
     [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
         if (error) {
-            DLog(@"Error for BulkShareTrack %@ with ResponseCode %li and Response %@", [AMBOptions serviceTypeStringValue:self.type], (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            DLog(@"Error for BulkShareTrack %@ with ResponseCode %li and Response %@", [AMBOptions serviceTypeStringValue:self.type], (long)((NSHTTPURLResponse*)response).statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
         } else {
-            DLog(@"Successfully shared BulkShareTrack %@ with ResponseCode %li and Response %@", [AMBOptions serviceTypeStringValue:self.type], (long)httpResponse.statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            DLog(@"Successfully shared BulkShareTrack %@ with ResponseCode %li and Response %@", [AMBOptions serviceTypeStringValue:self.type], (long)((NSHTTPURLResponse*)response).statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
         }
     }];
 }
@@ -490,22 +491,10 @@ float originalSendButtonHeight;
     for (AMBContact *contact in contacts) {
         [returnVal addObject:contact.value];
     }
+    
     return returnVal;
 }
 
-
-- (NSMutableArray *)validatePhoneNumbers:(NSArray *)contacts {
-    NSMutableArray *validSet = [[NSMutableArray alloc] init];
-    for (AMBContact *contact in contacts) {
-        NSString *number = [[contact.value componentsSeparatedByCharactersInSet:
-                             [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]]
-                            componentsJoinedByString:@""];
-        if (number.length == 11 || number.length == 10 || number.length == 7) {
-            [validSet addObject:number];
-        }
-    }
-    return validSet;
-}
 
 #pragma mark - AMBNamePrompt Delegate 
 
