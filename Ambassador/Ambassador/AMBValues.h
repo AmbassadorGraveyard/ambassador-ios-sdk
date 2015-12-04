@@ -20,11 +20,13 @@
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
 + (void)setDeviceFingerPrintWithDictionary:(NSDictionary*)dictionary;
-+ (void)setUserInfoFromPusherDict:(AMBUserNetworkObject*)dictionary;
++ (void)setUserFirstNameWithString:(NSString*)firstName;
++ (void)setUserLastNameWithString:(NSString*)lastName;
 
 // Default getters
 + (NSString*)getMbsyCookieCode;
 + (NSDictionary*)getDeviceFingerPrint;
-+ (AMBUserNetworkObject*)getUserInfo;
++ (NSString*)getUserFirstName;
++ (NSString*)getUserLastName;
 
 @end
