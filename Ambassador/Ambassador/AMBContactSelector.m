@@ -183,7 +183,7 @@ float originalSendButtonHeight;
     self.activeSearch = NO;
     [self showOrHideSearchDoneButton];
     sender.selected = NO;
-    [self refreshAll];
+    [self.contactsTable reloadData];
 }
 
 - (IBAction)editMessageButton:(UIButton *)sender {
@@ -248,6 +248,7 @@ float originalSendButtonHeight;
     }
 }
 
+
 #pragma mark - TableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -297,7 +298,7 @@ float originalSendButtonHeight;
     NSString *fullSearchText =  [textField.text stringByReplacingCharactersInRange:range withString:string];
     self.activeSearch = ([fullSearchText isEqualToString:@""]) ? NO : YES;
     [self searchWithText:fullSearchText];
-    [self refreshAll];
+    [self.contactsTable reloadData];
     
     return YES;
 }
