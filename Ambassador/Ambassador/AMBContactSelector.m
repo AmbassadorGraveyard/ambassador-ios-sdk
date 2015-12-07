@@ -74,10 +74,9 @@ float originalSendButtonHeight;
     [self.contactsTable addSubview:self.refreshControl];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     if (self.refreshControl.isRefreshing) { [self.refreshControl endRefreshing]; }
     [self refreshContacts];
-    [self.contactsTable reloadData];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -90,7 +89,6 @@ float originalSendButtonHeight;
         [self.containerView bringSubviewToFront:self.composeMessageView];
     }
 }
-
 
 
 #pragma mark - UI Functions
@@ -521,6 +519,10 @@ float originalSendButtonHeight;
 
 
 #pragma mark - AMBContactLoader Delegate
+
+- (void)contactsFinishedLoadingSuccessfully {
+    [self.contactsTable reloadData];
+}
 
 - (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
     UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Unable to load contacts" message:@"There was an error loading your contact list." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
