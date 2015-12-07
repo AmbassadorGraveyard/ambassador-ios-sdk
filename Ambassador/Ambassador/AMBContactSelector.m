@@ -40,7 +40,7 @@
 @property (nonatomic, strong) IBOutlet UITableView *selectedTable; // iPad Specific
 
 // Properties
-@property (nonatomic, strong) NSMutableArray *data; 
+@property (nonatomic, strong) NSMutableArray *data;
 @property (nonatomic, strong) NSMutableSet *selected;
 @property (nonatomic, strong) NSMutableArray *filteredData;
 @property (nonatomic, strong) AMBContactLoader *contactLoader;
@@ -532,10 +532,11 @@ float originalSendButtonHeight;
 }
 
 - (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
-    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Unable to load contacts" message:@"There was an error loading your contact list." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [errorAlert show];
-    
-    DLog(@"Error loading contacts - %@", message);
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        DLog(@"Error loading contacts - %@", message);
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Sharing requires access to your contact book. You can enable this in your settings." withUniqueID:@"contactError" forViewController:self shouldDismissVCImmediately:NO];
+        [AMBUtilities sharedInstance].delegate = self;
+    }];
 }
 
 
