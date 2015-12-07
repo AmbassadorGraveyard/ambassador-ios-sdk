@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "AMBNetworkObject.h"
 
 @interface AMBValues : NSObject
 
@@ -22,6 +23,8 @@
 + (void)setHasInstalled;
 + (void)setUniversalIDWithID:(NSString*)universalID;
 + (void)setUniversalTokenWithToken:(NSString*)universalToken;
++ (void)setUserFirstNameWithString:(NSString*)firstName;
++ (void)setUserLastNameWithString:(NSString*)lastName;
 
 // Default getters
 + (NSString*)getMbsyCookieCode;
@@ -29,5 +32,7 @@
 + (BOOL)getHasInstalledBoolean;
 + (NSString*)getUniversalID;
 + (NSString*)getUniversalToken;
++ (NSString*)getUserFirstName;
++ (NSString*)getUserLastName;
 
 @end

@@ -7,12 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AMBContact.h"
 
 @interface AMBContactCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *name;
-@property (weak, nonatomic) IBOutlet UILabel *value;
+@property (nonatomic, weak) IBOutlet UILabel * name;
+@property (nonatomic, weak) IBOutlet UILabel * value;
+@property (nonatomic, weak) IBOutlet UIImageView * checkmarkView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint * checkmarkConstraint;
 
-@property (weak, nonatomic) IBOutlet UIImageView *checkmarkView;
+- (void)setUpCellWithContact:(AMBContact*)contact isSelected:(BOOL)selected;
+- (void)animateCheckmarkIn;
+- (void)animateCheckmarkOut;
 
 @end

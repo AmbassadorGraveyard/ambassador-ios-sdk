@@ -24,7 +24,7 @@
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [self.mockDefaults removeSuiteNamed:@"AMBDEFAULTS"];
     [super tearDown];
 }
 
@@ -81,7 +81,7 @@
     realReturnValue = [AMBValues getMbsyCookieCode];
     
     // THEN
-    XCTAssertEqual(mockReturnValue, realReturnValue);
+    XCTAssertEqualObjects(mockReturnValue, realReturnValue);
 }
 
 - (void)testSetAndGetDeviceFingerPrint {
@@ -100,22 +100,19 @@
     realReturnValue = [AMBValues getDeviceFingerPrint];
     
     // THEN
-    XCTAssertEqual(mockReturnValue, realReturnValue);
+    XCTAssertEqualObjects(mockReturnValue, realReturnValue);
 }
 
 - (void)testSetAndGetHasInstalled {
     // GIVEN
     BOOL notFirstLaunch = YES;
-    BOOL firstLaunch = NO;
     
     // WHEN
-    BOOL expectedFalseBool = [AMBValues getHasInstalledBoolean];
     [AMBValues setHasInstalled];
     BOOL expectedTrueBool = [AMBValues getHasInstalledBoolean];
     
     // THEN
     XCTAssertEqual(notFirstLaunch, expectedTrueBool);
-    XCTAssertEqual(firstLaunch, expectedFalseBool);
 }
 
 - (void)testSetAndGetUniversalID {
@@ -140,6 +137,30 @@
     
     // THEN
     XCTAssertEqualObjects(mockUniversalToken, expectedToken);
+}
+
+- (void)testSetAndGetUserFirstName {
+    // GIVEN
+    NSString *mockFirstName = @"userFirstName";
+    
+    // WHEN
+    [AMBValues setUserFirstNameWithString:mockFirstName];
+    NSString *expectedFirstName = [AMBValues getUserFirstName];
+    
+    // THEN
+    XCTAssertEqualObjects(mockFirstName, expectedFirstName);
+}
+
+- (void)testSetAndGetUserLastName {
+    // GIVEN
+    NSString *mockLastName = @"userLastName";
+    
+    // WHEN
+    [AMBValues setUserLastNameWithString:mockLastName];
+    NSString *expectedLastName = [AMBValues getUserLastName];
+    
+    // THEN
+    XCTAssertEqualObjects(mockLastName, expectedLastName);
 }
 
 @end
