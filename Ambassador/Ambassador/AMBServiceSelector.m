@@ -419,7 +419,6 @@ int contactServiceType;
 }
 
 
-
 #pragma mark - ShareServiceDelegate
 
 - (void)networkError:(NSString *)title message:(NSString *)message {

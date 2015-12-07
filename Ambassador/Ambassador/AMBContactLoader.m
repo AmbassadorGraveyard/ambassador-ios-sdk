@@ -110,6 +110,8 @@
             [self getEmailsForPerson:person];
             [self getNumbersForPerson:person];
         }
+        
+        [self.delegate contactsFinishedLoadingSuccessfully];
     }
 }
 

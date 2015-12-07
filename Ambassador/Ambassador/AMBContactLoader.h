@@ -10,6 +10,7 @@
 
 @protocol AMBContactLoaderDelegate <NSObject>
 
+- (void)contactsFinishedLoadingSuccessfully;
 - (void)contactsFailedToLoadWithError:(NSString*)errorTitle message:(NSString *)message;
 
 @end
