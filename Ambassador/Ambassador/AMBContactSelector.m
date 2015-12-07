@@ -81,10 +81,16 @@ float originalSendButtonHeight;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    if ([self.fadeView isDescendantOfView:self.containerView]) {
+    [UIView animateWithDuration:.1 animations:^{
         self.fadeView.frame = self.containerView.frame;
+    }];
+    
+    if ([self.fadeView isDescendantOfView:self.containerView]) {
+        [self.containerView bringSubviewToFront:self.fadeView];
+        [self.containerView bringSubviewToFront:self.composeMessageView];
     }
 }
+
 
 
 #pragma mark - UI Functions
