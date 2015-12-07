@@ -17,7 +17,7 @@
 
 @interface AMBContactLoader : NSObject
 
-- (id)initWithDelegate:(id<AMBContactLoaderDelegate>)delegate;
+- (void)loadWithDelegate:(id)delegate;
 @property NSMutableArray *phoneNumbers;
 @property NSMutableArray *emailAddresses;
 @property (nonatomic, weak) id<AMBContactLoaderDelegate>delegate;

@@ -22,18 +22,9 @@
 
 @implementation AMBContactLoader
 
-
-#pragma mark - Initialization
-- (id)initWithDelegate:(id<AMBContactLoaderDelegate>)delegate
-{
-    if ([super init])
-    {
-        DLog();
-        self.delegate = delegate;
-        [self setUp];
-    }
-    
-    return self;
+- (void)loadWithDelegate:(id)delegate {
+    self.delegate = delegate;
+    [self setUp];
 }
 
 - (void)setUp

@@ -40,6 +40,7 @@
 @property (nonatomic, strong) IBOutlet UITableView *selectedTable; // iPad Specific
 
 // Properties
+@property (nonatomic, strong) NSMutableArray *data; 
 @property (nonatomic, strong) NSMutableSet *selected;
 @property (nonatomic, strong) NSMutableArray *filteredData;
 @property (nonatomic, strong) AMBContactLoader *contactLoader;
@@ -68,15 +69,14 @@ float originalSendButtonHeight;
     self.composeMessageTextView.text = self.defaultMessage;
     [self setUpTheme];
     
+    self.contactLoader = [[AMBContactLoader alloc] init];
+    [self.contactLoader loadWithDelegate:self];
+    [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
+    
     // Sets up a 'Pull to refresh'
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(viewDidAppear:) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(pullToRefresh) forControlEvents:UIControlEventValueChanged];
     [self.contactsTable addSubview:self.refreshControl];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    if (self.refreshControl.isRefreshing) { [self.refreshControl endRefreshing]; }
-    [self refreshContacts];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -432,8 +432,6 @@ float originalSendButtonHeight;
 }
 
 - (void)refreshContacts {
-    self.contactLoader = [[AMBContactLoader alloc] initWithDelegate:self];
-    
     switch (self.type) {
         case AMBSocialServiceTypeEmail:
             self.data = self.contactLoader.emailAddresses;
@@ -465,6 +463,11 @@ float originalSendButtonHeight;
     if (refreshContactsTable) { [self.contactsTable reloadData]; }
     [self.selectedTable reloadData];
     [self updateButton];
+}
+
+- (void)pullToRefresh {
+    [self.contactLoader loadWithDelegate:self];
+    [self.refreshControl endRefreshing];
 }
 
 
@@ -521,7 +524,11 @@ float originalSendButtonHeight;
 #pragma mark - AMBContactLoader Delegate
 
 - (void)contactsFinishedLoadingSuccessfully {
-    [self.contactsTable reloadData];
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [[AMBUtilities sharedInstance] hideLoadingView];
+        [self refreshContacts];
+        [self.contactsTable reloadData];
+    }];
 }
 
 - (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
