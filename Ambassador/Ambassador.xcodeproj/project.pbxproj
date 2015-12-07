@@ -199,7 +199,7 @@
 		EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */ = {isa = PBXBuildFile; fileRef = EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */; };
 		EFDFA0D01BE154B8002FA3ED /* UIColor+AMBColorValues.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */; };
 		EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
-		EFF58FA01BF4F8F5001AB2DE /* AMBMedia.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */; settings = {ASSET_TAGS = (); }; };
+		EFF58FA01BF4F8F5001AB2DE /* AMBMedia.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1546,6 +1546,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1573,6 +1574,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

@@ -49,7 +49,7 @@
 	<key>ContactSearchBackgroundColor</key>
 	<string>#DEDEDE</string>
 	<key>ContactSearchDoneButtonTextColor</key>
-	<string>#000000</string>
+	<string>#979797</string>
 	<key>CONTACT TABLEVIEW ------------</key>
 	<string></string>
 	<key>ContactTableCheckMarkColor</key>

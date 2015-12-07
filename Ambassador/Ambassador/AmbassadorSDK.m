@@ -153,6 +153,8 @@ static AMBServiceSelector *raf;
         if (json[@"url"]) {
             [user fillWithUrl:json[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
                 [AmbassadorSDK sharedInstance].user = user;
+                [AMBValues setUserFirstNameWithString:user.first_name];
+                [AMBValues setUserLastNameWithString:user.last_name];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
                 // TODO: Notification Center
             }];
@@ -163,6 +165,8 @@ static AMBServiceSelector *raf;
         } else {
             [user fillWithDictionary:json];
             [AmbassadorSDK sharedInstance].user = user;
+            [AMBValues setUserFirstNameWithString:user.first_name];
+            [AMBValues setUserLastNameWithString:user.last_name];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
         }
     }];

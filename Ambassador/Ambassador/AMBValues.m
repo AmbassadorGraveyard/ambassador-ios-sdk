@@ -113,6 +113,14 @@
     [[AMBValues ambUserDefaults] setValue:universalToken forKey:@"universal_token"];
 }
 
++ (void)setUserFirstNameWithString:(NSString*)firstName {
+    [[AMBValues ambUserDefaults] setValue:[firstName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] forKey:@"first_name"];
+}
+
++ (void)setUserLastNameWithString:(NSString*)lastName {
+    [[AMBValues ambUserDefaults] setValue:[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] forKey:@"last_name"];
+}
+
 
 #pragma mark - Getter Methods
 
@@ -125,7 +133,7 @@
 }
 
 + (BOOL)getHasInstalledBoolean {
-    return (BOOL)[[AMBValues ambUserDefaults] valueForKey:@"AMBFIRSTLAUNCHSTORAGE"];
+    return ([[AMBValues ambUserDefaults] valueForKey:@"AMBFIRSTLAUNCHSTORAGE"]) ? (BOOL)[[AMBValues ambUserDefaults] valueForKey:@"AMBFIRSTLAUNCHSTORAGE"] : NO;
 }
 
 + (NSString*)getUniversalID {
@@ -142,6 +150,14 @@
     NSString *scheme = [urlSchemeDict valueForKey:@"CFBundleURLSchemes"][0];
     
     return scheme;
+}
+
++ (NSString*)getUserFirstName {
+    return ([[AMBValues ambUserDefaults] valueForKey:@"first_name"]) ? [[AMBValues ambUserDefaults] valueForKey:@"first_name"] : @"";
+}
+
++ (NSString*)getUserLastName {
+    return ([[AMBValues ambUserDefaults] valueForKey:@"last_name"]) ? [[AMBValues ambUserDefaults] valueForKey:@"last_name"] : @"";
 }
 
 @end
