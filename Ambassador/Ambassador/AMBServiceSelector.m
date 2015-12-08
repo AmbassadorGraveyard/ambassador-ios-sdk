@@ -445,10 +445,15 @@ int contactServiceType;
 
 - (void)userMustReauthenticate {
     dispatch_async(dispatch_get_main_queue(), ^{
-        DLog(@"Reauthenticate");
-        AMBsendAlert(NO, @"You've been logged out of linkedIn. Log in and we will bring you back to the share screen.", self);
-        [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You've been logged out of LinkedIn. Please login to share." withUniqueID:@"linkedInAuth" forViewController:self shouldDismissVCImmediately:NO];
+        [AMBUtilities sharedInstance].delegate = self;
     });
+}
+
+- (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
+    if ([uniqueID isEqualToString:@"linkedInAuth"]) {
+        [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
+    }
 }
 
 @end
