@@ -118,4 +118,23 @@ NSString * const TITLE = @"Authorize LinkedIn";
     [task resume];
 }
 
+- (void)checkForInvalidatedToken {
+    NSDictionary *authKey = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
+    NSURL *url = [NSURL URLWithString:@"https://api.linkedin.com/v1/people/~?format=json"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"GET";
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", authKey[AMB_LKDN_OAUTH_TOKEN_KEY]] forHTTPHeaderField:@"Authorization"];
+    
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            if (((NSHTTPURLResponse*)response).statusCode == 401) {
+                DLog(@"Nullifying Linkedin Tokens");
+            } else {
+                DLog(@"LinkedIn Tokens are still up to date");
+            }
+        }
+    }];
+    [task resume];
+}
+
 @end

@@ -228,6 +228,8 @@ int contactServiceType;
 - (void)checkLinkedInToken {
     NSDictionary *token = [[NSUserDefaults  standardUserDefaults] dictionaryForKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
     DLog(@"%@", token);
+    AMBAuthorizeLinkedIn *auth = [[AMBAuthorizeLinkedIn alloc] init];
+    [auth checkForInvalidatedToken];
     if (token && [[NSDate date] compare:[AMBValues getLinkedInTokenExirationDate]] == NSOrderedAscending) {
         NSDate *referenceDate = token[AMB_LKDN_EXPIRES_DICT_KEY];
         if (!([referenceDate timeIntervalSinceNow] < 0.0)) {
@@ -449,6 +451,8 @@ int contactServiceType;
         [AMBUtilities sharedInstance].delegate = self;
     });
 }
+
+
 
 - (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
     if ([uniqueID isEqualToString:@"linkedInAuth"]) {
