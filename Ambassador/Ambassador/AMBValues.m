@@ -121,6 +121,10 @@
     [[AMBValues ambUserDefaults] setValue:[lastName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] forKey:@"last_name"];
 }
 
++ (void)setLinkedInAccessToken:(NSString*)accessToken {
+    [[AMBValues ambUserDefaults] setValue:accessToken forKey:@"lnkdin_access_token"];
+}
+
 
 #pragma mark - Getter Methods
 
@@ -158,6 +162,10 @@
 
 + (NSString*)getUserLastName {
     return ([[AMBValues ambUserDefaults] valueForKey:@"last_name"]) ? [[AMBValues ambUserDefaults] valueForKey:@"last_name"] : @"";
+}
+
++ (NSString*)getLinkedInAccessToken {
+    return [[AMBValues ambUserDefaults] valueForKey:@"lnkdin_access_token"];
 }
 
 @end
