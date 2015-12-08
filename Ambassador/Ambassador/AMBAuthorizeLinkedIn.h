@@ -22,5 +22,5 @@
 
 @interface AMBAuthorizeLinkedIn : UIViewController
 @property (nonatomic, weak) id<LinkedInAuthorizeDelegate>delegate;
-- (void)checkForInvalidatedToken;
+- (void)checkForInvalidatedTokenWithCompletion:(void(^)())complete;
 @end
