@@ -100,6 +100,8 @@ NSString * const TITLE = @"Authorize LinkedIn";
                   NSDate * date = [NSDate dateWithTimeIntervalSinceNow:offset - 1000];
                   tokenResponse[AMB_LKDN_EXPIRES_DICT_KEY] = date;
                   
+                  [AMBValues setLinkedInExpirationDate:tokenResponse[@"expires_in"]];
+                  
                   [[NSUserDefaults standardUserDefaults] setObject:tokenResponse
                                                             forKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
                   dispatch_async(dispatch_get_main_queue(),
