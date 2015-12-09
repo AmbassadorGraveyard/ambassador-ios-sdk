@@ -33,12 +33,16 @@
 @property (nonatomic, strong) UIView *loadingView;
 @property (nonatomic, strong) UIVisualEffectView *blurView;
 @property (nonatomic, strong) UIImageView * animatingView;
+@property (nonatomic, strong) NSCache * cache;
 
 + (AMBUtilities *)sharedInstance;
 
 - (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController shouldDismissVCImmediately:(BOOL)shouldDismiss;
 - (void)showLoadingScreenForView:(UIView*)view;
 - (void)hideLoadingView;
+- (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue;
+- (NSObject*)getCacheValueWithKey:(NSString*)key;
+- (void)removeCacheForKey:(NSString*)keyValue;
 
 + (NSString*)createRequestID;
 

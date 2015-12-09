@@ -41,6 +41,7 @@
 @property (nonatomic, strong) IBOutlet UITableView *selectedTable; // iPad Specific
 
 // Properties
+@property (nonatomic, strong) NSMutableArray *data;
 @property (nonatomic, strong) NSMutableSet *selected;
 @property (nonatomic, strong) NSMutableArray *filteredData;
 @property (nonatomic, strong) AMBContactLoader *contactLoader;
@@ -68,17 +69,12 @@ float originalSendButtonHeight;
     self.filteredData = [[NSMutableArray alloc] init];
     self.composeMessageTextView.text = self.defaultMessage;
     [self setUpTheme];
+    [self loadContacts];
     
     // Sets up a 'Pull to refresh'
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(viewDidAppear:) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(pullToRefresh) forControlEvents:UIControlEventValueChanged];
     [self.contactsTable addSubview:self.refreshControl];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    if (self.refreshControl.isRefreshing) { [self.refreshControl endRefreshing]; }
-    [self refreshContacts];
-    [self.contactsTable reloadData];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -91,7 +87,6 @@ float originalSendButtonHeight;
         [self.containerView bringSubviewToFront:self.composeMessageView];
     }
 }
-
 
 
 #pragma mark - UI Functions
@@ -436,8 +431,6 @@ float originalSendButtonHeight;
 }
 
 - (void)refreshContacts {
-    self.contactLoader = [[AMBContactLoader alloc] initWithDelegate:self];
-    
     switch (self.type) {
         case AMBSocialServiceTypeEmail:
             self.data = self.contactLoader.emailAddresses;
@@ -448,6 +441,9 @@ float originalSendButtonHeight;
         default:
             break;
     }
+    
+    NSDictionary *cacheDict = @{ @"contactData" : self.data, @"purgeDate" : [NSDate dateWithTimeIntervalSinceNow:600]};
+    [[AMBUtilities sharedInstance] saveToCache:cacheDict forKey:[AMBOptions serviceTypeStringValue:self.type]];
 }
 
 - (void)searchWithText:(NSString *)searchText {
@@ -469,6 +465,26 @@ float originalSendButtonHeight;
     if (refreshContactsTable) { [self.contactsTable reloadData]; }
     [self.selectedTable reloadData];
     [self updateButton];
+}
+
+- (void)pullToRefresh {
+    [self.contactLoader loadWithDelegate:self];
+    [self.refreshControl endRefreshing];
+}
+
+- (void)loadContacts {
+    NSDictionary *contactCacheDict = (NSDictionary*)[[AMBUtilities sharedInstance] getCacheValueWithKey:[AMBOptions serviceTypeStringValue:self.type]];
+    NSDate *purgeDate;
+    
+    if (contactCacheDict) { purgeDate = contactCacheDict[@"purgeDate"]; }
+    
+    if ([[NSDate date] compare:purgeDate] == NSOrderedAscending && contactCacheDict[@"contactData"]) {
+        self.data = (NSMutableArray*)contactCacheDict[@"contactData"];
+    } else {
+        self.contactLoader = [[AMBContactLoader alloc] init];
+        [self.contactLoader loadWithDelegate:self];
+        [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
+    }
 }
 
 
@@ -524,11 +540,20 @@ float originalSendButtonHeight;
 
 #pragma mark - AMBContactLoader Delegate
 
+- (void)contactsFinishedLoadingSuccessfully {
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [[AMBUtilities sharedInstance] hideLoadingView];
+        [self refreshContacts];
+        [self.contactsTable reloadData];
+    }];
+}
+
 - (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
-    UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Unable to load contacts" message:@"There was an error loading your contact list." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [errorAlert show];
-    
-    DLog(@"Error loading contacts - %@", message);
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        DLog(@"Error loading contacts - %@", message);
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Sharing requires access to your contact book. You can enable this in your settings." withUniqueID:@"contactError" forViewController:self shouldDismissVCImmediately:NO];
+        [AMBUtilities sharedInstance].delegate = self;
+    }];
 }
 
 
