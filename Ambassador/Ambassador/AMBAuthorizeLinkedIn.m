@@ -100,6 +100,8 @@ NSString * const TITLE = @"Authorize LinkedIn";
                   NSDate * date = [NSDate dateWithTimeIntervalSinceNow:offset - 1000];
                   tokenResponse[AMB_LKDN_EXPIRES_DICT_KEY] = date;
                   
+                  [AMBValues setLinkedInExpirationDate:tokenResponse[@"expires_in"]];
+                  [AMBValues setLinkedInAccessToken:tokenResponse[@"access_token"]];
                   [[NSUserDefaults standardUserDefaults] setObject:tokenResponse
                                                             forKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
                   dispatch_async(dispatch_get_main_queue(),
@@ -113,6 +115,32 @@ NSString * const TITLE = @"Authorize LinkedIn";
               //TODO:Log the error
           }
       }];
+    [task resume];
+}
+
+- (void)checkForInvalidatedTokenWithCompletion:(void(^)())complete {
+    NSDictionary *authKey = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
+    NSURL *url = [NSURL URLWithString:@"https://api.linkedin.com/v1/people/~?format=json"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"GET";
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", authKey[AMB_LKDN_OAUTH_TOKEN_KEY]] forHTTPHeaderField:@"Authorization"];
+    
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            if (((NSHTTPURLResponse*)response).statusCode == 401) {
+                DLog(@"Nullifying Linkedin Tokens");
+                [AMBValues setLinkedInAccessToken:nil];
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    complete();
+                }];
+            } else {
+                DLog(@"LinkedIn Tokens are still up to date");
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    complete();
+                }];
+            }
+        }
+    }];
     [task resume];
 }
 
