@@ -76,23 +76,62 @@
     XCTAssertEqualObjects(mockWelcomeFont, expectedWelcomeFont, @"%@ is not equal to %@", mockWelcomeFont, expectedWelcomeFont);
 }
 
-- (void)testImageForKey {
+//- (void)testImageForKey {
+//    // GIVEN
+//    UIImage *mockAppleImage = [UIImage imageNamed:@"appleLogo"];
+//    NSMutableDictionary *mockReturnValue = [[NSMutableDictionary alloc] initWithObjectsAndKeys:mockAppleImage, @"image", nil];
+//    [mockReturnValue setValue:@"0" forKey:@"imageSlotNumber"];
+//    NSMutableDictionary *expectedReturnValue;
+//    
+//    // WHEN
+//    expectedReturnValue = [self.themeManager imageForKey:RAFLogo];
+//    
+//    // THEN
+//    XCTAssertNotNil(expectedReturnValue);
+//    XCTAssertEqualObjects(mockReturnValue[@"image"], expectedReturnValue[@"image"], @"%@ is not equal to %@", mockReturnValue[@"image"], expectedReturnValue[@"image"]);
+//    XCTAssertEqualObjects(mockReturnValue[@"imageSlotNumber"], expectedReturnValue[@"imageSlotNumber"], @"%@ is not equal to %@", mockReturnValue[@"imageSlotNumber"], expectedReturnValue[@"imageSlotNumber"]);
+//}
+
+- (void)testCustomSocialGridArray {
     // GIVEN
-    UIImage *mockAppleImage = [UIImage imageNamed:@"appleLogo"];
-    NSMutableDictionary *mockReturnValue = [[NSMutableDictionary alloc] initWithObjectsAndKeys:mockAppleImage, @"image", nil];
-    [mockReturnValue setValue:@"0" forKey:@"imageSlotNumber"];
-    NSMutableDictionary *expectedReturnValue;
+    NSArray *mockSocialArray = @[@"Facebook", @"Twitter", @"LinkedIn", @"SMS", @"Email"];
     
     // WHEN
-    expectedReturnValue = [self.themeManager imageForKey:RAFLogo];
+    NSArray *expectedSocialArray = [[AMBThemeManager sharedInstance] customSocialGridArray];
     
     // THEN
-    XCTAssertNotNil(expectedReturnValue);
-    XCTAssertEqualObjects(mockReturnValue[@"image"], expectedReturnValue[@"image"], @"%@ is not equal to %@", mockReturnValue[@"image"], expectedReturnValue[@"image"]);
-    XCTAssertEqualObjects(mockReturnValue[@"imageSlotNumber"], expectedReturnValue[@"imageSlotNumber"], @"%@ is not equal to %@", mockReturnValue[@"imageSlotNumber"], expectedReturnValue[@"imageSlotNumber"]);
+    XCTAssertEqualObjects(mockSocialArray[0], expectedSocialArray[0]);
+    XCTAssertEqualObjects(mockSocialArray[1], expectedSocialArray[1]);
+    XCTAssertEqualObjects(mockSocialArray[2], expectedSocialArray[2]);
+    XCTAssertEqualObjects(mockSocialArray[3], expectedSocialArray[3]);
+    XCTAssertEqualObjects(mockSocialArray[4], expectedSocialArray[4]);
 }
 
-// Helper function that returns a color from a hex code
+- (void)testEnumValueForSocialString {
+    // GIVEN
+    SocialShareTypes mockFacebook = Facebook;
+    SocialShareTypes mockTwitter = Twitter;
+    SocialShareTypes mockLinkedin = LinkedIn;
+    SocialShareTypes mockSMS = SMS;
+    SocialShareTypes mockEmail = Email;
+    
+    // WHEN
+    SocialShareTypes expectedFacebook = [AMBThemeManager enumValueForSocialString:@"Facebook"];
+    SocialShareTypes expectedTwitter = [AMBThemeManager enumValueForSocialString:@"Twitter"];
+    SocialShareTypes expectedLinkedin = [AMBThemeManager enumValueForSocialString:@"LinkedIn"];
+    SocialShareTypes expectedSMS = [AMBThemeManager enumValueForSocialString:@"SMS"];
+    SocialShareTypes expectedEmail = [AMBThemeManager enumValueForSocialString:@"Email"];
+    
+    // THEN
+    XCTAssertEqual(mockFacebook, expectedFacebook);
+    XCTAssertEqual(mockTwitter, expectedTwitter);
+    XCTAssertEqual(mockLinkedin, expectedLinkedin);
+    XCTAssertEqual(mockSMS, expectedSMS);
+    XCTAssertEqual(mockEmail, expectedEmail);
+}
+
+#pragma mark - Helper Functions
+
 - (UIColor *)colorFromHexString:(NSString *)hexString {
     unsigned rgbValue = 0;
     NSScanner *scanner = [NSScanner scannerWithString:hexString];
