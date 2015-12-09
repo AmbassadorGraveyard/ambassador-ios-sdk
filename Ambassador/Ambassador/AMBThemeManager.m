@@ -216,11 +216,12 @@ static NSDictionary * valuesDic;
 }
 
 - (NSArray*)customSocialGridArray {
-    NSDictionary *socialDict = @{@"Facebook" : [valuesDic valueForKey:@"FacebookWeight"],
-                                 @"Twitter" : [valuesDic valueForKey:@"TwitterWeight"],
-                                 @"LinkedIn" : [valuesDic valueForKey:@"LinkedInWeight"],
-                                 @"SMS" : [valuesDic valueForKey:@"SMSWeight"],
-                                 @"Email" : [valuesDic valueForKey:@"EmailWeight"] };
+    NSMutableDictionary *socialDict = [[NSMutableDictionary alloc] init];
+    if ((int)[valuesDic valueForKey:@"FacebookWeight"] >= 0) { [socialDict setValue:[valuesDic valueForKey:@"FacebookWeight"] forKey:@"Facebook"]; }
+    if ((int)[valuesDic valueForKey:@"TwitterWeight"] >= 0 ) { [socialDict setValue:[valuesDic valueForKey:@"TwitterWeight"] forKey:@"Twitter"]; }
+    if ((int)[valuesDic valueForKey:@"LinkedInWeight"] >= 0) { [socialDict setValue:[valuesDic valueForKey:@"LinkedInWeight"] forKey:@"LinkedIn"]; }
+    if ((int)[valuesDic valueForKey:@"SMSWeight"] >= 0) { [socialDict setValue:[valuesDic valueForKey:@"SMSWeight"] forKey:@"SMS"]; }
+    if ((int)[valuesDic valueForKey:@"EmailWeight"] >= 0) { [socialDict setValue:[valuesDic valueForKey:@"EmailWeight"] forKey:@"Email"]; }
 
     return [socialDict keysSortedByValueUsingSelector:@selector(compare:)];
 }
