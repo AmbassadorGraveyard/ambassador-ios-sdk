@@ -58,5 +58,17 @@
 	<string>Helvetica, 17</string>
 	<key>ContactTableInfoTextFont</key>
 	<string>Helvetica, 13</string>
+	<key>SOCIAL SHARE GRID ------------</key>
+	<string></string>
+	<key>FacebookWeight</key>
+	<integer>10</integer>
+	<key>TwitterWeight</key>
+	<integer>20</integer>
+	<key>LinkedInWeight</key>
+	<integer>30</integer>
+	<key>SMSWeight</key>
+	<integer>40</integer>
+	<key>EmailWeight</key>
+	<integer>50</integer>
 </dict>
 </plist>
