@@ -25,6 +25,8 @@
 + (void)setUniversalTokenWithToken:(NSString*)universalToken;
 + (void)setUserFirstNameWithString:(NSString*)firstName;
 + (void)setUserLastNameWithString:(NSString*)lastName;
++ (void)setLinkedInExpirationDate:(NSDate*)expirationDate;
++ (void)setLinkedInAccessToken:(NSString*)accessToken;
 
 // Default getters
 + (NSString*)getMbsyCookieCode;
@@ -34,5 +36,7 @@
 + (NSString*)getUniversalToken;
 + (NSString*)getUserFirstName;
 + (NSString*)getUserLastName;
++ (NSDate*)getLinkedInTokenExirationDate;
++ (NSString*)getLinkedInAccessToken;
 
 @end

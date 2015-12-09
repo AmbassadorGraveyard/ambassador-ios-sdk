@@ -27,7 +27,7 @@
 #import "AMBNetworkObject.h"
 #import "AMBAmbassadorNetworkManager.h"
 
-@interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, AMBContactLoaderDelegate, LinkedInAuthorizeDelegate,
+@interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LinkedInAuthorizeDelegate,
                                     AMBShareServiceDelegate, UITextFieldDelegate, AMBUtilitiesDelegate>
 
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
@@ -48,7 +48,6 @@
 @property (nonatomic, strong) IBOutlet UIView * shortURLBackground;
 
 @property (nonatomic, strong) NSArray *services;
-@property (nonatomic, strong) AMBContactLoader *loader;
 @property (nonatomic, strong) NSTimer *waitViewTimer;
 @property (nonatomic, strong) AMBUserUrlNetworkObject *urlNetworkObj;
 @property (nonatomic, strong) UILabel * lblCopied;
@@ -70,7 +69,6 @@ int contactServiceType;
     [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLoadingView) name:@"PusherReceived" object:nil]; // Subscribe to the notification that gets sent out when we get our pusher payload back
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
-    self.loader = [[AMBContactLoader alloc] initWithDelegate:self];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
 
     [self setUpCloseButton];
@@ -79,8 +77,16 @@ int contactServiceType;
     self.services = [[AMBThemeManager sharedInstance] customSocialGridArray];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.collectionView reloadData];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [self.waitViewTimer invalidate];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self.collectionView reloadData];
 }
 
 
@@ -227,17 +233,14 @@ int contactServiceType;
 }
 
 - (void)checkLinkedInToken {
-    NSDictionary *token = [[NSUserDefaults  standardUserDefaults] dictionaryForKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
-    DLog(@"%@", token);
-    if (token) {
-        NSDate *referenceDate = token[AMB_LKDN_EXPIRES_DICT_KEY];
-        if (!([referenceDate timeIntervalSinceNow] < 0.0)) {
-            DLog();
+    AMBAuthorizeLinkedIn *auth = [[AMBAuthorizeLinkedIn alloc] init];
+    [auth checkForInvalidatedTokenWithCompletion:^{
+        if ([AMBValues getLinkedInAccessToken]) {
             [self presentLinkedInShare];
+        } else {
+            [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
         }
-    } else {
-        [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
-    }
+    }];
 }
 
 - (void)presentLinkedInShare {
@@ -324,7 +327,6 @@ int contactServiceType;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:CONTACT_SELECTOR_SEGUE]) {
-
         AMBContactSelector *vc = (AMBContactSelector *)segue.destinationViewController;
         vc.prefs = self.prefs;
         vc.shortURL = self.urlNetworkObj.url;
@@ -332,7 +334,6 @@ int contactServiceType;
         vc.defaultMessage = [NSString stringWithFormat:@"%@ %@", self.prefs.defaultShareMessage, self.urlNetworkObj.url];
         vc.type = contactServiceType;
         vc.urlNetworkObject = self.urlNetworkObj;
-        vc.data = (vc.type == AMBSocialServiceTypeSMS) ? self.loader.phoneNumbers : self.loader.emailAddresses;
     } else if ([segue.identifier isEqualToString:LKND_AUTHORIZE_SEGUE]) {
         AMBAuthorizeLinkedIn *vc = (AMBAuthorizeLinkedIn *)segue.destinationViewController;
         vc.delegate = self;
@@ -342,14 +343,6 @@ int contactServiceType;
 - (void)closeButtonPressed:(UIButton *)button {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
-
-
-#pragma mark - ContactLoaderDelegate
-
-- (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
-    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:@"contactsFailure" forViewController:self shouldDismissVCImmediately:NO];
-}
-
 
 
 #pragma mark - CollectionView DataSource
@@ -405,7 +398,6 @@ int contactServiceType;
 }
 
 
-
 #pragma mark - ShareServiceDelegate
 
 - (void)networkError:(NSString *)title message:(NSString *)message {
@@ -427,10 +419,17 @@ int contactServiceType;
 
 - (void)userMustReauthenticate {
     dispatch_async(dispatch_get_main_queue(), ^{
-        DLog(@"Reauthenticate");
-        AMBsendAlert(NO, @"You've been logged out of linkedIn. Log in and we will bring you back to the share screen.", self);
-        [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You've been logged out of LinkedIn. Please login to share." withUniqueID:@"linkedInAuth" forViewController:self shouldDismissVCImmediately:NO];
+        [AMBUtilities sharedInstance].delegate = self;
     });
+}
+
+
+
+- (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
+    if ([uniqueID isEqualToString:@"linkedInAuth"]) {
+        [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
+    }
 }
 
 @end

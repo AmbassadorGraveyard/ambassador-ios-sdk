@@ -10,13 +10,14 @@
 
 @protocol AMBContactLoaderDelegate <NSObject>
 
+- (void)contactsFinishedLoadingSuccessfully;
 - (void)contactsFailedToLoadWithError:(NSString*)errorTitle message:(NSString *)message;
 
 @end
 
 @interface AMBContactLoader : NSObject
 
-- (id)initWithDelegate:(id<AMBContactLoaderDelegate>)delegate;
+- (void)loadWithDelegate:(id)delegate;
 @property NSMutableArray *phoneNumbers;
 @property NSMutableArray *emailAddresses;
 @property (nonatomic, weak) id<AMBContactLoaderDelegate>delegate;

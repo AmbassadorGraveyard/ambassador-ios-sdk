@@ -13,7 +13,6 @@
 
 @interface AMBContactSelector : UIViewController
 
-@property (nonatomic, strong) NSMutableArray *data;
 @property (nonatomic, strong) AMBServiceSelectorPreferences *prefs;
 @property (nonatomic, strong) NSString *defaultMessage;
 @property (nonatomic, strong) NSString *shortCode;
