@@ -47,7 +47,7 @@
 @property (nonatomic, strong) IBOutlet UIButton * btnCopy;
 @property (nonatomic, strong) IBOutlet UIView * shortURLBackground;
 
-@property (nonatomic, strong) NSMutableArray *services;
+@property (nonatomic, strong) NSArray *services;
 @property (nonatomic, strong) AMBContactLoader *loader;
 @property (nonatomic, strong) NSTimer *waitViewTimer;
 @property (nonatomic, strong) AMBUserUrlNetworkObject *urlNetworkObj;
@@ -76,6 +76,7 @@ int contactServiceType;
     [self setUpCloseButton];
     [self performIdentify];
     [self setUpTheme];
+    self.services = [[AMBThemeManager sharedInstance] customSocialGridArray];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -359,27 +360,7 @@ int contactServiceType;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     AMBShareServiceCell *cell = (AMBShareServiceCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"serviceCell" forIndexPath:indexPath];
-    
-    switch (indexPath.row) {
-        case 0:
-            [cell setUpCellWithTitle:@"Facebook" backgroundColor:[UIColor faceBookBlue] icon:[AMBValues imageFromBundleWithName:@"facebook" type:@"png" tintable:NO]];
-            break;
-        case 1:
-            [cell setUpCellWithTitle:@"Twitter" backgroundColor:[UIColor twitterBlue] icon:[AMBValues imageFromBundleWithName:@"twitter" type:@"png" tintable:NO]];
-            break;
-        case 2:
-            [cell setUpCellWithTitle:@"LinkedIn" backgroundColor:[UIColor linkedInBlue] icon:[AMBValues imageFromBundleWithName:@"linkedin" type:@"png" tintable:NO]];
-            break;
-        case 3:
-            [cell setupBorderCellWithTitle:@"SMS" backgroundColor:[UIColor whiteColor] icon:[AMBValues imageFromBundleWithName:@"sms" type:@"png" tintable:NO] borderColor:[UIColor lightGrayColor]];
-            break;
-        case 4:
-            [cell setupBorderCellWithTitle:@"Email" backgroundColor:[UIColor whiteColor] icon:[AMBValues imageFromBundleWithName:@"email" type:@"png" tintable:NO] borderColor:[UIColor lightGrayColor]];
-            break;
-        default:
-            break;
-    }
-    
+    [cell setUpCellWithCellType:[AMBThemeManager enumValueForSocialString:self.services[indexPath.row]]];
     return cell;
 }
 
