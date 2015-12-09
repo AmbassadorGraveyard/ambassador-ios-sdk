@@ -37,4 +37,27 @@
     self.ivLogo.image = imageIcon;
 }
 
+- (void)setUpCellWithCellType:(SocialShareTypes)cellType {
+    self.cellType = cellType;
+    switch (cellType) {
+        case Facebook:
+            [self setUpCellWithTitle:@"Facebook" backgroundColor:[UIColor faceBookBlue] icon:[AMBValues imageFromBundleWithName:@"facebook" type:@"png" tintable:NO]];
+            break;
+        case Twitter:
+            [self setUpCellWithTitle:@"Twitter" backgroundColor:[UIColor twitterBlue] icon:[AMBValues imageFromBundleWithName:@"twitter" type:@"png" tintable:NO]];
+            break;
+        case LinkedIn:
+            [self setUpCellWithTitle:@"LinkedIn" backgroundColor:[UIColor linkedInBlue] icon:[AMBValues imageFromBundleWithName:@"linkedin" type:@"png" tintable:NO]];
+            break;
+        case SMS:
+            [self setupBorderCellWithTitle:@"SMS" backgroundColor:[UIColor clearColor] icon:[AMBValues imageFromBundleWithName:@"sms" type:@"png" tintable:NO] borderColor:[UIColor lightGrayColor]];
+            break;
+        case Email:
+            [self setupBorderCellWithTitle:@"Email" backgroundColor:[UIColor clearColor] icon:[AMBValues imageFromBundleWithName:@"email" type:@"png" tintable:NO] borderColor:[UIColor lightGrayColor]];
+            break;
+        default:
+            break;
+    }
+}
+
 @end

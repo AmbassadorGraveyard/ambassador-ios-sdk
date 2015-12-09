@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AMBThemeManager.h"
 
 @interface AMBShareServiceCell : UICollectionViewCell
 
-- (void)setUpCellWithTitle:(NSString*)title backgroundColor:(UIColor*)backgroundColor icon:(UIImage*)imageIcon;
-- (void)setupBorderCellWithTitle:(NSString*)title backgroundColor:(UIColor*)backgroundColor icon:(UIImage*)imageIcon borderColor:(UIColor*)borderColor;
+@property (nonatomic) SocialShareTypes cellType;
+
+- (void)setUpCellWithCellType:(SocialShareTypes)cellType;
 
 @end
