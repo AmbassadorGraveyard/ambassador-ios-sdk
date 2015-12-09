@@ -372,21 +372,22 @@ int contactServiceType;
 #pragma mark - CollectionView Delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.row) {
-        case 0:
+    AMBShareServiceCell *selectedCell = (AMBShareServiceCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+    switch (selectedCell.cellType) {
+        case Facebook:
             [self stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
             break;
-        case 1:
+        case Twitter:
             [self stockShareWithSocialMediaType:AMBSocialServiceTypeTwitter];
             break;
-        case 2:
+        case LinkedIn:
             [self checkLinkedInToken];
             break;
-        case 3:
+        case SMS:
             contactServiceType = AMBSocialServiceTypeSMS;
             [self performSegueWithIdentifier:CONTACT_SELECTOR_SEGUE sender:self];
             break;
-        case 4:
+        case Email:
             contactServiceType = AMBSocialServiceTypeEmail;
             [self performSegueWithIdentifier:CONTACT_SELECTOR_SEGUE sender:self];
             break;
