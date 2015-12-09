@@ -232,17 +232,14 @@ int contactServiceType;
 }
 
 - (void)checkLinkedInToken {
-    NSDictionary *token = [[NSUserDefaults  standardUserDefaults] dictionaryForKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
-    DLog(@"%@", token);
-    if (token) {
-        NSDate *referenceDate = token[AMB_LKDN_EXPIRES_DICT_KEY];
-        if (!([referenceDate timeIntervalSinceNow] < 0.0)) {
-            DLog();
+    AMBAuthorizeLinkedIn *auth = [[AMBAuthorizeLinkedIn alloc] init];
+    [auth checkForInvalidatedTokenWithCompletion:^{
+        if ([AMBValues getLinkedInAccessToken]) {
             [self presentLinkedInShare];
+        } else {
+            [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
         }
-    } else {
-        [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
-    }
+    }];
 }
 
 - (void)presentLinkedInShare {
@@ -440,10 +437,17 @@ int contactServiceType;
 
 - (void)userMustReauthenticate {
     dispatch_async(dispatch_get_main_queue(), ^{
-        DLog(@"Reauthenticate");
-        AMBsendAlert(NO, @"You've been logged out of linkedIn. Log in and we will bring you back to the share screen.", self);
-        [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You've been logged out of LinkedIn. Please login to share." withUniqueID:@"linkedInAuth" forViewController:self shouldDismissVCImmediately:NO];
+        [AMBUtilities sharedInstance].delegate = self;
     });
+}
+
+
+
+- (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
+    if ([uniqueID isEqualToString:@"linkedInAuth"]) {
+        [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
+    }
 }
 
 @end

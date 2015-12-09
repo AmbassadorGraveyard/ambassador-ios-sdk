@@ -163,4 +163,29 @@
     XCTAssertEqualObjects(mockLastName, expectedLastName);
 }
 
+- (void)testSetAndGetLinkedInExpirationDate {
+    // GIVEN
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSDate *mockDate = [formatter dateFromString:@"2016-02-06 20:39:59"];
+    
+    // WHEN
+    [AMBValues setLinkedInExpirationDate:mockDate];
+    NSDate *expectedDate = [AMBValues getLinkedInTokenExirationDate];
+    
+    // THEN
+    XCTAssertEqualObjects(mockDate, expectedDate);
+}
+
+- (void)testSetAndGetLinkedInAccessToken {
+    // GIVEN
+    NSString *mockAccessToken = @"randomaccesstoken6546";
+    
+    // WHEN
+    [AMBValues setLinkedInAccessToken:mockAccessToken];
+    NSString *expectedAccessToken = [AMBValues getLinkedInAccessToken];
+    
+    // THEN
+    XCTAssertEqualObjects(mockAccessToken, expectedAccessToken);
+}
+
 @end
