@@ -23,6 +23,7 @@
 - (void)setUpCellWithTitle:(NSString*)title backgroundColor:(UIColor*)backgroundColor icon:(UIImage*)imageIcon {
     self.isAccessibilityElement = YES;
     self.lblTitle.text = title;
+    self.logoBackground.layer.borderWidth = 0;
     self.logoBackground.backgroundColor = backgroundColor;
     self.logoBackground.layer.cornerRadius = 2;
     self.ivLogo.image = imageIcon;
