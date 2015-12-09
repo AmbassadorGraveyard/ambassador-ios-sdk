@@ -54,6 +54,14 @@ typedef enum ambassadorImages {
     RAFLogo
 } AmbassadorImages;
 
+typedef enum socialShareTypes {
+    Facebook,
+    Twitter,
+    LinkedIn,
+    SMS,
+    Email
+} SocialShareTypes;
+
 @interface AMBThemeManager : NSObject
 
 + (AMBThemeManager *)sharedInstance;
@@ -61,5 +69,7 @@ typedef enum ambassadorImages {
 - (NSString*)messageForKey:(AmbassadorMessages)messageName;
 - (UIFont*)fontForKey:(AmbassadorFonts)fontName;
 - (NSMutableDictionary*)imageForKey:(AmbassadorImages)imageName;
+- (NSArray*)customSocialGridArray;
++ (int)enumValueForSocialString:(NSString*)string;
 
 @end

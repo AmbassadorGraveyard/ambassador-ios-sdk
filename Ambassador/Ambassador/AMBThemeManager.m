@@ -215,4 +215,30 @@ static NSDictionary * valuesDic;
     return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
+- (NSArray*)customSocialGridArray {
+    NSDictionary *socialDict = @{@"Facebook" : [valuesDic valueForKey:@"FacebookWeight"],
+                                 @"Twitter" : [valuesDic valueForKey:@"TwitterWeight"],
+                                 @"LinkedIn" : [valuesDic valueForKey:@"LinkedInWeight"],
+                                 @"SMS" : [valuesDic valueForKey:@"SMSWeight"],
+                                 @"Email" : [valuesDic valueForKey:@"EmailWeight"] };
+
+    return [socialDict keysSortedByValueUsingSelector:@selector(compare:)];
+}
+
++ (int)enumValueForSocialString:(NSString*)string {
+    if ([string isEqualToString:@"Facebook"]) {
+        return Facebook;
+    } else if ([string isEqualToString:@"Twitter"]) {
+        return Twitter;
+    } else if ([string isEqualToString:@"LinkedIn"]) {
+        return LinkedIn;
+    } else if ([string isEqualToString:@"SMS"]) {
+        return SMS;
+    } else if ([string isEqualToString:@"Email"]) {
+        return Email;
+    } else {
+        return -1;
+    }
+}
+
 @end
