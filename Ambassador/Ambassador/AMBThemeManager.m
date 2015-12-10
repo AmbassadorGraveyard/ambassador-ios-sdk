@@ -216,8 +216,8 @@ static NSDictionary * valuesDic;
 }
 
 - (NSArray*)customSocialGridArray {
-    NSString *arrayString = [[valuesDic valueForKey:@"Channels"] lowercaseString];
-    return [[arrayString stringByReplacingOccurrencesOfString:@" " withString:@""] componentsSeparatedByString:@","];
+    NSString *arrayString = [[[valuesDic valueForKey:@"Channels"] lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    return (![arrayString isEqualToString:@""]) ? [[arrayString stringByReplacingOccurrencesOfString:@" " withString:@""] componentsSeparatedByString:@","] : @[];
 }
 
 + (SocialShareTypes)enumValueForSocialString:(NSString*)string {

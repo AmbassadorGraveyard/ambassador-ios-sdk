@@ -56,6 +56,8 @@
         case Email:
             [self setupBorderCellWithTitle:@"Email" backgroundColor:[UIColor clearColor] icon:[AMBValues imageFromBundleWithName:@"email" type:@"png" tintable:NO] borderColor:[UIColor lightGrayColor]];
             break;
+        case None:
+            [self setUpCellWithTitle:@"Unavailable" backgroundColor:[UIColor clearColor] icon:[AMBValues imageFromBundleWithName:@"failIcon" type:@"png" tintable:NO]];
         default:
             break;
     }
