@@ -59,7 +59,8 @@ typedef enum socialShareTypes {
     Twitter,
     LinkedIn,
     SMS,
-    Email
+    Email,
+    None
 } SocialShareTypes;
 
 @interface AMBThemeManager : NSObject
@@ -70,6 +71,6 @@ typedef enum socialShareTypes {
 - (UIFont*)fontForKey:(AmbassadorFonts)fontName;
 - (NSMutableDictionary*)imageForKey:(AmbassadorImages)imageName;
 - (NSArray*)customSocialGridArray;
-+ (int)enumValueForSocialString:(NSString*)string;
++ (SocialShareTypes)enumValueForSocialString:(NSString*)string;
 
 @end

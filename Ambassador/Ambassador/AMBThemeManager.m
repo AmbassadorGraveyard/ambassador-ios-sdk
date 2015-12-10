@@ -216,29 +216,22 @@ static NSDictionary * valuesDic;
 }
 
 - (NSArray*)customSocialGridArray {
-    NSMutableDictionary *socialDict = [[NSMutableDictionary alloc] init];
-    if ((int)[valuesDic valueForKey:@"FacebookWeight"] >= 0) { [socialDict setValue:[valuesDic valueForKey:@"FacebookWeight"] forKey:@"Facebook"]; }
-    if ((int)[valuesDic valueForKey:@"TwitterWeight"] >= 0 ) { [socialDict setValue:[valuesDic valueForKey:@"TwitterWeight"] forKey:@"Twitter"]; }
-    if ((int)[valuesDic valueForKey:@"LinkedInWeight"] >= 0) { [socialDict setValue:[valuesDic valueForKey:@"LinkedInWeight"] forKey:@"LinkedIn"]; }
-    if ((int)[valuesDic valueForKey:@"SMSWeight"] >= 0) { [socialDict setValue:[valuesDic valueForKey:@"SMSWeight"] forKey:@"SMS"]; }
-    if ((int)[valuesDic valueForKey:@"EmailWeight"] >= 0) { [socialDict setValue:[valuesDic valueForKey:@"EmailWeight"] forKey:@"Email"]; }
-
-    return [socialDict keysSortedByValueUsingSelector:@selector(compare:)];
+    return [[[valuesDic valueForKey:@"Channels"] lowercaseString] componentsSeparatedByString:@","];
 }
 
-+ (int)enumValueForSocialString:(NSString*)string {
-    if ([string isEqualToString:@"Facebook"]) {
++ (SocialShareTypes)enumValueForSocialString:(NSString*)string {
+    if ([string isEqualToString:@"facebook"]) {
         return Facebook;
-    } else if ([string isEqualToString:@"Twitter"]) {
+    } else if ([string isEqualToString:@"twitter"]) {
         return Twitter;
-    } else if ([string isEqualToString:@"LinkedIn"]) {
+    } else if ([string isEqualToString:@"linkedin"]) {
         return LinkedIn;
-    } else if ([string isEqualToString:@"SMS"]) {
+    } else if ([string isEqualToString:@"sms"]) {
         return SMS;
-    } else if ([string isEqualToString:@"Email"]) {
+    } else if ([string isEqualToString:@"email"]) {
         return Email;
     } else {
-        return -1;
+        return None;
     }
 }
 
