@@ -1055,6 +1055,7 @@
                                         <include reference="WOG-Er-b6X"/>
                                         <exclude reference="j9s-hc-G5R"/>
                                         <include reference="liu-9u-hcX"/>
+                                        <exclude reference="QJv-LC-s3h"/>
                                         <exclude reference="18Q-6g-R7y"/>
                                         <include reference="7cC-l0-dZO"/>
                                         <exclude reference="7rP-Vj-SLa"/>
@@ -1069,7 +1070,6 @@
                                         <exclude reference="jJF-9X-gt1"/>
                                         <exclude reference="kwD-EY-OD0"/>
                                         <exclude reference="Dk1-Az-etq"/>
-                                        <exclude reference="QJv-LC-s3h"/>
                                         <exclude reference="fyG-uj-0E8"/>
                                         <exclude reference="pqj-WC-rdD"/>
                                         <include reference="53P-Xb-rhh"/>
@@ -1115,6 +1115,7 @@
                         <outlet property="doneSearchingButton" destination="t9c-Xc-hOs" id="JNM-AE-wjK"/>
                         <outlet property="searchBar" destination="4wg-3o-up2" id="sor-zh-U4a"/>
                         <outlet property="searchBarRightConstraint" destination="WQN-Un-QU3" id="RPs-Xc-QUi"/>
+                        <outlet property="searchFieldBackground" destination="MC2-8v-QOj" id="aQ4-Ef-VnF"/>
                         <outlet property="selectedTable" destination="x0i-aq-Swh" id="MWz-1E-caB"/>
                         <outlet property="sendButton" destination="CZq-BD-s6q" id="fcj-sU-eYX"/>
                         <outlet property="sendButtonHeight" destination="UhS-YW-dnA" id="JLd-91-u3D"/>

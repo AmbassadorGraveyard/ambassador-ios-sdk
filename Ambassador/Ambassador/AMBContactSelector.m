@@ -32,6 +32,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *doneSearchingButton;
 @property (nonatomic, strong) IBOutlet UITextView *composeMessageTextView;
 @property (nonatomic, strong) IBOutlet UIView * containerView;
+@property (nonatomic, strong) IBOutlet UIView * searchFieldBackground;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *bottomViewBottomConstraint;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *composeBoxHeight;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *sendButtonHeight;
@@ -91,11 +92,12 @@ float originalSendButtonHeight;
 #pragma mark - UI Functions
 
 - (void)setUpTheme {
-    self.containerView.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSearchBackgroundColor];
+    self.searchFieldBackground.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSearchBackgroundColor];
     [self.doneSearchingButton setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:ContactSearchDoneButtonTextColor] forState:UIControlStateNormal];
     self.composeMessageTextView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     self.searchBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     
+    self.navigationController.navigationBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
     [self.sendButton.titleLabel setFont:[[AMBThemeManager sharedInstance] fontForKey:ContactSendButtonTextFont]];
     
     [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];

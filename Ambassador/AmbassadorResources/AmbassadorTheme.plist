@@ -58,5 +58,9 @@
 	<string>Helvetica, 17</string>
 	<key>ContactTableInfoTextFont</key>
 	<string>Helvetica, 13</string>
+	<key>SOCIAL SHARE GRID ------------</key>
+	<string></string>
+	<key>Channels</key>
+	<string>Facebook, Twitter, LinkedIn, SMS, Email</string>
 </dict>
 </plist>

@@ -47,7 +47,7 @@
 @property (nonatomic, strong) IBOutlet UIButton * btnCopy;
 @property (nonatomic, strong) IBOutlet UIView * shortURLBackground;
 
-@property (nonatomic, strong) NSMutableArray *services;
+@property (nonatomic, strong) NSArray *services;
 @property (nonatomic, strong) NSTimer *waitViewTimer;
 @property (nonatomic, strong) AMBUserUrlNetworkObject *urlNetworkObj;
 @property (nonatomic, strong) UILabel * lblCopied;
@@ -74,6 +74,7 @@ int contactServiceType;
     [self setUpCloseButton];
     [self performIdentify];
     [self setUpTheme];
+    self.services = [[AMBThemeManager sharedInstance] customSocialGridArray];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -347,32 +348,12 @@ int contactServiceType;
 #pragma mark - CollectionView DataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 5;
+    return [self.services count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     AMBShareServiceCell *cell = (AMBShareServiceCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"serviceCell" forIndexPath:indexPath];
-    
-    switch (indexPath.row) {
-        case 0:
-            [cell setUpCellWithTitle:@"Facebook" backgroundColor:[UIColor faceBookBlue] icon:[AMBValues imageFromBundleWithName:@"facebook" type:@"png" tintable:NO]];
-            break;
-        case 1:
-            [cell setUpCellWithTitle:@"Twitter" backgroundColor:[UIColor twitterBlue] icon:[AMBValues imageFromBundleWithName:@"twitter" type:@"png" tintable:NO]];
-            break;
-        case 2:
-            [cell setUpCellWithTitle:@"LinkedIn" backgroundColor:[UIColor linkedInBlue] icon:[AMBValues imageFromBundleWithName:@"linkedin" type:@"png" tintable:NO]];
-            break;
-        case 3:
-            [cell setupBorderCellWithTitle:@"SMS" backgroundColor:[UIColor whiteColor] icon:[AMBValues imageFromBundleWithName:@"sms" type:@"png" tintable:NO] borderColor:[UIColor lightGrayColor]];
-            break;
-        case 4:
-            [cell setupBorderCellWithTitle:@"Email" backgroundColor:[UIColor whiteColor] icon:[AMBValues imageFromBundleWithName:@"email" type:@"png" tintable:NO] borderColor:[UIColor lightGrayColor]];
-            break;
-        default:
-            break;
-    }
-    
+    [cell setUpCellWithCellType:[AMBThemeManager enumValueForSocialString:self.services[indexPath.row]]];
     return cell;
 }
 
@@ -384,21 +365,22 @@ int contactServiceType;
 #pragma mark - CollectionView Delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.row) {
-        case 0:
+    AMBShareServiceCell *selectedCell = (AMBShareServiceCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+    switch (selectedCell.cellType) {
+        case Facebook:
             [self stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
             break;
-        case 1:
+        case Twitter:
             [self stockShareWithSocialMediaType:AMBSocialServiceTypeTwitter];
             break;
-        case 2:
+        case LinkedIn:
             [self checkLinkedInToken];
             break;
-        case 3:
+        case SMS:
             contactServiceType = AMBSocialServiceTypeSMS;
             [self performSegueWithIdentifier:CONTACT_SELECTOR_SEGUE sender:self];
             break;
-        case 4:
+        case Email:
             contactServiceType = AMBSocialServiceTypeEmail;
             [self performSegueWithIdentifier:CONTACT_SELECTOR_SEGUE sender:self];
             break;

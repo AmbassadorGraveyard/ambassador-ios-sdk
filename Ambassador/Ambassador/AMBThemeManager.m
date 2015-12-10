@@ -215,4 +215,25 @@ static NSDictionary * valuesDic;
     return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
+- (NSArray*)customSocialGridArray {
+    NSString *arrayString = [[[valuesDic valueForKey:@"Channels"] lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    return (![arrayString isEqualToString:@""]) ? [[arrayString stringByReplacingOccurrencesOfString:@" " withString:@""] componentsSeparatedByString:@","] : @[];
+}
+
++ (SocialShareTypes)enumValueForSocialString:(NSString*)string {
+    if ([string isEqualToString:@"facebook"]) {
+        return Facebook;
+    } else if ([string isEqualToString:@"twitter"]) {
+        return Twitter;
+    } else if ([string isEqualToString:@"linkedin"]) {
+        return LinkedIn;
+    } else if ([string isEqualToString:@"sms"]) {
+        return SMS;
+    } else if ([string isEqualToString:@"email"]) {
+        return Email;
+    } else {
+        return None;
+    }
+}
+
 @end
