@@ -263,6 +263,33 @@ The way to enter an image will look like `<image name>, <position>`.  Ex: `apple
 
   <img src="screenShots/imagePos1.png" width="330" />
 
+### Reordering Sharing Channels
+
+Any Sharing Channels can be reordered. The Sharing Channels are ordered in a list separated by commas that can be found in the  __AmbassadorTheme.plist__.  
+
+This is the standard ordering with Facebook appearing first and Email last.
+
+  <img src="screenShots/standardSortOrder.png" width="600" />
+
+  <img src="screenShots/rafDemoImage.png" width="350" />
+
+Modifying the order of the list, as seen below, will move Email to the first position in the collectionView.
+
+  <img src="screenShots/reorderingPlist.png" width="600" />
+
+  <img src="screenShots/emailFirst.png" width="350" />
+
+### Disabling Sharing Channels
+
+Any Sharing Channel can be disabled if it is irrelevant to your campaign. Removing a Sharing Channel from the list will completely remove it from the collectionView.
+
+Removing __LinkedIn__ from the list would result in the LinkedIn Sharing Channel not displaying in your app.
+
+
+  <img src="screenShots/disabledOptionPlist.png" width="600" />
+
+  <img src="screenShots/disabledLinkedin.png" width="350" />
+
 **NOTES FOR CUSTOM THEMES**
 * **Colors must be entered as Hex Code values**
 * **Make sure when adding custom colors to the plist that you include a `#` in front of the Hex Code or it may result with incorrect colors**
