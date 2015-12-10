@@ -149,15 +149,16 @@
 }
 
 - (void)fillWithDictionary:(NSMutableDictionary *)d {
-    self.email = AMBStringValFromDictionary(d, @"email");
-    self.first_name = AMBStringValFromDictionary(d, @"first_name");
-    self.last_name = AMBStringValFromDictionary(d, @"last_name");
-    self.phone = AMBStringValFromDictionary(d, @"phone");
-    self.uid = AMBStringValFromDictionary(d, @"uid");
-    self.url = AMBStringValFromDictionary(d, @"url");
+    NSMutableDictionary *bodyDict = (d[@"body"]) ? d[@"body"] : d;
+    self.email = AMBStringValFromDictionary(bodyDict, @"email");
+    self.first_name = AMBStringValFromDictionary(bodyDict, @"first_name");
+    self.last_name = AMBStringValFromDictionary(bodyDict, @"last_name");
+    self.phone = AMBStringValFromDictionary(bodyDict, @"phone");
+    self.uid = AMBStringValFromDictionary(bodyDict, @"uid");
+    self.url = AMBStringValFromDictionary(bodyDict, @"url");
     self.urls = [[NSMutableArray alloc] init];
     
-    NSArray *urls = AMBArrayFromDicstionary(d, @"urls");
+    NSArray *urls = AMBArrayFromDicstionary(bodyDict, @"urls");
     for (NSMutableDictionary *url in urls) {
         AMBUserUrlNetworkObject *urlObj = [[AMBUserUrlNetworkObject alloc] init];
         [urlObj fillWithDictionary:url];
