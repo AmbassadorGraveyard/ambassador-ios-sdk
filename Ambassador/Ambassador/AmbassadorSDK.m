@@ -148,7 +148,7 @@ static AMBServiceSelector *raf;
 - (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID {
     [AmbassadorSDK sharedInstance].hasBeenBoundToChannel = YES;
     [self.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
-        NSMutableDictionary *json = (NSMutableDictionary *)ev.data;
+        NSMutableDictionary *json = (NSMutableDictionary *)ev.data[@"body"];
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
         if (json[@"url"]) {
             [user fillWithUrl:json[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
@@ -156,7 +156,6 @@ static AMBServiceSelector *raf;
                 [AMBValues setUserFirstNameWithString:user.first_name];
                 [AMBValues setUserLastNameWithString:user.last_name];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
-                // TODO: Notification Center
             }];
         } else if (json[@"mbsy_cookie_code"]) {
             DLog(@"MBSY COOKIE - %@ and %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
