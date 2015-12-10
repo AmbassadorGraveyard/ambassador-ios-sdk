@@ -150,8 +150,8 @@ static AMBServiceSelector *raf;
     [self.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
         NSMutableDictionary *json = (NSMutableDictionary *)ev.data[@"body"];
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
-        if (json[@"url"]) {
-            [user fillWithUrl:json[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
+        if (ev.data[@"url"]) {
+            [user fillWithUrl:ev.data[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
                 [AmbassadorSDK sharedInstance].user = user;
                 [AMBValues setUserFirstNameWithString:user.first_name];
                 [AMBValues setUserLastNameWithString:user.last_name];
