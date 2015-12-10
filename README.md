@@ -263,30 +263,30 @@ The way to enter an image will look like `<image name>, <position>`.  Ex: `apple
 
   <img src="screenShots/imagePos1.png" width="330" />
 
-### Reordering Sharing Options
+### Reordering Sharing Channels
 
-Any sharing options can be reordered. The sharing option order is based on the option's weight, which can be found in __AmbassadorTheme.plist__.  The lower weights appear first.
+Any Sharing Channels can be reordered. The Sharing Channels are ordered in a list separated by commas that can be found in the  __AmbassadorTheme.plist__.  
 
 This is the standard ordering with Facebook appearing first and Email last.
 
-  <img src="screenShots/standardSortOrder.png" width="500" />
+  <img src="screenShots/standardSortOrder.png" width="600" />
 
   <img src="screenShots/rafDemoImage.png" width="350" />
 
-Modifying the weights to give Email the lowest weight will result in it being moved to the first position.
+Modifying the order of the list, as seen below, will move Email to the first position in the collectionView.
 
-  <img src="screenShots/reorderingPlist.png" width="500" />
+  <img src="screenShots/reorderingPlist.png" width="600" />
 
   <img src="screenShots/emailFirst.png" width="350" />
 
-### Disabling Sharing Options
+### Disabling Sharing Channels
 
-Any sharing method can be disabled if it is irrelevant to your campaign. Setting a Share Option's weight to -1 will remove the option from the list.
+Any Sharing Channel can be disabled if it is irrelevant to your campaign. Removing a Sharing Channel from the list will completely remove it from the collectionView.
 
-Setting the __LinkedInWeight__ to __-1__ would result in the LinkedIn share option not displaying in your app.
+Removing __LinkedIn__ from the list would result in the LinkedIn Sharing Channel not displaying in your app.
 
 
-  <img src="screenShots/disabledOptionPlist.png" width="500" />
+  <img src="screenShots/disabledOptionPlist.png" width="600" />
 
   <img src="screenShots/disabledLinkedin.png" width="350" />
 
