@@ -94,7 +94,7 @@
 
 - (void)testCustomSocialGridArray {
     // GIVEN
-    NSArray *mockSocialArray = @[@"Facebook", @"Twitter", @"LinkedIn", @"SMS", @"Email"];
+    NSArray *mockSocialArray = @[@"facebook", @"twitter", @"linkedin", @"sms", @"email"];
     
     // WHEN
     NSArray *expectedSocialArray = [[AMBThemeManager sharedInstance] customSocialGridArray];
@@ -116,11 +116,11 @@
     SocialShareTypes mockEmail = Email;
     
     // WHEN
-    SocialShareTypes expectedFacebook = [AMBThemeManager enumValueForSocialString:@"Facebook"];
-    SocialShareTypes expectedTwitter = [AMBThemeManager enumValueForSocialString:@"Twitter"];
-    SocialShareTypes expectedLinkedin = [AMBThemeManager enumValueForSocialString:@"LinkedIn"];
-    SocialShareTypes expectedSMS = [AMBThemeManager enumValueForSocialString:@"SMS"];
-    SocialShareTypes expectedEmail = [AMBThemeManager enumValueForSocialString:@"Email"];
+    SocialShareTypes expectedFacebook = [AMBThemeManager enumValueForSocialString:@"facebook"];
+    SocialShareTypes expectedTwitter = [AMBThemeManager enumValueForSocialString:@"twitter"];
+    SocialShareTypes expectedLinkedin = [AMBThemeManager enumValueForSocialString:@"linkedin"];
+    SocialShareTypes expectedSMS = [AMBThemeManager enumValueForSocialString:@"sms"];
+    SocialShareTypes expectedEmail = [AMBThemeManager enumValueForSocialString:@"email"];
     
     // THEN
     XCTAssertEqual(mockFacebook, expectedFacebook);
