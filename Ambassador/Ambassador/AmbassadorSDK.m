@@ -148,18 +148,17 @@ static AMBServiceSelector *raf;
 - (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID {
     [AmbassadorSDK sharedInstance].hasBeenBoundToChannel = YES;
     [self.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
-        NSMutableDictionary *json = (NSMutableDictionary *)ev.data;
+        NSMutableDictionary *json = (NSMutableDictionary *)ev.data[@"body"];
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
-        if (json[@"url"]) {
-            [user fillWithUrl:json[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
+        if (ev.data[@"url"]) {
+            [user fillWithUrl:ev.data[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
                 [AmbassadorSDK sharedInstance].user = user;
                 [AMBValues setUserFirstNameWithString:user.first_name];
                 [AMBValues setUserLastNameWithString:user.last_name];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
-                // TODO: Notification Center
             }];
         } else if (json[@"mbsy_cookie_code"]) {
-            DLog(@"MBSY COOKIE - %@ and %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
+            DLog(@"MBSY COOKIE = %@ and FINGERPRINT = %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
             [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
             [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
         } else {
