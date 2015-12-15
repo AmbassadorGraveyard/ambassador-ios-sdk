@@ -16,12 +16,12 @@
 #import "AmbassadorSDK_Internal.h"
 #import "AMBUtilities.h"
 
-
 @interface AMBIdentify () <SFSafariViewControllerDelegate, UIWebViewDelegate>
 
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
 @property (nonatomic, strong) SFSafariViewController * safariVC;
 @property (nonatomic, strong) NSTimer * identifyTimer;
+@property (nonatomic, strong) UIWebView * webView;
 
 @end
 
@@ -31,10 +31,6 @@
     if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
         [self performIdentifyForiOS9];
         self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
-    } else {
-        if (![AMBValues getDeviceFingerPrint] || ![AMBValues getMbsyCookieCode]) { // Checks to see if we already have the values
-            [self performDeepLink];
-        }
     }
 }
 
@@ -52,13 +48,13 @@
     }
 }
 
-- (void)performDeepLink {
-    // Opens identify URL in Safari and then deeplinks back to app on redirect
-    DLog(@"Performing DeepLink with Safari on iOS 8");
-    NSString *identifyURLString = [AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID];
-    NSURL *identifyURL = [NSURL URLWithString:identifyURLString];
-    [[UIApplication sharedApplication] openURL:identifyURL]; // Tells the App Delegate to lauch the url in Safari which will eventually redirect us back
-}
+//- (void)performDeepLink {
+//    // Opens identify URL in Safari and then deeplinks back to app on redirect
+//    DLog(@"Performing DeepLink with Safari on iOS 8");
+//    NSString *identifyURLString = [AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID];
+//    NSURL *identifyURL = [NSURL URLWithString:identifyURLString];
+//    [[UIApplication sharedApplication] openURL:identifyURL]; // Tells the App Delegate to lauch the url in Safari which will eventually redirect us back
+//}
 
 
 #pragma mark - SFSafari ViewController Delegate
