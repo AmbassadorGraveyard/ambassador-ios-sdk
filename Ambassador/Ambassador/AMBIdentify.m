@@ -16,12 +16,11 @@
 #import "AmbassadorSDK_Internal.h"
 #import "AMBUtilities.h"
 
-@interface AMBIdentify () <SFSafariViewControllerDelegate, UIWebViewDelegate>
+@interface AMBIdentify () <SFSafariViewControllerDelegate>
 
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
 @property (nonatomic, strong) SFSafariViewController * safariVC;
 @property (nonatomic, strong) NSTimer * identifyTimer;
-@property (nonatomic, strong) UIWebView * webView;
 
 @end
 
