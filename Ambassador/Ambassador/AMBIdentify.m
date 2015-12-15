@@ -31,6 +31,7 @@
     if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
         [self performIdentifyForiOS9];
         self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceInfoReceived) name:@"deviceInfoReceived" object:nil];
     }
 }
 
@@ -48,22 +49,10 @@
     }
 }
 
-//- (void)performDeepLink {
-//    // Opens identify URL in Safari and then deeplinks back to app on redirect
-//    DLog(@"Performing DeepLink with Safari on iOS 8");
-//    NSString *identifyURLString = [AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID];
-//    NSURL *identifyURL = [NSURL URLWithString:identifyURLString];
-//    [[UIApplication sharedApplication] openURL:identifyURL]; // Tells the App Delegate to lauch the url in Safari which will eventually redirect us back
-//}
-
-
-#pragma mark - SFSafari ViewController Delegate
-
-- (void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
-    // When the safari VC has finished loading our page, we silently remove it from the rootVC.
+- (void)deviceInfoReceived {
     [self.safariVC.view removeFromSuperview];
     [self.safariVC removeFromParentViewController];
-    if (didLoadSuccessfully) { [self.identifyTimer invalidate]; } // If the load was successful, we kill the retry timer
+    [self.identifyTimer invalidate];
 }
 
 @end
