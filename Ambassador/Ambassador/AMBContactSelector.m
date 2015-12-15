@@ -62,6 +62,7 @@ float originalSendButtonHeight;
 #pragma mark - LifeCycle
 
 - (void)viewDidLoad {
+    [[NSUserDefaults standardUserDefaults] setValue:@(NO) forKey:@"_UIConstraintBasedLayoutLogUnsatisfiable"];
     [self registerForKeyboardNotifications];
     originalSendButtonHeight = self.sendButton.frame.size.height;
     self.title = self.prefs.navBarTitle;
@@ -86,6 +87,10 @@ float originalSendButtonHeight;
         [self.containerView bringSubviewToFront:self.fadeView];
         [self.containerView bringSubviewToFront:self.composeMessageView];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSUserDefaults standardUserDefaults] setValue:@(YES) forKey:@"_UIConstraintBasedLayoutLogUnsatisfiable"];
 }
 
 
