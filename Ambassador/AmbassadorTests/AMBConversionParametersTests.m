@@ -24,25 +24,25 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
-
-- (void)testIsValid {
-    // GIVEN
-    AMBConversionParameters *mockValidParameters = [[AMBConversionParameters alloc] init];
-    mockValidParameters.mbsy_email = @"jduntest@test.com";
-    mockValidParameters.mbsy_campaign = @206;
-    mockValidParameters.mbsy_revenue = @200;
-    
-    AMBConversionParameters *mockInvalidParameters = [[AMBConversionParameters alloc] init];
-    mockInvalidParameters.mbsy_revenue = @200;
-    mockInvalidParameters.mbsy_campaign = @206;
-    
-    // WHEN
-    NSError *expectedNilError = mockValidParameters.isValid;
-    NSError *expectedError = mockInvalidParameters.isValid;
-    
-    // THEN
-    XCTAssertNil(expectedNilError);
-    XCTAssertNotNil(expectedError);
-}
+//
+//- (void)testIsValid {
+//    // GIVEN
+//    AMBConversionParameters *mockValidParameters = [[AMBConversionParameters alloc] init];
+//    mockValidParameters.mbsy_email = @"jduntest@test.com";
+//    mockValidParameters.mbsy_campaign = @206;
+//    mockValidParameters.mbsy_revenue = @200;
+//    
+//    AMBConversionParameters *mockInvalidParameters = [[AMBConversionParameters alloc] init];
+//    mockInvalidParameters.mbsy_revenue = @200;
+//    mockInvalidParameters.mbsy_campaign = @206;
+//    
+//    // WHEN
+//    NSError *expectedNilError = mockValidParameters.isValid;
+//    NSError *expectedError = mockInvalidParameters.isValid;
+//    
+//    // THEN
+//    XCTAssertNil(expectedNilError);
+//    XCTAssertNotNil(expectedError);
+//}
 
 @end
