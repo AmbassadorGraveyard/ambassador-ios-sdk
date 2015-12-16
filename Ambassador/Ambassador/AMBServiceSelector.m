@@ -8,8 +8,6 @@
 
 #import "AMBServiceSelector.h"
 #import "AMBShareServiceCell.h"
-#import "AMBShareService.h"
-#import "AMBShareServicesConstants.h"
 #import "AMBContactSelector.h"
 #import "AMBContactLoader.h"
 #import "AMBAuthorizeLinkedIn.h"
@@ -405,7 +403,7 @@ int contactServiceType;
 }
 
 - (void)userDidPostFromService:(NSString *)service {
-    if ([service isEqualToString:AMB_LINKEDIN_TITLE]) {
+    if ([service isEqualToString:@"LinkedIn"]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was successfully shared" withUniqueID:@"linkedInShare" forViewController:self shouldDismissVCImmediately:NO];
         });
