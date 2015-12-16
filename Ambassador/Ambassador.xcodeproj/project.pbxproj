@@ -198,6 +198,8 @@
 		EFE7D79C1C21CB2D00D7F92C /* AMBCoreDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE7D79A1C21CB2D00D7F92C /* AMBCoreDataManager.h */; };
 		EFE7D79D1C21CB2D00D7F92C /* AMBCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE7D79B1C21CB2D00D7F92C /* AMBCoreDataManager.m */; };
 		EFE7D7AE1C21D0CF00D7F92C /* AMBConversionModel.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = EFE7D7971C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld */; };
+		EFE7D7B51C2202C900D7F92C /* AMBConversionParametersEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE7D7B11C2202C900D7F92C /* AMBConversionParametersEntity.h */; };
+		EFE7D7B61C2202C900D7F92C /* AMBConversionParametersEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE7D7B21C2202C900D7F92C /* AMBConversionParametersEntity.m */; };
 		EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
 		EFF58FA01BF4F8F5001AB2DE /* AMBMedia.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */; };
 /* End PBXBuildFile section */
@@ -477,6 +479,8 @@
 		EFE7D7981C21C9C700D7F92C /* AMBConversionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMBConversionModel.xcdatamodel; sourceTree = "<group>"; };
 		EFE7D79A1C21CB2D00D7F92C /* AMBCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBCoreDataManager.h; sourceTree = "<group>"; };
 		EFE7D79B1C21CB2D00D7F92C /* AMBCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBCoreDataManager.m; sourceTree = "<group>"; };
+		EFE7D7B11C2202C900D7F92C /* AMBConversionParametersEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBConversionParametersEntity.h; path = ../AMBConversionParametersEntity.h; sourceTree = "<group>"; };
+		EFE7D7B21C2202C900D7F92C /* AMBConversionParametersEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMBConversionParametersEntity.m; path = ../AMBConversionParametersEntity.m; sourceTree = "<group>"; };
 		EFED7B041BDA9F0A00F6C360 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AMBMedia.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -822,6 +826,8 @@
 		EFE7D7861C21B49C00D7F92C /* Conversions */ = {
 			isa = PBXGroup;
 			children = (
+				EFE7D7B11C2202C900D7F92C /* AMBConversionParametersEntity.h */,
+				EFE7D7B21C2202C900D7F92C /* AMBConversionParametersEntity.m */,
 				DBA3FB601BA8A23B00672D82 /* AMBConversion.h */,
 				DBA3FB611BA8A23B00672D82 /* AMBConversion.m */,
 				DBA3FB621BA8A23B00672D82 /* AMBConversionParameters.h */,
@@ -1016,6 +1022,7 @@
 				DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */,
 				DB6A245B1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h in Headers */,
 				DBA3FC191BA8AA1D00672D82 /* AMBPTPusherErrors.h in Headers */,
+				EFE7D7B51C2202C900D7F92C /* AMBConversionParametersEntity.h in Headers */,
 				DB95D7671BD821D9006A1E4A /* AMBOptions.h in Headers */,
 				DBA3FBD11BA8A9C000672D82 /* AMBFMDatabasePool.h in Headers */,
 				DBA3FB7B1BA8A23C00672D82 /* AMBContactLoader.h in Headers */,
@@ -1372,6 +1379,7 @@
 				EFE7D7961C21C19B00D7F92C /* AMBCoreDataDelegate.m in Sources */,
 				DBA3FB741BA8A23C00672D82 /* AMBAuthorizeLinkedIn.m in Sources */,
 				EF7BA1CD1BDEB17E00788160 /* AMBBulkShareHelper.m in Sources */,
+				EFE7D7B61C2202C900D7F92C /* AMBConversionParametersEntity.m in Sources */,
 				EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */,
 				DBA3FC0C1BA8AA1D00672D82 /* AMBPTJSON.m in Sources */,
 				DBA3FC2D1BA8AA5600672D82 /* base64.c in Sources */,
