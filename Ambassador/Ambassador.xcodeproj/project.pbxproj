@@ -560,8 +560,8 @@
 			isa = PBXGroup;
 			children = (
 				DB844D281BA75BB8003FD7A9 /* Ambassador */,
-				DB844D351BA75BB8003FD7A9 /* AmbassadorTests */,
 				DB844D531BA7622D003FD7A9 /* AmbassadorResources */,
+				DB844D351BA75BB8003FD7A9 /* AmbassadorTests */,
 				DB844D621BA76BDE003FD7A9 /* TestApplication */,
 				DB844D7C1BA76BDE003FD7A9 /* TestApplicationTests */,
 				EF64CFA41BE2A47D0072014B /* AmbassadorUITests */,

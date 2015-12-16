@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 
-@interface AMBCoreDataDelegate : AppDelegate
+@interface AMBCoreDataDelegate : NSObject
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
