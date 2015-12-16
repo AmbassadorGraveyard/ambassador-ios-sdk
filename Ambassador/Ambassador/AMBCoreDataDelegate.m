@@ -33,7 +33,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"AMBConversionModel" withExtension:@"momd"];
+    NSURL *modelURL = [[AMBValues AMBframeworkBundle] URLForResource:@"AMBConversionModel" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }
