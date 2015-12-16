@@ -46,7 +46,7 @@
     // Sets an array of property names to easily loop through and check values
     self.propertyArray = @[@"mbsy_campaign", @"mbsy_email", @"mbsy_first_name", @"mbsy_last_name", @"mbsy_email_new_ambassador", @"mbsy_uid", @"mbsy_custom1", @"mbsy_custom2", @"mbsy_custom3",
                            @"mbsy_auto_create", @"mbsy_revenue", @"mbsy_deactivate_new_ambassador", @"mbsy_transaction_uid", @"mbsy_add_to_group_id", @"mbsy_event_data1", @"mbsy_event_data2",
-                           @"mbsy_event_data3", @"mbsy_is_approved", @"mbsy_short_code"];
+                           @"mbsy_event_data3", @"mbsy_is_approved"];
     
     return self;
 }
@@ -77,7 +77,9 @@
     
     // Checks for any nil values
     for (NSString *propertyString in self.propertyArray) {
-        if (![self valueForKey:propertyString]) { nonNil = NO; }
+        if (![self valueForKey:propertyString]) {
+            nonNil = NO;
+        }
     }
     
     if (!nonNil) { NSLog(@"[Ambassador] Warning - ConversionPrameters object contained a nil property. Attempting to send anyway."); }
@@ -92,6 +94,18 @@
     }
     
     return error;
+}
+
+
+#pragma mark - Helper Functions
+
+- (NSDictionary*)propertyDictionary {
+    NSMutableDictionary *mutableDict = [[NSMutableDictionary alloc] init];
+    for (NSString *propertyString in self.propertyArray) {
+        [mutableDict setValue:[self valueForKey:propertyString] forKey:propertyString];
+    }
+    
+    return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
 
 @end

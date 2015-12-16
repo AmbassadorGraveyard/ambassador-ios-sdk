@@ -31,5 +31,6 @@
 
 - (NSError*)checkForError;
 - (NSString*)getShortCode;
+- (NSDictionary*)propertyDictionary;
 
 @end
