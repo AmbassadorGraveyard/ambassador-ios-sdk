@@ -13,8 +13,7 @@
 #import "AMBFMDatabaseQueue.h"
 #import "AMBConstants.h"
 #import "AMBUtilities.h"
-
-
+#import "AMBCoreDataManager.h"
 
 #pragma mark - Local Constants
 NSString * const AMB_CONVERSION_DB_NAME = @"conversions.db";
@@ -91,48 +90,15 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
 
 
 #pragma mark - API Functions
-- (void)registerConversionWithParameters:(AMBConversionParameters *)parameters completion:(void (^)(NSError *error))completion
-{
-    DLog();
+- (void)registerConversionWithParameters:(AMBConversionParameters *)parameters completion:(void (^)(NSError *error))completion {
+    NSLog(@"[Ambassador] Attempting to save conversion -\n%@", [parameters description]);
+    NSError *error = [parameters checkForError];
     
-    //Check that the conversion parameters meet the backend's requirements
-    //  * mbsy_revenue
-    //  * mbsy_campaign
-    //  * mbsy_email
-    //  and check that all properties are non-nil
-    NSLog(@"DESCRIPTION ==== %@",[parameters description]);
-    
-    __weak AMBConversion *weakSelf = self;
-    NSError *e = [parameters checkForError];
-    if (!e) {
-        [weakSelf.databaseQueue inDatabase:^(AMBFMDatabase *db)
-         {
-             [db executeUpdate:AMB_CONVERSION_INSERT_QUERY,
-              parameters.mbsy_campaign,
-              parameters.mbsy_email,
-              parameters.mbsy_first_name,
-              parameters.mbsy_last_name,
-              parameters.mbsy_email_new_ambassador,
-              parameters.mbsy_uid,
-              parameters.mbsy_custom1,
-              parameters.mbsy_custom2,
-              parameters.mbsy_custom3,
-              parameters.mbsy_auto_create,
-              parameters.mbsy_revenue,
-              parameters.mbsy_deactivate_new_ambassador,
-              parameters.mbsy_transaction_uid,
-              parameters.mbsy_add_to_group_id,
-              parameters.mbsy_event_data1,
-              parameters.mbsy_event_data2,
-              parameters.mbsy_event_data3,
-              parameters.mbsy_is_approved,
-              NULL];
-         }];
-    }
+    if (!error) { [AMBCoreDataManager saveNewObjectToCoreDataWithEntityName:@"AMBConversionParametersEntity" valuesToSave:[parameters propertyDictionary]]; }
     
     if (completion) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            completion(e);
+            completion(error);
         });
     }
 }
