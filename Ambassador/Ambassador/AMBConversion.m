@@ -100,9 +100,10 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
     //  * mbsy_campaign
     //  * mbsy_email
     //  and check that all properties are non-nil
+    NSLog(@"DESCRIPTION ==== %@",[parameters description]);
     
     __weak AMBConversion *weakSelf = self;
-    NSError *e = [parameters isValid];
+    NSError *e = [parameters checkForError];
     if (!e) {
         [weakSelf.databaseQueue inDatabase:^(AMBFMDatabase *db)
          {
