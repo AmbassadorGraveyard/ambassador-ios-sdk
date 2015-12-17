@@ -30,9 +30,9 @@
 @property (nonatomic, retain) NSString * mbsy_event_data3;
 @property (nonatomic, retain) NSNumber * mbsy_is_approved;
 
+- (id)initWithEntity:(AMBConversionParametersEntity *)entity;
 - (NSError*)checkForError;
 - (NSString*)getShortCode;
 - (NSDictionary*)propertyDictionary;
-- (void)fillWithEntity:(AMBConversionParametersEntity *)entity;
 
 @end

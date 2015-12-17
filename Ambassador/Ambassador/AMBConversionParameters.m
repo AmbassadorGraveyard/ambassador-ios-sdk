@@ -18,7 +18,6 @@
 
 @implementation AMBConversionParameters
 
-
 #pragma mark - Initialization
 
 - (id)init {
@@ -41,6 +40,34 @@
     self.mbsy_event_data3 = @"";
     self.mbsy_is_approved = @1;
     self.mbsy_short_code = [AMBValues getMbsyCookieCode];
+    
+    // Sets an array of property names to easily loop through and check values
+    self.propertyArray = @[@"mbsy_campaign", @"mbsy_email", @"mbsy_first_name", @"mbsy_last_name", @"mbsy_email_new_ambassador", @"mbsy_uid", @"mbsy_custom1", @"mbsy_custom2", @"mbsy_custom3",
+                           @"mbsy_auto_create", @"mbsy_revenue", @"mbsy_deactivate_new_ambassador", @"mbsy_transaction_uid", @"mbsy_add_to_group_id", @"mbsy_event_data1", @"mbsy_event_data2",
+                           @"mbsy_event_data3", @"mbsy_is_approved"];
+    
+    return self;
+}
+
+- (id)initWithEntity:(AMBConversionParametersEntity *)entity {
+    self.mbsy_campaign = entity.mbsy_campaign;
+    self.mbsy_email = entity.mbsy_email;
+    self.mbsy_first_name = entity.mbsy_first_name;
+    self.mbsy_last_name = entity.mbsy_last_name;
+    self.mbsy_email_new_ambassador = entity.mbsy_email_new_ambassador;
+    self.mbsy_uid = entity.mbsy_uid;
+    self.mbsy_custom1 = entity.mbsy_custom1;
+    self.mbsy_custom2 = entity.mbsy_custom2;
+    self.mbsy_custom3 = entity.mbsy_custom3;
+    self.mbsy_auto_create = entity.mbsy_auto_create;
+    self.mbsy_revenue = entity.mbsy_revenue;
+    self.mbsy_deactivate_new_ambassador = entity.mbsy_deactivate_new_ambassador;
+    self.mbsy_transaction_uid = entity.mbsy_transaction_uid;
+    self.mbsy_add_to_group_id = entity.mbsy_add_to_group_id;
+    self.mbsy_event_data1 = entity.mbsy_event_data1;
+    self.mbsy_event_data2 = entity.mbsy_event_data2;
+    self.mbsy_event_data3 = entity.mbsy_event_data3;
+    self.mbsy_is_approved = entity.mbsy_is_approved;
     
     // Sets an array of property names to easily loop through and check values
     self.propertyArray = @[@"mbsy_campaign", @"mbsy_email", @"mbsy_first_name", @"mbsy_last_name", @"mbsy_email_new_ambassador", @"mbsy_uid", @"mbsy_custom1", @"mbsy_custom2", @"mbsy_custom3",
@@ -123,27 +150,6 @@
     }
     
     return NO;
-}
-
-- (void)fillWithEntity:(AMBConversionParametersEntity *)entity {
-    self.mbsy_campaign = entity.mbsy_campaign;
-    self.mbsy_email = entity.mbsy_email;
-    self.mbsy_first_name = entity.mbsy_first_name;
-    self.mbsy_last_name = entity.mbsy_last_name;
-    self.mbsy_email_new_ambassador = entity.mbsy_email_new_ambassador;
-    self.mbsy_uid = entity.mbsy_uid;
-    self.mbsy_custom1 = entity.mbsy_custom1;
-    self.mbsy_custom2 = entity.mbsy_custom2;
-    self.mbsy_custom3 = entity.mbsy_custom3;
-    self.mbsy_auto_create = entity.mbsy_auto_create;
-    self.mbsy_revenue = entity.mbsy_revenue;
-    self.mbsy_deactivate_new_ambassador = entity.mbsy_deactivate_new_ambassador;
-    self.mbsy_transaction_uid = entity.mbsy_transaction_uid;
-    self.mbsy_add_to_group_id = entity.mbsy_add_to_group_id;
-    self.mbsy_event_data1 = entity.mbsy_event_data1;
-    self.mbsy_event_data2 = entity.mbsy_event_data2;
-    self.mbsy_event_data3 = entity.mbsy_event_data3;
-    self.mbsy_is_approved = entity.mbsy_is_approved;
 }
 
 @end
