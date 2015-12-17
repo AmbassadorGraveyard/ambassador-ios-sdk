@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AMBConversionParametersEntity.h"
 
 @interface AMBConversionParameters : NSObject
 
@@ -32,5 +33,6 @@
 - (NSError*)checkForError;
 - (NSString*)getShortCode;
 - (NSDictionary*)propertyDictionary;
+- (void)fillWithEntity:(AMBConversionParametersEntity *)entity;
 
 @end
