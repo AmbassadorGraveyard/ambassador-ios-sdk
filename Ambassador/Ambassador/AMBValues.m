@@ -73,9 +73,9 @@
         baseUrl = @"https://staging.mbsy.co/universal/landing";
     #endif
     
-    DLog(@"%@", [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", [AMBValues getDeepLinkURL], uid, networkUrlObject.sessionId, requestID]]);
+    DLog(@"%@", [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID]]);
     
-    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", [AMBValues getDeepLinkURL], uid, networkUrlObject.sessionId, requestID]];
+    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID]];
 }
 
 
@@ -149,14 +149,6 @@
 
 + (NSString*)getUniversalToken {
     return ([[AMBValues ambUserDefaults] valueForKey:@"universal_token"]) ? [[AMBValues ambUserDefaults] valueForKey:@"universal_token"] : @"";
-}
-
-+ (NSString*)getDeepLinkURL {
-    NSArray *urlArray = [[NSArray alloc] initWithArray:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleURLTypes"]];
-    NSDictionary *urlSchemeDict = [urlArray objectAtIndex:0];
-    NSString *scheme = [urlSchemeDict valueForKey:@"CFBundleURLSchemes"][0];
-    
-    return scheme;
 }
 
 + (NSString*)getUserFirstName {
