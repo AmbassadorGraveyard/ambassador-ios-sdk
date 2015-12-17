@@ -7,7 +7,6 @@
 //
 
 #import "AMBCoreDataManager.h"
-#import <CoreData/CoreData.h>
 #import "AMBCoreDataDelegate.h"
 
 @implementation AMBCoreDataManager

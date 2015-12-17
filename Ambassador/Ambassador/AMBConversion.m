@@ -14,6 +14,7 @@
 #import "AMBConstants.h"
 #import "AMBUtilities.h"
 #import "AMBCoreDataManager.h"
+#import "AMBConversionParametersEntity.h"
 
 #pragma mark - Local Constants
 NSString * const AMB_CONVERSION_DB_NAME = @"conversions.db";
@@ -90,6 +91,7 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
 
 
 #pragma mark - API Functions
+
 - (void)registerConversionWithParameters:(AMBConversionParameters *)parameters completion:(void (^)(NSError *error))completion {
     NSLog(@"[Ambassador] Attempting to save conversion -\n%@", [parameters description]);
     NSError *error = [parameters checkForError];
@@ -108,56 +110,28 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
     NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint];
 
     // Checks to make sure we have either a short code OR device fingerprint before moving on
-    if ((![AMBValues getMbsyCookieCode] || [[AMBValues getMbsyCookieCode] isEqualToString:@""]) && (!userDefaultsIdentify || userDefaultsIdentify.count == 0)) {
+    if ([[AMBValues getMbsyCookieCode] isEqualToString:@""] && [userDefaultsIdentify isEqual:@{}]) {
         return;
     }
     
-    [self.databaseQueue inDatabase:^(AMBFMDatabase *db)
-    {
-        DLog(@"Getting all database records");
-        AMBFMResultSet *resultSet = [db executeQuery:[NSString stringWithFormat:@"SELECT * FROM %@", AMB_CONVERSION_SQL_TABLE_NAME]];
-
-        while ([resultSet next])
-        {
-            // Build a dictionary for sending in POST request below
-            NSMutableDictionary * fields = [NSMutableDictionary dictionaryWithDictionary:
-                @{
-                    @"mbsy_campaign" : [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_campaign"]],
-                    @"mbsy_email" : [resultSet stringForColumn:@"mbsy_email"],
-                    @"mbsy_first_name" : [resultSet stringForColumn:@"mbsy_first_name"],
-                    @"mbsy_last_name" : [resultSet stringForColumn:@"mbsy_last_name"],
-                    @"mbsy_email_new_ambassador" : [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_email_new_ambassador"]],
-                    @"mbsy_uid" : [resultSet stringForColumn:@"mbsy_uid"],
-                    @"mbsy_custom1" : [resultSet stringForColumn:@"mbsy_custom1"],
-                    @"mbsy_custom2" : [resultSet stringForColumn:@"mbsy_custom2"],
-                    @"mbsy_custom3" : [resultSet stringForColumn:@"mbsy_custom3"],
-                    @"mbsy_auto_create" : [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_auto_create"]],
-                    @"mbsy_revenue" : [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_revenue"]],
-                    @"mbsy_deactivate_new_ambassador" : [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_deactivate_new_ambassador"]],
-                    @"mbsy_transaction_uid" : [resultSet stringForColumn:@"mbsy_transaction_uid"],
-                    @"mbsy_add_to_group_id" : [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_add_to_group_id"]],
-                    @"mbsy_event_data1" : [resultSet stringForColumn:@"mbsy_event_data1"],
-                    @"mbsy_event_data2" : [resultSet stringForColumn:@"mbsy_event_data2"],
-                    @"mbsy_event_data3" : [resultSet stringForColumn:@"mbsy_event_data3"],
-                    @"mbsy_is_approved" : [NSNumber numberWithInt:[resultSet intForColumn:@"mbsy_is_approved"]],
-                    @"mbsy_short_code"  : [AMBValues getMbsyCookieCode]
-                }];
-
-            // Convert to NSData to attach to request's HTTPBody
-            NSData *JSONData = [NSJSONSerialization dataWithJSONObject:[self payloadForConversionCallWithFP:userDefaultsIdentify mbsyFields:fields]
-                                                               options:0
-                                                                 error:nil];
+    NSArray *storedConversionArray = [AMBCoreDataManager getAllEntitiesFromCoreDataWithEntityName:@"AMBConversionParametersEntity"];
+    
+    if ([storedConversionArray count] > 0) {
+        for (AMBConversionParametersEntity *entity in storedConversionArray) {
+            AMBConversionParameters *parameters = [[AMBConversionParameters alloc] initWithEntity:entity];
+            NSMutableDictionary *fieldsDictionary = [NSMutableDictionary dictionaryWithDictionary:[parameters propertyDictionary]];
+            [fieldsDictionary setValue:[AMBValues getMbsyCookieCode] forKey:@"mbsy_short_code"];
+            
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self payloadForConversionCallWithFP:userDefaultsIdentify mbsyFields:fieldsDictionary] options:0 error:nil];
+            
             //Create the POST request
             NSURL *url = [NSURL URLWithString:AMB_CONVERSION_URL];
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
             request.HTTPMethod = @"POST";
             [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
             [request setValue:self.key forHTTPHeaderField:@"Authorization"];
-            request.HTTPBody = JSONData;
-        
-            //Get ID in order to remove upon sucessful network request
-            NSNumber * sql_ID = [NSNumber numberWithInt:[resultSet intForColumn:@"ID"]];
-            
+            request.HTTPBody = jsonData;
+
             NSURLSession *urlSession;
             
             #if AMBPRODUCTION
@@ -166,38 +140,25 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
                 urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
             #endif
             
-            NSURLSessionDataTask *task = [urlSession
-                                          dataTaskWithRequest:request
-                                          completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
-              {
-                  if (!error)
-                  {
-                      DLog(@"Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                      
-                      //Check for 2xx status codes
-                      if (((NSHTTPURLResponse *)response).statusCode >= 200 &&
-                          ((NSHTTPURLResponse *)response).statusCode < 300)
-                      {
-                          DLog(@"Response from backend for record ID %@: %@", sql_ID, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                          [db executeUpdate:@"Delete from conversions where ID = ?",  sql_ID];
-
-                      } else {
-                          NSLog(@"[Ambassador] Error - Server reponse from sending conversion:%ld - %@", (long)((NSHTTPURLResponse *)response).statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
-                      }
-                      
-                      if (((NSHTTPURLResponse *)response).statusCode >= 400 &&
-                          ((NSHTTPURLResponse *)response).statusCode < 500) {
-                           [db executeUpdate:@"Delete from conversions where ID = ?",  sql_ID];
-                      }
-                  }
-                  else
-                  {
-                      DLog(@"Error: %@", error.localizedDescription);
-                  }
-              }];
+            NSURLSessionDataTask *task = [urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                if (!error) {
+                    DLog(@"CONVERSION CALL - Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
+                    
+                    if ([AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse *)response).statusCode]) {
+                        DLog(@"Response from backend for CONVERSION CALL = %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+                    } else {
+                        NSLog(@"[Ambassador] Error - Server reponse from sending conversion:%ld - %@", (long)((NSHTTPURLResponse *)response).statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                    }
+                    
+                    return;
+                }
+                
+                DLog(@"CONVERSION CALL Error: %@", error.localizedDescription);
+            }];
+            
             [task resume];
         }
-    }];
+    }
 }
 
 
