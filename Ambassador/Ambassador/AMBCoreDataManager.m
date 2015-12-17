@@ -12,6 +12,8 @@
 
 @implementation AMBCoreDataManager
 
+#pragma mark - SAVE Funtionality
+
 + (void)saveNewObjectToCoreDataWithEntityName:(NSString *)entityTypeToSave valuesToSave:(NSDictionary *)valuesDict {
     NSManagedObjectContext *context = [[AMBCoreDataDelegate sharedInstance] managedObjectContext];
     NSEntityDescription *entdesc = [NSEntityDescription entityForName:entityTypeToSave inManagedObjectContext:context];
@@ -24,6 +26,9 @@
     
     [[AMBCoreDataDelegate sharedInstance] saveContext];
 }
+
+
+#pragma mark - GETTER Functionality
 
 + (NSMutableArray*)getAllEntitiesFromCoreDataWithEntityName:(NSString *)entityName alphabetizeByProperty:(NSString *)property{
     NSManagedObjectContext *context = [[AMBCoreDataDelegate sharedInstance] managedObjectContext];
@@ -44,6 +49,16 @@
 
 + (NSMutableArray*)getAllEntitiesFromCoreDataWithEntityName:(NSString *)entityName {
     return [AMBCoreDataManager getAllEntitiesFromCoreDataWithEntityName:entityName alphabetizeByProperty:nil];
+}
+
+
+#pragma mark - DELETE Functionality
+
++ (void)deleteCoreDataObject:(NSManagedObject*)managedObject {
+    NSManagedObjectContext *context = [[AMBCoreDataDelegate sharedInstance] managedObjectContext];
+    [context deleteObject:managedObject];
+    NSError *error;
+    [context save:&error];
 }
 
 @end
