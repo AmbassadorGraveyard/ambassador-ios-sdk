@@ -13,5 +13,6 @@
 + (void)saveNewObjectToCoreDataWithEntityName:(NSString *)entityTypeToSave valuesToSave:(NSDictionary*)valuesDict;
 + (NSMutableArray*)getAllEntitiesFromCoreDataWithEntityName:(NSString*)entityName alphabetizeByProperty:(NSString*)property;
 + (NSMutableArray*)getAllEntitiesFromCoreDataWithEntityName:(NSString *)entityName;
++ (void)deleteCoreDataObject:(NSManagedObject*)managedObject;
 
 @end
