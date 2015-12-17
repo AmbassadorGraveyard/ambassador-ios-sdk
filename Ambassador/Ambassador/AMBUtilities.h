@@ -45,6 +45,7 @@
 - (void)removeCacheForKey:(NSString*)keyValue;
 
 + (NSString*)createRequestID;
++ (BOOL)isSuccessfulStatusCode:(NSInteger)statusCode;
 
 @end
 
