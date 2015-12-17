@@ -6,43 +6,19 @@
 //  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
 //
 
-//#import "NamespacedDependencies.h"
 #import "AMBConversion.h"
-#import "AMBFMResultSet.h"
-#import "AMBFMDatabase.h"
-#import "AMBFMDatabaseQueue.h"
 #import "AMBConstants.h"
-#import "AMBUtilities.h"
 #import "AMBCoreDataManager.h"
 #import "AMBConversionParametersEntity.h"
 
+
 #pragma mark - Local Constants
-NSString * const AMB_CONVERSION_DB_NAME = @"conversions.db";
-NSString * const AMB_CONVERSION_SQL_TABLE_NAME = @"conversions";
 
 #if AMBPRODUCTION
 NSString * const AMB_CONVERSION_URL = @"https://api.getambassador.com/universal/action/conversion/";
 #else
 NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/";
 #endif
-NSString * const AMB_CONVERSION_INSERT_QUERY = @"INSERT INTO Conversions VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-NSString * const AMB_CREATE_CONVERSION_TABLE = @"CREATE TABLE IF NOT EXISTS conversions (ID INTEGER PRIMARY KEY AUTOINCREMENT, mbsy_campaign INTEGER, mbsy_email TEXT, mbsy_first_name TEXT, mbsy_last_name TEXT, mbsy_email_new_ambassador INTEGER, mbsy_uid TEXT, mbsy_custom1 TEXT, mbsy_custom2 TEXT, mbsy_custom3 TEXT, mbsy_auto_create INTEGER, mbsy_revenue REAL, mbsy_deactivate_new_ambassador INTEGER, mbsy_transaction_uid TEXT, mbsy_add_to_group_id INTEGER, mbsy_event_data1 TEXT, mbsy_event_data2 TEXT, mbsy_event_data3 TEXT, mbsy_is_approved INTEGER, insights_data BLOB)";
-
-NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUMN mbsy_short_code TEXT";
-#pragma mark -
-
-
-
-@interface AMBConversion ()
-
-@property NSString *databaseName;
-@property NSString *libraryDirectoryPath;
-@property NSString *databaseFilePath;
-@property AMBFMDatabaseQueue *databaseQueue;
-@property AMBFMDatabase *database;
-
-@end
-
 
 
 @implementation AMBConversion
@@ -90,12 +66,12 @@ NSString * const AMB_ADD_SHORT_CODE_COLUMN = @"ALTER TABLE conversions ADD COLUM
             [request setValue:[AMBValues getUniversalToken] forHTTPHeaderField:@"Authorization"];
             request.HTTPBody = jsonData;
 
-            NSURLSession *urlSession;
+            
             
             #if AMBPRODUCTION
-                urlSession = [NSURLSession sharedSession];
+                NSURLSession *urlSession = [NSURLSession sharedSession];
             #else
-                urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
+                NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
             #endif
             
             NSURLSessionDataTask *task = [urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
