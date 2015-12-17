@@ -111,7 +111,7 @@ static AMBServiceSelector *raf;
     [AMBValues setUniversalIDWithID:universalID];
     [AMBValues setUniversalTokenWithToken:universalToken];
     if (!self.conversionTimer.isValid) { self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES]; }
-    self.conversion = [[AMBConversion alloc] initWithKey:universalToken];
+    self.conversion = [[AMBConversion alloc] init];
 }
 
 
