@@ -8,6 +8,7 @@
 
 #import "AMBConversionParameters.h"
 #import "AMBConstants.h"
+#import "AMBConversionParameter_Internal.h"
 
 @interface AMBConversionParameters ()
 

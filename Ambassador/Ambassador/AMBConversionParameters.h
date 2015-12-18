@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AMBConversionParametersEntity.h"
+
 
 @interface AMBConversionParameters : NSObject
 
@@ -29,10 +29,5 @@
 @property (nonatomic, retain) NSString * mbsy_event_data2;
 @property (nonatomic, retain) NSString * mbsy_event_data3;
 @property (nonatomic, retain) NSNumber * mbsy_is_approved;
-
-- (id)initWithEntity:(AMBConversionParametersEntity *)entity;
-- (NSError*)checkForError;
-- (NSString*)getShortCode;
-- (NSDictionary*)propertyDictionary;
 
 @end
