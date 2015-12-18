@@ -32,7 +32,7 @@
     fakeInstallConversion.mbsy_email = @"greg@getambassador.com";
     fakeInstallConversion.mbsy_custom1 = @"installConversion";
     
-    [AmbassadorSDK registerConversion:fakeInstallConversion restrictToInsall:YES completion:^(NSError *error) {
+    [AmbassadorSDK registerConversion:fakeInstallConversion restrictToInstall:YES completion:^(NSError *error) {
         if (error) {
             NSLog(@"Conversion not registered - %@", error);
         } else {

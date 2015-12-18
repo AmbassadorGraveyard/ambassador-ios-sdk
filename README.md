@@ -73,10 +73,7 @@ If you're using Objective-C, import the Ambassador framework in your `AppDelegat
   ```
 
 ### Step 2
-You run Ambassador inside `application:didFinishLaunchingWithOptions:`
-and have the option to convert on install. This will register a conversion
-the first time the app is launched. More on conversions and setting their
-parameters in [Conversions](#conversions). Your Universal Token and Universal ID will be provided to you by Ambassador.
+You will want to run Ambassador inside of the  `application:didFinishLaunchingWithOptions:` function in your `AppDelegate.m`.
 
 **Objective-c**
 ```objective-c
