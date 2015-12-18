@@ -34,7 +34,7 @@
     clickConversion.mbsy_revenue = @200;
     clickConversion.mbsy_email = @"corey@getambassador.com";
     
-    [AmbassadorSDK registerConversion:clickConversion restrictToInsall:NO completion:^(NSError *error) {
+    [AmbassadorSDK registerConversion:clickConversion restrictToInstall:NO completion:^(NSError *error) {
         if (error) {
             NSLog(@"Conversion not registered - %@", error);
         } else {

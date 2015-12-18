@@ -57,11 +57,13 @@
 
 NSString * const NAME_PROMPT_SEGUE_IDENTIFIER = @"goToNamePrompt";
 float originalSendButtonHeight;
+BOOL keyboardShowing = NO;
 
 
 #pragma mark - LifeCycle
 
 - (void)viewDidLoad {
+    [[NSUserDefaults standardUserDefaults] setValue:@(NO) forKey:@"_UIConstraintBasedLayoutLogUnsatisfiable"];
     [self registerForKeyboardNotifications];
     originalSendButtonHeight = self.sendButton.frame.size.height;
     self.title = self.prefs.navBarTitle;
@@ -86,6 +88,10 @@ float originalSendButtonHeight;
         [self.containerView bringSubviewToFront:self.fadeView];
         [self.containerView bringSubviewToFront:self.composeMessageView];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSUserDefaults standardUserDefaults] setValue:@(YES) forKey:@"_UIConstraintBasedLayoutLogUnsatisfiable"];
 }
 
 
@@ -311,6 +317,7 @@ float originalSendButtonHeight;
 }
 
 - (void)keyboardWillShow:(NSNotification*)sender {
+    keyboardShowing = YES;
     CGRect keyboardFrame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
     if (self.isEditing) {
@@ -326,6 +333,10 @@ float originalSendButtonHeight;
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification {
+    if (!keyboardShowing) {
+        return;
+    }
+    
     if (self.isEditing) {
         self.bottomViewBottomConstraint.constant = 0;
         self.composeBoxHeight.constant = self.composeMessageView.frame.size.height + originalSendButtonHeight;
@@ -334,6 +345,8 @@ float originalSendButtonHeight;
     } else {
         self.contactTableBottomConstraint.constant = 0;
     }
+    
+    keyboardShowing = NO;
 }
 
 
