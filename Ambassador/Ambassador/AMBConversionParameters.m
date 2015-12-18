@@ -41,11 +41,7 @@
     self.mbsy_event_data3 = @"";
     self.mbsy_is_approved = @1;
     self.mbsy_short_code = [AMBValues getMbsyCookieCode];
-    
-    // Sets an array of property names to easily loop through and check values
-    self.propertyArray = @[@"mbsy_campaign", @"mbsy_email", @"mbsy_first_name", @"mbsy_last_name", @"mbsy_email_new_ambassador", @"mbsy_uid", @"mbsy_custom1", @"mbsy_custom2", @"mbsy_custom3",
-                           @"mbsy_auto_create", @"mbsy_revenue", @"mbsy_deactivate_new_ambassador", @"mbsy_transaction_uid", @"mbsy_add_to_group_id", @"mbsy_event_data1", @"mbsy_event_data2",
-                           @"mbsy_event_data3", @"mbsy_is_approved"];
+    [self setUpPropertyArray];
     
     return self;
 }
@@ -69,11 +65,7 @@
     self.mbsy_event_data2 = entity.mbsy_event_data2;
     self.mbsy_event_data3 = entity.mbsy_event_data3;
     self.mbsy_is_approved = entity.mbsy_is_approved;
-    
-    // Sets an array of property names to easily loop through and check values
-    self.propertyArray = @[@"mbsy_campaign", @"mbsy_email", @"mbsy_first_name", @"mbsy_last_name", @"mbsy_email_new_ambassador", @"mbsy_uid", @"mbsy_custom1", @"mbsy_custom2", @"mbsy_custom3",
-                           @"mbsy_auto_create", @"mbsy_revenue", @"mbsy_deactivate_new_ambassador", @"mbsy_transaction_uid", @"mbsy_add_to_group_id", @"mbsy_event_data1", @"mbsy_event_data2",
-                           @"mbsy_event_data3", @"mbsy_is_approved"];
+    [self setUpPropertyArray];
     
     return self;
 }
@@ -151,6 +143,13 @@
     }
     
     return NO;
+}
+
+- (void)setUpPropertyArray {
+    // Sets an array of property names to easily loop through and check values
+    self.propertyArray = @[@"mbsy_campaign", @"mbsy_email", @"mbsy_first_name", @"mbsy_last_name", @"mbsy_email_new_ambassador", @"mbsy_uid", @"mbsy_custom1", @"mbsy_custom2", @"mbsy_custom3",
+                           @"mbsy_auto_create", @"mbsy_revenue", @"mbsy_deactivate_new_ambassador", @"mbsy_transaction_uid", @"mbsy_add_to_group_id", @"mbsy_event_data1", @"mbsy_event_data2",
+                           @"mbsy_event_data3", @"mbsy_is_approved"];
 }
 
 @end
