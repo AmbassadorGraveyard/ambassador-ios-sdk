@@ -33,6 +33,7 @@
     clickConversion.mbsy_campaign = @260;
     clickConversion.mbsy_revenue = @200;
     clickConversion.mbsy_email = @"corey@getambassador.com";
+    clickConversion.mbsy_custom1 = @"button tap conversion";
     
     [AmbassadorSDK registerConversion:clickConversion restrictToInsall:NO completion:^(NSError *error) {
         if (error) {
