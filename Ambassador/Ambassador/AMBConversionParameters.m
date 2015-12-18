@@ -106,7 +106,7 @@
     for (NSString *propertyString in self.propertyArray) {
         if (![self valueForKey:propertyString]) {
             nonNil = NO;
-            if ([self isStringProperty:propertyString]) {
+            if ([AMBConversionParameters isStringProperty:propertyString]) {
                 [self setValue:@"" forKey:propertyString];
             } else {
                 [self setValue:@0 forKey:propertyString];
@@ -140,7 +140,7 @@
     return [NSDictionary dictionaryWithDictionary:mutableDict];
 }
 
-- (BOOL)isStringProperty:(NSString*)propertyName {
++ (BOOL)isStringProperty:(NSString*)propertyName {
     NSArray *stringPropertyArray = @[@"mbsy_email", @"mbsy_first_name", @"mbsy_last_name", @"mbsy_uid", @"mbsy_custom1", @"mbsy_custom2", @"mbsy_custom3", @"mbsy_transaction_uid", @"mbsy_add_to_group_id",
                                      @"mbsy_event_data1", @"mbsy_event_data2", @"mbsy_event_data3"];
     
