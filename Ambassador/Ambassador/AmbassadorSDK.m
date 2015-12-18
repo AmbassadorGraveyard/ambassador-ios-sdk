@@ -74,7 +74,7 @@ static AMBServiceSelector *raf;
 
 #pragma mark - conversion
 
-+ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInsall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion {
++ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion {
     [[AmbassadorSDK sharedInstance] localRegisterConversion:conversionParameters restrictToInstall:restrictToInstall completion:completion];
 }
 
@@ -161,6 +161,7 @@ static AMBServiceSelector *raf;
             DLog(@"MBSY COOKIE = %@ and FINGERPRINT = %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
             [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
             [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
         } else {
             [user fillWithDictionary:json];
             [AmbassadorSDK sharedInstance].user = user;

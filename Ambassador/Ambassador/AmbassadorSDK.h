@@ -65,7 +65,7 @@
                 1   ConversionParameters required properties unset 
                 2   ConversionParameters property has nil value
  */
-+ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInsall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion;
++ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion;
 
 /**
  Presents a full-page modal 'Refer-A-Friend' (RAF) view controller
