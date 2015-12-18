@@ -17,11 +17,10 @@ Follow the steps to install the Ambassador SDK in your Objective-c or Swift proj
 
   <img src="screenShots/Install_pt2.png" width="600" />
 
-* Link to the following libraries:
-  * libsqlite3
+* Go to __Build Phases__ and link to the following library:
   * libicucore
 
-  <img src="screenShots/Install_pt3.png" width="600" />
+<img src="screenShots/Install_pt3.png" width="600" />
 
 * Add an `-ObjC` flag under `Build Settings > Other Linker Flags`
 
