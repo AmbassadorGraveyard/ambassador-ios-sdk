@@ -16,5 +16,6 @@
 - (NSError*)checkForError;
 - (NSString*)getShortCode;
 - (NSDictionary*)propertyDictionary;
++ (BOOL)isStringProperty:(NSString*)propertyName;
 
 @end
