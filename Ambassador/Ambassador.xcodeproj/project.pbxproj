@@ -200,6 +200,7 @@
 		EFE7D7AE1C21D0CF00D7F92C /* AMBConversionModel.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = EFE7D7971C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld */; };
 		EFE7D7B51C2202C900D7F92C /* AMBConversionParametersEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE7D7B11C2202C900D7F92C /* AMBConversionParametersEntity.h */; };
 		EFE7D7B61C2202C900D7F92C /* AMBConversionParametersEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE7D7B21C2202C900D7F92C /* AMBConversionParametersEntity.m */; };
+		EFE7D7C91C24671600D7F92C /* AMBConversionParameter_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE7D7C71C24671600D7F92C /* AMBConversionParameter_Internal.h */; };
 		EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
 		EFF58FA01BF4F8F5001AB2DE /* AMBMedia.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */; };
 /* End PBXBuildFile section */
@@ -481,6 +482,7 @@
 		EFE7D79B1C21CB2D00D7F92C /* AMBCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBCoreDataManager.m; sourceTree = "<group>"; };
 		EFE7D7B11C2202C900D7F92C /* AMBConversionParametersEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBConversionParametersEntity.h; path = ../AMBConversionParametersEntity.h; sourceTree = "<group>"; };
 		EFE7D7B21C2202C900D7F92C /* AMBConversionParametersEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMBConversionParametersEntity.m; path = ../AMBConversionParametersEntity.m; sourceTree = "<group>"; };
+		EFE7D7C71C24671600D7F92C /* AMBConversionParameter_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBConversionParameter_Internal.h; sourceTree = "<group>"; };
 		EFED7B041BDA9F0A00F6C360 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AMBMedia.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -836,6 +838,7 @@
 				EFE7D7941C21C19B00D7F92C /* AMBCoreDataDelegate.m */,
 				EFE7D79A1C21CB2D00D7F92C /* AMBCoreDataManager.h */,
 				EFE7D79B1C21CB2D00D7F92C /* AMBCoreDataManager.m */,
+				EFE7D7C71C24671600D7F92C /* AMBConversionParameter_Internal.h */,
 			);
 			name = Conversions;
 			sourceTree = "<group>";
@@ -1053,6 +1056,7 @@
 				DBA3FBB51BA8A24F00672D82 /* AMBServiceSelector.h in Headers */,
 				DBA3FB7D1BA8A23C00672D82 /* AMBContactSelector.h in Headers */,
 				DBA3FC031BA8AA1D00672D82 /* NSString+Hashing.h in Headers */,
+				EFE7D7C91C24671600D7F92C /* AMBConversionParameter_Internal.h in Headers */,
 				DBA3FB791BA8A23C00672D82 /* AMBContactCell.h in Headers */,
 				DBA3FC1A1BA8AA1D00672D82 /* AMBPTPusherEvent.h in Headers */,
 				DBA3FB751BA8A23C00672D82 /* AMBConstants.h in Headers */,
