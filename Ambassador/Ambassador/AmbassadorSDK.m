@@ -74,7 +74,7 @@ static AMBServiceSelector *raf;
 
 #pragma mark - conversion
 
-+ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInsall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion {
++ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion {
     [[AmbassadorSDK sharedInstance] localRegisterConversion:conversionParameters restrictToInstall:restrictToInstall completion:completion];
 }
 
