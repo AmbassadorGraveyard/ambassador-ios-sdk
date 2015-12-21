@@ -94,6 +94,10 @@
     return [AMBValues isProduction] ? @"https://api.getambassador.com/track/share/" : @"https://dev-ambassador-api.herokuapp.com/track/share/";
 }
 
++ (NSString*)getLinkedInRequestTokenUrl {
+    return @"https://www.linkedin.com/uas/oauth2/accessToken";
+}
+
 
 #pragma mark - AMB Defaults
 
