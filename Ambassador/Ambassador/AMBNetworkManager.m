@@ -64,6 +64,16 @@ static NSURLSession * urlSession;
 #endif
 }
 
+- (NSMutableURLRequest*)createURLRequestWithURL:(NSString*)urlString requestType:(NSString*)requestType {
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = requestType;
+    [request setValue:@"application/json" forKey:@"Content-Type"];
+    [request setValue:[AMBValues getUniversalToken] forKey:@"Authorization"];
+    
+    return request;
+}
+
 
 #pragma mark - NSURLSession Delegate
 
