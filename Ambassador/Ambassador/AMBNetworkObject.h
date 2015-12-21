@@ -46,6 +46,9 @@
 @property (nonatomic, strong) NSString *url;
 @property BOOL has_access;
 @property BOOL is_active;
+
+- (instancetype)initWithDictionary:(NSDictionary*)dict;
+
 @end
 
 

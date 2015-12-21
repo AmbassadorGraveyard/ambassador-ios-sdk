@@ -121,8 +121,10 @@
 @end
 
 
+#pragma mark - AMBUserNetworkObject
 
 @implementation AMBUserUrlNetworkObject
+
 - (void)fillWithDictionary:(NSMutableDictionary *)d {
     self.campaign_uid = (NSNumber *)d[@"campaign_uid"];
     self.short_code = (NSString *)d[@"short_code"];
@@ -131,6 +133,18 @@
     self.has_access = (BOOL)d[@"has_access"];
     self.is_active = (BOOL)d[@"is_active"];
 }
+
+- (instancetype)initWithDictionary:(NSDictionary *)dict {
+    self.campaign_uid = (NSNumber *)dict[@"campaign_uid"];
+    self.short_code = (NSString *)dict[@"short_code"];
+    self.subject = (NSString *)dict[@"subject"];
+    self.url = (NSString *)dict[@"url"];
+    self.has_access = (BOOL)dict[@"has_access"];
+    self.is_active = (BOOL)dict[@"is_active"];
+    
+    return self;
+}
+
 @end
 
 

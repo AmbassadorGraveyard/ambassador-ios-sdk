@@ -34,6 +34,7 @@
 + (void)setLinkedInAccessToken:(NSString*)accessToken;
 + (void)setUserEmail:(NSString*)email;
 + (void)setPusherChannelObject:(AMBPusherChannelObject*)pusherChannel;
++ (void)setUserURLObject:(NSDictionary*)urlObject;
 
 // Default getters
 + (NSString*)getMbsyCookieCode;
@@ -47,5 +48,6 @@
 + (NSString*)getLinkedInAccessToken;
 + (NSString*)getUserEmail;
 + (AMBPusherChannelObject*)getPusherChannelObject;
++ (AMBUserUrlNetworkObject*)getUserURLObject;
 
 @end
