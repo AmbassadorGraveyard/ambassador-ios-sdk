@@ -22,6 +22,7 @@
 + (NSString *)identifyUrlWithUniversalID:(NSString *)uid;
 + (NSString*)getSendIdentifyUrl;
 + (NSString*)getShareTrackUrl;
++ (NSString*)getLinkedInRequestTokenUrl;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
