@@ -184,6 +184,7 @@ static AMBServiceSelector *raf;
 
 - (void)identifyWithEmail:(NSString *)email completion:(void(^)(NSError *))c {
     self.email = email;
+    [AMBValues setUserEmail:email];
     __weak AmbassadorSDK *weakSelf = self;
     if (!self.pusherManager) {
         self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken];

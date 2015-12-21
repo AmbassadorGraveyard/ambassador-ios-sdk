@@ -31,6 +31,7 @@
 + (void)setUserLastNameWithString:(NSString*)lastName;
 + (void)setLinkedInExpirationDate:(NSDate*)expirationDate;
 + (void)setLinkedInAccessToken:(NSString*)accessToken;
++ (void)setUserEmail:(NSString*)email;
 
 // Default getters
 + (NSString*)getMbsyCookieCode;
@@ -42,5 +43,6 @@
 + (NSString*)getUserLastName;
 + (NSDate*)getLinkedInTokenExirationDate;
 + (NSString*)getLinkedInAccessToken;
++ (NSString*)getUserEmail;
 
 @end
