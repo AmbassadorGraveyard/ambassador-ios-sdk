@@ -57,6 +57,14 @@
     return (frameworkBundle) ? frameworkBundle : [NSBundle bundleForClass:[self class]]; // This returns the framework bundle, but if unit testing, it will return the unit test's bundle
 }
 
++ (BOOL)isProduction {
+#if AMBPRODUCTION 
+    return YES;
+#else
+    return NO;
+#endif
+}
+
 
 #pragma mark - URLs
 
@@ -76,6 +84,10 @@
     DLog(@"%@", [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID]]);
     
     return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID]];
+}
+
++ (NSString*)getSendIdentifyUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/universal/action/identify/" : @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/";
 }
 
 
