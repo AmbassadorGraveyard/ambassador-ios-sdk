@@ -141,6 +141,10 @@
     [[AMBValues ambUserDefaults] setValue:accessToken forKey:@"lnkdin_access_token"];
 }
 
++ (void)setUserEmail:(NSString*)email {
+    [[AMBValues ambUserDefaults] setValue:email forKey:@"user_email"];
+}
+
 #pragma mark - Getter Methods
 
 + (NSString*)getMbsyCookieCode {
@@ -177,6 +181,10 @@
 
 + (NSString*)getLinkedInAccessToken {
     return [[AMBValues ambUserDefaults] valueForKey:@"lnkdin_access_token"];
+}
+
++ (NSString*)getUserEmail {
+    return [[AMBValues ambUserDefaults] valueForKey:@"user_email"];
 }
 
 @end
