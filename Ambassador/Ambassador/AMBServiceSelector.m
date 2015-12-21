@@ -262,6 +262,7 @@ int contactServiceType;
 - (void)removeLoadingView {
     NSNumber *campaingID = [NSNumber numberWithInt:self.campaignID.intValue];
     self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
+    [AMBValues setUserURLObject:[self.urlNetworkObj toDictionary]];
     
     if (!self.urlNetworkObj) { // This means that there was no matching campaign ID that was returned
         [self.waitViewTimer invalidate];
@@ -270,7 +271,7 @@ int contactServiceType;
         NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
         return;
     }
-    
+
     [[AMBUtilities sharedInstance] hideLoadingView];
     self.lblURL.text = self.urlNetworkObj.url;
     if (self.waitViewTimer) { [self.waitViewTimer invalidate]; }

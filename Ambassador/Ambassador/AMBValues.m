@@ -149,6 +149,10 @@
     [[AMBValues ambUserDefaults] setObject:pusherChannel forKey:@"pusher_channel_object"];
 }
 
++ (void)setUserURLObject:(NSDictionary*)urlObject {
+    [[AMBValues ambUserDefaults] setObject:urlObject forKey:@"user_url_object"];
+}
+
 #pragma mark - Getter Methods
 
 + (NSString*)getMbsyCookieCode {
@@ -193,6 +197,10 @@
 
 + (AMBPusherChannelObject*)getPusherChannelObject {
     return [[AMBPusherChannelObject alloc] initWithDictionary:[[AMBValues ambUserDefaults] valueForKey:@"pusher_channel_object"]];
+}
+
++ (AMBUserUrlNetworkObject*)getUserURLObject {
+    return [[AMBUserUrlNetworkObject alloc] initWithDictionary:[[AMBValues ambUserDefaults] valueForKey:@"user_url_object"]];
 }
 
 @end
