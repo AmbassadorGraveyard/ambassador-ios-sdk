@@ -115,7 +115,7 @@ static NSURLSession * urlSession;
             return;
         }
         
-        DLog(@"SEND IDENTIFY Error - %@", error);
+        DLog(@"SHARE TRACK Error - %@", error);
     }] resume];
 }
 
@@ -132,6 +132,7 @@ static NSURLSession * urlSession;
     request.HTTPMethod = requestType;
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[AMBValues getUniversalToken] forHTTPHeaderField:@"Authorization"];
+    [request setValue:[AMBValues getUniversalID] forHTTPHeaderField:@"MBSY_UNIVERSAL_ID"];
     
     return request;
 }
