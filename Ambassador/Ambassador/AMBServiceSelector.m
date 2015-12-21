@@ -217,7 +217,7 @@ int contactServiceType;
             });
 
             [[AMBNetworkManager sharedInstance] sendShareTrackForServiceType:servicetype contactList:nil success:^(NSDictionary *response) {
-                DLog(@"Share Track for %@ SUCCESSFUL with resonse - %@", [AMBOptions serviceTypeStringValue:servicetype], response);
+                DLog(@"Share Track for %@ SUCCESSFUL with response - %@", [AMBOptions serviceTypeStringValue:servicetype], response);
             } failure:^(NSString *error) {
                 DLog(@"Share Track for %@ FAILED with response - %@", [AMBOptions serviceTypeStringValue:servicetype], error);
             }];
