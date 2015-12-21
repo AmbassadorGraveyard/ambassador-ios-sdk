@@ -13,6 +13,7 @@
 - (NSError *)validate;
 - (void)fillWithDictionary:(NSMutableDictionary *)dictionary;
 - (NSData *)toDataError:(NSError *__autoreleasing*)e;
+- (NSData*)toData;
 - (void)save;
 + (instancetype)loadFromDisk;
 + (void)deleteFromDisk;
