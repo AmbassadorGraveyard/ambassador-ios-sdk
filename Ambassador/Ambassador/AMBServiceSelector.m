@@ -215,19 +215,14 @@ int contactServiceType;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was shared successfully!" withUniqueID:@"stockShare" forViewController:self shouldDismissVCImmediately:NO];
             });
-        
-            [self sendShareTrackForServiceType:AMBSocialServiceTypeFacebook completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-                DLog(@"Error for sending share track %@: %@\n Body returned for sending share track: %@", [AMBOptions serviceTypeStringValue:servicetype], e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+
+            [[AMBNetworkManager sharedInstance] sendShareTrackForServiceType:servicetype contactList:nil success:^(NSDictionary *response) {
+                DLog(@"Share Track for %@ SUCCESSFUL with resonse - %@", [AMBOptions serviceTypeStringValue:servicetype], response);
+            } failure:^(NSString *error) {
+                DLog(@"Share Track for %@ FAILED with response - %@", [AMBOptions serviceTypeStringValue:servicetype], error);
             }];
         }
     };
-}
-
-- (void)sendShareTrackForServiceType:(AMBSocialServiceType)type completion:(void(^)(NSData *, NSURLResponse *, NSError *))c {
-    AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
-    share.short_code = self.urlNetworkObj.short_code;
-    share.social_name = [AMBOptions serviceTypeStringValue:type];
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:c];
 }
 
 - (void)checkLinkedInToken {
@@ -407,10 +402,11 @@ int contactServiceType;
         dispatch_async(dispatch_get_main_queue(), ^{
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was successfully shared" withUniqueID:@"linkedInShare" forViewController:self shouldDismissVCImmediately:NO];
         });
-        
-        
-        [self sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-            DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+
+        [[AMBNetworkManager sharedInstance] sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn contactList:nil success:^(NSDictionary *response) {
+            DLog(@"LINKEDIN Share Track SUCCESSFUL with response - %@", response);
+        } failure:^(NSString *error) {
+            DLog(@"LINKEDIN Share Track FAILED with response - %@", error);
         }];
     }
 }
