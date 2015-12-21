@@ -54,6 +54,32 @@ static NSURLSession * urlSession;
 }
 
 
+#pragma mark - Network Calls 
+
+- (void)sendIdentifyForCampaign:(NSString*)campaign shouldEnroll:(BOOL)enroll success:(void(^)(NSString *response))success failure:(void(^)(NSString *error))failure {
+    AMBIdentifyNetworkObject *identifyObject = [[AMBIdentifyNetworkObject alloc] init];
+    identifyObject.email = [AMBValues getUserEmail];
+    identifyObject.campaign_id = campaign;
+    identifyObject.enroll = enroll;
+    identifyObject.fp = [AMBValues getDeviceFingerPrint];
+    
+    NSMutableURLRequest *identifyRequest = [self createURLRequestWithURL:[AMBValues getSendIdentifyUrl] requestType:@"POST"];
+    [identifyRequest setValue:[AMBValues getPusherChannelObject].sessionId forKey:@"X-Mbsy-Client-Session-ID"];
+    [identifyRequest setValue:[AMBValues getPusherChannelObject].requestId forKey:@"X-Mbsy-Client-Request-ID"];
+    
+    [[urlSession dataTaskWithRequest:identifyRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        DLog(@"SEND IDENTIFY Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
+        if (!error) {
+            if ([AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+                if (success) { success([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+            } else {
+                if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+            }
+        }
+    }] resume];
+}
+
+
 #pragma mark - Helper Functions
 
 - (NSURLSession*)createURLSession {

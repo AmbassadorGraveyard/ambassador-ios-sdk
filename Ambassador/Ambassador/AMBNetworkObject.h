@@ -69,7 +69,7 @@
 @property (strong, nonatomic) NSString *campaign_id;
 @property BOOL enroll;
 @property (strong, nonatomic) NSString *source;
-@property (strong, nonatomic) NSMutableDictionary *fp;
+@property (strong, nonatomic) NSDictionary *fp;
 @end
 
 
