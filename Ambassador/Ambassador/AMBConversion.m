@@ -28,7 +28,6 @@ NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com
 #pragma mark - API Functions
 
 - (void)registerConversionWithParameters:(AMBConversionParameters *)parameters completion:(void (^)(NSError *error))completion {
-    NSLog(@"[Ambassador] Attempting to save conversion -\n%@", [parameters description]);
     NSError *error = [parameters checkForError];
     
     if (!error) { [AMBCoreDataManager saveNewObjectToCoreDataWithEntityName:@"AMBConversionParametersEntity" valuesToSave:[parameters propertyDictionary]]; }
@@ -93,6 +92,8 @@ NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com
             
             [task resume];
         }
+    } else {
+        DLog(@"No conversions ready to be sent");
     }
 }
 
