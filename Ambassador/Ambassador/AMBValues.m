@@ -145,7 +145,7 @@
     [[AMBValues ambUserDefaults] setValue:email forKey:@"user_email"];
 }
 
-+ (void)setPusherChannelObject:(AMBPusherChannelObject*)pusherChannel {
++ (void)setPusherChannelObject:(NSDictionary*)pusherChannel {
     [[AMBValues ambUserDefaults] setObject:pusherChannel forKey:@"pusher_channel_object"];
 }
 
@@ -192,7 +192,7 @@
 }
 
 + (AMBPusherChannelObject*)getPusherChannelObject {
-    return [[AMBValues ambUserDefaults] valueForKey:@"pusher_channel_object"];
+    return [[AMBPusherChannelObject alloc] initWithDictionary:[[AMBValues ambUserDefaults] valueForKey:@"pusher_channel_object"]];
 }
 
 @end

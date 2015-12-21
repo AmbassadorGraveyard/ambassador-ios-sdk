@@ -46,6 +46,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{ c(nil, nil, e); });
         } else {
             NSMutableDictionary *payloadDict = [NSJSONSerialization JSONObjectWithData:d options:0 error:&e];
+            [AMBValues setPusherChannelObject:(NSDictionary*)payloadDict];
             dispatch_async(dispatch_get_main_queue(), ^{ c(payloadDict[@"channel_name"], payloadDict, e); });
         }
     }];
