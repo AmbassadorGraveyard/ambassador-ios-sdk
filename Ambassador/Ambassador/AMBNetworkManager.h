@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AMBNetworkObject.h"
+#import "AMBOptions.h"
 
 @interface AMBNetworkManager : NSObject <NSURLSessionDataDelegate>
 + (instancetype)sharedInstance;
@@ -16,5 +17,6 @@
 
 // Network calls
 - (void)sendIdentifyForCampaign:(NSString*)campaign shouldEnroll:(BOOL)enroll success:(void(^)(NSString *response))success failure:(void(^)(NSString *error))failure;
+- (void)sendShareTrackForServiceType:(AMBSocialServiceType)socialType contactList:(NSMutableArray*)contactList success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure;
 
 @end
