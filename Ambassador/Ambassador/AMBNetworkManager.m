@@ -64,8 +64,9 @@ static NSURLSession * urlSession;
     identifyObject.fp = [AMBValues getDeviceFingerPrint];
     
     NSMutableURLRequest *identifyRequest = [self createURLRequestWithURL:[AMBValues getSendIdentifyUrl] requestType:@"POST"];
-    [identifyRequest setValue:[AMBValues getPusherChannelObject].sessionId forKey:@"X-Mbsy-Client-Session-ID"];
-    [identifyRequest setValue:[AMBValues getPusherChannelObject].requestId forKey:@"X-Mbsy-Client-Request-ID"];
+    [identifyRequest setValue:[AMBValues getPusherChannelObject].sessionId forHTTPHeaderField:@"X-Mbsy-Client-Session-ID"];
+    [identifyRequest setValue:[AMBValues getPusherChannelObject].requestId forHTTPHeaderField:@"X-Mbsy-Client-Request-ID"];
+    identifyRequest.HTTPBody = [identifyObject toData];
     
     [[urlSession dataTaskWithRequest:identifyRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         DLog(@"SEND IDENTIFY Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
@@ -83,19 +84,16 @@ static NSURLSession * urlSession;
 #pragma mark - Helper Functions
 
 - (NSURLSession*)createURLSession {
-#if AMBPRODUCTION
-    return [NSURLSession sharedSession];
-#else
-    return [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
-#endif
+    return ([AMBValues isProduction]) ? [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]] :
+        [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]];
 }
 
 - (NSMutableURLRequest*)createURLRequestWithURL:(NSString*)urlString requestType:(NSString*)requestType {
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = requestType;
-    [request setValue:@"application/json" forKey:@"Content-Type"];
-    [request setValue:[AMBValues getUniversalToken] forKey:@"Authorization"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[AMBValues getUniversalToken] forHTTPHeaderField:@"Authorization"];
     
     return request;
 }

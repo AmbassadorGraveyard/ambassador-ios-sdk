@@ -34,6 +34,11 @@
     return [NSJSONSerialization dataWithJSONObject:[self toDictionary] options:0 error:e];
 }
 
+- (NSData*)toData {
+    NSError *error;
+    return [NSJSONSerialization dataWithJSONObject:[self toDictionary] options:0 error:&error];
+}
+
 
 
 #pragma mark - NSCoding
