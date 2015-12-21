@@ -145,6 +145,10 @@
     [[AMBValues ambUserDefaults] setValue:email forKey:@"user_email"];
 }
 
++ (void)setPusherChannelObject:(AMBPusherChannelObject*)pusherChannel {
+    [[AMBValues ambUserDefaults] setObject:pusherChannel forKey:@"pusher_channel_object"];
+}
+
 #pragma mark - Getter Methods
 
 + (NSString*)getMbsyCookieCode {
@@ -185,6 +189,10 @@
 
 + (NSString*)getUserEmail {
     return [[AMBValues ambUserDefaults] valueForKey:@"user_email"];
+}
+
++ (AMBPusherChannelObject*)getPusherChannelObject {
+    return [[AMBValues ambUserDefaults] valueForKey:@"pusher_channel_object"];
 }
 
 @end
