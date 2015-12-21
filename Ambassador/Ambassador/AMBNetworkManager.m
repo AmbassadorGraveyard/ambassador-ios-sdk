@@ -11,10 +11,16 @@
 
 @implementation AMBNetworkManager
 
+static NSURLSession * urlSession;
+
 + (instancetype)sharedInstance {
     static AMBNetworkManager* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{ _sharedInsance = [[AMBNetworkManager alloc] init]; });
+    dispatch_once(&oncePredicate, ^{
+        _sharedInsance = [[AMBNetworkManager alloc] init];
+        urlSession = [_sharedInsance createURLSession];
+    });
+    
     return _sharedInsance;
 }
 
@@ -45,6 +51,30 @@
         e = error? error : e;
         if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(data, response, e); }); }
     }] resume];
+}
+
+
+#pragma mark - Helper Functions
+
+- (NSURLSession*)createURLSession {
+#if AMBPRODUCTION
+    return [NSURLSession sharedSession];
+#else
+    return [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
+#endif
+}
+
+
+#pragma mark - NSURLSession Delegate
+
+// Allows certain requests to be made for dev servers when running in unit tests for Circle
+- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler{
+    if([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+        if([challenge.protectionSpace.host isEqualToString:@"dev-ambassador-api.herokuapp.com"]) { // Makes sure that it's our url being challenged
+            NSURLCredential *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+            completionHandler(NSURLSessionAuthChallengeUseCredential,credential);
+        }
+    }
 }
 
 @end
