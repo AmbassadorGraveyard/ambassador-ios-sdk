@@ -514,23 +514,10 @@ BOOL keyboardShowing = NO;
 #pragma mark - Share Track 
 
 - (void)sendShareTrack:(NSArray *)contacts {
-    AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
-    
-    if (self.type == AMBSocialServiceTypeEmail) {
-        share.recipient_email = [self valuesFromContacts:[self.selected allObjects]];
-    } else if (self.type == AMBSocialServiceTypeSMS) {
-        share.recipient_username = [self valuesFromContacts:[self.selected allObjects]];
-    }
-    
-    share.short_code = self.urlNetworkObject.short_code;
-    share.social_name = [AMBOptions serviceTypeStringValue:self.type];
-    
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            DLog(@"Error for BulkShareTrack %@ with ResponseCode %li and Response %@", [AMBOptions serviceTypeStringValue:self.type], (long)((NSHTTPURLResponse*)response).statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-        } else {
-            DLog(@"Successfully shared BulkShareTrack %@ with ResponseCode %li and Response %@", [AMBOptions serviceTypeStringValue:self.type], (long)((NSHTTPURLResponse*)response).statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-        }
+    [[AMBNetworkManager sharedInstance] sendShareTrackForServiceType:self.type contactList:(NSMutableArray*)contacts success:^(NSDictionary *response) {
+        DLog(@"Share Track for %@ SUCCESSFUL with response - %@", [AMBOptions serviceTypeStringValue:self.type], response);
+    } failure:^(NSString *error) {
+        DLog(@"Share Track for %@ FAILED with response - %@", [AMBOptions serviceTypeStringValue:self.type], error);
     }];
 }
 
