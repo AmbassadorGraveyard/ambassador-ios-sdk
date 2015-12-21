@@ -90,6 +90,10 @@
     return [AMBValues isProduction] ? @"https://api.getambassador.com/universal/action/identify/" : @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/";
 }
 
++ (NSString*)getShareTrackUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/track/share/" : @"https://dev-ambassador-api.herokuapp.com/track/share/";
+}
+
 
 #pragma mark - AMB Defaults
 

@@ -76,10 +76,48 @@ static NSURLSession * urlSession;
             } else {
                 if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
             }
+            
+            return;
         }
+        
+        DLog(@"SEND IDENTIFY Error - %@", error);
     }] resume];
 }
 
+- (void)sendShareTrackForServiceType:(AMBSocialServiceType)socialType contactList:(NSMutableArray*)contactList success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
+    AMBShareTrackNetworkObject *shareTrackObject = [[AMBShareTrackNetworkObject alloc] init];
+    shareTrackObject.short_code = [AMBValues getUserURLObject].short_code;
+    shareTrackObject.social_name = [AMBOptions serviceTypeStringValue:socialType];
+    
+    switch (socialType) {
+        case AMBSocialServiceTypeSMS:
+            shareTrackObject.recipient_username = contactList;
+            break;
+        case AMBSocialServiceTypeEmail:
+            shareTrackObject.recipient_email = contactList;
+            break;
+        default:
+            break;
+    }
+    
+    NSMutableURLRequest *shareTrackRequest = [self createURLRequestWithURL:[AMBValues getShareTrackUrl] requestType:@"POST"];
+    shareTrackRequest.HTTPBody = [shareTrackObject toData];
+    
+    [[urlSession dataTaskWithRequest:shareTrackRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        DLog(@"SHARE TRACK Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
+        if (!error) {
+            if ([AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+                if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);; }
+            } else {
+                if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+            }
+            
+            return;
+        }
+        
+        DLog(@"SEND IDENTIFY Error - %@", error);
+    }] resume];
+}
 
 #pragma mark - Helper Functions
 

@@ -21,6 +21,7 @@
 // URLs
 + (NSString *)identifyUrlWithUniversalID:(NSString *)uid;
 + (NSString*)getSendIdentifyUrl;
++ (NSString*)getShareTrackUrl;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
