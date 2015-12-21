@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "AMBNetworkObject.h"
+#import "AMBPusherChannelObject.h"
 
 @interface AMBValues : NSObject
 
@@ -32,6 +33,7 @@
 + (void)setLinkedInExpirationDate:(NSDate*)expirationDate;
 + (void)setLinkedInAccessToken:(NSString*)accessToken;
 + (void)setUserEmail:(NSString*)email;
++ (void)setPusherChannelObject:(AMBPusherChannelObject*)pusherChannel;
 
 // Default getters
 + (NSString*)getMbsyCookieCode;
@@ -44,5 +46,6 @@
 + (NSDate*)getLinkedInTokenExirationDate;
 + (NSString*)getLinkedInAccessToken;
 + (NSString*)getUserEmail;
++ (AMBPusherChannelObject*)getPusherChannelObject;
 
 @end
