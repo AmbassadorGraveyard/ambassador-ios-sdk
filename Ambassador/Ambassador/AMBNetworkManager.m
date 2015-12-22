@@ -70,17 +70,13 @@ static NSURLSession * urlSession;
     
     [[urlSession dataTaskWithRequest:identifyRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         DLog(@"SEND IDENTIFY Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
-        if (!error) {
-            if ([AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
-                if (success) { success([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
-            } else {
-                if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
-            }
-            
-            return;
+        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+            if (success) { success([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"SEND IDENTIFY Error - %@", error);
         }
-        
-        DLog(@"SEND IDENTIFY Error - %@", error);
     }] resume];
 }
 
@@ -105,17 +101,13 @@ static NSURLSession * urlSession;
     
     [[urlSession dataTaskWithRequest:shareTrackRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         DLog(@"SHARE TRACK Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
-        if (!error) {
-            if ([AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
-                if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);; }
-            } else {
-                if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
-            }
-            
-            return;
+        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+            if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);; }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"SHARE TRACK Error - %@", error);
         }
-        
-        DLog(@"SHARE TRACK Error - %@", error);
     }] resume];
 }
 
@@ -128,25 +120,19 @@ static NSURLSession * urlSession;
     linkedinRequest.HTTPBody = [bodyValue dataUsingEncoding:NSUTF8StringEncoding];
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:linkedinRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        DLog(@"LINKEDIN REQUEST TOKEN Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
-        if (!error) {
-            if ([AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            DLog(@"LINKEDIN REQUEST TOKEN Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
+            if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
                 NSMutableDictionary *tokenResponse = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
                 [AMBValues setLinkedInExpirationDate:tokenResponse[@"expires_in"]];
                 [AMBValues setLinkedInAccessToken:tokenResponse[@"access_token"]];
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    if (success) { success(); }
-                }];
+                if (success) { success(); }
+            } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]){
+                if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
             } else {
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
-                }];
+                DLog(@"LINKEDIN REQUEST TOKEN Error - %@", error);
             }
-            
-            return;
-        }
-        
-        DLog(@"LINKEDIN REQUEST TOKEN Error - %@", error);
+        }];
     }];
     
     [task resume];
@@ -159,20 +145,18 @@ static NSURLSession * urlSession;
     [request setValue:[NSString stringWithFormat:@"Bearer %@", [AMBValues getLinkedInAccessToken]] forHTTPHeaderField:@"Authorization"];
     
     NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (!error) {
-            if (((NSHTTPURLResponse*)response).statusCode == 401) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            if (!error && ((NSHTTPURLResponse*)response).statusCode == 401) {
                 DLog(@"Nullifying Linkedin Tokens");
                 [AMBValues setLinkedInAccessToken:nil];
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    complete();
-                }];
-            } else {
+            } else if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
                 DLog(@"LinkedIn Tokens are still up to date");
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    complete();
-                }];
+            } else {
+                DLog(@"LINKEDIN TOKEN VALIDATION CHECK Error - %@", error);
             }
-        }
+            
+            complete();
+        }];
     }];
     
     [task resume];
