@@ -170,6 +170,33 @@ static NSURLSession * urlSession;
     return request;
 }
 
+- (void)checkForInvalidatedTokenWithCompletion:(void(^)())complete {
+    //    NSDictionary *authKey = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
+    NSURL *url = [NSURL URLWithString:@"https://api.linkedin.com/v1/people/~?format=json"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"GET";
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", [AMBValues getLinkedInAccessToken]] forHTTPHeaderField:@"Authorization"];
+    
+    NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (!error) {
+            if (((NSHTTPURLResponse*)response).statusCode == 401) {
+                DLog(@"Nullifying Linkedin Tokens");
+                [AMBValues setLinkedInAccessToken:nil];
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    complete();
+                }];
+            } else {
+                DLog(@"LinkedIn Tokens are still up to date");
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    complete();
+                }];
+            }
+        }
+    }];
+    
+    [task resume];
+}
+
 
 #pragma mark - NSURLSession Delegate
 

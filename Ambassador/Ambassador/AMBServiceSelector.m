@@ -226,8 +226,7 @@ int contactServiceType;
 }
 
 - (void)checkLinkedInToken {
-    AMBAuthorizeLinkedIn *auth = [[AMBAuthorizeLinkedIn alloc] init];
-    [auth checkForInvalidatedTokenWithCompletion:^{
+    [[AMBNetworkManager sharedInstance] checkForInvalidatedTokenWithCompletion:^{
         if ([AMBValues getLinkedInAccessToken]) {
             [self presentLinkedInShare];
         } else {

@@ -30,13 +30,11 @@
 - (void)didSelectPost
 {
     DLog();
-    NSDictionary *authKey = [[NSUserDefaults standardUserDefaults] dictionaryForKey:AMB_LINKEDIN_USER_DEFAULTS_KEY];
-    
     NSURL *url = [NSURL URLWithString:AMB_LKDN_SHARE_URL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", authKey[AMB_LKDN_OAUTH_TOKEN_KEY]] forHTTPHeaderField:@"Authorization"];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", [AMBValues getLinkedInAccessToken]] forHTTPHeaderField:@"Authorization"];
     [request setValue:@"json" forHTTPHeaderField:@"x-li-format"];
     NSDictionary *payload = @{ AMB_LKDN_COMMENT_DICT_KEY : [NSString stringWithFormat:@"%@ %@", self.textView.text, self.shortURL], AMB_LKDN_VISIBILITY_DICT_KEY : @{ AMB_LKDN_CODE_DICT_KEY : @"connections-only" } };
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
