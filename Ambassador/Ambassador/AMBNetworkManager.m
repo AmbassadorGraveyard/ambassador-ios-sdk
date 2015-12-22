@@ -142,6 +142,8 @@ static NSURLSession * urlSession;
                     if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
                 }];
             }
+            
+            return;
         }
         
         DLog(@"LINKEDIN REQUEST TOKEN Error - %@", error);
