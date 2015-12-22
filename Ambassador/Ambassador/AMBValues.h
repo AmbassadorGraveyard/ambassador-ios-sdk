@@ -25,6 +25,7 @@
 + (NSString*)getLinkedInRequestTokenUrl;
 + (NSString*)getLinkedInValidationUrl;
 + (NSString*)getLinkedInShareUrl;
++ (NSString*)getBulkShareSMSUrl;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
