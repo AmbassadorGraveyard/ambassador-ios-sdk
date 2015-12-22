@@ -23,6 +23,8 @@
 + (NSString*)getSendIdentifyUrl;
 + (NSString*)getShareTrackUrl;
 + (NSString*)getLinkedInRequestTokenUrl;
++ (NSString*)getLinkedInValidationUrl;
++ (NSString*)getLinkedInShareUrl;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;

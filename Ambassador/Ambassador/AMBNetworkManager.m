@@ -139,7 +139,7 @@ static NSURLSession * urlSession;
 }
 
 - (void)checkForInvalidatedTokenWithCompletion:(void(^)())complete {
-    NSURL *url = [NSURL URLWithString:@"https://api.linkedin.com/v1/people/~?format=json"];
+    NSURL *url = [NSURL URLWithString:[AMBValues getLinkedInValidationUrl]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"GET";
     [request setValue:[NSString stringWithFormat:@"Bearer %@", [AMBValues getLinkedInAccessToken]] forHTTPHeaderField:@"Authorization"];
@@ -156,6 +156,33 @@ static NSURLSession * urlSession;
             }
             
             complete();
+        }];
+    }];
+    
+    [task resume];
+}
+
+- (void)shareToLinkedinWithPayload:(NSDictionary*)payload success:(void(^)())success needsReauthentication:(void(^)())shouldReauthenticate failure:(void(^)(NSString *error))failure {
+    NSURL *url = [NSURL URLWithString:[AMBValues getLinkedInShareUrl]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@", [AMBValues getLinkedInAccessToken]] forHTTPHeaderField:@"Authorization"];
+    [request setValue:@"json" forHTTPHeaderField:@"x-li-format"];
+    
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
+                DLog(@"Linkedin Post SUCCESSFUL!");
+                if (success) { success(); }
+            } else if (!error && ((NSHTTPURLResponse*)response).statusCode == 401) {
+                if (shouldReauthenticate) { shouldReauthenticate(); }
+            } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
+                DLog(@"Linkedin Post FAILED with response - %@", error);
+            } else {
+                DLog(@"LINKEDIN POST Error - %@", error);
+            }
         }];
     }];
     

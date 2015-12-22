@@ -98,6 +98,14 @@
     return @"https://www.linkedin.com/uas/oauth2/accessToken";
 }
 
++ (NSString*)getLinkedInValidationUrl {
+    return @"https://api.linkedin.com/v1/people/~?format=json";
+}
+
++ (NSString*)getLinkedInShareUrl {
+    return @"https://api.linkedin.com/v1/people/~/shares?format=json";
+}
+
 
 #pragma mark - AMB Defaults
 
