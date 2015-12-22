@@ -377,19 +377,12 @@ BOOL keyboardShowing = NO;
     NSArray *validatedContacts = [AMBBulkShareHelper validatedEmails:[self.selected allObjects]]; // Validate the contact list for emails
 
     if (validatedContacts.count > 0) {
-        AMBBulkShareEmailObject *emailObject = [[AMBBulkShareEmailObject alloc] initWithEmails:validatedContacts
-           shortCode:self.urlNetworkObject.short_code message:self.composeMessageTextView.text subjectLine:self.urlNetworkObject.subject];
-        
-        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:emailObject url:[AMBAmbassadorNetworkManager bulkShareEmailUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
-            if (error) {
-                DLog(@"Error for BulkShare Email with Response Code - %li and Response - %@", (long)((NSHTTPURLResponse*)response).statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
-            } else {
-                DLog(@"BulkShare Email Success with Response Code - %li and Response - %@", (long)((NSHTTPURLResponse*)response).statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                [self sendShareTrack:validatedContacts];
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
-                [AMBUtilities sharedInstance].delegate = self;
-            }
+        [[AMBNetworkManager sharedInstance] bulkshareEmailWithMessage:self.composeMessageTextView.text emailAddresses:validatedContacts success:^(NSDictionary *response) {
+            [self sendShareTrack:validatedContacts];
+            [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+            [AMBUtilities sharedInstance].delegate = self;
+        } failure:^(NSString *error) {
+            [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
         }];
     } else {
         [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid email address. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
