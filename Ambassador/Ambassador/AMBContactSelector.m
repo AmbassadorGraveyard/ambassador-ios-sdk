@@ -377,7 +377,7 @@ BOOL keyboardShowing = NO;
     NSArray *validatedContacts = [AMBBulkShareHelper validatedEmails:[self.selected allObjects]]; // Validate the contact list for emails
 
     if (validatedContacts.count > 0) {
-        [[AMBNetworkManager sharedInstance] bulkshareEmailWithMessage:self.composeMessageTextView.text emailAddresses:validatedContacts success:^(NSDictionary *response) {
+        [[AMBNetworkManager sharedInstance] bulkShareEmailWithMessage:self.composeMessageTextView.text emailAddresses:validatedContacts success:^(NSDictionary *response) {
             [self sendShareTrack:validatedContacts];
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
             [AMBUtilities sharedInstance].delegate = self;
