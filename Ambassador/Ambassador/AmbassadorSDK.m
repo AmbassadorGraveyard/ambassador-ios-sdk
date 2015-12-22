@@ -157,7 +157,7 @@ static AMBServiceSelector *raf;
                 [AMBValues setUserLastNameWithString:user.last_name];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
             }];
-        } else if (json[@"mbsy_cookie_code"]) {
+        } else if (json[@"mbsy_cookie_code"] && json[@"mbsy_cookie_code"] != [NSNull null]) {
             DLog(@"MBSY COOKIE = %@ and FINGERPRINT = %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
             [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
             [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
