@@ -246,7 +246,7 @@ static NSURLSession * urlSession;
             [AMBValues setUserLastNameWithString:lastName];
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
         } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
-            DLog(@"Updating Names FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            DLog(@"Updating Names FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
             DLog(@"NAME UPDATE Error - %@", error);
@@ -255,32 +255,24 @@ static NSURLSession * urlSession;
     }] resume];
 }
 
-//NSString *firstName = [self.firstNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//NSString *lastName = [self.lastNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//
-//AMBUpdateNameObject *nameUpdateObject = [[AMBUpdateNameObject alloc] initWithFirstName:firstName lastName:lastName email:[AmbassadorSDK sharedInstance].user.email];
-//
-//[[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nameUpdateObject url:[AMBAmbassadorNetworkManager sendIdentifyUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
-//    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
-//    if (error) {
-//        if (data) {
-//            DLog(@"Error Updating Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-//        } else {
-//            DLog(@"Error Updating Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], @"No data available");
-//        }
-//        
-//        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to update names.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
-//    } else {
-//        DLog(@"Successfully Updated Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-//        if ([AmbassadorSDK sharedInstance].user) {
-//            [AmbassadorSDK sharedInstance].user.first_name = firstName;
-//            [AmbassadorSDK sharedInstance].user.last_name = lastName;
-//        }
-//        
-//        [self.navigationController popViewControllerAnimated:YES];
-//        [self.delegate namesUpdatedSuccessfully];
-//    }
-//}];
+- (void)sendRegisteredConversion:(NSDictionary*)conversionDict success:(void(^)(NSDictionary *response))success failure:(void(^)(NSInteger statusCode, NSData *data))failure {
+    NSMutableURLRequest *conversionRequest = [self createURLRequestWithURL:[AMBValues getSendConversionUrl] requestType:@"POST"];
+    conversionRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:conversionDict options:0 error:nil];
+    
+    [[urlSession dataTaskWithRequest:conversionRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        DLog(@"SEND CONVERSION Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+            DLog(@"Sending Conversion SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (success) { success([NSJSONSerialization JSONObjectWithData:data options:NSUTF8StringEncoding error:nil]); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+            DLog(@"Sending Conversion FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+            if (failure) { failure(((NSHTTPURLResponse*) response).statusCode, data); }
+        } else {
+            DLog(@"SEND CONVERSION Error - %@", error);
+            if (failure) { failure(((NSHTTPURLResponse*) response).statusCode, data); }
+        }
+    }] resume];
+}
 
 
 #pragma mark - Helper Functions
