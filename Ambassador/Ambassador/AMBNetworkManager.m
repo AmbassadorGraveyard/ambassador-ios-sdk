@@ -76,6 +76,7 @@ static NSURLSession * urlSession;
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
             DLog(@"SEND IDENTIFY Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
         }
     }] resume];
 }
@@ -107,6 +108,7 @@ static NSURLSession * urlSession;
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
             DLog(@"SHARE TRACK Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
         }
     }] resume];
 }
@@ -131,6 +133,7 @@ static NSURLSession * urlSession;
                 if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
             } else {
                 DLog(@"LINKEDIN REQUEST TOKEN Error - %@", error);
+                if (failure) { failure([error localizedFailureReason]); }
             }
         }];
     }];
@@ -180,8 +183,10 @@ static NSURLSession * urlSession;
                 if (shouldReauthenticate) { shouldReauthenticate(); }
             } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
                 DLog(@"Linkedin Post FAILED with response - %@", error);
+                if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
             } else {
                 DLog(@"LINKEDIN POST Error - %@", error);
+                if (failure) { failure([error localizedFailureReason]); }
             }
         }];
     }];
