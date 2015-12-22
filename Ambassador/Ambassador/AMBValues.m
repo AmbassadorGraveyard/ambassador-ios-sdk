@@ -114,6 +114,10 @@
     return [AMBValues isProduction] ? @"https://api.getambassador.com/share/email/" : @"https://dev-ambassador-api.herokuapp.com/share/email/";
 }
 
++ (NSString*)getSendConversionUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/universal/action/conversion/" : @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/";
+}
+
 #pragma mark - AMB Defaults
 
 + (NSUserDefaults*)ambUserDefaults {

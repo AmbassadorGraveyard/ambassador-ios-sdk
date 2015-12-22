@@ -27,6 +27,7 @@
 + (NSString*)getLinkedInShareUrl;
 + (NSString*)getBulkShareSMSUrl;
 + (NSString*)getBulkShareEmailUrl;
++ (NSString*)getSendConversionUrl;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
