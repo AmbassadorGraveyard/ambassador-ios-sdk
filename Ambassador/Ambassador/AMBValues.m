@@ -106,6 +106,10 @@
     return @"https://api.linkedin.com/v1/people/~/shares?format=json";
 }
 
++ (NSString*)getBulkShareSMSUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/share/sms/" : @"https://dev-ambassador-api.herokuapp.com/share/sms/";
+}
+
 
 #pragma mark - AMB Defaults
 
