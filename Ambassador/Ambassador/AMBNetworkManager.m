@@ -119,7 +119,7 @@ static NSURLSession * urlSession;
     }] resume];
 }
 
-- (void)getLinkedInRequestTokenWithKey:(NSString*)key success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
+- (void)getLinkedInRequestTokenWithKey:(NSString*)key success:(void(^)())success failure:(void(^)(NSString *error))failure {
     NSString *bodyValue = [NSString stringWithFormat:@"grant_type=authorization_code&code=%@&redirect_uri=http://localhost:2999/&client_id=***REMOVED***&client_secret=***REMOVED***", key];
     
     NSMutableURLRequest *linkedinRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[AMBValues getLinkedInRequestTokenUrl]]];
@@ -127,22 +127,27 @@ static NSURLSession * urlSession;
     [linkedinRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     linkedinRequest.HTTPBody = [bodyValue dataUsingEncoding:NSUTF8StringEncoding];
     
-    [[urlSession dataTaskWithRequest:linkedinRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:linkedinRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         DLog(@"LINKEDIN REQUEST TOKEN Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
         if (!error) {
             if ([AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
                 NSMutableDictionary *tokenResponse = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
-                
-                int offset = [(NSNumber *)tokenResponse[@"expires_in"] intValue];
-                NSDate * date = [NSDate dateWithTimeIntervalSinceNow:offset - 1000];
-                tokenResponse[@"expires_in"] = date;
-                
                 [AMBValues setLinkedInExpirationDate:tokenResponse[@"expires_in"]];
                 [AMBValues setLinkedInAccessToken:tokenResponse[@"access_token"]];
-                [[NSUserDefaults standardUserDefaults] setObject:tokenResponse forKey:@"AMBLINKEDINSTORAGE"];
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    if (success) { success(); }
+                }];
+            } else {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+                }];
             }
         }
-    }] resume];
+        
+        DLog(@"LINKEDIN REQUEST TOKEN Error - %@", error);
+    }];
+    
+    [task resume];
 }
 
 #pragma mark - Helper Functions
