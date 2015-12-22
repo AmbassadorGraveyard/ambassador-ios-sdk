@@ -197,9 +197,9 @@ static NSURLSession * urlSession;
 - (void)bulkShareSmsWithMessage:(NSString*)message phoneNumbers:(NSArray*)phoneNumbers success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
     NSString *senderName = [NSString stringWithFormat:@"%@ %@", [AMBValues getUserFirstName], [AMBValues getUserLastName]];
     AMBBulkShareSMSObject *smsObject = [[AMBBulkShareSMSObject alloc] initWithPhoneNumbers:phoneNumbers fromSender:senderName message:message];
-    
     NSMutableURLRequest *smsRequest = [self createURLRequestWithURL:[AMBValues getBulkShareSMSUrl] requestType:@"POST"];
     smsRequest.HTTPBody = [smsObject toData];
+    
     [[urlSession dataTaskWithRequest:smsRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
             DLog(@"SMS Bulk Share SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
@@ -209,6 +209,24 @@ static NSURLSession * urlSession;
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
             DLog(@"SMS BULK SHARE Error - %@", error);
+        }
+    }] resume];
+}
+
+- (void)bulkShareEmailWithMessage:(NSString*)message emailAddresses:(NSArray*)addresses success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
+    AMBBulkShareEmailObject *emailObject = [[AMBBulkShareEmailObject alloc] initWithEmails:addresses shortCode:[AMBValues getUserURLObject].short_code message:message subjectLine:[AMBValues getUserURLObject].subject];
+    NSMutableURLRequest *emailRequest = [self createURLRequestWithURL:[AMBValues getBulkShareEmailUrl] requestType:@"POST"];
+    emailRequest.HTTPBody = [emailObject toData];
+    
+    [[urlSession dataTaskWithRequest:emailRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
+            DLog(@"Email Bulk Share SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
+            DLog(@"Email Bulk Share FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"EMAIL BULK SHARE Error - %@", error);
         }
     }] resume];
 }

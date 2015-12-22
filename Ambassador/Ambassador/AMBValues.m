@@ -110,6 +110,9 @@
     return [AMBValues isProduction] ? @"https://api.getambassador.com/share/sms/" : @"https://dev-ambassador-api.herokuapp.com/share/sms/";
 }
 
++ (NSString*)getBulkShareEmailUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/share/email/" : @"https://dev-ambassador-api.herokuapp.com/share/email/";
+}
 
 #pragma mark - AMB Defaults
 
