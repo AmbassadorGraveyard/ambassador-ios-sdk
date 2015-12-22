@@ -209,6 +209,7 @@ static NSURLSession * urlSession;
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
             DLog(@"SMS BULK SHARE Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
         }
     }] resume];
 }
@@ -227,9 +228,59 @@ static NSURLSession * urlSession;
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
             DLog(@"EMAIL BULK SHARE Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
         }
     }] resume];
 }
+
+- (void)updateNameWithFirstName:(NSString*)firstName lastName:(NSString*)lastName success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
+    AMBUpdateNameObject *nameUpdateObject = [[AMBUpdateNameObject alloc] initWithFirstName:firstName lastName:lastName email:[AMBValues getUserEmail]];
+    NSMutableURLRequest *nameUpdateRequest = [self createURLRequestWithURL:[AMBValues getSendIdentifyUrl] requestType:@"POST"];
+    nameUpdateRequest.HTTPBody = [nameUpdateObject toData];
+    
+    [[urlSession dataTaskWithRequest:nameUpdateRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        DLog(@"NAME UPDATE Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+            DLog(@"Updating Names SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            [AMBValues setUserFirstNameWithString:firstName];
+            [AMBValues setUserLastNameWithString:lastName];
+            if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+            DLog(@"Updating Names FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"NAME UPDATE Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
+    }] resume];
+}
+
+//NSString *firstName = [self.firstNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//NSString *lastName = [self.lastNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//
+//AMBUpdateNameObject *nameUpdateObject = [[AMBUpdateNameObject alloc] initWithFirstName:firstName lastName:lastName email:[AmbassadorSDK sharedInstance].user.email];
+//
+//[[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nameUpdateObject url:[AMBAmbassadorNetworkManager sendIdentifyUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
+//    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+//    if (error) {
+//        if (data) {
+//            DLog(@"Error Updating Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+//        } else {
+//            DLog(@"Error Updating Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], @"No data available");
+//        }
+//        
+//        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to update names.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+//    } else {
+//        DLog(@"Successfully Updated Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+//        if ([AmbassadorSDK sharedInstance].user) {
+//            [AmbassadorSDK sharedInstance].user.first_name = firstName;
+//            [AmbassadorSDK sharedInstance].user.last_name = lastName;
+//        }
+//        
+//        [self.navigationController popViewControllerAnimated:YES];
+//        [self.delegate namesUpdatedSuccessfully];
+//    }
+//}];
 
 
 #pragma mark - Helper Functions
