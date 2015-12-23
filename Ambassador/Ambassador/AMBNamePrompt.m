@@ -11,6 +11,7 @@
 #import "AMBConstants.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBNetworkManager.h"
+#import "AMBThemeManager.h"
 
 @interface AMBNamePrompt () <UITextFieldDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *continueButton;
@@ -19,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *firstNameError;
 @property (weak, nonatomic) IBOutlet UILabel *lastNameError;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, strong) IBOutlet UIButton * btnClose;
+@property (nonatomic, strong) IBOutlet UIView * masterView;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *viewTapped;
 @property BOOL firstNameEdited;
 @property BOOL lastNameEdited;
@@ -29,13 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self registerForKeyboardNotifications];
-    
-    // Set the navigation bar attributes (title and back button)
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
-    [backButton setImage:AMBimageFromBundleNamed(@"back", @"png") forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backBarButtonItem;
+
+    [self setUpTheme];
     
     // Do any additional setup after loading the view.
     self.continueButton.layer.cornerRadius = self.continueButton.frame.size.height/2;
@@ -53,6 +51,13 @@
     self.lastNameEdited = NO;
     
     self.scrollView.delegate = self;
+}
+
+
+#pragma mark - IBActions
+
+- (IBAction)btnCloseTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Navigation
@@ -206,4 +211,12 @@
         [self.view endEditing:YES];
     }
 }
+
+
+#pragma mark - Helper Functions
+
+- (void)setUpTheme {
+    self.continueButton.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+}
+
 @end
