@@ -16,9 +16,8 @@
 
 @property (nonatomic, strong) AMBPTPusher *client;
 @property (nonatomic, strong) AMBPTPusherPrivateChannel *channel;
-@property (nonatomic, copy) void (^completion)(AMBPTPusherChannel *c, NSError *e);
+@property (nonatomic, copy) void (^completion)(AMBPTPusherChannel *pusherChannel, NSError *error);
 @property (nonatomic, strong) NSString *universalToken;
-@property (nonatomic) BOOL isAuthorized;
 
 @end
 
@@ -49,21 +48,16 @@
         self.universalToken = auth;
         self.client = [AMBPTPusher pusherWithKey:[AMBPusherManager pusherKey] delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:[AMBValues getPusherAuthUrl]];
-        self.isAuthorized = NO;
         self.connectionState = PTPusherConnectionDisconnected;
         [self.client connect];
     }
     return self;
 }
 
-- (void)subscribeTo:(NSString *)chan pusherChanDict:(NSMutableDictionary*)pushDict completion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
-    [[AmbassadorSDK sharedInstance].pusherChannelObj createObjectFromDictionary:pushDict];
+- (void)subscribeToChannel:(NSString *)channel completion:(void(^)(AMBPTPusherChannel *pusherChannel, NSError *error))completion {
+    [AmbassadorSDK sharedInstance].pusherChannelObj = [AMBValues getPusherChannelObject];
     self.completion = completion;
-    self.channel = [self.client subscribeToPrivateChannelNamed:chan];
-    if (self.isAuthorized) {
-        self.completion(self.channel, nil);
-        return;
-    }
+    self.channel = [self.client subscribeToPrivateChannelNamed:channel];
 }
 
 - (void)resubscribeToExistingChannelWithCompletion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
@@ -112,17 +106,15 @@
 }
 
 - (void)pusher:(AMBPTPusher *)pusher didSubscribeToChannel:(AMBPTPusherChannel *)channel {
-    self.isAuthorized = YES;
-    DLog(@"Subscribed to chnnel %@", channel.name);
+    DLog(@"Subscribed to channel - %@", channel.name);
     [self throwComletion:channel error:nil];
 }
 
-- (void)throwComletion:(AMBPTPusherChannel *)c error:(NSError *)e {
+- (void)throwComletion:(AMBPTPusherChannel *)channel error:(NSError *)error {
     if (self.completion) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            __weak AMBPusherManager *weakSelf = self;
-            weakSelf.completion(c, e);
-        });
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            self.completion(channel, error);
+        }];
     }
 }
 
