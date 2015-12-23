@@ -17,8 +17,8 @@
 #import "AMBServiceSelectorPreferences.h"
 #import "AMBThemeManager.h"
 #import "AMBPusherManager.h"
-#import "AMBAmbassadorNetworkManager.h"
 #import "AMBNetworkObject.h"
+#import "AMBNetworkManager.h"
 #import "AMBPusher.h"
 #import "AMBPusherChannelObject.h"
 
@@ -34,7 +34,6 @@ NSString * const SHORT_CODE_URL_KEY = @"url";
 
 @interface AmbassadorSDK ()
 @property (nonatomic, strong) AMBIdentify *identify;
-@property (nonatomic, strong) AMBNetworkManager *ambassadorNetworkManager;
 @property (nonatomic, strong) NSTimer *conversionTimer;
 @property (nonatomic, strong) AMBConversion *conversion;
 @property (nonatomic) BOOL hasBeenBoundToChannel;
@@ -64,7 +63,6 @@ static AMBServiceSelector *raf;
 - (instancetype)init {
     if (self = [super init]) {
         self.identify = [[AMBIdentify alloc] init];
-        self.ambassadorNetworkManager = [AMBAmbassadorNetworkManager sharedInstance];
         self.user = [AMBUserNetworkObject loadFromDisk];
         self.pusherChannelObj = [[AMBPusherChannelObject alloc] init];
     }
@@ -182,11 +180,13 @@ static AMBServiceSelector *raf;
         NSMutableDictionary *json = (NSMutableDictionary *)ev.data[@"body"];
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
         if (ev.data[@"url"]) {
-            [user fillWithUrl:ev.data[@"url"] universalToken:uTok universalID:uID completion:^(NSError *e) {
-                [AmbassadorSDK sharedInstance].user = user;
-                [AMBValues setUserFirstNameWithString:user.first_name];
-                [AMBValues setUserLastNameWithString:user.last_name];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
+            [user fillWithUrl:ev.data[@"url"] completion:^(NSString *error) {
+                if (!error) {
+                    [AmbassadorSDK sharedInstance].user = user;
+                    [AMBValues setUserFirstNameWithString:user.first_name];
+                    [AMBValues setUserLastNameWithString:user.last_name];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
+                }
             }];
         } else if (json[@"mbsy_cookie_code"] && json[@"mbsy_cookie_code"] != [NSNull null]) {
             DLog(@"MBSY COOKIE = %@ and FINGERPRINT = %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
