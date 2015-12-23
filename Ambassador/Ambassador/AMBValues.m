@@ -118,6 +118,10 @@
     return [AMBValues isProduction] ? @"https://api.getambassador.com/universal/action/conversion/" : @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/";
 }
 
++ (NSString*)getPusherSessionUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/auth/subscribe/" : @"https://dev-ambassador-api.herokuapp.com/auth/session/";
+}
+
 #pragma mark - AMB Defaults
 
 + (NSUserDefaults*)ambUserDefaults {
