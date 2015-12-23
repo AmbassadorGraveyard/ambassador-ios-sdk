@@ -29,6 +29,7 @@
 + (NSString*)getBulkShareEmailUrl;
 + (NSString*)getSendConversionUrl;
 + (NSString*)getPusherSessionUrl;
++ (NSString*)getPusherAuthUrl;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
