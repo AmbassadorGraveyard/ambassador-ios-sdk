@@ -9,7 +9,7 @@
 #import <objc/runtime.h>
 #import "AMBNetworkObject.h"
 #import "AMBUtilities.h"
-#import "AMBAmbassadorNetworkManager.h"
+#import "AMBNetworkManager.h"
 
 @implementation AMBNetworkObject
 - (NSMutableDictionary *)toDictionary {
@@ -150,20 +150,13 @@
 
 
 @implementation AMBUserNetworkObject
-- (void)fillWithUrl:(NSString *)url universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c {
-    __weak AMBUserNetworkObject *weakSelf = self;
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:url additionParams:nil requestType:@"GET" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-        if (e) {
-            if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
-        } else {
-            NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:d options:0 error:&e];
-            if (e) {
-                if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
-            } else {
-                [weakSelf fillWithDictionary:json];
-                if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(nil); }); }
-            }
-        }
+
+- (void)fillWithUrl:(NSString *)url completion:(void(^)(NSString *error))completion {
+    [[AMBNetworkManager sharedInstance] getLargePusherPayloadFromUrl:url success:^(NSDictionary *response) {
+        [self fillWithDictionary:(NSMutableDictionary*)response];
+        completion(nil);
+    } failure:^(NSString *error) {
+        completion(error);
     }];
 }
 

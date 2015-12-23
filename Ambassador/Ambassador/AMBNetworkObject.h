@@ -54,7 +54,8 @@
 
 
 @interface AMBUserNetworkObject : AMBNetworkObject
-- (void)fillWithUrl:(NSString *)url universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c;
+//- (void)fillWithUrl:(NSString *)url universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c;
+- (void)fillWithUrl:(NSString *)url completion:(void(^)(NSString *error))completion;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *first_name;
 @property (nonatomic, strong) NSString *last_name;
