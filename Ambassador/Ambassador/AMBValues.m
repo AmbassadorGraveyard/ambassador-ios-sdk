@@ -119,7 +119,7 @@
 }
 
 + (NSString*)getPusherSessionUrl {
-    return [AMBValues isProduction] ? @"https://api.getambassador.com/auth/subscribe/" : @"https://dev-ambassador-api.herokuapp.com/auth/session/";
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/auth/session/" : @"https://dev-ambassador-api.herokuapp.com/auth/session/";
 }
 
 + (NSString*)getPusherAuthUrl {

@@ -29,7 +29,6 @@
 		DB6A24641BD017B600CE3230 /* AMBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24631BD017B600CE3230 /* AMBErrors.m */; };
 		DB6A24671BD01D8A00CE3230 /* AMBNetworkObject.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24651BD01D8A00CE3230 /* AMBNetworkObject.h */; };
 		DB6A24681BD01D8A00CE3230 /* AMBNetworkObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24661BD01D8A00CE3230 /* AMBNetworkObject.m */; };
-		DB6A246A1BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24691BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m */; };
 		DB6A246E1BD031A100CE3230 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		DB6A24711BD04E3900CE3230 /* AMBPusherManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A246F1BD04E3900CE3230 /* AMBPusherManager.h */; };
 		DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24701BD04E3900CE3230 /* AMBPusherManager.m */; };
@@ -278,7 +277,6 @@
 		DB6A24631BD017B600CE3230 /* AMBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBErrors.m; sourceTree = "<group>"; };
 		DB6A24651BD01D8A00CE3230 /* AMBNetworkObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNetworkObject.h; sourceTree = "<group>"; };
 		DB6A24661BD01D8A00CE3230 /* AMBNetworkObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworkObject.m; sourceTree = "<group>"; };
-		DB6A24691BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBAmbassadorNetworkManagerTests.m; sourceTree = "<group>"; };
 		DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		DB6A246D1BD031A100CE3230 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		DB6A246F1BD04E3900CE3230 /* AMBPusherManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPusherManager.h; sourceTree = "<group>"; };
@@ -605,7 +603,6 @@
 				DB6A247B1BD14BBB00CE3230 /* AMBMockObjects.m */,
 				DB6A24791BD12A2A00CE3230 /* AMBTests.h */,
 				DB6A24751BD125FF00CE3230 /* AMBTests.m */,
-				DB6A24691BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m */,
 				DB6A24731BD1259000CE3230 /* AMBPusherManagerTests.m */,
 				DB6A247D1BD14F4900CE3230 /* AMBNetworObjectTests.m */,
 				DB6A24851BD1847900CE3230 /* AmbassadorSDKTests.m */,
@@ -1351,7 +1348,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF7CA9D21BF3EAB7006EBD6A /* AMBContactTests.m in Sources */,
-				DB6A246A1BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m in Sources */,
 				EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */,
 				DB6A24861BD1847900CE3230 /* AmbassadorSDKTests.m in Sources */,
 				DB6A24741BD1259000CE3230 /* AMBPusherManagerTests.m in Sources */,
