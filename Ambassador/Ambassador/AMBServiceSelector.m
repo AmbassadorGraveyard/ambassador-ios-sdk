@@ -288,11 +288,11 @@ int contactServiceType;
         [[AmbassadorSDK sharedInstance].pusherManager resubscribeToExistingChannelWithCompletion:^(AMBPTPusherChannel *channelName, NSError *error) {
             if (error) {
                 DLog(@"Error resubscribing to channel - %@", error); // If there is an error trying to resubscribe, we will recall the whole identify process
-                [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
+                [[AmbassadorSDK sharedInstance] subscribeToPusherWithCompletion:^{
                     [self sendIdentify];
                 }];
             } else {
-                [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:nil]; // Everything is good to go and we can call identify
+                [self sendIdentify];
             }
         }];
         
@@ -301,7 +301,7 @@ int contactServiceType;
     
     // If we're NOT SUBSCRIBED or EXPIRED then we will do the whole pusher process over again (get channel name, connect to pusher, subscribe, identify)
     DLog(@"The Pusher channel seems to be null or expired, restarting whole identify process");
-    [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
+    [[AmbassadorSDK sharedInstance] subscribeToPusherWithCompletion:^{
         [self sendIdentify];
     }];
 }
