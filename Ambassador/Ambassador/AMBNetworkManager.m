@@ -274,6 +274,33 @@ static NSURLSession * urlSession;
     }] resume];
 }
 
+- (void)getPusherSessionWithSuccess:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
+    NSMutableURLRequest *pusherRequest = [self createURLRequestWithURL:[AMBValues getPusherSessionUrl] requestType:@"POST"];
+    [[urlSession dataTaskWithRequest:pusherRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        DLog(@"PUSHER SESSION Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+            DLog(@"Pusher Session SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+            DLog(@"Pusher Session FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"PUSHER SESSION Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
+    }] resume];
+}
+
+//[[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:[AMBAmbassadorNetworkManager pusherSessionSubscribeUrl] additionParams:nil requestType:@"POST" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
+//    if (e) {
+//        dispatch_async(dispatch_get_main_queue(), ^{ c(nil, nil, e); });
+//    } else {
+//        NSMutableDictionary *payloadDict = [NSJSONSerialization JSONObjectWithData:d options:0 error:&e];
+//        [AMBValues setPusherChannelObject:(NSDictionary*)payloadDict];
+//        dispatch_async(dispatch_get_main_queue(), ^{ c(payloadDict[@"channel_name"], payloadDict, e); });
+//    }
+//}];
+
 
 #pragma mark - Helper Functions
 
