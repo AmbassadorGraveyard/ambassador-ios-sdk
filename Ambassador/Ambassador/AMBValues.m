@@ -122,6 +122,11 @@
     return [AMBValues isProduction] ? @"https://api.getambassador.com/auth/subscribe/" : @"https://dev-ambassador-api.herokuapp.com/auth/session/";
 }
 
++ (NSString*)getPusherAuthUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/auth/subscribe/" : @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
+}
+
+
 #pragma mark - AMB Defaults
 
 + (NSUserDefaults*)ambUserDefaults {

@@ -48,7 +48,7 @@
     if (self = [super init]) {
         self.universalToken = auth;
         self.client = [AMBPTPusher pusherWithKey:[AMBPusherManager pusherKey] delegate:self encrypted:YES];
-        self.client.authorizationURL = [NSURL URLWithString:[self pusherAuthUrl]];
+        self.client.authorizationURL = [NSURL URLWithString:[AMBValues getPusherAuthUrl]];
         self.isAuthorized = NO;
         self.connectionState = PTPusherConnectionDisconnected;
         [self.client connect];
@@ -80,16 +80,6 @@
 
 - (void)bindToChannelEvent:(NSString *)event handler:(void(^)(AMBPTPusherEvent *))handler {
     [self.channel bindToEventNamed:event handleWithBlock:handler];
-}
-
-
-#pragma mark - Url returns
-- (NSString *)pusherAuthUrl {
-#if AMBPRODUCTION
-    return  @"https://api.getambassador.com/auth/subscribe/";
-#else
-    return  @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
-#endif
 }
 
 
