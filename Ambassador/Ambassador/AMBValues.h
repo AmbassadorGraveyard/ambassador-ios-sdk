@@ -42,7 +42,7 @@
 + (void)setLinkedInExpirationDate:(NSDate*)expirationDate;
 + (void)setLinkedInAccessToken:(NSString*)accessToken;
 + (void)setUserEmail:(NSString*)email;
-+ (void)setPusherChannelObject:(AMBPusherChannelObject*)pusherChannel;
++ (void)setPusherChannelObject:(NSDictionary*)pusherChannel;
 + (void)setUserURLObject:(NSDictionary*)urlObject;
 
 // Default getters
