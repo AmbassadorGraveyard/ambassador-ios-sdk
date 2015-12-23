@@ -23,8 +23,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		DB6A245B1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24591BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h */; };
-		DB6A245C1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A245A1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m */; };
 		DB6A245F1BD00F3F00CE3230 /* AMBNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */; };
 		DB6A24601BD00F3F00CE3230 /* AMBNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */; };
 		DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24611BD017A700CE3230 /* AMBErrors.h */; };
@@ -274,8 +272,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		DB6A24591BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBAmbassadorNetworkManager.h; sourceTree = "<group>"; };
-		DB6A245A1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBAmbassadorNetworkManager.m; sourceTree = "<group>"; };
 		DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNetworkManager.h; sourceTree = "<group>"; };
 		DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworkManager.m; sourceTree = "<group>"; };
 		DB6A24611BD017A700CE3230 /* AMBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBErrors.h; sourceTree = "<group>"; };
@@ -829,8 +825,6 @@
 				DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */,
 				DB6A24611BD017A700CE3230 /* AMBErrors.h */,
 				DB6A24631BD017B600CE3230 /* AMBErrors.m */,
-				DB6A24591BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h */,
-				DB6A245A1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m */,
 				DB6A24651BD01D8A00CE3230 /* AMBNetworkObject.h */,
 				DB6A24661BD01D8A00CE3230 /* AMBNetworkObject.m */,
 				EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */,
@@ -984,7 +978,6 @@
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
 				DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */,
 				DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */,
-				DB6A245B1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h in Headers */,
 				DBA3FC191BA8AA1D00672D82 /* AMBPTPusherErrors.h in Headers */,
 				EFE7D7B51C2202C900D7F92C /* AMBConversionParametersEntity.h in Headers */,
 				DB95D7671BD821D9006A1E4A /* AMBOptions.h in Headers */,
@@ -1315,7 +1308,6 @@
 				DBA3FBB41BA8A24F00672D82 /* AMBSendCompletionModal.m in Sources */,
 				DBA3FC141BA8AA1D00672D82 /* AMBPTPusherChannel.m in Sources */,
 				DBA3FB7A1BA8A23C00672D82 /* AMBContactCell.m in Sources */,
-				DB6A245C1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m in Sources */,
 				EFDFA0D01BE154B8002FA3ED /* UIColor+AMBColorValues.m in Sources */,
 				DBA3FB7C1BA8A23C00672D82 /* AMBContactLoader.m in Sources */,
 				DBA3FBBC1BA8A24F00672D82 /* AMBShareServiceCell.m in Sources */,
