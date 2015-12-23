@@ -11,8 +11,6 @@
 
 @interface AMBIdentify : NSObject
 
-@property NSMutableDictionary *fp;
-
-- (void)identifyWithUniversalID:(NSString*)universalID completion:(void(^)(NSMutableDictionary *returnDict, NSError *error))completion;
+- (void)getIdentity;
 
 @end
