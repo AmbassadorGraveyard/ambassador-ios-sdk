@@ -10,7 +10,7 @@
 #import "AMBUtilities.h"
 #import "AMBConstants.h"
 #import "AmbassadorSDK_Internal.h"
-#import "AMBAmbassadorNetworkManager.h"
+#import "AMBNetworkManager.h"
 
 @interface AMBNamePrompt () <UITextFieldDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *continueButton;

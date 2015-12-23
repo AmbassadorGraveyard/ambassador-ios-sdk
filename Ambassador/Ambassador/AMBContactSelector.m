@@ -12,11 +12,11 @@
 #import "AMBContact.h"
 #import "AMBNamePrompt.h"
 #import "AMBThemeManager.h"
-#import "AMBAmbassadorNetworkManager.h"
 #import "AMBNetworkObject.h"
 #import "AMBBulkShareHelper.h"
 #import "AMBOptions.h"
 #import "AMBContactLoader.h"
+#import "AMBNetworkManager.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                 AMBSelectedCellDelegate, UITextFieldDelegate,

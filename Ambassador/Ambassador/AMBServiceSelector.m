@@ -22,8 +22,8 @@
 #import "AMBIdentify.h"
 #import "AMBThemeManager.h"
 #import "AmbassadorSDK_Internal.h"
-#import "AMBNetworkObject.h"
-#import "AMBAmbassadorNetworkManager.h"
+#import "AMBNetworkObject.h" 
+#import "AMBNetworkManager.h"
 
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LinkedInAuthorizeDelegate,
                                     AMBShareServiceDelegate, UITextFieldDelegate, AMBUtilitiesDelegate>
