@@ -92,9 +92,9 @@ CGFloat originalTopConstraintValue;
         }];
     }
     
-    self.firstNameEdited = YES;
-    self.lastNameEdited = YES;
-    [self updateErrorLabelForFirstNameString:self.firstNameField.text lastNameString:self.lastNameField.text];
+//    self.firstNameEdited = YES;
+//    self.lastNameEdited = YES;
+//    [self updateErrorLabelForFirstNameString:self.firstNameField.text lastNameString:self.lastNameField.text];
 }
 
 - (BOOL)textFieldIsValid:(NSString *)string
@@ -106,49 +106,49 @@ CGFloat originalTopConstraintValue;
 
 
 #pragma mark - TextFieldDelegate
-- (BOOL)textField:(nonnull UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(nonnull NSString *)string
-{
-    NSMutableString *firstNameText = [NSMutableString stringWithString:self.firstNameField.text];
-    NSMutableString *lastNameText = [NSMutableString stringWithString:self.lastNameField.text];
-    if (textField == self.firstNameField) {
-        [firstNameText replaceCharactersInRange:range withString:string];
-    } else {
-        [lastNameText replaceCharactersInRange:range withString:string];
-    }
-    [self updateErrorLabelForFirstNameString:firstNameText lastNameString:lastNameText];
+- (BOOL)textField:(nonnull UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(nonnull NSString *)string {
+//    NSMutableString *firstNameText = [NSMutableString stringWithString:self.firstNameField.text];
+//    NSMutableString *lastNameText = [NSMutableString stringWithString:self.lastNameField.text];
+//    if (textField == self.firstNameField) {
+//        [firstNameText replaceCharactersInRange:range withString:string];
+//    } else {
+//        [lastNameText replaceCharactersInRange:range withString:string];
+//    }
+//    [self updateErrorLabelForFirstNameString:firstNameText lastNameString:lastNameText];
+    [self removeErrors];
     return YES;
 }
-
-- (void)updateErrorLabelForFirstNameString:(NSString *)firstString lastNameString:(NSString *)lastString
-{
-    if (!self.firstNameEdited || !self.lastNameEdited) { return; }
-    DLog(@"%@    %@",firstString, lastString);
-    if ([self textFieldIsValid:firstString])
-    {
-        DLog();
-        self.firstNameError.hidden = YES;
-        //self.firstNameField.backgroundColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:0.25];
-    }
-    else
-    {
-        DLog();
-        self.firstNameError.hidden = NO;
-        self.firstNameField.backgroundColor = [UIColor clearColor];
-    }
-    
-    if ([self textFieldIsValid:lastString])
-    {
-        DLog();
-        self.lastNameError.hidden = YES;
-        //self.lastNameField.backgroundColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:0.25];
-    }
-    else
-    {
-        DLog();
-        self.lastNameError.hidden = NO;
-        self.lastNameField.backgroundColor = [UIColor clearColor];
-    }
-}
+//
+//- (void)updateErrorLabelForFirstNameString:(NSString *)firstString lastNameString:(NSString *)lastString
+//{
+//    if (!self.firstNameEdited || !self.lastNameEdited) { return; }
+//    DLog(@"%@    %@",firstString, lastString);
+//    if ([self textFieldIsValid:firstString])
+//    {
+//        DLog();
+//        self.firstNameError.hidden = YES;
+//        //self.firstNameField.backgroundColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:0.25];
+//    }
+//    else
+//    {
+//        DLog();
+//        self.firstNameError.hidden = NO;
+//        self.firstNameField.backgroundColor = [UIColor clearColor];
+//    }
+//    
+//    if ([self textFieldIsValid:lastString])
+//    {
+//        DLog();
+//        self.lastNameError.hidden = YES;
+//        //self.lastNameField.backgroundColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:0.25];
+//    }
+//    else
+//    {
+//        DLog();
+//        self.lastNameError.hidden = NO;
+//        self.lastNameField.backgroundColor = [UIColor clearColor];
+//    }
+//}
 
 - (void)registerForKeyboardNotifications
 {
@@ -165,19 +165,6 @@ CGFloat originalTopConstraintValue;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField
-//{
-//    [textField resignFirstResponder];
-//    if(textField == self.firstNameField)
-//    {
-//        [self.lastNameField becomeFirstResponder];
-//    }
-//    return YES;
-//}
-//
-//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-//   
-//}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -215,7 +202,7 @@ CGFloat originalTopConstraintValue;
 }
 
 
-#pragma mark - Helper Functions
+#pragma mark - UI Functions
 
 - (void)setUpTheme {
     self.continueButton.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
@@ -232,6 +219,14 @@ CGFloat originalTopConstraintValue;
     [UIView animateWithDuration:0.3 animations:^{
         self.lastNameUnderLineView.backgroundColor = ([self.lastNameField.text isEqualToString:@""]) ? [UIColor redColor] : [UIColor lightGrayColor];
         self.lblError.alpha =  ([self.firstNameField.text isEqualToString:@""] || [self.lastNameField.text isEqualToString:@""]) ? 1 : 0;
+    }];
+}
+
+- (void)removeErrors {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.firstNameUnderLineView.backgroundColor = [UIColor lightGrayColor];
+        self.lastNameUnderLineView.backgroundColor = [UIColor lightGrayColor];
+        self.lblError.alpha = 0;
     }];
 }
 
