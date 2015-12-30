@@ -165,20 +165,22 @@ CGFloat originalTopConstraintValue;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    if(textField == self.firstNameField)
-    {
-        [self.lastNameField becomeFirstResponder];
-    }
-    return YES;
-}
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField
+//{
+//    [textField resignFirstResponder];
+//    if(textField == self.firstNameField)
+//    {
+//        [self.lastNameField becomeFirstResponder];
+//    }
+//    return YES;
+//}
+//
+//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+//   
+//}
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    if (textField == self.firstNameField) { self.firstNameEdited = YES; }
-    if (textField == self.lastNameField) { self.lastNameEdited = YES; }
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
     return YES;
 }
 
