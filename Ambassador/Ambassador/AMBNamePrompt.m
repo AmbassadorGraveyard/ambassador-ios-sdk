@@ -37,7 +37,8 @@ CGFloat originalTopConstraintValue;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self registerForKeyboardNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 
     [self setUpTheme];
     
@@ -61,6 +62,10 @@ CGFloat originalTopConstraintValue;
 
 - (void)viewDidAppear:(BOOL)animated {
     originalTopConstraintValue = self.topConstraint.constant;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -105,71 +110,20 @@ CGFloat originalTopConstraintValue;
 
 
 
-#pragma mark - TextFieldDelegate
+#pragma mark - TextField Delegate
+
 - (BOOL)textField:(nonnull UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(nonnull NSString *)string {
-//    NSMutableString *firstNameText = [NSMutableString stringWithString:self.firstNameField.text];
-//    NSMutableString *lastNameText = [NSMutableString stringWithString:self.lastNameField.text];
-//    if (textField == self.firstNameField) {
-//        [firstNameText replaceCharactersInRange:range withString:string];
-//    } else {
-//        [lastNameText replaceCharactersInRange:range withString:string];
-//    }
-//    [self updateErrorLabelForFirstNameString:firstNameText lastNameString:lastNameText];
     [self removeErrors];
     return YES;
 }
-//
-//- (void)updateErrorLabelForFirstNameString:(NSString *)firstString lastNameString:(NSString *)lastString
-//{
-//    if (!self.firstNameEdited || !self.lastNameEdited) { return; }
-//    DLog(@"%@    %@",firstString, lastString);
-//    if ([self textFieldIsValid:firstString])
-//    {
-//        DLog();
-//        self.firstNameError.hidden = YES;
-//        //self.firstNameField.backgroundColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:0.25];
-//    }
-//    else
-//    {
-//        DLog();
-//        self.firstNameError.hidden = NO;
-//        self.firstNameField.backgroundColor = [UIColor clearColor];
-//    }
-//    
-//    if ([self textFieldIsValid:lastString])
-//    {
-//        DLog();
-//        self.lastNameError.hidden = YES;
-//        //self.lastNameField.backgroundColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:0.25];
-//    }
-//    else
-//    {
-//        DLog();
-//        self.lastNameError.hidden = NO;
-//        self.lastNameField.backgroundColor = [UIColor clearColor];
-//    }
-//}
-
-- (void)registerForKeyboardNotifications
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillBeHidden:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-}
-
--(void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
+
+
+#pragma mark - Keyboard Delegates
 
 - (void)keyboardWillShow:(NSNotification*)aNotification {
     CGRect keyboardFrame = [aNotification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -184,20 +138,6 @@ CGFloat originalTopConstraintValue;
     if (self.topConstraint.constant != originalTopConstraintValue) {
         self.topConstraint.constant = originalTopConstraintValue;
         [self.view layoutIfNeeded];
-    }
-}
-
-
-- (void)removeKeyboard
-{
-    [self.view endEditing:YES];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (scrollView.isDragging) {
-        [scrollView setContentOffset:CGPointMake(0, 0)];
-        [self.view endEditing:YES];
     }
 }
 
