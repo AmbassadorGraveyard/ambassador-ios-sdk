@@ -75,69 +75,22 @@ CGFloat originalTopConstraintValue;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Navigation
-- (void)backButtonPressed:(UIButton *)button
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-- (IBAction)continueSending:(UIButton *)sender
-{
+- (IBAction)continueSending:(UIButton *)sender {
     [self checkForBlankFirstName];
     [self checkForBlankLastName];
     
     if ([self textFieldIsValid:self.firstNameField.text] && [self textFieldIsValid:self.lastNameField.text]) {
         NSString *firstName = [self.firstNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *lastName = [self.lastNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
+        
         [[AMBNetworkManager sharedInstance] updateNameWithFirstName:firstName lastName:lastName success:^(NSDictionary *response) {
-            [self.navigationController popViewControllerAnimated:YES];
+            [AMBValues setUserFirstNameWithString:firstName];
+            [AMBValues setUserLastNameWithString:lastName];
+            [self dismissViewControllerAnimated:YES completion:nil];
             [self.delegate namesUpdatedSuccessfully];
         } failure:^(NSString *error) {
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to update names.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
         }];
-    }
-    
-//    self.firstNameEdited = YES;
-//    self.lastNameEdited = YES;
-//    [self updateErrorLabelForFirstNameString:self.firstNameField.text lastNameString:self.lastNameField.text];
-}
-
-- (BOOL)textFieldIsValid:(NSString *)string
-{
-    NSString *formattedString = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    return ![formattedString isEqualToString:@""];
-}
-
-
-
-#pragma mark - TextField Delegate
-
-- (BOOL)textField:(nonnull UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(nonnull NSString *)string {
-    [self removeErrors];
-    return YES;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
-}
-
-
-#pragma mark - Keyboard Delegates
-
-- (void)keyboardWillShow:(NSNotification*)aNotification {
-    CGRect keyboardFrame = [aNotification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGFloat comparedHeight = self.view.frame.size.height - (self.lastNameUnderLineView.frame.origin.y + self.lastNameUnderLineView.frame.size.height + 10);
-    if (keyboardFrame.size.height > comparedHeight) {
-        self.topConstraint.constant = -(keyboardFrame.size.height - comparedHeight);
-        [self.view layoutIfNeeded];
-    }
-}
-
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification {
-    if (self.topConstraint.constant != originalTopConstraintValue) {
-        self.topConstraint.constant = originalTopConstraintValue;
-        [self.view layoutIfNeeded];
     }
 }
 
@@ -170,5 +123,52 @@ CGFloat originalTopConstraintValue;
     }];
 }
 
+
+#pragma mark - Helper Functions
+
+- (BOOL)textFieldIsValid:(NSString *)string {
+    NSString *formattedString = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return ![formattedString isEqualToString:@""];
+}
+
+
+#pragma mark - Navigation
+
+- (void)backButtonPressed:(UIButton *)button {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark - TextField Delegate
+
+- (BOOL)textField:(nonnull UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(nonnull NSString *)string {
+    [self removeErrors];
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+
+#pragma mark - Keyboard Delegates
+
+- (void)keyboardWillShow:(NSNotification*)aNotification {
+    CGRect keyboardFrame = [aNotification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat comparedHeight = self.view.frame.size.height - (self.lastNameUnderLineView.frame.origin.y + self.lastNameUnderLineView.frame.size.height + 10);
+    
+    if (keyboardFrame.size.height > comparedHeight) {
+        self.topConstraint.constant = -(keyboardFrame.size.height - comparedHeight);
+        [self.view layoutIfNeeded];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification {
+    if (self.topConstraint.constant != originalTopConstraintValue) {
+        self.topConstraint.constant = originalTopConstraintValue;
+        [self.view layoutIfNeeded];
+    }
+}
 
 @end
