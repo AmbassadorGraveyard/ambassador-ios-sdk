@@ -26,11 +26,14 @@
 @property (nonatomic, strong) IBOutlet UIView * lastNameUnderLineView;
 @property (nonatomic, strong) IBOutlet UILabel * lblError;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *viewTapped;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * topConstraint;
 @property BOOL firstNameEdited;
 @property BOOL lastNameEdited;
 @end
 
 @implementation AMBNamePrompt
+
+CGFloat originalTopConstraintValue;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -54,6 +57,10 @@
     self.lastNameEdited = NO;
     
     self.scrollView.delegate = self;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    originalTopConstraintValue = self.topConstraint.constant;
 }
 
 
@@ -146,8 +153,8 @@
 - (void)registerForKeyboardNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWasShown:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
@@ -175,33 +182,20 @@
     return YES;
 }
 
-// Called when the UIKeyboardDidShowNotification is sent.
-- (void)keyboardWasShown:(NSNotification*)aNotification
-{
-    CGRect frame = [aNotification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGRect newFrame = [self.view convertRect:frame fromView:[[UIApplication sharedApplication] delegate].window];
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, newFrame.size.height, 0.0);
-    self.scrollView.contentInset = contentInsets;
-    self.scrollView.scrollIndicatorInsets = contentInsets;
-    
-    // If active text field is hidden by keyboard, scroll it so it's visible
-    // Your application might not need or want this behavior.
-    CGRect aRect = self.view.frame;
-    aRect.size.height -= newFrame.size.height;
-    if (!CGRectContainsPoint(aRect, self.firstNameField.frame.origin) && [self.firstNameField isFirstResponder] ) {
-        [self.scrollView scrollRectToVisible:self.firstNameField.frame animated:YES];
-    }
-    if (!CGRectContainsPoint(aRect, self.lastNameField.frame.origin) && [self.lastNameField isFirstResponder]) {
-        [self.scrollView scrollRectToVisible:self.firstNameField.frame animated:YES];
+- (void)keyboardWillShow:(NSNotification*)aNotification {
+    CGRect keyboardFrame = [aNotification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat comparedHeight = self.view.frame.size.height - (self.lastNameUnderLineView.frame.origin.y + self.lastNameUnderLineView.frame.size.height + 10);
+    if (keyboardFrame.size.height > comparedHeight) {
+        self.topConstraint.constant = -(keyboardFrame.size.height - comparedHeight);
+        [self.view layoutIfNeeded];
     }
 }
 
-// Called when the UIKeyboardWillHideNotification is sent
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
-{
-    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
-    self.scrollView.contentInset = contentInsets;
-    self.scrollView.scrollIndicatorInsets = contentInsets;
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification {
+    if (self.topConstraint.constant != originalTopConstraintValue) {
+        self.topConstraint.constant = originalTopConstraintValue;
+        [self.view layoutIfNeeded];
+    }
 }
 
 
