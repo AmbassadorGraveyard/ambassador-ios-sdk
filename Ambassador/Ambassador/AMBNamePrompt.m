@@ -22,6 +22,9 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UIButton * btnClose;
 @property (nonatomic, strong) IBOutlet UIView * masterView;
+@property (nonatomic, strong) IBOutlet UIView * firstNameUnderLineView;
+@property (nonatomic, strong) IBOutlet UIView * lastNameUnderLineView;
+@property (nonatomic, strong) IBOutlet UILabel * lblError;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *viewTapped;
 @property BOOL firstNameEdited;
 @property BOOL lastNameEdited;
@@ -67,6 +70,9 @@
 }
 - (IBAction)continueSending:(UIButton *)sender
 {
+    [self checkForBlankFirstName];
+    [self checkForBlankLastName];
+    
     if ([self textFieldIsValid:self.firstNameField.text] && [self textFieldIsValid:self.lastNameField.text]) {
         NSString *firstName = [self.firstNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *lastName = [self.lastNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -217,6 +223,21 @@
 
 - (void)setUpTheme {
     self.continueButton.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    self.lblError.alpha = 0;
 }
+
+- (void)checkForBlankFirstName {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.firstNameUnderLineView.backgroundColor = ([self.firstNameField.text isEqualToString:@""]) ? [UIColor redColor] : [UIColor lightGrayColor];
+    }];
+}
+
+- (void)checkForBlankLastName {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.lastNameUnderLineView.backgroundColor = ([self.lastNameField.text isEqualToString:@""]) ? [UIColor redColor] : [UIColor lightGrayColor];
+        self.lblError.alpha =  ([self.firstNameField.text isEqualToString:@""] || [self.lastNameField.text isEqualToString:@""]) ? 1 : 0;
+    }];
+}
+
 
 @end
