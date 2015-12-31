@@ -14,21 +14,16 @@
 #import "AMBThemeManager.h"
 
 @interface AMBNamePrompt () <UITextFieldDelegate, UIScrollViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UIButton *continueButton;
 @property (weak, nonatomic) IBOutlet UITextField *firstNameField;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameField;
-@property (weak, nonatomic) IBOutlet UILabel *firstNameError;
-@property (weak, nonatomic) IBOutlet UILabel *lastNameError;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UIButton * btnClose;
-@property (nonatomic, strong) IBOutlet UIView * masterView;
 @property (nonatomic, strong) IBOutlet UIView * firstNameUnderLineView;
 @property (nonatomic, strong) IBOutlet UIView * lastNameUnderLineView;
 @property (nonatomic, strong) IBOutlet UILabel * lblError;
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *viewTapped;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * topConstraint;
-@property BOOL firstNameEdited;
-@property BOOL lastNameEdited;
+
 @end
 
 @implementation AMBNamePrompt
@@ -37,35 +32,17 @@ CGFloat originalTopConstraintValue;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setUpTheme];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
-
-    [self setUpTheme];
-    
-    // Do any additional setup after loading the view.
-    self.continueButton.layer.cornerRadius = self.continueButton.frame.size.height/2;
-    
-    self.firstNameField.backgroundColor = [UIColor clearColor];
-    self.lastNameField.backgroundColor = [UIColor clearColor];
-    self.firstNameError.hidden = YES;
-    self.lastNameError.hidden = YES;
-    self.firstNameField.textColor = [UIColor blackColor];
-    self.lastNameField.textColor = [UIColor blackColor];
-    [self.viewTapped addTarget:self action:@selector(removeKeyboard)];
-    self.firstNameField.delegate = self;
-    self.lastNameField.delegate = self;
-    self.firstNameEdited = NO;
-    self.lastNameEdited = NO;
-    
-    self.scrollView.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    originalTopConstraintValue = self.topConstraint.constant;
+    originalTopConstraintValue = self.topConstraint.constant; // Put in 'viewDidAppear' so that the correct sizes are guaranteed to be displayed
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self]; // Removes self from getting and responding to keyboard notifications
 }
 
 
@@ -76,13 +53,11 @@ CGFloat originalTopConstraintValue;
 }
 
 - (IBAction)continueSending:(UIButton *)sender {
-    [self checkForBlankFirstName];
-    [self checkForBlankLastName];
+    NSString *firstName = [self.firstNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *lastName = [self.lastNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [self checkForBlankNames:firstName lastName:lastName];
     
-    if ([self textFieldIsValid:self.firstNameField.text] && [self textFieldIsValid:self.lastNameField.text]) {
-        NSString *firstName = [self.firstNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        NSString *lastName = [self.lastNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        
+    if ([self textFieldIsValid:firstName] && [self textFieldIsValid:lastName]) {
         [[AMBNetworkManager sharedInstance] updateNameWithFirstName:firstName lastName:lastName success:^(NSDictionary *response) {
             [AMBValues setUserFirstNameWithString:firstName];
             [AMBValues setUserLastNameWithString:lastName];
@@ -99,19 +74,17 @@ CGFloat originalTopConstraintValue;
 
 - (void)setUpTheme {
     self.continueButton.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    self.continueButton.layer.cornerRadius = self.continueButton.frame.size.height/2;
+    self.firstNameField.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    self.lastNameField.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     self.lblError.alpha = 0;
 }
 
-- (void)checkForBlankFirstName {
+- (void)checkForBlankNames:(NSString*)firstName lastName:(NSString*)lastName {
     [UIView animateWithDuration:0.3 animations:^{
-        self.firstNameUnderLineView.backgroundColor = ([self.firstNameField.text isEqualToString:@""]) ? [UIColor redColor] : [UIColor lightGrayColor];
-    }];
-}
-
-- (void)checkForBlankLastName {
-    [UIView animateWithDuration:0.3 animations:^{
-        self.lastNameUnderLineView.backgroundColor = ([self.lastNameField.text isEqualToString:@""]) ? [UIColor redColor] : [UIColor lightGrayColor];
-        self.lblError.alpha =  ([self.firstNameField.text isEqualToString:@""] || [self.lastNameField.text isEqualToString:@""]) ? 1 : 0;
+        self.firstNameUnderLineView.backgroundColor = (![self textFieldIsValid:firstName]) ? [UIColor redColor] : [UIColor lightGrayColor];
+        self.lastNameUnderLineView.backgroundColor = (![self textFieldIsValid:lastName]) ? [UIColor redColor] : [UIColor lightGrayColor];
+        self.lblError.alpha =  (![self textFieldIsValid:firstName] || ![self textFieldIsValid:lastName]) ? 1 : 0;
     }];
 }
 
