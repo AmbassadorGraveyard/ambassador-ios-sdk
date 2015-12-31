@@ -108,8 +108,9 @@
         for (NSUInteger i = 0; i < self.allContacts.count; ++i)
         {
             ABRecordRef person = (__bridge ABRecordRef)self.allContacts[i];
-            [self getEmailsForPerson:person];
-            [self getNumbersForPerson:person];
+            AMBFullContact *contact = [[AMBFullContact alloc] initWithABPersonRef:person];
+            [self.phoneNumbers addObjectsFromArray:contact.phoneContacts];
+            [self.emailAddresses addObjectsFromArray:contact.emailContacts];
         }
         
         [self.delegate contactsFinishedLoadingSuccessfully];
