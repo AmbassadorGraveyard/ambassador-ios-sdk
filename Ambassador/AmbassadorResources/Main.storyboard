@@ -1167,29 +1167,29 @@
                                             <action selector="btnCloseTapped:" destination="QAG-ZD-cG3" eventType="touchUpInside" id="3CS-9F-zfa"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="FIRST NAME" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SIA-9e-a3u">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="FIRST NAME" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SIA-9e-a3u">
                                         <rect key="frame" x="35" y="210" width="530" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                         <connections>
                                             <outlet property="delegate" destination="QAG-ZD-cG3" id="pRC-uk-pRH"/>
                                         </connections>
                                     </textField>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CyO-co-7OU">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CyO-co-7OU">
                                         <rect key="frame" x="35" y="308" width="530" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="Fmu-HJ-v5U"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BYQ-8M-nwe">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BYQ-8M-nwe">
                                         <rect key="frame" x="35" y="239" width="530" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="Kac-aG-vxK"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxL-qm-uW1">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cxL-qm-uW1">
                                         <rect key="frame" x="200" y="384" width="200" height="50"/>
                                         <color key="backgroundColor" red="0.16877076077141384" green="0.54104354118292053" blue="0.73583500628869969" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -1222,7 +1222,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="LAST NAME" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O7o-fJ-ZI8">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="LAST NAME" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O7o-fJ-ZI8">
                                         <rect key="frame" x="35" y="280" width="530" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
@@ -1312,9 +1312,7 @@
                         <outlet property="lastNameField" destination="O7o-fJ-ZI8" id="MKh-Sl-hn2"/>
                         <outlet property="lastNameUnderLineView" destination="CyO-co-7OU" id="vHr-Ob-anN"/>
                         <outlet property="lblError" destination="dLw-Qc-roD" id="i8g-Fe-tft"/>
-                        <outlet property="masterView" destination="YTJ-US-kbT" id="QFQ-61-kMI"/>
                         <outlet property="topConstraint" destination="ITf-rD-8Ig" id="JOo-Ak-gEQ"/>
-                        <outlet property="viewTapped" destination="43M-OV-xrc" id="hdX-fD-OL2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gfd-AO-6ky" userLabel="First Responder" sceneMemberID="firstResponder"/>
