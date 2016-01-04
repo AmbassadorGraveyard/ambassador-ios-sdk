@@ -36,9 +36,7 @@ NSString * const TITLE = @"Authorize LinkedIn";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    if (self.webView.isLoading) {
-        [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
-    }
+    [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
 }
 
 - (void)didReceiveMemoryWarning {
