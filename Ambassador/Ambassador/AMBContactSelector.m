@@ -71,7 +71,8 @@ BOOL keyboardShowing = NO;
     self.filteredData = [[NSMutableArray alloc] init];
     self.composeMessageTextView.text = self.defaultMessage;
     [self setUpTheme];
-    [self loadContacts];
+    [[AMBContactLoader sharedInstance] attemptLoadWithDelegate:self];
+    [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
     
     // Sets up a 'Pull to refresh'
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -446,17 +447,14 @@ BOOL keyboardShowing = NO;
 - (void)refreshContacts {
     switch (self.type) {
         case AMBSocialServiceTypeEmail:
-            self.data = self.contactLoader.emailAddresses;
+            self.data = [AMBContactLoader sharedInstance].emailAddresses;
             break;
         case AMBSocialServiceTypeSMS:
-            self.data = self.contactLoader.phoneNumbers;
+            self.data = [AMBContactLoader sharedInstance].phoneNumbers;
             break;
         default:
             break;
     }
-    
-    NSDictionary *cacheDict = @{ @"contactData" : self.data, @"purgeDate" : [NSDate dateWithTimeIntervalSinceNow:600]};
-    [[AMBUtilities sharedInstance] saveToCache:cacheDict forKey:[AMBOptions serviceTypeStringValue:self.type]];
 }
 
 - (void)searchWithText:(NSString *)searchText {
@@ -481,23 +479,7 @@ BOOL keyboardShowing = NO;
 }
 
 - (void)pullToRefresh {
-    [self.contactLoader loadWithDelegate:self];
     [self.refreshControl endRefreshing];
-}
-
-- (void)loadContacts {
-    NSDictionary *contactCacheDict = (NSDictionary*)[[AMBUtilities sharedInstance] getCacheValueWithKey:[AMBOptions serviceTypeStringValue:self.type]];
-    NSDate *purgeDate;
-    
-    if (contactCacheDict) { purgeDate = contactCacheDict[@"purgeDate"]; }
-    
-    if ([[NSDate date] compare:purgeDate] == NSOrderedAscending && contactCacheDict[@"contactData"]) {
-        self.data = (NSMutableArray*)contactCacheDict[@"contactData"];
-    } else {
-        self.contactLoader = [[AMBContactLoader alloc] init];
-        [self.contactLoader loadWithDelegate:self];
-        [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
-    }
 }
 
 
