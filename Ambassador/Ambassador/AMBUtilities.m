@@ -91,7 +91,22 @@
 }
 
 - (void)rotateLoadingView {
+    CGRect screenFrame = [[UIScreen mainScreen] bounds];
+    CGFloat newWidth = screenFrame.size.height;
+    CGFloat newHeight = screenFrame.size.width;
     
+    CGRect newSpinnerFrame;
+    if (newWidth <= newHeight) {
+        newSpinnerFrame = CGRectMake(newWidth/2 - 50, newHeight - (newHeight * .75), 100, 100);
+    } else {
+        newSpinnerFrame = CGRectMake(newWidth/2 - 50, newHeight/2 - 75, 100, 100);
+    }
+    
+    [self.animatingView setFrame:newSpinnerFrame];
+    
+    CGRect newParentFrame = CGRectMake(0, 0, newWidth, newHeight);
+    [self.loadingView setFrame:newParentFrame];
+    [self.blurView setFrame:newParentFrame];
 }
 
 - (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue {
