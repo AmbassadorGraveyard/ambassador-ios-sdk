@@ -12,14 +12,6 @@
 #import "AMBUtilities.h"
 
 
-
-@interface AMBContactLoader ()
-@property ABAddressBookRef addressBook;
-@property NSArray *allContacts;
-@end
-
-
-
 @implementation AMBContactLoader
 
 - (void)loadWithDelegate:(id)delegate {
@@ -34,8 +26,6 @@
     self.emailAddresses = [[NSMutableArray alloc] init];
     self.phoneNumbers = [[NSMutableArray alloc] init];
     
-    //Set up address book
-    self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     [self getPermissions];
 }
 
@@ -44,6 +34,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedInstance = [[AMBContactLoader alloc] init];
+        _sharedInstance.emailAddresses = [[NSMutableArray alloc] init];
+        _sharedInstance.phoneNumbers = [[NSMutableArray alloc] init];
+        [_sharedInstance loadContacts];
     });
     
     return _sharedInstance;
@@ -94,20 +87,16 @@
 
 
 #pragma mark - Main contacts loop
-- (void)loadContacts
-{
-    DLog();
-    if (self.addressBook != nil)
-    {
-        ABRecordRef source = ABAddressBookCopyDefaultSource(self.addressBook);
-        
-        // Load addressbook
-        self.allContacts = (__bridge NSArray *)ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(self.addressBook, source, kABPersonFirstNameProperty);
+- (void)loadContacts {
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    
+    if (addressBook != nil) {
+        ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
+        NSArray *contactArray = (__bridge NSArray *)ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonFirstNameProperty); // Load addressbook
         
         // Main contact loop
-        for (NSUInteger i = 0; i < self.allContacts.count; ++i)
-        {
-            ABRecordRef person = (__bridge ABRecordRef)self.allContacts[i];
+        for (NSUInteger i = 0; i < [contactArray count]; ++i) {
+            ABRecordRef person = (__bridge ABRecordRef)contactArray[i];
             AMBFullContact *contact = [[AMBFullContact alloc] initWithABPersonRef:person];
             [self.phoneNumbers addObjectsFromArray:contact.phoneContacts];
             [self.emailAddresses addObjectsFromArray:contact.emailContacts];
@@ -115,124 +104,6 @@
         
         [self.delegate contactsFinishedLoadingSuccessfully];
     }
-}
-
-
-
-#pragma mark - Accessory Functions
-- (void)getNumbersForPerson:(ABRecordRef)person
-{
-    // Get name
-    NSDictionary *name = [self getNameForPerson:person];
-    
-    // Phone numbers for contact
-    ABMultiValueRef phones = ABRecordCopyValue(person, kABPersonPhoneProperty);
-    
-    NSString *phoneLabel;
-    
-    // Cycle through phone numbers
-    for (CFIndex j = 0; j < ABMultiValueGetCount(phones); ++j)
-    {
-        //String to store lable of each number type
-        phoneLabel = (__bridge NSString *)ABMultiValueCopyLabelAtIndex(phones, j);
-        
-        //Check if it's mobile of iPhone
-        if ([phoneLabel isEqualToString:(NSString *)kABPersonPhoneMobileLabel] ||
-            [phoneLabel isEqualToString:(NSString *)kABPersonPhoneIPhoneLabel] ||
-            YES ) //TODO: remove YES
-        {
-            //Strip the charaters surrounding label type
-            phoneLabel = [phoneLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]];
-            if (!phoneLabel) phoneLabel = @"Other";
-            
-            //Get the number
-            NSString *number = (__bridge NSString *)ABMultiValueCopyValueAtIndex(phones, j);
-            
-            //Remove non-numeric characters from number string
-            NSCharacterSet *breakAtCharacters = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
-            number = [[number componentsSeparatedByCharactersInSet:breakAtCharacters] componentsJoinedByString:@""];
-            
-            AMBContact *contact = [[AMBContact alloc] init];
-            contact.firstName = name[@"firstName"];
-            contact.lastName = name[@"lastName"];
-            contact.label = phoneLabel;
-            contact.value = [self formatPhoneNumber:number];
-            
-            [self.phoneNumbers addObject:contact];
-        }
-    }
-}
-
-- (void)getEmailsForPerson:(ABRecordRef)person
-{
-    // Get name
-    NSDictionary *name = [self getNameForPerson:person];
-    
-    // Emails for contact
-    ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
-    
-    // Cycle through emails
-    for (CFIndex j = 0; j < ABMultiValueGetCount(emails); ++j) {
-        
-        //String to store label of each email type
-        NSString *emailLabel = (__bridge NSString *)ABMultiValueCopyLabelAtIndex(emails, j);
-        
-        //Strip the charaters surrounding label type
-        emailLabel = [emailLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]];
-        if (!emailLabel) emailLabel = @"Other";
-        
-        NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emails, j);
-        
-        AMBContact *contact = [[AMBContact alloc] init];
-        contact.firstName = name[@"firstName"];
-        contact.lastName = name[@"lastName"];
-        contact.label = emailLabel;
-        contact.value = email;
-        
-        [self.emailAddresses addObject:contact];
-    }
-
-}
-
-- (NSDictionary *)getNameForPerson:(ABRecordRef)person
-{
-    NSString *firstName, *lastName;
-    firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-    lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
-    
-    return @{
-             // Check if fields are set before attempting to insert the values
-             @"firstName" : firstName? firstName : @"",
-             @"lastName" : lastName? lastName : @""
-             };
-}
-
-- (NSString *)formatPhoneNumber:(NSString *)number
-{
-    NSMutableString *returnNumber = [NSMutableString stringWithString:number];
-    if (number.length == 11)
-    {
-        //country code
-        [returnNumber insertString:@" " atIndex:1];
-        [returnNumber insertString:@"(" atIndex:2];
-        [returnNumber insertString:@")" atIndex:6];
-        [returnNumber insertString:@" " atIndex:7];
-        [returnNumber insertString:@"-" atIndex:11];
-    }
-    else if (number.length == 10)
-    {
-        // area code
-        [returnNumber insertString:@"(" atIndex:0];
-        [returnNumber insertString:@")" atIndex:4];
-        [returnNumber insertString:@" " atIndex:5];
-        [returnNumber insertString:@"-" atIndex:9];
-    }
-    else if (number.length >= 4) 
-    {
-        // simple number
-        [returnNumber insertString:@"-" atIndex:3];
-    }
-    return returnNumber;
 }
 
 @end
