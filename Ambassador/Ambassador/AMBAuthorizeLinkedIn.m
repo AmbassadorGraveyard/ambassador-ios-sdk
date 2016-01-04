@@ -35,10 +35,8 @@ NSString * const TITLE = @"Authorize LinkedIn";
 //    self.navigationItem. = blankBackButton;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    if (self.webView.isLoading)
-    {
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.webView.isLoading) {
         [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
     }
 }
