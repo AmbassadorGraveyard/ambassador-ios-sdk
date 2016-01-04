@@ -106,7 +106,7 @@
     }
         
     CGRect newSpinnerFrame;
-    if (newWidth <= newHeight) {
+    if (UIDeviceOrientationIsPortrait(orientation)) {
         newSpinnerFrame = CGRectMake(newWidth/2 - 50, newHeight - (newHeight * .75), 100, 100);
     } else {
         newSpinnerFrame = CGRectMake(newWidth/2 - 50, newHeight/2 - 75, 100, 100);
