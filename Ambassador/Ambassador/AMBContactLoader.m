@@ -30,7 +30,6 @@
         _sharedInstance = [[AMBContactLoader alloc] init];
         _sharedInstance.emailAddresses = [[NSMutableArray alloc] init];
         _sharedInstance.phoneNumbers = [[NSMutableArray alloc] init];
-        _sharedInstance.purgeTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 * 5 target:self selector:@selector(emptyOutArrays) userInfo:nil repeats:YES];
     });
     
     return _sharedInstance;
@@ -50,11 +49,13 @@
     switch (ABAddressBookGetAuthorizationStatus()) {
         case kABAuthorizationStatusAuthorized:
             DLog(@"CONTACT LOADER - Already had permission to access contacts");
+            if (!self.purgeTimer) { self.purgeTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 * 5 target:self selector:@selector(emptyOutArrays) userInfo:nil repeats:YES]; }
             [self loadContacts];
             break;
         case kABAuthorizationStatusDenied || kABAuthorizationStatusRestricted:
             DLog(@"CONTACT LOADER - Have been denied permission to access contacts");
             [self throwContactLoadError];
+            break;
         default:
             DLog(@"CONTACT LOADER - Need to ask for permission");
             [self requestContactsPermission];
@@ -126,6 +127,7 @@
 }
 
 - (void)emptyOutArrays {
+    DLog(@"Contact arrays purged!");
     if (self.phoneNumbers != nil) { [self.phoneNumbers removeAllObjects]; } // Removes all objects if the array have already been initialized
     if (self.emailAddresses != nil) { [self.emailAddresses removeAllObjects]; } // ^^
 }
