@@ -35,6 +35,10 @@ NSString * const TITLE = @"Authorize LinkedIn";
 //    self.navigationItem. = blankBackButton;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
+}
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [[AMBUtilities sharedInstance] rotateLoadingView];
 }
@@ -74,6 +78,12 @@ NSString * const TITLE = @"Authorize LinkedIn";
         return NO;
     }
     return YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    if (!webView.isLoading) {
+        [[AMBUtilities sharedInstance] hideLoadingView];
+    }
 }
 
 - (void)getRequestTokenWithKey:(NSString *)key
