@@ -40,7 +40,7 @@ NSString * const TITLE = @"Authorize LinkedIn";
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [[AMBUtilities sharedInstance] rotateLoadingView];
+    [[AMBUtilities sharedInstance] rotateLoadingView:toInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -80,7 +80,7 @@ BOOL keyboardShowing = NO;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [[AMBUtilities sharedInstance] rotateLoadingView];
+    [[AMBUtilities sharedInstance] rotateLoadingView:toInterfaceOrientation];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
