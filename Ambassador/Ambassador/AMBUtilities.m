@@ -90,10 +90,15 @@
     }
 }
 
-- (void)rotateLoadingView {
+- (void)rotateLoadingView:(UIInterfaceOrientation)orientation {
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
+    
     CGFloat newWidth = screenFrame.size.height;
     CGFloat newHeight = screenFrame.size.width;
+    
+    if (UIInterfaceOrientationIsLandscape(orientation) && newWidth < newHeight) {
+        return;
+    }
     
     CGRect newSpinnerFrame;
     if (newWidth <= newHeight) {
