@@ -79,6 +79,10 @@ BOOL keyboardShowing = NO;
     [self.contactsTable addSubview:self.refreshControl];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [[AMBUtilities sharedInstance] rotateLoadingView];
+}
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [UIView animateWithDuration:.1 animations:^{
         self.fadeView.frame = self.containerView.frame;
