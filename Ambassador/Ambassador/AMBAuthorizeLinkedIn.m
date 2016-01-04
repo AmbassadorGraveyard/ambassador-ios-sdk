@@ -30,10 +30,17 @@ NSString * const TITLE = @"Authorize LinkedIn";
     NSString * addressString = AMB_LKDN_AUTH_URL;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:addressString]]];
     [self.view addSubview:self.webView];
-    [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
     
 //    UIBarButtonItemleftBarButtonItem *blankBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
 //    self.navigationItem. = blankBackButton;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (self.webView.isLoading)
+    {
+        [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,10 +80,8 @@ NSString * const TITLE = @"Authorize LinkedIn";
     return YES;
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    if (!webView.isLoading)
-    {
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    if (!webView.isLoading) {
         [[AMBUtilities sharedInstance] hideLoadingView];
     }
 }
