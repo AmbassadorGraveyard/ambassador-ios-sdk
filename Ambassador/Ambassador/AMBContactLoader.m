@@ -11,6 +11,12 @@
 #import "AMBContact.h"
 #import "AMBUtilities.h"
 
+@interface AMBContactLoader()
+
+@property (nonatomic, strong) NSTimer * purgeTimer;
+
+@end
+
 
 @implementation AMBContactLoader
 
@@ -24,6 +30,7 @@
         _sharedInstance = [[AMBContactLoader alloc] init];
         _sharedInstance.emailAddresses = [[NSMutableArray alloc] init];
         _sharedInstance.phoneNumbers = [[NSMutableArray alloc] init];
+        _sharedInstance.purgeTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 * 5 target:self selector:@selector(emptyOutArrays) userInfo:nil repeats:YES];
         [_sharedInstance loadContacts];
     });
     
@@ -58,8 +65,7 @@
     }
     
     // If the phoneNumber OR email array are empty, we need to load contacts from the address book
-    if (self.phoneNumbers != nil) { [self.phoneNumbers removeAllObjects]; } // Removes all objects if the array have already been initialized
-    if (self.emailAddresses != nil) { [self.emailAddresses removeAllObjects]; } // ^^
+    [self emptyOutArrays];
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     
     if (addressBook != nil) {
@@ -76,6 +82,11 @@
         
         [self.delegate contactsFinishedLoadingSuccessfully];
     }
+}
+
+- (void)forceReloadContacts {
+    [self emptyOutArrays];
+    [self loadContacts];
 }
 
 
@@ -97,5 +108,12 @@
     [self.delegate contactsFailedToLoadWithError:@"Couldn't load contacts" message:@"Sharing requires access to your contact book. You can enable this in your settings."];
 }
 
+
+#pragma mark - Helper Functions
+
+- (void)emptyOutArrays {
+    if (self.phoneNumbers != nil) { [self.phoneNumbers removeAllObjects]; } // Removes all objects if the array have already been initialized
+    if (self.emailAddresses != nil) { [self.emailAddresses removeAllObjects]; } // ^^
+}
 
 @end
