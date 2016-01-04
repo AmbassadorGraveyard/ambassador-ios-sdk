@@ -81,18 +81,7 @@ BOOL keyboardShowing = NO;
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     
-    CGFloat width = self.view.frame.size.width;
-    CGFloat height = self.view.frame.size.height;
-    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
-    CGFloat statusBarHeight = 20;
-    
-    CGFloat offset;
-    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && width < height) {
-        offset = navigationBarHeight + statusBarHeight;
-    } else if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
-        offset = navigationBarHeight;
-    }
-    
+    CGFloat offset = [AMBUtilities getOffsetForRotation:self toOrientation:toInterfaceOrientation];
     [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
 }
 
