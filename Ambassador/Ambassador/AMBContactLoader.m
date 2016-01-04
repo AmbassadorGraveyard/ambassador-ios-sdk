@@ -40,7 +40,13 @@
 
 #pragma mark - Loading Functionality 
 
-- (void)attemptLoadWithDelegate:(id)delegate {
+- (void)attemptLoadWithDelegate:(id)delegate loadingFromCache:(void(^)(BOOL isCached))loadingFromCache {
+    if (loadingFromCache && [self hasCachedArrays]) {
+        loadingFromCache(YES);
+    } else if (loadingFromCache && ![self hasCachedArrays]){
+        loadingFromCache(NO);
+    }
+    
     self.delegate = delegate;
     switch (ABAddressBookGetAuthorizationStatus()) {
         case kABAuthorizationStatusAuthorized:
@@ -85,6 +91,7 @@
 }
 
 - (void)forceReloadContacts {
+    // FUNCTIONALITY: Will force the contacts to be loaded from the address book whether the purge timer (5 minutes) has been hit or not
     [self emptyOutArrays];
     [self loadContacts];
 }
@@ -110,6 +117,14 @@
 
 
 #pragma mark - Helper Functions
+
+- (BOOL)hasCachedArrays {
+    if ([self.phoneNumbers count] > 0 && [self.emailAddresses count] > 0) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
 
 - (void)emptyOutArrays {
     if (self.phoneNumbers != nil) { [self.phoneNumbers removeAllObjects]; } // Removes all objects if the array have already been initialized

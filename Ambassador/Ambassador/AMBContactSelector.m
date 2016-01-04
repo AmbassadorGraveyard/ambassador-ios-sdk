@@ -71,9 +71,12 @@ BOOL keyboardShowing = NO;
     self.filteredData = [[NSMutableArray alloc] init];
     self.composeMessageTextView.text = self.defaultMessage;
     [self setUpTheme];
-    [[AMBContactLoader sharedInstance] attemptLoadWithDelegate:self];
-    [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
-    
+    [[AMBContactLoader sharedInstance] attemptLoadWithDelegate:self loadingFromCache:^(BOOL isCached) {
+        if (!isCached) {
+            [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
+        }
+    }];
+
     // Sets up a 'Pull to refresh'
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(pullToRefresh) forControlEvents:UIControlEventValueChanged];
@@ -479,6 +482,7 @@ BOOL keyboardShowing = NO;
 }
 
 - (void)pullToRefresh {
+    [[AMBContactLoader sharedInstance] forceReloadContacts];
     [self.refreshControl endRefreshing];
 }
 
