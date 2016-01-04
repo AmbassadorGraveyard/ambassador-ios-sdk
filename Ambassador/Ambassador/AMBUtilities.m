@@ -90,16 +90,21 @@
     }
 }
 
-- (void)rotateLoadingView:(UIInterfaceOrientation)orientation {
-    CGRect screenFrame = [[UIScreen mainScreen] bounds];
+- (void)rotateLoadingView:(UIView *)view widthOffset:(CGFloat)widthOffset {
+    CGRect parentFrame = view.frame;
+    CGFloat width = parentFrame.size.width;
+    CGFloat height = parentFrame.size.height;
     
-    CGFloat newWidth = screenFrame.size.height;
-    CGFloat newHeight = screenFrame.size.width;
-    
-    if (UIInterfaceOrientationIsLandscape(orientation) && newWidth < newHeight) {
-        return;
+    CGFloat newWidth, newHeight;
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    if (UIDeviceOrientationIsLandscape(orientation)) {
+        newWidth = MAX(width, height) + widthOffset;
+        newHeight = MIN(width, height);
+    } else {
+        newWidth = MIN(width, height) + widthOffset;
+        newHeight = MAX(width, height);
     }
-    
+        
     CGRect newSpinnerFrame;
     if (newWidth <= newHeight) {
         newSpinnerFrame = CGRectMake(newWidth/2 - 50, newHeight - (newHeight * .75), 100, 100);

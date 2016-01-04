@@ -80,7 +80,20 @@ BOOL keyboardShowing = NO;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [[AMBUtilities sharedInstance] rotateLoadingView:toInterfaceOrientation];
+    
+    CGFloat width = self.view.frame.size.width;
+    CGFloat height = self.view.frame.size.height;
+    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    CGFloat statusBarHeight = 20;
+    
+    CGFloat offset;
+    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation) && width < height) {
+        offset = navigationBarHeight + statusBarHeight;
+    } else if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+        offset = navigationBarHeight;
+    }
+    
+    [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
