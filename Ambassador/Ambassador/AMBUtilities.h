@@ -41,6 +41,7 @@
 - (void)showLoadingScreenForView:(UIView*)view;
 - (void)hideLoadingView;
 - (void)rotateLoadingView:(UIView*)view widthOffset:(CGFloat)widthOffset;
++ (CGFloat)getOffsetForRotation:(UIViewController*) viewController toOrientation:(UIInterfaceOrientation)toOrientation;
 - (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue;
 - (NSObject*)getCacheValueWithKey:(NSString*)key;
 - (void)removeCacheForKey:(NSString*)keyValue;

@@ -119,6 +119,23 @@
     [self.blurView setFrame:newParentFrame];
 }
 
++ (CGFloat)getOffsetForRotation:(UIViewController *)viewController toOrientation:(UIInterfaceOrientation)toOrientation {
+    
+    CGFloat width = viewController.view.frame.size.width;
+    CGFloat height = viewController.view.frame.size.height;
+    CGFloat navigationBarHeight = viewController.navigationController.navigationBar.frame.size.height;
+    CGFloat statusBarHeight = 20;
+    
+    CGFloat offset;
+    if (UIInterfaceOrientationIsLandscape(toOrientation) && width < height) {
+        offset = navigationBarHeight + statusBarHeight;
+    } else if (UIInterfaceOrientationIsPortrait(toOrientation)) {
+        offset = navigationBarHeight;
+    }
+    
+    return offset;
+}
+
 - (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue {
     if (!self.cache) { self.cache = [[NSCache alloc] init]; }
     
