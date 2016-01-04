@@ -483,6 +483,8 @@ BOOL keyboardShowing = NO;
 
 - (void)pullToRefresh {
     [[AMBContactLoader sharedInstance] forceReloadContacts];
+    [self.selected removeAllObjects];
+    [self updateButton];
     [self.refreshControl endRefreshing];
 }
 
