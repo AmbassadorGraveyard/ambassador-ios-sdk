@@ -73,6 +73,14 @@ NSString * const TITLE = @"Authorize LinkedIn";
     return YES;
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    if (!webView.isLoading)
+    {
+        [[AMBUtilities sharedInstance] hideLoadingView];
+    }
+}
+
 - (void)getRequestTokenWithKey:(NSString *)key
 {
     NSURL *url = [NSURL URLWithString:AMB_LKDN_REQUEST_OAUTH_TOKEN_URL];
