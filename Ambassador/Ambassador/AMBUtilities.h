@@ -40,6 +40,7 @@
 - (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController shouldDismissVCImmediately:(BOOL)shouldDismiss;
 - (void)showLoadingScreenForView:(UIView*)view;
 - (void)hideLoadingView;
+- (void)rotateLoadingView;
 - (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue;
 - (NSObject*)getCacheValueWithKey:(NSString*)key;
 - (void)removeCacheForKey:(NSString*)keyValue;

@@ -90,6 +90,10 @@
     }
 }
 
+- (void)rotateLoadingView {
+    
+}
+
 - (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue {
     if (!self.cache) { self.cache = [[NSCache alloc] init]; }
     
