@@ -31,7 +31,6 @@
         _sharedInstance.emailAddresses = [[NSMutableArray alloc] init];
         _sharedInstance.phoneNumbers = [[NSMutableArray alloc] init];
         _sharedInstance.purgeTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 * 5 target:self selector:@selector(emptyOutArrays) userInfo:nil repeats:YES];
-        [_sharedInstance loadContacts];
     });
     
     return _sharedInstance;
