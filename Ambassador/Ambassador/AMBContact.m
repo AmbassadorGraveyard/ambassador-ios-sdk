@@ -30,13 +30,16 @@
     NSString *lastName = (__bridge NSString*)ABRecordCopyValue(recordRef, kABPersonLastNameProperty);
     lastName = (![lastName isEqualToString:@"(null)"] && lastName) ? lastName : @"";
     
-    self.phoneContacts = [self getPhoneNumbers:recordRef withFirstName:firstName lastName:lastName];
-    self.emailContacts = [self getEmailAddresses:recordRef withFirstName:firstName lastName:lastName];
+    NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(recordRef);
+    UIImage *contactImage = [UIImage imageWithData:imgData];
+    
+    self.phoneContacts = [self getPhoneNumbers:recordRef withFirstName:firstName lastName:lastName contactImage:contactImage];
+    self.emailContacts = [self getEmailAddresses:recordRef withFirstName:firstName lastName:lastName contactImage:contactImage];
     
     return self;
 }
 
-- (NSMutableArray*)getPhoneNumbers:(ABRecordRef)recordRef withFirstName:(NSString*)firstName lastName:(NSString*)lastName {
+- (NSMutableArray*)getPhoneNumbers:(ABRecordRef)recordRef withFirstName:(NSString*)firstName lastName:(NSString*)lastName contactImage:(UIImage*)image {
     ABMultiValueRef phoneNumbers = ABRecordCopyValue(recordRef, kABPersonPhoneProperty);
     NSMutableArray *returnArray = [[NSMutableArray alloc] init];
     
@@ -49,13 +52,15 @@
         phoneContact.lastName = lastName;
         phoneContact.label = (phoneLabel) ? [phoneLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]] : @"Other";
         phoneContact.value = number;
+        phoneContact.contactImage = image;
+        
         [returnArray addObject:phoneContact];
     }
     
     return returnArray;
 }
 
-- (NSMutableArray*)getEmailAddresses:(ABRecordRef)recordRef withFirstName:(NSString*)firstName lastName:(NSString*)lastName  {
+- (NSMutableArray*)getEmailAddresses:(ABRecordRef)recordRef withFirstName:(NSString*)firstName lastName:(NSString*)lastName contactImage:(UIImage*)image  {
     ABMultiValueRef emailAddresses = ABRecordCopyValue(recordRef, kABPersonEmailProperty);
     NSMutableArray *returnArray = [[NSMutableArray alloc] init];
     
@@ -68,6 +73,8 @@
         emailContact.lastName = lastName;
         emailContact.label = (emailLabel) ? [emailLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]] : @"Other";
         emailContact.value = address;
+        emailContact.contactImage = image;
+        
         [returnArray addObject:emailContact];
     }
     
