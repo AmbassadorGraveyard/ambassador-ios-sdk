@@ -35,6 +35,10 @@ NSString * const TITLE = @"Authorize LinkedIn";
 //    self.navigationItem. = blankBackButton;
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [[AMBUtilities sharedInstance] rotateLoadingView];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

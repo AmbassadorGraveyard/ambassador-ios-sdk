@@ -87,6 +87,7 @@ int contactServiceType;
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self.collectionView reloadData];
+    [[AMBUtilities sharedInstance] rotateLoadingView];
 }
 
 
