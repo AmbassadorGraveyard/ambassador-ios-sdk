@@ -172,6 +172,8 @@
 		DBEB6FFE1BA9B2D8005EE0D0 /* sms.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FEF1BA9B2D8005EE0D0 /* sms.png */; };
 		DBEB6FFF1BA9B2D8005EE0D0 /* successIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FF01BA9B2D8005EE0D0 /* successIcon.png */; };
 		DBEB70001BA9B2D8005EE0D0 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */; };
+		EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */; };
+		EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */; };
 		EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */; };
 		EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */; };
 		EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */; };
@@ -449,6 +451,8 @@
 		DBEB6FEF1BA9B2D8005EE0D0 /* sms.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sms.png; sourceTree = "<group>"; };
 		DBEB6FF01BA9B2D8005EE0D0 /* successIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = successIcon.png; sourceTree = "<group>"; };
 		DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
+		EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContactCard.h; sourceTree = "<group>"; };
+		EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCard.m; sourceTree = "<group>"; };
 		EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValuesUnitTests.m; sourceTree = "<group>"; };
 		EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBBulkShareHelperUnitTests.m; sourceTree = "<group>"; };
 		EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManagerUnitTests.m; sourceTree = "<group>"; };
@@ -658,6 +662,8 @@
 				EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */,
 				EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */,
 				EFDFA0D11BE157D2002FA3ED /* Ambassador-Prefix.pch */,
+				EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */,
+				EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */,
 			);
 			path = Ambassador;
 			sourceTree = "<group>";
@@ -887,6 +893,7 @@
 				DBA3FC081BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h in Headers */,
 				DBA3FC041BA8AA1D00672D82 /* AMBPTBlockEventListener.h in Headers */,
 				DBA3FBCD1BA8A9C000672D82 /* AMBFMDatabase.h in Headers */,
+				EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */,
 				DB6A24711BD04E3900CE3230 /* AMBPusherManager.h in Headers */,
 				DBA3FC071BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h in Headers */,
 				DBA3FC201BA8AA1D00672D82 /* AMBPTPusherMockConnection.h in Headers */,
@@ -1222,6 +1229,7 @@
 				DBA3FC0E1BA8AA1D00672D82 /* AMBPTPusher.m in Sources */,
 				DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */,
 				EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */,
+				EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */,
 				DBA3FB7E1BA8A23C00672D82 /* AMBContactSelector.m in Sources */,
 				DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */,
 				DBA3FC121BA8AA1D00672D82 /* AMBPTPusherAPI.m in Sources */,
