@@ -1258,6 +1258,7 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="4Q1-Lr-uYc"/>
                                 <exclude reference="iSb-CX-ErF"/>
                                 <exclude reference="zKm-Ky-Yk1"/>
                             </mask>
@@ -1270,6 +1271,7 @@
                         <outlet property="ivContactPhoto" destination="Rs9-1X-D2a" id="43P-vF-R3S"/>
                         <outlet property="lblFullName" destination="HW2-mz-YX0" id="aZg-x5-6QT"/>
                         <outlet property="masterView" destination="q0I-c4-lNA" id="176-ox-ncg"/>
+                        <outlet property="masterViewHeight" destination="laa-qt-MNn" id="7vL-oG-aMh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kfr-S0-y36" userLabel="First Responder" sceneMemberID="firstResponder"/>
