@@ -28,15 +28,17 @@
     self.checkmarkView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableCheckMarkColor];
     self.checkmarkConstraint.constant = (selected) ? 16 : -(self.checkmarkView.frame.size.width);
     
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressTriggeredForContact:)];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressTriggered:)];
     [self addGestureRecognizer:longPress];
 }
 
 
 #pragma mark - Helper Functions
 
-- (void)longPressTriggered {
-    [self.delegate longPressTriggeredForContact:self.contact];
+- (void)longPressTriggered:(UILongPressGestureRecognizer*)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [self.delegate longPressTriggeredForContact:self.contact];
+    }
 }
 
 
