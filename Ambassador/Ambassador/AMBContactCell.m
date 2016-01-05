@@ -24,6 +24,8 @@
     self.value.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableInfoTextFont];
     
     self.contactPhoto.image = contact.contactImage;
+    self.contactPhoto.layer.cornerRadius = self.contactPhoto.frame.size.height/2;
+    self.contactPhoto.layer.masksToBounds = YES;
     self.checkmarkView.image = [AMBValues imageFromBundleWithName:@"check" type:@"png" tintable:YES];
     self.checkmarkView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableCheckMarkColor];
     self.checkmarkConstraint.constant = (selected) ? 16 : -(self.checkmarkView.frame.size.width);

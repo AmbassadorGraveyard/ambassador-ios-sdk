@@ -823,7 +823,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFY-Fk-jda">
-                                                            <rect key="frame" x="60" y="30" width="498" height="21"/>
+                                                            <rect key="frame" x="66" y="30" width="492" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -836,18 +836,19 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nKa-Zo-lVt">
-                                                            <rect key="frame" x="60" y="8" width="498" height="21"/>
+                                                            <rect key="frame" x="66" y="8" width="492" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="het-Ak-Kay">
-                                                            <rect key="frame" x="8" y="8" width="44" height="44"/>
+                                                            <rect key="frame" x="12" y="8" width="44" height="44"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="het-Ak-Kay" secondAttribute="height" multiplier="1:1" id="dNK-Y6-ElA"/>
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="UFY-Fk-jda" firstAttribute="leading" secondItem="5Ap-fV-JNz" secondAttribute="leadingMargin" constant="8" id="0mX-Pc-Yzt"/>
                                                         <constraint firstItem="LTS-mD-3ev" firstAttribute="leading" secondItem="UFY-Fk-jda" secondAttribute="trailing" constant="8" id="1yX-HF-hDL"/>
@@ -855,12 +856,12 @@
                                                         <constraint firstAttribute="centerY" secondItem="LTS-mD-3ev" secondAttribute="centerY" constant="-0.5" id="Ebq-kb-haV"/>
                                                         <constraint firstItem="nKa-Zo-lVt" firstAttribute="top" secondItem="5Ap-fV-JNz" secondAttribute="topMargin" id="F9w-Jv-qQL"/>
                                                         <constraint firstItem="UFY-Fk-jda" firstAttribute="top" secondItem="nKa-Zo-lVt" secondAttribute="bottom" constant="1" id="Tc5-Gv-ddb"/>
-                                                        <constraint firstItem="nKa-Zo-lVt" firstAttribute="leading" secondItem="het-Ak-Kay" secondAttribute="trailing" constant="8" id="UH9-eu-ah3"/>
+                                                        <constraint firstItem="nKa-Zo-lVt" firstAttribute="leading" secondItem="het-Ak-Kay" secondAttribute="trailing" constant="10" id="UH9-eu-ah3"/>
                                                         <constraint firstAttribute="bottom" secondItem="het-Ak-Kay" secondAttribute="bottom" constant="8" id="cMc-iF-Ph4"/>
-                                                        <constraint firstItem="UFY-Fk-jda" firstAttribute="leading" secondItem="het-Ak-Kay" secondAttribute="trailing" constant="8" id="n2l-51-aDY"/>
+                                                        <constraint firstItem="UFY-Fk-jda" firstAttribute="leading" secondItem="het-Ak-Kay" secondAttribute="trailing" constant="10" id="n2l-51-aDY"/>
                                                         <constraint firstItem="LTS-mD-3ev" firstAttribute="trailing" secondItem="5Ap-fV-JNz" secondAttribute="trailingMargin" constant="-8" id="oef-ue-Do5"/>
                                                         <constraint firstItem="nKa-Zo-lVt" firstAttribute="leading" secondItem="5Ap-fV-JNz" secondAttribute="leadingMargin" constant="8" id="pZI-RV-bQQ"/>
-                                                        <constraint firstItem="het-Ak-Kay" firstAttribute="leading" secondItem="5Ap-fV-JNz" secondAttribute="leading" constant="8" id="qPM-Tf-qP5"/>
+                                                        <constraint firstItem="het-Ak-Kay" firstAttribute="leading" secondItem="5Ap-fV-JNz" secondAttribute="leading" constant="12" id="qPM-Tf-qP5"/>
                                                         <constraint firstItem="UFY-Fk-jda" firstAttribute="bottom" secondItem="5Ap-fV-JNz" secondAttribute="bottomMargin" id="rmi-iK-Rii"/>
                                                         <constraint firstItem="LTS-mD-3ev" firstAttribute="leading" secondItem="nKa-Zo-lVt" secondAttribute="trailing" constant="8" id="wYP-Ew-jyX"/>
                                                         <constraint firstItem="het-Ak-Kay" firstAttribute="top" secondItem="5Ap-fV-JNz" secondAttribute="top" constant="8" id="zX0-jK-tsb"/>
