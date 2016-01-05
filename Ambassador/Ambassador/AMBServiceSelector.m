@@ -128,7 +128,9 @@ int contactServiceType;
 }
 
 - (void)setUpTheme {
-    // Sets messages
+    // Set images programmatically
+    [self.btnCopy setImage:[AMBValues imageFromBundleWithName:@"clipboard" type:@"png" tintable:NO] forState:UIControlStateNormal];
+    
     // Sets labels and navbarTitle based on plist
     self.titleLabel.text = self.prefs.titleLabelText;
     self.descriptionLabel.text = self.prefs.descriptionLabelText;

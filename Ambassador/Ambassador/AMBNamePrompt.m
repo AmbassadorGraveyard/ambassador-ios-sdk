@@ -77,6 +77,7 @@ CGFloat originalTopConstraintValue;
     self.continueButton.layer.cornerRadius = self.continueButton.frame.size.height/2;
     self.firstNameField.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     self.lastNameField.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    [self.btnClose setImage:[AMBValues imageFromBundleWithName:@"close" type:@"png" tintable:NO] forState:UIControlStateNormal];
     self.lblError.alpha = 0;
 }
 
