@@ -21,7 +21,7 @@
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                 AMBSelectedCellDelegate, UITextFieldDelegate,
                                 UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate,
-                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate>
+                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate, AMBContactCellDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UITableView *contactsTable;
@@ -234,6 +234,7 @@ BOOL keyboardShowing = NO;
         AMBContact *contact = self.activeSearch ? self.filteredData[indexPath.row] : self.data[indexPath.row];
         AMBContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell"];
         [cell setUpCellWithContact:contact isSelected:[self.selected containsObject:contact]];
+        cell.delegate = self;
         
         return cell;
     } else {
@@ -555,6 +556,13 @@ BOOL keyboardShowing = NO;
         [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Sharing requires access to your contact book. You can enable this in your settings." withUniqueID:@"contactError" forViewController:self shouldDismissVCImmediately:NO];
         [AMBUtilities sharedInstance].delegate = self;
     }];
+}
+
+
+#pragma mark - AMBContactCell Delegate
+
+- (void)longPressTriggeredForContact:(AMBContact *)contact {
+    DLog(@"Long Press triggered for - %@", [contact fullName]);
 }
 
 
