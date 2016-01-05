@@ -16,6 +16,7 @@
 @property (nonatomic, strong) IBOutlet UITableView * infoTableView;
 @property (nonatomic, strong) IBOutlet UIButton * btnClose;
 @property (nonatomic, strong) IBOutlet UIView * buttonBackgroundView;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * masterViewHeight;
 
 @property (nonatomic, strong) NSMutableArray * valueArray;
 
@@ -23,6 +24,7 @@
 
 @implementation AMBContactCard
 
+CGFloat const ROW_HEIGHT = 35;
 
 #pragma mark - LifeCycle
 
@@ -31,6 +33,10 @@
     [self.valueArray addObjectsFromArray:self.contact.fullContact.phoneContacts];
     [self.valueArray addObjectsFromArray:self.contact.fullContact.emailContacts];
     [self setUpCard];
+}
+
+- (void)viewDidLayoutSubviews {
+    self.masterViewHeight.constant = self.ivContactPhoto.frame.size.height + self.lblFullName.frame.size.height + ([self.valueArray count] * ROW_HEIGHT) + 10;
 }
 
 
@@ -48,7 +54,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 35;
+    return ROW_HEIGHT;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
