@@ -24,6 +24,7 @@
     self.value.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableInfoTextFont];
     
     self.contactPhoto.image = contact.contactImage;
+    self.contactPhoto.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     self.contactPhoto.layer.cornerRadius = self.contactPhoto.frame.size.height/2;
     self.contactPhoto.layer.masksToBounds = YES;
     self.checkmarkView.image = [AMBValues imageFromBundleWithName:@"check" type:@"png" tintable:YES];
