@@ -11,24 +11,36 @@
 
 @implementation AMBContactCell
 
+
+#pragma mark - Setup Functionality
+
 - (void)setUpCellWithContact:(AMBContact*)contact isSelected:(BOOL)selected {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.contact = contact;
+    
     self.name.text = [contact fullName];
     self.name.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableNameTextFont];
-    
     self.value.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
     self.value.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableInfoTextFont];
     
     self.contactPhoto.image = contact.contactImage;
     self.checkmarkView.image = [AMBValues imageFromBundleWithName:@"check" type:@"png" tintable:YES];
     self.checkmarkView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableCheckMarkColor];
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.checkmarkConstraint.constant = (selected) ? 16 : -(self.checkmarkView.frame.size.width);
     
-    if (selected) {
-        self.checkmarkConstraint.constant = 16;
-    } else {
-        self.checkmarkConstraint.constant = -self.checkmarkView.frame.size.width;
-    }
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressTriggeredForContact:)];
+    [self addGestureRecognizer:longPress];
 }
+
+
+#pragma mark - Helper Functions
+
+- (void)longPressTriggered {
+    [self.delegate longPressTriggeredForContact:self.contact];
+}
+
+
+#pragma mark - UI Functions
 
 - (void)animateCheckmarkIn {
     self.checkmarkConstraint.constant = 16;
