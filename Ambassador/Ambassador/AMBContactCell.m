@@ -14,8 +14,11 @@
 - (void)setUpCellWithContact:(AMBContact*)contact isSelected:(BOOL)selected {
     self.name.text = [contact fullName];
     self.name.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableNameTextFont];
+    
     self.value.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
     self.value.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableInfoTextFont];
+    
+    self.contactPhoto.image = contact.contactImage;
     self.checkmarkView.image = [AMBValues imageFromBundleWithName:@"check" type:@"png" tintable:YES];
     self.checkmarkView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableCheckMarkColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
