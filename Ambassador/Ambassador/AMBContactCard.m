@@ -18,6 +18,7 @@
 @property (nonatomic, strong) IBOutlet UIView * buttonBackgroundView;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * masterViewHeight;
 
+@property (nonatomic, strong) UIView * fadeView;
 @property (nonatomic, strong) NSMutableArray * valueArray;
 
 @end
@@ -26,6 +27,7 @@
 
 CGFloat const ROW_HEIGHT = 35;
 
+
 #pragma mark - LifeCycle
 
 - (void)viewDidLoad {
@@ -33,6 +35,25 @@ CGFloat const ROW_HEIGHT = 35;
     [self.valueArray addObjectsFromArray:self.contact.fullContact.phoneContacts];
     [self.valueArray addObjectsFromArray:self.contact.fullContact.emailContacts];
     [self setUpCard];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.fadeView = [[UIView alloc] initWithFrame:self.presentingViewController.view.frame];
+    self.fadeView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.77];
+    self.fadeView.alpha = 0;
+    [self.presentingViewController.view addSubview:self.fadeView];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.fadeView.alpha = 1;
+    }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [UIView animateWithDuration:0.2 animations:^{
+        self.fadeView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.fadeView removeFromSuperview];
+    }];
 }
 
 - (void)viewDidLayoutSubviews {
