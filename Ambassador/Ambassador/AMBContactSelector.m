@@ -17,6 +17,7 @@
 #import "AMBBulkShareHelper.h"
 #import "AMBOptions.h"
 #import "AMBContactLoader.h"
+#import "AMBContactCard.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                 AMBSelectedCellDelegate, UITextFieldDelegate,
@@ -47,6 +48,7 @@
 @property (nonatomic, strong) AMBContactLoader *contactLoader;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) UIView * fadeView;
+@property (nonatomic, strong) AMBContact * selectedContact;
 @property (nonatomic) BOOL activeSearch;
 @property (nonatomic) BOOL isEditing;
 
@@ -56,6 +58,7 @@
 @implementation AMBContactSelector
 
 NSString * const NAME_PROMPT_SEGUE_IDENTIFIER = @"goToNamePrompt";
+NSString * const CONTACT_CARD_SEGUE_IDENTIFIER = @"contactCardSegue";
 float originalSendButtonHeight;
 BOOL keyboardShowing = NO;
 
@@ -496,6 +499,9 @@ BOOL keyboardShowing = NO;
     if ([segue.identifier isEqualToString:NAME_PROMPT_SEGUE_IDENTIFIER]) {
         AMBNamePrompt *vc = (AMBNamePrompt*)segue.destinationViewController;
         vc.delegate = self;
+    } else if ([segue.identifier isEqualToString:CONTACT_CARD_SEGUE_IDENTIFIER]) {
+        AMBContactCard *contactCardVC = (AMBContactCard*)segue.destinationViewController;
+        contactCardVC.contact = self.selectedContact;
     }
 }
 
@@ -562,7 +568,8 @@ BOOL keyboardShowing = NO;
 #pragma mark - AMBContactCell Delegate
 
 - (void)longPressTriggeredForContact:(AMBContact *)contact {
-    DLog(@"Long Press triggered for - %@", [contact fullName]);
+    self.selectedContact = contact;
+    [self performSegueWithIdentifier:CONTACT_CARD_SEGUE_IDENTIFIER sender:self];
 }
 
 

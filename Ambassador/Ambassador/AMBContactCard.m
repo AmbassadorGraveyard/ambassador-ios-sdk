@@ -11,7 +11,8 @@
 @interface AMBContactCard ()
 
 @property (nonatomic, strong) IBOutlet UIView * masterView;
-@property (nonatomic, strong) IBOutlet UIImageView * ivContactPhone;
+@property (nonatomic, strong) IBOutlet UIImageView * ivContactPhoto;
+@property (nonatomic, strong) IBOutlet UILabel * lblFullName;
 @property (nonatomic, strong) IBOutlet UITableView * infoTableView;
 
 @end
@@ -22,13 +23,15 @@
 #pragma mark - LifeCycle
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self setUpCard];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+#pragma mark - UI Functions
+
+- (void)setUpCard {
+    self.ivContactPhoto.image = self.contact.contactImage;
+    self.lblFullName.text = [self.contact fullName];
 }
 
 @end
