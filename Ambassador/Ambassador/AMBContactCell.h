@@ -14,6 +14,7 @@
 @property (nonatomic, weak) IBOutlet UILabel * name;
 @property (nonatomic, weak) IBOutlet UILabel * value;
 @property (nonatomic, weak) IBOutlet UIImageView * checkmarkView;
+@property (nonatomic, weak) IBOutlet UIImageView * contactPhoto;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint * checkmarkConstraint;
 
 - (void)setUpCellWithContact:(AMBContact*)contact isSelected:(BOOL)selected;
