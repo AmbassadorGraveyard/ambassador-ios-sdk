@@ -8,9 +8,7 @@
 
 #import "AMBContact.h"
 
-
 @implementation AMBContact
-
 
 #pragma mark - Helper functions
 
@@ -53,6 +51,7 @@
         phoneContact.label = (phoneLabel) ? [phoneLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]] : @"Other";
         phoneContact.value = number;
         phoneContact.contactImage = image;
+        phoneContact.fullContact = self;
         
         [returnArray addObject:phoneContact];
     }
@@ -74,6 +73,7 @@
         emailContact.label = (emailLabel) ? [emailLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]] : @"Other";
         emailContact.value = address;
         emailContact.contactImage = image;
+        emailContact.fullContact = self;
         
         [returnArray addObject:emailContact];
     }

@@ -9,20 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 
-// AMBCONTACT
-@interface AMBContact : NSObject
-
-@property (nonatomic, strong) NSString * firstName;
-@property (nonatomic, strong) NSString * lastName;
-@property (nonatomic, strong) NSString * label;
-@property (nonatomic, strong) NSString * value;
-@property (nonatomic, strong) UIImage * contactImage;
-
-- (NSString *)fullName;
-
-@end
-
-
 // AMBFULLCONTACT
 @interface AMBFullContact : NSObject
 
@@ -32,3 +18,20 @@
 - (instancetype)initWithABPersonRef:(ABRecordRef)recordRef;
 
 @end
+
+
+// AMBCONTACT
+@interface AMBContact : NSObject
+
+@property (nonatomic, strong) NSString * firstName;
+@property (nonatomic, strong) NSString * lastName;
+@property (nonatomic, strong) NSString * label;
+@property (nonatomic, strong) NSString * value;
+@property (nonatomic, strong) UIImage * contactImage;
+@property (nonatomic, strong) AMBFullContact * fullContact;
+
+- (NSString *)fullName;
+
+@end
+
+
