@@ -84,6 +84,7 @@ CGFloat const ROW_HEIGHT = 35;
     cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
     cell.textLabel.textAlignment = NSTextAlignmentJustified;
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:15];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
