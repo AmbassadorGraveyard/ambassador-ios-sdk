@@ -14,6 +14,8 @@
 @property (nonatomic, strong) IBOutlet UIImageView * ivContactPhoto;
 @property (nonatomic, strong) IBOutlet UILabel * lblFullName;
 @property (nonatomic, strong) IBOutlet UITableView * infoTableView;
+@property (nonatomic, strong) IBOutlet UIButton * btnClose;
+@property (nonatomic, strong) IBOutlet UIView * buttonBackgroundView;
 
 @property (nonatomic, strong) NSMutableArray * valueArray;
 
@@ -32,14 +34,10 @@
 }
 
 
-#pragma mark - UI Functions
+#pragma mark - IBActions
 
-- (void)setUpCard {
-    self.ivContactPhoto.image = self.contact.contactImage;
-    self.lblFullName.text = [self.contact fullName];
-    self.infoTableView.backgroundColor = [UIColor clearColor];
-    self.infoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero]; // Removes empty cell from tableview
+- (IBAction)buttonCloseTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -61,6 +59,23 @@
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:15];
     
     return cell;
+}
+
+
+#pragma mark - UI Functions
+
+- (void)setUpCard {
+    self.ivContactPhoto.image = self.contact.contactImage;
+    self.lblFullName.text = [self.contact fullName];
+    self.infoTableView.backgroundColor = [UIColor whiteColor];
+    self.infoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero]; // Removes empty cell from tableview
+    
+    [self.btnClose setImage:[AMBValues imageFromBundleWithName:@"close" type:@"png" tintable:YES] forState:UIControlStateNormal];
+    self.btnClose.tintColor = [UIColor redColor];
+    self.buttonBackgroundView.layer.cornerRadius = self.buttonBackgroundView.frame.size.height/2;
+    self.buttonBackgroundView.layer.borderWidth = 2;
+    self.buttonBackgroundView.layer.borderColor = [UIColor redColor].CGColor;
 }
 
 @end
