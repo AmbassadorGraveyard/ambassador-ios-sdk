@@ -36,6 +36,8 @@
     self.value.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableInfoTextFont];
     
     self.avatarImage.hidden = (contact.contactImage) ? YES : NO;
+    if (!self.avatarImage.hidden) { self.avatarImage.image = [AMBValues imageFromBundleWithName:@"avatar" type:@"png" tintable:NO]; }
+    
     self.contactPhoto.image = contact.contactImage;
     self.contactPhoto.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     self.contactPhoto.layer.cornerRadius = self.contactPhoto.frame.size.height/2;

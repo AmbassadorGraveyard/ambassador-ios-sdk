@@ -847,7 +847,7 @@
                                                                 <constraint firstAttribute="width" secondItem="het-Ak-Kay" secondAttribute="height" multiplier="1:1" id="dNK-Y6-ElA"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="N4M-sW-IMi">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N4M-sW-IMi">
                                                             <rect key="frame" x="18" y="14" width="33" height="33"/>
                                                         </imageView>
                                                     </subviews>
@@ -1183,7 +1183,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="q0I-c4-lNA">
+                            <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="q0I-c4-lNA">
                                 <rect key="frame" x="30" y="105" width="540" height="391"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FirstName LastName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HW2-mz-YX0">
@@ -1204,7 +1204,7 @@
                                             <outlet property="delegate" destination="bRB-da-6hl" id="NA2-oo-yG1"/>
                                         </connections>
                                     </tableView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ambassadorLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Rs9-1X-D2a">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rs9-1X-D2a">
                                         <rect key="frame" x="0.0" y="0.0" width="540" height="270"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Rs9-1X-D2a" secondAttribute="height" multiplier="2:1" id="8dl-f3-JFV"/>
@@ -1216,6 +1216,12 @@
                                             </mask>
                                         </variation>
                                     </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CHL-n5-vV7">
+                                        <rect key="frame" x="169" y="44" width="203" height="203"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="CHL-n5-vV7" secondAttribute="height" multiplier="1:1" id="opk-Yh-kI5"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1223,6 +1229,8 @@
                                     <constraint firstItem="Rs9-1X-D2a" firstAttribute="leading" secondItem="q0I-c4-lNA" secondAttribute="leading" id="574-7V-Dot"/>
                                     <constraint firstItem="d2n-kS-gr9" firstAttribute="top" secondItem="HW2-mz-YX0" secondAttribute="bottom" id="9IY-Hf-MY5"/>
                                     <constraint firstItem="HW2-mz-YX0" firstAttribute="top" secondItem="Rs9-1X-D2a" secondAttribute="bottom" id="AAM-1F-50m"/>
+                                    <constraint firstItem="CHL-n5-vV7" firstAttribute="height" secondItem="Rs9-1X-D2a" secondAttribute="height" multiplier="0.75" id="CcJ-pL-icp"/>
+                                    <constraint firstItem="CHL-n5-vV7" firstAttribute="width" secondItem="Rs9-1X-D2a" secondAttribute="width" id="Fu9-2g-xDC"/>
                                     <constraint firstItem="HW2-mz-YX0" firstAttribute="centerX" secondItem="q0I-c4-lNA" secondAttribute="centerX" id="GM8-E5-GDH"/>
                                     <constraint firstItem="Rs9-1X-D2a" firstAttribute="top" secondItem="q0I-c4-lNA" secondAttribute="top" id="M0t-0j-NvW"/>
                                     <constraint firstAttribute="bottom" secondItem="d2n-kS-gr9" secondAttribute="bottom" id="TbD-Yz-aaN"/>
@@ -1230,10 +1238,13 @@
                                     <constraint firstAttribute="trailing" secondItem="HW2-mz-YX0" secondAttribute="trailing" id="c9v-Ij-p9u"/>
                                     <constraint firstAttribute="height" constant="391" id="laa-qt-MNn"/>
                                     <constraint firstItem="d2n-kS-gr9" firstAttribute="leading" secondItem="q0I-c4-lNA" secondAttribute="leading" id="nPH-6p-NRJ"/>
+                                    <constraint firstItem="CHL-n5-vV7" firstAttribute="centerY" secondItem="Rs9-1X-D2a" secondAttribute="centerY" constant="10" id="u8P-Sj-nax"/>
+                                    <constraint firstItem="CHL-n5-vV7" firstAttribute="centerX" secondItem="Rs9-1X-D2a" secondAttribute="centerX" id="y4S-Fh-JXG"/>
                                     <constraint firstAttribute="trailing" secondItem="d2n-kS-gr9" secondAttribute="trailing" id="yO9-xO-x3s"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="Fu9-2g-xDC"/>
                                         <exclude reference="GM8-E5-GDH"/>
                                     </mask>
                                 </variation>
@@ -1284,6 +1295,7 @@
                         <outlet property="btnClose" destination="XMG-R6-puY" id="9mh-Vo-0Pd"/>
                         <outlet property="buttonBackgroundView" destination="xbV-Ly-TAf" id="0Fu-gG-43G"/>
                         <outlet property="infoTableView" destination="d2n-kS-gr9" id="nQg-qJ-RGW"/>
+                        <outlet property="ivAvatarImage" destination="CHL-n5-vV7" id="BkW-rp-6KF"/>
                         <outlet property="ivContactPhoto" destination="Rs9-1X-D2a" id="43P-vF-R3S"/>
                         <outlet property="lblFullName" destination="HW2-mz-YX0" id="aZg-x5-6QT"/>
                         <outlet property="masterView" destination="q0I-c4-lNA" id="176-ox-ncg"/>
@@ -1584,8 +1596,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ambassadorLogo" width="224" height="42"/>
-        <image name="avatar" width="96" height="140"/>
         <image name="check" width="61" height="55"/>
         <image name="clipboard" width="43" height="55"/>
         <image name="close" width="44" height="43"/>
