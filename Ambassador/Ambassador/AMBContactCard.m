@@ -11,6 +11,7 @@
 
 @interface AMBContactCard () <UITableViewDataSource, UITableViewDelegate>
 
+// IBOutlets
 @property (nonatomic, strong) IBOutlet UIView * masterView;
 @property (nonatomic, strong) IBOutlet UIImageView * ivContactPhoto;
 @property (nonatomic, strong) IBOutlet UIImageView * ivAvatarImage;
@@ -20,6 +21,7 @@
 @property (nonatomic, strong) IBOutlet UIView * buttonBackgroundView;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * masterViewHeight;
 
+// Other properties
 @property (nonatomic, strong) UIView * fadeView;
 @property (nonatomic, strong) NSMutableArray * valueArray;
 
@@ -27,6 +29,7 @@
 
 @implementation AMBContactCard
 
+// Constants
 CGFloat const ROW_HEIGHT = 35;
 
 
@@ -34,12 +37,13 @@ CGFloat const ROW_HEIGHT = 35;
 
 - (void)viewDidLoad {
     self.valueArray = [[NSMutableArray alloc] init];
-    [self.valueArray addObjectsFromArray:self.contact.fullContact.phoneContacts];
-    [self.valueArray addObjectsFromArray:self.contact.fullContact.emailContacts];
+    [self.valueArray addObjectsFromArray:self.contact.fullContact.phoneContacts]; // Adds any phone numbers to the value array
+    [self.valueArray addObjectsFromArray:self.contact.fullContact.emailContacts]; // Adds any emails to the value array
     [self setUpCard];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    // Creates a darkenedView that is added to the contactSelector VC behind the cardView
     self.fadeView = [[UIView alloc] initWithFrame:self.presentingViewController.view.frame];
     self.fadeView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.77];
     self.fadeView.alpha = 0;
@@ -88,6 +92,8 @@ CGFloat const ROW_HEIGHT = 35;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     AMBContact *contact = self.valueArray[indexPath.row];
+    
+    // Sets up contact cell
     cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:15];
@@ -125,7 +131,10 @@ CGFloat const ROW_HEIGHT = 35;
 }
 
 - (void)resizeMasterView {
-    self.masterViewHeight.constant = self.ivContactPhoto.frame.size.height + self.lblFullName.frame.size.height + ([self.valueArray count] * ROW_HEIGHT) + 10;
+    // FUNCTIONALITY: Resizes the height of the masterView after we get the final height of the imageView and tableView
+    if([UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPad) {
+        self.masterViewHeight.constant = self.ivContactPhoto.frame.size.height + self.lblFullName.frame.size.height + ([self.valueArray count] * ROW_HEIGHT) + 10;
+    }
 }
 
 @end
