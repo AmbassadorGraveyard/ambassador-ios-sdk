@@ -9,6 +9,18 @@
 #import "AMBContactCell.h"
 #import "AMBThemeManager.h"
 
+@interface AMBContactCell()
+
+// IBOutlets
+@property (nonatomic, weak) IBOutlet UILabel * name;
+@property (nonatomic, weak) IBOutlet UILabel * value;
+@property (nonatomic, weak) IBOutlet UIImageView * checkmarkView;
+@property (nonatomic, weak) IBOutlet UIImageView * contactPhoto;
+@property (nonatomic, weak) IBOutlet UIImageView * avatarImage;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint * checkmarkConstraint;
+
+@end
+
 @implementation AMBContactCell
 
 
@@ -23,6 +35,7 @@
     self.value.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
     self.value.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableInfoTextFont];
     
+    self.avatarImage.hidden = (contact.contactImage) ? YES : NO;
     self.contactPhoto.image = contact.contactImage;
     self.contactPhoto.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     self.contactPhoto.layer.cornerRadius = self.contactPhoto.frame.size.height/2;

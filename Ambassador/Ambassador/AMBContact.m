@@ -29,7 +29,7 @@
     lastName = (![lastName isEqualToString:@"(null)"] && lastName) ? lastName : @"";
     
     NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(recordRef);
-    UIImage *contactImage = (imgData) ? [UIImage imageWithData:imgData] : [AMBValues imageFromBundleWithName:@"avatar" type:@"png" tintable:NO];
+    UIImage *contactImage = (imgData) ? [UIImage imageWithData:imgData] : nil;
     
     self.phoneContacts = [self getPhoneNumbers:recordRef withFirstName:firstName lastName:lastName contactImage:contactImage];
     self.emailContacts = [self getEmailAddresses:recordRef withFirstName:firstName lastName:lastName contactImage:contactImage];

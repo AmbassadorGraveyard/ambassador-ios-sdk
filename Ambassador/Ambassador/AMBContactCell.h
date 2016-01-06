@@ -18,13 +18,6 @@
 
 @interface AMBContactCell : UITableViewCell
 
-// IBOutlets
-@property (nonatomic, weak) IBOutlet UILabel * name;
-@property (nonatomic, weak) IBOutlet UILabel * value;
-@property (nonatomic, weak) IBOutlet UIImageView * checkmarkView;
-@property (nonatomic, weak) IBOutlet UIImageView * contactPhoto;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint * checkmarkConstraint;
-
 // Other properties
 @property (nonatomic, weak) AMBContact * contact;
 @property (nonatomic, weak) id <AMBContactCellDelegate> delegate;
