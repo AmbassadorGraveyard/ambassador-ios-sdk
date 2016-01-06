@@ -18,7 +18,6 @@
     self.value.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableInfoTextFont];
     self.checkmarkView.image = [AMBValues imageFromBundleWithName:@"check" type:@"png" tintable:YES];
     self.checkmarkView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableCheckMarkColor];
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (selected) {
         self.checkmarkConstraint.constant = 16;
