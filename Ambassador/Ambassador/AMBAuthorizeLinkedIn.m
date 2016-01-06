@@ -39,6 +39,12 @@ NSString * const TITLE = @"Authorize LinkedIn";
     [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
+    CGFloat offset = [AMBUtilities getOffsetForRotation:self toOrientation:toInterfaceOrientation];
+    [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
