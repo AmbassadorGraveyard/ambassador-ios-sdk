@@ -13,6 +13,7 @@
 + (UIColor*)twitterBlue;
 + (UIColor*)faceBookBlue;
 + (UIColor*)linkedInBlue;
++ (UIColor*)errorRed;
 + (UIColor *)colorFromHexString:(NSString *)hexString;
 
 @end
