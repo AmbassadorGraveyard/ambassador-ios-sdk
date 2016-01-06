@@ -126,7 +126,7 @@
     CGFloat navigationBarHeight = viewController.navigationController.navigationBar.frame.size.height;
     CGFloat statusBarHeight = 20;
     
-    CGFloat offset;
+    CGFloat offset = 0;
     if (UIInterfaceOrientationIsLandscape(toOrientation) && width < height) {
         offset = navigationBarHeight + statusBarHeight;
     } else if (UIInterfaceOrientationIsPortrait(toOrientation)) {
