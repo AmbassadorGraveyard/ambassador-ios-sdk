@@ -237,10 +237,6 @@ BOOL keyboardShowing = NO;
         AMBContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell"];
         [cell setUpCellWithContact:contact isSelected:[self.selected containsObject:contact]];
         
-        UIView *colorView = [[UIView alloc] init];
-        colorView.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:0.5];
-        cell.selectedBackgroundView = colorView;
-        
         return cell;
     } else {
         AMBContact *contact = [self.selected allObjects][indexPath.row];
