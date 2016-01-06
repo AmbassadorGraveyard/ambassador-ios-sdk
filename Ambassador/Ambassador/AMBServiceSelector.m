@@ -392,6 +392,20 @@ int contactServiceType;
     }
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+    AMBShareServiceCell *selectedCell = (AMBShareServiceCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.1 animations:^{
+        selectedCell.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:0.5];
+    }];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+    AMBShareServiceCell *selectedCell = (AMBShareServiceCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.3 animations:^{
+        selectedCell.backgroundColor = [UIColor whiteColor];
+    }];
+}
+
 
 #pragma mark - Linkedin delegate
 
