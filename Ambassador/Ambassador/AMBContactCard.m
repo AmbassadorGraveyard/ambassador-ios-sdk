@@ -7,11 +7,13 @@
 //
 
 #import "AMBContactCard.h"
+#import "AMBThemeManager.h"
 
 @interface AMBContactCard () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * masterView;
 @property (nonatomic, strong) IBOutlet UIImageView * ivContactPhoto;
+@property (nonatomic, strong) IBOutlet UIImageView * ivAvatarImage;
 @property (nonatomic, strong) IBOutlet UILabel * lblFullName;
 @property (nonatomic, strong) IBOutlet UITableView * infoTableView;
 @property (nonatomic, strong) IBOutlet UIButton * btnClose;
@@ -48,6 +50,7 @@ CGFloat const ROW_HEIGHT = 35;
     }];
 }
 
+
 - (void)viewWillDisappear:(BOOL)animated {
     [UIView animateWithDuration:0.2 animations:^{
         self.fadeView.alpha = 0;
@@ -82,7 +85,7 @@ CGFloat const ROW_HEIGHT = 35;
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     AMBContact *contact = self.valueArray[indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
-    cell.textLabel.textAlignment = NSTextAlignmentJustified;
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:15];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -93,17 +96,26 @@ CGFloat const ROW_HEIGHT = 35;
 #pragma mark - UI Functions
 
 - (void)setUpCard {
-    self.ivContactPhoto.image = self.contact.contactImage;
+    self.masterView.layer.cornerRadius = 5;
     self.lblFullName.text = [self.contact fullName];
+    
+    // Checks whether or not to show avatar image in case there is no contact photo
+    self.ivAvatarImage.hidden = (self.contact.contactImage) ? YES : NO;
+    if (!self.ivAvatarImage.hidden) { self.ivAvatarImage.image = [AMBValues imageFromBundleWithName:@"avatar" type:@"png" tintable:NO]; }
+    
+    // Sets the the contact photo and background color
+    self.ivContactPhoto.image = self.contact.contactImage;
+    self.ivContactPhoto.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    
     self.infoTableView.backgroundColor = [UIColor whiteColor];
     self.infoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero]; // Removes empty cell from tableview
     
     [self.btnClose setImage:[AMBValues imageFromBundleWithName:@"close" type:@"png" tintable:YES] forState:UIControlStateNormal];
-    self.btnClose.tintColor = [UIColor redColor];
+    self.btnClose.tintColor = [UIColor errorRed];
     self.buttonBackgroundView.layer.cornerRadius = self.buttonBackgroundView.frame.size.height/2;
     self.buttonBackgroundView.layer.borderWidth = 2;
-    self.buttonBackgroundView.layer.borderColor = [UIColor redColor].CGColor;
+    self.buttonBackgroundView.layer.borderColor = [UIColor errorRed].CGColor;
 }
 
 @end
