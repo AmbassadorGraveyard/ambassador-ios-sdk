@@ -12,6 +12,7 @@
 @implementation AMBContactCell
 
 - (void)setUpCellWithContact:(AMBContact*)contact isSelected:(BOOL)selected {
+    [self setCellSelectionColor];
     self.name.text = [contact fullName];
     self.name.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableNameTextFont];
     self.value.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
@@ -42,6 +43,12 @@
             [self layoutIfNeeded];
         }];
     } completion:nil];
+}
+
+- (void)setCellSelectionColor {
+    UIView *colorView = [[UIView alloc] init];
+    colorView.backgroundColor = [UIColor cellSelectionGray];
+    self.selectedBackgroundView = colorView;
 }
 
 @end
