@@ -50,7 +50,6 @@ CGFloat const ROW_HEIGHT = 35;
     }];
 }
 
-
 - (void)viewWillDisappear:(BOOL)animated {
     [UIView animateWithDuration:0.2 animations:^{
         self.fadeView.alpha = 0;
@@ -60,7 +59,12 @@ CGFloat const ROW_HEIGHT = 35;
 }
 
 - (void)viewDidLayoutSubviews {
-    self.masterViewHeight.constant = self.ivContactPhoto.frame.size.height + self.lblFullName.frame.size.height + ([self.valueArray count] * ROW_HEIGHT) + 10;
+    [self resizeMasterView];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    self.fadeView.frame = self.presentingViewController.view.frame;
+    [self resizeMasterView];
 }
 
 
@@ -87,6 +91,7 @@ CGFloat const ROW_HEIGHT = 35;
     cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:15];
+    cell.textLabel.minimumScaleFactor = 0.6;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
@@ -107,6 +112,7 @@ CGFloat const ROW_HEIGHT = 35;
     self.ivContactPhoto.image = self.contact.contactImage;
     self.ivContactPhoto.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
     
+    // Sets up tableView
     self.infoTableView.backgroundColor = [UIColor whiteColor];
     self.infoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.infoTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero]; // Removes empty cell from tableview
@@ -116,6 +122,10 @@ CGFloat const ROW_HEIGHT = 35;
     self.buttonBackgroundView.layer.cornerRadius = self.buttonBackgroundView.frame.size.height/2;
     self.buttonBackgroundView.layer.borderWidth = 2;
     self.buttonBackgroundView.layer.borderColor = [UIColor errorRed].CGColor;
+}
+
+- (void)resizeMasterView {
+    self.masterViewHeight.constant = self.ivContactPhoto.frame.size.height + self.lblFullName.frame.size.height + ([self.valueArray count] * ROW_HEIGHT) + 10;
 }
 
 @end
