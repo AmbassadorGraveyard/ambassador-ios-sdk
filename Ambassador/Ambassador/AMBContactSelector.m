@@ -253,6 +253,7 @@ BOOL keyboardShowing = NO;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contactsTable) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         AMBContact *contact = self.activeSearch ? self.filteredData[indexPath.row] : self.data[indexPath.row];
         AMBContactCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         
