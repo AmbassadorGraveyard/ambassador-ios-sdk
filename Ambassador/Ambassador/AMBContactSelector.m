@@ -454,10 +454,10 @@ BOOL keyboardShowing = NO;
 - (void)refreshContacts {
     switch (self.type) {
         case AMBSocialServiceTypeEmail:
-            self.data = [AMBContactLoader sharedInstance].emailAddresses;
+            self.data = [NSMutableArray arrayWithArray:[AMBContactLoader sharedInstance].emailAddresses];
             break;
         case AMBSocialServiceTypeSMS:
-            self.data = [AMBContactLoader sharedInstance].phoneNumbers;
+            self.data = [NSMutableArray arrayWithArray:[AMBContactLoader sharedInstance].phoneNumbers];
             break;
         default:
             break;
