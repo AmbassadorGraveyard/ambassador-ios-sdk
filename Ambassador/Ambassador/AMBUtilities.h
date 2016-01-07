@@ -46,11 +46,10 @@
 
 + (NSString*)createRequestID;
 + (BOOL)isSuccessfulStatusCode:(NSInteger)statusCode;
++ (NSDictionary*)dictionaryFromQueryString:(NSString*)queryString;
 
 @end
 
-
-NSMutableDictionary* AMBparseQueryString(NSString *string);
 UIColor* AMBColorFromRGB(float r, float g, float b);
 void AMBsimpleAlert(NSString *title, NSString *message, UIViewController *vc);
 NSString* AMBStringValFromDictionary(NSMutableDictionary *d, NSString *key);

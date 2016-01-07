@@ -122,24 +122,21 @@
         return NO;
     }
 }
-    
-@end
 
-NSMutableDictionary* AMBparseQueryString(NSString *string)
-{
-    string = [[string componentsSeparatedByString:@"?"] lastObject];
-    NSArray *variables = [string componentsSeparatedByString:@"&"];
++ (NSDictionary*)dictionaryFromQueryString:(NSString*)queryString {
+    queryString = [[queryString componentsSeparatedByString:@"?"] lastObject];
+    NSArray *variables = [queryString componentsSeparatedByString:@"&"];
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
-    
-    for (NSString *str in variables)
-    {
+
+    for (NSString *str in variables) {
         NSArray *pair = [str componentsSeparatedByString:@"="];
         [result setValue:[pair lastObject] forKey:[pair firstObject]];
     }
     
-    DLog(@"%@", result);
     return result;
 }
+    
+@end
 
 UIColor* AMBColorFromRGB(float r, float g, float b)
 {

@@ -82,7 +82,8 @@
 - (void)pusher:(AMBPTPusher *)pusher willAuthorizeChannel:(AMBPTPusherChannel *)channel withRequest:(NSMutableURLRequest *)request {
     AMBPusherAuthNetworkObject *pusherAuthObj = [[AMBPusherAuthNetworkObject alloc] init];
     request = [self modifyPusherAuthRequest:request authorization:self.universalToken];
-    NSMutableDictionary *httpBody = AMBparseQueryString([[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding]);
+
+    NSDictionary *httpBody = [AMBUtilities dictionaryFromQueryString:[[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding]];
     pusherAuthObj.auth_type = @"private";
     pusherAuthObj.socket_id = httpBody[@"socket_id"];
     pusherAuthObj.channel = channel.name;
