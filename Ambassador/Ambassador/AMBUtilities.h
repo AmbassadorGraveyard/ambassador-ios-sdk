@@ -6,9 +6,6 @@
 //  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
 //
 
-#ifndef iOS_Framework_Utilities_h
-#define iOS_Framework_Utilities_h
-
 #ifdef DEBUG
 #	define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else
@@ -50,9 +47,4 @@
 
 @end
 
-UIColor* AMBColorFromRGB(float r, float g, float b);
-void AMBsimpleAlert(NSString *title, NSString *message, UIViewController *vc);
-NSArray *AMBArrayFromDicstionary(NSMutableDictionary *d, NSString *key);
-NSString* AMBOptionalString(NSString *s);
 
-#endif
