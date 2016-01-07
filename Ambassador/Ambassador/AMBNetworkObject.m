@@ -170,7 +170,7 @@
     self.url = bodyDict[@"url"];
     self.urls = [[NSMutableArray alloc] init];
     
-    NSArray *urls = AMBArrayFromDicstionary(bodyDict, @"urls");
+    NSArray *urls = bodyDict[@"urls"];
     for (NSMutableDictionary *url in urls) {
         AMBUserUrlNetworkObject *urlObj = [[AMBUserUrlNetworkObject alloc] init];
         [urlObj fillWithDictionary:url];
