@@ -162,12 +162,12 @@
 
 - (void)fillWithDictionary:(NSMutableDictionary *)d {
     NSMutableDictionary *bodyDict = (d[@"body"]) ? d[@"body"] : d;
-    self.email = AMBStringValFromDictionary(bodyDict, @"email");
-    self.first_name = AMBStringValFromDictionary(bodyDict, @"first_name");
-    self.last_name = AMBStringValFromDictionary(bodyDict, @"last_name");
-    self.phone = AMBStringValFromDictionary(bodyDict, @"phone");
-    self.uid = AMBStringValFromDictionary(bodyDict, @"uid");
-    self.url = AMBStringValFromDictionary(bodyDict, @"url");
+    self.email = bodyDict[@"email"];
+    self.first_name = bodyDict[@"first_name"];
+    self.last_name = bodyDict[@"last_name"];
+    self.phone = bodyDict[@"phone"];
+    self.uid = bodyDict[@"uid"];
+    self.url = bodyDict[@"url"];
     self.urls = [[NSMutableArray alloc] init];
     
     NSArray *urls = AMBArrayFromDicstionary(bodyDict, @"urls");
