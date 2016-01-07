@@ -134,7 +134,7 @@ static AMBServiceSelector *raf;
 
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController {
     // Initialize root view controller
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
     UINavigationController *vc = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
     raf = (AMBServiceSelector *)vc.childViewControllers[0];
     raf.campaignID = ID;
