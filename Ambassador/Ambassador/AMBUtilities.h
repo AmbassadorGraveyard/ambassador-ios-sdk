@@ -52,7 +52,6 @@
 
 UIColor* AMBColorFromRGB(float r, float g, float b);
 void AMBsimpleAlert(NSString *title, NSString *message, UIViewController *vc);
-NSString* AMBStringValFromDictionary(NSMutableDictionary *d, NSString *key);
 NSArray *AMBArrayFromDicstionary(NSMutableDictionary *d, NSString *key);
 NSString* AMBOptionalString(NSString *s);
 

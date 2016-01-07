@@ -143,10 +143,6 @@ UIColor* AMBColorFromRGB(float r, float g, float b)
     return [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
 }
 
-NSString* AMBStringValFromDictionary(NSMutableDictionary *d, NSString *key) {
-    return (d[key] && d[key] != [NSNull null])? (NSString *)d[key] : @"";
-}
-
 NSArray *AMBArrayFromDicstionary(NSMutableDictionary *d, NSString *key) {
     return (d[key] && d[key] != [NSNull null])? (NSArray *)d[key] : @[];
 }
