@@ -153,6 +153,9 @@ int contactServiceType;
     self.descriptionLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFDescriptionTextColor];
     self.descriptionLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFDescriptionTextFont];
     [self applyImage];
+    
+    // Checks to see if the nav bar color is "light" or "dark" and sets the status bar text color accordingly
+    if ([AMBUtilities colorIsDark:[[AMBThemeManager sharedInstance] colorForKey:NavBarColor]]) { self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent; }
 }
 
 - (void)applyImage {
@@ -164,23 +167,23 @@ int contactServiceType;
     switch (slotNum) {
         case 1:
             self.imgSlot1.image = image;
-            self.imgSlotHeight1.constant = 50;
+            self.imgSlotHeight1.constant = 70;
             break;
         case 2:
             self.imgSlot2.image = image;
-            self.imgSlotHeight2.constant = 50;
+            self.imgSlotHeight2.constant = 70;
             break;
         case 3:
             self.imgSlot3.image = image;
-            self.imgSlotHeight3.constant = 50;
+            self.imgSlotHeight3.constant = 70;
             break;
         case 4:
             self.imgSlot4.image = image;
-            self.imgSlotHeight4.constant = 50;
+            self.imgSlotHeight4.constant = 70;
             break;
         case 5:
             self.imgSlot5.image = image;
-            self.imgSlotHeight5.constant = 50;
+            self.imgSlotHeight5.constant = 70;
             break;
         default:
             break;

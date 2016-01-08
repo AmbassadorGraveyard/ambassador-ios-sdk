@@ -47,6 +47,7 @@
 - (void)removeCacheForKey:(NSString*)keyValue;
 
 + (NSString*)createRequestID;
++ (BOOL)colorIsDark:(UIColor*)color;
 
 @end
 
