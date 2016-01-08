@@ -30,6 +30,7 @@
     fakeInstallConversion.mbsy_campaign = @260;
     fakeInstallConversion.mbsy_revenue = @200;
     fakeInstallConversion.mbsy_email = @"greg@getambassador.com";
+    fakeInstallConversion.mbsy_custom1 = @"installConversion";
     
     [AmbassadorSDK registerConversion:fakeInstallConversion restrictToInstall:YES completion:^(NSError *error) {
         if (error) {
