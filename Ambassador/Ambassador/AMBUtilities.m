@@ -166,7 +166,7 @@
     double redValue = components[0];
     CGFloat greenValue = components[1];
     CGFloat blueValue = components[2];
-    CGFloat darkness = 1 - (299 * redValue + 587 * greenValue + 114 * blueValue)/255;
+    CGFloat darkness = 1 - (299 * redValue + 587 * greenValue + 114 * blueValue)/1000;
 
     return (darkness < 0.5) ? NO : YES;
 }
