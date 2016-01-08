@@ -10,15 +10,19 @@
 #import <Ambassador/Ambassador.h>
 
 @interface ViewController ()
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UIButton *rafButton;
+
+@property (nonatomic, strong) IBOutlet UIView * loginView;
+@property (nonatomic, strong) IBOutlet UIButton * btnLogin;
+@property (nonatomic, strong) IBOutlet UIButton * btnDrawer;
+@property (nonatomic, strong) IBOutlet UITextField * tfUsername;
+@property (nonatomic, strong) IBOutlet UITextField * tfPassword;
 
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    [self setUpTheme];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,29 +30,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)showGenericRAF:(UIButton *)sender {
-    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:nil];
+- (void)setUpTheme {
+    // Login View
+    self.loginView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.loginView.layer.borderWidth = 1;
+    self.loginView.layer.cornerRadius = 4;
     
-    AMBConversionParameters *clickConversion = [[AMBConversionParameters alloc] init];
-    clickConversion.mbsy_campaign = @260;
-    clickConversion.mbsy_revenue = @200;
-    clickConversion.mbsy_email = @"corey@getambassador.com";
-    
-    [AmbassadorSDK registerConversion:clickConversion restrictToInstall:NO completion:^(NSError *error) {
-        if (error) {
-            NSLog(@"Conversion not registered - %@", error);
-        } else {
-            NSLog(@"BUTTON TAP CONVERSION REGISTERED SUCCESSFULLY!");
-        }
-    }];
-}
-
-- (IBAction)showThemedRAF:(id)sender {
-    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"AmbassadorTheme"];
-}
-
-- (IBAction)showNoThemedRAF:(id)sender {
-    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"doesntexist"];
+    // Login Button
+    self.btnLogin.layer.cornerRadius = 4;
 }
 
 @end
