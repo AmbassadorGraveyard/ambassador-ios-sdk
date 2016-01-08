@@ -23,16 +23,15 @@ static NSDictionary * valuesDic;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
         _sharedInsance = [[AMBThemeManager alloc] init];
-        valuesDic = [AMBThemeManager createDicFromPlist];
     });
     
     return _sharedInsance;
 }
 
-+ (NSDictionary*)createDicFromPlist {
+- (void)createDicFromPlist:(NSString*)plistName {
     NSBundle *bundle = ([NSBundle bundleWithIdentifier:@"AmbassadorBundle"]) ? [NSBundle bundleWithIdentifier:@"AmbassadorBundle"] : [NSBundle bundleForClass:[self class]]; // Returns correct bundle based on whether unit testing or not
-    NSString *plistPath = [bundle pathForResource:@"AmbassadorTheme" ofType:@"plist"];
-    return [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    NSString *plistPath = ([bundle pathForResource:plistName ofType:@"plist"]) ? [bundle pathForResource:plistName ofType:@"plist"] : [bundle pathForResource:@"GenericTheme" ofType:@"plist"];
+    valuesDic = [NSDictionary dictionaryWithContentsOfFile:plistPath];
 }
 
 
