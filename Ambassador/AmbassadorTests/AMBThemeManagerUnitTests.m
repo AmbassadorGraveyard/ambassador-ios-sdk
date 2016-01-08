@@ -20,6 +20,7 @@
 - (void)setUp {
     [super setUp];
     self.themeManager = [AMBThemeManager sharedInstance];
+    [self.themeManager createDicFromPlist:@"AmbassadorTheme"];
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
