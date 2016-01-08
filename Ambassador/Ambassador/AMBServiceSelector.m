@@ -44,6 +44,7 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight3;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight4;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight5;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * shortURLBackgroundHeight;
 @property (nonatomic, strong) IBOutlet UIButton * btnCopy;
 @property (nonatomic, strong) IBOutlet UIView * shortURLBackground;
 
@@ -153,6 +154,12 @@ int contactServiceType;
     self.descriptionLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFDescriptionTextColor];
     self.descriptionLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFDescriptionTextFont];
     [self applyImage];
+    
+    // Setup shareURL field
+    self.shortURLBackground.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldBackgroundColor];
+    self.lblURL.textColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldTextColor];
+    self.lblURL.font = [[AMBThemeManager sharedInstance] fontForKey:ShareFieldTextFont];
+    self.shortURLBackgroundHeight.constant = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldHeight] floatValue];
     
     // Checks to see if the nav bar color is "light" or "dark" and sets the status bar text color accordingly
     if ([AMBUtilities colorIsDark:[[AMBThemeManager sharedInstance] colorForKey:NavBarColor]]) { self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent; }
