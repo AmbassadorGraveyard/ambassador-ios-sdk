@@ -28,6 +28,8 @@
 	<string>#000000</string>
 	<key>ShareFieldTextFont</key>
 	<string>HelveticaNeue, 15</string>
+	<key>ShareFieldCornerRadius</key>
+	<integer>0</integer>
 	<key>RAF WELCOME LABEL ----------</key>
 	<string></string>
 	<key>RAFWelcomeTextMessage</key>

@@ -219,6 +219,9 @@ static NSDictionary * valuesDic;
         case ShareFieldHeight:
             return @"ShareFieldHeight";
             break;
+        case ShareFieldCornerRadius:
+            return @"ShareFieldCornerRadius";
+            break;
         default:
             break;
     }
