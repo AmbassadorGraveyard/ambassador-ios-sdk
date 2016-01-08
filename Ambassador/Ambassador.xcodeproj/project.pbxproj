@@ -193,6 +193,7 @@
 		EF7CA9D21BF3EAB7006EBD6A /* AMBContactTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7CA9D11BF3EAB7006EBD6A /* AMBContactTests.m */; };
 		EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */; };
 		EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */; };
+		EFBCBB3B1C4044300075D3DD /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EFBCBB3A1C4044300075D3DD /* GenericTheme.plist */; };
 		EFCBFDBB1BDA859E0052DFB7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
 		EFDFA0CA1BE148A5002FA3ED /* AMBValues.h in Headers */ = {isa = PBXBuildFile; fileRef = EFDFA0C81BE148A5002FA3ED /* AMBValues.h */; };
 		EFDFA0CB1BE148A5002FA3ED /* AMBValues.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDFA0C91BE148A5002FA3ED /* AMBValues.m */; };
@@ -473,6 +474,7 @@
 		EF7CA9D11BF3EAB7006EBD6A /* AMBContactTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactTests.m; sourceTree = "<group>"; };
 		EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBPusherChannelObject.h; path = fmdb/AMBPusherChannelObject.h; sourceTree = "<group>"; };
 		EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMBPusherChannelObject.m; path = fmdb/AMBPusherChannelObject.m; sourceTree = "<group>"; };
+		EFBCBB3A1C4044300075D3DD /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GenericTheme.plist; sourceTree = "<group>"; };
 		EFDFA0C81BE148A5002FA3ED /* AMBValues.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = AMBValues.h; sourceTree = "<group>"; };
 		EFDFA0C91BE148A5002FA3ED /* AMBValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValues.m; sourceTree = "<group>"; };
 		EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AMBColorValues.h"; sourceTree = "<group>"; };
@@ -709,6 +711,7 @@
 			isa = PBXGroup;
 			children = (
 				DBEB6FE11BA9AD04005EE0D0 /* Main.storyboard */,
+				EFBCBB3A1C4044300075D3DD /* GenericTheme.plist */,
 				DBEB6FE31BA9B2D8005EE0D0 /* blank.png */,
 				DBEB6FE41BA9B2D8005EE0D0 /* check.png */,
 				DBEB6FE51BA9B2D8005EE0D0 /* clipboard.png */,
@@ -1140,6 +1143,7 @@
 				DBEB6FFF1BA9B2D8005EE0D0 /* successIcon.png in Resources */,
 				EFF58FA01BF4F8F5001AB2DE /* AMBMedia.xcassets in Resources */,
 				EF407F211BB3449B0074D2AE /* AmbassadorTheme.plist in Resources */,
+				EFBCBB3B1C4044300075D3DD /* GenericTheme.plist in Resources */,
 				DBEB6FFD1BA9B2D8005EE0D0 /* search.png in Resources */,
 				DBEB6FF71BA9B2D8005EE0D0 /* facebook.png in Resources */,
 				DB844D5C1BA767FA003FD7A9 /* back.png in Resources */,

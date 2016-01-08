@@ -74,7 +74,7 @@
  @param viewController The view controller from which you would like to present the RAF.
  @param parameters An instance of ServiceSelectorpreferences with properties set to customize text properties of the RAF
  */
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController;
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist;
 
 
 @end
