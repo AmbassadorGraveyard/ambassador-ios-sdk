@@ -15,6 +15,8 @@
 
 static NSDictionary * valuesDic;
 
+#pragma mark - LifeCycle
+
 + (AMBThemeManager *)sharedInstance
 {
     static AMBThemeManager* _sharedInsance = nil;
@@ -23,8 +25,6 @@ static NSDictionary * valuesDic;
         _sharedInsance = [[AMBThemeManager alloc] init];
         valuesDic = [AMBThemeManager createDicFromPlist];
     });
-    
-    
     
     return _sharedInsance;
 }
@@ -35,25 +35,92 @@ static NSDictionary * valuesDic;
     return [NSDictionary dictionaryWithContentsOfFile:plistPath];
 }
 
+
+#pragma mark - Colors
+
 - (UIColor*)colorForKey:(AmbassadorColors)colorName {
-    if ([[valuesDic allKeys] containsObject:[AMBThemeManager colorEnumStringValue:colorName]] && ![[valuesDic valueForKey:[AMBThemeManager colorEnumStringValue:colorName]] isEqual: @""]) {
-        return ([AMBThemeManager colorFromHexString:[valuesDic valueForKey:[AMBThemeManager colorEnumStringValue:colorName]]]) ? [AMBThemeManager colorFromHexString:[valuesDic valueForKey:[AMBThemeManager colorEnumStringValue:colorName]]] : [UIColor whiteColor];
+    if ([self keyExists:[self colorEnumStringValue:colorName]]) {
+        return ([UIColor colorFromHexString:[valuesDic valueForKey:[self colorEnumStringValue:colorName]]]) ? [UIColor colorFromHexString:[valuesDic valueForKey:[self colorEnumStringValue:colorName]]] : [UIColor whiteColor];
     }
     
-    return [UIColor lightGrayColor];
+    return [UIColor whiteColor];
 }
 
+- (NSString*)colorEnumStringValue:(AmbassadorColors)enumValue {
+    switch (enumValue) {
+        case NavBarColor:
+            return @"NavBarColor";
+            break;
+        case NavBarTextColor:
+            return @"NavBarTextColor";
+            break;
+        case RAFBackgroundColor:
+            return @"RAFBackgroundColor";
+            break;
+        case RAFWelcomeTextColor:
+            return @"RAFWelcomeTextColor";
+            break;
+        case RAFDescriptionTextColor:
+            return @"RAFDescriptionTextColor";
+            break;
+        case ContactSendButtonBackgroundColor:
+            return @"ContactSendButtonBackgroundColor";
+            break;
+        case ContactSendButtonTextColor:
+            return @"ContactSendButtonTextColor";
+            break;
+        case ContactSearchBackgroundColor:
+            return @"ContactSearchBackgroundColor";
+            break;
+        case ContactSearchDoneButtonTextColor:
+            return @"ContactSearchDoneButtonTextColor";
+            break;
+        case ContactTableCheckMarkColor:
+            return @"ContactTableCheckMarkColor";
+            break;
+        default:
+            return @"Unavailable";
+            break;
+    }
+}
+
+
+#pragma mark - Messages
+
 - (NSString*)messageForKey:(AmbassadorMessages)messageName {
-    if ([[valuesDic allKeys] containsObject:[AMBThemeManager messageEnumStringValue:messageName]] && ![[valuesDic valueForKey:[AMBThemeManager messageEnumStringValue:messageName]] isEqualToString:@""]) {
-        return [valuesDic valueForKey:[AMBThemeManager messageEnumStringValue:messageName]];
+    if ([self keyExists:[self messageEnumStringValue:messageName]]) {
+        return [valuesDic valueForKey:[self messageEnumStringValue:messageName]];
     }
     
     return @"NO PLIST VALUE FOUND";
 }
 
+- (NSString*)messageEnumStringValue:(AmbassadorMessages)enumValue {
+    switch (enumValue) {
+        case NavBarTextMessage:
+            return @"NavBarTextMessage";
+            break;
+        case RAFWelcomeTextMessage:
+            return @"RAFWelcomeTextMessage";
+            break;
+        case RAFDescriptionTextMessage:
+            return @"RAFDescriptionTextMessage";
+            break;
+        case DefaultShareMessage:
+            return @"DefaultShareMessage";
+            break;
+        default:
+            return @"Unavailable";
+            break;
+    }
+}
+
+
+#pragma mark - Fonts
+
 - (UIFont*)fontForKey:(AmbassadorFonts)fontName {
-    if ([[valuesDic allKeys] containsObject:[AMBThemeManager fontEnumStringValue:fontName]] && ![[valuesDic valueForKey:[AMBThemeManager fontEnumStringValue:fontName]] isEqualToString:@""]) {
-        NSString *fontDescription = [valuesDic valueForKey:[AMBThemeManager fontEnumStringValue:fontName]];
+    if ([self keyExists:[self fontEnumStringValue:fontName]]) {
+        NSString *fontDescription = [valuesDic valueForKey:[self fontEnumStringValue:fontName]];
         NSArray *fontArray = [fontDescription componentsSeparatedByString:@","];
         
         NSString *fontName = fontArray[0];
@@ -71,14 +138,42 @@ static NSDictionary * valuesDic;
     return [UIFont systemFontOfSize:11];
 }
 
+- (NSString*)fontEnumStringValue:(AmbassadorFonts)enumValue {
+    switch (enumValue) {
+        case NavBarTextFont:
+            return @"NavBarTextFont";
+            break;
+        case RAFWelcomeTextFont:
+            return @"RAFWelcomeTextFont";
+            break;
+        case RAFDescriptionTextFont:
+            return @"RAFDescriptionTextFont";
+            break;
+        case ContactTableNameTextFont:
+            return @"ContactTableNameTextFont";
+            break;
+        case ContactTableInfoTextFont:
+            return @"ContactTableInfoTextFont";
+            break;
+        case ContactSendButtonTextFont:
+            return @"ContactSendButtonTextFont";
+            break;
+        default:
+            return @"Unavailable";
+            break;
+    }
+}
+
+
+#pragma mark - Images
+
 - (NSMutableDictionary*)imageForKey:(AmbassadorImages)imageName {
     NSMutableDictionary *returnDict = [[NSMutableDictionary alloc] init];
     [returnDict setValue:@"0" forKey:@"imageSlotNumber"];
     [returnDict setValue:[[UIImage alloc] init] forKey: @"image"];
     
-    if ([[valuesDic allKeys] containsObject:[AMBThemeManager imageEnumStringValue:imageName]] && ![[valuesDic valueForKey:[AMBThemeManager imageEnumStringValue:imageName]] isEqualToString:@""]) {
-        
-        NSString *imageDescription = [valuesDic valueForKey:[AMBThemeManager imageEnumStringValue:imageName]];
+    if ([self keyExists:[self imageEnumStringValue:imageName]]) {
+        NSString *imageDescription = [valuesDic valueForKey:[self imageEnumStringValue:imageName]];
         NSArray *imageDescArray = [imageDescription componentsSeparatedByString:@","];
         
         [returnDict setValue:[UIImage imageNamed:[imageDescArray objectAtIndex:0]] forKey:@"image"];
@@ -91,129 +186,40 @@ static NSDictionary * valuesDic;
     return returnDict;
 }
 
-+ (NSString*)colorEnumStringValue:(AmbassadorColors)enumValue {
-    switch (enumValue) {
-        case NavBarColor:
-            return @"NavBarColor";
-            break;
-    
-        case NavBarTextColor:
-            return @"NavBarTextColor";
-            break;
-            
-        case RAFBackgroundColor:
-            return @"RAFBackgroundColor";
-            break;
-            
-        case RAFWelcomeTextColor:
-            return @"RAFWelcomeTextColor";
-            break;
-            
-        case RAFDescriptionTextColor:
-            return @"RAFDescriptionTextColor";
-            break;
-            
-        case ContactSendButtonBackgroundColor:
-            return @"ContactSendButtonBackgroundColor";
-            break;
-            
-        case ContactSendButtonTextColor:
-            return @"ContactSendButtonTextColor";
-            break;
-            
-        case ContactSearchBackgroundColor:
-            return @"ContactSearchBackgroundColor";
-            break;
-            
-        case ContactSearchDoneButtonTextColor:
-            return @"ContactSearchDoneButtonTextColor";
-            break;
-            
-        case ContactTableCheckMarkColor:
-            return @"ContactTableCheckMarkColor";
-            break;
-
-        default:
-            return @"Unavailable";
-            break;
-    }
-}
-
-+ (NSString*)messageEnumStringValue:(AmbassadorMessages)enumValue {
-    switch (enumValue) {
-        case NavBarTextMessage:
-            return @"NavBarTextMessage";
-            break;
-            
-        case RAFWelcomeTextMessage:
-            return @"RAFWelcomeTextMessage";
-            break;
-            
-        case RAFDescriptionTextMessage:
-            return @"RAFDescriptionTextMessage";
-            break;
-            
-        case DefaultShareMessage:
-            return @"DefaultShareMessage";
-            break;
-            
-        default:
-            return @"Unavailable";
-            break;
-    }
-}
-
-+ (NSString*)fontEnumStringValue:(AmbassadorFonts)enumValue {
-    switch (enumValue) {
-        case NavBarTextFont:
-            return @"NavBarTextFont";
-            break;
-            
-        case RAFWelcomeTextFont:
-            return @"RAFWelcomeTextFont";
-            break;
-            
-        case RAFDescriptionTextFont:
-            return @"RAFDescriptionTextFont";
-            break;
-            
-        case ContactTableNameTextFont:
-            return @"ContactTableNameTextFont";
-            break;
-            
-        case ContactTableInfoTextFont:
-            return @"ContactTableInfoTextFont";
-            break;
-            
-        case ContactSendButtonTextFont:
-            return @"ContactSendButtonTextFont";
-            break;
-            
-        default:
-            return @"Unavailable";
-            break;
-    }
-}
-
-+ (NSString*)imageEnumStringValue:(AmbassadorImages)enumValue {
+- (NSString*)imageEnumStringValue:(AmbassadorImages)enumValue {
     switch (enumValue) {
         case RAFLogo:
             return @"RAFLogo";
             break;
-            
         default:
             return @"Unavailable";
             break;
     }
 }
 
-+ (UIColor *)colorFromHexString:(NSString *)hexString {
-    unsigned rgbValue = 0;
-    NSScanner *scanner = [NSScanner scannerWithString:hexString];
-    [scanner setScanLocation:1]; // bypass '#' character
-    [scanner scanHexInt:&rgbValue];
-    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+
+#pragma mark - Sizes
+
+- (int)sizeForKey:(AmbassadorSizes)sizeName {
+    if ([self keyExists:[self sizeEnumStringValue:sizeName]]) {
+        return (int)[valuesDic valueForKey:[self sizeEnumStringValue:sizeName]];
+    } else {
+        return 0;
+    }
 }
+
+- (NSString*)sizeEnumStringValue:(AmbassadorSizes)enumValue {
+    switch (enumValue) {
+        case ShareFieldHeight:
+            return @"ShareFieldHeight";
+            break;
+        default:
+            break;
+    }
+}
+
+
+#pragma mark - Ordering
 
 - (NSArray*)customSocialGridArray {
     NSString *arrayString = [[[valuesDic valueForKey:@"Channels"] lowercaseString] stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -234,6 +240,13 @@ static NSDictionary * valuesDic;
     } else {
         return None;
     }
+}
+
+
+#pragma mark - Helper Functions
+
+- (BOOL)keyExists:(NSString*)keyName {
+    return ([[valuesDic allKeys] containsObject:keyName] && ![[valuesDic valueForKey:keyName] isEqual: @""]) ? YES : NO;
 }
 
 @end

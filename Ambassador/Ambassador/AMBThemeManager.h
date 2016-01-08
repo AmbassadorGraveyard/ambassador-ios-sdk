@@ -17,6 +17,8 @@ typedef enum ambassadorColors {
     RAFBackgroundColor,
     RAFWelcomeTextColor,
     RAFDescriptionTextColor,
+    ShareFieldBackgroundColor,
+    ShareFieldTextColor,
     
     // Contact Selector ViewController
     ContactSendButtonBackgroundColor,
@@ -43,6 +45,7 @@ typedef enum ambassadorFonts {
     // RAF ViewController
     RAFWelcomeTextFont,
     RAFDescriptionTextFont,
+    ShareFieldTextFont,
     
     // Contact Selector ViewController
     ContactTableNameTextFont,
@@ -53,6 +56,11 @@ typedef enum ambassadorFonts {
 typedef enum ambassadorImages {
     RAFLogo
 } AmbassadorImages;
+
+typedef enum ambassadorSizes {
+    // RAF
+    ShareFieldHeight
+} AmbassadorSizes;
 
 typedef enum socialShareTypes {
     Facebook,
@@ -70,6 +78,7 @@ typedef enum socialShareTypes {
 - (NSString*)messageForKey:(AmbassadorMessages)messageName;
 - (UIFont*)fontForKey:(AmbassadorFonts)fontName;
 - (NSMutableDictionary*)imageForKey:(AmbassadorImages)imageName;
+- (int)sizeForKey:(AmbassadorSizes)sizeName;
 - (NSArray*)customSocialGridArray;
 + (SocialShareTypes)enumValueForSocialString:(NSString*)string;
 

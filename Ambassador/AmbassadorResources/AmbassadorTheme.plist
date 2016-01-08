@@ -18,6 +18,16 @@
 	<string>#FFFFFF</string>
 	<key>RAFLogo</key>
 	<string></string>
+	<key>SHARE URL FIELD ----------------</key>
+	<string></string>
+	<key>ShareFieldBackgroundColor</key>
+	<string></string>
+	<key>ShareFieldHeight</key>
+	<string></string>
+	<key>ShareFieldTextColor</key>
+	<string></string>
+	<key>ShareFieldTextFont</key>
+	<string></string>
 	<key>RAF WELCOME LABEL ----------</key>
 	<string></string>
 	<key>RAFWelcomeTextMessage</key>
