@@ -160,6 +160,16 @@
     NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970] * 1000;
     return [NSString stringWithFormat:@"%f", timeInMiliseconds];
 }
+
++ (BOOL)colorIsDark:(UIColor*)color {
+    const CGFloat* components = CGColorGetComponents(color.CGColor);
+    double redValue = components[0];
+    CGFloat greenValue = components[1];
+    CGFloat blueValue = components[2];
+    CGFloat darkness = 1 - (299 * redValue + 587 * greenValue + 114 * blueValue)/255;
+
+    return (darkness < 0.5) ? NO : YES;
+}
     
 @end
 
