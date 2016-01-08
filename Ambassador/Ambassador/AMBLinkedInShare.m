@@ -9,7 +9,6 @@
 #import "AMBLinkedInShare.h"
 #import "AMBLinkedInAPIConstants.h"
 #import "AMBConstants.h"
-#import "AMBShareServicesConstants.h"
 #import "AMBUtilities.h"
 
 @interface AMBLinkedInShare ()
@@ -53,7 +52,7 @@
                   ((NSHTTPURLResponse *)response).statusCode < 300)
               {
                   DLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                  [self.delegate userDidPostFromService:AMB_LINKEDIN_TITLE];
+                  [self.delegate userDidPostFromService:@"LinkedIn"];
               }
               else if (((NSHTTPURLResponse *)response).statusCode == 400)
               {

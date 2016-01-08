@@ -1,15 +1,17 @@
 //
-//  ConversionParameters.h
-//  iOS_Framework
+//  AMBConversionParametersEntity.h
+//  Ambassador
 //
-//  Created by Diplomat on 6/29/15.
-//  Copyright (c) 2015 ZFERRAL, INC (dba Ambassador Software). All rights reserved.
+//  Created by Jake Dunahee on 12/16/15.
+//  Copyright © 2015 Ambassador. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
-@interface AMBConversionParameters : NSObject
+@interface AMBConversionParametersEntity : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * mbsy_campaign;
 @property (nonatomic, retain) NSString * mbsy_email;
@@ -31,3 +33,6 @@
 @property (nonatomic, retain) NSNumber * mbsy_is_approved;
 
 @end
+
+NS_ASSUME_NONNULL_END
+
