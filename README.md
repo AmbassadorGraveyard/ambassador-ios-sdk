@@ -3,7 +3,18 @@
 ## Getting Started
 Install Git hooks:
 ```
-ln -s ../../git-hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
+$ ln -s ../../git-hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
+$ ln -s ../../git-hooks/pre-push .git/hooks/pre-push
+```
+
+The `pre-push` hook requires re-initialization of the repo:
+```
+$ git init
+```
+
+Make sure the `pre-push` hook is executable:
+```
+$ chmod +x .git/hooks/pre-push
 ```
 
 ## Documentation
@@ -149,7 +160,7 @@ parameters.mbsy_event_data2 = @"eventdata2"; // NSString
 parameters.mbsy_event_data3 = @"eventdata3"; // NSString
 parameters.mbsy_is_approved = @YES; // BOOL (Defaults to @YES)
 
-// STEP FOUR: Register the conversion with the parameter object.  
+// STEP FOUR: Register the conversion with the parameter object.
 [AmbassadorSDK registerConversion:parameters restrictToInsall:NO completion:^(NSError *error) {
     if (error) {
         NSLog(@"There was an error - %@", error);
@@ -261,7 +272,7 @@ The way to enter an image will look like `<image name>, <position>`.  Ex: `apple
 
 ### Reordering Sharing Channels
 
-Any Sharing Channels can be reordered. The Sharing Channels are ordered in a list separated by commas that can be found in the  __AmbassadorTheme.plist__.  
+Any Sharing Channels can be reordered. The Sharing Channels are ordered in a list separated by commas that can be found in the  __AmbassadorTheme.plist__.
 
 This is the standard ordering with Facebook appearing first and Email last.
 
