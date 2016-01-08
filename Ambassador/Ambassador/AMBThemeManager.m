@@ -206,9 +206,9 @@ static NSDictionary * valuesDic;
 
 #pragma mark - Sizes
 
-- (int)sizeForKey:(AmbassadorSizes)sizeName {
+- (NSNumber*)sizeForKey:(AmbassadorSizes)sizeName {
     if ([self keyExists:[self sizeEnumStringValue:sizeName]]) {
-        return (int)[valuesDic valueForKey:[self sizeEnumStringValue:sizeName]];
+        return [valuesDic valueForKey:[self sizeEnumStringValue:sizeName]];
     } else {
         return 0;
     }

@@ -21,13 +21,13 @@
 	<key>SHARE URL FIELD ----------------</key>
 	<string></string>
 	<key>ShareFieldBackgroundColor</key>
-	<string></string>
+	<string>#F4F4F4</string>
 	<key>ShareFieldHeight</key>
-	<string></string>
+	<integer>35</integer>
 	<key>ShareFieldTextColor</key>
-	<string></string>
+	<string>#000000</string>
 	<key>ShareFieldTextFont</key>
-	<string></string>
+	<string>HelveticaNeue, 15</string>
 	<key>RAF WELCOME LABEL ----------</key>
 	<string></string>
 	<key>RAFWelcomeTextMessage</key>
