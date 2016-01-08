@@ -71,9 +71,9 @@ int contactServiceType;
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
 
+    [self setUpTheme];
     [self setUpCloseButton];
     [self performIdentify];
-    [self setUpTheme];
     self.services = [[AMBThemeManager sharedInstance] customSocialGridArray];
 }
 
@@ -133,16 +133,16 @@ int contactServiceType;
 }
 
 - (void)setUpTheme {
-    // Sets messages
+    [[AMBThemeManager sharedInstance] createDicFromPlist:self.themeName];
     // Sets labels and navbarTitle based on plist
-    self.titleLabel.text = self.prefs.titleLabelText;
-    self.descriptionLabel.text = self.prefs.descriptionLabelText;
-    self.title = self.prefs.navBarTitle;
+    self.titleLabel.text = [[AMBThemeManager sharedInstance] messageForKey:RAFWelcomeTextMessage];
+    self.descriptionLabel.text = [[AMBThemeManager sharedInstance] messageForKey:RAFDescriptionTextMessage];
+    self.title = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
     
     // Setup NAV BAR
     self.navigationController.navigationBar.barTintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarColor];
     self.navigationController.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName:[[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor], NSFontAttributeName:[[AMBThemeManager sharedInstance] fontForKey:NavBarTextFont]};
-    self.navigationController.title = self.prefs.navBarTitle;
+    self.navigationController.title = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
     
     // Setup RAF Background color
     self.view.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:RAFBackgroundColor];
@@ -213,7 +213,7 @@ int contactServiceType;
     }
     
     [vc addURL:[NSURL URLWithString:self.urlNetworkObj.url]];
-    [vc setInitialText:self.prefs.defaultShareMessage];
+    [vc setInitialText:[[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage]];
     [self presentViewController:vc animated:YES completion:nil];
     vc.completionHandler = ^(SLComposeViewControllerResult result) {
         if (result == SLComposeViewControllerResultDone) {
@@ -250,7 +250,7 @@ int contactServiceType;
     DLog();
     AMBLinkedInShare * vc = [[AMBLinkedInShare alloc] init];
     DLog(@"%@", vc.debugDescription);
-    vc.defaultMessage = self.prefs.defaultShareMessage;
+    vc.defaultMessage = [[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage];
     vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
     vc.shortCode = self.urlNetworkObj.short_code;
     vc.shortURL = self.urlNetworkObj.url;
@@ -331,10 +331,9 @@ int contactServiceType;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:CONTACT_SELECTOR_SEGUE]) {
         AMBContactSelector *vc = (AMBContactSelector *)segue.destinationViewController;
-        vc.prefs = self.prefs;
         vc.shortURL = self.urlNetworkObj.url;
         vc.shortCode = self.urlNetworkObj.short_code;
-        vc.defaultMessage = [NSString stringWithFormat:@"%@ %@", self.prefs.defaultShareMessage, self.urlNetworkObj.url];
+        vc.defaultMessage = [NSString stringWithFormat:@"%@ %@", [[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage], self.urlNetworkObj.url];
         vc.type = contactServiceType;
         vc.urlNetworkObject = self.urlNetworkObj;
     } else if ([segue.identifier isEqualToString:LKND_AUTHORIZE_SEGUE]) {
