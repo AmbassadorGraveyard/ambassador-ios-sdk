@@ -401,7 +401,7 @@ int contactServiceType;
 - (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
     AMBShareServiceCell *selectedCell = (AMBShareServiceCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
     [UIView animateWithDuration:0.3 animations:^{
-        selectedCell.backgroundColor = [UIColor whiteColor];
+        selectedCell.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:RAFBackgroundColor];
     }];
 }
 
