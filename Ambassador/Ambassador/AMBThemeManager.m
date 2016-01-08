@@ -28,7 +28,7 @@ static NSDictionary * valuesDic;
 
 - (void)createDicFromPlist:(NSString*)plistName {
     NSBundle *bundle = ([NSBundle bundleWithIdentifier:@"AmbassadorBundle"]) ? [NSBundle bundleWithIdentifier:@"AmbassadorBundle"] : [NSBundle bundleForClass:[self class]]; // Returns correct bundle based on whether unit testing or not
-    NSString *plistPath = [bundle pathForResource:plistName ofType:@"plist"];
+    NSString *plistPath = ([bundle pathForResource:plistName ofType:@"plist"]) ? [bundle pathForResource:plistName ofType:@"plist"] : [bundle pathForResource:@"GenericTheme" ofType:@"plist"];
     valuesDic = [NSDictionary dictionaryWithContentsOfFile:plistPath];
 }
 
