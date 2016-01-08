@@ -78,6 +78,10 @@ static NSDictionary * valuesDic;
         case ContactTableCheckMarkColor:
             return @"ContactTableCheckMarkColor";
             break;
+        case ShareFieldBackgroundColor:
+            return @"ShareFieldBackgroundColor";
+        case ShareFieldTextColor:
+            return @"ShareFieldTextColor";
         default:
             return @"Unavailable";
             break;
@@ -158,6 +162,8 @@ static NSDictionary * valuesDic;
         case ContactSendButtonTextFont:
             return @"ContactSendButtonTextFont";
             break;
+        case ShareFieldTextFont:
+            return @"ShareFieldTextFont";
         default:
             return @"Unavailable";
             break;
