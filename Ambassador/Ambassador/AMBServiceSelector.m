@@ -160,6 +160,8 @@ int contactServiceType;
     self.lblURL.textColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldTextColor];
     self.lblURL.font = [[AMBThemeManager sharedInstance] fontForKey:ShareFieldTextFont];
     self.shortURLBackgroundHeight.constant = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldHeight] floatValue];
+    self.btnCopy.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldBackgroundColor];
+    self.shortURLBackground.layer.cornerRadius = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldCornerRadius] floatValue];
     
     // Checks to see if the nav bar color is "light" or "dark" and sets the status bar text color accordingly
     if ([AMBUtilities colorIsDark:[[AMBThemeManager sharedInstance] colorForKey:NavBarColor]]) { self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent; }

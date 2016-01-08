@@ -59,7 +59,8 @@ typedef enum ambassadorImages {
 
 typedef enum ambassadorSizes {
     // RAF
-    ShareFieldHeight
+    ShareFieldHeight,
+    ShareFieldCornerRadius
 } AmbassadorSizes;
 
 typedef enum socialShareTypes {
