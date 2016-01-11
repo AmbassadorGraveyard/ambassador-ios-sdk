@@ -24,7 +24,7 @@
             </objects>
             <point key="canvasLocation" x="910" y="780"/>
         </scene>
-        <!--Item 1-->
+        <!--Login-->
         <scene sceneID="Q1M-LW-W3h">
             <objects>
                 <viewController id="O36-Ew-33q" customClass="ViewController" sceneMemberID="viewController">
@@ -46,10 +46,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RgI-Dt-Dke">
-                                        <rect key="frame" x="15" y="19" width="20" height="12"/>
+                                        <rect key="frame" x="15" y="19" width="17" height="12"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="12" id="EfD-js-F2n"/>
-                                            <constraint firstAttribute="width" constant="20" id="tHa-uc-myE"/>
+                                            <constraint firstAttribute="width" constant="17" id="tHa-uc-myE"/>
                                         </constraints>
                                         <state key="normal" image="menuIcon">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -89,6 +89,7 @@
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r0b-qi-F3o">
                                         <rect key="frame" x="10" y="43" width="230" height="35"/>
+                                        <color key="tintColor" red="0.15686274510000001" green="0.39607843139999999" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -116,18 +117,19 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ambassador Demo App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s6r-Mz-SYy">
-                                <rect key="frame" x="199" y="170" width="202" height="23"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Ambassador Demo App" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s6r-Mz-SYy">
+                                <rect key="frame" x="10" y="170" width="580" height="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="19"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UDO-ey-2sY">
-                                <rect key="frame" x="175" y="303" width="250" height="45"/>
+                                <rect key="frame" x="175" y="303" width="250" height="40"/>
                                 <color key="backgroundColor" red="0.15686274509803921" green="0.396078431372549" blue="0.65490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="eVf-vm-uT5"/>
+                                    <constraint firstAttribute="height" constant="40" id="eVf-vm-uT5"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -140,6 +142,8 @@
                             <constraint firstItem="UDO-ey-2sY" firstAttribute="width" secondItem="Cnc-th-dCg" secondAttribute="width" id="LnJ-W5-wRo"/>
                             <constraint firstItem="UDO-ey-2sY" firstAttribute="centerX" secondItem="KK1-Sd-Hlz" secondAttribute="centerX" id="POU-sr-cCE"/>
                             <constraint firstItem="s6r-Mz-SYy" firstAttribute="centerX" secondItem="KK1-Sd-Hlz" secondAttribute="centerX" id="Pq8-D2-jGw"/>
+                            <constraint firstItem="s6r-Mz-SYy" firstAttribute="leading" secondItem="KK1-Sd-Hlz" secondAttribute="leading" constant="10" id="dPl-up-Rrd"/>
+                            <constraint firstAttribute="trailing" secondItem="s6r-Mz-SYy" secondAttribute="trailing" constant="10" id="e4h-E2-mPP"/>
                             <constraint firstItem="s6r-Mz-SYy" firstAttribute="top" secondItem="ps0-m8-sKg" secondAttribute="bottom" constant="20" id="hdt-nN-tln"/>
                             <constraint firstItem="Cnc-th-dCg" firstAttribute="centerX" secondItem="KK1-Sd-Hlz" secondAttribute="centerX" id="mlv-yN-yMt"/>
                             <constraint firstItem="UDO-ey-2sY" firstAttribute="top" secondItem="Cnc-th-dCg" secondAttribute="bottom" constant="10" id="oXy-9N-6kF"/>
@@ -148,12 +152,20 @@
                             <constraint firstItem="Cnc-th-dCg" firstAttribute="top" secondItem="s6r-Mz-SYy" secondAttribute="bottom" constant="20" id="wfH-rG-9qU"/>
                             <constraint firstItem="vuE-qY-Xgt" firstAttribute="top" secondItem="e62-wf-Do9" secondAttribute="bottom" id="yRb-Bd-LpV"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Pq8-D2-jGw"/>
+                            </mask>
+                        </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="Rt5-4m-ggU"/>
+                    <tabBarItem key="tabBarItem" title="Login" image="loginIcon" selectedImage="loginIcon" id="Rt5-4m-ggU">
+                        <inset key="imageInsets" minX="2" minY="4" maxX="2" maxY="1"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="btnDrawer" destination="RgI-Dt-Dke" id="1AR-ic-4pQ"/>
                         <outlet property="btnLogin" destination="UDO-ey-2sY" id="aBF-7B-tmq"/>
                         <outlet property="loginView" destination="Cnc-th-dCg" id="j9J-Zo-IPh"/>
+                        <outlet property="signInCrossbar" destination="QZj-cJ-0mX" id="uya-Yb-Nxa"/>
                         <outlet property="tfPassword" destination="r0b-qi-F3o" id="J8J-8Z-0hB"/>
                         <outlet property="tfUsername" destination="2iQ-M2-zxk" id="MC5-vk-whN"/>
                     </connections>
@@ -183,6 +195,7 @@
     </scenes>
     <resources>
         <image name="ambassadorFlags" width="70" height="98"/>
+        <image name="loginIcon" width="34" height="36"/>
         <image name="menuIcon" width="38" height="24"/>
     </resources>
 </document>
