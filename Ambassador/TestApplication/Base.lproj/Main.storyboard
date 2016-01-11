@@ -158,9 +158,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Login" image="loginIcon" selectedImage="loginIcon" id="Rt5-4m-ggU">
-                        <inset key="imageInsets" minX="2" minY="4" maxX="2" maxY="1"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Login" id="Rt5-4m-ggU"/>
                     <connections>
                         <outlet property="btnDrawer" destination="RgI-Dt-Dke" id="1AR-ic-4pQ"/>
                         <outlet property="btnLogin" destination="UDO-ey-2sY" id="aBF-7B-tmq"/>
@@ -195,7 +193,6 @@
     </scenes>
     <resources>
         <image name="ambassadorFlags" width="70" height="98"/>
-        <image name="loginIcon" width="34" height="36"/>
         <image name="menuIcon" width="38" height="24"/>
     </resources>
 </document>

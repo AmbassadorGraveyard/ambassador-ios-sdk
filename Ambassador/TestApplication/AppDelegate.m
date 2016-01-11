@@ -47,7 +47,6 @@
 }
 
 - (void)setUpAppearance {
-//    [[UITabBar appearance] setBarStyle:UIBarStyleBlackOpaque];
     [[UITabBar appearance] setBarTintColor:[AppDelegate colorFromHexString:@"#25313f"]];
     [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
 }
