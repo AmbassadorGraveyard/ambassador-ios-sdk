@@ -26,7 +26,7 @@
 
 @implementation AMBIdentify
 
-- (void)identifyWithUniversalID:(NSString*)universalID completion:(void(^)(NSMutableDictionary *returnDict, NSError *error))completion {
+- (void)getIdentity {
     if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
         [self performIdentifyForiOS9];
         self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
