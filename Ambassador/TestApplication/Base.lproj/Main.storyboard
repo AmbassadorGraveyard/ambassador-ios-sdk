@@ -194,6 +194,25 @@
             </objects>
             <point key="canvasLocation" x="910" y="780"/>
         </scene>
+        <!--Refer a Friend-->
+        <scene sceneID="baE-qk-n4s">
+            <objects>
+                <viewController id="scf-li-MTd" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0nC-CN-9GZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="zxh-ZW-yN4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XWc-ro-VHc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Refer a Friend" image="rafIcon" id="Gm8-tE-R7X"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c8m-Yv-h08" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="919" y="2161"/>
+        </scene>
         <!--Buy Now-->
         <scene sceneID="cjl-d3-mjJ">
             <objects>
@@ -498,6 +517,7 @@
                         <segue destination="O36-Ew-33q" kind="relationship" relationship="viewControllers" id="lPJ-ji-V7M"/>
                         <segue destination="9YV-9x-emY" kind="relationship" relationship="viewControllers" id="7hp-rl-5Fi"/>
                         <segue destination="Uyy-Ly-PsL" kind="relationship" relationship="viewControllers" id="cwS-4b-N9j"/>
+                        <segue destination="scf-li-MTd" kind="relationship" relationship="viewControllers" id="HLb-ve-WH0"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IHb-rh-kIS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -512,6 +532,7 @@
         <image name="buyIcon" width="36" height="28"/>
         <image name="loginIcon" width="34" height="36"/>
         <image name="menuIcon" width="38" height="24"/>
+        <image name="rafIcon" width="36" height="34"/>
         <image name="signUpIcon" width="36" height="36"/>
     </resources>
 </document>
