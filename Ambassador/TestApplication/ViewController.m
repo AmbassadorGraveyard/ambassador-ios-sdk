@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "Utilities.h"
 #import <Ambassador/Ambassador.h>
 
 @interface ViewController ()
@@ -32,6 +33,9 @@
 }
 
 - (void)setUpTheme {
+    // Tab bar
+    [Utilities setTabImageForViewController:self activeImageName:@"loginIcon" inactiveImageName:@"inactiveLogin"];
+    
     // Login View
     self.loginView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1].CGColor;
     self.signInCrossbar.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
