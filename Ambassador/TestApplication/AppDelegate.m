@@ -16,28 +16,10 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // UI Testing setup
-    if ([[[NSProcessInfo processInfo] arguments] containsObject:@"isUITesting"]) {
-        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
-    }
-
+    [self setUpAppearance];
     [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32"]; // DEV CREDENTIALS
 //    [AmbassadorSDK runWithUniversalToken:@"84444f4022a8cd4fce299114bc2e323e57e32188" universalID:@"830883cd-b2a7-449c-8a3c-d1850aa8bc6b"]; // PROD CREDENTIALS
 
-    [AmbassadorSDK identifyWithEmail:@"jake@getambassador.com"];
-    
-    AMBConversionParameters *fakeInstallConversion = [[AMBConversionParameters alloc] init];
-    fakeInstallConversion.mbsy_campaign = @260;
-    fakeInstallConversion.mbsy_revenue = @200;
-    fakeInstallConversion.mbsy_email = @"greg@getambassador.com";
-    
-    [AmbassadorSDK registerConversion:fakeInstallConversion restrictToInstall:YES completion:^(NSError *error) {
-        if (error) {
-            NSLog(@"Conversion not registered - %@", error);
-        } else {
-            NSLog(@"INSTALL CONVERSION REGISTERED SUCCESSFULLY!");
-        }
-    }];
 
     return YES;
 }
@@ -62,6 +44,20 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)setUpAppearance {
+//    [[UITabBar appearance] setBarStyle:UIBarStyleBlackOpaque];
+    [[UITabBar appearance] setBarTintColor:[AppDelegate colorFromHexString:@"#25313f"]];
+    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
+}
+
++ (UIColor *)colorFromHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
 @end
