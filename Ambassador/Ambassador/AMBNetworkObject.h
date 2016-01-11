@@ -13,6 +13,7 @@
 - (NSError *)validate;
 - (void)fillWithDictionary:(NSMutableDictionary *)dictionary;
 - (NSData *)toDataError:(NSError *__autoreleasing*)e;
+- (NSData*)toData;
 - (void)save;
 + (instancetype)loadFromDisk;
 + (void)deleteFromDisk;
@@ -45,12 +46,16 @@
 @property (nonatomic, strong) NSString *url;
 @property BOOL has_access;
 @property BOOL is_active;
+
+- (instancetype)initWithDictionary:(NSDictionary*)dict;
+
 @end
 
 
 
 @interface AMBUserNetworkObject : AMBNetworkObject
-- (void)fillWithUrl:(NSString *)url universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c;
+//- (void)fillWithUrl:(NSString *)url universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c;
+- (void)fillWithUrl:(NSString *)url completion:(void(^)(NSString *error))completion;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *first_name;
 @property (nonatomic, strong) NSString *last_name;
@@ -69,7 +74,7 @@
 @property (strong, nonatomic) NSString *campaign_id;
 @property BOOL enroll;
 @property (strong, nonatomic) NSString *source;
-@property (strong, nonatomic) NSMutableDictionary *fp;
+@property (strong, nonatomic) NSDictionary *fp;
 @end
 
 

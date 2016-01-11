@@ -11,6 +11,7 @@
 #import "AMBCoreDataManager.h"
 #import "AMBConversionParametersEntity.h"
 #import "AMBConversionParameter_Internal.h"
+#import "AMBNetworkManager.h"
 
 
 #pragma mark - Local Constants
@@ -56,41 +57,11 @@ NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com
             NSMutableDictionary *fieldsDictionary = [NSMutableDictionary dictionaryWithDictionary:[parameters propertyDictionary]];
             [fieldsDictionary setValue:[AMBValues getMbsyCookieCode] forKey:@"mbsy_short_code"];
             
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self payloadForConversionCallWithFP:userDefaultsIdentify mbsyFields:fieldsDictionary] options:0 error:nil];
-            
-            //Create the POST request
-            NSURL *url = [NSURL URLWithString:AMB_CONVERSION_URL];
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-            request.HTTPMethod = @"POST";
-            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-            [request setValue:[AMBValues getUniversalToken] forHTTPHeaderField:@"Authorization"];
-            request.HTTPBody = jsonData;
-
-            
-            
-            #if AMBPRODUCTION
-                NSURLSession *urlSession = [NSURLSession sharedSession];
-            #else
-                NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
-            #endif
-            
-            NSURLSessionDataTask *task = [urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                DLog(@"CONVERSION CALL - Status code: %ld", (long)((NSHTTPURLResponse *)response).statusCode);
-                if (!error) {
-                    if ([AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse *)response).statusCode]) {
-                        DLog(@"Response from backend for CONVERSION CALL = %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                        [AMBCoreDataManager deleteCoreDataObject:entity];
-                    } else {
-                        NSLog(@"[Ambassador] Error - Server reponse from sending conversion:%ld - %@", (long)((NSHTTPURLResponse *)response).statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
-                    }
-                    
-                    return;
-                }
-                
-                DLog(@"CONVERSION CALL Error: %@", error.localizedDescription);
+            [[AMBNetworkManager sharedInstance] sendRegisteredConversion:[self payloadForConversionCallWithFP:userDefaultsIdentify mbsyFields:fieldsDictionary] success:^(NSDictionary *response) {
+                [AMBCoreDataManager deleteCoreDataObject:entity];
+            } failure:^(NSInteger statusCode, NSData *data) {
+                NSLog(@"[Ambassador] Error - Server reponse from sending conversion:%li - %@", (long)statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
             }];
-            
-            [task resume];
         }
     } else {
         DLog(@"No conversions ready to be sent");

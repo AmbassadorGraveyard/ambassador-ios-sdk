@@ -10,7 +10,7 @@
 #import "AMBUtilities.h"
 #import "AMBConstants.h"
 #import "AmbassadorSDK_Internal.h"
-#import "AMBAmbassadorNetworkManager.h"
+#import "AMBNetworkManager.h"
 
 @interface AMBNamePrompt () <UITextFieldDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *continueButton;
@@ -62,38 +62,18 @@
 }
 - (IBAction)continueSending:(UIButton *)sender
 {
-    if ([self textFieldIsValid:self.firstNameField.text] && [self textFieldIsValid:self.lastNameField.text])
-    {
+    if ([self textFieldIsValid:self.firstNameField.text] && [self textFieldIsValid:self.lastNameField.text]) {
         NSString *firstName = [self.firstNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         NSString *lastName = [self.lastNameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-       
-        AMBUpdateNameObject *nameUpdateObject = [[AMBUpdateNameObject alloc] initWithFirstName:firstName lastName:lastName email:[AmbassadorSDK sharedInstance].user.email];
-        
-        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nameUpdateObject url:[AMBAmbassadorNetworkManager sendIdentifyUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
-            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
-            if (error) {
-                if (data) {
-                    DLog(@"Error Updating Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                } else {
-                    DLog(@"Error Updating Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], @"No data available");
-                }
-                
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to update names.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
-            } else {
-                DLog(@"Successfully Updated Names with Response Code - %li and Response - %@", (long)[httpResponse statusCode], [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                if ([AmbassadorSDK sharedInstance].user) {
-                    [AmbassadorSDK sharedInstance].user.first_name = firstName;
-                    [AmbassadorSDK sharedInstance].user.last_name = lastName;
-                }
-                
-                [self.navigationController popViewControllerAnimated:YES];
-                [self.delegate namesUpdatedSuccessfully];
-            }
+
+        [[AMBNetworkManager sharedInstance] updateNameWithFirstName:firstName lastName:lastName success:^(NSDictionary *response) {
+            [self.navigationController popViewControllerAnimated:YES];
+            [self.delegate namesUpdatedSuccessfully];
+        } failure:^(NSString *error) {
+            [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to update names.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
         }];
-        
-        
-//        [self.delegate sendSMSPressedWithFirstName:firstName lastName:lastName];
     }
+    
     self.firstNameEdited = YES;
     self.lastNameEdited = YES;
     [self updateErrorLabelForFirstNameString:self.firstNameField.text lastNameString:self.lastNameField.text];

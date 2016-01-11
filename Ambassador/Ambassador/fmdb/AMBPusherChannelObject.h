@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSDate * expiresAt;
 @property (nonatomic, strong) NSString * requestId;
 
+- (instancetype)initWithDictionary:(NSMutableDictionary*)payloadDict;
 - (void)createObjectFromDictionary:(NSMutableDictionary *)payloadDic;
 - (BOOL)isExpired;
 - (NSMutableDictionary *)createAdditionalNetworkHeaders;
