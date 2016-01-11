@@ -16,6 +16,7 @@
 @property (nonatomic, strong) IBOutlet UIButton * btnDrawer;
 @property (nonatomic, strong) IBOutlet UITextField * tfUsername;
 @property (nonatomic, strong) IBOutlet UITextField * tfPassword;
+@property (nonatomic, strong) IBOutlet UIView * signInCrossbar;
 
 @end
 
@@ -32,7 +33,8 @@
 
 - (void)setUpTheme {
     // Login View
-    self.loginView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.loginView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1].CGColor;
+    self.signInCrossbar.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
     self.loginView.layer.borderWidth = 1;
     self.loginView.layer.cornerRadius = 4;
     
