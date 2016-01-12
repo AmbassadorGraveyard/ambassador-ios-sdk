@@ -8,6 +8,7 @@
 
 #import "SignUpViewController.h"
 #import "Utilities.h"
+#import <Ambassador/Ambassador.h>
 
 @interface SignUpViewController ()
 
@@ -29,9 +30,16 @@
     [self setUpTheme];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+#pragma mark - IBAction
+
+- (IBAction)signUpTapped:(id)sender {
+    if ([self allowSignUp]) {
+        [self registerConversion];
+    } else {
+        UIAlertView *blankAlert = [[UIAlertView alloc] initWithTitle:@"Cannot log in" message:@"All fields must be filled out before signing in" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [blankAlert show];
+    }
 }
 
 - (void)setUpTheme {
@@ -44,6 +52,25 @@
     
     // Login Button
     self.btnSignUp.layer.cornerRadius = 4;
+}
+
+- (void)registerConversion {
+    AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];
+    conversionParameters.mbsy_email = self.tfEmail.text;
+    conversionParameters.mbsy_campaign = @260;
+    conversionParameters.mbsy_revenue = @200;
+    conversionParameters.mbsy_custom1 = @"This is a conversion from the Ambassador iOS Test Application";
+    conversionParameters.mbsy_custom2 = [NSString stringWithFormat:@"Username registered = %@", self.tfUsername.text];
+    
+    [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:YES completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Error registering install conversion - %@", error);
+        }
+    }];
+}
+
+- (BOOL)allowSignUp {
+    return (![self.tfEmail.text isEqualToString:@""] && ![self.tfPassword.text isEqualToString:@""] && ![self.tfUsername.text isEqualToString:@""]) ? YES : NO;
 }
 
 @end
