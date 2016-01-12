@@ -7,6 +7,7 @@
 //
 
 #import "BuyNowViewController.h"
+#import <Ambassador/Ambassador.h>
 
 @interface BuyNowViewController ()
 
@@ -21,9 +22,22 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+#pragma mark - IBActions
+
+- (IBAction)buyNowTapped:(id)sender {
+    AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];
+    conversionParameters.mbsy_email = [[NSUserDefaults standardUserDefaults] valueForKey:@"loginEmail"];
+    conversionParameters.mbsy_campaign = @260;
+    conversionParameters.mbsy_revenue = @200;
+    conversionParameters.mbsy_custom1 = @"This is a conversion from the Ambassador iOS Test Application";
+    conversionParameters.mbsy_custom2 = @"Buy conversion registered for $24.00";
+    
+    [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Error registering install conversion - %@", error);
+        }
+    }];
 }
 
 - (void)setUpTheme {

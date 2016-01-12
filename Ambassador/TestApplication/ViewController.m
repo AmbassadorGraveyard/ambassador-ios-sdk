@@ -59,6 +59,7 @@
 - (void)identifyOnSignIn {
     if ([self allowSignIn]) {
         [AmbassadorSDK identifyWithEmail:self.tfUsername.text];
+        [[NSUserDefaults standardUserDefaults] setValue:self.tfUsername.text forKey:@"loginEmail"];
     } else {
         UIAlertView *blankAlert = [[UIAlertView alloc] initWithTitle:@"Cannot log in" message:@"All fields must be filled out before signing in" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [blankAlert show];
