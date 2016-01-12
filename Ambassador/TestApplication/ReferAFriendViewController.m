@@ -7,10 +7,13 @@
 //
 
 #import "ReferAFriendViewController.h"
+#import "RAFCell.h"
 
 @interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView * rafTable;
+
+@property (nonatomic, strong) NSArray * rafNameArray;
 
 @end
 
@@ -18,12 +21,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.rafTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.rafNameArray = @[@"Shopping Cart RAF", @"Login RAF", @"Sign Up RAF", @"Refer a Friend 4"];
 }
 
 
@@ -34,7 +33,10 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    RAFCell *rafCell = [tableView dequeueReusableCellWithIdentifier:@"rafCell"];
+    [rafCell setUpCellWithRafName:self.rafNameArray[indexPath.row]];
     
+    return rafCell;
 }
 
 @end
