@@ -50,7 +50,7 @@
             [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"AmbassadorShoes"];
             break;
         case 1:
-            [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:nil];
+            [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"AmbassadorTheme"];
             break;
         case 2:
             [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:nil];
