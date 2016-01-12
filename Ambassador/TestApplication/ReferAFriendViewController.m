@@ -8,6 +8,7 @@
 
 #import "ReferAFriendViewController.h"
 #import "RAFCell.h"
+#import <Ambassador/Ambassador.h>
 
 @interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -37,6 +38,29 @@
     [rafCell setUpCellWithRafName:self.rafNameArray[indexPath.row]];
     
     return rafCell;
+}
+
+
+#pragma mark - TableView Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    switch (indexPath.row) {
+        case 0:
+            [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:nil];
+            break;
+        case 1:
+            [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:nil];
+            break;
+        case 2:
+            [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:nil];
+            break;
+        case 3:
+            [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:nil];
+            break;
+        default:
+            break;
+    }
 }
 
 @end
