@@ -187,6 +187,7 @@
 		EF5390D11C445BF2005F6944 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D01C445BF2005F6944 /* SignUpViewController.m */; };
 		EF5390D41C446693005F6944 /* BuyNowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D31C446693005F6944 /* BuyNowViewController.m */; };
 		EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */; };
+		EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D91C4565D9005F6944 /* RAFCell.m */; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
@@ -475,6 +476,8 @@
 		EF5390D31C446693005F6944 /* BuyNowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyNowViewController.m; sourceTree = "<group>"; };
 		EF5390D51C4469AF005F6944 /* ReferAFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferAFriendViewController.h; sourceTree = "<group>"; };
 		EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferAFriendViewController.m; sourceTree = "<group>"; };
+		EF5390D81C4565D9005F6944 /* RAFCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFCell.h; sourceTree = "<group>"; };
+		EF5390D91C4565D9005F6944 /* RAFCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFCell.m; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -766,6 +769,8 @@
 				EF5390D31C446693005F6944 /* BuyNowViewController.m */,
 				EF5390D51C4469AF005F6944 /* ReferAFriendViewController.h */,
 				EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */,
+				EF5390D81C4565D9005F6944 /* RAFCell.h */,
+				EF5390D91C4565D9005F6944 /* RAFCell.m */,
 			);
 			path = TestApplication;
 			sourceTree = "<group>";
@@ -1339,6 +1344,7 @@
 				EF5390D11C445BF2005F6944 /* SignUpViewController.m in Sources */,
 				DB844D691BA76BDE003FD7A9 /* AppDelegate.m in Sources */,
 				EF5390CE1C444FD5005F6944 /* Utilities.m in Sources */,
+				EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */,
 				DB844D661BA76BDE003FD7A9 /* main.m in Sources */,
 				EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */,
 			);

@@ -8,7 +8,9 @@
 
 #import "ReferAFriendViewController.h"
 
-@interface ReferAFriendViewController ()
+@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) IBOutlet UITableView * rafTable;
 
 @end
 
@@ -22,6 +24,17 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - TableView DataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 4;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
 }
 
 @end
