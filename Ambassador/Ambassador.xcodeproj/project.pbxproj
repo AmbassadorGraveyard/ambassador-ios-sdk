@@ -180,7 +180,6 @@
 		EF2EC3351BAC60CC003CAA43 /* AMBFMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = EF2EC3341BAC60CC003CAA43 /* AMBFMResultSet.h */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
-		EF407F211BB3449B0074D2AE /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */; };
 		EF5356501BF109A400BC80C4 /* unitTestImage.png in Resources */ = {isa = PBXBuildFile; fileRef = EF53564F1BF109A400BC80C4 /* unitTestImage.png */; };
 		EF5356521BF10C0700BC80C4 /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */; };
 		EF5390CE1C444FD5005F6944 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390CD1C444FD5005F6944 /* Utilities.m */; };
@@ -189,6 +188,7 @@
 		EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */; };
 		EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D91C4565D9005F6944 /* RAFCell.m */; };
 		EF5390DC1C458FFD005F6944 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390DB1C458FFD005F6944 /* GenericTheme.plist */; };
+		EF5390DE1C459433005F6944 /* AmbassadorShoes.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
@@ -465,7 +465,6 @@
 		EF2EC3341BAC60CC003CAA43 /* AMBFMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMResultSet.h; sourceTree = "<group>"; };
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
-		EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AmbassadorTheme.plist; path = AmbassadorResources/AmbassadorTheme.plist; sourceTree = SOURCE_ROOT; };
 		EF53564F1BF109A400BC80C4 /* unitTestImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unitTestImage.png; sourceTree = "<group>"; };
 		EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorTheme.plist; sourceTree = "<group>"; };
 		EF5390CC1C444FD5005F6944 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
@@ -479,6 +478,7 @@
 		EF5390D81C4565D9005F6944 /* RAFCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFCell.h; sourceTree = "<group>"; };
 		EF5390D91C4565D9005F6944 /* RAFCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFCell.m; sourceTree = "<group>"; };
 		EF5390DB1C458FFD005F6944 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GenericTheme.plist; sourceTree = "<group>"; };
+		EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorShoes.plist; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -727,6 +727,7 @@
 			children = (
 				DBEB6FE11BA9AD04005EE0D0 /* Main.storyboard */,
 				EF5390DB1C458FFD005F6944 /* GenericTheme.plist */,
+				EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */,
 				DBEB6FE31BA9B2D8005EE0D0 /* blank.png */,
 				DBEB6FE41BA9B2D8005EE0D0 /* check.png */,
 				DBEB6FE51BA9B2D8005EE0D0 /* clipboard.png */,
@@ -745,7 +746,6 @@
 				DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */,
 				DB844D5B1BA767FA003FD7A9 /* back.png */,
 				DB844D551BA7622D003FD7A9 /* Info.plist */,
-				EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1161,13 +1161,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF5390DE1C459433005F6944 /* AmbassadorShoes.plist in Resources */,
 				DBEB6FFB1BA9B2D8005EE0D0 /* pencil.png in Resources */,
 				DBEB6FFA1BA9B2D8005EE0D0 /* linkedin.png in Resources */,
 				DBEB6FF51BA9B2D8005EE0D0 /* close.png in Resources */,
 				DBEB6FFE1BA9B2D8005EE0D0 /* sms.png in Resources */,
 				DBEB6FFF1BA9B2D8005EE0D0 /* successIcon.png in Resources */,
 				EFF58FA01BF4F8F5001AB2DE /* AMBMedia.xcassets in Resources */,
-				EF407F211BB3449B0074D2AE /* AmbassadorTheme.plist in Resources */,
 				DBEB6FFD1BA9B2D8005EE0D0 /* search.png in Resources */,
 				DBEB6FF71BA9B2D8005EE0D0 /* facebook.png in Resources */,
 				DB844D5C1BA767FA003FD7A9 /* back.png in Resources */,
