@@ -51,7 +51,7 @@
 	<key>CONTACT SEND BUTTON ---------</key>
 	<string></string>
 	<key>ContactSendButtonBackgroundColor</key>
-	<string>#4199D1</string>
+	<string>#D9232E</string>
 	<key>ContactSendButtonTextColor</key>
 	<string>#FFFFFF</string>
 	<key>ContactSendButtonTextFont</key>
@@ -65,7 +65,7 @@
 	<key>CONTACT TABLEVIEW ------------</key>
 	<string></string>
 	<key>ContactTableCheckMarkColor</key>
-	<string>#4199D1</string>
+	<string>#D9232E</string>
 	<key>ContactTableNameTextFont</key>
 	<string>Helvetica, 17</string>
 	<key>ContactTableInfoTextFont</key>
