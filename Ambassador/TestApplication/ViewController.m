@@ -35,6 +35,8 @@
 
 - (IBAction)loginTapped:(id)sender {
     [self identifyOnSignIn];
+    [self.tfUsername resignFirstResponder];
+    [self.tfPassword resignFirstResponder];
 }
 
 
