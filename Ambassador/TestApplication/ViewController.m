@@ -23,14 +23,22 @@
 
 @implementation ViewController
 
+
+#pragma mark - LifeCycle
+
 - (void)viewDidLoad {
     [self setUpTheme];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+#pragma mark - IBActions
+
+- (IBAction)loginTapped:(id)sender {
+    [self identifyOnSignIn];
 }
+
+
+#pragma mark - UI Functions
 
 - (void)setUpTheme {    
     // Login View
@@ -41,6 +49,22 @@
     
     // Login Button
     self.btnLogin.layer.cornerRadius = 4;
+}
+
+
+#pragma mark - Helper Functions
+
+- (void)identifyOnSignIn {
+    if ([self allowSignIn]) {
+        [AmbassadorSDK identifyWithEmail:self.tfUsername.text];
+    } else {
+        UIAlertView *blankAlert = [[UIAlertView alloc] initWithTitle:@"Cannot log in" message:@"All fields must be filled out before signing in" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [blankAlert show];
+    }
+}
+
+- (BOOL)allowSignIn {
+    return (![self.tfPassword.text  isEqual: @""] && ![self.tfUsername.text  isEqual: @""]) ? YES : NO;
 }
 
 @end
