@@ -182,7 +182,6 @@
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF5356501BF109A400BC80C4 /* unitTestImage.png in Resources */ = {isa = PBXBuildFile; fileRef = EF53564F1BF109A400BC80C4 /* unitTestImage.png */; };
 		EF5356521BF10C0700BC80C4 /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */; };
-		EF5390CE1C444FD5005F6944 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390CD1C444FD5005F6944 /* Utilities.m */; };
 		EF5390D11C445BF2005F6944 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D01C445BF2005F6944 /* SignUpViewController.m */; };
 		EF5390D41C446693005F6944 /* BuyNowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D31C446693005F6944 /* BuyNowViewController.m */; };
 		EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */; };
@@ -470,8 +469,6 @@
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF53564F1BF109A400BC80C4 /* unitTestImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unitTestImage.png; sourceTree = "<group>"; };
 		EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorTheme.plist; sourceTree = "<group>"; };
-		EF5390CC1C444FD5005F6944 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
-		EF5390CD1C444FD5005F6944 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		EF5390CF1C445BF2005F6944 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		EF5390D01C445BF2005F6944 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		EF5390D21C446693005F6944 /* BuyNowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyNowViewController.h; sourceTree = "<group>"; };
@@ -769,8 +766,6 @@
 				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
 				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
 				DB844D631BA76BDE003FD7A9 /* Supporting Files */,
-				EF5390CC1C444FD5005F6944 /* Utilities.h */,
-				EF5390CD1C444FD5005F6944 /* Utilities.m */,
 				EF5390CF1C445BF2005F6944 /* SignUpViewController.h */,
 				EF5390D01C445BF2005F6944 /* SignUpViewController.m */,
 				EF5390D21C446693005F6944 /* BuyNowViewController.h */,
@@ -1354,7 +1349,6 @@
 				DB844D6C1BA76BDE003FD7A9 /* ViewController.m in Sources */,
 				EF5390D11C445BF2005F6944 /* SignUpViewController.m in Sources */,
 				DB844D691BA76BDE003FD7A9 /* AppDelegate.m in Sources */,
-				EF5390CE1C444FD5005F6944 /* Utilities.m in Sources */,
 				EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */,
 				DB844D661BA76BDE003FD7A9 /* main.m in Sources */,
 				EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */,
