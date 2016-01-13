@@ -79,6 +79,12 @@ BOOL keyboardShowing = NO;
     [self.contactsTable addSubview:self.refreshControl];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
+    CGFloat offset = [AMBUtilities getOffsetForRotation:self toOrientation:toInterfaceOrientation];
+    [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
+}
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [UIView animateWithDuration:.1 animations:^{
         self.fadeView.frame = self.containerView.frame;
@@ -247,6 +253,7 @@ BOOL keyboardShowing = NO;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contactsTable) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         AMBContact *contact = self.activeSearch ? self.filteredData[indexPath.row] : self.data[indexPath.row];
         AMBContactCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         
