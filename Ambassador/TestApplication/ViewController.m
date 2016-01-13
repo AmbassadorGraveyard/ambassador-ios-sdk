@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "Utilities.h"
 #import <Ambassador/Ambassador.h>
 
 @interface ViewController ()

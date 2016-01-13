@@ -7,7 +7,6 @@
 //
 
 #import "SignUpViewController.h"
-#import "Utilities.h"
 #import <Ambassador/Ambassador.h>
 
 @interface SignUpViewController ()
