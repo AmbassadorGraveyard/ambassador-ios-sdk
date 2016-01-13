@@ -10,9 +10,10 @@
 #import "RAFCell.h"
 #import <Ambassador/Ambassador.h>
 
-@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView * rafTable;
+@property (nonatomic, strong) IBOutlet UITextField * tfCampaignId;
 
 @property (nonatomic, strong) NSArray * rafNameArray;
 
@@ -24,6 +25,7 @@
     [super viewDidLoad];
     self.rafTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.rafNameArray = @[@"Ambassador Shoes RAF", @"Ambassador RAF", @"Ambassador Shirt RAF"];
+    self.tfCampaignId.delegate = self;
 }
 
 
@@ -45,19 +47,29 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSString *campaingId = self.tfCampaignId.text;
+    
     switch (indexPath.row) {
         case 0:
-            [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"AmbassadorShoes"];
+            [AmbassadorSDK presentRAFForCampaign:campaingId FromViewController:self withThemePlist:@"AmbassadorShoes"];
             break;
         case 1:
-            [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"AmbassadorTheme"];
+            [AmbassadorSDK presentRAFForCampaign:campaingId FromViewController:self withThemePlist:@"AmbassadorTheme"];
             break;
         case 2:
-            [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"AmbassadorShirt"];
+            [AmbassadorSDK presentRAFForCampaign:campaingId FromViewController:self withThemePlist:@"AmbassadorShirt"];
             break;
         default:
             break;
     }
+}
+
+
+#pragma mark - TextField Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end
