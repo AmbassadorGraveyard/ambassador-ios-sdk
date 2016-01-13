@@ -239,7 +239,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="61" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Dl7-aO-S8m">
-                                <rect key="frame" x="0.0" y="271" width="600" height="280"/>
+                                <rect key="frame" x="0.0" y="364" width="600" height="187"/>
                                 <color key="backgroundColor" red="0.10980392160000001" green="0.14117647059999999" blue="0.19215686269999999" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.10980392160000001" green="0.14117647059999999" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -247,7 +247,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="61"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="smJ-zd-BOl" id="HLW-t9-CG6">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="60.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="created on 01/07/2015 at 10:22pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hC-Dv-COo">
@@ -292,14 +292,31 @@
                                     <outlet property="delegate" destination="scf-li-MTd" id="cP0-eB-6ua"/>
                                 </connections>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Campaign ID:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jJi-tF-tne">
+                                <rect key="frame" x="249" y="276" width="103" height="20"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                <color key="textColor" red="0.23474984217171713" green="0.23474984217171713" blue="0.23474984217171713" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="260" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UsH-BR-p53">
+                                <rect key="frame" x="250" y="304" width="100" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="kdh-pD-K7o"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="xbU-cL-oj1" firstAttribute="top" secondItem="0WZ-f2-qxl" secondAttribute="bottom" constant="22" id="05Z-IJ-xii"/>
+                            <constraint firstItem="Dl7-aO-S8m" firstAttribute="top" secondItem="UsH-BR-p53" secondAttribute="bottom" constant="30" id="241-8z-OO7"/>
                             <constraint firstItem="zxh-ZW-yN4" firstAttribute="top" secondItem="Dl7-aO-S8m" secondAttribute="bottom" id="9uH-G7-4Cv"/>
+                            <constraint firstItem="UsH-BR-p53" firstAttribute="top" secondItem="jJi-tF-tne" secondAttribute="bottom" constant="8" id="AMZ-Fu-6gt"/>
                             <constraint firstItem="Z0X-Jm-hjZ" firstAttribute="top" secondItem="XWc-ro-VHc" secondAttribute="top" id="AiL-Qa-91i"/>
                             <constraint firstItem="0WZ-f2-qxl" firstAttribute="top" secondItem="Z0X-Jm-hjZ" secondAttribute="bottom" constant="30" id="DRF-OP-DEG"/>
                             <constraint firstItem="Dl7-aO-S8m" firstAttribute="top" secondItem="hLl-kI-KFU" secondAttribute="bottom" constant="15" id="KP7-EQ-XIx"/>
+                            <constraint firstItem="UsH-BR-p53" firstAttribute="centerX" secondItem="XWc-ro-VHc" secondAttribute="centerX" id="P5U-fb-zt1"/>
                             <constraint firstAttribute="trailing" secondItem="Z0X-Jm-hjZ" secondAttribute="trailing" id="QCd-bg-sOX"/>
                             <constraint firstAttribute="trailing" secondItem="Dl7-aO-S8m" secondAttribute="trailing" id="Sv9-NA-MK7"/>
                             <constraint firstItem="Z0X-Jm-hjZ" firstAttribute="leading" secondItem="XWc-ro-VHc" secondAttribute="leading" id="TjD-Eq-uVc"/>
@@ -309,12 +326,20 @@
                             <constraint firstItem="0WZ-f2-qxl" firstAttribute="centerX" secondItem="XWc-ro-VHc" secondAttribute="centerX" id="eVb-vX-fKV"/>
                             <constraint firstItem="xbU-cL-oj1" firstAttribute="leading" secondItem="XWc-ro-VHc" secondAttribute="leading" constant="30" id="jXR-ds-kUt"/>
                             <constraint firstItem="hLl-kI-KFU" firstAttribute="leading" secondItem="XWc-ro-VHc" secondAttribute="leading" constant="30" id="or0-t4-pU3"/>
+                            <constraint firstItem="jJi-tF-tne" firstAttribute="centerX" secondItem="XWc-ro-VHc" secondAttribute="centerX" id="pdk-ki-b1E"/>
+                            <constraint firstItem="jJi-tF-tne" firstAttribute="top" secondItem="hLl-kI-KFU" secondAttribute="bottom" constant="20" id="uQD-ut-FIH"/>
                             <constraint firstAttribute="trailing" secondItem="hLl-kI-KFU" secondAttribute="trailing" constant="30" id="ykL-OI-lS7"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="KP7-EQ-XIx"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Refer a Friend" image="rafIcon" id="Gm8-tE-R7X"/>
                     <connections>
                         <outlet property="rafTable" destination="Dl7-aO-S8m" id="tNT-TL-bTY"/>
+                        <outlet property="tfCampaignId" destination="UsH-BR-p53" id="h4P-Og-6YI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c8m-Yv-h08" userLabel="First Responder" sceneMemberID="firstResponder"/>
