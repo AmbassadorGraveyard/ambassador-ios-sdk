@@ -47,17 +47,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSString *campaingId = self.tfCampaignId.text;
+    NSString *campaignId = self.tfCampaignId.text;
     
     switch (indexPath.row) {
         case 0:
-            [AmbassadorSDK presentRAFForCampaign:campaingId FromViewController:self withThemePlist:@"AmbassadorShoes"];
+            [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self withThemePlist:@"AmbassadorShoes"];
             break;
         case 1:
-            [AmbassadorSDK presentRAFForCampaign:campaingId FromViewController:self withThemePlist:@"AmbassadorTheme"];
+            [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self withThemePlist:@"AmbassadorTheme"];
             break;
         case 2:
-            [AmbassadorSDK presentRAFForCampaign:campaingId FromViewController:self withThemePlist:@"AmbassadorShirt"];
+            [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self withThemePlist:@"AmbassadorShirt"];
             break;
         default:
             break;
