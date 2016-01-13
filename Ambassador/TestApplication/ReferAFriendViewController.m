@@ -23,14 +23,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.rafTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.rafNameArray = @[@"Shopping Cart RAF", @"Login RAF", @"Sign Up RAF", @"Refer a Friend 4"];
+    self.rafNameArray = @[@"Ambassador Shoes RAF", @"Ambassador RAF", @"Ambassador Shirt RAF"];
 }
 
 
 #pragma mark - TableView DataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -53,10 +53,7 @@
             [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"AmbassadorTheme"];
             break;
         case 2:
-            [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:nil];
-            break;
-        case 3:
-            [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:nil];
+            [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"AmbassadorShirt"];
             break;
         default:
             break;

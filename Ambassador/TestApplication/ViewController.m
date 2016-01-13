@@ -34,9 +34,8 @@
 #pragma mark - IBActions
 
 - (IBAction)loginTapped:(id)sender {
+    [self.view endEditing:YES];
     [self identifyOnSignIn];
-    [self.tfUsername resignFirstResponder];
-    [self.tfPassword resignFirstResponder];
 }
 
 
