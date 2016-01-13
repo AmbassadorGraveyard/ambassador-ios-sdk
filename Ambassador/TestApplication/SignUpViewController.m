@@ -36,6 +36,9 @@
 - (IBAction)signUpTapped:(id)sender {
     if ([self allowSignUp]) {
         [self registerConversion];
+        [self.tfEmail resignFirstResponder];
+        [self.tfPassword resignFirstResponder];
+        [self.tfUsername resignFirstResponder];
     } else {
         UIAlertView *blankAlert = [[UIAlertView alloc] initWithTitle:@"Cannot log in" message:@"All fields must be filled out before signing in" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [blankAlert show];

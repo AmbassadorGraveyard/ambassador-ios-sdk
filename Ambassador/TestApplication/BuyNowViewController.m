@@ -36,6 +36,9 @@
     [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {
         if (error) {
             NSLog(@"Error registering install conversion - %@", error);
+        } else {
+            UIAlertView *purchaseAlert = [[UIAlertView alloc] initWithTitle:@"Purchase successful" message:@"Thank you for buying from Ambassador!" delegate:nil cancelButtonTitle:@"Done" otherButtonTitles:nil];
+            [purchaseAlert show];
         }
     }];
 }
