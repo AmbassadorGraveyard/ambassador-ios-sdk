@@ -19,8 +19,6 @@
 + (AmbassadorSDK*)sharedInstance;
 - (void)subscribeToPusherWithCompletion:(void(^)())completion;
 
-@property (nonatomic, strong) NSString *email;
-@property (nonatomic, strong) AMBPusherChannelObject *pusherChannelObj;
 @property (nonatomic, strong) AMBPusherManager *pusherManager;
 @property (nonatomic, strong) AMBUserNetworkObject *user;
 @property (nonatomic, strong) NSString *universalToken;

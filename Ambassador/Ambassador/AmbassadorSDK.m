@@ -8,25 +8,18 @@
 
 #import "AmbassadorSDK.h"
 #import "AmbassadorSDK_Internal.h"
-#import "AMBConstants.h"
 #import "AMBIdentify.h"
 #import "AMBConversion.h"
 #import "AMBConversionParameters.h"
-#import "AMBUtilities.h"
 #import "AMBServiceSelector.h"
-#import "AMBServiceSelectorPreferences.h"
-#import "AMBThemeManager.h"
 #import "AMBPusherManager.h"
-#import "AMBNetworkObject.h"
 #import "AMBNetworkManager.h"
-#import "AMBPusher.h"
-#import "AMBPusherChannelObject.h"
 
 @interface AmbassadorSDK ()
+
 @property (nonatomic, strong) AMBIdentify *identify;
 @property (nonatomic, strong) NSTimer *conversionTimer;
 @property (nonatomic, strong) AMBConversion *conversion;
-@property (nonatomic) BOOL hasBeenBoundToChannel;
 
 @end
 
@@ -34,7 +27,7 @@
 @implementation AmbassadorSDK
 
 #pragma mark - LifeCycle
-``
+
 + (AmbassadorSDK *)sharedInstance {
     static AmbassadorSDK* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
@@ -42,7 +35,6 @@
         _sharedInsance = [[AmbassadorSDK alloc] init];
         _sharedInsance.identify = [[AMBIdentify alloc] init];
         _sharedInsance.user = [AMBUserNetworkObject loadFromDisk];
-        _sharedInsance.pusherChannelObj = [[AMBPusherChannelObject alloc] init];
     });
     
     return _sharedInsance;
@@ -73,7 +65,6 @@
 }
 
 - (void)localIdentifyWithEmail:(NSString*)email {
-    self.email = email;
     [AMBValues setUserEmail:email];
     [self subscribeToPusherWithCompletion:nil];
 }
