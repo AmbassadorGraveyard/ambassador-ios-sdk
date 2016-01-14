@@ -22,6 +22,8 @@
 + (NSString *)identifyUrlWithUniversalID:(NSString *)uid;
 + (NSString*)getSendIdentifyUrl;
 + (NSString*)getShareTrackUrl;
++ (NSString*)getLinkedInAuthorizationUrl;
++ (NSString*)getLinkedInAuthCallbackUrl;
 + (NSString*)getLinkedInRequestTokenUrl;
 + (NSString*)getLinkedInValidationUrl;
 + (NSString*)getLinkedInShareUrl;

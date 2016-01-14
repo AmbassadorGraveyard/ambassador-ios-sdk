@@ -94,6 +94,14 @@
     return [AMBValues isProduction] ? @"https://api.getambassador.com/track/share/" : @"https://dev-ambassador-api.herokuapp.com/track/share/";
 }
 
++ (NSString*)getLinkedInAuthorizationUrl {
+    return @"https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=***REMOVED***&redirect_uri=http://localhost:2999/&state=987654321&scope=r_basicprofile%20w_share";
+}
+
++ (NSString*)getLinkedInAuthCallbackUrl {
+    return @"http://localhost:2999/";
+}
+
 + (NSString*)getLinkedInRequestTokenUrl {
     return @"https://www.linkedin.com/uas/oauth2/accessToken";
 }
