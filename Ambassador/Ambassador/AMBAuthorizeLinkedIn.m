@@ -57,22 +57,14 @@
 }
 
 
-#pragma mark - UIAlertView
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
 #pragma mark - Helper Functions
 
 - (void)saveValuesFromQueryParams:(NSArray*)queryParameters {
     for (int i = 0; i < queryParameters.count; ++i) {
         NSArray *queryPair = [queryParameters[i] componentsSeparatedByString:@"="];
         
-        if ([[queryPair firstObject] isEqualToString:@"error"]) { // If a random error occurs, the user is alerted and popped back to try again
-            UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Unable to login" message:@"There was an error while logging into LinkedIn, please try again" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-            [errorAlert show];
+        if ([[queryPair firstObject] isEqualToString:@"error"]) { // This means that the user tapped 'Cancel' in the webview
+            [self.navigationController popViewControllerAnimated:YES];
             return;
         }
     
