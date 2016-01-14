@@ -83,8 +83,6 @@
 		DBA3FBB41BA8A24F00672D82 /* AMBSendCompletionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */; };
 		DBA3FBB51BA8A24F00672D82 /* AMBServiceSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9D1BA8A24F00672D82 /* AMBServiceSelector.h */; };
 		DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9E1BA8A24F00672D82 /* AMBServiceSelector.m */; };
-		DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9F1BA8A24F00672D82 /* AMBServiceSelectorPreferences.h */; };
-		DBA3FBB81BA8A24F00672D82 /* AMBServiceSelectorPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA01BA8A24F00672D82 /* AMBServiceSelectorPreferences.m */; };
 		DBA3FBBB1BA8A24F00672D82 /* AMBShareServiceCell.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA31BA8A24F00672D82 /* AMBShareServiceCell.h */; };
 		DBA3FBBC1BA8A24F00672D82 /* AMBShareServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA41BA8A24F00672D82 /* AMBShareServiceCell.m */; };
 		DBA3FBBF1BA8A24F00672D82 /* AMBUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */; };
@@ -341,8 +339,6 @@
 		DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSendCompletionModal.m; sourceTree = "<group>"; };
 		DBA3FB9D1BA8A24F00672D82 /* AMBServiceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBServiceSelector.h; sourceTree = "<group>"; };
 		DBA3FB9E1BA8A24F00672D82 /* AMBServiceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelector.m; sourceTree = "<group>"; };
-		DBA3FB9F1BA8A24F00672D82 /* AMBServiceSelectorPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBServiceSelectorPreferences.h; sourceTree = "<group>"; };
-		DBA3FBA01BA8A24F00672D82 /* AMBServiceSelectorPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelectorPreferences.m; sourceTree = "<group>"; };
 		DBA3FBA31BA8A24F00672D82 /* AMBShareServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBShareServiceCell.h; sourceTree = "<group>"; };
 		DBA3FBA41BA8A24F00672D82 /* AMBShareServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBShareServiceCell.m; sourceTree = "<group>"; };
 		DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBUtilities.h; sourceTree = "<group>"; };
@@ -930,8 +926,6 @@
 		EFE7D7921C21BA7400D7F92C /* Theme Manager */ = {
 			isa = PBXGroup;
 			children = (
-				DBA3FB9F1BA8A24F00672D82 /* AMBServiceSelectorPreferences.h */,
-				DBA3FBA01BA8A24F00672D82 /* AMBServiceSelectorPreferences.m */,
 				EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */,
 				EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */,
 				EF407F1C1BB344500074D2AE /* AMBThemeManager.h */,
@@ -969,7 +963,6 @@
 				DBA3FC1F1BA8AA1D00672D82 /* AMBPTPusherMacros.h in Headers */,
 				DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
-				DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */,
 				DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */,
 				DBA3FC191BA8AA1D00672D82 /* AMBPTPusherErrors.h in Headers */,
 				EFE7D7B51C2202C900D7F92C /* AMBConversionParametersEntity.h in Headers */,
@@ -1294,7 +1287,6 @@
 				DBA3FC121BA8AA1D00672D82 /* AMBPTPusherAPI.m in Sources */,
 				DBA3FC001BA8AA1D00672D82 /* NSDictionary+QueryString.m in Sources */,
 				DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */,
-				DBA3FBB81BA8A24F00672D82 /* AMBServiceSelectorPreferences.m in Sources */,
 				DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */,
 				DBA3FC231BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m in Sources */,
 				DBA3FC211BA8AA1D00672D82 /* AMBPTPusherMockConnection.m in Sources */,
