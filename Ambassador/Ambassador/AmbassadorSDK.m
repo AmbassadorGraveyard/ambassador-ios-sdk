@@ -133,15 +133,13 @@
 #pragma mark - Pusher
 
 - (void)subscribeToPusherWithCompletion:(void(^)())completion {
-    if (!self.pusherManager) {
-        self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken];
-    }
+    if (!self.pusherManager) { self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken]; }
     
     [[AMBNetworkManager sharedInstance] getPusherSessionWithSuccess:^(NSDictionary *response) {
         [AMBValues setPusherChannelObject:response];
         [self.pusherManager subscribeToChannel:[AMBValues getPusherChannelObject].channelName completion:^(AMBPTPusherChannel *pusherChannel, NSError *error) {
             if (!error) {
-                [self bindToIdentifyActionUniversalToken:[AMBValues getUniversalToken] universalID:[AMBValues getUniversalID]];
+                [self.pusherManager bindToChannelEvent:@"identify_action"];
                 [self.identify getIdentity];
             } else {
                 DLog(@"Error binding to pusher channel - %@", error);
@@ -151,35 +149,6 @@
         }];
     } failure:^(NSString *error) {
         DLog(@"Unable to get PUSHER SESSION");
-    }];
-}
-
-- (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID {
-    [AmbassadorSDK sharedInstance].hasBeenBoundToChannel = YES;
-    [self.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
-        NSMutableDictionary *json = (NSMutableDictionary *)ev.data[@"body"];
-        AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
-        if (ev.data[@"url"]) {
-            [user fillWithUrl:ev.data[@"url"] completion:^(NSString *error) {
-                if (!error) {
-                    [AmbassadorSDK sharedInstance].user = user;
-                    [AMBValues setUserFirstNameWithString:user.first_name];
-                    [AMBValues setUserLastNameWithString:user.last_name];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
-                }
-            }];
-        } else if (json[@"mbsy_cookie_code"] && json[@"mbsy_cookie_code"] != [NSNull null]) {
-            DLog(@"MBSY COOKIE = %@ and FINGERPRINT = %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
-            [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
-            [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
-        } else {
-            [user fillWithDictionary:json];
-            [AmbassadorSDK sharedInstance].user = user;
-            [AMBValues setUserFirstNameWithString:user.first_name];
-            [AMBValues setUserLastNameWithString:user.last_name];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
-        }
     }];
 }
 
