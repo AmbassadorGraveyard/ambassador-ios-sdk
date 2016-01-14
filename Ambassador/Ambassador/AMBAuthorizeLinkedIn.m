@@ -19,6 +19,9 @@
 
 @implementation AMBAuthorizeLinkedIn
 
+
+#pragma mark - LifeCycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Authorize LinkedIn";
