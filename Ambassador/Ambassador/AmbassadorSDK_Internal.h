@@ -8,6 +8,7 @@
 
 #import <Ambassador/Ambassador.h>
 #import "AMBPusherChannelObject.h"
+#import "AMBNetworkObject.h"
 #import "AMBPusherManager.h"
 #import "AMBPusher.h"
 
