@@ -34,7 +34,6 @@
     dispatch_once(&oncePredicate, ^{
         _sharedInsance = [[AmbassadorSDK alloc] init];
         _sharedInsance.identify = [[AMBIdentify alloc] init];
-        _sharedInsance.user = [AMBUserNetworkObject loadFromDisk];
     });
     
     return _sharedInsance;
