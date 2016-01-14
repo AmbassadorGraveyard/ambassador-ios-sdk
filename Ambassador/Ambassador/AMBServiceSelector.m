@@ -369,8 +369,8 @@ int contactServiceType;
 }
 
 - (void)removeLoadingView {
-    NSNumber *campaingID = [NSNumber numberWithInt:self.campaignID.intValue];
-    self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
+    NSNumber *campaignID = [NSNumber numberWithInt:self.campaignID.intValue];
+    self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaignID];
     [AMBValues setUserURLObject:[self.urlNetworkObj toDictionary]];
     
     if (!self.urlNetworkObj) { // This means that there was no matching campaign ID that was returned
