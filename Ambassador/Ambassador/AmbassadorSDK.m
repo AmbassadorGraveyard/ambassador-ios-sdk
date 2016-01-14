@@ -22,16 +22,6 @@
 #import "AMBPusher.h"
 #import "AMBPusherChannelObject.h"
 
-
-#pragma mark - Local Constants
-float const AMB_CONVERSION_FLUSH_TIME = 10.0;
-NSString * const AMBASSADOR_INFO_URLS_KEY = @"urls";
-NSString * const CAMPAIGN_UID_KEY = @"campaign_uid";
-NSString * const SHORT_CODE_KEY = @"short_code";
-NSString * const SHORT_CODE_URL_KEY = @"url";
-#pragma mark -
-
-
 @interface AmbassadorSDK ()
 @property (nonatomic, strong) AMBIdentify *identify;
 @property (nonatomic, strong) NSTimer *conversionTimer;
