@@ -7,14 +7,12 @@
 //
 
 #import "AMBLinkedInShare.h"
-#import "AMBConstants.h"
 #import "AMBNetworkManager.h"
 
-@interface AMBLinkedInShare ()
-
-@end
-
 @implementation AMBLinkedInShare
+
+
+#pragma mark - LifeCycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,6 +23,9 @@
 - (void)viewDidAppear:(BOOL)animated {
     [self.textView becomeFirstResponder];
 }
+
+
+#pragma mark - SLComposeView Delegate 
 
 - (void)didSelectPost {
     NSDictionary *payload = @{ @"comment" : [NSString stringWithFormat:@"%@ %@", self.textView.text, self.shortURL], @"visibility" : @{ @"code" : @"connections-only" } };
