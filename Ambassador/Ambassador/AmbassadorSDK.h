@@ -19,6 +19,6 @@
 + (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion;
 
 /**Presents a full-page modal 'Refer-A-Friend' (RAF) ViewController*/
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController;
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist;
 
 @end
