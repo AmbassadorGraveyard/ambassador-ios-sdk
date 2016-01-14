@@ -7,7 +7,6 @@
 //
 
 #import "AMBAuthorizeLinkedIn.h"
-#import "AMBLinkedInAPIConstants.h"
 #import "AMBConstants.h"
 #import "AMBNetworkManager.h"
 
@@ -18,17 +17,13 @@
 
 @implementation AMBAuthorizeLinkedIn
 
-#pragma mark - Local Constants
-NSString * const TITLE = @"Authorize LinkedIn";
-//NSString * const AMB_LINKEDIN_USER_DEFAULTS_KEY = @"AMBLINKEDINSTORAGE";
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = TITLE;
+    self.navigationItem.title = @"Authorize LinkedIn";
     self.webView.delegate = self;
-    NSString * addressString = AMB_LKDN_AUTH_URL;
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:addressString]]];
+//    NSString * addressString = AMB_LKDN_AUTH_URL;
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[AMBValues getLinkedInAuthorizationUrl]]]];
     [self.view addSubview:self.webView];
 }
 
@@ -55,7 +50,7 @@ NSString * const TITLE = @"Authorize LinkedIn";
     //Parse the URL string delimiting at "?"
     NSString *urlRequestString = [[request URL] absoluteString];
     NSArray *urlRequestComponents = [urlRequestString componentsSeparatedByString:@"?"];
-    if ([[urlRequestComponents firstObject] isEqualToString:AMB_LKDN_AUTH_CALLBACK_URL])
+    if ([[urlRequestComponents firstObject] isEqualToString:[AMBValues getLinkedInAuthCallbackUrl]])
     {
         self.webView.hidden = YES;
         if (urlRequestComponents.count > 1)
@@ -64,11 +59,11 @@ NSString * const TITLE = @"Authorize LinkedIn";
             for (int i = 0; i < queryParameters.count; ++i)
             {
                 NSArray *queryPair = [queryParameters[i] componentsSeparatedByString:@"="];
-                if ([[queryPair firstObject] isEqualToString:AMB_LKDN_ERROR_DICT_KEY]) {
+                if ([[queryPair firstObject] isEqualToString:@"error"]) {
                     [self.navigationController popViewControllerAnimated:YES];
                 }
                 
-                if ([[queryPair firstObject] isEqualToString:AMB_LKDN_CODE_DICT_KEY]) {
+                if ([[queryPair firstObject] isEqualToString:@"code"]) {
                     [[AMBNetworkManager sharedInstance] getLinkedInRequestTokenWithKey:[NSString stringWithString:[queryPair lastObject]] success:^{
                         DLog(@"Get Linkedin Request Token SUCCESSFUL!")
                         [self.delegate userDidContinue];

@@ -12,7 +12,6 @@
 #import "AMBContactLoader.h"
 #import "AMBAuthorizeLinkedIn.h"
 #import "AMBUtilities.h"
-#import "AMBLinkedInAPIConstants.h"
 #import "AMBConstants.h"
 #import <Social/Social.h>
 #import "AMBLinkedInShare.h"
