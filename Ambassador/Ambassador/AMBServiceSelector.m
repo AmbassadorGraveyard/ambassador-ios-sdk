@@ -9,23 +9,14 @@
 #import "AMBServiceSelector.h"
 #import "AMBShareServiceCell.h"
 #import "AMBContactSelector.h"
-#import "AMBContactLoader.h"
 #import "AMBAuthorizeLinkedIn.h"
-#import "AMBUtilities.h"
-#import "AMBConstants.h"
 #import <Social/Social.h>
 #import "AMBLinkedInShare.h"
-#import "AMBContact.h"
-#import "AMBSendCompletionModal.h"
-#import <MessageUI/MessageUI.h>
-#import "AMBIdentify.h"
 #import "AMBThemeManager.h"
 #import "AmbassadorSDK_Internal.h"
-#import "AMBNetworkObject.h" 
 #import "AMBNetworkManager.h"
 
-@interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LinkedInAuthorizeDelegate,
-                                    AMBShareServiceDelegate, UITextFieldDelegate, AMBUtilitiesDelegate>
+@interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LinkedInAuthorizeDelegate, AMBShareServiceDelegate, AMBUtilitiesDelegate>
 
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *descriptionLabel;
@@ -362,9 +353,7 @@ int contactServiceType;
 }
 
 - (void)presentLinkedInShare {
-    DLog();
     AMBLinkedInShare * vc = [[AMBLinkedInShare alloc] init];
-    DLog(@"%@", vc.debugDescription);
     vc.defaultMessage = [[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage];
     vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
     vc.shortCode = self.urlNetworkObj.short_code;
