@@ -31,12 +31,7 @@
 @end
 
 
-
 @implementation AmbassadorSDK
-#pragma mark - Static class variables
-static AMBServiceSelector *raf;
-
-
 
 #pragma mark - Object lifecycle
 + (AmbassadorSDK *)sharedInstance {
@@ -126,12 +121,12 @@ static AMBServiceSelector *raf;
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist {
     // Initialize root view controller
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
-    UINavigationController *vc = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
-    raf = (AMBServiceSelector *)vc.childViewControllers[0];
-    raf.campaignID = ID;
-    raf.themeName = themePlist;
+    UINavigationController *nav = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
+    AMBServiceSelector *serviceSelectorVC = (AMBServiceSelector *)nav.childViewControllers[0];
+    serviceSelectorVC.campaignID = ID;
+    serviceSelectorVC.themeName = themePlist;
 
-    [viewController presentViewController:vc animated:YES completion:nil];
+    [viewController presentViewController:nav animated:YES completion:nil];
 }
 
 
