@@ -11,6 +11,7 @@
 #import "AMBNetworkManager.h"
 
 @interface AMBAuthorizeLinkedIn () <UIWebViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end
@@ -19,12 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.navigationItem.title = @"Authorize LinkedIn";
-    self.webView.delegate = self;
-//    NSString * addressString = AMB_LKDN_AUTH_URL;
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[AMBValues getLinkedInAuthorizationUrl]]]];
-    [self.view addSubview:self.webView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -32,16 +29,9 @@
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    
     CGFloat offset = [AMBUtilities getOffsetForRotation:self toOrientation:toInterfaceOrientation];
     [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 
 #pragma mark - WebViewDelegate
