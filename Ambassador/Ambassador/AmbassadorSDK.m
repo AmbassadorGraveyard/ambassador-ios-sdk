@@ -33,25 +33,19 @@
 
 @implementation AmbassadorSDK
 
-#pragma mark - Object lifecycle
+#pragma mark - LifeCycle
+``
 + (AmbassadorSDK *)sharedInstance {
     static AmbassadorSDK* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{ _sharedInsance = [[AmbassadorSDK alloc] init]; });
+    dispatch_once(&oncePredicate, ^{
+        _sharedInsance = [[AmbassadorSDK alloc] init];
+        _sharedInsance.identify = [[AMBIdentify alloc] init];
+        _sharedInsance.user = [AMBUserNetworkObject loadFromDisk];
+        _sharedInsance.pusherChannelObj = [[AMBPusherChannelObject alloc] init];
+    });
+    
     return _sharedInsance;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (instancetype)init {
-    if (self = [super init]) {
-        self.identify = [[AMBIdentify alloc] init];
-        self.user = [AMBUserNetworkObject loadFromDisk];
-        self.pusherChannelObj = [[AMBPusherChannelObject alloc] init];
-    }
-    return self;
 }
 
 
