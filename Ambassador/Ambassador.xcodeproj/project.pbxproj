@@ -73,8 +73,6 @@
 		DBA3FB821BA8A23C00672D82 /* AMBConversionParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB631BA8A23C00672D82 /* AMBConversionParameters.m */; };
 		DBA3FB8E1BA8A23C00672D82 /* AMBIdentify.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB6F1BA8A23C00672D82 /* AMBIdentify.h */; };
 		DBA3FB8F1BA8A23C00672D82 /* AMBIdentify.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB701BA8A23C00672D82 /* AMBIdentify.m */; };
-		DBA3FBA91BA8A24F00672D82 /* AMBLinkedInAPIConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB901BA8A24F00672D82 /* AMBLinkedInAPIConstants.h */; };
-		DBA3FBAA1BA8A24F00672D82 /* AMBLinkedInAPIConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB911BA8A24F00672D82 /* AMBLinkedInAPIConstants.m */; };
 		DBA3FBAB1BA8A24F00672D82 /* AMBLinkedInShare.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB921BA8A24F00672D82 /* AMBLinkedInShare.h */; };
 		DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */; };
 		DBA3FBAD1BA8A24F00672D82 /* AMBNamePrompt.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */; };
@@ -333,8 +331,6 @@
 		DBA3FB631BA8A23C00672D82 /* AMBConversionParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBConversionParameters.m; sourceTree = "<group>"; };
 		DBA3FB6F1BA8A23C00672D82 /* AMBIdentify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBIdentify.h; sourceTree = "<group>"; };
 		DBA3FB701BA8A23C00672D82 /* AMBIdentify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdentify.m; sourceTree = "<group>"; };
-		DBA3FB901BA8A24F00672D82 /* AMBLinkedInAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBLinkedInAPIConstants.h; sourceTree = "<group>"; };
-		DBA3FB911BA8A24F00672D82 /* AMBLinkedInAPIConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkedInAPIConstants.m; sourceTree = "<group>"; };
 		DBA3FB921BA8A24F00672D82 /* AMBLinkedInShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBLinkedInShare.h; sourceTree = "<group>"; };
 		DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkedInShare.m; sourceTree = "<group>"; };
 		DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNamePrompt.h; sourceTree = "<group>"; };
@@ -861,8 +857,6 @@
 		EFE7D78B1C21B99300D7F92C /* LinkedIn */ = {
 			isa = PBXGroup;
 			children = (
-				DBA3FB901BA8A24F00672D82 /* AMBLinkedInAPIConstants.h */,
-				DBA3FB911BA8A24F00672D82 /* AMBLinkedInAPIConstants.m */,
 				DBA3FB541BA8A23B00672D82 /* AMBAuthorizeLinkedIn.h */,
 				DBA3FB551BA8A23B00672D82 /* AMBAuthorizeLinkedIn.m */,
 				DBA3FB921BA8A24F00672D82 /* AMBLinkedInShare.h */,
@@ -973,7 +967,6 @@
 				EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */,
 				DB6A24841BD1842800CE3230 /* AmbassadorSDK_Internal.h in Headers */,
 				DBA3FC1F1BA8AA1D00672D82 /* AMBPTPusherMacros.h in Headers */,
-				DBA3FBA91BA8A24F00672D82 /* AMBLinkedInAPIConstants.h in Headers */,
 				DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
 				DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */,
@@ -1314,7 +1307,6 @@
 				DBA3FBBC1BA8A24F00672D82 /* AMBShareServiceCell.m in Sources */,
 				DBB8BD0B1BAC6B6D00B87896 /* AMBPTPusher+Testing.m in Sources */,
 				DBA3FC241BA8AA1D00672D82 /* AMBPTURLRequestOperation.m in Sources */,
-				DBA3FBAA1BA8A24F00672D82 /* AMBLinkedInAPIConstants.m in Sources */,
 				DB6A24681BD01D8A00CE3230 /* AMBNetworkObject.m in Sources */,
 				DBA3FB781BA8A23C00672D82 /* AMBContact.m in Sources */,
 				DBA3FB821BA8A23C00672D82 /* AMBConversionParameters.m in Sources */,
