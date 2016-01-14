@@ -55,17 +55,16 @@
 }
 
 - (void)subscribeToChannel:(NSString *)channel completion:(void(^)(AMBPTPusherChannel *pusherChannel, NSError *error))completion {
-    [AmbassadorSDK sharedInstance].pusherChannelObj = [AMBValues getPusherChannelObject];
     self.completion = completion;
     self.channel = [self.client subscribeToPrivateChannelNamed:channel];
 }
 
 - (void)resubscribeToExistingChannelWithCompletion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
-    NSString *channelName = [AmbassadorSDK sharedInstance].pusherChannelObj.channelName;
+    NSString *channelName = [AMBValues getPusherChannelObject].channelName;
     self.completion = completion;
     
     if (channelName && ![channelName isEqualToString:@""]) {
-        self.channel = [self.client subscribeToPrivateChannelNamed:[AmbassadorSDK sharedInstance].pusherChannelObj.channelName];
+        self.channel = [self.client subscribeToPrivateChannelNamed:[AMBValues getPusherChannelObject].channelName];
         self.completion(self.channel, nil);
     } else {
         self.completion(self.channel, [NSError errorWithDomain:@"Could not find existing channel name to subscribe!" code:1 userInfo:nil]);

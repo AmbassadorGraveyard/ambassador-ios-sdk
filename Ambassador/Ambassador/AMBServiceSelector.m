@@ -275,7 +275,7 @@ int contactServiceType;
 }
 
 - (void)performIdentify {
-    AMBPusherChannelObject *channelObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
+    AMBPusherChannelObject *channelObject = [AMBValues getPusherChannelObject];
     
     // Checks if we are subscribed to a pusher channel and makes sure that the channel is not expired
     if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState == PTPusherConnectionConnected) {
