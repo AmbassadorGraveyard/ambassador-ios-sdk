@@ -66,6 +66,7 @@ typedef enum socialShareTypes {
 @interface AMBThemeManager : NSObject
 
 + (AMBThemeManager *)sharedInstance;
+- (void)createDicFromPlist:(NSString*)plistName;
 - (UIColor*)colorForKey:(AmbassadorColors)colorName;
 - (NSString*)messageForKey:(AmbassadorMessages)messageName;
 - (UIFont*)fontForKey:(AmbassadorFonts)fontName;
