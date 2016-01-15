@@ -132,6 +132,10 @@ int contactServiceType;
 
 - (void)setUpTheme {
     [[AMBThemeManager sharedInstance] createDicFromPlist:self.themeName];
+
+    // Set images programmatically
+    [self.btnCopy setImage:[AMBValues imageFromBundleWithName:@"clipboard" type:@"png" tintable:NO] forState:UIControlStateNormal];
+
     // Sets labels and navbarTitle based on plist
     self.titleLabel.text = [[AMBThemeManager sharedInstance] messageForKey:RAFWelcomeTextMessage];
     self.descriptionLabel.text = [[AMBThemeManager sharedInstance] messageForKey:RAFDescriptionTextMessage];

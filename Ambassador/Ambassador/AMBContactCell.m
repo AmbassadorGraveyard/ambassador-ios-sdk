@@ -9,23 +9,66 @@
 #import "AMBContactCell.h"
 #import "AMBThemeManager.h"
 
+@interface AMBContactCell()
+
+// IBOutlets
+@property (nonatomic, weak) IBOutlet UILabel * name;
+@property (nonatomic, weak) IBOutlet UILabel * value;
+@property (nonatomic, weak) IBOutlet UIImageView * checkmarkView;
+@property (nonatomic, weak) IBOutlet UIImageView * contactPhoto;
+@property (nonatomic, weak) IBOutlet UIImageView * avatarImage;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint * checkmarkConstraint;
+
+@end
+
 @implementation AMBContactCell
 
+
+#pragma mark - Setup Functionality
+
 - (void)setUpCellWithContact:(AMBContact*)contact isSelected:(BOOL)selected {
-    [self setCellSelectionColor];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.contact = contact;
+
     self.name.text = [contact fullName];
     self.name.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableNameTextFont];
     self.value.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
     self.value.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableInfoTextFont];
+    
+    self.avatarImage.hidden = (contact.contactImage) ? YES : NO;
+    if (!self.avatarImage.hidden) { self.avatarImage.image = [AMBValues imageFromBundleWithName:@"avatar" type:@"png" tintable:NO]; }
+    
+    self.contactPhoto.image = contact.contactImage;
+    self.contactPhoto.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    self.contactPhoto.layer.cornerRadius = self.contactPhoto.frame.size.height/2;
+    self.contactPhoto.layer.masksToBounds = YES;
     self.checkmarkView.image = [AMBValues imageFromBundleWithName:@"check" type:@"png" tintable:YES];
     self.checkmarkView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableCheckMarkColor];
-    
-    if (selected) {
-        self.checkmarkConstraint.constant = 16;
+    self.checkmarkConstraint.constant = (selected) ? 16 : -(self.checkmarkView.frame.size.width);
+
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressTriggered:)];
+    [self addGestureRecognizer:longPress];
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    if (highlighted) {
+        self.backgroundColor = [UIColor cellSelectionGray];
     } else {
-        self.checkmarkConstraint.constant = -self.checkmarkView.frame.size.width;
+        self.backgroundColor = [UIColor whiteColor];
     }
 }
+
+
+#pragma mark - Helper Functions
+
+- (void)longPressTriggered:(UILongPressGestureRecognizer*)sender {
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        [self.delegate longPressTriggeredForContact:self.contact];
+    }
+}
+
+
+#pragma mark - UI Functions
 
 - (void)animateCheckmarkIn {
     self.checkmarkConstraint.constant = 16;
