@@ -55,25 +55,48 @@
 }
 
 - (void)subscribeToChannel:(NSString *)channel completion:(void(^)(AMBPTPusherChannel *pusherChannel, NSError *error))completion {
-    [AmbassadorSDK sharedInstance].pusherChannelObj = [AMBValues getPusherChannelObject];
     self.completion = completion;
     self.channel = [self.client subscribeToPrivateChannelNamed:channel];
 }
 
 - (void)resubscribeToExistingChannelWithCompletion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
-    NSString *channelName = [AmbassadorSDK sharedInstance].pusherChannelObj.channelName;
+    NSString *channelName = [AMBValues getPusherChannelObject].channelName;
     self.completion = completion;
     
     if (channelName && ![channelName isEqualToString:@""]) {
-        self.channel = [self.client subscribeToPrivateChannelNamed:[AmbassadorSDK sharedInstance].pusherChannelObj.channelName];
+        self.channel = [self.client subscribeToPrivateChannelNamed:[AMBValues getPusherChannelObject].channelName];
         self.completion(self.channel, nil);
     } else {
         self.completion(self.channel, [NSError errorWithDomain:@"Could not find existing channel name to subscribe!" code:1 userInfo:nil]);
     }
 }
 
-- (void)bindToChannelEvent:(NSString *)event handler:(void(^)(AMBPTPusherEvent *))handler {
-    [self.channel bindToEventNamed:event handleWithBlock:handler];
+- (void)bindToChannelEvent:(NSString*)eventName {
+    [self.channel bindToEventNamed:eventName handleWithBlock:^(AMBPTPusherEvent *event) {
+        NSMutableDictionary *json = (NSMutableDictionary *)event.data[@"body"];
+        AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
+        if (event.data[@"url"]) {
+            [user fillWithUrl:event.data[@"url"] completion:^(NSString *error) {
+                if (!error) {
+                    [AmbassadorSDK sharedInstance].user = user;
+                    [AMBValues setUserFirstNameWithString:user.first_name];
+                    [AMBValues setUserLastNameWithString:user.last_name];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
+                }
+            }];
+        } else if (json[@"mbsy_cookie_code"] && json[@"mbsy_cookie_code"] != [NSNull null]) {
+            DLog(@"MBSY COOKIE = %@ and FINGERPRINT = %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
+            [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
+            [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
+        } else {
+            [user fillWithDictionary:json];
+            [AmbassadorSDK sharedInstance].user = user;
+            [AMBValues setUserFirstNameWithString:user.first_name];
+            [AMBValues setUserLastNameWithString:user.last_name];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
+        }
+    }];
 }
 
 
