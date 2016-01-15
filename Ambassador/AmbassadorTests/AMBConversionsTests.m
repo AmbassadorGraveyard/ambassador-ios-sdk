@@ -28,65 +28,55 @@
     [super tearDown];
 }
 
-- (void)testInitWithKey {
-    // GIVEN
-    AMBConversion *mockConversion;
-    
-    // WHEN
-    mockConversion  = [[AMBConversion alloc] initWithKey:self.mockUniversalToken];
-    
-    // THEN
-    XCTAssertEqualObjects(self.mockUniversalToken, mockConversion.key, @"%@ is not equal to %@", self.mockUniversalToken, mockConversion.key);
-    XCTAssertNotNil(mockConversion);
-}
 
-- (void)testRegisterConversionSuccess {
-    // GIVEN
-    XCTestExpectation *completeExpectation = [self expectationWithDescription:@"Registration complete"];
-    AMBConversion *mockConversion = [[AMBConversion alloc] initWithKey:self.mockUniversalToken];
-    
-    AMBConversionParameters *mockParameters = [[AMBConversionParameters alloc] init];
-    mockParameters.mbsy_email = @"test@test.com";
-    mockParameters.mbsy_campaign = @206;
-    mockParameters.mbsy_revenue = @200;
-    
-    __block NSError *expectedError;
-    
-    // WHEN
-    [mockConversion registerConversionWithParameters:mockParameters completion:^(NSError *error) {
-        [completeExpectation fulfill];
-        expectedError = error;
-    }];
-    
-    [self waitForExpectationsWithTimeout:1 handler:nil];
-    
-    // THEN
-    XCTAssertNil(expectedError);
-    XCTAssertNil(mockParameters.isValid);
-}
-
-- (void)testRegisterConversionFail {
-    // GIVEN
-    XCTestExpectation *completedExpectation = [self expectationWithDescription:@"Registation attempt complete"];
-    AMBConversion *mockConversion = [[AMBConversion alloc] initWithKey:self.mockUniversalToken];
-    
-    AMBConversionParameters *mockParameters = [[AMBConversionParameters alloc] init];
-    mockParameters.mbsy_email = @"test@test.com";
-    mockParameters.mbsy_campaign = @200;
-    
-    __block NSError *expectedError;
-    
-    // WHEN
-    [mockConversion registerConversionWithParameters:mockParameters completion:^(NSError *error) {
-        [completedExpectation fulfill];
-        expectedError = error;
-    }];
-    
-    [self waitForExpectationsWithTimeout:1 handler:nil];
-    
-    // THEN
-    XCTAssertNotNil(expectedError);
-    XCTAssertNotNil(mockParameters.isValid);
-}
+//
+//- (void)testRegisterConversionSuccess {
+//    // GIVEN
+//    XCTestExpectation *completeExpectation = [self expectationWithDescription:@"Registration complete"];
+//    AMBConversion *mockConversion = [[AMBConversion alloc] initWithKey:self.mockUniversalToken];
+//    
+//    AMBConversionParameters *mockParameters = [[AMBConversionParameters alloc] init];
+//    mockParameters.mbsy_email = @"test@test.com";
+//    mockParameters.mbsy_campaign = @206;
+//    mockParameters.mbsy_revenue = @200;
+//    
+//    __block NSError *expectedError;
+//    
+//    // WHEN
+//    [mockConversion registerConversionWithParameters:mockParameters completion:^(NSError *error) {
+//        [completeExpectation fulfill];
+//        expectedError = error;
+//    }];
+//    
+//    [self waitForExpectationsWithTimeout:1 handler:nil];
+//    
+//    // THEN
+//    XCTAssertNil(expectedError);
+//    XCTAssertNil(mockParameters.isValid);
+//}
+//
+//- (void)testRegisterConversionFail {
+//    // GIVEN
+//    XCTestExpectation *completedExpectation = [self expectationWithDescription:@"Registation attempt complete"];
+//    AMBConversion *mockConversion = [[AMBConversion alloc] initWithKey:self.mockUniversalToken];
+//    
+//    AMBConversionParameters *mockParameters = [[AMBConversionParameters alloc] init];
+//    mockParameters.mbsy_email = @"test@test.com";
+//    mockParameters.mbsy_campaign = @200;
+//    
+//    __block NSError *expectedError;
+//    
+//    // WHEN
+//    [mockConversion registerConversionWithParameters:mockParameters completion:^(NSError *error) {
+//        [completedExpectation fulfill];
+//        expectedError = error;
+//    }];
+//    
+//    [self waitForExpectationsWithTimeout:1 handler:nil];
+//    
+//    // THEN
+//    XCTAssertNotNil(expectedError);
+//    XCTAssertNotNil(mockParameters.isValid);
+//}
 
 @end
