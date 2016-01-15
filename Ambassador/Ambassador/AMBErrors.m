@@ -10,8 +10,25 @@
 
 @implementation AMBErrors
 
+
+#pragma mark - Error Logs
+
 + (void)conversionError:(NSInteger)statusCode errorData:(NSData*)data {
     NSLog(@"[Ambassador] Error Sending Conversion - Status Code=%li Failure Reason=%@", (long)statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
 }
+
+
+#pragma mark - NSErrors
+
++ (NSError*)restrictedConversionError {
+    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: NSLocalizedString(@"Conversion was not registered", nil),
+                                NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"The conversion is restricted to install", nil),
+                                NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Change the Conversion's 'restrictToInstall' boolean to NO/false", nil) };
+    
+    return [NSError errorWithDomain:@"AmbassadorErrorDomain" code:0 userInfo:userInfo];
+}
+
+
+#pragma mark - AlertView Errors
 
 @end
