@@ -26,9 +26,6 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Authorize LinkedIn";
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[AMBValues getLinkedInAuthorizationUrl]]]];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
     [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
 }
 
