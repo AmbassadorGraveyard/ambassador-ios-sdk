@@ -11,7 +11,7 @@
 
 @interface AMBServiceSelector : UIViewController
 
-@property (strong, nonatomic) AMBServiceSelectorPreferences *prefs;
 @property (nonatomic, strong) NSString *campaignID;
+@property (nonatomic, strong) NSString * themeName;
 
 @end

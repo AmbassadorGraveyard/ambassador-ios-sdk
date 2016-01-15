@@ -128,23 +128,18 @@ static AMBServiceSelector *raf;
 
 #pragma mark - RAF
 
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController {
-    [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController];
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist {
+    if (!themePlist || [themePlist isEqualToString:@""]) { themePlist = @"GenericTheme"; }
+    [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withThemePlist:themePlist];
 }
 
-- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController {
+- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist {
     // Initialize root view controller
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
     UINavigationController *vc = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
     raf = (AMBServiceSelector *)vc.childViewControllers[0];
     raf.campaignID = ID;
-    
-    AMBServiceSelectorPreferences *prefs = [[AMBServiceSelectorPreferences alloc] init];
-    prefs.titleLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFWelcomeTextMessage];
-    prefs.descriptionLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFDescriptionTextMessage];
-    prefs.defaultShareMessage = [[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage];
-    prefs.navBarTitle = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
-    raf.prefs = prefs;
+    raf.themeName = themePlist;
 
     [viewController presentViewController:vc animated:YES completion:nil];
 }
