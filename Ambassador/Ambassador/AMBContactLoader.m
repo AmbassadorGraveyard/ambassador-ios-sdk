@@ -11,217 +11,125 @@
 #import "AMBContact.h"
 #import "AMBUtilities.h"
 
+@interface AMBContactLoader()
 
+@property (nonatomic, strong) NSTimer * purgeTimer;
 
-@interface AMBContactLoader ()
-@property ABAddressBookRef addressBook;
-@property NSArray *allContacts;
 @end
-
 
 
 @implementation AMBContactLoader
 
-- (void)loadWithDelegate:(id)delegate {
-    self.delegate = delegate;
-    [self setUp];
-}
 
-- (void)setUp
-{
-    DLog();
-    //Initialize containers
-    self.emailAddresses = [[NSMutableArray alloc] init];
-    self.phoneNumbers = [[NSMutableArray alloc] init];
-    
-    //Set up address book
-    self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-    [self getPermissions];
-}
+#pragma mark - LifeCycle
 
-- (void)getPermissions
-{
-    DLog();
-    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied ||
-        ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted)
-    {
-        DLog(@"Don't have permission to access contacts");
-        [self requestContactsPermission];
-    }
-    else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
-    {
-        DLog(@"Already had permission to access contacts");
-        [self loadContacts];
-    }
-    else
-    {
-        [self requestContactsPermission];
-    }
-}
-
-- (void)requestContactsPermission
-{
-    DLog(@"Asking for permission to access contacts");
-    ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, nil), ^(bool granted, CFErrorRef error) {
-        if (!granted)
-        {
-            DLog(@"Contact access permission request denied");
-            [self throwContactLoadError];
-        }
-        else
-        {
-            DLog(@"Contact access permission request granted");
-            [self loadContacts];
-        }
++ (AMBContactLoader*)sharedInstance {
+    static AMBContactLoader *_sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedInstance = [[AMBContactLoader alloc] init];
+        _sharedInstance.emailAddresses = [[NSMutableArray alloc] init];
+        _sharedInstance.phoneNumbers = [[NSMutableArray alloc] init];
     });
-}
-
-- (void)throwContactLoadError
-{
-    [self.delegate contactsFailedToLoadWithError:@"Couldn't load contacts" message:@"Sharing requires access to your contact book. You can enable this in your settings."];
+    
+    return _sharedInstance;
 }
 
 
+#pragma mark - Loading Functionality 
 
-#pragma mark - Main contacts loop
-- (void)loadContacts
-{
-    DLog();
-    if (self.addressBook != nil)
-    {
-        ABRecordRef source = ABAddressBookCopyDefaultSource(self.addressBook);
+- (void)attemptLoadWithDelegate:(id)delegate loadingFromCache:(void(^)(BOOL isCached))loadingFromCache {
+    if (loadingFromCache && [self hasCachedArrays]) {
+        loadingFromCache(YES);
+    } else if (loadingFromCache && ![self hasCachedArrays]){
+        loadingFromCache(NO);
+    }
+    
+    self.delegate = delegate;
+    switch (ABAddressBookGetAuthorizationStatus()) {
+        case kABAuthorizationStatusAuthorized:
+            DLog(@"CONTACT LOADER - Already had permission to access contacts");
+            if (!self.purgeTimer) { self.purgeTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 * 5 target:self selector:@selector(emptyOutArrays) userInfo:nil repeats:YES]; }
+            [self loadContacts];
+            break;
+        case kABAuthorizationStatusDenied || kABAuthorizationStatusRestricted:
+            DLog(@"CONTACT LOADER - Have been denied permission to access contacts");
+            [self throwContactLoadError];
+            break;
+        default:
+            DLog(@"CONTACT LOADER - Need to ask for permission");
+            [self requestContactsPermission];
+            break;
+    }
+}
+
+- (void)loadContacts {
+    // Checks if our phone numbers and emails have aready been loaded and re-uses them
+    if ([self.phoneNumbers count] > 0 && [self.emailAddresses count] > 0) {
+        [self.delegate contactsFinishedLoadingSuccessfully];
+        return;
+    }
+    
+    // If the phoneNumber OR email array are empty, we need to load contacts from the address book
+    [self emptyOutArrays];
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    
+    if (addressBook != nil) {
+        ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
+        NSArray *contactArray = (__bridge NSArray *)ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonFirstNameProperty); // Load addressbook
         
-        // Load addressbook
-        self.allContacts = (__bridge NSArray *)ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(self.addressBook, source, kABPersonFirstNameProperty);
-        
-        // Main contact loop
-        for (NSUInteger i = 0; i < self.allContacts.count; ++i)
-        {
-            ABRecordRef person = (__bridge ABRecordRef)self.allContacts[i];
-            [self getEmailsForPerson:person];
-            [self getNumbersForPerson:person];
+        // Loops through all the contacts in contact book
+        for (NSUInteger i = 0; i < [contactArray count]; ++i) {
+            ABRecordRef person = (__bridge ABRecordRef)contactArray[i];
+            AMBFullContact *contact = [[AMBFullContact alloc] initWithABPersonRef:person]; // Creates a contact with all phone numbers and emails that may be included with contact
+            [self.phoneNumbers addObjectsFromArray:contact.phoneContacts]; // For every phone number a contact may have, a new contact is made so that all numbers can be selectable
+            [self.emailAddresses addObjectsFromArray:contact.emailContacts]; // ^^
         }
         
         [self.delegate contactsFinishedLoadingSuccessfully];
     }
 }
 
+- (void)forceReloadContacts {
+    // FUNCTIONALITY: Will force the contacts to be loaded from the address book whether the purge timer (5 minutes) has been hit or not
+    [self emptyOutArrays];
+    [self loadContacts];
+}
 
 
-#pragma mark - Accessory Functions
-- (void)getNumbersForPerson:(ABRecordRef)person
-{
-    // Get name
-    NSDictionary *name = [self getNameForPerson:person];
-    
-    // Phone numbers for contact
-    ABMultiValueRef phones = ABRecordCopyValue(person, kABPersonPhoneProperty);
-    
-    NSString *phoneLabel;
-    
-    // Cycle through phone numbers
-    for (CFIndex j = 0; j < ABMultiValueGetCount(phones); ++j)
-    {
-        //String to store lable of each number type
-        phoneLabel = (__bridge NSString *)ABMultiValueCopyLabelAtIndex(phones, j);
-        
-        //Check if it's mobile of iPhone
-        if ([phoneLabel isEqualToString:(NSString *)kABPersonPhoneMobileLabel] ||
-            [phoneLabel isEqualToString:(NSString *)kABPersonPhoneIPhoneLabel] ||
-            YES ) //TODO: remove YES
-        {
-            //Strip the charaters surrounding label type
-            phoneLabel = [phoneLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]];
-            if (!phoneLabel) phoneLabel = @"Other";
-            
-            //Get the number
-            NSString *number = (__bridge NSString *)ABMultiValueCopyValueAtIndex(phones, j);
-            
-            //Remove non-numeric characters from number string
-            NSCharacterSet *breakAtCharacters = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
-            number = [[number componentsSeparatedByCharactersInSet:breakAtCharacters] componentsJoinedByString:@""];
-            
-            AMBContact *contact = [[AMBContact alloc] init];
-            contact.firstName = name[@"firstName"];
-            contact.lastName = name[@"lastName"];
-            contact.label = phoneLabel;
-            contact.value = [self formatPhoneNumber:number];
-            
-            [self.phoneNumbers addObject:contact];
+#pragma mark - Permissions
+
+- (void)requestContactsPermission {
+    ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, NULL), ^(bool granted, CFErrorRef error) {
+        if (!granted) {
+            DLog(@"Contact access permission request denied");
+            [self throwContactLoadError];
+        } else {
+            DLog(@"Contact access permission request granted");
+            [self loadContacts];
         }
+    });
+}
+
+- (void)throwContactLoadError {
+    [self.delegate contactsFailedToLoadWithError:@"Couldn't load contacts" message:@"Sharing requires access to your contact book. You can enable this in your settings."];
+}
+
+
+#pragma mark - Helper Functions
+
+- (BOOL)hasCachedArrays {
+    if ([self.phoneNumbers count] > 0 && [self.emailAddresses count] > 0) {
+        return YES;
+    } else {
+        return NO;
     }
 }
 
-- (void)getEmailsForPerson:(ABRecordRef)person
-{
-    // Get name
-    NSDictionary *name = [self getNameForPerson:person];
-    
-    // Emails for contact
-    ABMultiValueRef emails = ABRecordCopyValue(person, kABPersonEmailProperty);
-    
-    // Cycle through emails
-    for (CFIndex j = 0; j < ABMultiValueGetCount(emails); ++j) {
-        
-        //String to store label of each email type
-        NSString *emailLabel = (__bridge NSString *)ABMultiValueCopyLabelAtIndex(emails, j);
-        
-        //Strip the charaters surrounding label type
-        emailLabel = [emailLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]];
-        if (!emailLabel) emailLabel = @"Other";
-        
-        NSString *email = (__bridge NSString *)ABMultiValueCopyValueAtIndex(emails, j);
-        
-        AMBContact *contact = [[AMBContact alloc] init];
-        contact.firstName = name[@"firstName"];
-        contact.lastName = name[@"lastName"];
-        contact.label = emailLabel;
-        contact.value = email;
-        
-        [self.emailAddresses addObject:contact];
-    }
-
-}
-
-- (NSDictionary *)getNameForPerson:(ABRecordRef)person
-{
-    NSString *firstName, *lastName;
-    firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-    lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
-    
-    return @{
-             // Check if fields are set before attempting to insert the values
-             @"firstName" : firstName? firstName : @"",
-             @"lastName" : lastName? lastName : @""
-             };
-}
-
-- (NSString *)formatPhoneNumber:(NSString *)number
-{
-    NSMutableString *returnNumber = [NSMutableString stringWithString:number];
-    if (number.length == 11)
-    {
-        //country code
-        [returnNumber insertString:@" " atIndex:1];
-        [returnNumber insertString:@"(" atIndex:2];
-        [returnNumber insertString:@")" atIndex:6];
-        [returnNumber insertString:@" " atIndex:7];
-        [returnNumber insertString:@"-" atIndex:11];
-    }
-    else if (number.length == 10)
-    {
-        // area code
-        [returnNumber insertString:@"(" atIndex:0];
-        [returnNumber insertString:@")" atIndex:4];
-        [returnNumber insertString:@" " atIndex:5];
-        [returnNumber insertString:@"-" atIndex:9];
-    }
-    else if (number.length >= 4) 
-    {
-        // simple number
-        [returnNumber insertString:@"-" atIndex:3];
-    }
-    return returnNumber;
+- (void)emptyOutArrays {
+    DLog(@"Contact arrays purged!");
+    if (self.phoneNumbers != nil) { [self.phoneNumbers removeAllObjects]; } // Removes all objects if the array have already been initialized
+    if (self.emailAddresses != nil) { [self.emailAddresses removeAllObjects]; } // ^^
 }
 
 @end
