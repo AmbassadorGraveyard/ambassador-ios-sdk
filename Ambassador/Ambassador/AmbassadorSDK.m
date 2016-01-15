@@ -104,13 +104,14 @@
 
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist {
     // Initialize root view controller
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:AMBframeworkBundle()];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
     UINavigationController *nav = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
     AMBServiceSelector *serviceSelectorVC = (AMBServiceSelector *)nav.childViewControllers[0];
     serviceSelectorVC.campaignID = ID;
     serviceSelectorVC.themeName = themePlist;
 
     [viewController presentViewController:nav animated:YES completion:nil];
+
 }
 
 
