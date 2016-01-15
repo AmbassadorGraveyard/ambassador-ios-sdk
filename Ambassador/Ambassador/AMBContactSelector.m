@@ -16,12 +16,13 @@
 #import "AMBBulkShareHelper.h"
 #import "AMBOptions.h"
 #import "AMBContactLoader.h"
+#import "AMBContactCard.h"
 #import "AMBNetworkManager.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                 AMBSelectedCellDelegate, UITextFieldDelegate,
                                 UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate,
-                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate>
+                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate, AMBContactCellDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UITableView *contactsTable;
@@ -47,6 +48,7 @@
 @property (nonatomic, strong) AMBContactLoader *contactLoader;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) UIView * fadeView;
+@property (nonatomic, strong) AMBContact * selectedContact;
 @property (nonatomic) BOOL activeSearch;
 @property (nonatomic) BOOL isEditing;
 
@@ -56,6 +58,7 @@
 @implementation AMBContactSelector
 
 NSString * const NAME_PROMPT_SEGUE_IDENTIFIER = @"goToNamePrompt";
+NSString * const CONTACT_CARD_SEGUE_IDENTIFIER = @"contactCardSegue";
 float originalSendButtonHeight;
 BOOL keyboardShowing = NO;
 
@@ -71,8 +74,12 @@ BOOL keyboardShowing = NO;
     self.filteredData = [[NSMutableArray alloc] init];
     self.composeMessageTextView.text = self.defaultMessage;
     [self setUpTheme];
-    [self loadContacts];
-    
+    [[AMBContactLoader sharedInstance] attemptLoadWithDelegate:self loadingFromCache:^(BOOL isCached) {
+        if (!isCached) {
+            [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
+        }
+    }];
+
     // Sets up a 'Pull to refresh'
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(pullToRefresh) forControlEvents:UIControlEventValueChanged];
@@ -236,6 +243,7 @@ BOOL keyboardShowing = NO;
         AMBContact *contact = self.activeSearch ? self.filteredData[indexPath.row] : self.data[indexPath.row];
         AMBContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell"];
         [cell setUpCellWithContact:contact isSelected:[self.selected containsObject:contact]];
+        cell.delegate = self;
         
         return cell;
     } else {
@@ -439,17 +447,14 @@ BOOL keyboardShowing = NO;
 - (void)refreshContacts {
     switch (self.type) {
         case AMBSocialServiceTypeEmail:
-            self.data = self.contactLoader.emailAddresses;
+            self.data = [NSMutableArray arrayWithArray:[AMBContactLoader sharedInstance].emailAddresses];
             break;
         case AMBSocialServiceTypeSMS:
-            self.data = self.contactLoader.phoneNumbers;
+            self.data = [NSMutableArray arrayWithArray:[AMBContactLoader sharedInstance].phoneNumbers];
             break;
         default:
             break;
     }
-    
-    NSDictionary *cacheDict = @{ @"contactData" : self.data, @"purgeDate" : [NSDate dateWithTimeIntervalSinceNow:600]};
-    [[AMBUtilities sharedInstance] saveToCache:cacheDict forKey:[AMBOptions serviceTypeStringValue:self.type]];
 }
 
 - (void)searchWithText:(NSString *)searchText {
@@ -474,23 +479,10 @@ BOOL keyboardShowing = NO;
 }
 
 - (void)pullToRefresh {
-    [self.contactLoader loadWithDelegate:self];
+    [[AMBContactLoader sharedInstance] forceReloadContacts];
+    [self.selected removeAllObjects];
+    [self updateButton];
     [self.refreshControl endRefreshing];
-}
-
-- (void)loadContacts {
-    NSDictionary *contactCacheDict = (NSDictionary*)[[AMBUtilities sharedInstance] getCacheValueWithKey:[AMBOptions serviceTypeStringValue:self.type]];
-    NSDate *purgeDate;
-    
-    if (contactCacheDict) { purgeDate = contactCacheDict[@"purgeDate"]; }
-    
-    if ([[NSDate date] compare:purgeDate] == NSOrderedAscending && contactCacheDict[@"contactData"]) {
-        self.data = (NSMutableArray*)contactCacheDict[@"contactData"];
-    } else {
-        self.contactLoader = [[AMBContactLoader alloc] init];
-        [self.contactLoader loadWithDelegate:self];
-        [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
-    }
 }
 
 
@@ -500,6 +492,9 @@ BOOL keyboardShowing = NO;
     if ([segue.identifier isEqualToString:NAME_PROMPT_SEGUE_IDENTIFIER]) {
         AMBNamePrompt *vc = (AMBNamePrompt*)segue.destinationViewController;
         vc.delegate = self;
+    } else if ([segue.identifier isEqualToString:CONTACT_CARD_SEGUE_IDENTIFIER]) {
+        AMBContactCard *contactCardVC = (AMBContactCard*)segue.destinationViewController;
+        contactCardVC.contact = self.selectedContact;
     }
 }
 
@@ -547,6 +542,14 @@ BOOL keyboardShowing = NO;
         [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Sharing requires access to your contact book. You can enable this in your settings." withUniqueID:@"contactError" forViewController:self shouldDismissVCImmediately:NO];
         [AMBUtilities sharedInstance].delegate = self;
     }];
+}
+
+
+#pragma mark - AMBContactCell Delegate
+
+- (void)longPressTriggeredForContact:(AMBContact *)contact {
+    self.selectedContact = contact;
+    [self performSegueWithIdentifier:CONTACT_CARD_SEGUE_IDENTIFIER sender:self];
 }
 
 
