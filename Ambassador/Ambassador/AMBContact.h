@@ -7,12 +7,28 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AddressBook/AddressBook.h>
 
+// AMBCONTACT
 @interface AMBContact : NSObject
-@property NSString *firstName;
-@property NSString *lastName;
-@property NSString *label;
-@property NSString *value;
+
+@property (nonatomic, strong) NSString * firstName;
+@property (nonatomic, strong) NSString * lastName;
+@property (nonatomic, strong) NSString * label;
+@property (nonatomic, strong) NSString * value;
+@property (nonatomic, strong) UIImage * contactImage;
 
 - (NSString *)fullName;
+
+@end
+
+
+// AMBFULLCONTACT
+@interface AMBFullContact : NSObject
+
+@property (nonatomic, strong) NSArray * phoneContacts;
+@property (nonatomic, strong) NSArray * emailContacts;
+
+- (instancetype)initWithABPersonRef:(ABRecordRef)recordRef;
+
 @end
