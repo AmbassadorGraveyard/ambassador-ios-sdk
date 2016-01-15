@@ -11,6 +11,7 @@
 @interface AMBErrors : NSObject
 
 + (void)conversionError:(NSInteger)statusCode errorData:(NSData*)data;
++ (NSError*)restrictedConversionError;
 
 @end
 
