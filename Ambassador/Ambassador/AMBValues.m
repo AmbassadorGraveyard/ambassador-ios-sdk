@@ -69,9 +69,9 @@
 #pragma mark - URLs
 
 + (NSString *)identifyUrlWithUniversalID:(NSString *)uid {
-    AMBPusherChannelObject *networkUrlObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
+    AMBPusherChannelObject *networkUrlObject = [AMBValues getPusherChannelObject];
     NSString *requestID = [AMBUtilities createRequestID];
-    [AmbassadorSDK sharedInstance].pusherChannelObj.requestId = requestID;
+    networkUrlObject.requestId = requestID;
     
     NSString *baseUrl;
     

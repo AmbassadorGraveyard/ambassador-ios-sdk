@@ -18,6 +18,5 @@
 - (instancetype)initWithDictionary:(NSMutableDictionary*)payloadDict;
 - (void)createObjectFromDictionary:(NSMutableDictionary *)payloadDic;
 - (BOOL)isExpired;
-- (NSMutableDictionary *)createAdditionalNetworkHeaders;
 
 @end

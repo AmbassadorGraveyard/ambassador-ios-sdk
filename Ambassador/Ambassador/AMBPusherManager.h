@@ -16,7 +16,7 @@
 + (instancetype)sharedInstanceWithAuthorization:(NSString *)auth;
 - (void)subscribeToChannel:(NSString *)channel completion:(void(^)(AMBPTPusherChannel *pusherChannel, NSError *error))completion;
 - (void)resubscribeToExistingChannelWithCompletion:(void(^)(AMBPTPusherChannel *, NSError *))completion;
-- (void)bindToChannelEvent:(NSString *)event handler:(void(^)(AMBPTPusherEvent *))handler;
+- (void)bindToChannelEvent:(NSString*)eventName;
 
 @end
 

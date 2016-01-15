@@ -69,7 +69,7 @@ BOOL keyboardShowing = NO;
     [[NSUserDefaults standardUserDefaults] setValue:@(NO) forKey:@"_UIConstraintBasedLayoutLogUnsatisfiable"];
     [self registerForKeyboardNotifications];
     originalSendButtonHeight = self.sendButton.frame.size.height;
-    self.title = self.prefs.navBarTitle;
+    self.title = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
     self.selected = [[NSMutableSet alloc] init];
     self.filteredData = [[NSMutableArray alloc] init];
     self.composeMessageTextView.text = self.defaultMessage;
