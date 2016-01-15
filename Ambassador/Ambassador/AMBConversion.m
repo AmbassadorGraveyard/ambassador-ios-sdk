@@ -12,6 +12,7 @@
 #import "AMBConversionParametersEntity.h"
 #import "AMBConversionParameter_Internal.h"
 #import "AMBNetworkManager.h"
+#import "AMBErrors.h"
 
 
 #pragma mark - Local Constants
@@ -60,7 +61,7 @@ NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com
             [[AMBNetworkManager sharedInstance] sendRegisteredConversion:[self payloadForConversionCallWithFP:userDefaultsIdentify mbsyFields:fieldsDictionary] success:^(NSDictionary *response) {
                 [AMBCoreDataManager deleteCoreDataObject:entity];
             } failure:^(NSInteger statusCode, NSData *data) {
-                NSLog(@"[Ambassador] Error - Server reponse from sending conversion:%li - %@", (long)statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+                [AMBErrors conversionError:statusCode errorData:data];
             }];
         }
     } else {
