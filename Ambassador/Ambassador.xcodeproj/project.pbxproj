@@ -756,6 +756,25 @@
 			name = "Socket Rocket";
 			sourceTree = "<group>";
 		};
+		EF441B651C345F440038F6BB /* Name Prompt */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */,
+				DBA3FB961BA8A24F00672D82 /* AMBNamePrompt.m */,
+			);
+			name = "Name Prompt";
+			sourceTree = "<group>";
+		};
+		EF441B661C345F6B0038F6BB /* Contact Selector */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB5E1BA8A23B00672D82 /* AMBContactSelector.h */,
+				DBA3FB5F1BA8A23B00672D82 /* AMBContactSelector.m */,
+				EFE7D78E1C21B9FC00D7F92C /* Custom Cells */,
+			);
+			name = "Contact Selector";
+			sourceTree = "<group>";
+		};
 		EF64CFA41BE2A47D0072014B /* AmbassadorUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -805,11 +824,8 @@
 		EFE7D7871C21B4DB00D7F92C /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				DBA3FB5E1BA8A23B00672D82 /* AMBContactSelector.h */,
-				DBA3FB5F1BA8A23B00672D82 /* AMBContactSelector.m */,
-				DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */,
-				DBA3FB961BA8A24F00672D82 /* AMBNamePrompt.m */,
-				EFE7D78E1C21B9FC00D7F92C /* Custom Cells */,
+				EF441B661C345F6B0038F6BB /* Contact Selector */,
+				EF441B651C345F440038F6BB /* Name Prompt */,
 				EFE7D78D1C21B9EC00D7F92C /* Contact Loader */,
 			);
 			name = Contacts;
