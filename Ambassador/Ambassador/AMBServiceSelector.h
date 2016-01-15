@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AMBServiceSelectorPreferences.h"
 
 @interface AMBServiceSelector : UIViewController
 

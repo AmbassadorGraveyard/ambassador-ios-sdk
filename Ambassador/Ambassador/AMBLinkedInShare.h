@@ -16,11 +16,12 @@
 
 @end
 
+
 @interface AMBLinkedInShare : SLComposeServiceViewController
 
-@property NSString *defaultMessage;
-@property NSString *shortCode;
-@property NSString *shortURL;
-@property (weak)id<AMBShareServiceDelegate>delegate;
+@property (nonatomic, strong) NSString *defaultMessage;
+@property (nonatomic, strong) NSString *shortCode;
+@property (nonatomic, strong) NSString *shortURL;
+@property (nonatomic, weak) id<AMBShareServiceDelegate>delegate;
 
 @end
