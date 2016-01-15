@@ -8,9 +8,7 @@
 
 #import "AMBContact.h"
 
-
 @implementation AMBContact
-
 
 #pragma mark - Helper functions
 
@@ -31,7 +29,7 @@
     lastName = (![lastName isEqualToString:@"(null)"] && lastName) ? lastName : @"";
     
     NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(recordRef);
-    UIImage *contactImage = [UIImage imageWithData:imgData];
+    UIImage *contactImage = (imgData) ? [UIImage imageWithData:imgData] : nil;
     
     self.phoneContacts = [self getPhoneNumbers:recordRef withFirstName:firstName lastName:lastName contactImage:contactImage];
     self.emailContacts = [self getEmailAddresses:recordRef withFirstName:firstName lastName:lastName contactImage:contactImage];
@@ -53,6 +51,7 @@
         phoneContact.label = (phoneLabel) ? [phoneLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]] : @"Other";
         phoneContact.value = number;
         phoneContact.contactImage = image;
+        phoneContact.fullContact = self;
         
         [returnArray addObject:phoneContact];
     }
@@ -74,6 +73,7 @@
         emailContact.label = (emailLabel) ? [emailLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"_.$!<>"]] : @"Other";
         emailContact.value = address;
         emailContact.contactImage = image;
+        emailContact.fullContact = self;
         
         [returnArray addObject:emailContact];
     }
