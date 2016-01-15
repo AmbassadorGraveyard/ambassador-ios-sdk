@@ -9,7 +9,7 @@
 #import <objc/runtime.h>
 #import "AMBNetworkObject.h"
 #import "AMBUtilities.h"
-#import "AMBAmbassadorNetworkManager.h"
+#import "AMBNetworkManager.h"
 
 @implementation AMBNetworkObject
 - (NSMutableDictionary *)toDictionary {
@@ -32,6 +32,11 @@
 
 - (NSData *)toDataError:(NSError *__autoreleasing*)e {
     return [NSJSONSerialization dataWithJSONObject:[self toDictionary] options:0 error:e];
+}
+
+- (NSData*)toData {
+    NSError *error;
+    return [NSJSONSerialization dataWithJSONObject:[self toDictionary] options:0 error:&error];
 }
 
 
@@ -116,8 +121,10 @@
 @end
 
 
+#pragma mark - AMBUserNetworkObject
 
 @implementation AMBUserUrlNetworkObject
+
 - (void)fillWithDictionary:(NSMutableDictionary *)d {
     self.campaign_uid = (NSNumber *)d[@"campaign_uid"];
     self.short_code = (NSString *)d[@"short_code"];
@@ -126,25 +133,30 @@
     self.has_access = (BOOL)d[@"has_access"];
     self.is_active = (BOOL)d[@"is_active"];
 }
+
+- (instancetype)initWithDictionary:(NSDictionary *)dict {
+    self.campaign_uid = (NSNumber *)dict[@"campaign_uid"];
+    self.short_code = (NSString *)dict[@"short_code"];
+    self.subject = (NSString *)dict[@"subject"];
+    self.url = (NSString *)dict[@"url"];
+    self.has_access = (BOOL)dict[@"has_access"];
+    self.is_active = (BOOL)dict[@"is_active"];
+    
+    return self;
+}
+
 @end
 
 
 
 @implementation AMBUserNetworkObject
-- (void)fillWithUrl:(NSString *)url universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c {
-    __weak AMBUserNetworkObject *weakSelf = self;
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:nil url:url additionParams:nil requestType:@"GET" completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-        if (e) {
-            if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
-        } else {
-            NSMutableDictionary *json = [NSJSONSerialization JSONObjectWithData:d options:0 error:&e];
-            if (e) {
-                if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(e); }); }
-            } else {
-                [weakSelf fillWithDictionary:json];
-                if (c) { dispatch_async(dispatch_get_main_queue(), ^{ c(nil); }); }
-            }
-        }
+
+- (void)fillWithUrl:(NSString *)url completion:(void(^)(NSString *error))completion {
+    [[AMBNetworkManager sharedInstance] getLargePusherPayloadFromUrl:url success:^(NSDictionary *response) {
+        [self fillWithDictionary:(NSMutableDictionary*)response];
+        completion(nil);
+    } failure:^(NSString *error) {
+        completion(error);
     }];
 }
 
@@ -194,8 +206,8 @@
 @implementation AMBShareTrackNetworkObject
 -(instancetype)init {
     if (self = [super init]) {
-        self.recipient_username = nil; //[NSMutableArray arrayWithArray:@[]];
-        self.recipient_email = nil; //[NSMutableArray arrayWithArray:@[]];
+        self.recipient_username = [NSMutableArray arrayWithArray:@[@""]];
+        self.recipient_email = [NSMutableArray arrayWithArray:@[@""]];
         self.short_code = @"";
         self.social_name = @"";
     }

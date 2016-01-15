@@ -160,6 +160,14 @@
     NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970] * 1000;
     return [NSString stringWithFormat:@"%f", timeInMiliseconds];
 }
+
++ (BOOL)isSuccessfulStatusCode:(NSInteger)statusCode {
+    if (statusCode >= (NSInteger)200 && statusCode <= (NSInteger)299) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
     
 @end
 
