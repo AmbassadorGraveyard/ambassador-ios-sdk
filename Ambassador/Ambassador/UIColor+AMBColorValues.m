@@ -22,6 +22,14 @@
     return [UIColor colorFromHexString:@"#0E62A6"];
 }
 
++ (UIColor*)errorRed {
+    return [UIColor colorFromHexString:@"#AE0015"];
+}
+
++ (UIColor *)cellSelectionGray {
+    return [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:0.5];
+}
+
 + (UIColor *)colorFromHexString:(NSString *)hexString {
     unsigned rgbValue = 0;
     NSScanner *scanner = [NSScanner scannerWithString:hexString];

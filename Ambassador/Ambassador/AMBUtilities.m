@@ -90,6 +90,52 @@
     }
 }
 
+- (void)rotateLoadingView:(UIView *)view widthOffset:(CGFloat)widthOffset {
+    CGRect parentFrame = view.frame;
+    CGFloat width = parentFrame.size.width;
+    CGFloat height = parentFrame.size.height;
+    
+    CGFloat newWidth, newHeight;
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    if (UIDeviceOrientationIsLandscape(orientation)) {
+        newWidth = MAX(width, height) + widthOffset;
+        newHeight = MIN(width, height);
+    } else {
+        newWidth = MIN(width, height) + widthOffset;
+        newHeight = MAX(width, height);
+    }
+        
+    CGRect newSpinnerFrame;
+    if (UIDeviceOrientationIsPortrait(orientation)) {
+        newSpinnerFrame = CGRectMake(newWidth/2 - 50, newHeight - (newHeight * .75), 100, 100);
+    } else {
+        newSpinnerFrame = CGRectMake(newWidth/2 - 50, newHeight/2 - 75, 100, 100);
+    }
+    
+    [self.animatingView setFrame:newSpinnerFrame];
+    
+    CGRect newParentFrame = CGRectMake(0, 0, newWidth, newHeight);
+    [self.loadingView setFrame:newParentFrame];
+    [self.blurView setFrame:newParentFrame];
+}
+
++ (CGFloat)getOffsetForRotation:(UIViewController *)viewController toOrientation:(UIInterfaceOrientation)toOrientation {
+    
+    CGFloat width = viewController.view.frame.size.width;
+    CGFloat height = viewController.view.frame.size.height;
+    CGFloat navigationBarHeight = viewController.navigationController.navigationBar.frame.size.height;
+    CGFloat statusBarHeight = 20;
+    
+    CGFloat offset = 0;
+    if (UIInterfaceOrientationIsLandscape(toOrientation) && width < height) {
+        offset = navigationBarHeight + statusBarHeight;
+    } else if (UIInterfaceOrientationIsPortrait(toOrientation)) {
+        offset = navigationBarHeight;
+    }
+    
+    return offset;
+}
+
 - (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue {
     if (!self.cache) { self.cache = [[NSCache alloc] init]; }
     
