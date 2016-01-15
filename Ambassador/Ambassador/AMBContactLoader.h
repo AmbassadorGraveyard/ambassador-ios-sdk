@@ -17,7 +17,10 @@
 
 @interface AMBContactLoader : NSObject
 
-- (void)loadWithDelegate:(id)delegate;
++ (AMBContactLoader*)sharedInstance;
+- (void)attemptLoadWithDelegate:(id)delegate loadingFromCache:(void(^)(BOOL isCached))loadingFromCache;
+- (void)forceReloadContacts;
+
 @property NSMutableArray *phoneNumbers;
 @property NSMutableArray *emailAddresses;
 @property (nonatomic, weak) id<AMBContactLoaderDelegate>delegate;
