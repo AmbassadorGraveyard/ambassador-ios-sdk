@@ -26,8 +26,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)showRAF:(UIButton *)sender {
-    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self];
+- (IBAction)showGenericRAF:(UIButton *)sender {
+    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:nil];
     
     AMBConversionParameters *clickConversion = [[AMBConversionParameters alloc] init];
     clickConversion.mbsy_campaign = @260;
@@ -42,6 +42,14 @@
             NSLog(@"BUTTON TAP CONVERSION REGISTERED SUCCESSFULLY!");
         }
     }];
+}
+
+- (IBAction)showThemedRAF:(id)sender {
+    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"AmbassadorTheme"];
+}
+
+- (IBAction)showNoThemedRAF:(id)sender {
+    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"doesntexist"];
 }
 
 @end

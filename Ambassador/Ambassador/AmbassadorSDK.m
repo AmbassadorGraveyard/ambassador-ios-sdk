@@ -8,65 +8,35 @@
 
 #import "AmbassadorSDK.h"
 #import "AmbassadorSDK_Internal.h"
-#import "AMBConstants.h"
 #import "AMBIdentify.h"
 #import "AMBConversion.h"
 #import "AMBConversionParameters.h"
-#import "AMBUtilities.h"
 #import "AMBServiceSelector.h"
-#import "AMBServiceSelectorPreferences.h"
-#import "AMBThemeManager.h"
 #import "AMBPusherManager.h"
-#import "AMBNetworkObject.h"
 #import "AMBNetworkManager.h"
-#import "AMBPusher.h"
-#import "AMBPusherChannelObject.h"
-
-
-#pragma mark - Local Constants
-float const AMB_CONVERSION_FLUSH_TIME = 10.0;
-NSString * const AMBASSADOR_INFO_URLS_KEY = @"urls";
-NSString * const CAMPAIGN_UID_KEY = @"campaign_uid";
-NSString * const SHORT_CODE_KEY = @"short_code";
-NSString * const SHORT_CODE_URL_KEY = @"url";
-#pragma mark -
-
 
 @interface AmbassadorSDK ()
+
 @property (nonatomic, strong) AMBIdentify *identify;
 @property (nonatomic, strong) NSTimer *conversionTimer;
 @property (nonatomic, strong) AMBConversion *conversion;
-@property (nonatomic) BOOL hasBeenBoundToChannel;
 
 @end
 
 
-
 @implementation AmbassadorSDK
-#pragma mark - Static class variables
-static AMBServiceSelector *raf;
 
+#pragma mark - LifeCycle
 
-
-#pragma mark - Object lifecycle
 + (AmbassadorSDK *)sharedInstance {
     static AmbassadorSDK* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{ _sharedInsance = [[AmbassadorSDK alloc] init]; });
+    dispatch_once(&oncePredicate, ^{
+        _sharedInsance = [[AmbassadorSDK alloc] init];
+        _sharedInsance.identify = [[AMBIdentify alloc] init];
+    });
+    
     return _sharedInsance;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (instancetype)init {
-    if (self = [super init]) {
-        self.identify = [[AMBIdentify alloc] init];
-        self.user = [AMBUserNetworkObject loadFromDisk];
-        self.pusherChannelObj = [[AMBPusherChannelObject alloc] init];
-    }
-    return self;
 }
 
 
@@ -94,7 +64,6 @@ static AMBServiceSelector *raf;
 }
 
 - (void)localIdentifyWithEmail:(NSString*)email {
-    self.email = email;
     [AMBValues setUserEmail:email];
     [self subscribeToPusherWithCompletion:nil];
 }
@@ -128,40 +97,34 @@ static AMBServiceSelector *raf;
 
 #pragma mark - RAF
 
-+ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController {
-    [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController];
++ (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist {
+    if (!themePlist || [themePlist isEqualToString:@""]) { themePlist = @"GenericTheme"; }
+    [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withThemePlist:themePlist];
 }
 
-- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController {
+- (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist {
     // Initialize root view controller
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
-    UINavigationController *vc = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
-    raf = (AMBServiceSelector *)vc.childViewControllers[0];
-    raf.campaignID = ID;
-    
-    AMBServiceSelectorPreferences *prefs = [[AMBServiceSelectorPreferences alloc] init];
-    prefs.titleLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFWelcomeTextMessage];
-    prefs.descriptionLabelText = [[AMBThemeManager sharedInstance] messageForKey:RAFDescriptionTextMessage];
-    prefs.defaultShareMessage = [[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage];
-    prefs.navBarTitle = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
-    raf.prefs = prefs;
+    UINavigationController *nav = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
+    AMBServiceSelector *serviceSelectorVC = (AMBServiceSelector *)nav.childViewControllers[0];
+    serviceSelectorVC.campaignID = ID;
+    serviceSelectorVC.themeName = themePlist;
 
-    [viewController presentViewController:vc animated:YES completion:nil];
+    [viewController presentViewController:nav animated:YES completion:nil];
+
 }
 
 
 #pragma mark - Pusher
 
 - (void)subscribeToPusherWithCompletion:(void(^)())completion {
-    if (!self.pusherManager) {
-        self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken];
-    }
+    if (!self.pusherManager) { self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken]; }
     
     [[AMBNetworkManager sharedInstance] getPusherSessionWithSuccess:^(NSDictionary *response) {
         [AMBValues setPusherChannelObject:response];
         [self.pusherManager subscribeToChannel:[AMBValues getPusherChannelObject].channelName completion:^(AMBPTPusherChannel *pusherChannel, NSError *error) {
             if (!error) {
-                [self bindToIdentifyActionUniversalToken:[AMBValues getUniversalToken] universalID:[AMBValues getUniversalID]];
+                [self.pusherManager bindToChannelEvent:@"identify_action"];
                 [self.identify getIdentity];
             } else {
                 DLog(@"Error binding to pusher channel - %@", error);
@@ -171,35 +134,6 @@ static AMBServiceSelector *raf;
         }];
     } failure:^(NSString *error) {
         DLog(@"Unable to get PUSHER SESSION");
-    }];
-}
-
-- (void)bindToIdentifyActionUniversalToken:(NSString *)uTok universalID:(NSString *)uID {
-    [AmbassadorSDK sharedInstance].hasBeenBoundToChannel = YES;
-    [self.pusherManager bindToChannelEvent:@"identify_action" handler:^(AMBPTPusherEvent *ev) {
-        NSMutableDictionary *json = (NSMutableDictionary *)ev.data[@"body"];
-        AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
-        if (ev.data[@"url"]) {
-            [user fillWithUrl:ev.data[@"url"] completion:^(NSString *error) {
-                if (!error) {
-                    [AmbassadorSDK sharedInstance].user = user;
-                    [AMBValues setUserFirstNameWithString:user.first_name];
-                    [AMBValues setUserLastNameWithString:user.last_name];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
-                }
-            }];
-        } else if (json[@"mbsy_cookie_code"] && json[@"mbsy_cookie_code"] != [NSNull null]) {
-            DLog(@"MBSY COOKIE = %@ and FINGERPRINT = %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
-            [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
-            [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
-        } else {
-            [user fillWithDictionary:json];
-            [AmbassadorSDK sharedInstance].user = user;
-            [AMBValues setUserFirstNameWithString:user.first_name];
-            [AMBValues setUserLastNameWithString:user.last_name];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
-        }
     }];
 }
 
