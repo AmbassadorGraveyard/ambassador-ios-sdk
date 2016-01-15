@@ -85,6 +85,9 @@ int contactServiceType;
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self.collectionView reloadData];
+    
+    CGFloat offset = [AMBUtilities getOffsetForRotation:self toOrientation:toInterfaceOrientation];
+    [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
 }
 
 
@@ -381,6 +384,20 @@ int contactServiceType;
         default:
             break;
     }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+    AMBShareServiceCell *selectedCell = (AMBShareServiceCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.1 animations:^{
+        selectedCell.backgroundColor = [UIColor cellSelectionGray];
+    }];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+    AMBShareServiceCell *selectedCell = (AMBShareServiceCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.3 animations:^{
+        selectedCell.backgroundColor = [UIColor whiteColor];
+    }];
 }
 
 
