@@ -12,12 +12,12 @@
 #import "AMBContact.h"
 #import "AMBNamePrompt.h"
 #import "AMBThemeManager.h"
-#import "AMBAmbassadorNetworkManager.h"
 #import "AMBNetworkObject.h"
 #import "AMBBulkShareHelper.h"
 #import "AMBOptions.h"
 #import "AMBContactLoader.h"
 #import "AMBContactCard.h"
+#import "AMBNetworkManager.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                 AMBSelectedCellDelegate, UITextFieldDelegate,
@@ -84,6 +84,12 @@ BOOL keyboardShowing = NO;
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(pullToRefresh) forControlEvents:UIControlEventValueChanged];
     [self.contactsTable addSubview:self.refreshControl];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    
+    CGFloat offset = [AMBUtilities getOffsetForRotation:self toOrientation:toInterfaceOrientation];
+    [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -255,6 +261,7 @@ BOOL keyboardShowing = NO;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == self.contactsTable) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         AMBContact *contact = self.activeSearch ? self.filteredData[indexPath.row] : self.data[indexPath.row];
         AMBContactCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         
@@ -369,19 +376,12 @@ BOOL keyboardShowing = NO;
     NSArray *validatedNumbers = [AMBBulkShareHelper validatedPhoneNumbers:[self.selected allObjects]];
     
     if (validatedNumbers.count > 0) {
-        NSString *senderName = [NSString stringWithFormat:@"%@ %@", [AMBValues getUserFirstName], [AMBValues getUserLastName]];
-        AMBBulkShareSMSObject *smsObject = [[AMBBulkShareSMSObject alloc] initWithPhoneNumbers:validatedNumbers fromSender:senderName message:self.composeMessageTextView.text];
-        
-        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:smsObject url:[AMBAmbassadorNetworkManager bulkShareSMSUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
-            if (error) {
-                DLog(@"Error for BulkShare SMS with Response Code - %li and Response - %@", (long)((NSHTTPURLResponse*)response).statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
-            } else {
-                DLog(@"BulkShare SMS Success with Response Code - %li and Response - %@", (long)((NSHTTPURLResponse*)response).statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                [self sendShareTrack:validatedNumbers];
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
-                [AMBUtilities sharedInstance].delegate = self;
-            }
+        [[AMBNetworkManager sharedInstance] bulkShareSmsWithMessage:self.composeMessageTextView.text phoneNumbers:validatedNumbers success:^(NSDictionary *response) {
+            [self sendShareTrack:validatedNumbers];
+            [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+            [AMBUtilities sharedInstance].delegate = self;
+        } failure:^(NSString *error) {
+            [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
         }];
     } else {
         [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid phone number. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
@@ -392,19 +392,12 @@ BOOL keyboardShowing = NO;
     NSArray *validatedContacts = [AMBBulkShareHelper validatedEmails:[self.selected allObjects]]; // Validate the contact list for emails
 
     if (validatedContacts.count > 0) {
-        AMBBulkShareEmailObject *emailObject = [[AMBBulkShareEmailObject alloc] initWithEmails:validatedContacts
-           shortCode:self.urlNetworkObject.short_code message:self.composeMessageTextView.text subjectLine:self.urlNetworkObject.subject];
-        
-        [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:emailObject url:[AMBAmbassadorNetworkManager bulkShareEmailUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
-            if (error) {
-                DLog(@"Error for BulkShare Email with Response Code - %li and Response - %@", (long)((NSHTTPURLResponse*)response).statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
-            } else {
-                DLog(@"BulkShare Email Success with Response Code - %li and Response - %@", (long)((NSHTTPURLResponse*)response).statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-                [self sendShareTrack:validatedContacts];
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
-                [AMBUtilities sharedInstance].delegate = self;
-            }
+        [[AMBNetworkManager sharedInstance] bulkShareEmailWithMessage:self.composeMessageTextView.text emailAddresses:validatedContacts success:^(NSDictionary *response) {
+            [self sendShareTrack:validatedContacts];
+            [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+            [AMBUtilities sharedInstance].delegate = self;
+        } failure:^(NSString *error) {
+            [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
         }];
     } else {
         [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid email address. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
@@ -509,23 +502,10 @@ BOOL keyboardShowing = NO;
 #pragma mark - Share Track 
 
 - (void)sendShareTrack:(NSArray *)contacts {
-    AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
-    
-    if (self.type == AMBSocialServiceTypeEmail) {
-        share.recipient_email = [self valuesFromContacts:[self.selected allObjects]];
-    } else if (self.type == AMBSocialServiceTypeSMS) {
-        share.recipient_username = [self valuesFromContacts:[self.selected allObjects]];
-    }
-    
-    share.short_code = self.urlNetworkObject.short_code;
-    share.social_name = [AMBOptions serviceTypeStringValue:self.type];
-    
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            DLog(@"Error for BulkShareTrack %@ with ResponseCode %li and Response %@", [AMBOptions serviceTypeStringValue:self.type], (long)((NSHTTPURLResponse*)response).statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-        } else {
-            DLog(@"Successfully shared BulkShareTrack %@ with ResponseCode %li and Response %@", [AMBOptions serviceTypeStringValue:self.type], (long)((NSHTTPURLResponse*)response).statusCode, [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-        }
+    [[AMBNetworkManager sharedInstance] sendShareTrackForServiceType:self.type contactList:(NSMutableArray*)contacts success:^(NSDictionary *response) {
+        DLog(@"Share Track for %@ SUCCESSFUL with response - %@", [AMBOptions serviceTypeStringValue:self.type], response);
+    } failure:^(NSString *error) {
+        DLog(@"Share Track for %@ FAILED with response - %@", [AMBOptions serviceTypeStringValue:self.type], error);
     }];
 }
 
