@@ -57,6 +57,14 @@
     return (frameworkBundle) ? frameworkBundle : [NSBundle bundleForClass:[self class]]; // This returns the framework bundle, but if unit testing, it will return the unit test's bundle
 }
 
++ (BOOL)isProduction {
+#if AMBPRODUCTION 
+    return YES;
+#else
+    return NO;
+#endif
+}
+
 
 #pragma mark - URLs
 
@@ -76,6 +84,46 @@
     DLog(@"%@", [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID]]);
     
     return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID]];
+}
+
++ (NSString*)getSendIdentifyUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/universal/action/identify/" : @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/";
+}
+
++ (NSString*)getShareTrackUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/track/share/" : @"https://dev-ambassador-api.herokuapp.com/track/share/";
+}
+
++ (NSString*)getLinkedInRequestTokenUrl {
+    return @"https://www.linkedin.com/uas/oauth2/accessToken";
+}
+
++ (NSString*)getLinkedInValidationUrl {
+    return @"https://api.linkedin.com/v1/people/~?format=json";
+}
+
++ (NSString*)getLinkedInShareUrl {
+    return @"https://api.linkedin.com/v1/people/~/shares?format=json";
+}
+
++ (NSString*)getBulkShareSMSUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/share/sms/" : @"https://dev-ambassador-api.herokuapp.com/share/sms/";
+}
+
++ (NSString*)getBulkShareEmailUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/share/email/" : @"https://dev-ambassador-api.herokuapp.com/share/email/";
+}
+
++ (NSString*)getSendConversionUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/universal/action/conversion/" : @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/";
+}
+
++ (NSString*)getPusherSessionUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/auth/session/" : @"https://dev-ambassador-api.herokuapp.com/auth/session/";
+}
+
++ (NSString*)getPusherAuthUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/auth/subscribe/" : @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
 }
 
 
@@ -129,6 +177,18 @@
     [[AMBValues ambUserDefaults] setValue:accessToken forKey:@"lnkdin_access_token"];
 }
 
++ (void)setUserEmail:(NSString*)email {
+    [[AMBValues ambUserDefaults] setValue:email forKey:@"user_email"];
+}
+
++ (void)setPusherChannelObject:(NSDictionary*)pusherChannel {
+    [[AMBValues ambUserDefaults] setObject:pusherChannel forKey:@"pusher_channel_object"];
+}
+
++ (void)setUserURLObject:(NSDictionary*)urlObject {
+    [[AMBValues ambUserDefaults] setObject:urlObject forKey:@"user_url_object"];
+}
+
 #pragma mark - Getter Methods
 
 + (NSString*)getMbsyCookieCode {
@@ -165,6 +225,18 @@
 
 + (NSString*)getLinkedInAccessToken {
     return [[AMBValues ambUserDefaults] valueForKey:@"lnkdin_access_token"];
+}
+
++ (NSString*)getUserEmail {
+    return [[AMBValues ambUserDefaults] valueForKey:@"user_email"];
+}
+
++ (AMBPusherChannelObject*)getPusherChannelObject {
+    return [[AMBPusherChannelObject alloc] initWithDictionary:[[AMBValues ambUserDefaults] valueForKey:@"pusher_channel_object"]];
+}
+
++ (AMBUserUrlNetworkObject*)getUserURLObject {
+    return [[AMBUserUrlNetworkObject alloc] initWithDictionary:[[AMBValues ambUserDefaults] valueForKey:@"user_url_object"]];
 }
 
 @end

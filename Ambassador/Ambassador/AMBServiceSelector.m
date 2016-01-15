@@ -8,8 +8,6 @@
 
 #import "AMBServiceSelector.h"
 #import "AMBShareServiceCell.h"
-#import "AMBShareService.h"
-#import "AMBShareServicesConstants.h"
 #import "AMBContactSelector.h"
 #import "AMBContactLoader.h"
 #import "AMBAuthorizeLinkedIn.h"
@@ -24,8 +22,8 @@
 #import "AMBIdentify.h"
 #import "AMBThemeManager.h"
 #import "AmbassadorSDK_Internal.h"
-#import "AMBNetworkObject.h"
-#import "AMBAmbassadorNetworkManager.h"
+#import "AMBNetworkObject.h" 
+#import "AMBNetworkManager.h"
 
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LinkedInAuthorizeDelegate,
                                     AMBShareServiceDelegate, UITextFieldDelegate, AMBUtilitiesDelegate>
@@ -87,6 +85,9 @@ int contactServiceType;
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self.collectionView reloadData];
+    
+    CGFloat offset = [AMBUtilities getOffsetForRotation:self toOrientation:toInterfaceOrientation];
+    [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
 }
 
 
@@ -130,7 +131,9 @@ int contactServiceType;
 }
 
 - (void)setUpTheme {
-    // Sets messages
+    // Set images programmatically
+    [self.btnCopy setImage:[AMBValues imageFromBundleWithName:@"clipboard" type:@"png" tintable:NO] forState:UIControlStateNormal];
+    
     // Sets labels and navbarTitle based on plist
     self.titleLabel.text = self.prefs.titleLabelText;
     self.descriptionLabel.text = self.prefs.descriptionLabelText;
@@ -217,24 +220,18 @@ int contactServiceType;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was shared successfully!" withUniqueID:@"stockShare" forViewController:self shouldDismissVCImmediately:NO];
             });
-        
-            [self sendShareTrackForServiceType:AMBSocialServiceTypeFacebook completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-                DLog(@"Error for sending share track %@: %@\n Body returned for sending share track: %@", [AMBOptions serviceTypeStringValue:servicetype], e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+
+            [[AMBNetworkManager sharedInstance] sendShareTrackForServiceType:servicetype contactList:nil success:^(NSDictionary *response) {
+                DLog(@"Share Track for %@ SUCCESSFUL with response - %@", [AMBOptions serviceTypeStringValue:servicetype], response);
+            } failure:^(NSString *error) {
+                DLog(@"Share Track for %@ FAILED with response - %@", [AMBOptions serviceTypeStringValue:servicetype], error);
             }];
         }
     };
 }
 
-- (void)sendShareTrackForServiceType:(AMBSocialServiceType)type completion:(void(^)(NSData *, NSURLResponse *, NSError *))c {
-    AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
-    share.short_code = self.urlNetworkObj.short_code;
-    share.social_name = [AMBOptions serviceTypeStringValue:type];
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:c];
-}
-
 - (void)checkLinkedInToken {
-    AMBAuthorizeLinkedIn *auth = [[AMBAuthorizeLinkedIn alloc] init];
-    [auth checkForInvalidatedTokenWithCompletion:^{
+    [[AMBNetworkManager sharedInstance] checkForInvalidatedTokenWithCompletion:^{
         if ([AMBValues getLinkedInAccessToken]) {
             [self presentLinkedInShare];
         } else {
@@ -264,6 +261,7 @@ int contactServiceType;
 - (void)removeLoadingView {
     NSNumber *campaingID = [NSNumber numberWithInt:self.campaignID.intValue];
     self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
+    [AMBValues setUserURLObject:[self.urlNetworkObj toDictionary]];
     
     if (!self.urlNetworkObj) { // This means that there was no matching campaign ID that was returned
         [self.waitViewTimer invalidate];
@@ -272,7 +270,7 @@ int contactServiceType;
         NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
         return;
     }
-    
+
     [[AMBUtilities sharedInstance] hideLoadingView];
     self.lblURL.text = self.urlNetworkObj.url;
     if (self.waitViewTimer) { [self.waitViewTimer invalidate]; }
@@ -284,10 +282,7 @@ int contactServiceType;
     // Checks if we are subscribed to a pusher channel and makes sure that the channel is not expired
     if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState == PTPusherConnectionConnected) {
         // If we're SUBSCRIBED and NOT expired, then we will call the Identify
-        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-            if (e) { DLog(@"There was an error - %@", e); }
-        }];
-        
+        [self sendIdentify];
         return;
     }
     
@@ -298,13 +293,11 @@ int contactServiceType;
         [[AmbassadorSDK sharedInstance].pusherManager resubscribeToExistingChannelWithCompletion:^(AMBPTPusherChannel *channelName, NSError *error) {
             if (error) {
                 DLog(@"Error resubscribing to channel - %@", error); // If there is an error trying to resubscribe, we will recall the whole identify process
-                [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
-                    [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-                        if (e) { DLog(@"There was an error - %@", e); }
-                    }];
+                [[AmbassadorSDK sharedInstance] subscribeToPusherWithCompletion:^{
+                    [self sendIdentify];
                 }];
             } else {
-                [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:nil]; // Everything is good to go and we can call identify
+                [self sendIdentify];
             }
         }];
         
@@ -313,12 +306,16 @@ int contactServiceType;
     
     // If we're NOT SUBSCRIBED or EXPIRED then we will do the whole pusher process over again (get channel name, connect to pusher, subscribe, identify)
     DLog(@"The Pusher channel seems to be null or expired, restarting whole identify process");
-    [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
-        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-            if (e) {
-                DLog(@"There was an error - %@", e);
-            }
-        }];
+    [[AmbassadorSDK sharedInstance] subscribeToPusherWithCompletion:^{
+        [self sendIdentify];
+    }];
+}
+
+- (void)sendIdentify {
+    [[AMBNetworkManager sharedInstance] sendIdentifyForCampaign:self.campaignID shouldEnroll:YES success:^(NSString *response) {
+        DLog(@"SEND IDENTIFY Response - %@", response);
+    } failure:^(NSString *error) {
+        DLog(@"SEND IDENTIFY Response - %@", error);
     }];
 }
 
@@ -389,6 +386,20 @@ int contactServiceType;
     }
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+    AMBShareServiceCell *selectedCell = (AMBShareServiceCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.1 animations:^{
+        selectedCell.backgroundColor = [UIColor cellSelectionGray];
+    }];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+    AMBShareServiceCell *selectedCell = (AMBShareServiceCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.3 animations:^{
+        selectedCell.backgroundColor = [UIColor whiteColor];
+    }];
+}
+
 
 #pragma mark - Linkedin delegate
 
@@ -405,14 +416,15 @@ int contactServiceType;
 }
 
 - (void)userDidPostFromService:(NSString *)service {
-    if ([service isEqualToString:AMB_LINKEDIN_TITLE]) {
+    if ([service isEqualToString:@"LinkedIn"]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was successfully shared" withUniqueID:@"linkedInShare" forViewController:self shouldDismissVCImmediately:NO];
         });
-        
-        
-        [self sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-            DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+
+        [[AMBNetworkManager sharedInstance] sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn contactList:nil success:^(NSDictionary *response) {
+            DLog(@"LINKEDIN Share Track SUCCESSFUL with response - %@", response);
+        } failure:^(NSString *error) {
+            DLog(@"LINKEDIN Share Track FAILED with response - %@", error);
         }];
     }
 }

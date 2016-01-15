@@ -12,6 +12,16 @@
 
 @implementation AMBPusherChannelObject
 
+- (instancetype)initWithDictionary:(NSMutableDictionary*)payloadDict {
+    self.channelName = (NSString *)payloadDict[@"channel_name"];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.zzz"];
+    self.expiresAt = [df dateFromString:(NSString *)payloadDict[@"expires_at"]];
+    self.sessionId = (NSString *)payloadDict[@"client_session_uid"];
+    
+    return self;
+}
+
 - (void)createObjectFromDictionary:(NSMutableDictionary *)payloadDic {
     self.channelName = (NSString *)payloadDic[@"channel_name"];
     NSDateFormatter *df = [[NSDateFormatter alloc] init];

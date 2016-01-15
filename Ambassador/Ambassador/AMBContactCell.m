@@ -29,7 +29,7 @@
 - (void)setUpCellWithContact:(AMBContact*)contact isSelected:(BOOL)selected {
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.contact = contact;
-    
+
     self.name.text = [contact fullName];
     self.name.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableNameTextFont];
     self.value.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
@@ -45,9 +45,17 @@
     self.checkmarkView.image = [AMBValues imageFromBundleWithName:@"check" type:@"png" tintable:YES];
     self.checkmarkView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableCheckMarkColor];
     self.checkmarkConstraint.constant = (selected) ? 16 : -(self.checkmarkView.frame.size.width);
-    
+
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressTriggered:)];
     [self addGestureRecognizer:longPress];
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    if (highlighted) {
+        self.backgroundColor = [UIColor cellSelectionGray];
+    } else {
+        self.backgroundColor = [UIColor whiteColor];
+    }
 }
 
 
@@ -78,6 +86,12 @@
             [self layoutIfNeeded];
         }];
     } completion:nil];
+}
+
+- (void)setCellSelectionColor {
+    UIView *colorView = [[UIView alloc] init];
+    colorView.backgroundColor = [UIColor cellSelectionGray];
+    self.selectedBackgroundView = colorView;
 }
 
 @end
