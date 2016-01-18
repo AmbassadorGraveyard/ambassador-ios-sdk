@@ -283,7 +283,7 @@ BOOL keyboardShowing = NO;
         }
         
         // If the contact is invalid
-        [self showInvalidValueAlertForValue:contact.value];
+        [AMBErrors errorSelectingInvalidValueForValue:contact.value type:self.type];
     }
 }
 
@@ -426,23 +426,6 @@ BOOL keyboardShowing = NO;
         default:
             return NO;
     }
-}
-
-- (void)showInvalidValueAlertForValue:(NSString*)valueString {
-    NSString *errorString;
-    
-    switch (self.type) {
-        case AMBSocialServiceTypeEmail:
-            errorString = [NSString stringWithFormat:@"The email address %@ is invalid.  Please change it to a valid email address. \n(Example: user.name@example.com)", valueString];
-            break;
-        case AMBSocialServiceTypeSMS:
-            errorString = [NSString stringWithFormat:@"The phone number %@ is invalid.  Please change it to a valid phone number. \n(Example: 1-(555)555-5555, (555)555-5555, 555-5555)", valueString];
-        default:
-            break;
-    }
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Unable to select!" message:errorString delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [alertView show];
 }
 
 - (void)refreshContacts {
