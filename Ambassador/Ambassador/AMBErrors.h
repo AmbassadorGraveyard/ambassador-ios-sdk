@@ -20,6 +20,7 @@
 + (void)errorSharingMessageForVC:(UIViewController*)viewController withErrorMessage:(NSString*)message;
 + (void)errorSendingInvalidPhoneNumbersForVC:(UIViewController*)viewController;
 + (void)errorSendingInvalidEmailsForVC:(UIViewController*)viewController;
++ (void)errorSelectingInvalidValueForValue:(NSString*)valueString type:(AMBSocialServiceType)serviceType;
 
 @end
 
