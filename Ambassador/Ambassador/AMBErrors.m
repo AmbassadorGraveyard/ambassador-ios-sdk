@@ -13,7 +13,7 @@
 
 #pragma mark - Error Logs
 
-+ (void)conversionError:(NSInteger)statusCode errorData:(NSData*)data {
++ (void)errorLogCannotSendConversion:(NSInteger)statusCode errorData:(NSData*)data {
     NSLog(@"[Ambassador] Error Sending Conversion - Status Code=%li Failure Reason=%@", (long)statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
 }
 

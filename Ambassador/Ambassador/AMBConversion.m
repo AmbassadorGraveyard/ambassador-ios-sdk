@@ -61,7 +61,7 @@ NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com
             [[AMBNetworkManager sharedInstance] sendRegisteredConversion:[self payloadForConversionCallWithFP:userDefaultsIdentify mbsyFields:fieldsDictionary] success:^(NSDictionary *response) {
                 [AMBCoreDataManager deleteCoreDataObject:entity];
             } failure:^(NSInteger statusCode, NSData *data) {
-                [AMBErrors conversionError:statusCode errorData:data];
+                [AMBErrors errorLogCannotSendConversion:statusCode errorData:data];
             }];
         }
     } else {

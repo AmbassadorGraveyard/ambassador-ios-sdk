@@ -10,7 +10,7 @@
 
 @interface AMBErrors : NSObject
 
-+ (void)conversionError:(NSInteger)statusCode errorData:(NSData*)data;
++ (void)errorLogCannotSendConversion:(NSInteger)statusCode errorData:(NSData*)data;
 + (void)errorLogNoMatchingCampaignIdError:(NSString*)campaignId;
 + (NSError*)restrictedConversionError;
 + (void)errorAlertNoMatchingCampaignIdsForVC:(UIViewController*)viewController;
