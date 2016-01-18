@@ -14,6 +14,8 @@
 + (void)errorLogNoMatchingCampaignIdError:(NSString*)campaignId;
 + (NSError*)restrictedConversionError;
 + (void)errorAlertNoMatchingCampaignIdsForVC:(UIViewController*)viewController;
++ (void)errorLinkedInShareForVC:(UIViewController*)viewController withMessage:(NSString*)message;
++ (void)errorLinkedInReauthForVC:(UIViewController*)viewController;
 
 @end
 

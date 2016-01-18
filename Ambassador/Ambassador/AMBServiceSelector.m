@@ -64,6 +64,7 @@ int contactServiceType;
     [self setUpCloseButton];
     [self performIdentify];
     self.services = [[AMBThemeManager sharedInstance] customSocialGridArray];
+    [AMBUtilities sharedInstance].delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -182,7 +183,7 @@ int contactServiceType;
 #pragma mark - ShareServiceDelegate
 
 - (void)networkError:(NSString *)title message:(NSString *)message {
-    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:@"linkedShareFail" forViewController:self shouldDismissVCImmediately:NO];
+    [AMBErrors errorLinkedInShareForVC:self withMessage:message];
 }
 
 - (void)userDidPostFromService:(NSString *)service {
@@ -200,10 +201,7 @@ int contactServiceType;
 }
 
 - (void)userMustReauthenticate {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You've been logged out of LinkedIn. Please login to share." withUniqueID:@"linkedInAuth" forViewController:self shouldDismissVCImmediately:NO];
-        [AMBUtilities sharedInstance].delegate = self;
-    });
+    [AMBErrors errorLinkedInReauthForVC:self];
 }
 
 
