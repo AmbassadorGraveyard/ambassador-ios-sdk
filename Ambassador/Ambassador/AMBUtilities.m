@@ -164,6 +164,14 @@
     }];
 }
 
+- (void)removeFadeFromView {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.fadeView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.fadeView removeFromSuperview];
+    }];
+}
+
 
 #pragma mark - Caching
 

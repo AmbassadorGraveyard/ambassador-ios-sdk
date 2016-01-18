@@ -46,6 +46,7 @@
 
 // Fade View
 - (void)addFadeToView:(UIView*)view;
+- (void)removeFadeFromView;
 
 // Caching
 - (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue;
