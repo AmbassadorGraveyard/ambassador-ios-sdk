@@ -8,6 +8,7 @@
 
 #import "AMBSendCompletionModal.h"
 #import "AMBUtilities.h"
+#import "AMBThemeManager.h"
 
 @interface AMBSendCompletionModal ()
 
@@ -59,6 +60,7 @@
 {
     DLog();
     self.button.layer.cornerRadius = self.button.frame.size.height / 2;
+    self.button.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarColor];
 }
 
 - (IBAction)buttonPressed:(UIButton *)sender

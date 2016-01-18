@@ -44,6 +44,7 @@
 - (void)removeCacheForKey:(NSString*)keyValue;
 
 + (NSString*)createRequestID;
++ (BOOL)colorIsDark:(UIColor*)color;
 + (BOOL)isSuccessfulStatusCode:(NSInteger)statusCode;
 + (NSDictionary*)dictionaryFromQueryString:(NSString*)queryString;
 
