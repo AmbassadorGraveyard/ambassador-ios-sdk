@@ -8,27 +8,15 @@
 
 #import "AMBServiceSelector.h"
 #import "AMBShareServiceCell.h"
-#import "AMBShareService.h"
-#import "AMBShareServicesConstants.h"
 #import "AMBContactSelector.h"
-#import "AMBContactLoader.h"
 #import "AMBAuthorizeLinkedIn.h"
-#import "AMBUtilities.h"
-#import "AMBLinkedInAPIConstants.h"
-#import "AMBConstants.h"
 #import <Social/Social.h>
 #import "AMBLinkedInShare.h"
-#import "AMBContact.h"
-#import "AMBSendCompletionModal.h"
-#import <MessageUI/MessageUI.h>
-#import "AMBIdentify.h"
 #import "AMBThemeManager.h"
 #import "AmbassadorSDK_Internal.h"
-#import "AMBNetworkObject.h"
-#import "AMBAmbassadorNetworkManager.h"
+#import "AMBNetworkManager.h"
 
-@interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LinkedInAuthorizeDelegate,
-                                    AMBShareServiceDelegate, UITextFieldDelegate, AMBUtilitiesDelegate>
+@interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LinkedInAuthorizeDelegate, AMBShareServiceDelegate, AMBUtilitiesDelegate>
 
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *descriptionLabel;
@@ -100,241 +88,6 @@ int contactServiceType;
     UIPasteboard *pb = [UIPasteboard generalPasteboard];
     [pb setString:self.lblURL.text];
     if (!self.copiedAnimationTimer.isValid) { [self confirmCopyAnimation]; }
-}
-
-
-#pragma mark - UI Functions
-
-- (void)confirmCopyAnimation {
-    if (!self.lblCopied) {
-        self.lblCopied = [[UILabel alloc] initWithFrame:self.btnCopy.frame];
-        self.lblCopied.accessibilityIdentifier = @"lblCopied";
-    }
-    
-    self.lblCopied.alpha = 0;
-    self.lblCopied.text = @"Copied!";
-    self.lblCopied.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
-    [self.shortURLBackground addSubview:self.lblCopied];
-    [self.shortURLBackground bringSubviewToFront:self.btnCopy];
-
-    self.copiedAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(hideConfirmCopyAnimation) userInfo:nil repeats:NO];
-
-    [UIView animateWithDuration:0.3 animations:^{
-        self.lblCopied.frame = CGRectMake(self.btnCopy.frame.origin.x - self.lblCopied.frame.size.width - 20, self.lblCopied.frame.origin.y, 45, self.lblCopied.frame.size.height);
-        self.lblCopied.alpha = 1;
-    }];
-}
-
-- (void)hideConfirmCopyAnimation {
-    [self.copiedAnimationTimer invalidate];
-    [UIView animateWithDuration:0.3 animations:^{
-        self.lblCopied.frame = self.btnCopy.frame;
-        self.lblCopied.alpha = 0;
-    }];
-}
-
-- (void)setUpTheme {
-    [[AMBThemeManager sharedInstance] createDicFromPlist:self.themeName];
-    // Sets labels and navbarTitle based on plist
-    self.titleLabel.text = [[AMBThemeManager sharedInstance] messageForKey:RAFWelcomeTextMessage];
-    self.descriptionLabel.text = [[AMBThemeManager sharedInstance] messageForKey:RAFDescriptionTextMessage];
-    self.title = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
-    
-    // Setup NAV BAR
-    self.navigationController.navigationBar.barTintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarColor];
-    self.navigationController.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName:[[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor], NSFontAttributeName:[[AMBThemeManager sharedInstance] fontForKey:NavBarTextFont]};
-    self.navigationController.title = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
-    
-    // Setup RAF Background color
-    self.view.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:RAFBackgroundColor];
-    
-    // Setup RAF Labels
-    self.titleLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFWelcomeTextColor];
-    self.titleLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFWelcomeTextFont];
-    self.descriptionLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFDescriptionTextColor];
-    self.descriptionLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFDescriptionTextFont];
-    [self applyImage];
-    
-    // Setup shareURL field
-    self.shortURLBackground.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldBackgroundColor];
-    self.lblURL.textColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldTextColor];
-    self.lblURL.font = [[AMBThemeManager sharedInstance] fontForKey:ShareFieldTextFont];
-    self.shortURLBackgroundHeight.constant = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldHeight] floatValue];
-    self.btnCopy.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldBackgroundColor];
-    self.shortURLBackground.layer.cornerRadius = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldCornerRadius] floatValue];
-    
-    // Checks to see if the nav bar color is "light" or "dark" and sets the status bar text color accordingly
-    if ([AMBUtilities colorIsDark:[[AMBThemeManager sharedInstance] colorForKey:NavBarColor]]) { self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent; }
-}
-
-- (void)applyImage {
-    NSMutableDictionary *imageDict = [[AMBThemeManager sharedInstance] imageForKey:RAFLogo];
-    UIImage *image = [imageDict valueForKey:@"image"];
-    
-    int slotNum = [[imageDict valueForKey:@"imageSlotNumber"] intValue];
-    
-    switch (slotNum) {
-        case 1:
-            self.imgSlot1.image = image;
-            self.imgSlotHeight1.constant = 70;
-            break;
-        case 2:
-            self.imgSlot2.image = image;
-            self.imgSlotHeight2.constant = 70;
-            break;
-        case 3:
-            self.imgSlot3.image = image;
-            self.imgSlotHeight3.constant = 70;
-            break;
-        case 4:
-            self.imgSlot4.image = image;
-            self.imgSlotHeight4.constant = 70;
-            break;
-        case 5:
-            self.imgSlot5.image = image;
-            self.imgSlotHeight5.constant = 70;
-            break;
-        default:
-            break;
-    }
-}
-
-- (void)setUpCloseButton {
-    UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
-    [closeButton setImage:[AMBValues imageFromBundleWithName:@"close" type:@"png" tintable:YES] forState:UIControlStateNormal];
-    closeButton.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
-    [closeButton addTarget:self action:@selector(closeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *closeBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
-    self.navigationItem.leftBarButtonItem = closeBarButtonItem;
-}
-
-
-#pragma mark - Helper Functions
-
-- (void)stockShareWithSocialMediaType:(AMBSocialServiceType)servicetype {
-    SLComposeViewController *vc;
-    switch (servicetype) {
-        case AMBSocialServiceTypeFacebook:
-            vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-            break;
-        case AMBSocialServiceTypeTwitter:
-            vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        default:
-            break;
-    }
-    
-    [vc addURL:[NSURL URLWithString:self.urlNetworkObj.url]];
-    [vc setInitialText:[[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage]];
-    [self presentViewController:vc animated:YES completion:nil];
-    vc.completionHandler = ^(SLComposeViewControllerResult result) {
-        if (result == SLComposeViewControllerResultDone) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was shared successfully!" withUniqueID:@"stockShare" forViewController:self shouldDismissVCImmediately:NO];
-            });
-        
-            [self sendShareTrackForServiceType:AMBSocialServiceTypeFacebook completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-                DLog(@"Error for sending share track %@: %@\n Body returned for sending share track: %@", [AMBOptions serviceTypeStringValue:servicetype], e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
-            }];
-        }
-    };
-}
-
-- (void)sendShareTrackForServiceType:(AMBSocialServiceType)type completion:(void(^)(NSData *, NSURLResponse *, NSError *))c {
-    AMBShareTrackNetworkObject *share = [[AMBShareTrackNetworkObject alloc] init];
-    share.short_code = self.urlNetworkObj.short_code;
-    share.social_name = [AMBOptions serviceTypeStringValue:type];
-    [[AMBAmbassadorNetworkManager sharedInstance] sendNetworkObject:share url:[AMBAmbassadorNetworkManager sendShareTrackUrl] additionParams:nil requestType:@"POST" completion:c];
-}
-
-- (void)checkLinkedInToken {
-    AMBAuthorizeLinkedIn *auth = [[AMBAuthorizeLinkedIn alloc] init];
-    [auth checkForInvalidatedTokenWithCompletion:^{
-        if ([AMBValues getLinkedInAccessToken]) {
-            [self presentLinkedInShare];
-        } else {
-            [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
-        }
-    }];
-}
-
-- (void)presentLinkedInShare {
-    DLog();
-    AMBLinkedInShare * vc = [[AMBLinkedInShare alloc] init];
-    DLog(@"%@", vc.debugDescription);
-    vc.defaultMessage = [[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage];
-    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    vc.shortCode = self.urlNetworkObj.short_code;
-    vc.shortURL = self.urlNetworkObj.url;
-    vc.delegate = self;
-    [self presentViewController:vc animated:YES completion:nil];
-    [vc didMoveToParentViewController:self];
-}
-
-- (void)alertForNetworkTimeout {
-    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"The network request has timed out. Please check your connection and try again." withUniqueID:@"networkTimeOut" forViewController:self shouldDismissVCImmediately:YES];
-    [AMBUtilities sharedInstance].delegate = self;
-}
-
-- (void)removeLoadingView {
-    NSNumber *campaingID = [NSNumber numberWithInt:self.campaignID.intValue];
-    self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaingID];
-    
-    if (!self.urlNetworkObj) { // This means that there was no matching campaign ID that was returned
-        [self.waitViewTimer invalidate];
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:YES];
-        [AMBUtilities sharedInstance].delegate = self;
-        NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
-        return;
-    }
-    
-    [[AMBUtilities sharedInstance] hideLoadingView];
-    self.lblURL.text = self.urlNetworkObj.url;
-    if (self.waitViewTimer) { [self.waitViewTimer invalidate]; }
-}
-
-- (void)performIdentify {
-    AMBPusherChannelObject *channelObject = [AmbassadorSDK sharedInstance].pusherChannelObj;
-    
-    // Checks if we are subscribed to a pusher channel and makes sure that the channel is not expired
-    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState == PTPusherConnectionConnected) {
-        // If we're SUBSCRIBED and NOT expired, then we will call the Identify
-        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-            if (e) { DLog(@"There was an error - %@", e); }
-        }];
-        
-        return;
-    }
-    
-    // Checks if we are subscribed, good with expiration, BUT Pusher got disconnected
-    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState != PTPusherConnectionConnected) {
-        // If pusher socket is NOT OPEN, then we attempt to RESUBSCRIBE to the existing channel
-        DLog(@"Attempting to resubscribe to previous Pusher channel");
-        [[AmbassadorSDK sharedInstance].pusherManager resubscribeToExistingChannelWithCompletion:^(AMBPTPusherChannel *channelName, NSError *error) {
-            if (error) {
-                DLog(@"Error resubscribing to channel - %@", error); // If there is an error trying to resubscribe, we will recall the whole identify process
-                [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
-                    [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-                        if (e) { DLog(@"There was an error - %@", e); }
-                    }];
-                }];
-            } else {
-                [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:nil]; // Everything is good to go and we can call identify
-            }
-        }];
-        
-        return;
-    }
-    
-    // If we're NOT SUBSCRIBED or EXPIRED then we will do the whole pusher process over again (get channel name, connect to pusher, subscribe, identify)
-    DLog(@"The Pusher channel seems to be null or expired, restarting whole identify process");
-    [AmbassadorSDK identifyWithEmail:[AmbassadorSDK sharedInstance].email completion:^(NSError *e) {
-        [AmbassadorSDK sendIdentifyWithCampaign:self.campaignID enroll:YES completion:^(NSError *e) {
-            if (e) {
-                DLog(@"There was an error - %@", e);
-            }
-        }];
-    }];
 }
 
 
@@ -433,14 +186,15 @@ int contactServiceType;
 }
 
 - (void)userDidPostFromService:(NSString *)service {
-    if ([service isEqualToString:AMB_LINKEDIN_TITLE]) {
+    if ([service isEqualToString:@"LinkedIn"]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was successfully shared" withUniqueID:@"linkedInShare" forViewController:self shouldDismissVCImmediately:NO];
         });
-        
-        
-        [self sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn completion:^(NSData *d, NSURLResponse *r, NSError *e) {
-            DLog(@"Error for sending share track: %@\n Body returned for sending share track: %@", e, [[NSString alloc] initWithData:d encoding:NSASCIIStringEncoding]);
+
+        [[AMBNetworkManager sharedInstance] sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn contactList:nil success:^(NSDictionary *response) {
+            DLog(@"LINKEDIN Share Track SUCCESSFUL with response - %@", response);
+        } failure:^(NSString *error) {
+            DLog(@"LINKEDIN Share Track FAILED with response - %@", error);
         }];
     }
 }
@@ -458,6 +212,237 @@ int contactServiceType;
     if ([uniqueID isEqualToString:@"linkedInAuth"]) {
         [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
     }
+}
+
+
+#pragma mark - UI Functions
+
+- (void)confirmCopyAnimation {
+    if (!self.lblCopied) {
+        self.lblCopied = [[UILabel alloc] initWithFrame:self.btnCopy.frame];
+        self.lblCopied.accessibilityIdentifier = @"lblCopied";
+    }
+    
+    self.lblCopied.alpha = 0;
+    self.lblCopied.text = @"Copied!";
+    self.lblCopied.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:10];
+    [self.shortURLBackground addSubview:self.lblCopied];
+    [self.shortURLBackground bringSubviewToFront:self.btnCopy];
+    
+    self.copiedAnimationTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(hideConfirmCopyAnimation) userInfo:nil repeats:NO];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.lblCopied.frame = CGRectMake(self.btnCopy.frame.origin.x - self.lblCopied.frame.size.width - 20, self.lblCopied.frame.origin.y, 45, self.lblCopied.frame.size.height);
+        self.lblCopied.alpha = 1;
+    }];
+}
+
+- (void)hideConfirmCopyAnimation {
+    [self.copiedAnimationTimer invalidate];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.lblCopied.frame = self.btnCopy.frame;
+        self.lblCopied.alpha = 0;
+    }];
+}
+
+- (void)setUpTheme {
+    [[AMBThemeManager sharedInstance] createDicFromPlist:self.themeName];
+
+    // Set images programmatically
+    [self.btnCopy setImage:[AMBValues imageFromBundleWithName:@"clipboard" type:@"png" tintable:NO] forState:UIControlStateNormal];
+
+    // Sets labels and navbarTitle based on plist
+    self.titleLabel.text = [[AMBThemeManager sharedInstance] messageForKey:RAFWelcomeTextMessage];
+    self.descriptionLabel.text = [[AMBThemeManager sharedInstance] messageForKey:RAFDescriptionTextMessage];
+    self.title = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
+    
+    // Setup NAV BAR
+    self.navigationController.navigationBar.barTintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarColor];
+    self.navigationController.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName:[[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor], NSFontAttributeName:[[AMBThemeManager sharedInstance] fontForKey:NavBarTextFont]};
+    self.navigationController.title = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
+    
+    // Setup RAF Background color
+    self.view.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:RAFBackgroundColor];
+    
+    // Setup RAF Labels
+    self.titleLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFWelcomeTextColor];
+    self.titleLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFWelcomeTextFont];
+    self.descriptionLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFDescriptionTextColor];
+    self.descriptionLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFDescriptionTextFont];
+    [self applyImage];
+    
+    // Setup shareURL field
+    self.shortURLBackground.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldBackgroundColor];
+    self.lblURL.textColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldTextColor];
+    self.lblURL.font = [[AMBThemeManager sharedInstance] fontForKey:ShareFieldTextFont];
+    self.shortURLBackgroundHeight.constant = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldHeight] floatValue];
+    self.btnCopy.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldBackgroundColor];
+    self.shortURLBackground.layer.cornerRadius = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldCornerRadius] floatValue];
+    
+    // Checks to see if the nav bar color is "light" or "dark" and sets the status bar text color accordingly
+    if ([AMBUtilities colorIsDark:[[AMBThemeManager sharedInstance] colorForKey:NavBarColor]]) { self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent; }
+}
+
+- (void)applyImage {
+    NSMutableDictionary *imageDict = [[AMBThemeManager sharedInstance] imageForKey:RAFLogo];
+    UIImage *image = [imageDict valueForKey:@"image"];
+    
+    int slotNum = [[imageDict valueForKey:@"imageSlotNumber"] intValue];
+    
+    switch (slotNum) {
+        case 1:
+            self.imgSlot1.image = image;
+            self.imgSlotHeight1.constant = 70;
+            break;
+        case 2:
+            self.imgSlot2.image = image;
+            self.imgSlotHeight2.constant = 70;
+            break;
+        case 3:
+            self.imgSlot3.image = image;
+            self.imgSlotHeight3.constant = 70;
+            break;
+        case 4:
+            self.imgSlot4.image = image;
+            self.imgSlotHeight4.constant = 70;
+            break;
+        case 5:
+            self.imgSlot5.image = image;
+            self.imgSlotHeight5.constant = 70;
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)setUpCloseButton {
+    UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 16, 16)];
+    [closeButton setImage:[AMBValues imageFromBundleWithName:@"close" type:@"png" tintable:YES] forState:UIControlStateNormal];
+    closeButton.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
+    [closeButton addTarget:self action:@selector(closeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *closeBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
+    self.navigationItem.leftBarButtonItem = closeBarButtonItem;
+}
+
+
+#pragma mark - Helper Functions
+
+- (void)stockShareWithSocialMediaType:(AMBSocialServiceType)servicetype {
+    SLComposeViewController *vc;
+    switch (servicetype) {
+        case AMBSocialServiceTypeFacebook:
+            vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+            break;
+        case AMBSocialServiceTypeTwitter:
+            vc = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        default:
+            break;
+    }
+    
+    [vc addURL:[NSURL URLWithString:self.urlNetworkObj.url]];
+    [vc setInitialText:[[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage]];
+    [self presentViewController:vc animated:YES completion:nil];
+    vc.completionHandler = ^(SLComposeViewControllerResult result) {
+        if (result == SLComposeViewControllerResultDone) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Your link was shared successfully!" withUniqueID:@"stockShare" forViewController:self shouldDismissVCImmediately:NO];
+            });
+            
+            [[AMBNetworkManager sharedInstance] sendShareTrackForServiceType:servicetype contactList:nil success:^(NSDictionary *response) {
+                DLog(@"Share Track for %@ SUCCESSFUL with response - %@", [AMBOptions serviceTypeStringValue:servicetype], response);
+            } failure:^(NSString *error) {
+                DLog(@"Share Track for %@ FAILED with response - %@", [AMBOptions serviceTypeStringValue:servicetype], error);
+            }];
+        }
+    };
+}
+
+- (void)checkLinkedInToken {
+    [[AMBNetworkManager sharedInstance] checkForInvalidatedTokenWithCompletion:^{
+        if ([AMBValues getLinkedInAccessToken]) {
+            [self presentLinkedInShare];
+        } else {
+            [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
+        }
+    }];
+}
+
+- (void)presentLinkedInShare {
+    AMBLinkedInShare * vc = [[AMBLinkedInShare alloc] init];
+    vc.defaultMessage = [[AMBThemeManager sharedInstance] messageForKey:DefaultShareMessage];
+    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    vc.shortCode = self.urlNetworkObj.short_code;
+    vc.shortURL = self.urlNetworkObj.url;
+    vc.delegate = self;
+    [self presentViewController:vc animated:YES completion:nil];
+    [vc didMoveToParentViewController:self];
+}
+
+- (void)alertForNetworkTimeout {
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"The network request has timed out. Please check your connection and try again." withUniqueID:@"networkTimeOut" forViewController:self shouldDismissVCImmediately:YES];
+    [AMBUtilities sharedInstance].delegate = self;
+}
+
+- (void)removeLoadingView {
+    NSNumber *campaignID = [NSNumber numberWithInt:self.campaignID.intValue];
+    self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaignID];
+    [AMBValues setUserURLObject:[self.urlNetworkObj toDictionary]];
+    
+    if (!self.urlNetworkObj) { // This means that there was no matching campaign ID that was returned
+        [self.waitViewTimer invalidate];
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:YES];
+        [AMBUtilities sharedInstance].delegate = self;
+        NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
+        return;
+    }
+    
+    [[AMBUtilities sharedInstance] hideLoadingView];
+    self.lblURL.text = self.urlNetworkObj.url;
+    if (self.waitViewTimer) { [self.waitViewTimer invalidate]; }
+}
+
+- (void)performIdentify {
+    AMBPusherChannelObject *channelObject = [AMBValues getPusherChannelObject];
+    
+    // Checks if we are subscribed to a pusher channel and makes sure that the channel is not expired
+    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState == PTPusherConnectionConnected) {
+        // If we're SUBSCRIBED and NOT expired, then we will call the Identify
+        [self sendIdentify];
+        return;
+    }
+    
+    // Checks if we are subscribed, good with expiration, BUT Pusher got disconnected
+    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState != PTPusherConnectionConnected) {
+        // If pusher socket is NOT OPEN, then we attempt to RESUBSCRIBE to the existing channel
+        DLog(@"Attempting to resubscribe to previous Pusher channel");
+        [[AmbassadorSDK sharedInstance].pusherManager resubscribeToExistingChannelWithCompletion:^(AMBPTPusherChannel *channelName, NSError *error) {
+            if (error) {
+                DLog(@"Error resubscribing to channel - %@", error); // If there is an error trying to resubscribe, we will recall the whole identify process
+                [[AmbassadorSDK sharedInstance] subscribeToPusherWithCompletion:^{
+                    [self sendIdentify];
+                }];
+            } else {
+                [self sendIdentify];
+            }
+        }];
+        
+        return;
+    }
+    
+    // If we're NOT SUBSCRIBED or EXPIRED then we will do the whole pusher process over again (get channel name, connect to pusher, subscribe, identify)
+    DLog(@"The Pusher channel seems to be null or expired, restarting whole identify process");
+    [[AmbassadorSDK sharedInstance] subscribeToPusherWithCompletion:^{
+        [self sendIdentify];
+    }];
+}
+
+- (void)sendIdentify {
+    [[AMBNetworkManager sharedInstance] sendIdentifyForCampaign:self.campaignID shouldEnroll:YES success:^(NSString *response) {
+        DLog(@"SEND IDENTIFY Response - %@", response);
+    } failure:^(NSString *error) {
+        DLog(@"SEND IDENTIFY Response - %@", error);
+    }];
 }
 
 @end

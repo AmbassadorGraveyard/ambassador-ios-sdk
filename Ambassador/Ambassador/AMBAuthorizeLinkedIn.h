@@ -12,15 +12,11 @@
 
 - (void)userDidContinue;
 
-@optional
-- (void)userDidCancel;
-
-
 @end
 
 
-
 @interface AMBAuthorizeLinkedIn : UIViewController
+
 @property (nonatomic, weak) id<LinkedInAuthorizeDelegate>delegate;
-- (void)checkForInvalidatedTokenWithCompletion:(void(^)())complete;
+
 @end

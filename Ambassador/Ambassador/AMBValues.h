@@ -9,13 +9,29 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "AMBNetworkObject.h"
+#import "AMBPusherChannelObject.h"
 
 @interface AMBValues : NSObject
 
 + (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type tintable:(BOOL)tintable;
 + (NSBundle*)AMBframeworkBundle;
-+ (NSString *)identifyUrlWithUniversalID:(NSString *)uid;
 + (void)clearAmbUserDefaults;
++ (BOOL)isProduction;
+
+// URLs
++ (NSString *)identifyUrlWithUniversalID:(NSString *)uid;
++ (NSString*)getSendIdentifyUrl;
++ (NSString*)getShareTrackUrl;
++ (NSString*)getLinkedInAuthorizationUrl;
++ (NSString*)getLinkedInAuthCallbackUrl;
++ (NSString*)getLinkedInRequestTokenUrl;
++ (NSString*)getLinkedInValidationUrl;
++ (NSString*)getLinkedInShareUrl;
++ (NSString*)getBulkShareSMSUrl;
++ (NSString*)getBulkShareEmailUrl;
++ (NSString*)getSendConversionUrl;
++ (NSString*)getPusherSessionUrl;
++ (NSString*)getPusherAuthUrl;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
@@ -27,6 +43,9 @@
 + (void)setUserLastNameWithString:(NSString*)lastName;
 + (void)setLinkedInExpirationDate:(NSDate*)expirationDate;
 + (void)setLinkedInAccessToken:(NSString*)accessToken;
++ (void)setUserEmail:(NSString*)email;
++ (void)setPusherChannelObject:(NSDictionary*)pusherChannel;
++ (void)setUserURLObject:(NSDictionary*)urlObject;
 
 // Default getters
 + (NSString*)getMbsyCookieCode;
@@ -38,5 +57,8 @@
 + (NSString*)getUserLastName;
 + (NSDate*)getLinkedInTokenExirationDate;
 + (NSString*)getLinkedInAccessToken;
++ (NSString*)getUserEmail;
++ (AMBPusherChannelObject*)getPusherChannelObject;
++ (AMBUserUrlNetworkObject*)getUserURLObject;
 
 @end
