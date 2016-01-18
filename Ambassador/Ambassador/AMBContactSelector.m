@@ -385,7 +385,7 @@ BOOL keyboardShowing = NO;
             [AMBErrors errorSharingMessageForVC:self withErrorMessage:error];
         }];
     } else {
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid phone number. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+        [AMBErrors errorSendingInvalidPhoneNumbersForVC:self];
     }
 }
 
@@ -401,7 +401,7 @@ BOOL keyboardShowing = NO;
             [AMBErrors errorSharingMessageForVC:self withErrorMessage:error];
         }];
     } else {
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid email address. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+        [AMBErrors errorSendingInvalidEmailsForVC:self];
     }
 }
 
