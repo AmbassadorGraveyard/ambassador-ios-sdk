@@ -11,12 +11,18 @@
 
 @implementation AMBUtilities : NSObject
 
+
+#pragma mark - LifeCycle
+
 + (AMBUtilities *)sharedInstance {
     static AMBUtilities* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{ _sharedInsance = [[AMBUtilities alloc] init]; });
     return _sharedInsance;
 }
+
+
+#pragma mark - Custom Alert
 
 - (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController shouldDismissVCImmediately:(BOOL)shouldDismiss {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
@@ -38,6 +44,9 @@
     
     [viewController presentViewController:vc animated:YES completion:nil];
 }
+
+
+#pragma mark - Loading Screen
 
 - (void)showLoadingScreenForView:(UIView*)view {
     if (!self.loadingView) {
@@ -136,6 +145,9 @@
     return offset;
 }
 
+
+#pragma mark - Caching
+
 - (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue {
     if (!self.cache) { self.cache = [[NSCache alloc] init]; }
     
@@ -155,6 +167,9 @@
         [self.cache removeObjectForKey:keyValue];
     }
 }
+
+
+#pragma mark - Misc Class Functions
 
 + (NSString*)createRequestID {
     NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970] * 1000;
