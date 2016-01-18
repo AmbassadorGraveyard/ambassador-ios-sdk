@@ -17,6 +17,7 @@
 + (void)errorLinkedInShareForVC:(UIViewController*)viewController withMessage:(NSString*)message;
 + (void)errorLinkedInReauthForVC:(UIViewController*)viewController;
 + (void)errorNetworkTimeoutForVC:(UIViewController*)viewController;
++ (void)errorSharingMessageForVC:(UIViewController*)viewController withErrorMessage:(NSString*)message;
 
 @end
 

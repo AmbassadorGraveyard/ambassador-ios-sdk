@@ -55,4 +55,9 @@
     [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"The network request has timed out. Please check your connection and try again." withUniqueID:@"networkTimeOut" forViewController:viewController shouldDismissVCImmediately:YES];
 }
 
++ (void)errorSharingMessageForVC:(UIViewController*)viewController withErrorMessage:(NSString*)message {
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:viewController shouldDismissVCImmediately:NO];
+    NSLog(@"[Ambassador] Error Sharing Message - %@", message);
+}
+
 @end
