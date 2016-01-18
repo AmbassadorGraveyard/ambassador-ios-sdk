@@ -9,40 +9,37 @@
 import XCTest
 
 var app : XCUIApplication!
+var rafLoaded = false
 
 class AmbassadorUITests: XCTestCase {
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
+        
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
         if app == nil {
             app = XCUIApplication()
             app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
             app.launch()
-            app.buttons["Button"].tap()
-            
-            while (app.otherElements["LoadingView"].exists) {
-                let smallDelay = NSDate().dateByAddingTimeInterval(1)
-                NSRunLoop.mainRunLoop().runUntilDate(smallDelay)
-            }
+            identifyWithLogin()
+            presentRAF()
         }
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
+}
+
+// UI Tests
+extension AmbassadorUITests {
     func testLoadRAF() {
         // When the RAF page is hit, we check to make sure that all of the correct labels are shown
         XCTAssert(app.staticTexts.elementMatchingType(XCUIElementType.StaticText, identifier: "urlLabel").exists)
-        XCTAssert(app.staticTexts["Spread the word"].exists)
-        XCTAssert(app.staticTexts["Refer a friend to get rewards"].exists)
-    
+        
         // Check to make sure there are the correct number of cells in the collectionView
         XCTAssertEqual(app.collectionViews.cells.count, 5)
+        rafLoaded = true
     }
     
     func testCopyButton() {
@@ -55,40 +52,53 @@ class AmbassadorUITests: XCTestCase {
         // Tap the facebook cell
         app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(0).tap()
         
-        // First make sure that the cancel button functions correctly
-        let facebookNavigationBar = app.navigationBars["Facebook"]
-        facebookNavigationBar.buttons["Cancel"].tap()
+        NSRunLoop.mainRunLoop().runUntilDate(NSDate().dateByAddingTimeInterval(2))
         
-        // Tap the facebook cell again, but this time post the message
-        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(0).tap()
-        facebookNavigationBar.buttons["Post"].tap()
-        
-        // Tap the OKAY button and assure that the success screen is hidden
-        app.buttons["OKAY"].tap()
-        XCTAssertEqual(app.buttons["OKAY"].exists, false)
+        if app.alerts["No Facebook Account"].exists {
+            let cancelButton = app.alerts["No Facebook Account"].collectionViews.buttons["Cancel"]
+            cancelButton.tap()
+        } else {
+            // First make sure that the cancel button functions correctly
+            let facebookNavigationBar = app.navigationBars["Facebook"]
+            facebookNavigationBar.buttons["Cancel"].tap()
+            
+            // Tap the facebook cell again, but this time post the message
+            app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(0).tap()
+            facebookNavigationBar.buttons["Post"].tap()
+            
+            // Tap the OKAY button and assure that the success screen is hidden
+            app.buttons["OKAY"].tap()
+            XCTAssertEqual(app.buttons["OKAY"].exists, false)
+        }
     }
-    
+
     func testTwitter() {
         // Tap the twitter cell
         app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(1).tap()
         
-        // Make sure that the cancel button works correctly with the twitter alertView
-        let twitterNavigationBar = app.navigationBars["Twitter"]
-        twitterNavigationBar.buttons["Cancel"].tap()
+        NSRunLoop.mainRunLoop().runUntilDate(NSDate().dateByAddingTimeInterval(2))
         
-        // Now we tap the twitter cell again and Post
-        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(1).tap()
-        twitterNavigationBar.buttons["Post"].tap()
-        
-        // If we get an alert about duplicate tweets, we will press the OK button in the alertview
-        if app.alerts.elementBoundByIndex(0).exists { app.buttons["OK"].tap() }
-        
-        // Tap OKAY on the success message and check that the message went away
-        app.buttons["OKAY"].tap()
-        XCTAssertEqual(app.buttons["OKAY"].exists, false)
+        if app.alerts["No Twitter Accounts"].exists {
+            app.alerts["No Twitter Accounts"].collectionViews.buttons["Cancel"].tap()
+        } else {
+            // Make sure that the cancel button works correctly with the twitter alertView
+            let twitterNavigationBar = app.navigationBars["Twitter"]
+            twitterNavigationBar.buttons["Cancel"].tap()
+            
+            // Now we tap the twitter cell again and Post
+            app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(1).tap()
+            twitterNavigationBar.buttons["Post"].tap()
+            
+            // If we get an alert about duplicate tweets, we will press the OK button in the alertview
+            if app.alerts.elementBoundByIndex(0).exists { app.buttons["OK"].tap() }
+            
+            // Tap OKAY on the success message and check that the message went away
+            app.buttons["OKAY"].tap()
+            XCTAssertEqual(app.buttons["OKAY"].exists, false)
+        }
     }
     
-    func testLinkedIn() {
+    func testLinkedIn() {        
         // Tap the linkedIn cell
         app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(2).tap()
         
@@ -188,5 +198,37 @@ class AmbassadorUITests: XCTestCase {
         
         // Pop back to ServiceSelector
         app.navigationBars.buttons["Back"].tap()
+    }
+    
+}
+
+// Helper Functions
+extension AmbassadorUITests {
+    func identifyWithLogin() {
+        let app = XCUIApplication()
+        app.tabBars.buttons["Login"].tap()
+        
+        let usernameTextField = app.textFields["Username"]
+        usernameTextField.tap()
+        usernameTextField.typeText("jake@getambassador.com")
+        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
+        
+        let passwordSecureTextField = app.secureTextFields["Password"]
+        passwordSecureTextField.tap()
+        passwordSecureTextField.typeText("testpassword")
+        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
+        
+        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
+        XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
+    }
+    
+    func presentRAF() {
+        let app = XCUIApplication()
+        app.tabBars.buttons["Refer a Friend"].tap()
+        app.tables.staticTexts["Shopping Cart RAF"].tap()
+        while (app.otherElements["LoadingView"].exists) {
+            let smallDelay = NSDate().dateByAddingTimeInterval(1)
+            NSRunLoop.mainRunLoop().runUntilDate(smallDelay)
+        }
     }
 }
