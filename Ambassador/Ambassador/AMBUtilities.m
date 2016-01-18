@@ -173,7 +173,7 @@
 }
 
 - (void)rotateFadeForView:(UIView*)view {
-    if (self.fadeView) {
+    if (self.fadeView && [self.fadeView isDescendantOfView:view]) {
         self.fadeView.frame = view.frame;
         [view bringSubviewToFront:self.fadeView];
     }
