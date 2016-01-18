@@ -15,6 +15,7 @@
 #import "AMBThemeManager.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBNetworkManager.h"
+#import "AMBErrors.h"
 
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LinkedInAuthorizeDelegate, AMBShareServiceDelegate, AMBUtilitiesDelegate>
 
@@ -381,7 +382,7 @@ int contactServiceType;
         [self.waitViewTimer invalidate];
         [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:YES];
         [AMBUtilities sharedInstance].delegate = self;
-        NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
+        [AMBErrors errorNoMatchingCampaignIdError:self.campaignID];
         return;
     }
     
