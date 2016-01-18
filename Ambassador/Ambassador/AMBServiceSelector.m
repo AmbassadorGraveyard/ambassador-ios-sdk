@@ -32,6 +32,7 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight3;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight4;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight5;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * shortURLBackgroundHeight;
 @property (nonatomic, strong) IBOutlet UIButton * btnCopy;
 @property (nonatomic, strong) IBOutlet UIView * shortURLBackground;
 
@@ -269,6 +270,17 @@ int contactServiceType;
     self.descriptionLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFDescriptionTextColor];
     self.descriptionLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFDescriptionTextFont];
     [self applyImage];
+    
+    // Setup shareURL field
+    self.shortURLBackground.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldBackgroundColor];
+    self.lblURL.textColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldTextColor];
+    self.lblURL.font = [[AMBThemeManager sharedInstance] fontForKey:ShareFieldTextFont];
+    self.shortURLBackgroundHeight.constant = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldHeight] floatValue];
+    self.btnCopy.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldBackgroundColor];
+    self.shortURLBackground.layer.cornerRadius = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldCornerRadius] floatValue];
+    
+    // Checks to see if the nav bar color is "light" or "dark" and sets the status bar text color accordingly
+    if ([AMBUtilities colorIsDark:[[AMBThemeManager sharedInstance] colorForKey:NavBarColor]]) { self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent; }
 }
 
 - (void)applyImage {
@@ -280,23 +292,23 @@ int contactServiceType;
     switch (slotNum) {
         case 1:
             self.imgSlot1.image = image;
-            self.imgSlotHeight1.constant = 50;
+            self.imgSlotHeight1.constant = 70;
             break;
         case 2:
             self.imgSlot2.image = image;
-            self.imgSlotHeight2.constant = 50;
+            self.imgSlotHeight2.constant = 70;
             break;
         case 3:
             self.imgSlot3.image = image;
-            self.imgSlotHeight3.constant = 50;
+            self.imgSlotHeight3.constant = 70;
             break;
         case 4:
             self.imgSlot4.image = image;
-            self.imgSlotHeight4.constant = 50;
+            self.imgSlotHeight4.constant = 70;
             break;
         case 5:
             self.imgSlot5.image = image;
-            self.imgSlotHeight5.constant = 50;
+            self.imgSlotHeight5.constant = 70;
             break;
         default:
             break;
