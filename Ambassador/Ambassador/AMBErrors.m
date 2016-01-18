@@ -85,4 +85,8 @@
     [alertView show];
 }
 
++ (void)errorLoadingContactsForVC:(UIViewController*)viewController {
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Sharing requires access to your contact book. You can enable this in your settings." withUniqueID:@"contactError" forViewController:viewController shouldDismissVCImmediately:NO];
+}
+
 @end
