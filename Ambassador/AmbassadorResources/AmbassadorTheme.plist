@@ -5,7 +5,7 @@
 	<key>NAVIGATION BAR -- - -- - - - - </key>
 	<string></string>
 	<key>NavBarColor</key>
-	<string>#000000</string>
+	<string>#2F6898</string>
 	<key>NavBarTextMessage</key>
 	<string>Refer your friends</string>
 	<key>NavBarTextColor</key>
@@ -15,31 +15,43 @@
 	<key>RAF PAGE ------------------------</key>
 	<string></string>
 	<key>RAFBackgroundColor</key>
-	<string>#4199D1</string>
+	<string>#FFFFFF</string>
 	<key>RAFLogo</key>
+	<string>moneyHand, 1</string>
+	<key>SHARE URL FIELD ----------------</key>
 	<string></string>
+	<key>ShareFieldBackgroundColor</key>
+	<string>#F1F1F1</string>
+	<key>ShareFieldHeight</key>
+	<integer>40</integer>
+	<key>ShareFieldTextColor</key>
+	<string>#8A9198</string>
+	<key>ShareFieldTextFont</key>
+	<string>HelveticaNeue, 15</string>
+	<key>ShareFieldCornerRadius</key>
+	<integer>3</integer>
 	<key>RAF WELCOME LABEL ----------</key>
 	<string></string>
 	<key>RAFWelcomeTextMessage</key>
-	<string>Spread the word</string>
+	<string>Share Ambassador and for every demo scheduled, you&apos;ll receive a $25 Amazon gift card. Plus, for every contract signed you&apos;ll receive a free Apple Watch!</string>
 	<key>RAFWelcomeTextColor</key>
-	<string>#FFFFFF</string>
+	<string>#000000</string>
 	<key>RAFWelcomeTextFont</key>
-	<string>HelveticaNeue, 22</string>
+	<string>HelveticaNeue, 15</string>
 	<key>RAF DESCRIPTION LABEL ------</key>
 	<string></string>
 	<key>RAFDescriptionTextMessage</key>
-	<string>Refer a friend to get rewards</string>
+	<string>Share using any of the methods below</string>
 	<key>RAFDescriptionTextColor</key>
-	<string>#FFFFFF</string>
+	<string>#9198AB</string>
 	<key>RAFDescriptionTextFont</key>
-	<string>HelveticaNeue, 18</string>
+	<string>HelveticaNeue, 11</string>
 	<key>DefaultShareMessage</key>
 	<string>I&apos;m a fan of this company, check them out!</string>
 	<key>CONTACT SEND BUTTON ---------</key>
 	<string></string>
 	<key>ContactSendButtonBackgroundColor</key>
-	<string>#4199D1</string>
+	<string>#2F6898</string>
 	<key>ContactSendButtonTextColor</key>
 	<string>#FFFFFF</string>
 	<key>ContactSendButtonTextFont</key>
