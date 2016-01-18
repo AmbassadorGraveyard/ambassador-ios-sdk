@@ -16,9 +16,8 @@
 
 @property (nonatomic, strong) AMBPTPusher *client;
 @property (nonatomic, strong) AMBPTPusherPrivateChannel *channel;
-@property (nonatomic, copy) void (^completion)(AMBPTPusherChannel *c, NSError *e);
+@property (nonatomic, copy) void (^completion)(AMBPTPusherChannel *pusherChannel, NSError *error);
 @property (nonatomic, strong) NSString *universalToken;
-@property (nonatomic) BOOL isAuthorized;
 
 @end
 
@@ -48,48 +47,56 @@
     if (self = [super init]) {
         self.universalToken = auth;
         self.client = [AMBPTPusher pusherWithKey:[AMBPusherManager pusherKey] delegate:self encrypted:YES];
-        self.client.authorizationURL = [NSURL URLWithString:[self pusherAuthUrl]];
-        self.isAuthorized = NO;
+        self.client.authorizationURL = [NSURL URLWithString:[AMBValues getPusherAuthUrl]];
         self.connectionState = PTPusherConnectionDisconnected;
         [self.client connect];
     }
     return self;
 }
 
-- (void)subscribeTo:(NSString *)chan pusherChanDict:(NSMutableDictionary*)pushDict completion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
-    [[AmbassadorSDK sharedInstance].pusherChannelObj createObjectFromDictionary:pushDict];
+- (void)subscribeToChannel:(NSString *)channel completion:(void(^)(AMBPTPusherChannel *pusherChannel, NSError *error))completion {
     self.completion = completion;
-    self.channel = [self.client subscribeToPrivateChannelNamed:chan];
-    if (self.isAuthorized) {
-        self.completion(self.channel, nil);
-        return;
-    }
+    self.channel = [self.client subscribeToPrivateChannelNamed:channel];
 }
 
 - (void)resubscribeToExistingChannelWithCompletion:(void(^)(AMBPTPusherChannel *, NSError *))completion {
-    NSString *channelName = [AmbassadorSDK sharedInstance].pusherChannelObj.channelName;
+    NSString *channelName = [AMBValues getPusherChannelObject].channelName;
     self.completion = completion;
     
     if (channelName && ![channelName isEqualToString:@""]) {
-        self.channel = [self.client subscribeToPrivateChannelNamed:[AmbassadorSDK sharedInstance].pusherChannelObj.channelName];
+        self.channel = [self.client subscribeToPrivateChannelNamed:[AMBValues getPusherChannelObject].channelName];
         self.completion(self.channel, nil);
     } else {
         self.completion(self.channel, [NSError errorWithDomain:@"Could not find existing channel name to subscribe!" code:1 userInfo:nil]);
     }
 }
 
-- (void)bindToChannelEvent:(NSString *)event handler:(void(^)(AMBPTPusherEvent *))handler {
-    [self.channel bindToEventNamed:event handleWithBlock:handler];
-}
-
-
-#pragma mark - Url returns
-- (NSString *)pusherAuthUrl {
-#if AMBPRODUCTION
-    return  @"https://api.getambassador.com/auth/subscribe/";
-#else
-    return  @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
-#endif
+- (void)bindToChannelEvent:(NSString*)eventName {
+    [self.channel bindToEventNamed:eventName handleWithBlock:^(AMBPTPusherEvent *event) {
+        NSMutableDictionary *json = (NSMutableDictionary *)event.data[@"body"];
+        AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
+        if (event.data[@"url"]) {
+            [user fillWithUrl:event.data[@"url"] completion:^(NSString *error) {
+                if (!error) {
+                    [AmbassadorSDK sharedInstance].user = user;
+                    [AMBValues setUserFirstNameWithString:user.first_name];
+                    [AMBValues setUserLastNameWithString:user.last_name];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
+                }
+            }];
+        } else if (json[@"mbsy_cookie_code"] && json[@"mbsy_cookie_code"] != [NSNull null]) {
+            DLog(@"MBSY COOKIE = %@ and FINGERPRINT = %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
+            [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
+            [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
+        } else {
+            [user fillWithDictionary:json];
+            [AmbassadorSDK sharedInstance].user = user;
+            [AMBValues setUserFirstNameWithString:user.first_name];
+            [AMBValues setUserLastNameWithString:user.last_name];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
+        }
+    }];
 }
 
 
@@ -98,7 +105,8 @@
 - (void)pusher:(AMBPTPusher *)pusher willAuthorizeChannel:(AMBPTPusherChannel *)channel withRequest:(NSMutableURLRequest *)request {
     AMBPusherAuthNetworkObject *pusherAuthObj = [[AMBPusherAuthNetworkObject alloc] init];
     request = [self modifyPusherAuthRequest:request authorization:self.universalToken];
-    NSMutableDictionary *httpBody = AMBparseQueryString([[NSMutableString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding]);
+
+    NSDictionary *httpBody = [AMBUtilities dictionaryFromQueryString:[[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding]];
     pusherAuthObj.auth_type = @"private";
     pusherAuthObj.socket_id = httpBody[@"socket_id"];
     pusherAuthObj.channel = channel.name;
@@ -122,17 +130,15 @@
 }
 
 - (void)pusher:(AMBPTPusher *)pusher didSubscribeToChannel:(AMBPTPusherChannel *)channel {
-    self.isAuthorized = YES;
-    DLog(@"Subscribed to chnnel %@", channel.name);
+    DLog(@"Subscribed to channel - %@", channel.name);
     [self throwComletion:channel error:nil];
 }
 
-- (void)throwComletion:(AMBPTPusherChannel *)c error:(NSError *)e {
+- (void)throwComletion:(AMBPTPusherChannel *)channel error:(NSError *)error {
     if (self.completion) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            __weak AMBPusherManager *weakSelf = self;
-            weakSelf.completion(c, e);
-        });
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            self.completion(channel, error);
+        }];
     }
 }
 

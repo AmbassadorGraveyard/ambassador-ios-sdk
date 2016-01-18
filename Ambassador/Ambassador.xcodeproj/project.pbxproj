@@ -23,15 +23,12 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		DB6A245B1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24591BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h */; };
-		DB6A245C1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A245A1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m */; };
 		DB6A245F1BD00F3F00CE3230 /* AMBNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */; };
 		DB6A24601BD00F3F00CE3230 /* AMBNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */; };
 		DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24611BD017A700CE3230 /* AMBErrors.h */; };
 		DB6A24641BD017B600CE3230 /* AMBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24631BD017B600CE3230 /* AMBErrors.m */; };
 		DB6A24671BD01D8A00CE3230 /* AMBNetworkObject.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24651BD01D8A00CE3230 /* AMBNetworkObject.h */; };
 		DB6A24681BD01D8A00CE3230 /* AMBNetworkObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24661BD01D8A00CE3230 /* AMBNetworkObject.m */; };
-		DB6A246A1BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24691BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m */; };
 		DB6A246E1BD031A100CE3230 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		DB6A24711BD04E3900CE3230 /* AMBPusherManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A246F1BD04E3900CE3230 /* AMBPusherManager.h */; };
 		DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24701BD04E3900CE3230 /* AMBPusherManager.m */; };
@@ -39,8 +36,6 @@
 		DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24751BD125FF00CE3230 /* AMBTests.m */; };
 		DB6A247C1BD14BBB00CE3230 /* AMBMockObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A247B1BD14BBB00CE3230 /* AMBMockObjects.m */; };
 		DB6A247E1BD14F4900CE3230 /* AMBNetworObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A247D1BD14F4900CE3230 /* AMBNetworObjectTests.m */; };
-		DB6A24811BD1663F00CE3230 /* AMBStorageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A247F1BD1663F00CE3230 /* AMBStorageManager.h */; };
-		DB6A24821BD1663F00CE3230 /* AMBStorageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24801BD1663F00CE3230 /* AMBStorageManager.m */; };
 		DB6A24841BD1842800CE3230 /* AmbassadorSDK_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24831BD1842800CE3230 /* AmbassadorSDK_Internal.h */; };
 		DB6A24861BD1847900CE3230 /* AmbassadorSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24851BD1847900CE3230 /* AmbassadorSDKTests.m */; };
 		DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in Copy Files */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; };
@@ -78,8 +73,6 @@
 		DBA3FB821BA8A23C00672D82 /* AMBConversionParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB631BA8A23C00672D82 /* AMBConversionParameters.m */; };
 		DBA3FB8E1BA8A23C00672D82 /* AMBIdentify.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB6F1BA8A23C00672D82 /* AMBIdentify.h */; };
 		DBA3FB8F1BA8A23C00672D82 /* AMBIdentify.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB701BA8A23C00672D82 /* AMBIdentify.m */; };
-		DBA3FBA91BA8A24F00672D82 /* AMBLinkedInAPIConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB901BA8A24F00672D82 /* AMBLinkedInAPIConstants.h */; };
-		DBA3FBAA1BA8A24F00672D82 /* AMBLinkedInAPIConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB911BA8A24F00672D82 /* AMBLinkedInAPIConstants.m */; };
 		DBA3FBAB1BA8A24F00672D82 /* AMBLinkedInShare.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB921BA8A24F00672D82 /* AMBLinkedInShare.h */; };
 		DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */; };
 		DBA3FBAD1BA8A24F00672D82 /* AMBNamePrompt.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */; };
@@ -90,26 +83,10 @@
 		DBA3FBB41BA8A24F00672D82 /* AMBSendCompletionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */; };
 		DBA3FBB51BA8A24F00672D82 /* AMBServiceSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9D1BA8A24F00672D82 /* AMBServiceSelector.h */; };
 		DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FB9E1BA8A24F00672D82 /* AMBServiceSelector.m */; };
-		DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FB9F1BA8A24F00672D82 /* AMBServiceSelectorPreferences.h */; };
-		DBA3FBB81BA8A24F00672D82 /* AMBServiceSelectorPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA01BA8A24F00672D82 /* AMBServiceSelectorPreferences.m */; };
-		DBA3FBB91BA8A24F00672D82 /* AMBShareService.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA11BA8A24F00672D82 /* AMBShareService.h */; };
-		DBA3FBBA1BA8A24F00672D82 /* AMBShareService.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA21BA8A24F00672D82 /* AMBShareService.m */; };
 		DBA3FBBB1BA8A24F00672D82 /* AMBShareServiceCell.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA31BA8A24F00672D82 /* AMBShareServiceCell.h */; };
 		DBA3FBBC1BA8A24F00672D82 /* AMBShareServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA41BA8A24F00672D82 /* AMBShareServiceCell.m */; };
-		DBA3FBBD1BA8A24F00672D82 /* AMBShareServicesConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA51BA8A24F00672D82 /* AMBShareServicesConstants.h */; };
-		DBA3FBBE1BA8A24F00672D82 /* AMBShareServicesConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA61BA8A24F00672D82 /* AMBShareServicesConstants.m */; };
 		DBA3FBBF1BA8A24F00672D82 /* AMBUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */; };
 		DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBA81BA8A24F00672D82 /* AMBUtilities.m */; };
-		DBA3FBCD1BA8A9C000672D82 /* AMBFMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC21BA8A9C000672D82 /* AMBFMDatabase.h */; };
-		DBA3FBCE1BA8A9C000672D82 /* AMBFMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC31BA8A9C000672D82 /* AMBFMDatabase.m */; };
-		DBA3FBCF1BA8A9C000672D82 /* AMBFMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC41BA8A9C000672D82 /* AMBFMDatabaseAdditions.h */; };
-		DBA3FBD01BA8A9C000672D82 /* AMBFMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC51BA8A9C000672D82 /* AMBFMDatabaseAdditions.m */; };
-		DBA3FBD11BA8A9C000672D82 /* AMBFMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC61BA8A9C000672D82 /* AMBFMDatabasePool.h */; };
-		DBA3FBD21BA8A9C000672D82 /* AMBFMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC71BA8A9C000672D82 /* AMBFMDatabasePool.m */; };
-		DBA3FBD31BA8A9C000672D82 /* AMBFMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBC81BA8A9C000672D82 /* AMBFMDatabaseQueue.h */; };
-		DBA3FBD41BA8A9C000672D82 /* AMBFMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBC91BA8A9C000672D82 /* AMBFMDatabaseQueue.m */; };
-		DBA3FBD51BA8A9C000672D82 /* FMDB.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBCA1BA8A9C000672D82 /* FMDB.h */; };
-		DBA3FBD71BA8A9C000672D82 /* AMBFMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBCC1BA8A9C000672D82 /* AMBFMResultSet.m */; };
 		DBA3FC001BA8AA1D00672D82 /* NSDictionary+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBD91BA8AA1D00672D82 /* NSDictionary+QueryString.m */; };
 		DBA3FC011BA8AA1D00672D82 /* NSString+Hashing.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FBDA1BA8AA1D00672D82 /* NSString+Hashing.m */; };
 		DBA3FC021BA8AA1D00672D82 /* NSDictionary+QueryString.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FBDC1BA8AA1D00672D82 /* NSDictionary+QueryString.h */; };
@@ -152,8 +129,6 @@
 		DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FC2A1BA8AA5600672D82 /* NSData+SRB64Additions.m */; };
 		DBA3FC311BA8AA5600672D82 /* AMBSRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FC2B1BA8AA5600672D82 /* AMBSRWebSocket.h */; };
 		DBA3FC321BA8AA5600672D82 /* AMBSRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FC2C1BA8AA5600672D82 /* AMBSRWebSocket.m */; };
-		DBA3FC361BA8AB9200672D82 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA3FC331BA8AAA500672D82 /* libsqlite3.dylib */; };
-		DBA3FC411BA8BE2300672D82 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DBA3FC401BA8BE2300672D82 /* libicucore.dylib */; };
 		DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */ = {isa = PBXBuildFile; fileRef = DBB8BD081BAC6B6D00B87896 /* AMBPTPusher+Testing.h */; };
 		DBB8BD0B1BAC6B6D00B87896 /* AMBPTPusher+Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = DBB8BD091BAC6B6D00B87896 /* AMBPTPusher+Testing.m */; };
 		DBEB6FE21BA9AD04005EE0D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FE11BA9AD04005EE0D0 /* Main.storyboard */; };
@@ -172,12 +147,14 @@
 		DBEB6FFE1BA9B2D8005EE0D0 /* sms.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FEF1BA9B2D8005EE0D0 /* sms.png */; };
 		DBEB6FFF1BA9B2D8005EE0D0 /* successIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FF01BA9B2D8005EE0D0 /* successIcon.png */; };
 		DBEB70001BA9B2D8005EE0D0 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */; };
+		EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */; };
+		EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */; };
+		EF1CB0B41C3C7F6600F65031 /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1CB0B31C3C7F6600F65031 /* avatar.png */; };
 		EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */; };
 		EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */; };
 		EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */; };
 		EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */; };
 		EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */; };
-		EF2EC3351BAC60CC003CAA43 /* AMBFMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = EF2EC3341BAC60CC003CAA43 /* AMBFMResultSet.h */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF5356501BF109A400BC80C4 /* unitTestImage.png in Resources */ = {isa = PBXBuildFile; fileRef = EF53564F1BF109A400BC80C4 /* unitTestImage.png */; };
@@ -199,6 +176,7 @@
 		EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7CA9CD1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m */; };
 		EF7CA9D01BF3DDB3006EBD6A /* AMBConversionParametersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7CA9CF1BF3DDB3006EBD6A /* AMBConversionParametersTests.m */; };
 		EF7CA9D21BF3EAB7006EBD6A /* AMBContactTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7CA9D11BF3EAB7006EBD6A /* AMBContactTests.m */; };
+		EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */; };
 		EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */; };
 		EFCBFDBB1BDA859E0052DFB7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
@@ -206,6 +184,15 @@
 		EFDFA0CB1BE148A5002FA3ED /* AMBValues.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDFA0C91BE148A5002FA3ED /* AMBValues.m */; };
 		EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */ = {isa = PBXBuildFile; fileRef = EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */; };
 		EFDFA0D01BE154B8002FA3ED /* UIColor+AMBColorValues.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */; };
+		EFE7D7951C21C19B00D7F92C /* AMBCoreDataDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE7D7931C21C19B00D7F92C /* AMBCoreDataDelegate.h */; };
+		EFE7D7961C21C19B00D7F92C /* AMBCoreDataDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE7D7941C21C19B00D7F92C /* AMBCoreDataDelegate.m */; };
+		EFE7D7991C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EFE7D7971C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld */; };
+		EFE7D79C1C21CB2D00D7F92C /* AMBCoreDataManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE7D79A1C21CB2D00D7F92C /* AMBCoreDataManager.h */; };
+		EFE7D79D1C21CB2D00D7F92C /* AMBCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE7D79B1C21CB2D00D7F92C /* AMBCoreDataManager.m */; };
+		EFE7D7AE1C21D0CF00D7F92C /* AMBConversionModel.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = EFE7D7971C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld */; };
+		EFE7D7B51C2202C900D7F92C /* AMBConversionParametersEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE7D7B11C2202C900D7F92C /* AMBConversionParametersEntity.h */; };
+		EFE7D7B61C2202C900D7F92C /* AMBConversionParametersEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE7D7B21C2202C900D7F92C /* AMBConversionParametersEntity.m */; };
+		EFE7D7C91C24671600D7F92C /* AMBConversionParameter_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE7D7C71C24671600D7F92C /* AMBConversionParameter_Internal.h */; };
 		EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */; };
 		EFF58FA01BF4F8F5001AB2DE /* AMBMedia.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */; };
 /* End PBXBuildFile section */
@@ -291,15 +278,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		DB6A24591BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBAmbassadorNetworkManager.h; sourceTree = "<group>"; };
-		DB6A245A1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBAmbassadorNetworkManager.m; sourceTree = "<group>"; };
 		DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNetworkManager.h; sourceTree = "<group>"; };
 		DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworkManager.m; sourceTree = "<group>"; };
 		DB6A24611BD017A700CE3230 /* AMBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBErrors.h; sourceTree = "<group>"; };
 		DB6A24631BD017B600CE3230 /* AMBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBErrors.m; sourceTree = "<group>"; };
 		DB6A24651BD01D8A00CE3230 /* AMBNetworkObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNetworkObject.h; sourceTree = "<group>"; };
 		DB6A24661BD01D8A00CE3230 /* AMBNetworkObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworkObject.m; sourceTree = "<group>"; };
-		DB6A24691BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBAmbassadorNetworkManagerTests.m; sourceTree = "<group>"; };
 		DB6A246B1BD0319700CE3230 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		DB6A246D1BD031A100CE3230 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		DB6A246F1BD04E3900CE3230 /* AMBPusherManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPusherManager.h; sourceTree = "<group>"; };
@@ -311,8 +295,6 @@
 		DB6A247A1BD14BBB00CE3230 /* AMBMockObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBMockObjects.h; sourceTree = "<group>"; };
 		DB6A247B1BD14BBB00CE3230 /* AMBMockObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBMockObjects.m; sourceTree = "<group>"; };
 		DB6A247D1BD14F4900CE3230 /* AMBNetworObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworObjectTests.m; sourceTree = "<group>"; };
-		DB6A247F1BD1663F00CE3230 /* AMBStorageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBStorageManager.h; sourceTree = "<group>"; };
-		DB6A24801BD1663F00CE3230 /* AMBStorageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBStorageManager.m; sourceTree = "<group>"; };
 		DB6A24831BD1842800CE3230 /* AmbassadorSDK_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmbassadorSDK_Internal.h; sourceTree = "<group>"; };
 		DB6A24851BD1847900CE3230 /* AmbassadorSDKTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorSDKTests.m; sourceTree = "<group>"; };
 		DB844D261BA75BB8003FD7A9 /* libAmbassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAmbassador.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -357,8 +339,6 @@
 		DBA3FB631BA8A23C00672D82 /* AMBConversionParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBConversionParameters.m; sourceTree = "<group>"; };
 		DBA3FB6F1BA8A23C00672D82 /* AMBIdentify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBIdentify.h; sourceTree = "<group>"; };
 		DBA3FB701BA8A23C00672D82 /* AMBIdentify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdentify.m; sourceTree = "<group>"; };
-		DBA3FB901BA8A24F00672D82 /* AMBLinkedInAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBLinkedInAPIConstants.h; sourceTree = "<group>"; };
-		DBA3FB911BA8A24F00672D82 /* AMBLinkedInAPIConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkedInAPIConstants.m; sourceTree = "<group>"; };
 		DBA3FB921BA8A24F00672D82 /* AMBLinkedInShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBLinkedInShare.h; sourceTree = "<group>"; };
 		DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkedInShare.m; sourceTree = "<group>"; };
 		DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNamePrompt.h; sourceTree = "<group>"; };
@@ -369,26 +349,10 @@
 		DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSendCompletionModal.m; sourceTree = "<group>"; };
 		DBA3FB9D1BA8A24F00672D82 /* AMBServiceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBServiceSelector.h; sourceTree = "<group>"; };
 		DBA3FB9E1BA8A24F00672D82 /* AMBServiceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelector.m; sourceTree = "<group>"; };
-		DBA3FB9F1BA8A24F00672D82 /* AMBServiceSelectorPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBServiceSelectorPreferences.h; sourceTree = "<group>"; };
-		DBA3FBA01BA8A24F00672D82 /* AMBServiceSelectorPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelectorPreferences.m; sourceTree = "<group>"; };
-		DBA3FBA11BA8A24F00672D82 /* AMBShareService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBShareService.h; sourceTree = "<group>"; };
-		DBA3FBA21BA8A24F00672D82 /* AMBShareService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBShareService.m; sourceTree = "<group>"; };
 		DBA3FBA31BA8A24F00672D82 /* AMBShareServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBShareServiceCell.h; sourceTree = "<group>"; };
 		DBA3FBA41BA8A24F00672D82 /* AMBShareServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBShareServiceCell.m; sourceTree = "<group>"; };
-		DBA3FBA51BA8A24F00672D82 /* AMBShareServicesConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBShareServicesConstants.h; sourceTree = "<group>"; };
-		DBA3FBA61BA8A24F00672D82 /* AMBShareServicesConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBShareServicesConstants.m; sourceTree = "<group>"; };
 		DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBUtilities.h; sourceTree = "<group>"; };
 		DBA3FBA81BA8A24F00672D82 /* AMBUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBUtilities.m; sourceTree = "<group>"; };
-		DBA3FBC21BA8A9C000672D82 /* AMBFMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMDatabase.h; sourceTree = "<group>"; };
-		DBA3FBC31BA8A9C000672D82 /* AMBFMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFMDatabase.m; sourceTree = "<group>"; };
-		DBA3FBC41BA8A9C000672D82 /* AMBFMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMDatabaseAdditions.h; sourceTree = "<group>"; };
-		DBA3FBC51BA8A9C000672D82 /* AMBFMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFMDatabaseAdditions.m; sourceTree = "<group>"; };
-		DBA3FBC61BA8A9C000672D82 /* AMBFMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMDatabasePool.h; sourceTree = "<group>"; };
-		DBA3FBC71BA8A9C000672D82 /* AMBFMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFMDatabasePool.m; sourceTree = "<group>"; };
-		DBA3FBC81BA8A9C000672D82 /* AMBFMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMDatabaseQueue.h; sourceTree = "<group>"; };
-		DBA3FBC91BA8A9C000672D82 /* AMBFMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFMDatabaseQueue.m; sourceTree = "<group>"; };
-		DBA3FBCA1BA8A9C000672D82 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
-		DBA3FBCC1BA8A9C000672D82 /* AMBFMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBFMResultSet.m; sourceTree = "<group>"; };
 		DBA3FBD91BA8AA1D00672D82 /* NSDictionary+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+QueryString.m"; sourceTree = "<group>"; };
 		DBA3FBDA1BA8AA1D00672D82 /* NSString+Hashing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hashing.m"; sourceTree = "<group>"; };
 		DBA3FBDC1BA8AA1D00672D82 /* NSDictionary+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+QueryString.h"; sourceTree = "<group>"; };
@@ -457,6 +421,9 @@
 		DBEB6FEF1BA9B2D8005EE0D0 /* sms.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sms.png; sourceTree = "<group>"; };
 		DBEB6FF01BA9B2D8005EE0D0 /* successIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = successIcon.png; sourceTree = "<group>"; };
 		DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter.png; sourceTree = "<group>"; };
+		EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContactCard.h; sourceTree = "<group>"; };
+		EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCard.m; sourceTree = "<group>"; };
+		EF1CB0B31C3C7F6600F65031 /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
 		EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValuesUnitTests.m; sourceTree = "<group>"; };
 		EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBBulkShareHelperUnitTests.m; sourceTree = "<group>"; };
 		EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManagerUnitTests.m; sourceTree = "<group>"; };
@@ -464,7 +431,6 @@
 		EF24D1E41BECFAC000561476 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = ../../../../Desktop/iOS/libOCMock.a; sourceTree = "<group>"; };
 		EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBConversionsTests.m; sourceTree = "<group>"; };
 		EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBOptionsTests.m; sourceTree = "<group>"; };
-		EF2EC3341BAC60CC003CAA43 /* AMBFMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBFMResultSet.h; sourceTree = "<group>"; };
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF53564F1BF109A400BC80C4 /* unitTestImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unitTestImage.png; sourceTree = "<group>"; };
@@ -498,6 +464,14 @@
 		EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AMBColorValues.h"; sourceTree = "<group>"; };
 		EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AMBColorValues.m"; sourceTree = "<group>"; };
 		EFDFA0D11BE157D2002FA3ED /* Ambassador-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Ambassador-Prefix.pch"; sourceTree = "<group>"; };
+		EFE7D7931C21C19B00D7F92C /* AMBCoreDataDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBCoreDataDelegate.h; sourceTree = "<group>"; };
+		EFE7D7941C21C19B00D7F92C /* AMBCoreDataDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBCoreDataDelegate.m; sourceTree = "<group>"; };
+		EFE7D7981C21C9C700D7F92C /* AMBConversionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMBConversionModel.xcdatamodel; sourceTree = "<group>"; };
+		EFE7D79A1C21CB2D00D7F92C /* AMBCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBCoreDataManager.h; sourceTree = "<group>"; };
+		EFE7D79B1C21CB2D00D7F92C /* AMBCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBCoreDataManager.m; sourceTree = "<group>"; };
+		EFE7D7B11C2202C900D7F92C /* AMBConversionParametersEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBConversionParametersEntity.h; path = ../AMBConversionParametersEntity.h; sourceTree = "<group>"; };
+		EFE7D7B21C2202C900D7F92C /* AMBConversionParametersEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMBConversionParametersEntity.m; path = ../AMBConversionParametersEntity.m; sourceTree = "<group>"; };
+		EFE7D7C71C24671600D7F92C /* AMBConversionParameter_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBConversionParameter_Internal.h; sourceTree = "<group>"; };
 		EFED7B041BDA9F0A00F6C360 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AMBMedia.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -533,8 +507,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DBA3FC411BA8BE2300672D82 /* libicucore.dylib in Frameworks */,
-				DBA3FC361BA8AB9200672D82 /* libsqlite3.dylib in Frameworks */,
+				EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */,
 				DB844D891BA76C1E003FD7A9 /* libAmbassador.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -581,8 +554,8 @@
 			isa = PBXGroup;
 			children = (
 				DB844D281BA75BB8003FD7A9 /* Ambassador */,
-				DB844D351BA75BB8003FD7A9 /* AmbassadorTests */,
 				DB844D531BA7622D003FD7A9 /* AmbassadorResources */,
+				DB844D351BA75BB8003FD7A9 /* AmbassadorTests */,
 				DB844D621BA76BDE003FD7A9 /* TestApplication */,
 				DB844D7C1BA76BDE003FD7A9 /* TestApplicationTests */,
 				EF64CFA41BE2A47D0072014B /* AmbassadorUITests */,
@@ -607,77 +580,19 @@
 		DB844D281BA75BB8003FD7A9 /* Ambassador */ = {
 			isa = PBXGroup;
 			children = (
-				DBA3FBD81BA8A9CA00672D82 /* Pusher */,
-				DBA3FBC11BA8A9C000672D82 /* fmdb */,
 				DB844D291BA75BB8003FD7A9 /* Ambassador.h */,
 				DBA3FB521BA8A23B00672D82 /* AmbassadorSDK.h */,
 				DBA3FB531BA8A23B00672D82 /* AmbassadorSDK.m */,
 				DB6A24831BD1842800CE3230 /* AmbassadorSDK_Internal.h */,
-				DB6A247F1BD1663F00CE3230 /* AMBStorageManager.h */,
-				DB6A24801BD1663F00CE3230 /* AMBStorageManager.m */,
-				DBA3FB541BA8A23B00672D82 /* AMBAuthorizeLinkedIn.h */,
-				DBA3FB551BA8A23B00672D82 /* AMBAuthorizeLinkedIn.m */,
-				EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */,
-				EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */,
-				DBA3FB561BA8A23B00672D82 /* AMBConstants.h */,
-				DBA3FB571BA8A23B00672D82 /* AMBConstants.m */,
-				DBA3FB581BA8A23B00672D82 /* AMBContact.h */,
-				DBA3FB591BA8A23B00672D82 /* AMBContact.m */,
-				DBA3FB5A1BA8A23B00672D82 /* AMBContactCell.h */,
-				DBA3FB5B1BA8A23B00672D82 /* AMBContactCell.m */,
-				DBA3FB5C1BA8A23B00672D82 /* AMBContactLoader.h */,
-				DBA3FB5D1BA8A23B00672D82 /* AMBContactLoader.m */,
-				DBA3FB5E1BA8A23B00672D82 /* AMBContactSelector.h */,
-				DBA3FB5F1BA8A23B00672D82 /* AMBContactSelector.m */,
-				DBA3FB601BA8A23B00672D82 /* AMBConversion.h */,
-				DBA3FB611BA8A23B00672D82 /* AMBConversion.m */,
-				DBA3FB621BA8A23B00672D82 /* AMBConversionParameters.h */,
-				DBA3FB631BA8A23C00672D82 /* AMBConversionParameters.m */,
-				DBA3FB6F1BA8A23C00672D82 /* AMBIdentify.h */,
-				DBA3FB701BA8A23C00672D82 /* AMBIdentify.m */,
-				DB6A246F1BD04E3900CE3230 /* AMBPusherManager.h */,
-				DB6A24701BD04E3900CE3230 /* AMBPusherManager.m */,
-				DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */,
-				DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */,
-				DB6A24611BD017A700CE3230 /* AMBErrors.h */,
-				DB6A24631BD017B600CE3230 /* AMBErrors.m */,
-				DB95D7661BD821D9006A1E4A /* AMBOptions.h */,
-				DB95D7681BD824AF006A1E4A /* AMBOptions.m */,
-				DB6A24591BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h */,
-				DB6A245A1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m */,
-				DB6A24651BD01D8A00CE3230 /* AMBNetworkObject.h */,
-				DB6A24661BD01D8A00CE3230 /* AMBNetworkObject.m */,
-				DBA3FB901BA8A24F00672D82 /* AMBLinkedInAPIConstants.h */,
-				DBA3FB911BA8A24F00672D82 /* AMBLinkedInAPIConstants.m */,
-				DBA3FB921BA8A24F00672D82 /* AMBLinkedInShare.h */,
-				DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */,
-				DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */,
-				DBA3FB961BA8A24F00672D82 /* AMBNamePrompt.m */,
-				DBA3FB991BA8A24F00672D82 /* AMBSelectedCell.h */,
-				DBA3FB9A1BA8A24F00672D82 /* AMBSelectedCell.m */,
-				DBA3FB9B1BA8A24F00672D82 /* AMBSendCompletionModal.h */,
-				DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */,
-				DBA3FB9D1BA8A24F00672D82 /* AMBServiceSelector.h */,
-				DBA3FB9E1BA8A24F00672D82 /* AMBServiceSelector.m */,
-				DBA3FB9F1BA8A24F00672D82 /* AMBServiceSelectorPreferences.h */,
-				DBA3FBA01BA8A24F00672D82 /* AMBServiceSelectorPreferences.m */,
-				DBA3FBA11BA8A24F00672D82 /* AMBShareService.h */,
-				DBA3FBA21BA8A24F00672D82 /* AMBShareService.m */,
-				DBA3FBA31BA8A24F00672D82 /* AMBShareServiceCell.h */,
-				DBA3FBA41BA8A24F00672D82 /* AMBShareServiceCell.m */,
-				DBA3FBA51BA8A24F00672D82 /* AMBShareServicesConstants.h */,
-				DBA3FBA61BA8A24F00672D82 /* AMBShareServicesConstants.m */,
-				DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */,
-				DBA3FBA81BA8A24F00672D82 /* AMBUtilities.m */,
-				EF407F1C1BB344500074D2AE /* AMBThemeManager.h */,
-				EF407F1D1BB344500074D2AE /* AMBThemeManager.m */,
-				EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */,
-				EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */,
-				EFDFA0C81BE148A5002FA3ED /* AMBValues.h */,
-				EFDFA0C91BE148A5002FA3ED /* AMBValues.m */,
-				EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */,
-				EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */,
 				EFDFA0D11BE157D2002FA3ED /* Ambassador-Prefix.pch */,
+				EFE7D7851C21B2B600D7F92C /* Service Selector (RAF) */,
+				EFE7D7871C21B4DB00D7F92C /* Contacts */,
+				EFE7D7861C21B49C00D7F92C /* Conversions */,
+				EFE7D7881C21B6DF00D7F92C /* Networking */,
+				EFE7D7891C21B74D00D7F92C /* Misc */,
+				EFE7D78A1C21B7EA00D7F92C /* Libraries */,
+				EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */,
+				EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */,
 			);
 			path = Ambassador;
 			sourceTree = "<group>";
@@ -708,7 +623,6 @@
 				DB6A247B1BD14BBB00CE3230 /* AMBMockObjects.m */,
 				DB6A24791BD12A2A00CE3230 /* AMBTests.h */,
 				DB6A24751BD125FF00CE3230 /* AMBTests.m */,
-				DB6A24691BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m */,
 				DB6A24731BD1259000CE3230 /* AMBPusherManagerTests.m */,
 				DB6A247D1BD14F4900CE3230 /* AMBNetworObjectTests.m */,
 				DB6A24851BD1847900CE3230 /* AmbassadorSDKTests.m */,
@@ -733,6 +647,7 @@
 				EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */,
 				EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */,
 				EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */,
+				EF1CB0B31C3C7F6600F65031 /* avatar.png */,
 				DBEB6FE31BA9B2D8005EE0D0 /* blank.png */,
 				DBEB6FE41BA9B2D8005EE0D0 /* check.png */,
 				DBEB6FE51BA9B2D8005EE0D0 /* clipboard.png */,
@@ -751,6 +666,8 @@
 				DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */,
 				DB844D5B1BA767FA003FD7A9 /* back.png */,
 				DB844D551BA7622D003FD7A9 /* Info.plist */,
+				EFE7D7971C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld */,
+				EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -802,24 +719,6 @@
 				DB844D7E1BA76BDE003FD7A9 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		DBA3FBC11BA8A9C000672D82 /* fmdb */ = {
-			isa = PBXGroup;
-			children = (
-				DBA3FBC21BA8A9C000672D82 /* AMBFMDatabase.h */,
-				DBA3FBC31BA8A9C000672D82 /* AMBFMDatabase.m */,
-				DBA3FBC41BA8A9C000672D82 /* AMBFMDatabaseAdditions.h */,
-				DBA3FBC51BA8A9C000672D82 /* AMBFMDatabaseAdditions.m */,
-				DBA3FBC61BA8A9C000672D82 /* AMBFMDatabasePool.h */,
-				DBA3FBC71BA8A9C000672D82 /* AMBFMDatabasePool.m */,
-				DBA3FBC81BA8A9C000672D82 /* AMBFMDatabaseQueue.h */,
-				DBA3FBC91BA8A9C000672D82 /* AMBFMDatabaseQueue.m */,
-				DBA3FBCA1BA8A9C000672D82 /* FMDB.h */,
-				EF2EC3341BAC60CC003CAA43 /* AMBFMResultSet.h */,
-				DBA3FBCC1BA8A9C000672D82 /* AMBFMResultSet.m */,
-			);
-			path = fmdb;
 			sourceTree = "<group>";
 		};
 		DBA3FBD81BA8A9CA00672D82 /* Pusher */ = {
@@ -890,6 +789,25 @@
 			name = "Socket Rocket";
 			sourceTree = "<group>";
 		};
+		EF441B651C345F440038F6BB /* Name Prompt */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB951BA8A24F00672D82 /* AMBNamePrompt.h */,
+				DBA3FB961BA8A24F00672D82 /* AMBNamePrompt.m */,
+			);
+			name = "Name Prompt";
+			sourceTree = "<group>";
+		};
+		EF441B661C345F6B0038F6BB /* Contact Selector */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB5E1BA8A23B00672D82 /* AMBContactSelector.h */,
+				DBA3FB5F1BA8A23B00672D82 /* AMBContactSelector.m */,
+				EFE7D78E1C21B9FC00D7F92C /* Custom Cells */,
+			);
+			name = "Contact Selector";
+			sourceTree = "<group>";
+		};
 		EF64CFA41BE2A47D0072014B /* AmbassadorUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -900,6 +818,177 @@
 			path = AmbassadorUITests;
 			sourceTree = "<group>";
 		};
+		EF7D80B91C24B9E00098D054 /* Conversion Parameters */ = {
+			isa = PBXGroup;
+			children = (
+				EFE7D7B11C2202C900D7F92C /* AMBConversionParametersEntity.h */,
+				EFE7D7B21C2202C900D7F92C /* AMBConversionParametersEntity.m */,
+				DBA3FB621BA8A23B00672D82 /* AMBConversionParameters.h */,
+				DBA3FB631BA8A23C00672D82 /* AMBConversionParameters.m */,
+				EFE7D7C71C24671600D7F92C /* AMBConversionParameter_Internal.h */,
+			);
+			name = "Conversion Parameters";
+			sourceTree = "<group>";
+		};
+		EFE7D7851C21B2B600D7F92C /* Service Selector (RAF) */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB9D1BA8A24F00672D82 /* AMBServiceSelector.h */,
+				DBA3FB9E1BA8A24F00672D82 /* AMBServiceSelector.m */,
+				EFE7D78C1C21B9AF00D7F92C /* Custom Cells */,
+				EFE7D78B1C21B99300D7F92C /* LinkedIn */,
+			);
+			name = "Service Selector (RAF)";
+			sourceTree = "<group>";
+		};
+		EFE7D7861C21B49C00D7F92C /* Conversions */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB601BA8A23B00672D82 /* AMBConversion.h */,
+				DBA3FB611BA8A23B00672D82 /* AMBConversion.m */,
+				EFE7D7931C21C19B00D7F92C /* AMBCoreDataDelegate.h */,
+				EFE7D7941C21C19B00D7F92C /* AMBCoreDataDelegate.m */,
+				EFE7D79A1C21CB2D00D7F92C /* AMBCoreDataManager.h */,
+				EFE7D79B1C21CB2D00D7F92C /* AMBCoreDataManager.m */,
+				EF7D80B91C24B9E00098D054 /* Conversion Parameters */,
+			);
+			name = Conversions;
+			sourceTree = "<group>";
+		};
+		EFE7D7871C21B4DB00D7F92C /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				EF441B661C345F6B0038F6BB /* Contact Selector */,
+				EF441B651C345F440038F6BB /* Name Prompt */,
+				EFE7D78D1C21B9EC00D7F92C /* Contact Loader */,
+			);
+			name = Contacts;
+			sourceTree = "<group>";
+		};
+		EFE7D7881C21B6DF00D7F92C /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */,
+				DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */,
+				DB6A24611BD017A700CE3230 /* AMBErrors.h */,
+				DB6A24631BD017B600CE3230 /* AMBErrors.m */,
+				DB6A24651BD01D8A00CE3230 /* AMBNetworkObject.h */,
+				DB6A24661BD01D8A00CE3230 /* AMBNetworkObject.m */,
+				EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */,
+				EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */,
+				EFE7D78F1C21BA1A00D7F92C /* Identify */,
+				EFE7D7901C21BA2B00D7F92C /* Pusher Classes */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		EFE7D7891C21B74D00D7F92C /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB561BA8A23B00672D82 /* AMBConstants.h */,
+				DBA3FB571BA8A23B00672D82 /* AMBConstants.m */,
+				DB95D7661BD821D9006A1E4A /* AMBOptions.h */,
+				DB95D7681BD824AF006A1E4A /* AMBOptions.m */,
+				EFDFA0C81BE148A5002FA3ED /* AMBValues.h */,
+				EFDFA0C91BE148A5002FA3ED /* AMBValues.m */,
+				EFE7D7921C21BA7400D7F92C /* Theme Manager */,
+				EFE7D7911C21BA5F00D7F92C /* Utilities */,
+			);
+			name = Misc;
+			sourceTree = "<group>";
+		};
+		EFE7D78A1C21B7EA00D7F92C /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FBD81BA8A9CA00672D82 /* Pusher */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		EFE7D78B1C21B99300D7F92C /* LinkedIn */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB541BA8A23B00672D82 /* AMBAuthorizeLinkedIn.h */,
+				DBA3FB551BA8A23B00672D82 /* AMBAuthorizeLinkedIn.m */,
+				DBA3FB921BA8A24F00672D82 /* AMBLinkedInShare.h */,
+				DBA3FB931BA8A24F00672D82 /* AMBLinkedInShare.m */,
+			);
+			name = LinkedIn;
+			sourceTree = "<group>";
+		};
+		EFE7D78C1C21B9AF00D7F92C /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FBA31BA8A24F00672D82 /* AMBShareServiceCell.h */,
+				DBA3FBA41BA8A24F00672D82 /* AMBShareServiceCell.m */,
+			);
+			name = "Custom Cells";
+			sourceTree = "<group>";
+		};
+		EFE7D78D1C21B9EC00D7F92C /* Contact Loader */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB5C1BA8A23B00672D82 /* AMBContactLoader.h */,
+				DBA3FB5D1BA8A23B00672D82 /* AMBContactLoader.m */,
+				DBA3FB581BA8A23B00672D82 /* AMBContact.h */,
+				DBA3FB591BA8A23B00672D82 /* AMBContact.m */,
+			);
+			name = "Contact Loader";
+			sourceTree = "<group>";
+		};
+		EFE7D78E1C21B9FC00D7F92C /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB5A1BA8A23B00672D82 /* AMBContactCell.h */,
+				DBA3FB5B1BA8A23B00672D82 /* AMBContactCell.m */,
+				DBA3FB991BA8A24F00672D82 /* AMBSelectedCell.h */,
+				DBA3FB9A1BA8A24F00672D82 /* AMBSelectedCell.m */,
+			);
+			name = "Custom Cells";
+			sourceTree = "<group>";
+		};
+		EFE7D78F1C21BA1A00D7F92C /* Identify */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB6F1BA8A23C00672D82 /* AMBIdentify.h */,
+				DBA3FB701BA8A23C00672D82 /* AMBIdentify.m */,
+			);
+			name = Identify;
+			sourceTree = "<group>";
+		};
+		EFE7D7901C21BA2B00D7F92C /* Pusher Classes */ = {
+			isa = PBXGroup;
+			children = (
+				DB6A246F1BD04E3900CE3230 /* AMBPusherManager.h */,
+				DB6A24701BD04E3900CE3230 /* AMBPusherManager.m */,
+				EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */,
+				EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */,
+			);
+			name = "Pusher Classes";
+			sourceTree = "<group>";
+		};
+		EFE7D7911C21BA5F00D7F92C /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB9B1BA8A24F00672D82 /* AMBSendCompletionModal.h */,
+				DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */,
+				DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */,
+				DBA3FBA81BA8A24F00672D82 /* AMBUtilities.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		EFE7D7921C21BA7400D7F92C /* Theme Manager */ = {
+			isa = PBXGroup;
+			children = (
+				EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */,
+				EFDFA0CE1BE154B8002FA3ED /* UIColor+AMBColorValues.m */,
+				EF407F1C1BB344500074D2AE /* AMBThemeManager.h */,
+				EF407F1D1BB344500074D2AE /* AMBThemeManager.m */,
+			);
+			name = "Theme Manager";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -908,9 +997,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBA3FC161BA8AA1D00672D82 /* AMBPTPusherConnection.h in Headers */,
-				EF2EC3351BAC60CC003CAA43 /* AMBFMResultSet.h in Headers */,
 				DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */,
 				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
+				EFE7D7951C21C19B00D7F92C /* AMBCoreDataDelegate.h in Headers */,
 				DBA3FC051BA8AA1D00672D82 /* AMBPTJSON.h in Headers */,
 				EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */,
 				DBA3FC131BA8AA1D00672D82 /* AMBPTPusherChannel.h in Headers */,
@@ -919,28 +1008,24 @@
 				DBA3FC081BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h in Headers */,
 				DBA3FC041BA8AA1D00672D82 /* AMBPTBlockEventListener.h in Headers */,
 				DBA3FBCD1BA8A9C000672D82 /* AMBFMDatabase.h in Headers */,
+				EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */,
 				DB6A24711BD04E3900CE3230 /* AMBPusherManager.h in Headers */,
 				DBA3FC071BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h in Headers */,
 				DBA3FC201BA8AA1D00672D82 /* AMBPTPusherMockConnection.h in Headers */,
 				DBA3FC1C1BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.h in Headers */,
-				DBA3FBB91BA8A24F00672D82 /* AMBShareService.h in Headers */,
-				DBA3FBD51BA8A9C000672D82 /* FMDB.h in Headers */,
 				DBA3FC021BA8AA1D00672D82 /* NSDictionary+QueryString.h in Headers */,
 				DBA3FC221BA8AA1D00672D82 /* AMBPTPusherPresenceChannelDelegate.h in Headers */,
 				EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */,
 				DB6A24841BD1842800CE3230 /* AmbassadorSDK_Internal.h in Headers */,
 				DBA3FC1F1BA8AA1D00672D82 /* AMBPTPusherMacros.h in Headers */,
-				DBA3FBD31BA8A9C000672D82 /* AMBFMDatabaseQueue.h in Headers */,
-				DBA3FBA91BA8A24F00672D82 /* AMBLinkedInAPIConstants.h in Headers */,
 				DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
-				DBA3FBB71BA8A24F00672D82 /* AMBServiceSelectorPreferences.h in Headers */,
 				DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */,
-				DB6A245B1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.h in Headers */,
 				DBA3FC191BA8AA1D00672D82 /* AMBPTPusherErrors.h in Headers */,
+				EFE7D7B51C2202C900D7F92C /* AMBConversionParametersEntity.h in Headers */,
 				DB95D7671BD821D9006A1E4A /* AMBOptions.h in Headers */,
-				DBA3FBD11BA8A9C000672D82 /* AMBFMDatabasePool.h in Headers */,
 				DBA3FB7B1BA8A23C00672D82 /* AMBContactLoader.h in Headers */,
+				EFE7D79C1C21CB2D00D7F92C /* AMBCoreDataManager.h in Headers */,
 				DBA3FC091BA8AA1D00672D82 /* AMBPTURLRequestOperation.h in Headers */,
 				DBA3FC1E1BA8AA1D00672D82 /* AMBPTPusherEventPublisher.h in Headers */,
 				EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */,
@@ -956,9 +1041,6 @@
 				DBA3FBAB1BA8A24F00672D82 /* AMBLinkedInShare.h in Headers */,
 				DBA3FC061BA8AA1D00672D82 /* AMBPTPusherChannel_Private.h in Headers */,
 				DBA3FC311BA8AA5600672D82 /* AMBSRWebSocket.h in Headers */,
-				DBA3FBCF1BA8A9C000672D82 /* AMBFMDatabaseAdditions.h in Headers */,
-				DB6A24811BD1663F00CE3230 /* AMBStorageManager.h in Headers */,
-				DBA3FBBD1BA8A24F00672D82 /* AMBShareServicesConstants.h in Headers */,
 				DBA3FBAD1BA8A24F00672D82 /* AMBNamePrompt.h in Headers */,
 				DBA3FC111BA8AA1D00672D82 /* AMBPTPusherAPI.h in Headers */,
 				DBA3FC2E1BA8AA5600672D82 /* base64.h in Headers */,
@@ -969,6 +1051,7 @@
 				DBA3FBB51BA8A24F00672D82 /* AMBServiceSelector.h in Headers */,
 				DBA3FB7D1BA8A23C00672D82 /* AMBContactSelector.h in Headers */,
 				DBA3FC031BA8AA1D00672D82 /* NSString+Hashing.h in Headers */,
+				EFE7D7C91C24671600D7F92C /* AMBConversionParameter_Internal.h in Headers */,
 				DBA3FB791BA8A23C00672D82 /* AMBContactCell.h in Headers */,
 				DBA3FC1A1BA8AA1D00672D82 /* AMBPTPusherEvent.h in Headers */,
 				DBA3FB751BA8A23C00672D82 /* AMBConstants.h in Headers */,
@@ -1166,6 +1249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF5390DE1C459433005F6944 /* AmbassadorShoes.plist in Resources */,
+				EFE7D7AE1C21D0CF00D7F92C /* AMBConversionModel.xcdatamodeld in Resources */,
 				DBEB6FFB1BA9B2D8005EE0D0 /* pencil.png in Resources */,
 				DBEB6FFA1BA9B2D8005EE0D0 /* linkedin.png in Resources */,
 				EF5390E01C45A644005F6944 /* AmbassadorTheme.plist in Resources */,
@@ -1183,6 +1267,7 @@
 				EF5390E41C46E93C005F6944 /* AmbassadorShirt.plist in Resources */,
 				DBEB6FE21BA9AD04005EE0D0 /* Main.storyboard in Resources */,
 				EF5390DC1C458FFD005F6944 /* GenericTheme.plist in Resources */,
+				EF1CB0B41C3C7F6600F65031 /* avatar.png in Resources */,
 				DBEB6FF41BA9B2D8005EE0D0 /* clipboard.png in Resources */,
 				DBEB6FF31BA9B2D8005EE0D0 /* check.png in Resources */,
 				DBEB6FF21BA9B2D8005EE0D0 /* blank.png in Resources */,
@@ -1257,46 +1342,41 @@
 				DBA3FC0E1BA8AA1D00672D82 /* AMBPTPusher.m in Sources */,
 				DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */,
 				EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */,
+				EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */,
 				DBA3FB7E1BA8A23C00672D82 /* AMBContactSelector.m in Sources */,
 				DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */,
 				DBA3FC121BA8AA1D00672D82 /* AMBPTPusherAPI.m in Sources */,
 				DBA3FC001BA8AA1D00672D82 /* NSDictionary+QueryString.m in Sources */,
 				DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */,
-				DBA3FBB81BA8A24F00672D82 /* AMBServiceSelectorPreferences.m in Sources */,
 				DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */,
 				DBA3FC231BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m in Sources */,
 				DBA3FC211BA8AA1D00672D82 /* AMBPTPusherMockConnection.m in Sources */,
+				EFE7D7991C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld in Sources */,
 				DBA3FBB41BA8A24F00672D82 /* AMBSendCompletionModal.m in Sources */,
 				DBA3FC141BA8AA1D00672D82 /* AMBPTPusherChannel.m in Sources */,
-				DBA3FBBA1BA8A24F00672D82 /* AMBShareService.m in Sources */,
 				DBA3FB7A1BA8A23C00672D82 /* AMBContactCell.m in Sources */,
-				DBA3FBCE1BA8A9C000672D82 /* AMBFMDatabase.m in Sources */,
-				DB6A245C1BD00EE000CE3230 /* AMBAmbassadorNetworkManager.m in Sources */,
 				EFDFA0D01BE154B8002FA3ED /* UIColor+AMBColorValues.m in Sources */,
 				DBA3FB7C1BA8A23C00672D82 /* AMBContactLoader.m in Sources */,
 				DBA3FBBC1BA8A24F00672D82 /* AMBShareServiceCell.m in Sources */,
 				DBB8BD0B1BAC6B6D00B87896 /* AMBPTPusher+Testing.m in Sources */,
 				DBA3FC241BA8AA1D00672D82 /* AMBPTURLRequestOperation.m in Sources */,
-				DBA3FBAA1BA8A24F00672D82 /* AMBLinkedInAPIConstants.m in Sources */,
 				DB6A24681BD01D8A00CE3230 /* AMBNetworkObject.m in Sources */,
-				DBA3FBD21BA8A9C000672D82 /* AMBFMDatabasePool.m in Sources */,
-				DBA3FBBE1BA8A24F00672D82 /* AMBShareServicesConstants.m in Sources */,
 				DBA3FB781BA8A23C00672D82 /* AMBContact.m in Sources */,
-				DBA3FBD71BA8A9C000672D82 /* AMBFMResultSet.m in Sources */,
 				DBA3FB821BA8A23C00672D82 /* AMBConversionParameters.m in Sources */,
+				EFE7D79D1C21CB2D00D7F92C /* AMBCoreDataManager.m in Sources */,
 				DBA3FB721BA8A23C00672D82 /* AmbassadorSDK.m in Sources */,
-				DBA3FBD41BA8A9C000672D82 /* AMBFMDatabaseQueue.m in Sources */,
 				DBA3FC0A1BA8AA1D00672D82 /* AMBPTBlockEventListener.m in Sources */,
 				DBA3FC151BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m in Sources */,
 				DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */,
-				DB6A24821BD1663F00CE3230 /* AMBStorageManager.m in Sources */,
 				DBA3FB801BA8A23C00672D82 /* AMBConversion.m in Sources */,
 				DBA3FB8F1BA8A23C00672D82 /* AMBIdentify.m in Sources */,
 				DBA3FC011BA8AA1D00672D82 /* NSString+Hashing.m in Sources */,
 				DB6A24601BD00F3F00CE3230 /* AMBNetworkManager.m in Sources */,
 				DBA3FC1B1BA8AA1D00672D82 /* AMBPTPusherEvent.m in Sources */,
+				EFE7D7961C21C19B00D7F92C /* AMBCoreDataDelegate.m in Sources */,
 				DBA3FB741BA8A23C00672D82 /* AMBAuthorizeLinkedIn.m in Sources */,
 				EF7BA1CD1BDEB17E00788160 /* AMBBulkShareHelper.m in Sources */,
+				EFE7D7B61C2202C900D7F92C /* AMBConversionParametersEntity.m in Sources */,
 				EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */,
 				DBA3FC0C1BA8AA1D00672D82 /* AMBPTJSON.m in Sources */,
 				DBA3FC2D1BA8AA5600672D82 /* base64.c in Sources */,
@@ -1309,7 +1389,6 @@
 				DBA3FC321BA8AA5600672D82 /* AMBSRWebSocket.m in Sources */,
 				DBA3FB761BA8A23C00672D82 /* AMBConstants.m in Sources */,
 				EFDFA0CB1BE148A5002FA3ED /* AMBValues.m in Sources */,
-				DBA3FBD01BA8A9C000672D82 /* AMBFMDatabaseAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1318,7 +1397,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF7CA9D21BF3EAB7006EBD6A /* AMBContactTests.m in Sources */,
-				DB6A246A1BD02FF800CE3230 /* AMBAmbassadorNetworkManagerTests.m in Sources */,
 				EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */,
 				DB6A24861BD1847900CE3230 /* AmbassadorSDKTests.m in Sources */,
 				DB6A24741BD1259000CE3230 /* AMBPusherManagerTests.m in Sources */,
@@ -1880,6 +1958,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		EFE7D7971C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				EFE7D7981C21C9C700D7F92C /* AMBConversionModel.xcdatamodel */,
+			);
+			currentVersion = EFE7D7981C21C9C700D7F92C /* AMBConversionModel.xcdatamodel */;
+			name = AMBConversionModel.xcdatamodeld;
+			path = ../Ambassador/AMBConversionModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DB844D1E1BA75BB8003FD7A9 /* Project object */;
 }

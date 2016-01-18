@@ -11,9 +11,6 @@
 
 @interface AMBConversion : NSObject <NSURLSessionDelegate>
 
-@property (nonatomic, strong) NSString * key;
-
-- (id)initWithKey:(NSString *)key;
 - (void)registerConversionWithParameters:(AMBConversionParameters *)parameters completion:(void (^)(NSError *error))completion;
 - (void)sendConversions;
 

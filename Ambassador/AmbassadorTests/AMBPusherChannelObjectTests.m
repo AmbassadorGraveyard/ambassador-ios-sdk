@@ -74,24 +74,4 @@
     XCTAssertTrue(expired);
 }
 
-- (void)testCreateAdditionalNetworkHeaders {
-    // GIVEN
-    AMBPusherChannelObject * pusherChannelObj = [[AMBPusherChannelObject alloc] init];
-    pusherChannelObj.channelName = @"private-snippet-channel@user=privatetestchannel";
-    pusherChannelObj.sessionId = @"privatetestchannel";
-    pusherChannelObj.expiresAt = [NSDate dateWithTimeIntervalSinceNow:10000];
-    pusherChannelObj.requestId = @456789.100;
-    
-    NSString *mockSessionID = @"privatetestchannel";
-    NSMutableDictionary *expectedHeaderArray;
-    
-    // WHEN
-    expectedHeaderArray = [pusherChannelObj createAdditionalNetworkHeaders];
-    
-    // THEN
-    XCTAssertEqual(2, expectedHeaderArray.count, @"%i is not equal to %i", 2, (int)expectedHeaderArray.count);
-    XCTAssertEqualObjects(mockSessionID, [expectedHeaderArray valueForKey:@"X-Mbsy-Client-Session-ID"], @"%@ is not equal to %@", mockSessionID, [expectedHeaderArray valueForKey:@"X-Mbsy-Client-Session-ID"]);
-    XCTAssertNotNil([expectedHeaderArray valueForKey:@"X-Mbsy-Client-Request-ID"]);
-}
-
 @end
