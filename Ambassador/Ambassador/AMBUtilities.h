@@ -34,15 +34,21 @@
 
 + (AMBUtilities *)sharedInstance;
 
+// Custom Alerts
 - (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController shouldDismissVCImmediately:(BOOL)shouldDismiss;
+
+// Loading Screen
 - (void)showLoadingScreenForView:(UIView*)view;
 - (void)hideLoadingView;
 - (void)rotateLoadingView:(UIView*)view widthOffset:(CGFloat)widthOffset;
 + (CGFloat)getOffsetForRotation:(UIViewController*) viewController toOrientation:(UIInterfaceOrientation)toOrientation;
+
+// Caching
 - (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue;
 - (NSObject*)getCacheValueWithKey:(NSString*)key;
 - (void)removeCacheForKey:(NSString*)keyValue;
 
+// Misc Class Functions
 + (NSString*)createRequestID;
 + (BOOL)isSuccessfulStatusCode:(NSInteger)statusCode;
 + (NSDictionary*)dictionaryFromQueryString:(NSString*)queryString;
