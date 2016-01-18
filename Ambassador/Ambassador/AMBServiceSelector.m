@@ -380,9 +380,8 @@ int contactServiceType;
     
     if (!self.urlNetworkObj) { // This means that there was no matching campaign ID that was returned
         [self.waitViewTimer invalidate];
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:YES];
-        [AMBUtilities sharedInstance].delegate = self;
-        [AMBErrors errorNoMatchingCampaignIdError:self.campaignID];
+        [AMBErrors errorAlertNoMatchingCampaignIdsForVC:self];
+        [AMBErrors errorLogNoMatchingCampaignIdError:self.campaignID];
         return;
     }
     

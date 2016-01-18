@@ -17,7 +17,7 @@
     NSLog(@"[Ambassador] Error Sending Conversion - Status Code=%li Failure Reason=%@", (long)statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
 }
 
-+ (void)errorNoMatchingCampaignIdError:(NSString*)campaignId {
++ (void)errorLogNoMatchingCampaignIdError:(NSString*)campaignId {
     NSLog(@"[Ambassador] Error loading RAF - There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting a RAF widget", campaignId);
 }
 
@@ -34,5 +34,9 @@
 
 
 #pragma mark - AlertView Errors
+
++ (void)errorAlertNoMatchingCampaignIdsForVC:(UIViewController*)viewController {
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" withUniqueID:nil forViewController:viewController shouldDismissVCImmediately:YES];
+}
 
 @end
