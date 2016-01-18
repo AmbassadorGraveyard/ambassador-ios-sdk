@@ -21,6 +21,7 @@
 + (void)errorSendingInvalidPhoneNumbersForVC:(UIViewController*)viewController;
 + (void)errorSendingInvalidEmailsForVC:(UIViewController*)viewController;
 + (void)errorSelectingInvalidValueForValue:(NSString*)valueString type:(AMBSocialServiceType)serviceType;
++ (void)errorLoadingContactsForVC:(UIViewController*)viewController;
 
 @end
 

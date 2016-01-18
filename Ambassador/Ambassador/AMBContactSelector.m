@@ -75,6 +75,7 @@ BOOL keyboardShowing = NO;
     self.filteredData = [[NSMutableArray alloc] init];
     self.composeMessageTextView.text = self.defaultMessage;
     [self setUpTheme];
+    [AMBUtilities sharedInstance].delegate = self;
     [[AMBContactLoader sharedInstance] attemptLoadWithDelegate:self loadingFromCache:^(BOOL isCached) {
         if (!isCached) {
             [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
@@ -523,8 +524,7 @@ BOOL keyboardShowing = NO;
 - (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         DLog(@"Error loading contacts - %@", message);
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Sharing requires access to your contact book. You can enable this in your settings." withUniqueID:@"contactError" forViewController:self shouldDismissVCImmediately:NO];
-        [AMBUtilities sharedInstance].delegate = self;
+        [AMBErrors errorLoadingContactsForVC:self];
     }];
 }
 
@@ -540,7 +540,9 @@ BOOL keyboardShowing = NO;
 #pragma mark - AMBUtitlites Delegate
 
 - (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([uniqueID isEqualToString:@"contactError"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end
