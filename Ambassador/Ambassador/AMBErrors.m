@@ -17,6 +17,10 @@
     NSLog(@"[Ambassador] Error Sending Conversion - Status Code=%li Failure Reason=%@", (long)statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
 }
 
++ (void)errorNoMatchingCampaignIdError:(NSString*)campaignId {
+    NSLog(@"[Ambassador] Error loading RAF - There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting a RAF widget", campaignId);
+}
+
 
 #pragma mark - NSErrors
 

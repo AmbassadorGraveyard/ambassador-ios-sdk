@@ -11,6 +11,7 @@
 @interface AMBErrors : NSObject
 
 + (void)conversionError:(NSInteger)statusCode errorData:(NSData*)data;
++ (void)errorNoMatchingCampaignIdError:(NSString*)campaignId;
 + (NSError*)restrictedConversionError;
 
 @end
