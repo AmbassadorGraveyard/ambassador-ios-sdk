@@ -367,8 +367,7 @@ int contactServiceType;
 }
 
 - (void)alertForNetworkTimeout {
-    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"The network request has timed out. Please check your connection and try again." withUniqueID:@"networkTimeOut" forViewController:self shouldDismissVCImmediately:YES];
-    [AMBUtilities sharedInstance].delegate = self;
+    [AMBErrors errorNetworkTimeoutForVC:self];
 }
 
 - (void)removeLoadingView {

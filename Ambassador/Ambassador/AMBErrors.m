@@ -51,4 +51,8 @@
     }];
 }
 
++ (void)errorNetworkTimeoutForVC:(UIViewController*)viewController {
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"The network request has timed out. Please check your connection and try again." withUniqueID:@"networkTimeOut" forViewController:viewController shouldDismissVCImmediately:YES];
+}
+
 @end

@@ -16,6 +16,7 @@
 + (void)errorAlertNoMatchingCampaignIdsForVC:(UIViewController*)viewController;
 + (void)errorLinkedInShareForVC:(UIViewController*)viewController withMessage:(NSString*)message;
 + (void)errorLinkedInReauthForVC:(UIViewController*)viewController;
++ (void)errorNetworkTimeoutForVC:(UIViewController*)viewController;
 
 @end
 
