@@ -18,6 +18,7 @@
 #import "AMBContactLoader.h"
 #import "AMBContactCard.h"
 #import "AMBNetworkManager.h"
+#import "AMBErrors.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                 AMBSelectedCellDelegate, UITextFieldDelegate,
@@ -381,7 +382,7 @@ BOOL keyboardShowing = NO;
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
             [AMBUtilities sharedInstance].delegate = self;
         } failure:^(NSString *error) {
-            [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+            [AMBErrors errorSharingMessageForVC:self withErrorMessage:error];
         }];
     } else {
         [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid phone number. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
@@ -397,7 +398,7 @@ BOOL keyboardShowing = NO;
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
             [AMBUtilities sharedInstance].delegate = self;
         } failure:^(NSString *error) {
-            [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+            [AMBErrors errorSharingMessageForVC:self withErrorMessage:error];
         }];
     } else {
         [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid email address. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
