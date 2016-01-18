@@ -10,9 +10,14 @@
 
 @interface AMBErrors : NSObject
 
+// Error Logs
 + (void)errorLogCannotSendConversion:(NSInteger)statusCode errorData:(NSData*)data;
 + (void)errorLogNoMatchingCampaignIdError:(NSString*)campaignId;
+
+// NSErrors
 + (NSError*)restrictedConversionError;
+
+// AlertView Errors
 + (void)errorAlertNoMatchingCampaignIdsForVC:(UIViewController*)viewController;
 + (void)errorLinkedInShareForVC:(UIViewController*)viewController withMessage:(NSString*)message;
 + (void)errorLinkedInReauthForVC:(UIViewController*)viewController;
