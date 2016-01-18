@@ -28,6 +28,7 @@
 
 @property (nonatomic, weak)id <AMBUtilitiesDelegate> delegate;
 @property (nonatomic, strong) UIView *loadingView;
+@property (nonatomic, strong) UIView * fadeView;
 @property (nonatomic, strong) UIVisualEffectView *blurView;
 @property (nonatomic, strong) UIImageView * animatingView;
 @property (nonatomic, strong) NSCache * cache;
@@ -42,6 +43,9 @@
 - (void)hideLoadingView;
 - (void)rotateLoadingView:(UIView*)view widthOffset:(CGFloat)widthOffset;
 + (CGFloat)getOffsetForRotation:(UIViewController*) viewController toOrientation:(UIInterfaceOrientation)toOrientation;
+
+// Fade View
+- (void)addFadeToView:(UIView*)view;
 
 // Caching
 - (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue;

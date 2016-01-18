@@ -146,6 +146,25 @@
 }
 
 
+#pragma mark - FadeView 
+
+- (void)addFadeToView:(UIView*)view {
+    if (!self.fadeView) {
+        self.fadeView = [[UIView alloc] init];
+        self.fadeView.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
+        self.fadeView.alpha = 0;
+    }
+    
+    self.fadeView.frame = view.frame;
+    self.fadeView.alpha = 0;
+    [view addSubview:self.fadeView];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.fadeView.alpha = 1;
+    }];
+}
+
+
 #pragma mark - Caching
 
 - (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue {
