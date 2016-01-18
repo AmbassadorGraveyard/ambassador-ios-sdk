@@ -172,6 +172,13 @@
     }];
 }
 
+- (void)rotateFadeForView:(UIView*)view {
+    if (self.fadeView) {
+        self.fadeView.frame = view.frame;
+        [view bringSubviewToFront:self.fadeView];
+    }
+}
+
 
 #pragma mark - Caching
 
