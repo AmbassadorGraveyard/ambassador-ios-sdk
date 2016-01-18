@@ -60,4 +60,12 @@
     NSLog(@"[Ambassador] Error Sharing Message - %@", message);
 }
 
++ (void)errorSendingInvalidPhoneNumbersForVC:(UIViewController*)viewController {
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid phone number. Please check and try again." withUniqueID:nil forViewController:viewController shouldDismissVCImmediately:NO];
+}
+
++ (void)errorSendingInvalidEmailsForVC:(UIViewController*)viewController {
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid email address. Please check and try again." withUniqueID:nil forViewController:viewController shouldDismissVCImmediately:NO];
+}
+
 @end

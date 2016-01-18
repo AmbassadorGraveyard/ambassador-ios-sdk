@@ -18,6 +18,8 @@
 + (void)errorLinkedInReauthForVC:(UIViewController*)viewController;
 + (void)errorNetworkTimeoutForVC:(UIViewController*)viewController;
 + (void)errorSharingMessageForVC:(UIViewController*)viewController withErrorMessage:(NSString*)message;
++ (void)errorSendingInvalidPhoneNumbersForVC:(UIViewController*)viewController;
++ (void)errorSendingInvalidEmailsForVC:(UIViewController*)viewController;
 
 @end
 
