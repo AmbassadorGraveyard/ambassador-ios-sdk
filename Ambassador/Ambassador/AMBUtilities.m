@@ -151,7 +151,7 @@
 - (void)addFadeToView:(UIView*)view {
     if (!self.fadeView) {
         self.fadeView = [[UIView alloc] init];
-        self.fadeView.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
+        self.fadeView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.8];
         self.fadeView.alpha = 0;
     }
     
