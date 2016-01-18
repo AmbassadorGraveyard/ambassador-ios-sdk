@@ -47,7 +47,6 @@
 @property (nonatomic, strong) NSMutableArray *filteredData;
 @property (nonatomic, strong) AMBContactLoader *contactLoader;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, strong) UIView * fadeView;
 @property (nonatomic, strong) AMBContact * selectedContact;
 @property (nonatomic) BOOL activeSearch;
 @property (nonatomic) BOOL isEditing;
@@ -87,20 +86,13 @@ BOOL keyboardShowing = NO;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    
     CGFloat offset = [AMBUtilities getOffsetForRotation:self toOrientation:toInterfaceOrientation];
     [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [UIView animateWithDuration:.1 animations:^{
-        self.fadeView.frame = self.containerView.frame;
-    }];
-    
-    if ([self.fadeView isDescendantOfView:self.containerView]) {
-        [self.containerView bringSubviewToFront:self.fadeView];
-        [self.containerView bringSubviewToFront:self.composeMessageView];
-    }
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [[AMBUtilities sharedInstance] rotateFadeForView:self.containerView];
+    [self.containerView bringSubviewToFront:self.composeMessageView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -152,28 +144,6 @@ BOOL keyboardShowing = NO;
     }
 }
 
-- (void)showHideFadeView {
-    if (!self.fadeView) {
-        self.fadeView = [[UIView alloc] initWithFrame:self.containerView.frame];
-        self.fadeView.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
-        self.fadeView.alpha = 0;
-    }
-    
-    if ([self.fadeView isDescendantOfView:self.containerView]) {
-        [UIView animateWithDuration:0.3 animations:^{
-            self.fadeView.alpha = 0;
-        } completion:^(BOOL finished) {
-            [self.fadeView removeFromSuperview];
-        }];
-    } else {
-        [self.containerView addSubview:self.fadeView];
-        [self.containerView bringSubviewToFront:self.composeMessageView];
-        [UIView animateWithDuration:0.3 animations:^{
-            self.fadeView.alpha = 1;
-        } completion:0];
-    }
-}
-
 
 #pragma mark - IBActions
 
@@ -212,13 +182,14 @@ BOOL keyboardShowing = NO;
 - (IBAction)editMessageButtonTapped:(id)sender {
     if (!self.isEditing) {
         self.isEditing = YES;
-        [self showHideFadeView];
+        [[AMBUtilities sharedInstance] addFadeToView:self.containerView];
+        [self.containerView bringSubviewToFront:self.composeMessageView];
         [self.composeMessageTextView becomeFirstResponder];
         self.composeMessageTextView.textColor = [UIColor blackColor];
         [self.btnEditMessage setImage:nil forState:UIControlStateNormal];
         [self.btnEditMessage setTitle:@"DONE" forState:UIControlStateNormal];
     } else {
-        [self showHideFadeView];
+        [[AMBUtilities sharedInstance] removeFadeFromView];
         [self.composeMessageTextView resignFirstResponder];
         self.composeMessageTextView.textColor = [UIColor lightGrayColor];
         [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
