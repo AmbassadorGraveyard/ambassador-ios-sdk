@@ -39,4 +39,16 @@
     [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" withUniqueID:nil forViewController:viewController shouldDismissVCImmediately:YES];
 }
 
++ (void)errorLinkedInShareForVC:(UIViewController*)viewController withMessage:(NSString*)message {
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:@"linkedShareFail" forViewController:viewController shouldDismissVCImmediately:NO];
+    }];
+}
+
++ (void)errorLinkedInReauthForVC:(UIViewController*)viewController {
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You've been logged out of LinkedIn. Please login to share." withUniqueID:@"linkedInAuth" forViewController:viewController shouldDismissVCImmediately:NO];
+    }];
+}
+
 @end
