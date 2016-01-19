@@ -18,6 +18,7 @@
 #import "AMBContactLoader.h"
 #import "AMBContactCard.h"
 #import "AMBNetworkManager.h"
+#import "AMBErrors.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                 AMBSelectedCellDelegate, UITextFieldDelegate,
@@ -47,7 +48,6 @@
 @property (nonatomic, strong) NSMutableArray *filteredData;
 @property (nonatomic, strong) AMBContactLoader *contactLoader;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, strong) UIView * fadeView;
 @property (nonatomic, strong) AMBContact * selectedContact;
 @property (nonatomic) BOOL activeSearch;
 @property (nonatomic) BOOL isEditing;
@@ -74,6 +74,7 @@ BOOL keyboardShowing = NO;
     self.filteredData = [[NSMutableArray alloc] init];
     self.composeMessageTextView.text = self.defaultMessage;
     [self setUpTheme];
+    [AMBUtilities sharedInstance].delegate = self;
     [[AMBContactLoader sharedInstance] attemptLoadWithDelegate:self loadingFromCache:^(BOOL isCached) {
         if (!isCached) {
             [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
@@ -87,20 +88,13 @@ BOOL keyboardShowing = NO;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    
     CGFloat offset = [AMBUtilities getOffsetForRotation:self toOrientation:toInterfaceOrientation];
     [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [UIView animateWithDuration:.1 animations:^{
-        self.fadeView.frame = self.containerView.frame;
-    }];
-    
-    if ([self.fadeView isDescendantOfView:self.containerView]) {
-        [self.containerView bringSubviewToFront:self.fadeView];
-        [self.containerView bringSubviewToFront:self.composeMessageView];
-    }
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [[AMBUtilities sharedInstance] rotateFadeForView:self.containerView];
+    [self.containerView bringSubviewToFront:self.composeMessageView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -152,28 +146,6 @@ BOOL keyboardShowing = NO;
     }
 }
 
-- (void)showHideFadeView {
-    if (!self.fadeView) {
-        self.fadeView = [[UIView alloc] initWithFrame:self.containerView.frame];
-        self.fadeView.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.7];
-        self.fadeView.alpha = 0;
-    }
-    
-    if ([self.fadeView isDescendantOfView:self.containerView]) {
-        [UIView animateWithDuration:0.3 animations:^{
-            self.fadeView.alpha = 0;
-        } completion:^(BOOL finished) {
-            [self.fadeView removeFromSuperview];
-        }];
-    } else {
-        [self.containerView addSubview:self.fadeView];
-        [self.containerView bringSubviewToFront:self.composeMessageView];
-        [UIView animateWithDuration:0.3 animations:^{
-            self.fadeView.alpha = 1;
-        } completion:0];
-    }
-}
-
 
 #pragma mark - IBActions
 
@@ -212,13 +184,14 @@ BOOL keyboardShowing = NO;
 - (IBAction)editMessageButtonTapped:(id)sender {
     if (!self.isEditing) {
         self.isEditing = YES;
-        [self showHideFadeView];
+        [[AMBUtilities sharedInstance] addFadeToView:self.containerView];
+        [self.containerView bringSubviewToFront:self.composeMessageView];
         [self.composeMessageTextView becomeFirstResponder];
         self.composeMessageTextView.textColor = [UIColor blackColor];
         [self.btnEditMessage setImage:nil forState:UIControlStateNormal];
         [self.btnEditMessage setTitle:@"DONE" forState:UIControlStateNormal];
     } else {
-        [self showHideFadeView];
+        [[AMBUtilities sharedInstance] removeFadeFromView];
         [self.composeMessageTextView resignFirstResponder];
         self.composeMessageTextView.textColor = [UIColor lightGrayColor];
         [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
@@ -282,7 +255,7 @@ BOOL keyboardShowing = NO;
         }
         
         // If the contact is invalid
-        [self showInvalidValueAlertForValue:contact.value];
+        [AMBErrors errorSelectingInvalidValueForValue:contact.value type:self.type];
     }
 }
 
@@ -381,10 +354,10 @@ BOOL keyboardShowing = NO;
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
             [AMBUtilities sharedInstance].delegate = self;
         } failure:^(NSString *error) {
-            [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+            [AMBErrors errorSharingMessageForVC:self withErrorMessage:error];
         }];
     } else {
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid phone number. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+        [AMBErrors errorSendingInvalidPhoneNumbersForVC:self];
     }
 }
 
@@ -397,10 +370,10 @@ BOOL keyboardShowing = NO;
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
             [AMBUtilities sharedInstance].delegate = self;
         } failure:^(NSString *error) {
-            [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+            [AMBErrors errorSharingMessageForVC:self withErrorMessage:error];
         }];
     } else {
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid email address. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+        [AMBErrors errorSendingInvalidEmailsForVC:self];
     }
 }
 
@@ -425,23 +398,6 @@ BOOL keyboardShowing = NO;
         default:
             return NO;
     }
-}
-
-- (void)showInvalidValueAlertForValue:(NSString*)valueString {
-    NSString *errorString;
-    
-    switch (self.type) {
-        case AMBSocialServiceTypeEmail:
-            errorString = [NSString stringWithFormat:@"The email address %@ is invalid.  Please change it to a valid email address. \n(Example: user.name@example.com)", valueString];
-            break;
-        case AMBSocialServiceTypeSMS:
-            errorString = [NSString stringWithFormat:@"The phone number %@ is invalid.  Please change it to a valid phone number. \n(Example: 1-(555)555-5555, (555)555-5555, 555-5555)", valueString];
-        default:
-            break;
-    }
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Unable to select!" message:errorString delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [alertView show];
 }
 
 - (void)refreshContacts {
@@ -539,8 +495,7 @@ BOOL keyboardShowing = NO;
 - (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         DLog(@"Error loading contacts - %@", message);
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Sharing requires access to your contact book. You can enable this in your settings." withUniqueID:@"contactError" forViewController:self shouldDismissVCImmediately:NO];
-        [AMBUtilities sharedInstance].delegate = self;
+        [AMBErrors errorLoadingContactsForVC:self];
     }];
 }
 

@@ -15,6 +15,7 @@
 #import "AMBThemeManager.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBNetworkManager.h"
+#import "AMBErrors.h"
 
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LinkedInAuthorizeDelegate, AMBShareServiceDelegate, AMBUtilitiesDelegate>
 
@@ -64,6 +65,7 @@ int contactServiceType;
     [self setUpCloseButton];
     [self performIdentify];
     self.services = [[AMBThemeManager sharedInstance] customSocialGridArray];
+    [AMBUtilities sharedInstance].delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -182,7 +184,7 @@ int contactServiceType;
 #pragma mark - ShareServiceDelegate
 
 - (void)networkError:(NSString *)title message:(NSString *)message {
-    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:@"linkedShareFail" forViewController:self shouldDismissVCImmediately:NO];
+    [AMBErrors errorLinkedInShareForVC:self withMessage:message];
 }
 
 - (void)userDidPostFromService:(NSString *)service {
@@ -200,10 +202,7 @@ int contactServiceType;
 }
 
 - (void)userMustReauthenticate {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You've been logged out of LinkedIn. Please login to share." withUniqueID:@"linkedInAuth" forViewController:self shouldDismissVCImmediately:NO];
-        [AMBUtilities sharedInstance].delegate = self;
-    });
+    [AMBErrors errorLinkedInReauthForVC:self];
 }
 
 
@@ -380,8 +379,7 @@ int contactServiceType;
 }
 
 - (void)alertForNetworkTimeout {
-    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"The network request has timed out. Please check your connection and try again." withUniqueID:@"networkTimeOut" forViewController:self shouldDismissVCImmediately:YES];
-    [AMBUtilities sharedInstance].delegate = self;
+    [AMBErrors errorNetworkTimeoutForVC:self];
 }
 
 - (void)removeLoadingView {
@@ -391,9 +389,8 @@ int contactServiceType;
     
     if (!self.urlNetworkObj) { // This means that there was no matching campaign ID that was returned
         [self.waitViewTimer invalidate];
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:YES];
-        [AMBUtilities sharedInstance].delegate = self;
-        NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
+        [AMBErrors errorAlertNoMatchingCampaignIdsForVC:self];
+        [AMBErrors errorLogNoMatchingCampaignIdError:self.campaignID];
         return;
     }
     
