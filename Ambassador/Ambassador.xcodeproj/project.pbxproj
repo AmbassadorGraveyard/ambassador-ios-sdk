@@ -591,8 +591,6 @@
 				EFE7D7881C21B6DF00D7F92C /* Networking */,
 				EFE7D7891C21B74D00D7F92C /* Misc */,
 				EFE7D78A1C21B7EA00D7F92C /* Libraries */,
-				EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */,
-				EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */,
 			);
 			path = Ambassador;
 			sourceTree = "<group>";
@@ -803,6 +801,7 @@
 			children = (
 				DBA3FB5E1BA8A23B00672D82 /* AMBContactSelector.h */,
 				DBA3FB5F1BA8A23B00672D82 /* AMBContactSelector.m */,
+				EF7082C81C4997EA0068145E /* Contact Card */,
 				EFE7D78E1C21B9FC00D7F92C /* Custom Cells */,
 			);
 			name = "Contact Selector";
@@ -816,6 +815,15 @@
 				EF64CFA71BE2A47D0072014B /* Info.plist */,
 			);
 			path = AmbassadorUITests;
+			sourceTree = "<group>";
+		};
+		EF7082C81C4997EA0068145E /* Contact Card */ = {
+			isa = PBXGroup;
+			children = (
+				EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */,
+				EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */,
+			);
+			name = "Contact Card";
 			sourceTree = "<group>";
 		};
 		EF7D80B91C24B9E00098D054 /* Conversion Parameters */ = {
@@ -870,8 +878,6 @@
 			children = (
 				DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */,
 				DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */,
-				DB6A24611BD017A700CE3230 /* AMBErrors.h */,
-				DB6A24631BD017B600CE3230 /* AMBErrors.m */,
 				DB6A24651BD01D8A00CE3230 /* AMBNetworkObject.h */,
 				DB6A24661BD01D8A00CE3230 /* AMBNetworkObject.m */,
 				EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */,
@@ -885,6 +891,8 @@
 		EFE7D7891C21B74D00D7F92C /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				DB6A24611BD017A700CE3230 /* AMBErrors.h */,
+				DB6A24631BD017B600CE3230 /* AMBErrors.m */,
 				DBA3FB561BA8A23B00672D82 /* AMBConstants.h */,
 				DBA3FB571BA8A23B00672D82 /* AMBConstants.m */,
 				DB95D7661BD821D9006A1E4A /* AMBOptions.h */,
@@ -1007,7 +1015,6 @@
 				DBA3FBBB1BA8A24F00672D82 /* AMBShareServiceCell.h in Headers */,
 				DBA3FC081BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h in Headers */,
 				DBA3FC041BA8AA1D00672D82 /* AMBPTBlockEventListener.h in Headers */,
-				DBA3FBCD1BA8A9C000672D82 /* AMBFMDatabase.h in Headers */,
 				EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */,
 				DB6A24711BD04E3900CE3230 /* AMBPusherManager.h in Headers */,
 				DBA3FC071BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h in Headers */,

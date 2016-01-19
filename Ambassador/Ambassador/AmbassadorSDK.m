@@ -14,6 +14,7 @@
 #import "AMBServiceSelector.h"
 #import "AMBPusherManager.h"
 #import "AMBNetworkManager.h"
+#import "AMBErrors.h"
 
 @interface AmbassadorSDK ()
 
@@ -83,7 +84,7 @@
     }
     
     if (restrictToInstall && [AMBValues getHasInstalledBoolean]) {
-        completion([NSError errorWithDomain:@"This conversion is restricted to install." code:0 userInfo:nil]);
+        completion([AMBErrors restrictedConversionError]);
         return;
     }
     
