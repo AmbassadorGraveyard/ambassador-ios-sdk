@@ -10,46 +10,62 @@
 #import <Ambassador/Ambassador.h>
 
 @interface ViewController ()
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UIButton *rafButton;
+
+@property (nonatomic, strong) IBOutlet UIView * loginView;
+@property (nonatomic, strong) IBOutlet UIButton * btnLogin;
+@property (nonatomic, strong) IBOutlet UIButton * btnDrawer;
+@property (nonatomic, strong) IBOutlet UITextField * tfUsername;
+@property (nonatomic, strong) IBOutlet UITextField * tfPassword;
+@property (nonatomic, strong) IBOutlet UIView * signInCrossbar;
 
 @end
 
 @implementation ViewController
 
+
+#pragma mark - LifeCycle
+
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    [self setUpTheme];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+#pragma mark - IBActions
+
+- (IBAction)loginTapped:(id)sender {
+    [self.view endEditing:YES];
+    [self identifyOnSignIn];
 }
 
-- (IBAction)showGenericRAF:(UIButton *)sender {
-    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:nil];
+
+#pragma mark - UI Functions
+
+- (void)setUpTheme {    
+    // Login View
+    self.loginView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1].CGColor;
+    self.signInCrossbar.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
+    self.loginView.layer.borderWidth = 1;
+    self.loginView.layer.cornerRadius = 4;
     
-    AMBConversionParameters *clickConversion = [[AMBConversionParameters alloc] init];
-    clickConversion.mbsy_campaign = @260;
-    clickConversion.mbsy_revenue = @200;
-    clickConversion.mbsy_email = @"corey@getambassador.com";
-    clickConversion.mbsy_custom1 = @"button tap conversion";
-    
-    [AmbassadorSDK registerConversion:clickConversion restrictToInstall:NO completion:^(NSError *error) {
-        if (error) {
-            NSLog(@"Conversion not registered - %@", error);
-        } else {
-            NSLog(@"BUTTON TAP CONVERSION REGISTERED SUCCESSFULLY!");
-        }
-    }];
+    // Login Button
+    self.btnLogin.layer.cornerRadius = 4;
 }
 
-- (IBAction)showThemedRAF:(id)sender {
-    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"AmbassadorTheme"];
+
+#pragma mark - Helper Functions
+
+- (void)identifyOnSignIn {
+    if ([self allowSignIn]) {
+        [AmbassadorSDK identifyWithEmail:self.tfUsername.text];
+        [[NSUserDefaults standardUserDefaults] setValue:self.tfUsername.text forKey:@"loginEmail"];
+    } else {
+        UIAlertView *blankAlert = [[UIAlertView alloc] initWithTitle:@"Cannot log in" message:@"All fields must be filled out before signing in" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [blankAlert show];
+    }
 }
 
-- (IBAction)showNoThemedRAF:(id)sender {
-    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"doesntexist"];
+- (BOOL)allowSignIn {
+    return (![self.tfPassword.text  isEqual: @""] && ![self.tfUsername.text  isEqual: @""]) ? YES : NO;
 }
 
 @end
