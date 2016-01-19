@@ -91,6 +91,7 @@
 @property (nonatomic, strong) NSString * short_code;
 @property (nonatomic, strong) NSString * message;
 @property (nonatomic, strong) NSString * subject_line;
+@property (nonatomic, strong) NSString * from_email;
 
 - (instancetype)initWithEmails:(NSArray*)emails shortCode:(NSString*)shortCode message:(NSString*)message subjectLine:(NSString*)subjectLine;
 
@@ -100,6 +101,7 @@
 @property (nonatomic, strong) NSArray * to;
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSString * message;
+@property (nonatomic, strong) NSString * from_email;
 
 - (instancetype)initWithPhoneNumbers:(NSArray*)phoneNumbers fromSender:(NSString*)sender message:(NSString*)message;
 

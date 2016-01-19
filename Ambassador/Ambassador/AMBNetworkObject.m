@@ -226,6 +226,7 @@
     self.short_code = shortCode;
     self.message = message;
     self.subject_line = subjectLine;
+    self.from_email = ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
     
     return self;
 }
@@ -242,6 +243,7 @@
     self.to = [[NSArray alloc] initWithArray:phoneNumbers];
     self.name = sender;
     self.message = message;
+    self.from_email = ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
     
     return self;
 }
