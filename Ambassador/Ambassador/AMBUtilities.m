@@ -210,6 +210,16 @@
     return [NSString stringWithFormat:@"%f", timeInMiliseconds];
 }
 
++ (BOOL)colorIsDark:(UIColor*)color {
+    const CGFloat* components = CGColorGetComponents(color.CGColor);
+    double redValue = components[0];
+    CGFloat greenValue = components[1];
+    CGFloat blueValue = components[2];
+    CGFloat darkness = 1 - (299 * redValue + 587 * greenValue + 114 * blueValue)/1000;
+
+    return (darkness < 0.5) ? NO : YES;
+}
+
 + (BOOL)isSuccessfulStatusCode:(NSInteger)statusCode {
     if (statusCode >= (NSInteger)200 && statusCode <= (NSInteger)299) {
         return YES;

@@ -15,6 +15,7 @@
 #import "AMBThemeManager.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBNetworkManager.h"
+#import "AMBErrors.h"
 
 @interface AMBServiceSelector () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, LinkedInAuthorizeDelegate, AMBShareServiceDelegate, AMBUtilitiesDelegate>
 
@@ -32,6 +33,7 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight3;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight4;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight5;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * shortURLBackgroundHeight;
 @property (nonatomic, strong) IBOutlet UIButton * btnCopy;
 @property (nonatomic, strong) IBOutlet UIView * shortURLBackground;
 
@@ -63,6 +65,7 @@ int contactServiceType;
     [self setUpCloseButton];
     [self performIdentify];
     self.services = [[AMBThemeManager sharedInstance] customSocialGridArray];
+    [AMBUtilities sharedInstance].delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -181,7 +184,7 @@ int contactServiceType;
 #pragma mark - ShareServiceDelegate
 
 - (void)networkError:(NSString *)title message:(NSString *)message {
-    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:@"linkedShareFail" forViewController:self shouldDismissVCImmediately:NO];
+    [AMBErrors errorLinkedInShareForVC:self withMessage:message];
 }
 
 - (void)userDidPostFromService:(NSString *)service {
@@ -199,10 +202,7 @@ int contactServiceType;
 }
 
 - (void)userMustReauthenticate {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You've been logged out of LinkedIn. Please login to share." withUniqueID:@"linkedInAuth" forViewController:self shouldDismissVCImmediately:NO];
-        [AMBUtilities sharedInstance].delegate = self;
-    });
+    [AMBErrors errorLinkedInReauthForVC:self];
 }
 
 
@@ -269,6 +269,17 @@ int contactServiceType;
     self.descriptionLabel.textColor = [[AMBThemeManager sharedInstance] colorForKey:RAFDescriptionTextColor];
     self.descriptionLabel.font = [[AMBThemeManager sharedInstance] fontForKey:RAFDescriptionTextFont];
     [self applyImage];
+    
+    // Setup shareURL field
+    self.shortURLBackground.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldBackgroundColor];
+    self.lblURL.textColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldTextColor];
+    self.lblURL.font = [[AMBThemeManager sharedInstance] fontForKey:ShareFieldTextFont];
+    self.shortURLBackgroundHeight.constant = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldHeight] floatValue];
+    self.btnCopy.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldBackgroundColor];
+    self.shortURLBackground.layer.cornerRadius = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldCornerRadius] floatValue];
+    
+    // Checks to see if the nav bar color is "light" or "dark" and sets the status bar text color accordingly
+    if ([AMBUtilities colorIsDark:[[AMBThemeManager sharedInstance] colorForKey:NavBarColor]]) { self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent; }
 }
 
 - (void)applyImage {
@@ -280,23 +291,23 @@ int contactServiceType;
     switch (slotNum) {
         case 1:
             self.imgSlot1.image = image;
-            self.imgSlotHeight1.constant = 50;
+            self.imgSlotHeight1.constant = 70;
             break;
         case 2:
             self.imgSlot2.image = image;
-            self.imgSlotHeight2.constant = 50;
+            self.imgSlotHeight2.constant = 70;
             break;
         case 3:
             self.imgSlot3.image = image;
-            self.imgSlotHeight3.constant = 50;
+            self.imgSlotHeight3.constant = 70;
             break;
         case 4:
             self.imgSlot4.image = image;
-            self.imgSlotHeight4.constant = 50;
+            self.imgSlotHeight4.constant = 70;
             break;
         case 5:
             self.imgSlot5.image = image;
-            self.imgSlotHeight5.constant = 50;
+            self.imgSlotHeight5.constant = 70;
             break;
         default:
             break;
@@ -368,8 +379,7 @@ int contactServiceType;
 }
 
 - (void)alertForNetworkTimeout {
-    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"The network request has timed out. Please check your connection and try again." withUniqueID:@"networkTimeOut" forViewController:self shouldDismissVCImmediately:YES];
-    [AMBUtilities sharedInstance].delegate = self;
+    [AMBErrors errorNetworkTimeoutForVC:self];
 }
 
 - (void)removeLoadingView {
@@ -379,9 +389,8 @@ int contactServiceType;
     
     if (!self.urlNetworkObj) { // This means that there was no matching campaign ID that was returned
         [self.waitViewTimer invalidate];
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:YES];
-        [AMBUtilities sharedInstance].delegate = self;
-        NSLog(@"There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting the RAF view controller.", self.campaignID);
+        [AMBErrors errorAlertNoMatchingCampaignIdsForVC:self];
+        [AMBErrors errorLogNoMatchingCampaignIdError:self.campaignID];
         return;
     }
     
