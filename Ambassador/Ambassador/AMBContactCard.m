@@ -22,7 +22,6 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * masterViewHeight;
 
 // Other properties
-@property (nonatomic, strong) UIView * fadeView;
 @property (nonatomic, strong) NSMutableArray * valueArray;
 
 @end
@@ -44,22 +43,11 @@ CGFloat const ROW_HEIGHT = 35;
 
 - (void)viewWillAppear:(BOOL)animated {
     // Creates a darkenedView that is added to the contactSelector VC behind the cardView
-    self.fadeView = [[UIView alloc] initWithFrame:self.presentingViewController.view.frame];
-    self.fadeView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.77];
-    self.fadeView.alpha = 0;
-    [self.presentingViewController.view addSubview:self.fadeView];
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        self.fadeView.alpha = 1;
-    }];
+    [[AMBUtilities sharedInstance] addFadeToView:self.presentingViewController.view];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [UIView animateWithDuration:0.2 animations:^{
-        self.fadeView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self.fadeView removeFromSuperview];
-    }];
+    [[AMBUtilities sharedInstance] removeFadeFromView];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -67,7 +55,7 @@ CGFloat const ROW_HEIGHT = 35;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    self.fadeView.frame = self.presentingViewController.view.frame;
+    [[AMBUtilities sharedInstance] rotateFadeForView:self.presentingViewController.view];
     [self resizeMasterView];
 }
 
