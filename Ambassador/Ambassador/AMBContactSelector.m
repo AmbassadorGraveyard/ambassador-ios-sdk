@@ -511,9 +511,7 @@ BOOL keyboardShowing = NO;
 #pragma mark - AMBUtitlites Delegate
 
 - (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
-    if ([uniqueID isEqualToString:@"contactError"]) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
