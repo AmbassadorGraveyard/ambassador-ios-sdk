@@ -28,21 +28,33 @@
 
 @property (nonatomic, weak)id <AMBUtilitiesDelegate> delegate;
 @property (nonatomic, strong) UIView *loadingView;
+@property (nonatomic, strong) UIView * fadeView;
 @property (nonatomic, strong) UIVisualEffectView *blurView;
 @property (nonatomic, strong) UIImageView * animatingView;
 @property (nonatomic, strong) NSCache * cache;
 
 + (AMBUtilities *)sharedInstance;
 
+// Custom Alerts
 - (void)presentAlertWithSuccess:(BOOL)successful message:(NSString*)message withUniqueID:(NSString*)uniqueID forViewController:(UIViewController*)viewController shouldDismissVCImmediately:(BOOL)shouldDismiss;
+
+// Loading Screen
 - (void)showLoadingScreenForView:(UIView*)view;
 - (void)hideLoadingView;
 - (void)rotateLoadingView:(UIView*)view widthOffset:(CGFloat)widthOffset;
 + (CGFloat)getOffsetForRotation:(UIViewController*) viewController toOrientation:(UIInterfaceOrientation)toOrientation;
+
+// Fade View
+- (void)addFadeToView:(UIView*)view;
+- (void)removeFadeFromView;
+- (void)rotateFadeForView:(UIView*)view;
+
+// Caching
 - (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue;
 - (NSObject*)getCacheValueWithKey:(NSString*)key;
 - (void)removeCacheForKey:(NSString*)keyValue;
 
+// Misc Class Functions
 + (NSString*)createRequestID;
 + (BOOL)colorIsDark:(UIColor*)color;
 + (BOOL)isSuccessfulStatusCode:(NSInteger)statusCode;
