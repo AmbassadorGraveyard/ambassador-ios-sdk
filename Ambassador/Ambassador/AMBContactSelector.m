@@ -23,7 +23,7 @@
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                 AMBSelectedCellDelegate, UITextFieldDelegate,
                                 UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate,
-                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate, AMBContactCellDelegate>
+                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate, AMBContactCellDelegate, UIAlertViewDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UITableView *contactsTable;
@@ -151,11 +151,7 @@ BOOL keyboardShowing = NO;
 
 - (IBAction)sendButtonTapped:(id)sender {
     if ([self messageContainsURL]) {
-        if (self.type == AMBSocialServiceTypeEmail) {
-            [self sendEmail];
-        } else if (self.type == AMBSocialServiceTypeSMS) {
-            [self sendSMS];
-        }
+        [self sendMessage];
     }
 }
 
@@ -285,6 +281,17 @@ BOOL keyboardShowing = NO;
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     if (!self.isEditing) { [self editMessageButtonTapped:nil]; }
     return YES;
+}
+
+
+#pragma mark - UIAlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        
+    } else if (buttonIndex == 1) {
+        [self sendMessage];
+    }
 }
 
 
@@ -437,6 +444,14 @@ BOOL keyboardShowing = NO;
     [self.selected removeAllObjects];
     [self updateButton];
     [self.refreshControl endRefreshing];
+}
+
+- (void)sendMessage {
+    if (self.type == AMBSocialServiceTypeEmail) {
+        [self sendEmail];
+    } else if (self.type == AMBSocialServiceTypeSMS) {
+        [self sendSMS];
+    }
 }
 
 
