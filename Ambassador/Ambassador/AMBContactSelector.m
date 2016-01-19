@@ -130,8 +130,8 @@ BOOL keyboardShowing = NO;
 }
 
 - (void)updateButton {
-    self.sendButton.enabled = self.selected.count ? YES : NO;
-    self.sendButton.backgroundColor = self.sendButton.enabled ? [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor] : [UIColor lightGrayColor];
+    self.sendButton.enabled = (self.selected.count > 0) ? YES : NO;
+    self.sendButton.backgroundColor = (self.sendButton.enabled) ? [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor] : [UIColor lightGrayColor];
     
     switch (self.selected.count) {
         case 0:
@@ -150,20 +150,11 @@ BOOL keyboardShowing = NO;
 #pragma mark - IBActions
 
 - (IBAction)sendButtonTapped:(id)sender {
-    if (self.selected.count > 0 && ![self validateString:self.shortURL inString:self.composeMessageTextView.text]) {
-        NSString *message = [NSString stringWithFormat:@"Please include your url in the message: %@", self.shortURL];
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
-        return;
-    } else if ([self.selected count] > 0 && [self validateString:self.shortURL inString:self.composeMessageTextView.text]) {
-        switch (self.type) {
-            case AMBSocialServiceTypeEmail:
-                [self sendEmail];
-                break;
-            case AMBSocialServiceTypeSMS:
-                [self sendSMS];
-                break;
-            default:
-                break;
+    if ([self messageContainsURL]) {
+        if (self.type == AMBSocialServiceTypeEmail) {
+            [self sendEmail];
+        } else if (self.type == AMBSocialServiceTypeSMS) {
+            [self sendSMS];
         }
     }
 }
@@ -424,8 +415,15 @@ BOOL keyboardShowing = NO;
     self.filteredData = (NSMutableArray *)[self.data filteredArrayUsingPredicate:predicate];
 }
 
-- (BOOL)validateString:(NSString *)string inString:(NSString *)inString {
-    return [inString rangeOfString:string].location != NSNotFound;
+- (BOOL)messageContainsURL {
+    if ([self.composeMessageTextView.text containsString:[AMBValues getUserURLObject].url]) {
+        return YES;
+    } else {
+        NSString *alertString = [NSString stringWithFormat:@"Your Referral Link is not included in the message: %@", [AMBValues getUserURLObject].url];
+        UIAlertView *missingURLAlert = [[UIAlertView alloc] initWithTitle:@"Hold On!" message:alertString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Insert URL", @"Continue Sending", nil];
+        [missingURLAlert show];
+        return NO;
+    }
 }
 
 - (void)refreshAllIncludingContacts:(BOOL)refreshContactsTable {
