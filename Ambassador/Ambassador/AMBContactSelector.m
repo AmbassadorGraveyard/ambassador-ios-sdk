@@ -18,6 +18,7 @@
 #import "AMBContactLoader.h"
 #import "AMBContactCard.h"
 #import "AMBNetworkManager.h"
+#import "AMBErrors.h"
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                 AMBSelectedCellDelegate, UITextFieldDelegate,
@@ -74,6 +75,7 @@ BOOL keyboardShowing = NO;
     self.filteredData = [[NSMutableArray alloc] init];
     self.composeMessageTextView.text = self.defaultMessage;
     [self setUpTheme];
+    [AMBUtilities sharedInstance].delegate = self;
     [[AMBContactLoader sharedInstance] attemptLoadWithDelegate:self loadingFromCache:^(BOOL isCached) {
         if (!isCached) {
             [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
@@ -282,7 +284,7 @@ BOOL keyboardShowing = NO;
         }
         
         // If the contact is invalid
-        [self showInvalidValueAlertForValue:contact.value];
+        [AMBErrors errorSelectingInvalidValueForValue:contact.value type:self.type];
     }
 }
 
@@ -381,10 +383,10 @@ BOOL keyboardShowing = NO;
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
             [AMBUtilities sharedInstance].delegate = self;
         } failure:^(NSString *error) {
-            [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+            [AMBErrors errorSharingMessageForVC:self withErrorMessage:error];
         }];
     } else {
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid phone number. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+        [AMBErrors errorSendingInvalidPhoneNumbersForVC:self];
     }
 }
 
@@ -397,10 +399,10 @@ BOOL keyboardShowing = NO;
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
             [AMBUtilities sharedInstance].delegate = self;
         } failure:^(NSString *error) {
-            [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+            [AMBErrors errorSharingMessageForVC:self withErrorMessage:error];
         }];
     } else {
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You may have selected an invalid email address. Please check and try again." withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+        [AMBErrors errorSendingInvalidEmailsForVC:self];
     }
 }
 
@@ -425,23 +427,6 @@ BOOL keyboardShowing = NO;
         default:
             return NO;
     }
-}
-
-- (void)showInvalidValueAlertForValue:(NSString*)valueString {
-    NSString *errorString;
-    
-    switch (self.type) {
-        case AMBSocialServiceTypeEmail:
-            errorString = [NSString stringWithFormat:@"The email address %@ is invalid.  Please change it to a valid email address. \n(Example: user.name@example.com)", valueString];
-            break;
-        case AMBSocialServiceTypeSMS:
-            errorString = [NSString stringWithFormat:@"The phone number %@ is invalid.  Please change it to a valid phone number. \n(Example: 1-(555)555-5555, (555)555-5555, 555-5555)", valueString];
-        default:
-            break;
-    }
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Unable to select!" message:errorString delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [alertView show];
 }
 
 - (void)refreshContacts {
@@ -539,8 +524,7 @@ BOOL keyboardShowing = NO;
 - (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         DLog(@"Error loading contacts - %@", message);
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Sharing requires access to your contact book. You can enable this in your settings." withUniqueID:@"contactError" forViewController:self shouldDismissVCImmediately:NO];
-        [AMBUtilities sharedInstance].delegate = self;
+        [AMBErrors errorLoadingContactsForVC:self];
     }];
 }
 
@@ -556,7 +540,9 @@ BOOL keyboardShowing = NO;
 #pragma mark - AMBUtitlites Delegate
 
 - (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([uniqueID isEqualToString:@"contactError"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end
