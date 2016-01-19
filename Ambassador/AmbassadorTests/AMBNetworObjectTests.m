@@ -37,7 +37,7 @@
     NSMutableDictionary *expectedDictionary = [mockShareEmailObj toDictionary];
     
     // THEN
-    XCTAssertEqual(4, expectedDictionary.count, @"Expected count was actually %i, not 4", (int)expectedDictionary.count);
+    XCTAssertEqual(5, expectedDictionary.count, @"Expected count was actually %i, not 4", (int)expectedDictionary.count);
     XCTAssertEqualObjects(mockShortCode, expectedDictionary[@"short_code"], @"%@ is not equal to %@", mockShortCode, expectedDictionary[@"short_code"]);
     XCTAssertEqualObjects(mockMessage, expectedDictionary[@"message"], @"%@ is not equal to %@", mockMessage, expectedDictionary[@"message"]);
     XCTAssertEqualObjects(mockSubjectLine, expectedDictionary[@"subject_line"], @"%@ is not equal to %@", mockSubjectLine, expectedDictionary[@"subject_line"]);
