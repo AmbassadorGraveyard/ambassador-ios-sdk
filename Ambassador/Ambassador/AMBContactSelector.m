@@ -288,7 +288,7 @@ BOOL keyboardShowing = NO;
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        
+        [self insertURL];
     } else if (buttonIndex == 1) {
         [self sendMessage];
     }
@@ -451,6 +451,34 @@ BOOL keyboardShowing = NO;
         [self sendEmail];
     } else if (self.type == AMBSocialServiceTypeSMS) {
         [self sendSMS];
+    }
+}
+
+- (void)insertURL {
+    NSMutableString *newString = [NSMutableString stringWithString:self.composeMessageTextView.text];
+    
+    if ([self customContainsString:newString subString:@"http://"]) {
+        NSRange rangeOfString = [self.composeMessageTextView.text rangeOfString:@"http://"];
+        NSString *existingHttpString = [self.composeMessageTextView.text substringFromIndex:rangeOfString.location];
+        NSString *httpString = ([existingHttpString containsString:@" "]) ? [existingHttpString substringToIndex:[existingHttpString rangeOfString:@" "].location] : existingHttpString;
+        
+        [newString replaceOccurrencesOfString:httpString withString:@"" options:0 range:[self.composeMessageTextView.text rangeOfString:self.composeMessageTextView.text]];
+        [newString insertString:[AMBValues getUserURLObject].url atIndex:rangeOfString.location];
+        self.composeMessageTextView.text = newString;
+        
+        return;
+    }
+    
+    [newString appendString:[AMBValues getUserURLObject].url];
+    self.composeMessageTextView.text = newString;
+}
+
+// This method will only need to be used until we stop supporting iOS 7
+- (BOOL)customContainsString:(NSString*)string subString:(NSString*)subString {
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        return [string containsString:subString]; // This function will crash the app on iOS 7 or below
+    } else {
+        return [string rangeOfString:subString].location != NSNotFound;
     }
 }
 
