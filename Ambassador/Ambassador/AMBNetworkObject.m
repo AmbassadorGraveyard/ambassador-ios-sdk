@@ -206,10 +206,11 @@
 @implementation AMBShareTrackNetworkObject
 -(instancetype)init {
     if (self = [super init]) {
-        self.recipient_username = [NSMutableArray arrayWithArray:@[@""]];
-        self.recipient_email = [NSMutableArray arrayWithArray:@[@""]];
+        self.recipient_username = @"";
+        self.recipient_email = @"";
         self.short_code = @"";
         self.social_name = @"";
+        self.from_email =  ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
     }
     return self;
 }
@@ -226,6 +227,7 @@
     self.short_code = shortCode;
     self.message = message;
     self.subject_line = subjectLine;
+    self.from_email = ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
     
     return self;
 }
@@ -242,6 +244,7 @@
     self.to = [[NSArray alloc] initWithArray:phoneNumbers];
     self.name = sender;
     self.message = message;
+    self.from_email = ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
     
     return self;
 }

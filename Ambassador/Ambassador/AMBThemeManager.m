@@ -77,10 +77,18 @@ static NSDictionary * valuesDic;
         case ContactTableCheckMarkColor:
             return @"ContactTableCheckMarkColor";
             break;
+        case ContactAvatarBackgroundColor:
+            return @"ContactAvatarBackgroundColor";
+        case ContactAvatarColor:
+            return @"ContactAvatarColor";
         case ShareFieldBackgroundColor:
             return @"ShareFieldBackgroundColor";
         case ShareFieldTextColor:
             return @"ShareFieldTextColor";
+        case AlertButtonBackgroundColor:
+            return @"AlertButtonBackgroundColor";
+        case AlertButtonTextColor:
+            return @"AlertButtonTextColor";
         default:
             return @"Unavailable";
             break;

@@ -8,6 +8,7 @@
 
 #import "AMBNetworkManager.h"
 #import "AMBErrors.h"
+#import "AMBBulkShareHelper.h"
 
 @implementation AMBNetworkManager
 
@@ -56,23 +57,8 @@ static NSURLSession * urlSession;
 }
 
 - (void)sendShareTrackForServiceType:(AMBSocialServiceType)socialType contactList:(NSMutableArray*)contactList success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
-    AMBShareTrackNetworkObject *shareTrackObject = [[AMBShareTrackNetworkObject alloc] init];
-    shareTrackObject.short_code = [AMBValues getUserURLObject].short_code;
-    shareTrackObject.social_name = [AMBOptions serviceTypeStringValue:socialType];
-    
-    switch (socialType) {
-        case AMBSocialServiceTypeSMS:
-            shareTrackObject.recipient_username = contactList;
-            break;
-        case AMBSocialServiceTypeEmail:
-            shareTrackObject.recipient_email = contactList;
-            break;
-        default:
-            break;
-    }
-    
     NSMutableURLRequest *shareTrackRequest = [self createURLRequestWithURL:[AMBValues getShareTrackUrl] requestType:@"POST"];
-    shareTrackRequest.HTTPBody = [shareTrackObject toData];
+    shareTrackRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:[AMBBulkShareHelper shareTrackPayload:contactList shareType:socialType] options:0 error:nil];
     
     [[urlSession dataTaskWithRequest:shareTrackRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         DLog(@"SHARE TRACK Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);

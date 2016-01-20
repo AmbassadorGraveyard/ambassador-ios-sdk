@@ -552,7 +552,9 @@ BOOL keyboardShowing = NO;
 #pragma mark - AMBUtitlites Delegate
 
 - (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (![uniqueID isEqualToString:@"missingURL"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end

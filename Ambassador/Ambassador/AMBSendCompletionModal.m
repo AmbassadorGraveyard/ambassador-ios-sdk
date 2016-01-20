@@ -60,7 +60,8 @@
 {
     DLog();
     self.button.layer.cornerRadius = self.button.frame.size.height / 2;
-    self.button.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarColor];
+    self.button.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:AlertButtonBackgroundColor];
+    [self.button setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:AlertButtonTextColor] forState:UIControlStateNormal];
 }
 
 - (IBAction)buttonPressed:(UIButton *)sender
