@@ -26,6 +26,8 @@ typedef enum ambassadorColors {
     ContactSendButtonTextColor,
     ContactSearchDoneButtonTextColor,
     ContactTableCheckMarkColor,
+    ContactAvatarBackgroundColor,
+    ContactAvatarColor,
     
     // Alert Button
     AlertButtonBackgroundColor,
