@@ -71,7 +71,7 @@
 	<key>ContactTableInfoTextFont</key>
 	<string>Helvetica, 13</string>
 	<key>ContactAvatarBackgroundColor</key>
-	<string>#000000</string>
+	<string>#4199D1</string>
 	<key>ContactAvatarColor</key>
 	<string>#FFFFFF</string>
 	<key>ALERT BUTTON ---------</key>
