@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AMBOptions.h"
 
 @interface AMBBulkShareHelper : NSObject
 
