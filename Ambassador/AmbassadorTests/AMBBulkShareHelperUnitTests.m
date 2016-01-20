@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "AMBContact.h"
 #import "AMBBulkShareHelper.h"
+#import "AMBOptions.h"
 
 @interface AMBBulkShareHelperUnitTests : XCTestCase
 
