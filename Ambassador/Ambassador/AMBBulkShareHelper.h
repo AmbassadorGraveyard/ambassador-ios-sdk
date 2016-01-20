@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AMBOptions.h"
 
 @interface AMBBulkShareHelper : NSObject
 
@@ -15,5 +16,6 @@
 + (BOOL)isValidPhoneNumber:(NSString*)phoneNumber;
 + (BOOL)isValidEmail:(NSString*)emailAddress;
 + (NSString*)stripPhoneNumber:(NSString*)phoneNumber;
++ (NSArray*)shareTrackPayload:(NSArray*)contactList shareType:(AMBSocialServiceType)socialType;
 
 @end
