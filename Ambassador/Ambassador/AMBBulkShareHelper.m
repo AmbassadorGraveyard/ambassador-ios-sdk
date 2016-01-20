@@ -54,6 +54,31 @@
 + (NSString*)stripPhoneNumber:(NSString*)phoneNumber {
     return [[phoneNumber componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]] componentsJoinedByString:@""];
 }
+
++ (NSArray*)shareTrackPayload:(NSArray*)contactList shareType:(AMBSocialServiceType)socialType {
+    AMBShareTrackNetworkObject *shareTrackObject = [[AMBShareTrackNetworkObject alloc] init];
+    shareTrackObject.short_code = [AMBValues getUserURLObject].short_code;
+    shareTrackObject.social_name = [AMBOptions serviceTypeStringValue:socialType];
+    
+    NSMutableArray *trackingObjects = ([contactList count] > 0) ? [[NSMutableArray alloc] init] : [NSMutableArray arrayWithObject:[shareTrackObject toDictionary]];
+    
+    for (NSString *contact in contactList) {
+        switch (socialType) {
+            case AMBSocialServiceTypeSMS:
+                shareTrackObject.recipient_username = contact;
+                break;
+            case AMBSocialServiceTypeEmail:
+                shareTrackObject.recipient_email = contact;
+                break;
+            default:
+                break;
+        }
+        
+        [trackingObjects addObject:[shareTrackObject toDictionary]];
+    }
+    
+    return trackingObjects;
+}
                             
 
 @end
