@@ -9,7 +9,7 @@ $ ln -s ../../git-hooks/pre-push .git/hooks/pre-push
 
 The `pre-push` hook requires re-initialization of the repo:
 ```
-$ git initÂ
+$ git init
 ```
 
 Make sure the `pre-push` hook is executable:
