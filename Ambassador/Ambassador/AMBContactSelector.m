@@ -152,7 +152,7 @@ BOOL keyboardShowing = NO;
 - (IBAction)sendButtonTapped:(id)sender {
     if (self.selected.count > 0 && ![self validateString:self.shortURL inString:self.composeMessageTextView.text]) {
         NSString *message = [NSString stringWithFormat:@"Please include your url in the message: %@", self.shortURL];
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:@"missingURL" forViewController:self shouldDismissVCImmediately:NO];
         return;
     } else if ([self.selected count] > 0 && [self validateString:self.shortURL inString:self.composeMessageTextView.text]) {
         switch (self.type) {
@@ -511,7 +511,9 @@ BOOL keyboardShowing = NO;
 #pragma mark - AMBUtitlites Delegate
 
 - (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (![uniqueID isEqualToString:@"missingURL"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end
