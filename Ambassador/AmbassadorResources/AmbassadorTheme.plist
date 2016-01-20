@@ -70,6 +70,16 @@
 	<string>Helvetica, 17</string>
 	<key>ContactTableInfoTextFont</key>
 	<string>Helvetica, 13</string>
+	<key>ContactAvatarBackgroundColor</key>
+	<string>#4199D1</string>
+	<key>ContactAvatarColor</key>
+	<string>#FFFFFF</string>
+	<key>ALERT BUTTON -----------------</key>
+	<string></string>
+	<key>AlertButtonBackgroundColor</key>
+	<string>#2F6898</string>
+	<key>AlertButtonTextColor</key>
+	<string>#FFFFFF</string>
 	<key>SOCIAL SHARE GRID ------------</key>
 	<string></string>
 	<key>Channels</key>
