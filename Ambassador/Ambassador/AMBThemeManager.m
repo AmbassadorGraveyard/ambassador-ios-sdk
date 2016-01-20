@@ -81,6 +81,10 @@ static NSDictionary * valuesDic;
             return @"ShareFieldBackgroundColor";
         case ShareFieldTextColor:
             return @"ShareFieldTextColor";
+        case AlertButtonBackgroundColor:
+            return @"AlertButtonBackgroundColor";
+        case AlertButtonTextColor:
+            return @"AlertButtonTextColor";
         default:
             return @"Unavailable";
             break;
