@@ -100,11 +100,14 @@ CGFloat const ROW_HEIGHT = 35;
     
     // Checks whether or not to show avatar image in case there is no contact photo
     self.ivAvatarImage.hidden = (self.contact.contactImage) ? YES : NO;
-    if (!self.ivAvatarImage.hidden) { self.ivAvatarImage.image = [AMBValues imageFromBundleWithName:@"avatar" type:@"png" tintable:NO]; }
+    if (!self.ivAvatarImage.hidden) {
+        self.ivAvatarImage.image = [AMBValues imageFromBundleWithName:@"avatar" type:@"png" tintable:YES];
+        self.ivAvatarImage.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactAvatarColor];
+    }
     
     // Sets the the contact photo and background color
     self.ivContactPhoto.image = self.contact.contactImage;
-    self.ivContactPhoto.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    self.ivContactPhoto.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactAvatarBackgroundColor];
     
     // Sets up tableView
     self.infoTableView.backgroundColor = [UIColor whiteColor];
