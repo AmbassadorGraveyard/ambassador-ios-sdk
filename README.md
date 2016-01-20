@@ -9,7 +9,7 @@ $ ln -s ../../git-hooks/pre-push .git/hooks/pre-push
 
 The `pre-push` hook requires re-initialization of the repo:
 ```
-$ git initÂ
+$ git init
 ```
 
 Make sure the `pre-push` hook is executable:
@@ -244,11 +244,11 @@ The `GenericTheme.plist` will come with preconfigured values looking like this:
 
   <img src="screenShots/themePlist.png" width="600" />
 
-This is what the default theme will look like with the preconfigured values in the `AmbassadorTheme.plist`.
+This is what the default theme will look like with the preconfigured values in the `GenericTheme.plist`.
 
   <img src="screenShots/rafDemoImage.png" width="250" />   <img src="screenShots/contactsDemoImage.png" width="250"/>
 
-To demonstrate how to change the default theme, here is the AmbassadorTheme.plist with some edited values:
+To demonstrate how to change the default theme, here is the GenericTheme.plist with some edited values:
 
   <img src="screenShots/editedPlist.png" width="500" />
 
@@ -259,7 +259,7 @@ The results from the minor changes will look like this:
 ### Adding an image to the RAF Page
 
 You can add an image to the RAF Widget by editing the **RAFLogo** plist value:
-* **NOTE**: The image you reference from the AmbassadorTheme.plist must be in your app's **Images.xcassets** folder
+* **NOTE**: The image you reference from the GenericTheme.plist must be in your app's **Images.xcassets** folder
 
   <img src="screenShots/imageAddPlist.png" width="500" />  <img src="screenShots/imgNoPos.png" width="250" />
 
@@ -271,7 +271,7 @@ The way to enter an image will look like `<image name>, <position>`.  Ex: `apple
 
 ### Reordering Sharing Channels
 
-Any Sharing Channels can be reordered. The Sharing Channels are ordered in a list separated by commas that can be found in the  __AmbassadorTheme.plist__.
+Any Sharing Channels can be reordered. The Sharing Channels are ordered in a list separated by commas that can be found in the  __GenericTheme.plist__.
 
 This is the standard ordering with Facebook appearing first and Email last.
 
@@ -312,6 +312,17 @@ Right click __GenericTheme.plist__ and select __Duplicate__
 
   <img src="screenShots/themeDuplicate.png" width="500" />
 
+Rename the duplicate to the name of your new plist. The new plist should now show up in your project navigator
+
+  <img src="screenShots/newplist.png" width=300 />
+
+You can now alter your new plist's values to create a new look for a different RAF. You would apply it to a new RAF by using the following code:
+
+```objective-c
+// Present the RAF Modal View
+[AmbassadorSDK presentRAFForCampaign:<campaign ID> FromViewController:self withThemePlist:@"newPlist"];
+```
+You can use as many plists as you want and apply them to different RAFs throughout your app
 
 **NOTES FOR CUSTOM THEMES**
 * **Colors must be entered as Hex Code values**
