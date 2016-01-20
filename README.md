@@ -98,8 +98,7 @@ You will want to run Ambassador inside of the  `application:didFinishLaunchingWi
 
 **Swift**
 ```objective-c
-func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
-{
+func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Override point for customization after application launch.
 
     AmbassadorSDK.runWithUniversalToken(<your_universal_token>, universalID:<your_universal_id>)
@@ -213,13 +212,13 @@ AmbassadorSDK.registerConversion(parameters, restrictToInsall: false) { (error) 
 **Objective-c**
 ```objective-c
 // Present the RAF Modal View
-[AmbassadorSDK presentRAFForCampaign:@"877" FromViewController:self];
+[AmbassadorSDK presentRAFForCampaign:<campaign ID> FromViewController:self withThemePlist:@"GenericTheme"];
 ```
 
 **Swift**
 ```objective-c
 // Present the RAF Modal View
-AmbassadorSDK.presentRAFForCampaign("877", fromViewController: self)
+AmbassadorSDK.presentRAFForCampaign(<campaign ID>, fromViewController: self, withThemePlist: "GenericTheme")
 ```
 
 **NOTES**
@@ -228,28 +227,28 @@ AmbassadorSDK.presentRAFForCampaign("877", fromViewController: self)
 
 * **Identify should also be called before any calls to present a RAF. Identify will need to generate/update the short urls, and therefore should not be placed immediately before any RAF presentation calls.  This will allow the share urls to be generated for your user. If identify is not called before, or a campaign ID that does not exist is passed, a warning will be logged to let you know**
 
-### Service Selector Preferences
+### Customizing the RAF Screen
 The RAF screen provides a UI component that allows users to share with their contacts and become part of your referral program.
-To allow customization, there is an `AmbassadorTheme.plist` where you can set many editable properties of the RAF, including colors, messages, fonts, and images.
+To allow customization, there is a `GenericTheme.plist` where you can set many editable properties of the RAF, including colors, messages, fonts, and images.
 
-  <img src="screenShots/AmbassadorThemeSelection.png" width="250" />
+  <img src="screenShots/genericThemeSelection.png" width="250" />
 
 If you leave any property unset, the RAF will use the default values shown below.
-Any blank or incorrect values inserted into the `AmbassadorTheme.plist` will default to:
+Any blank or incorrect values inserted into the `GenericTheme.plist` will default to:
 * Colors - White
 * Fonts - **System Font** of size **14**
 * Messages - **"NO PLIST VALUE FOUND"**
 * Images - No image will be added
 
-The `AmbassadorTheme.plist` will come with preconfigured values looking like this:
+The `GenericTheme.plist` will come with preconfigured values looking like this:
 
   <img src="screenShots/themePlist.png" width="600" />
 
-This is what the default theme will look like with the preconfigured values in the `AmbassadorTheme.plist`.
+This is what the default theme will look like with the preconfigured values in the `GenericTheme.plist`.
 
   <img src="screenShots/rafDemoImage.png" width="250" />   <img src="screenShots/contactsDemoImage.png" width="250"/>
 
-To demonstrate how to change the default theme, here is the AmbassadorTheme.plist with some edited values:
+To demonstrate how to change the default theme, here is the GenericTheme.plist with some edited values:
 
   <img src="screenShots/editedPlist.png" width="500" />
 
@@ -260,7 +259,7 @@ The results from the minor changes will look like this:
 ### Adding an image to the RAF Page
 
 You can add an image to the RAF Widget by editing the **RAFLogo** plist value:
-* **NOTE**: The image you reference from the AmbassadorTheme.plist must be in your app's **Images.xcassets** folder
+* **NOTE**: The image you reference from the GenericTheme.plist must be in your app's **Images.xcassets** folder
 
   <img src="screenShots/imageAddPlist.png" width="500" />  <img src="screenShots/imgNoPos.png" width="250" />
 
@@ -272,7 +271,7 @@ The way to enter an image will look like `<image name>, <position>`.  Ex: `apple
 
 ### Reordering Sharing Channels
 
-Any Sharing Channels can be reordered. The Sharing Channels are ordered in a list separated by commas that can be found in the  __AmbassadorTheme.plist__.
+Any Sharing Channels can be reordered. The Sharing Channels are ordered in a list separated by commas that can be found in the  __GenericTheme.plist__.
 
 This is the standard ordering with Facebook appearing first and Email last.
 
@@ -296,6 +295,34 @@ Removing __LinkedIn__ from the list would result in the LinkedIn Sharing Channel
   <img src="screenShots/disabledOptionPlist.png" width="600" />
 
   <img src="screenShots/disabledLinkedin.png" width="350" />
+
+### Theming multiple RAFs using different Theming plists
+
+Your app may include various RAF Screens that triggered by different events. You can use different themes for each RAF by following the steps below:
+
+Right click __GenericTheme.plist__ and select __Show in Finder__
+
+  <img src="screenShots/themeRightClick.png" width="400" />
+
+You should now see the __GenericTheme.plist__ in a Finder window
+
+  <img src="screenShots/themeInFinder.png" width="500" />
+
+Right click __GenericTheme.plist__ and select __Duplicate__
+
+  <img src="screenShots/themeDuplicate.png" width="500" />
+
+Rename the duplicate to the name of your new plist. The new plist should now show up in your project navigator
+
+  <img src="screenShots/newplist.png" width=300 />
+
+You can now alter your new plist's values to create a new look for a different RAF. You would apply it to a new RAF by using the following code:
+
+```objective-c
+// Present the RAF Modal View
+[AmbassadorSDK presentRAFForCampaign:<campaign ID> FromViewController:self withThemePlist:@"newPlist"];
+```
+You can use as many plists as you want and apply them to different RAFs throughout your app
 
 **NOTES FOR CUSTOM THEMES**
 * **Colors must be entered as Hex Code values**
