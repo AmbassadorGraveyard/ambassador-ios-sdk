@@ -15,5 +15,6 @@
 + (BOOL)isValidPhoneNumber:(NSString*)phoneNumber;
 + (BOOL)isValidEmail:(NSString*)emailAddress;
 + (NSString*)stripPhoneNumber:(NSString*)phoneNumber;
++ (NSArray*)shareTrackPayload:(NSArray*)contactList shareType:(AMBSocialServiceType)socialType;
 
 @end
