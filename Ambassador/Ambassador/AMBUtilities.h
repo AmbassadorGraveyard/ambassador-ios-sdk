@@ -41,8 +41,7 @@
 // Loading Screen
 - (void)showLoadingScreenForView:(UIView*)view;
 - (void)hideLoadingView;
-- (void)rotateLoadingView:(UIView*)view widthOffset:(CGFloat)widthOffset;
-+ (CGFloat)getOffsetForRotation:(UIViewController*) viewController toOrientation:(UIInterfaceOrientation)toOrientation;
+- (void)rotateLoadingView:(UIView*)view orientation:(UIInterfaceOrientation)orientation;
 
 // Fade View
 - (void)addFadeToView:(UIView*)view;
