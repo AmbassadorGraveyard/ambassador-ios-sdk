@@ -98,7 +98,7 @@
 @property (nonatomic, strong) NSString * subject_line;
 @property (nonatomic, strong) NSString * from_email;
 
-- (instancetype)initWithEmails:(NSArray*)emails shortCode:(NSString*)shortCode message:(NSString*)message subjectLine:(NSString*)subjectLine;
+- (instancetype)initWithEmails:(NSArray*)emails message:(NSString*)message;
 
 @end
 

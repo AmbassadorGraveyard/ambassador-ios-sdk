@@ -158,12 +158,12 @@
 
 @implementation AMBBulkShareEmailObject
 
-- (instancetype)initWithEmails:(NSArray*)emails shortCode:(NSString*)shortCode message:(NSString*)message subjectLine:(NSString*)subjectLine {
+- (instancetype)initWithEmails:(NSArray*)emails message:(NSString*)message {
     self = [super init];
     self.to_emails = [[NSArray alloc] initWithArray:emails];
-    self.short_code = shortCode;
+    self.short_code = [AMBValues getUserURLObject].short_code;
     self.message = message;
-    self.subject_line = subjectLine;
+    self.subject_line = [AMBValues getUserURLObject].subject;
     self.from_email = ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
     
     return self;
