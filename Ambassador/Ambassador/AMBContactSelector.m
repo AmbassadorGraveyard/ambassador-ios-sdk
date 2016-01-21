@@ -87,12 +87,8 @@ BOOL keyboardShowing = NO;
     [self.contactsTable addSubview:self.refreshControl];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    CGFloat offset = [AMBUtilities getOffsetForRotation:self toOrientation:toInterfaceOrientation];
-    [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
-}
-
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [[AMBUtilities sharedInstance] rotateLoadingView:self.view orientation:toInterfaceOrientation];
     [[AMBUtilities sharedInstance] rotateFadeForView:self.containerView];
     [self.containerView bringSubviewToFront:self.composeMessageView];
 }

@@ -29,9 +29,8 @@
     [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    CGFloat offset = [AMBUtilities getOffsetForRotation:self toOrientation:toInterfaceOrientation];
-    [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [[AMBUtilities sharedInstance] rotateLoadingView:self.view orientation:toInterfaceOrientation];
 }
 
 
@@ -51,9 +50,7 @@
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    if (!webView.isLoading) {
-        [[AMBUtilities sharedInstance] hideLoadingView];
-    }
+    [[AMBUtilities sharedInstance] hideLoadingView];
 }
 
 
