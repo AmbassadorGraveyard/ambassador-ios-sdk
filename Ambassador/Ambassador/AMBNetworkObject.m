@@ -19,11 +19,13 @@
     NSMutableDictionary *returnDictionary = [[NSMutableDictionary alloc] init];
     unsigned int numProperties = 0;
     objc_property_t *propertyArray = class_copyPropertyList([self class], &numProperties);
+    
     for (NSUInteger i = 0; i <numProperties; ++i) {
         objc_property_t property = propertyArray[i];
         NSString *key = [[NSString alloc] initWithUTF8String:property_getName(property)];
         [returnDictionary setValue:[self valueForKey:key] forKey:key];
     }
+    
     return returnDictionary;
 }
 
@@ -42,6 +44,16 @@
 #pragma mark - Pusher Auth Object
 
 @implementation AMBPusherAuthNetworkObject
+
+- (instancetype)init {
+    self =[super init];
+    self.auth_type = @"";
+    self.channel = @"";
+    self.socket_id = @"";
+    
+    return self;
+}
+
 @end
 
 
@@ -67,6 +79,7 @@
 
 @implementation AMBUserNetworkObject
 
+// Used if pusher payload is too big to get back and only external url is given back
 - (void)fillWithUrl:(NSString *)url completion:(void(^)(NSString *error))completion {
     [[AMBNetworkManager sharedInstance] getLargePusherPayloadFromUrl:url success:^(NSDictionary *response) {
         [self fillWithDictionary:(NSMutableDictionary*)response];
@@ -76,6 +89,7 @@
     }];
 }
 
+// Override fillWithDictionary because we set a custom object -- AMBUserUrlNetworkObject
 - (void)fillWithDictionary:(NSMutableDictionary *)d {
     NSMutableDictionary *bodyDict = (d[@"body"]) ? d[@"body"] : d;
     self.email = bodyDict[@"email"];
@@ -98,6 +112,7 @@
     for (AMBUserUrlNetworkObject *url in self.urls) {
         if ([url.campaign_uid isEqual:cID]) { return url; }
     }
+    
     return nil;
 }
 
@@ -107,31 +122,35 @@
 #pragma mark - Identify Object
 
 @implementation AMBIdentifyNetworkObject
+
 - (instancetype)init {
-    if (self = [super init]) {
-        self.email = @"";
-        self.campaign_id = @"";
-        self.enroll = NO;
-        self.source = @"";
-    }
+    self = [super init];
+    self.email = @"";
+    self.campaign_id = @"";
+    self.enroll = NO;
+    self.source = @"";
+    
     return self;
 }
+
 @end
 
 
 #pragma mark - Share Track Object
 
 @implementation AMBShareTrackNetworkObject
+
 -(instancetype)init {
-    if (self = [super init]) {
-        self.recipient_username = @"";
-        self.recipient_email = @"";
-        self.short_code = @"";
-        self.social_name = @"";
-        self.from_email =  ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
-    }
+    self = [super init];
+    self.recipient_username = @"";
+    self.recipient_email = @"";
+    self.short_code = @"";
+    self.social_name = @"";
+    self.from_email =  ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
+    
     return self;
 }
+
 @end
 
 
@@ -176,8 +195,7 @@
 
 - (instancetype)initWithFirstName:(NSString *)firstName lastName:(NSString *)lastName email:(NSString *)email {
     self = [super init];
-    self.update_data = [[NSDictionary alloc] initWithObjectsAndKeys:firstName, @"first_name",
-                        lastName, @"last_name", nil];
+    self.update_data = [[NSDictionary alloc] initWithObjectsAndKeys:firstName, @"first_name", lastName, @"last_name", nil];
     self.email = email;
     
     return self;
