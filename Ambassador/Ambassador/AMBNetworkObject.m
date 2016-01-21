@@ -11,6 +11,10 @@
 #import "AMBNetworkManager.h"
 
 @implementation AMBNetworkObject
+
+
+#pragma mark - Helper Functions
+
 - (NSMutableDictionary *)toDictionary {
     NSMutableDictionary *returnDictionary = [[NSMutableDictionary alloc] init];
     unsigned int numProperties = 0;
@@ -35,6 +39,7 @@
 @end
 
 
+#pragma mark - Pusher Auth Object
 
 @implementation AMBPusherAuthNetworkObject
 @end
@@ -58,6 +63,7 @@
 @end
 
 
+#pragma mark - User Object
 
 @implementation AMBUserNetworkObject
 
@@ -98,6 +104,7 @@
 @end
 
 
+#pragma mark - Identify Object
 
 @implementation AMBIdentifyNetworkObject
 - (instancetype)init {
@@ -112,6 +119,7 @@
 @end
 
 
+#pragma mark - Share Track Object
 
 @implementation AMBShareTrackNetworkObject
 -(instancetype)init {
@@ -162,7 +170,7 @@
 @end
 
 
-#pragma mark - AMBUpdateNameObject
+#pragma mark - Update Name Object
 
 @implementation AMBUpdateNameObject
 
