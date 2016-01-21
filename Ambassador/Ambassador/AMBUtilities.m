@@ -128,6 +128,18 @@
     [self.blurView setFrame:newParentFrame];
 }
 
+- (void)rotateLoadingView:(UIView*)view orientation:(UIInterfaceOrientation)orientation {
+    CGRect newFrame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height);
+
+    // LANDSCAPE - Spinner set center, PORTRAIT - Spinner center horizontally center but is higher vertically
+    self.animatingView.frame = (UIInterfaceOrientationIsPortrait(orientation)) ?
+    CGRectMake(newFrame.size.width/2 - 50, newFrame.size.height - (newFrame.size.height * .75), 100, 100) :
+    CGRectMake(newFrame.size.width/2 - 50, newFrame.size.height/2 - 50, 100, 100);
+
+    self.loadingView.frame = newFrame;
+    self.blurView.frame = newFrame;
+}
+
 + (CGFloat)getOffsetForRotation:(UIViewController *)viewController toOrientation:(UIInterfaceOrientation)toOrientation {
     
     CGFloat width = viewController.view.frame.size.width;
