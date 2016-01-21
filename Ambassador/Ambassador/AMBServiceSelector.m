@@ -76,13 +76,10 @@ int contactServiceType;
     [self.waitViewTimer invalidate];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [self.collectionView reloadData];
-    
-    CGFloat offset = [AMBUtilities getOffsetForRotation:self toOrientation:toInterfaceOrientation];
-    [[AMBUtilities sharedInstance] rotateLoadingView:self.view widthOffset:offset];
+    [[AMBUtilities sharedInstance] rotateLoadingView:self.view orientation:toInterfaceOrientation];
 }
-
 
 #pragma mark - IBActions
 
