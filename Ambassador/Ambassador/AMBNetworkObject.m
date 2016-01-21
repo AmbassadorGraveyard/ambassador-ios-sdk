@@ -8,7 +8,6 @@
 
 #import <objc/runtime.h>
 #import "AMBNetworkObject.h"
-#import "AMBUtilities.h"
 #import "AMBNetworkManager.h"
 
 @implementation AMBNetworkObject
@@ -33,34 +32,6 @@
     return [NSJSONSerialization dataWithJSONObject:[self toDictionary] options:0 error:&error];
 }
 
-
-@end
-
-
-
-@implementation AMBPusherSessionSubscribeNetworkObject
-- (void)fillWithDictionary:(NSMutableDictionary *)d {
-    self.channel_name = (NSString *)d[@"channel_name"];
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.zzz"];
-    self.expires_at = [df dateFromString:(NSString *)d[@"expires_at"]];
-    self.client_session_uid = (NSString *)d[@"client_session_uid"];
-}
-
-- (BOOL)isExpired {
-    if ([self.expires_at timeIntervalSinceNow] < 0.0) {
-        return YES;
-    }
-    return NO;
-}
-
-- (NSMutableDictionary *)additionalNetworkHeaders {
-    NSMutableDictionary *returnVal = [[NSMutableDictionary alloc] init];
-    [returnVal setValue:self.client_session_uid forKey:@"X-Mbsy-Client-Session-ID"];
-    NSString * timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
-    [returnVal setValue:timestamp forKey:@"X-Mbsy-Client-Request-ID"];
-    return returnVal;
-}
 @end
 
 
@@ -72,15 +43,6 @@
 #pragma mark - AMBUserNetworkObject
 
 @implementation AMBUserUrlNetworkObject
-
-- (void)fillWithDictionary:(NSMutableDictionary *)d {
-    self.campaign_uid = (NSNumber *)d[@"campaign_uid"];
-    self.short_code = (NSString *)d[@"short_code"];
-    self.subject = (NSString *)d[@"subject"];
-    self.url = (NSString *)d[@"url"];
-    self.has_access = (BOOL)d[@"has_access"];
-    self.is_active = (BOOL)d[@"is_active"];
-}
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict {
     self.campaign_uid = (NSNumber *)dict[@"campaign_uid"];
