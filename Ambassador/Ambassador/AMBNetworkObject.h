@@ -8,15 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AMBNetworkObject : NSObject <NSCoding>
+@interface AMBNetworkObject : NSObject
+
 - (NSMutableDictionary *)toDictionary;
-- (NSError *)validate;
 - (void)fillWithDictionary:(NSMutableDictionary *)dictionary;
-- (NSData *)toDataError:(NSError *__autoreleasing*)e;
 - (NSData*)toData;
-- (void)save;
-+ (instancetype)loadFromDisk;
-+ (void)deleteFromDisk;
+
 @end
 
 

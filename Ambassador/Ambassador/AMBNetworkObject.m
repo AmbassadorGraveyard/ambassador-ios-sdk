@@ -24,14 +24,8 @@
     return returnDictionary;
 }
 
-- (NSError *)validate { return nil; }
-
 - (void)fillWithDictionary:(NSMutableDictionary *)dictionary {
     [self setValuesForKeysWithDictionary:dictionary];
-}
-
-- (NSData *)toDataError:(NSError *__autoreleasing*)e {
-    return [NSJSONSerialization dataWithJSONObject:[self toDictionary] options:0 error:e];
 }
 
 - (NSData*)toData {
@@ -39,52 +33,6 @@
     return [NSJSONSerialization dataWithJSONObject:[self toDictionary] options:0 error:&error];
 }
 
-
-
-#pragma mark - NSCoding
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    unsigned int numProperties = 0;
-    objc_property_t *propertyArray = class_copyPropertyList([self class], &numProperties);
-    for (NSUInteger i = 0; i <numProperties; ++i) {
-        objc_property_t property = propertyArray[i];
-        NSString *key = [[NSString alloc] initWithUTF8String:property_getName(property)];
-        [aCoder encodeObject:[self valueForKey:key] forKey:key];
-    }
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super init]) {
-        unsigned int numProperties = 0;
-        objc_property_t *propertyArray = class_copyPropertyList([self class], &numProperties);
-        for (NSUInteger i = 0; i <numProperties; ++i) {
-            objc_property_t property = propertyArray[i];
-            NSString *key = [[NSString alloc] initWithUTF8String:property_getName(property)];
-            [self setValue:[aDecoder decodeObjectForKey:key] forKey:key];
-        }
-    }
-    return self;
-}
-
-
-
-#pragma mark - storage
-- (NSString *)rootPath {
-    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-}
-
-- (void)save {
-    [NSKeyedArchiver archiveRootObject:self toFile:[[self rootPath] stringByAppendingPathComponent:NSStringFromClass([self class])]];
-}
-
-+ (instancetype)loadFromDisk {
-    return [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:NSStringFromClass([self class])]];
-}
-
-+ (void)deleteFromDisk {
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath:rootPath error:&error];
-}
 
 @end
 
