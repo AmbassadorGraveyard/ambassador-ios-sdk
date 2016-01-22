@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol AMBSendCompletionDelegate <NSObject>
+
+- (void)buttonClicked;
+
+@end
+
+
 @interface AMBSendCompletionModal : UIViewController
 
-@property NSString *alertMessage;
-@property BOOL successFlag;
-@property (nonatomic, copy)void (^buttonAction)();
+@property (nonatomic, strong) NSString *alertMessage;
+@property (nonatomic) BOOL successFlag;
+@property (nonatomic, weak) id<AMBSendCompletionDelegate> delegate;
 
 @end
