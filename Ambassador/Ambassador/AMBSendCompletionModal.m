@@ -33,17 +33,16 @@
 
 #pragma mark - IBActions
 
-- (IBAction)buttonPressed:(UIButton *)sender
-{
-    if (self.buttonAction)
-    {
-        self.buttonAction();
-    }
-    else
-    {
+- (IBAction)buttonPressed:(UIButton *)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(buttonClicked)]) {
+        [self.delegate buttonClicked];
+    } else {
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }
 }
+
+
+#pragma mark - UI Functionality
 
 - (void)setUpTheme {
     // Button
