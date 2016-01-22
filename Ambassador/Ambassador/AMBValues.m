@@ -138,7 +138,8 @@
 #pragma mark - AMB Defaults
 
 + (NSUserDefaults*)ambUserDefaults {
-    NSUserDefaults *ambDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AMBDEFAULTS"];
+    NSString *defaultsString = (NSClassFromString(@"XCTest")) ? @"AMBTEST" : @"AMBDEFAULTS";
+    NSUserDefaults *ambDefaults = [[NSUserDefaults alloc] initWithSuiteName:defaultsString];
     return ambDefaults;
 }
 
