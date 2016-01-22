@@ -11,7 +11,7 @@
 @interface AMBSendCompletionModal : UIViewController
 
 @property NSString *alertMessage;
-- (void)shouldUseSuccessIcon:(BOOL)successful;
+@property BOOL successFlag;
 @property (nonatomic, copy)void (^buttonAction)();
 
 @end
