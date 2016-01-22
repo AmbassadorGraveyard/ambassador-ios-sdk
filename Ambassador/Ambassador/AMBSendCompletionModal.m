@@ -12,57 +12,26 @@
 
 @interface AMBSendCompletionModal ()
 
-@property (weak, nonatomic) IBOutlet UIView *alertBox;
-@property (weak, nonatomic) IBOutlet UIImageView *icon;
-@property (weak, nonatomic) IBOutlet UIButton *button;
-@property (weak, nonatomic) IBOutlet UILabel *message;
-
-@property BOOL successFlag;
+@property (nonatomic, strong) IBOutlet UIView *alertBox;
+@property (nonatomic, strong) IBOutlet UIImageView *icon;
+@property (nonatomic, strong) IBOutlet UIButton *button;
+@property (nonatomic, strong) IBOutlet UILabel *message;
 
 @end
 
+
 @implementation AMBSendCompletionModal
 
-- (void)shouldUseSuccessIcon:(BOOL)successful
-{
-    DLog();
 
-    self.successFlag = successful;
-    DLog(@"%i", self.successFlag);
-}
+#pragma mark - LifeCycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    DLog();
-    self.message.text = self.alertMessage;
-    
-    [self setUpAlertBox];
-    [self setUpIcon];
-    [self setUpButton];
+    [self setUpTheme];
 }
 
-- (void)setUpAlertBox
-{
-    DLog();
-    self.alertBox.layer.cornerRadius = 4.0;
-}
 
-- (void)setUpIcon
-{
-    DLog();
-    NSString *imageName = self.successFlag ? @"successIcon" : @"failIcon";
-    DLog(@"%@", imageName);
-    self.icon.image = [AMBValues imageFromBundleWithName:imageName type:@"png" tintable:NO];
-}
-
-- (void)setUpButton
-{
-    DLog();
-    self.button.layer.cornerRadius = self.button.frame.size.height / 2;
-    self.button.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:AlertButtonBackgroundColor];
-    [self.button setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:AlertButtonTextColor] forState:UIControlStateNormal];
-}
+#pragma mark - IBActions
 
 - (IBAction)buttonPressed:(UIButton *)sender
 {
@@ -74,7 +43,23 @@
     {
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }
+}
+
+- (void)setUpTheme {
+    // Button
+    self.button.layer.cornerRadius = self.button.frame.size.height / 2;
+    self.button.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:AlertButtonBackgroundColor];
+    [self.button setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:AlertButtonTextColor] forState:UIControlStateNormal];
     
+    // Image
+    NSString *imageName = self.successFlag ? @"successIcon" : @"failIcon";
+    self.icon.image = [AMBValues imageFromBundleWithName:imageName type:@"png" tintable:NO];
+    
+    // Message
+    self.message.text = self.alertMessage;
+    
+    // Master View
+    self.alertBox.layer.cornerRadius = 6.0;
 }
 
 @end
