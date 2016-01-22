@@ -34,11 +34,11 @@
 #pragma mark - IBActions
 
 - (IBAction)buttonPressed:(UIButton *)sender {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(buttonClicked)]) {
-        [self.delegate buttonClicked];
-    } else {
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }
+    [self.presentingViewController dismissViewControllerAnimated:NO completion:^{
+        if (self.delegate && [self.delegate respondsToSelector:@selector(buttonClickedWithPresentingVC:shouldDismissPresentingVC:uniqueID:)]) {
+            [self.delegate buttonClickedWithPresentingVC:self.presentingVC shouldDismissPresentingVC:self.shouldDismissPresentingVC uniqueID:self.uniqueIdentifier];
+        }
+    }];
 }
 
 
@@ -51,7 +51,7 @@
     [self.button setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:AlertButtonTextColor] forState:UIControlStateNormal];
     
     // Image
-    NSString *imageName = self.successFlag ? @"successIcon" : @"failIcon";
+    NSString *imageName = self.showSuccess ? @"successIcon" : @"failIcon";
     self.icon.image = [AMBValues imageFromBundleWithName:imageName type:@"png" tintable:NO];
     
     // Message
