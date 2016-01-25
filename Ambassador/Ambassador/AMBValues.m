@@ -196,7 +196,8 @@
 
 // Should only be used for TESTING
 + (void)resetHasInstalled {
-    [[AMBValues ambUserDefaults] removeObjectForKey:@"AMBFIRSTLAUNCHSTORAGE"];
+    NSUserDefaults *ambDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AMBTEST"];
+    [ambDefaults removeObjectForKey:@"AMBFIRSTLAUNCHSTORAGE"];
 }
 
 #pragma mark - Getter Methods
