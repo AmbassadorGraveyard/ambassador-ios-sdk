@@ -143,10 +143,6 @@
     return ambDefaults;
 }
 
-+ (void)clearAmbUserDefaults {
-    [[AMBValues ambUserDefaults] setValue:nil forKey:@"mbsy_cookie_code"];
-}
-
 
 #pragma mark - Setter Methods
 
@@ -196,6 +192,11 @@
 
 + (void)setUserURLObject:(NSDictionary*)urlObject {
     [[AMBValues ambUserDefaults] setObject:urlObject forKey:@"user_url_object"];
+}
+
+// Should only be used for TESTING
++ (void)resetHasInstalled {
+    [[AMBValues ambUserDefaults] removeObjectForKey:@"AMBFIRSTLAUNCHSTORAGE"];
 }
 
 #pragma mark - Getter Methods
