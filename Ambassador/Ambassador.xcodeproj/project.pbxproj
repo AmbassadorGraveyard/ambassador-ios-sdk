@@ -159,6 +159,7 @@
 		EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
+		EF50EFC01C5692E70077CC63 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */; };
 		EF5356501BF109A400BC80C4 /* unitTestImage.png in Resources */ = {isa = PBXBuildFile; fileRef = EF53564F1BF109A400BC80C4 /* unitTestImage.png */; };
 		EF5356521BF10C0700BC80C4 /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */; };
 		EF5390D11C445BF2005F6944 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D01C445BF2005F6944 /* SignUpViewController.m */; };
@@ -437,6 +438,7 @@
 		EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBOptionsTests.m; sourceTree = "<group>"; };
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
+		EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GenericTheme.plist; sourceTree = "<group>"; };
 		EF53564F1BF109A400BC80C4 /* unitTestImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unitTestImage.png; sourceTree = "<group>"; };
 		EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorTheme.plist; sourceTree = "<group>"; };
 		EF5390CF1C445BF2005F6944 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
@@ -617,6 +619,7 @@
 				EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */,
 				EF7CA9D11BF3EAB7006EBD6A /* AMBContactTests.m */,
 				EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */,
+				EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */,
 				EF53564F1BF109A400BC80C4 /* unitTestImage.png */,
 				EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */,
 				EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */,
@@ -1252,6 +1255,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF50EFC01C5692E70077CC63 /* GenericTheme.plist in Resources */,
 				EF07452A1C52C8E1009AF919 /* OCMock in Resources */,
 				EF5356501BF109A400BC80C4 /* unitTestImage.png in Resources */,
 				EF5356521BF10C0700BC80C4 /* AmbassadorTheme.plist in Resources */,
