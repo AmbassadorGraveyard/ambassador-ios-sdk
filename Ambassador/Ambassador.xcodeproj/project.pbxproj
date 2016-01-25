@@ -160,6 +160,8 @@
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF50EFC01C5692E70077CC63 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */; };
+		EF50EFC21C56AE230077CC63 /* AMBConversionModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = EF50EFC11C56AE230077CC63 /* AMBConversionModel.xcdatamodel */; };
+		EF50EFC41C56BB510077CC63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF50EFC31C56BB510077CC63 /* Main.storyboard */; };
 		EF5356501BF109A400BC80C4 /* unitTestImage.png in Resources */ = {isa = PBXBuildFile; fileRef = EF53564F1BF109A400BC80C4 /* unitTestImage.png */; };
 		EF5356521BF10C0700BC80C4 /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */; };
 		EF5390D11C445BF2005F6944 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D01C445BF2005F6944 /* SignUpViewController.m */; };
@@ -439,6 +441,8 @@
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GenericTheme.plist; sourceTree = "<group>"; };
+		EF50EFC11C56AE230077CC63 /* AMBConversionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMBConversionModel.xcdatamodel; sourceTree = "<group>"; };
+		EF50EFC31C56BB510077CC63 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EF53564F1BF109A400BC80C4 /* unitTestImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unitTestImage.png; sourceTree = "<group>"; };
 		EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorTheme.plist; sourceTree = "<group>"; };
 		EF5390CF1C445BF2005F6944 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
@@ -615,6 +619,8 @@
 		DB844D361BA75BB8003FD7A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EF50EFC31C56BB510077CC63 /* Main.storyboard */,
+				EF50EFC11C56AE230077CC63 /* AMBConversionModel.xcdatamodel */,
 				EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */,
 				EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */,
 				EF7CA9D11BF3EAB7006EBD6A /* AMBContactTests.m */,
@@ -1256,6 +1262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF50EFC01C5692E70077CC63 /* GenericTheme.plist in Resources */,
+				EF50EFC41C56BB510077CC63 /* Main.storyboard in Resources */,
 				EF07452A1C52C8E1009AF919 /* OCMock in Resources */,
 				EF5356501BF109A400BC80C4 /* unitTestImage.png in Resources */,
 				EF5356521BF10C0700BC80C4 /* AmbassadorTheme.plist in Resources */,
@@ -1419,6 +1426,7 @@
 				DB6A24861BD1847900CE3230 /* AmbassadorSDKTests.m in Sources */,
 				DB6A24741BD1259000CE3230 /* AMBPusherManagerTests.m in Sources */,
 				EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */,
+				EF50EFC21C56AE230077CC63 /* AMBConversionModel.xcdatamodel in Sources */,
 				EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */,
 				EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */,
 				DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */,
