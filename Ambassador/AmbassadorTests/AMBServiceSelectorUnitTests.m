@@ -12,19 +12,26 @@
 #import "AMBNetworkObject.h"
 #import "AMBContactSelector.h"
 #import "AMBAuthorizeLinkedIn.h"
+#import "AMBThemeManager.h"
 
 @interface AMBServiceSelector (Tests)
 
+@property (nonatomic, strong) IBOutlet UILabel *titleLabel;
+@property (nonatomic, strong) IBOutlet UILabel *descriptionLabel;
 @property (nonatomic, strong) IBOutlet UICollectionView * collectionView;
 @property (nonatomic, strong) NSTimer *waitViewTimer;
 @property (nonatomic, strong) IBOutlet UILabel * lblURL;
 @property (nonatomic, strong) AMBUserUrlNetworkObject *urlNetworkObj;
+@property (nonatomic, strong) UILabel * lblCopied;
+@property (nonatomic, strong) NSTimer * copiedAnimationTimer;
 
 - (void)setUpTheme;
 - (void)setUpCloseButton;
 - (void)performIdentify;
 - (IBAction)clipboardButtonPress:(UIButton *)button;
 - (void)confirmCopyAnimation;
+- (void)closeButtonPressed:(UIButton *)button;
+- (void)hideConfirmCopyAnimation;
 
 @end
 
@@ -140,6 +147,68 @@
     
     // THEN
     XCTAssertEqual(self.serviceSelector, (AMBServiceSelector*)linkedInVC.delegate);
+}
+
+//- (void)testCloseButtonPressed {
+//    // GIVEN
+//    UIViewController *mockVC = [[UIViewController alloc] init];
+//    [mockVC presentViewController:self.serviceSelector animated:NO completion:nil];
+//    id mockPresentingVC = [OCMockObject partialMockForObject:self.serviceSelector.presentingViewController];
+//    
+//    // WHEN
+//    [[mockPresentingVC expect] dismissViewControllerAnimated:YES completion:nil];
+//    [self.serviceSelector closeButtonPressed:nil];
+//    
+//    // THEN
+////    [mockPresentingVC dismissViewControllerAnimated:YES completion:nil];
+//    [mockPresentingVC verify];
+//}
+
+
+#pragma mark - UI Function Tests
+
+- (void)testConfirmCopyAnimation {
+    // GIVEN
+    NSString *lblText = @"Copied!";
+    
+    // WHEN
+    [self.serviceSelector confirmCopyAnimation];
+    
+    // THEN
+    XCTAssertEqual(self.serviceSelector.lblCopied.alpha, 1);
+    XCTAssertEqualObjects(self.serviceSelector.lblCopied.text, lblText);
+}
+
+- (void)testHideConfirmationCopyAnimation {
+    // GIVEN
+    id mockTimer = OCMClassMock([NSTimer class]);
+    self.serviceSelector.copiedAnimationTimer = mockTimer;
+    
+    // WHEN
+    [[mockTimer expect] invalidate];
+    [self.serviceSelector hideConfirmCopyAnimation];
+    
+    // THEN
+    [mockTimer verify];
+    XCTAssertEqual(self.serviceSelector.lblCopied.alpha, 0);
+}
+
+- (void)testSetUpTheme {
+    // GIVEN
+    NSString *expectedWelcomeString = @"Spread the word";
+    NSString *expectedDescriptionString = @"Refer a friend to get rewards";
+    NSString *expectedTitleString = @"Refer your friends";
+    
+    // WHEN
+    [self.serviceSelector setUpTheme];
+    NSString *welcomeString = [[AMBThemeManager sharedInstance] messageForKey:RAFWelcomeTextMessage];
+    NSString *descriptionLblString =[[AMBThemeManager sharedInstance] messageForKey:RAFDescriptionTextMessage];
+    NSString *titleString = [[AMBThemeManager sharedInstance] messageForKey:NavBarTextMessage];
+    
+    // THEN
+    XCTAssertEqualObjects(welcomeString, expectedWelcomeString);
+    XCTAssertEqualObjects(descriptionLblString, expectedDescriptionString);
+    XCTAssertEqualObjects(titleString, expectedTitleString);
 }
 
 @end
