@@ -427,7 +427,7 @@ BOOL keyboardShowing = NO;
         return YES;
     } else {
         NSString *alertString = [NSString stringWithFormat:@"Your Referral Link is not included in the message: %@", [AMBValues getUserURLObject].url];
-        UIAlertView *missingURLAlert = [[UIAlertView alloc] initWithTitle:@"Hold On!" message:alertString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Insert URL", @"Continue Sending", nil];
+        UIAlertView *missingURLAlert = [[UIAlertView alloc] initWithTitle:@"Hold On!" message:alertString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Insert Link", @"Continue Sending", nil];
         [missingURLAlert show];
         return NO;
     }
