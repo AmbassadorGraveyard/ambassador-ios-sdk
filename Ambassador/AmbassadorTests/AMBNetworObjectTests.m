@@ -27,20 +27,16 @@
 
 - (void)testToDictionary {
     // GIVEN
-    NSString *mockShortCode = @"lbBf";
     NSString *mockMessage = @"Test message";
-    NSString *mockSubjectLine = @"Test subject line.";
     NSArray *mockEmails = [[NSArray alloc] initWithObjects:@"test@test.com", @"test2@test.com", @"test3@gmail.com", nil];
-    AMBBulkShareEmailObject *mockShareEmailObj = [[AMBBulkShareEmailObject alloc] initWithEmails:mockEmails shortCode:mockShortCode message:mockMessage subjectLine:mockSubjectLine];
+    AMBBulkShareEmailObject *mockShareEmailObj = [[AMBBulkShareEmailObject alloc] initWithEmails:mockEmails message:mockMessage];
     
     // WHEN
     NSMutableDictionary *expectedDictionary = [mockShareEmailObj toDictionary];
     
     // THEN
-    XCTAssertEqual(5, expectedDictionary.count, @"Expected count was actually %i, not 5", (int)expectedDictionary.count);
-    XCTAssertEqualObjects(mockShortCode, expectedDictionary[@"short_code"], @"%@ is not equal to %@", mockShortCode, expectedDictionary[@"short_code"]);
+    XCTAssertEqual(3, expectedDictionary.count, @"Expected count was actually %i, not 5", (int)expectedDictionary.count);
     XCTAssertEqualObjects(mockMessage, expectedDictionary[@"message"], @"%@ is not equal to %@", mockMessage, expectedDictionary[@"message"]);
-    XCTAssertEqualObjects(mockSubjectLine, expectedDictionary[@"subject_line"], @"%@ is not equal to %@", mockSubjectLine, expectedDictionary[@"subject_line"]);
     XCTAssertEqualObjects(mockEmails, expectedDictionary[@"to_emails"], @"%@ is not equal to %@", mockEmails, expectedDictionary[@"to_emails"]);
 }
 
