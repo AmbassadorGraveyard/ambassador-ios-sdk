@@ -7,8 +7,20 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "AMBAuthorizeLinkedIn.h"
+
+@interface AMBAuthorizeLinkedIn (Test)
+
+- (void)viewDidLoad;
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration;
+- (void)saveValuesFromQueryParams:(NSArray*)queryParameters;
+
+@end
+
 
 @interface AMBAuthorizeLinkedInTests : XCTestCase
+
+@property (nonatomic, strong) AMBAuthorizeLinkedIn * ambAuthorizeLinkedin;
 
 @end
 
@@ -16,7 +28,9 @@
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    if (!self.ambAuthorizeLinkedin) {
+        self.ambAuthorizeLinkedin = [[AMBAuthorizeLinkedIn alloc] init];
+    }
 }
 
 - (void)tearDown {
@@ -24,16 +38,15 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void)testViewDidLoad {
+    // GIVEN
+    NSString *titleString = @"Authorize LinkedIn";
+    
+    // WHEN
+    [self.ambAuthorizeLinkedin viewDidLoad];
+    
+    // THEN
+    XCTAssertEqualObjects(titleString, self.ambAuthorizeLinkedin.navigationItem.title);
 }
 
 @end
