@@ -13,6 +13,9 @@
 #import "AMBContactSelector.h"
 #import "AMBAuthorizeLinkedIn.h"
 #import "AMBThemeManager.h"
+#import "AMBNetworkManager.h"
+#import "AmbassadorSDK_Internal.h"
+#import "AMBValues.h";
 
 @interface AMBServiceSelector (Tests)
 
@@ -27,15 +30,19 @@
 @property (nonatomic, strong) UILabel * lblCopied;
 @property (nonatomic, strong) NSTimer * copiedAnimationTimer;
 
+- (void)stockShareWithSocialMediaType:(AMBSocialServiceType)servicetype;
 - (void)setUpCloseButton;
 - (void)setUpTheme;
-- (void)setUpCloseButton;
 - (void)performIdentify;
 - (IBAction)clipboardButtonPress:(UIButton *)button;
 - (void)confirmCopyAnimation;
 - (void)closeButtonPressed:(UIButton *)button;
 - (void)hideConfirmCopyAnimation;
 - (void)applyImage;
+- (void)checkLinkedInToken;
+- (void)presentLinkedInShare;
+- (void)removeLoadingView;
+- (void)sendIdentify;
 
 @end
 
@@ -238,6 +245,177 @@
     
     // THEN
     XCTAssertNotNil(self.serviceSelector.navigationItem.leftBarButtonItem);
+}
+
+
+#pragma mark - Helper Function Tests
+
+- (void)testStockShareWithSocialMedia {
+    // GIVEN
+    id mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
+    
+    // WHEN
+    [[mockSS expect] presentViewController:[OCMArg isKindOfClass:[UIViewController class]] animated:YES completion:[OCMArg any]];
+    [self.serviceSelector stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
+    
+    // THEN
+    [mockSS verify];
+}
+
+//- (void)testCheckLinkedInTokenFail {
+//    // GIVEN
+//    id mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
+//    
+//    // WHEN
+//    XCTestExpectation *expectation = [self expectationWithDescription:@"test"];
+//    [[mockSS expect] performSegueWithIdentifier:@"goToAuthorizeLinkedIn" sender:self.serviceSelector];
+//    [self.serviceSelector checkLinkedInToken];
+//    [expectation fulfill];
+//    
+//    
+//    // THEN
+//    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * _Nullable error) {
+//        [mockSS verify];
+//    }];
+//    
+//}
+
+- (void)testPresentLinkedInShare {
+    // GIVEN
+    id mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
+    self.serviceSelector.urlNetworkObj = [[AMBUserUrlNetworkObject alloc] init];
+    self.serviceSelector.urlNetworkObj.short_code = @"TEST";
+    self.serviceSelector.urlNetworkObj.url = @"test@test.com";
+    
+    // WHEN
+    [[mockSS expect] presentViewController:[OCMArg isKindOfClass:[UIViewController class]] animated:YES completion:nil];
+    [self.serviceSelector presentLinkedInShare];
+    
+    // THEN
+    [mockSS verify];
+}
+
+- (void)testRemoveLoadingViewSuccess {
+    // GIVEN
+    id waitViewTimerMock = OCMClassMock([NSTimer class]);
+    self.serviceSelector.waitViewTimer = [[NSTimer alloc] init];
+    self.serviceSelector.waitViewTimer = waitViewTimerMock;
+    self.serviceSelector.campaignID = @"864";
+    NSDictionary *urlDict = @{ @"campaign_uid" : @864, @"has_access" : @1, @"is_active" : @1, @"short_code" : @"jHjg", @"subject" : @"Check out Developers!", @"url" : @"http://staging.mbsy.co/jHjg" };
+    
+    AMBUserUrlNetworkObject *networkUrlObj = [[AMBUserUrlNetworkObject alloc] initWithDictionary:urlDict];
+
+    AMBUserNetworkObject *networkObj = [[AMBUserNetworkObject alloc] init];
+    networkObj.email = @"jake@getambassador.com";
+    networkObj.first_name = @"Jake";
+    networkObj.last_name = @"Dunahee";
+    networkObj.uid = @"864";
+
+    [AmbassadorSDK sharedInstance].user = networkObj;
+    [AmbassadorSDK sharedInstance].user.uid = @"864";
+    [AmbassadorSDK sharedInstance].user.urls = [NSMutableArray arrayWithObject:networkUrlObj];
+    
+    // WHEN
+    [self.serviceSelector removeLoadingView];
+    
+    // THEN
+    XCTAssertNotNil(self.serviceSelector.urlNetworkObj);
+    OCMVerify([waitViewTimerMock invalidate]);
+}
+
+- (void)testRemoveLoadingViewNoIDMatch {
+    // GIVEN
+    id waitViewTimerMock = OCMClassMock([NSTimer class]);
+    self.serviceSelector.waitViewTimer = [[NSTimer alloc] init];
+    self.serviceSelector.waitViewTimer = waitViewTimerMock;
+    self.serviceSelector.campaignID = @"200";
+    
+    NSDictionary *urlDict = @{ @"campaign_uid" : @864, @"has_access" : @1, @"is_active" : @1, @"short_code" : @"jHjg", @"subject" : @"Check out Developers!", @"url" : @"http://staging.mbsy.co/jHjg" };
+    
+    AMBUserUrlNetworkObject *networkUrlObj = [[AMBUserUrlNetworkObject alloc] initWithDictionary:urlDict];
+    
+    AMBUserNetworkObject *networkObj = [[AMBUserNetworkObject alloc] init];
+    networkObj.email = @"jake@getambassador.com";
+    networkObj.first_name = @"Jake";
+    networkObj.last_name = @"Dunahee";
+    networkObj.uid = @"864";
+    
+    [AmbassadorSDK sharedInstance].user = networkObj;
+    [AmbassadorSDK sharedInstance].user.uid = @"864";
+    [AmbassadorSDK sharedInstance].user.urls = [NSMutableArray arrayWithObject:networkUrlObj];
+    
+    // WHEN
+    [self.serviceSelector removeLoadingView];
+    
+    // THEN
+    XCTAssertNil(self.serviceSelector.urlNetworkObj);
+    OCMVerify([waitViewTimerMock invalidate]);
+}
+
+- (void)testPerformIdentifyWithValidChannel {
+    // GIVEN
+    id mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
+    [AmbassadorSDK sharedInstance].pusherManager = [[AMBPusherManager alloc] init]; // Fakes pusherManager and connection
+    [AmbassadorSDK sharedInstance].pusherManager.connectionState = PTPusherConnectionConnected;
+    
+    NSDictionary *pusherChannelDict = @{ @"channel_name" : @"private-channel@user=gAAAAABWp9VD55okqsd4attaQEkXkXSDnBDYzcHc6a8p1dSKdMBsqXKDuUGi6UzTXd9G-1jOgNVONVlc4jYVgrsD3CLQmyCx867qFPItiL2PowHpCP0rLG4kyN1qhCwFzANvFCdl2jW4",
+                                         @"client_session_uid" : @"gAAAAABWp9VD55okqsd4attaQEkXkXSDnBDYzcHc6a8p1dSKdMBsqXKDuUGi6UzTXd9G-1jOgNVONVlc4jYVgrsD3CLQmyCx867qFPItiL2PowHpCP0rLG4kyN1qhCwFzANvFCdl2jW4",
+                                         @"expires_at" : @"2900-02-02T20:21:23.885" };
+    
+    [AMBValues setPusherChannelObject:pusherChannelDict];
+    
+    
+    // WHEN
+    [[mockSS expect] sendIdentify];
+    [self.serviceSelector performIdentify];
+    
+    // THEN
+    [mockSS verify];
+}
+
+- (void)testPerformIdentifyWithDisconnectedPusher {
+    // GIVEN
+    id mockPusherMgr = OCMClassMock([AMBPusherManager class]);
+    [AmbassadorSDK sharedInstance].pusherManager = [[AMBPusherManager alloc] init]; // Fakes pusherManager and connection
+    [AmbassadorSDK sharedInstance].pusherManager.connectionState = PTPusherConnectionDisconnected;
+    [AmbassadorSDK sharedInstance].pusherManager = mockPusherMgr;
+    
+    NSDictionary *pusherChannelDict = @{ @"channel_name" : @"private-channel@user=gAAAAABWp9VD55okqsd4attaQEkXkXSDnBDYzcHc6a8p1dSKdMBsqXKDuUGi6UzTXd9G-1jOgNVONVlc4jYVgrsD3CLQmyCx867qFPItiL2PowHpCP0rLG4kyN1qhCwFzANvFCdl2jW4",
+                                         @"client_session_uid" : @"gAAAAABWp9VD55okqsd4attaQEkXkXSDnBDYzcHc6a8p1dSKdMBsqXKDuUGi6UzTXd9G-1jOgNVONVlc4jYVgrsD3CLQmyCx867qFPItiL2PowHpCP0rLG4kyN1qhCwFzANvFCdl2jW4",
+                                         @"expires_at" : @"2900-02-02T20:21:23.885" };
+    
+    [AMBValues setPusherChannelObject:pusherChannelDict];
+    
+    
+    // WHEN
+    [[mockPusherMgr expect] resubscribeToExistingChannelWithCompletion:[OCMArg any]];
+    [self.serviceSelector performIdentify];
+    
+    // THEN
+    [mockPusherMgr verify];
+}
+
+- (void)testPerformIdentifyWithExpiredChannel {
+    // GIVEN
+    id mockAmbassadorSDK = OCMClassMock([AmbassadorSDK class]);
+    [AMBValues resetHasInstalled];
+    AmbassadorSDK *sdk = [AmbassadorSDK sharedInstance];
+    sdk = mockAmbassadorSDK;
+    NSDictionary *expiredChannelDict = @{ @"channel_name" : @"private-channel@user=gAAAAABWp9VD55okqsd4attaQEkXkXSDnBDYzcHc6a8p1dSKdMBsqXKDuUGi6UzTXd9G-1jOgNVONVlc4jYVgrsD3CLQmyCx867qFPItiL2PowHpCP0rLG4kyN1qhCwFzANvFCdl2jW4",
+                                         @"client_session_uid" : @"gAAAAABWp9VD55okqsd4attaQEkXkXSDnBDYzcHc6a8p1dSKdMBsqXKDuUGi6UzTXd9G-1jOgNVONVlc4jYVgrsD3CLQmyCx867qFPItiL2PowHpCP0rLG4kyN1qhCwFzANvFCdl2jW4",
+                                         @"expires_at" : @"2000-02-02T20:21:23.885" };
+ 
+    [AMBValues setPusherChannelObject:expiredChannelDict];
+    
+    // WHEN
+    [[mockAmbassadorSDK expect] subscribeToPusherWithCompletion:^{
+        [self.serviceSelector sendIdentify];
+    }];
+    
+    [self.serviceSelector performIdentify];
+    
+    // THEN
+    [mockAmbassadorSDK verify];
 }
 
 @end
