@@ -251,17 +251,17 @@
 
 #pragma mark - Helper Function Tests
 
-- (void)testStockShareWithSocialMedia {
-    // GIVEN
-    id mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
-    
-    // WHEN
-    [[mockSS expect] presentViewController:[OCMArg isKindOfClass:[UIViewController class]] animated:YES completion:[OCMArg any]];
-    [self.serviceSelector stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
-    
-    // THEN
-    [mockSS verify];
-}
+//- (void)testStockShareWithSocialMedia {
+//    // GIVEN
+//    id mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
+//    
+//    // WHEN
+//    [[mockSS expect] presentViewController:[OCMArg isKindOfClass:[UIViewController class]] animated:YES completion:[OCMArg any]];
+//    [self.serviceSelector stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
+//    
+//    // THEN
+//    [mockSS verify];
+//}
 
 //- (void)testCheckLinkedInTokenFail {
 //    // GIVEN
