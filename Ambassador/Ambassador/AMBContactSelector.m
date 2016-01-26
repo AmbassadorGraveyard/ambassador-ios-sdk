@@ -426,7 +426,7 @@ BOOL keyboardShowing = NO;
     if ([self.composeMessageTextView.text containsString:[AMBValues getUserURLObject].url]) {
         return YES;
     } else {
-        NSString *alertString = [NSString stringWithFormat:@"Your Referral Link is not included in the message: %@", [AMBValues getUserURLObject].url];
+        NSString *alertString = [NSString stringWithFormat:@"Your share link is not included in the message: %@", [AMBValues getUserURLObject].url];
         UIAlertView *missingURLAlert = [[UIAlertView alloc] initWithTitle:@"Hold On!" message:alertString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Insert Link", @"Continue Sending", nil];
         [missingURLAlert show];
         return NO;
