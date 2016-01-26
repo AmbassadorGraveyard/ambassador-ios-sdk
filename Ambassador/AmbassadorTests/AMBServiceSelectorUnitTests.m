@@ -19,12 +19,15 @@
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *descriptionLabel;
 @property (nonatomic, strong) IBOutlet UICollectionView * collectionView;
+@property (nonatomic, strong) IBOutlet UIImageView *imgSlot1;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *imgSlotHeight1;
 @property (nonatomic, strong) NSTimer *waitViewTimer;
 @property (nonatomic, strong) IBOutlet UILabel * lblURL;
 @property (nonatomic, strong) AMBUserUrlNetworkObject *urlNetworkObj;
 @property (nonatomic, strong) UILabel * lblCopied;
 @property (nonatomic, strong) NSTimer * copiedAnimationTimer;
 
+- (void)setUpCloseButton;
 - (void)setUpTheme;
 - (void)setUpCloseButton;
 - (void)performIdentify;
@@ -32,6 +35,7 @@
 - (void)confirmCopyAnimation;
 - (void)closeButtonPressed:(UIButton *)button;
 - (void)hideConfirmCopyAnimation;
+- (void)applyImage;
 
 @end
 
@@ -209,6 +213,31 @@
     XCTAssertEqualObjects(welcomeString, expectedWelcomeString);
     XCTAssertEqualObjects(descriptionLblString, expectedDescriptionString);
     XCTAssertEqualObjects(titleString, expectedTitleString);
+}
+
+//- (void)testApplyImage {
+//    // GIVEN
+//    id mockImageView = OCMClassMock([UIImage class]);
+//    UIImageView *mockImage = self.serviceSelector.imgSlot1;
+//    self.serviceSelector.imgSlot1 = mockImageView;
+////    self.serviceSelector.imgSlot1 = mockImageSlot1;
+//    
+//    // WHEN
+//    [self.serviceSelector applyImage];
+//    
+//    // THEN
+//    ocm
+////    XCTAssertNotNil(mockImage.image);
+//    XCTAssertEqual(, 70);
+//    oc
+//}
+
+- (void)testSetUpCloseButton {
+    // WHEN
+    [self.serviceSelector setUpCloseButton];
+    
+    // THEN
+    XCTAssertNotNil(self.serviceSelector.navigationItem.leftBarButtonItem);
 }
 
 @end
