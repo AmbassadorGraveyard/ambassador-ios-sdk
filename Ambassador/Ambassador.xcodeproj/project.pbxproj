@@ -185,6 +185,9 @@
 		EF9DA74D1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */; };
 		EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */; };
 		EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */; };
+		EFC0371F1C5829DB0062202A /* AMBShareServiceCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC0371E1C5829DB0062202A /* AMBShareServiceCellTests.m */; };
+		EFC037211C5829F70062202A /* AMBAuthorizeLinkedInTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC037201C5829F70062202A /* AMBAuthorizeLinkedInTests.m */; };
+		EFC037231C582A100062202A /* AMBLinkedInShareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC037221C582A100062202A /* AMBLinkedInShareTests.m */; };
 		EFDFA0CA1BE148A5002FA3ED /* AMBValues.h in Headers */ = {isa = PBXBuildFile; fileRef = EFDFA0C81BE148A5002FA3ED /* AMBValues.h */; };
 		EFDFA0CB1BE148A5002FA3ED /* AMBValues.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDFA0C91BE148A5002FA3ED /* AMBValues.m */; };
 		EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */ = {isa = PBXBuildFile; fileRef = EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */; };
@@ -471,6 +474,9 @@
 		EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBPusherChannelObject.h; path = fmdb/AMBPusherChannelObject.h; sourceTree = "<group>"; };
 		EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMBPusherChannelObject.m; path = fmdb/AMBPusherChannelObject.m; sourceTree = "<group>"; };
+		EFC0371E1C5829DB0062202A /* AMBShareServiceCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBShareServiceCellTests.m; sourceTree = "<group>"; };
+		EFC037201C5829F70062202A /* AMBAuthorizeLinkedInTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBAuthorizeLinkedInTests.m; sourceTree = "<group>"; };
+		EFC037221C582A100062202A /* AMBLinkedInShareTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkedInShareTests.m; sourceTree = "<group>"; };
 		EFDFA0C81BE148A5002FA3ED /* AMBValues.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = AMBValues.h; sourceTree = "<group>"; };
 		EFDFA0C91BE148A5002FA3ED /* AMBValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValues.m; sourceTree = "<group>"; };
 		EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AMBColorValues.h"; sourceTree = "<group>"; };
@@ -621,6 +627,9 @@
 		DB844D361BA75BB8003FD7A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EFC037221C582A100062202A /* AMBLinkedInShareTests.m */,
+				EFC037201C5829F70062202A /* AMBAuthorizeLinkedInTests.m */,
+				EFC0371E1C5829DB0062202A /* AMBShareServiceCellTests.m */,
 				EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */,
 				EF50EFC31C56BB510077CC63 /* Main.storyboard */,
 				EF50EFC11C56AE230077CC63 /* AMBConversionModel.xcdatamodel */,
@@ -1432,10 +1441,13 @@
 				EF50EFC21C56AE230077CC63 /* AMBConversionModel.xcdatamodel in Sources */,
 				EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */,
 				EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */,
+				EFC037231C582A100062202A /* AMBLinkedInShareTests.m in Sources */,
 				DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */,
 				EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */,
 				DB6A247C1BD14BBB00CE3230 /* AMBMockObjects.m in Sources */,
+				EFC037211C5829F70062202A /* AMBAuthorizeLinkedInTests.m in Sources */,
 				EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */,
+				EFC0371F1C5829DB0062202A /* AMBShareServiceCellTests.m in Sources */,
 				EF7CA9D01BF3DDB3006EBD6A /* AMBConversionParametersTests.m in Sources */,
 				DB6A247E1BD14F4900CE3230 /* AMBNetworObjectTests.m in Sources */,
 				EF9DA74D1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m in Sources */,
