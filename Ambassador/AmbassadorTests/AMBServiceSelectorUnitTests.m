@@ -17,8 +17,9 @@
 #import "AmbassadorSDK_Internal.h"
 #import "AMBValues.h"
 #import "AMBErrors.h"
+#import "AMBShareServiceCell.h"
 
-@interface AMBServiceSelector (Tests)
+@interface AMBServiceSelector (Tests) <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *descriptionLabel;
@@ -49,7 +50,7 @@
 @end
 
 
-@interface AMBServiceSelectorUnitTests : XCTestCase <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface AMBServiceSelectorUnitTests : XCTestCase
 
 @property (nonatomic, strong) AMBServiceSelector * serviceSelector;
 
@@ -176,6 +177,32 @@
     
     // THEN
     [mockPresentingVC verify];
+}
+
+
+#pragma mark - CollectionView Tests
+
+- (void)testCollectionViewNumOfItems {
+    // GIVEN
+    self.serviceSelector.services = [[AMBThemeManager sharedInstance] customSocialGridArray];
+    
+    // WHEN
+    NSInteger numOfCells = [self.serviceSelector collectionView:self.serviceSelector.collectionView numberOfItemsInSection:0];
+    
+    // THEN
+    XCTAssertEqual(numOfCells, [self.serviceSelector.services count]);
+}
+
+- (void)testCollectionViewCell {
+    // GIVEN
+    id mockCell = [OCMockObject mockForClass:[AMBShareServiceCell class]];
+    [[mockCell expect] setUpCellWithCellType:(int)[OCMArg any]];
+    
+    // WHEN
+    mockCell = [self.serviceSelector collectionView:self.serviceSelector.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    
+    // THEN
+    [mockCell verify];
 }
 
 
