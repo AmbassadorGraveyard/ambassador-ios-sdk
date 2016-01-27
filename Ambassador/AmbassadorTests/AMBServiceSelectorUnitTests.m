@@ -16,6 +16,7 @@
 #import "AMBNetworkManager.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBValues.h"
+#import "AMBErrors.h"
 
 @interface AMBServiceSelector (Tests)
 
@@ -317,6 +318,10 @@
 - (void)testRemoveLoadingViewNoIDMatch {
     // GIVEN
     id waitViewTimerMock = OCMClassMock([NSTimer class]);
+    id mockError = [OCMockObject mockForClass:[AMBErrors class]];
+    
+    OCMStub(ClassMethod([mockError errorAlertNoMatchingCampaignIdsForVC:[OCMArg any]])).andDo(nil);
+    
     self.serviceSelector.waitViewTimer = [[NSTimer alloc] init];
     self.serviceSelector.waitViewTimer = waitViewTimerMock;
     self.serviceSelector.campaignID = @"200";
@@ -433,7 +438,5 @@
     // THEN
     [mockNetworkMgr verify];
 }
-
-
 
 @end
