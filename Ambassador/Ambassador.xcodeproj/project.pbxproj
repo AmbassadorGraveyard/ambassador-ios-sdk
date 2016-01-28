@@ -180,6 +180,8 @@
 		EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7CA9CD1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m */; };
 		EF7CA9D01BF3DDB3006EBD6A /* AMBConversionParametersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7CA9CF1BF3DDB3006EBD6A /* AMBConversionParametersTests.m */; };
 		EF7CA9D21BF3EAB7006EBD6A /* AMBContactTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7CA9D11BF3EAB7006EBD6A /* AMBContactTests.m */; };
+		EF7D076C1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */; };
+		EF7D076E1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */; };
 		EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF9DA74D1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */; };
 		EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */; };
@@ -469,6 +471,8 @@
 		EF7CA9CD1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPusherChannelObjectTests.m; sourceTree = "<group>"; };
 		EF7CA9CF1BF3DDB3006EBD6A /* AMBConversionParametersTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBConversionParametersTests.m; sourceTree = "<group>"; };
 		EF7CA9D11BF3EAB7006EBD6A /* AMBContactTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactTests.m; sourceTree = "<group>"; };
+		EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBUtilitiesTests.m; sourceTree = "<group>"; };
+		EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSendCompletionTests.m; sourceTree = "<group>"; };
 		EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBPusherChannelObject.h; path = fmdb/AMBPusherChannelObject.h; sourceTree = "<group>"; };
 		EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMBPusherChannelObject.m; path = fmdb/AMBPusherChannelObject.m; sourceTree = "<group>"; };
@@ -625,6 +629,8 @@
 		DB844D361BA75BB8003FD7A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */,
+				EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */,
 				EFC037221C582A100062202A /* AMBLinkedInShareTests.m */,
 				EFC037201C5829F70062202A /* AMBAuthorizeLinkedInTests.m */,
 				EFC0371E1C5829DB0062202A /* AMBShareServiceCellTests.m */,
@@ -1441,7 +1447,9 @@
 				DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */,
 				EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */,
 				DB6A247C1BD14BBB00CE3230 /* AMBMockObjects.m in Sources */,
+				EF7D076C1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m in Sources */,
 				EFC037211C5829F70062202A /* AMBAuthorizeLinkedInTests.m in Sources */,
+				EF7D076E1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m in Sources */,
 				EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */,
 				EFC0371F1C5829DB0062202A /* AMBShareServiceCellTests.m in Sources */,
 				EF7CA9D01BF3DDB3006EBD6A /* AMBConversionParametersTests.m in Sources */,
