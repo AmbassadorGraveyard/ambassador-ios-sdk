@@ -554,6 +554,7 @@
         [invocation getArgument:&complete atIndex:2];
         complete();
     }] checkForInvalidatedTokenWithCompletion:[OCMArg any]];
+    [[[self.mockSS expect] andDo:nil] performSegueWithIdentifier:[OCMArg any] sender:self.serviceSelector];
     
     // WHEN
     [self.serviceSelector checkLinkedInToken];
