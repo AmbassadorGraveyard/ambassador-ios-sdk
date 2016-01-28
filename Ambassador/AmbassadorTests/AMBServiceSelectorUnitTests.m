@@ -53,6 +53,8 @@
 @interface AMBServiceSelectorUnitTests : XCTestCase
 
 @property (nonatomic, strong) AMBServiceSelector * serviceSelector;
+@property (nonatomic) id mockNetworkMgr;
+@property (nonatomic) id mockSS;
 
 @end
 
@@ -63,6 +65,8 @@
     if (!self.serviceSelector) {
         self.serviceSelector = [[AMBServiceSelector alloc] init];
         [[AMBThemeManager sharedInstance] createDicFromPlist:@"GenericTheme"];
+        self.mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
+        self.mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
     }
 }
 
@@ -76,16 +80,15 @@
 
 - (void)testViewDidLoad {
     // GIVEN
-    id mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
+    [[self.mockSS expect] setUpTheme];
+    [[self.mockSS expect] setUpCloseButton];
+    [[self.mockSS expect] performIdentify];
     
     // WHEN
-    [[mockSS expect] setUpTheme];
-    [[mockSS expect] setUpCloseButton];
-    [[mockSS expect] performIdentify];
     [self.serviceSelector viewDidLoad];
     
     // THEN
-    [mockSS verify];
+    [self.mockSS verify];
 }
 
 - (void)testViewWillAppear {
@@ -117,16 +120,15 @@
 
 - (void)testClipboardButtonPress {
     // GIVEN
-    id mockServiceSelector = [OCMockObject partialMockForObject:self.serviceSelector];
     self.serviceSelector.lblURL = [[UILabel alloc] init];
     self.serviceSelector.lblURL.text = @"test";
+    [[self.mockSS expect] confirmCopyAnimation];
     
     // WHEN
-    [[mockServiceSelector expect] confirmCopyAnimation];
     [self.serviceSelector clipboardButtonPress:nil];
     
     // THEN
-    [mockServiceSelector verify];
+    [self.mockSS verify];
 }
 
 
@@ -168,9 +170,7 @@
     // GIVEN
     id mockPresentingVC = [OCMockObject mockForClass:[UIViewController class]];
     [[mockPresentingVC expect] dismissViewControllerAnimated:YES completion:nil];
-    
-    id mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
-    [[[mockSS expect] andReturn:mockPresentingVC] presentingViewController];
+    [[[self.mockSS expect] andReturn:mockPresentingVC] presentingViewController];
     
     // WHEN
     [self.serviceSelector closeButtonPressed:nil];
@@ -224,9 +224,9 @@
     // GIVEN
     id mockTimer = OCMClassMock([NSTimer class]);
     self.serviceSelector.copiedAnimationTimer = mockTimer;
+    [[mockTimer expect] invalidate];
     
     // WHEN
-    [[mockTimer expect] invalidate];
     [self.serviceSelector hideConfirmCopyAnimation];
     
     // THEN
@@ -277,41 +277,38 @@
 
 - (void)testStockShareWithSocialMedia {
     // GIVEN
-    id mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
-    [[[mockSS expect] andDo:nil] presentViewController:[OCMArg isKindOfClass:[UIViewController class]] animated:YES completion:[OCMArg any]];
+    [[[self.mockSS expect] andDo:nil] presentViewController:[OCMArg isKindOfClass:[UIViewController class]] animated:YES completion:[OCMArg any]];
     
     // WHEN
     [self.serviceSelector stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
     
     // THEN
-    [mockSS verify];
+    [self.mockSS verify];
 }
 
 - (void)testCheckLinkedInTokenFail {
     // GIVEN
-    id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
+    [[self.mockNetworkMgr expect] checkForInvalidatedTokenWithCompletion:[OCMArg any]];
     
     // WHEN
-    [[mockNetworkMgr expect] checkForInvalidatedTokenWithCompletion:[OCMArg any]];
     [self.serviceSelector checkLinkedInToken];
     
     // THEN
-    [mockNetworkMgr verify];
+    [self.mockNetworkMgr verify];
 }
 
 - (void)testPresentLinkedInShare {
     // GIVEN
-    id mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
     self.serviceSelector.urlNetworkObj = [[AMBUserUrlNetworkObject alloc] init];
     self.serviceSelector.urlNetworkObj.short_code = @"TEST";
     self.serviceSelector.urlNetworkObj.url = @"test@test.com";
+    [[self.mockSS expect] presentViewController:[OCMArg isKindOfClass:[UIViewController class]] animated:YES completion:nil];
     
     // WHEN
-    [[mockSS expect] presentViewController:[OCMArg isKindOfClass:[UIViewController class]] animated:YES completion:nil];
     [self.serviceSelector presentLinkedInShare];
     
     // THEN
-    [mockSS verify];
+    [self.mockSS verify];
 }
 
 - (void)testRemoveLoadingViewSuccess {
@@ -377,7 +374,6 @@
 
 - (void)testPerformIdentifyWithValidChannel {
     // GIVEN
-    id mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
     [AmbassadorSDK sharedInstance].pusherManager = [[AMBPusherManager alloc] init]; // Fakes pusherManager and connection
     [AmbassadorSDK sharedInstance].pusherManager.connectionState = PTPusherConnectionConnected;
     
@@ -386,14 +382,13 @@
                                          @"expires_at" : @"2900-02-02T20:21:23.885" };
     
     [AMBValues setPusherChannelObject:pusherChannelDict];
-    
+    [[self.mockSS expect] sendIdentify];
     
     // WHEN
-    [[mockSS expect] sendIdentify];
     [self.serviceSelector performIdentify];
     
     // THEN
-    [mockSS verify];
+    [self.mockSS verify];
 }
 
 - (void)testPerformIdentifyWithDisconnectedPusher {
@@ -408,10 +403,9 @@
                                          @"expires_at" : @"2900-02-02T20:21:23.885" };
     
     [AMBValues setPusherChannelObject:pusherChannelDict];
-    
+    [[mockPusherMgr expect] resubscribeToExistingChannelWithCompletion:[OCMArg any]];
     
     // WHEN
-    [[mockPusherMgr expect] resubscribeToExistingChannelWithCompletion:[OCMArg any]];
     [self.serviceSelector performIdentify];
     
     // THEN
@@ -426,9 +420,9 @@
                                          @"expires_at" : @"2000-02-02T20:21:23.885" };
  
     [AMBValues setPusherChannelObject:expiredChannelDict];
+    [[mockAmbassadorSDK expect] subscribeToPusherWithCompletion:[OCMArg isNotNil]];
     
     // WHEN
-    [[mockAmbassadorSDK expect] subscribeToPusherWithCompletion:[OCMArg isNotNil]];
     [self.serviceSelector performIdentify];
     
     // THEN
@@ -438,22 +432,20 @@
 - (void)testSendIdentify {
     // GIVEN
     self.serviceSelector.campaignID = @"206";
-    id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
+    [[self.mockNetworkMgr expect] sendIdentifyForCampaign:self.serviceSelector.campaignID shouldEnroll:YES success:[OCMArg isNotNil] failure:[OCMArg isNotNil]];
     
     // WHEN
-    [[mockNetworkMgr expect] sendIdentifyForCampaign:self.serviceSelector.campaignID shouldEnroll:YES success:[OCMArg isNotNil] failure:[OCMArg isNotNil]];
     [self.serviceSelector sendIdentify];
     
     // THEN
-    [mockNetworkMgr verify];
+    [self.mockNetworkMgr verify];
 }
 
 #pragma mark - Block Tests 
 
 - (void)testCheckLinkedinTokenCompletion {
     // GIVEN
-    id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
-    [[[mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
+    [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
         void (^complete)() = nil;
         [invocation getArgument:&complete atIndex:2];
         complete();
@@ -463,7 +455,7 @@
     [self.serviceSelector checkLinkedInToken];
     
     // THEN
-    [mockNetworkMgr verify];
+    [self.mockNetworkMgr verify];
 }
 
 @end
