@@ -146,29 +146,6 @@
 }
 
 
-#pragma mark - Caching
-
-- (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue {
-    if (!self.cache) { self.cache = [[NSCache alloc] init]; }
-    
-    [self.cache setObject:value forKey:keyValue];
-}
-
-- (NSObject*)getCacheValueWithKey:(NSString*)key {
-    if (self.cache) {
-        return [self.cache objectForKey:key];
-    }
-    
-    return nil;
-}
-
-- (void)removeCacheForKey:(NSString*)keyValue {
-    if (self.cache) {
-        [self.cache removeObjectForKey:keyValue];
-    }
-}
-
-
 #pragma mark - Misc Class Functions
 
 + (NSString*)createRequestID {
