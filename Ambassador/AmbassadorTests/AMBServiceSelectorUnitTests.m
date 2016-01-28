@@ -65,13 +65,15 @@
     if (!self.serviceSelector) {
         self.serviceSelector = [[AMBServiceSelector alloc] init];
         [[AMBThemeManager sharedInstance] createDicFromPlist:@"GenericTheme"];
-        self.mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
-        self.mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
     }
+    
+    self.mockSS = [OCMockObject partialMockForObject:self.serviceSelector];
+    self.mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [self.mockNetworkMgr stopMocking];
+    [self.mockSS stopMocking];
     [super tearDown];
 }
 
@@ -277,7 +279,7 @@
 
 - (void)testStockShareWithSocialMedia {
     // GIVEN
-    [[[self.mockSS expect] andDo:nil] presentViewController:[OCMArg isKindOfClass:[UIViewController class]] animated:YES completion:[OCMArg any]];
+    [[[self.mockSS expect] andDo:nil] presentViewController:[OCMArg any] animated:YES completion:[OCMArg any]];
     
     // WHEN
     [self.serviceSelector stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
@@ -288,7 +290,7 @@
 
 - (void)testCheckLinkedInTokenFail {
     // GIVEN
-    [[self.mockNetworkMgr expect] checkForInvalidatedTokenWithCompletion:[OCMArg any]];
+    [[[self.mockNetworkMgr expect] andDo:nil] checkForInvalidatedTokenWithCompletion:[OCMArg any]];
     
     // WHEN
     [self.serviceSelector checkLinkedInToken];
