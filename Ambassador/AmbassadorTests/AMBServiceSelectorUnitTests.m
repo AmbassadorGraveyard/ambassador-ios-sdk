@@ -18,8 +18,11 @@
 #import "AMBValues.h"
 #import "AMBErrors.h"
 #import "AMBShareServiceCell.h"
+#import "AMBLinkedInShare.h"
+#import "UIColor+AMBColorValues.h"
+#import "AMBUtilities.h"
 
-@interface AMBServiceSelector (Tests) <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface AMBServiceSelector (Tests) <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, AMBShareServiceDelegate, AMBUtilitiesDelegate>
 
 @property (nonatomic, strong) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *descriptionLabel;
@@ -207,6 +210,104 @@
     [mockCell verify];
 }
 
+//- (void)testCollectionViewLayout {
+//    // GIVEN
+//    CGSize expectedSize = (CGSize)CGSizeMake(self.serviceSelector.collectionView.frame.size.width/3, 105);
+//    
+//    // WHEN
+//    CGSize size = [self.serviceSelector collectionView:self.serviceSelector.collectionView layout:[UICollectionViewLayout alloc] sizeForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//    CGSize newSize = CGSizeMake(size.width, size.height);
+//    
+//    // THEN
+//    XCTAssertNotNil(newSize);
+//}
+- (void)testDidSelectItemCollectionView {
+    // GIVEN
+    [[self.mockSS expect] stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
+    
+    // WHEN
+    [self.serviceSelector collectionView:self.serviceSelector.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+
+    // THEN
+    [self.mockSS verify];
+}
+
+- (void)testDidHighlightItem {
+    // GIVEN
+    id mockColor = [OCMockObject mockForClass:[UIColor class]];
+    [[mockColor expect] cellSelectionGray];
+    
+    // WHEN
+    [self.serviceSelector collectionView:self.serviceSelector.collectionView didHighlightItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    
+    // THEN
+    [mockColor verify];
+}
+
+- (void)testDidUnhighlightItem {
+    // GIVEN
+    id mockThemeMgr = [OCMockObject partialMockForObject:[AMBThemeManager sharedInstance]];
+    [[mockThemeMgr expect] colorForKey:RAFBackgroundColor];
+    
+    // WHEN
+    [self.serviceSelector collectionView:self.serviceSelector.collectionView didUnhighlightItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    
+    // THEN
+    [mockThemeMgr verify];
+}
+
+#pragma mark - ShareServiceDelegate Tests
+
+- (void)testNetworkError {
+    // GIVEN
+    NSString *errorString = @"There was an error";
+    id mockError = [OCMockObject mockForClass:[AMBErrors class]];
+    [[[mockError expect] andDo:nil] errorLinkedInShareForVC:self.serviceSelector withMessage:errorString];
+    
+    // WHEN
+    [self.serviceSelector networkError:@"Title" message:errorString];
+    
+    // THEN
+    [mockError verify];
+}
+
+- (void)testUserDidPost {
+    // GIVEN
+    [[self.mockNetworkMgr expect] sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn contactList:nil success:[OCMArg any] failure:[OCMArg any]];
+    
+    // WHEN
+    [self.serviceSelector userDidPostFromService:@"LinkedIn"];
+    
+    // THEN
+    [self.mockNetworkMgr verify];
+}
+
+- (void)testUserMustReauthenticate {
+    // GIVEN
+    id mockError = [OCMockObject mockForClass:[AMBErrors class]];
+    [[[mockError expect] andDo:nil] errorLinkedInReauthForVC:self.serviceSelector];
+    
+    // WHEN
+    [self.serviceSelector userMustReauthenticate];
+    
+    // THEN
+    [mockError verify];
+}
+
+
+#pragma mark - Custom AlertView Delegate
+
+- (void)testOkayButtonClicked {
+    // GIVEN
+    NSString *uniqueID = @"linkedInAuth";
+    [[[self.mockSS expect] andDo:nil] performSegueWithIdentifier:[OCMArg any] sender:self.serviceSelector];
+    
+    // WHEN
+    [self.serviceSelector okayButtonClickedForUniqueID:uniqueID];
+    
+    // THEN
+    [self.mockSS verify];
+}
 
 #pragma mark - UI Function Tests
 
@@ -291,6 +392,7 @@
 - (void)testCheckLinkedInTokenFail {
     // GIVEN
     [[[self.mockNetworkMgr expect] andDo:nil] checkForInvalidatedTokenWithCompletion:[OCMArg any]];
+    OCMStub([self.mockSS performSegueWithIdentifier:[OCMArg any] sender:self.serviceSelector])._andDo(nil);
     
     // WHEN
     [self.serviceSelector checkLinkedInToken];
@@ -458,6 +560,91 @@
     
     // THEN
     [self.mockNetworkMgr verify];
+}
+
+- (void)testShareTrackCompletion {
+    // GIVEN
+    [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
+        void (^success)() = nil;
+        [invocation getArgument:&success atIndex:4];
+        success();
+    }] sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn contactList:nil success:[OCMArg invokeBlock] failure:[OCMArg any]];
+    
+    // WHEN
+    [self.serviceSelector userDidPostFromService:@"LinkedIn"];
+    
+    // THEN
+    [self.mockNetworkMgr verify];
+}
+
+- (void)testShareTrackFailure {
+    // GIVEN
+    [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
+        void (^failure)() = nil;
+        [invocation getArgument:&failure atIndex:5];
+        failure();
+    }] sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn contactList:nil success:[OCMArg any] failure:[OCMArg invokeBlock]];
+    
+    // WHEN
+    [self.serviceSelector userDidPostFromService:@"LinkedIn"];
+    
+    // THEN
+    [self.mockNetworkMgr verify];
+}
+
+- (void)testSendIdentifyCompletion {
+    // GIVEN
+    [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
+        void (^success)() = nil;
+        [invocation getArgument:&success atIndex:5];
+        success();
+    }] sendIdentifyForCampaign:[OCMArg any] shouldEnroll:YES success:[OCMArg invokeBlock] failure:[OCMArg any]];
+    
+    // WHEN
+    [self.serviceSelector sendIdentify];
+    
+    // THEN
+    [self.mockNetworkMgr verify];
+}
+
+- (void)testSendIdentifyFailure {
+    // GIVEN
+    [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
+        void (^failure)() = nil;
+        [invocation getArgument:&failure atIndex:5];
+        failure();
+    }] sendIdentifyForCampaign:[OCMArg any] shouldEnroll:YES success:[OCMArg any] failure:[OCMArg invokeBlock]];
+    
+    // WHEN
+    [self.serviceSelector sendIdentify];
+    
+    // THEN
+    [self.mockNetworkMgr verify];
+}
+
+- (void)testPerformIdentifyResubscribeCompletion {
+    // GIVEN
+    id mockPusherManager = OCMClassMock([AMBPusherManager class]);
+    [AmbassadorSDK sharedInstance].pusherManager = [[AMBPusherManager alloc] init];
+    [AmbassadorSDK sharedInstance].pusherManager.connectionState = PTPusherConnectionDisconnected;
+    [AmbassadorSDK sharedInstance].pusherManager = mockPusherManager;
+    [[[mockPusherManager expect] andDo:^(NSInvocation *invocation) {
+        void (^completion)(AMBPTPusherChannel *channelName, NSError *error) = nil;
+        [invocation getArgument:&completion atIndex:2];
+        completion(nil, nil);
+    }] resubscribeToExistingChannelWithCompletion:[OCMArg invokeBlock]];
+    
+    NSDictionary *pusherChannelDict = @{ @"channel_name" : @"private-channel@user=gAAAAABWp9VD55okqsd4attaQEkXkXSDnBDYzcHc6a8p1dSKdMBsqXKDuUGi6UzTXd9G-1jOgNVONVlc4jYVgrsD3CLQmyCx867qFPItiL2PowHpCP0rLG4kyN1qhCwFzANvFCdl2jW4",
+                                         @"client_session_uid" : @"gAAAAABWp9VD55okqsd4attaQEkXkXSDnBDYzcHc6a8p1dSKdMBsqXKDuUGi6UzTXd9G-1jOgNVONVlc4jYVgrsD3CLQmyCx867qFPItiL2PowHpCP0rLG4kyN1qhCwFzANvFCdl2jW4",
+                                         @"expires_at" : @"2900-02-02T20:21:23.885" };
+    
+    [AMBValues setPusherChannelObject:pusherChannelDict];
+    
+    // WHEN
+    [self.serviceSelector performIdentify];
+    
+    // THEN
+    [mockPusherManager verify];
 }
 
 @end
