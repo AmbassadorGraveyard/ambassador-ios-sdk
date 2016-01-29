@@ -70,42 +70,6 @@ CGFloat originalTopConstraintValue;
 }
 
 
-#pragma mark - UI Functions
-
-- (void)setUpTheme {
-    self.continueButton.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
-    self.continueButton.layer.cornerRadius = self.continueButton.frame.size.height/2;
-    self.firstNameField.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
-    self.lastNameField.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
-    [self.btnClose setImage:[AMBValues imageFromBundleWithName:@"close" type:@"png" tintable:NO] forState:UIControlStateNormal];
-    self.lblError.alpha = 0;
-}
-
-- (void)checkForBlankNames:(NSString*)firstName lastName:(NSString*)lastName {
-    [UIView animateWithDuration:0.3 animations:^{
-        self.firstNameUnderLineView.backgroundColor = (![self textFieldIsValid:firstName]) ? [UIColor redColor] : [UIColor lightGrayColor];
-        self.lastNameUnderLineView.backgroundColor = (![self textFieldIsValid:lastName]) ? [UIColor redColor] : [UIColor lightGrayColor];
-        self.lblError.alpha =  (![self textFieldIsValid:firstName] || ![self textFieldIsValid:lastName]) ? 1 : 0;
-    }];
-}
-
-- (void)removeErrors {
-    [UIView animateWithDuration:0.3 animations:^{
-        self.firstNameUnderLineView.backgroundColor = [UIColor lightGrayColor];
-        self.lastNameUnderLineView.backgroundColor = [UIColor lightGrayColor];
-        self.lblError.alpha = 0;
-    }];
-}
-
-
-#pragma mark - Helper Functions
-
-- (BOOL)textFieldIsValid:(NSString *)string {
-    NSString *formattedString = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    return ![formattedString isEqualToString:@""];
-}
-
-
 #pragma mark - Navigation
 
 - (void)backButtonPressed:(UIButton *)button {
@@ -143,6 +107,42 @@ CGFloat originalTopConstraintValue;
         self.topConstraint.constant = originalTopConstraintValue;
         [self.view layoutIfNeeded];
     }
+}
+
+
+#pragma mark - UI Functions
+
+- (void)setUpTheme {
+    self.continueButton.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    self.continueButton.layer.cornerRadius = self.continueButton.frame.size.height/2;
+    self.firstNameField.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    self.lastNameField.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    [self.btnClose setImage:[AMBValues imageFromBundleWithName:@"close" type:@"png" tintable:NO] forState:UIControlStateNormal];
+    self.lblError.alpha = 0;
+}
+
+- (void)checkForBlankNames:(NSString*)firstName lastName:(NSString*)lastName {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.firstNameUnderLineView.backgroundColor = (![self textFieldIsValid:firstName]) ? [UIColor redColor] : [UIColor lightGrayColor];
+        self.lastNameUnderLineView.backgroundColor = (![self textFieldIsValid:lastName]) ? [UIColor redColor] : [UIColor lightGrayColor];
+        self.lblError.alpha =  (![self textFieldIsValid:firstName] || ![self textFieldIsValid:lastName]) ? 1 : 0;
+    }];
+}
+
+- (void)removeErrors {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.firstNameUnderLineView.backgroundColor = [UIColor lightGrayColor];
+        self.lastNameUnderLineView.backgroundColor = [UIColor lightGrayColor];
+        self.lblError.alpha = 0;
+    }];
+}
+
+
+#pragma mark - Helper Functions
+
+- (BOOL)textFieldIsValid:(NSString *)string {
+    NSString *formattedString = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return ![formattedString isEqualToString:@""];
 }
 
 @end
