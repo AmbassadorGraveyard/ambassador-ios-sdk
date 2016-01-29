@@ -216,9 +216,11 @@
     
     // WHEN
     NSNumber *realNumber = [self.themeManager sizeForKey:ShareFieldHeight];
+    NSNumber *failNumber = [self.themeManager sizeForKey:100];
     
     // THEN
     XCTAssertEqualObjects(expectedNumber, realNumber);
+    XCTAssertNil(failNumber);
 }
 
 - (void)testSizeEnumString {
@@ -274,6 +276,64 @@
     XCTAssertEqual(mockLinkedin, expectedLinkedin);
     XCTAssertEqual(mockSMS, expectedSMS);
     XCTAssertEqual(mockEmail, expectedEmail);
+}
+
+
+#pragma mark - UIColor Category Tests
+
+- (void)testTwitterBlue {
+    // GIVEN
+    UIColor *expectedColor = [UIColor colorFromHexString:@"#469AE9"];
+    
+    // WHEN
+    UIColor *twitterBlue = [UIColor twitterBlue];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedColor, twitterBlue);
+}
+
+- (void)testFBBlue {
+    // GIVEN
+    UIColor *expectedColor = [UIColor colorFromHexString:@"#2E4486"];
+    
+    // WHEN
+    UIColor *fbBlue = [UIColor faceBookBlue];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedColor, fbBlue);
+}
+
+- (void)testLinkedinBlue {
+    // GIVEN
+    UIColor *expectedColor = [UIColor colorFromHexString:@"#0E62A6"];
+    
+    // WHEN
+    UIColor *linkedinBlue = [UIColor linkedInBlue];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedColor, linkedinBlue);
+}
+
+- (void)testErrorRed {
+    // GIVEN
+    UIColor *expectedColor = [UIColor colorFromHexString:@"#AE0015"];
+    
+    // WHEN
+    UIColor *errorRed = [UIColor errorRed];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedColor, errorRed);
+}
+
+- (void)testCellSelectionGray {
+    // GIVEN
+    UIColor *expectedColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:0.5];
+    
+    // WHEN
+    UIColor *cellSelectionGray = [UIColor cellSelectionGray];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedColor, cellSelectionGray);
 }
 
 @end
