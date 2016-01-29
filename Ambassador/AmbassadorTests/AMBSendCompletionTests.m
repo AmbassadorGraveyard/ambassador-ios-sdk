@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "AMBSendCompletionModal.h"
+#import "AMBThemeManager.h"
 
 @interface AMBSendCompletionModal (Test)
 
@@ -62,7 +63,12 @@
     // GIVEN
     id mockPresentingVC = [OCMockObject mockForClass:[UIViewController class]];
     [[[self.mockVC expect] andReturn:mockPresentingVC] presentingViewController];
-    [[[mockPresentingVC expect] andDo:nil] dismissViewControllerAnimated:NO completion:[OCMArg any]];
+    [[[mockPresentingVC expect] andDo:^(NSInvocation *invocation) {
+        void (^completion)() = nil;
+        [invocation getArgument:&completion atIndex:3];
+        completion();
+    }] dismissViewControllerAnimated:NO completion:[OCMArg invokeBlock]];
+    
     
     // WHEN
     [self.sendCompletion buttonPressed:[OCMArg any]];
@@ -74,5 +80,17 @@
 
 #pragma mark - UI Function Tests
 
+- (void)testSetUpTheme {
+    // GIVEN
+    id mockThemeMgr = [OCMockObject partialMockForObject:[AMBThemeManager sharedInstance]];
+    [[mockThemeMgr expect] colorForKey:AlertButtonBackgroundColor];
+    [[mockThemeMgr expect] colorForKey:AlertButtonTextColor];
+    
+    // WHEN
+    [self.sendCompletion setUpTheme];
+    
+    // THEN
+    [mockThemeMgr verify];
+}
 
 @end
