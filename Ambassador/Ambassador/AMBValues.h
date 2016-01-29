@@ -15,7 +15,6 @@
 
 + (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type tintable:(BOOL)tintable;
 + (NSBundle*)AMBframeworkBundle;
-+ (void)clearAmbUserDefaults;
 + (BOOL)isProduction;
 
 // URLs
@@ -46,6 +45,7 @@
 + (void)setUserEmail:(NSString*)email;
 + (void)setPusherChannelObject:(NSDictionary*)pusherChannel;
 + (void)setUserURLObject:(NSDictionary*)urlObject;
++ (void)resetHasInstalled; // Should only be used for TESTING
 
 // Default getters
 + (NSString*)getMbsyCookieCode;

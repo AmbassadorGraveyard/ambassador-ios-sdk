@@ -138,12 +138,9 @@
 #pragma mark - AMB Defaults
 
 + (NSUserDefaults*)ambUserDefaults {
-    NSUserDefaults *ambDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AMBDEFAULTS"];
+    NSString *defaultsString = (NSClassFromString(@"XCTest")) ? @"AMBTEST" : @"AMBDEFAULTS";
+    NSUserDefaults *ambDefaults = [[NSUserDefaults alloc] initWithSuiteName:defaultsString];
     return ambDefaults;
-}
-
-+ (void)clearAmbUserDefaults {
-    [[AMBValues ambUserDefaults] setValue:nil forKey:@"mbsy_cookie_code"];
 }
 
 
@@ -195,6 +192,12 @@
 
 + (void)setUserURLObject:(NSDictionary*)urlObject {
     [[AMBValues ambUserDefaults] setObject:urlObject forKey:@"user_url_object"];
+}
+
+// Should only be used for TESTING
++ (void)resetHasInstalled {
+    NSUserDefaults *ambDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AMBTEST"];
+    [ambDefaults removeObjectForKey:@"AMBFIRSTLAUNCHSTORAGE"];
 }
 
 #pragma mark - Getter Methods
