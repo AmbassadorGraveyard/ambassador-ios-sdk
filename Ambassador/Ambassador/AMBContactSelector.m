@@ -98,51 +98,6 @@ BOOL keyboardShowing = NO;
 }
 
 
-#pragma mark - UI Functions
-
-- (void)setUpTheme {
-    self.searchFieldBackground.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSearchBackgroundColor];
-    [self.doneSearchingButton setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:ContactSearchDoneButtonTextColor] forState:UIControlStateNormal];
-    self.composeMessageTextView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
-    self.searchBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
-    
-    self.navigationController.navigationBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
-    [self.sendButton.titleLabel setFont:[[AMBThemeManager sharedInstance] fontForKey:ContactSendButtonTextFont]];
-    
-    [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
-    [[self.btnEditMessage imageView] setContentMode:UIViewContentModeScaleAspectFit];
-    [self.btnEditMessage setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    self.btnEditMessage.tintColor = [UIColor lightGrayColor];
-    [self updateButton];
-}
-
-- (void)showOrHideSearchDoneButton {
-    self.searchBarRightConstraint.constant = (self.searchBarRightConstraint.constant == 18) ? self.searchBarRightConstraint.constant + self.doneSearchingButton.frame.size.width + 18 : 18;
-    [UIView animateKeyframesWithDuration:0.4 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
-        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.2 animations:^{
-            [self.view layoutIfNeeded];
-        }];
-    } completion:nil];
-}
-
-- (void)updateButton {
-    self.sendButton.enabled = (self.selected.count > 0) ? YES : NO;
-    self.sendButton.backgroundColor = (self.sendButton.enabled) ? [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor] : [UIColor lightGrayColor];
-    
-    switch (self.selected.count) {
-        case 0:
-            [self.sendButton setTitle:@"Select Contacts" forState:UIControlStateNormal];
-            break;
-        case 1:
-            [self.sendButton setTitle:@"Send to 1 contact" forState:UIControlStateNormal];
-            break;
-        default:
-            [self.sendButton setTitle:[NSString stringWithFormat:@"Send to %i contacts", (int)self.selected.count] forState:UIControlStateNormal];
-            break;
-    }
-}
-
-
 #pragma mark - IBActions
 
 - (IBAction)sendButtonTapped:(id)sender {
@@ -180,6 +135,19 @@ BOOL keyboardShowing = NO;
         [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
         [self.btnEditMessage setTitle:@"" forState:UIControlStateNormal];
         self.isEditing = NO;
+    }
+}
+
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender {
+    if ([segue.identifier isEqualToString:NAME_PROMPT_SEGUE_IDENTIFIER]) {
+        AMBNamePrompt *vc = (AMBNamePrompt*)segue.destinationViewController;
+        vc.delegate = self;
+    } else if ([segue.identifier isEqualToString:CONTACT_CARD_SEGUE_IDENTIFIER]) {
+        AMBContactCard *contactCardVC = (AMBContactCard*)segue.destinationViewController;
+        contactCardVC.contact = self.selectedContact;
     }
 }
 
@@ -372,6 +340,113 @@ BOOL keyboardShowing = NO;
 }
 
 
+#pragma mark - Share Track 
+
+- (void)sendShareTrack:(NSArray *)contacts {
+    [[AMBNetworkManager sharedInstance] sendShareTrackForServiceType:self.type contactList:(NSMutableArray*)contacts success:^(NSDictionary *response) {
+        DLog(@"Share Track for %@ SUCCESSFUL with response - %@", [AMBOptions serviceTypeStringValue:self.type], response);
+    } failure:^(NSString *error) {
+        DLog(@"Share Track for %@ FAILED with response - %@", [AMBOptions serviceTypeStringValue:self.type], error);
+    }];
+}
+
+- (NSMutableArray *)valuesFromContacts:(NSArray *)contacts {
+    NSMutableArray *returnVal = [[NSMutableArray alloc] init];
+    for (AMBContact *contact in contacts) {
+        [returnVal addObject:contact.value];
+    }
+    
+    return returnVal;
+}
+
+
+#pragma mark - AMBNamePrompt Delegate 
+
+- (void)namesUpdatedSuccessfully {
+    [self sendSMS];
+}
+
+
+#pragma mark - AMBContactLoader Delegate
+
+- (void)contactsFinishedLoadingSuccessfully {
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [[AMBUtilities sharedInstance] hideLoadingView];
+        [self refreshContacts];
+        [self.contactsTable reloadData];
+    }];
+}
+
+- (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        DLog(@"Error loading contacts - %@", message);
+        [AMBErrors errorLoadingContactsForVC:self];
+    }];
+}
+
+
+#pragma mark - AMBContactCell Delegate
+
+- (void)longPressTriggeredForContact:(AMBContact *)contact {
+    self.selectedContact = contact;
+    [self performSegueWithIdentifier:CONTACT_CARD_SEGUE_IDENTIFIER sender:self];
+}
+
+
+#pragma mark - AMBUtitlites Delegate
+
+- (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
+    if (![uniqueID isEqualToString:@"missingURL"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+
+#pragma mark - UI Functions
+
+- (void)setUpTheme {
+    self.searchFieldBackground.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSearchBackgroundColor];
+    [self.doneSearchingButton setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:ContactSearchDoneButtonTextColor] forState:UIControlStateNormal];
+    self.composeMessageTextView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    self.searchBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
+    
+    self.navigationController.navigationBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
+    [self.sendButton.titleLabel setFont:[[AMBThemeManager sharedInstance] fontForKey:ContactSendButtonTextFont]];
+    
+    [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
+    [[self.btnEditMessage imageView] setContentMode:UIViewContentModeScaleAspectFit];
+    [self.btnEditMessage setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    self.btnEditMessage.tintColor = [UIColor lightGrayColor];
+    [self updateButton];
+}
+
+- (void)showOrHideSearchDoneButton {
+    self.searchBarRightConstraint.constant = (self.searchBarRightConstraint.constant == 18) ? self.searchBarRightConstraint.constant + self.doneSearchingButton.frame.size.width + 18 : 18;
+    [UIView animateKeyframesWithDuration:0.4 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.2 animations:^{
+            [self.view layoutIfNeeded];
+        }];
+    } completion:nil];
+}
+
+- (void)updateButton {
+    self.sendButton.enabled = self.selected.count ? YES : NO;
+    self.sendButton.backgroundColor = self.sendButton.enabled ? [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor] : [UIColor lightGrayColor];
+    
+    switch (self.selected.count) {
+        case 0:
+            [self.sendButton setTitle:@"Select Contacts" forState:UIControlStateNormal];
+            break;
+        case 1:
+            [self.sendButton setTitle:@"Send to 1 contact" forState:UIControlStateNormal];
+            break;
+        default:
+            [self.sendButton setTitle:[NSString stringWithFormat:@"Send to %i contacts", (int)self.selected.count] forState:UIControlStateNormal];
+            break;
+    }
+}
+
+
 #pragma mark - Helper Functions
 
 - (BOOL)alreadyHaveNames {
@@ -478,79 +553,5 @@ BOOL keyboardShowing = NO;
     }
 }
 
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(nonnull UIStoryboardSegue *)segue sender:(nullable id)sender {
-    if ([segue.identifier isEqualToString:NAME_PROMPT_SEGUE_IDENTIFIER]) {
-        AMBNamePrompt *vc = (AMBNamePrompt*)segue.destinationViewController;
-        vc.delegate = self;
-    } else if ([segue.identifier isEqualToString:CONTACT_CARD_SEGUE_IDENTIFIER]) {
-        AMBContactCard *contactCardVC = (AMBContactCard*)segue.destinationViewController;
-        contactCardVC.contact = self.selectedContact;
-    }
-}
-
-
-#pragma mark - Share Track 
-
-- (void)sendShareTrack:(NSArray *)contacts {
-    [[AMBNetworkManager sharedInstance] sendShareTrackForServiceType:self.type contactList:(NSMutableArray*)contacts success:^(NSDictionary *response) {
-        DLog(@"Share Track for %@ SUCCESSFUL with response - %@", [AMBOptions serviceTypeStringValue:self.type], response);
-    } failure:^(NSString *error) {
-        DLog(@"Share Track for %@ FAILED with response - %@", [AMBOptions serviceTypeStringValue:self.type], error);
-    }];
-}
-
-- (NSMutableArray *)valuesFromContacts:(NSArray *)contacts {
-    NSMutableArray *returnVal = [[NSMutableArray alloc] init];
-    for (AMBContact *contact in contacts) {
-        [returnVal addObject:contact.value];
-    }
-    
-    return returnVal;
-}
-
-
-#pragma mark - AMBNamePrompt Delegate 
-
-- (void)namesUpdatedSuccessfully {
-    [self sendSMS];
-}
-
-
-#pragma mark - AMBContactLoader Delegate
-
-- (void)contactsFinishedLoadingSuccessfully {
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        [[AMBUtilities sharedInstance] hideLoadingView];
-        [self refreshContacts];
-        [self.contactsTable reloadData];
-    }];
-}
-
-- (void)contactsFailedToLoadWithError:(NSString *)errorTitle message:(NSString *)message {
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        DLog(@"Error loading contacts - %@", message);
-        [AMBErrors errorLoadingContactsForVC:self];
-    }];
-}
-
-
-#pragma mark - AMBContactCell Delegate
-
-- (void)longPressTriggeredForContact:(AMBContact *)contact {
-    self.selectedContact = contact;
-    [self performSegueWithIdentifier:CONTACT_CARD_SEGUE_IDENTIFIER sender:self];
-}
-
-
-#pragma mark - AMBUtitlites Delegate
-
-- (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
-    if (![uniqueID isEqualToString:@"missingURL"]) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
 
 @end
