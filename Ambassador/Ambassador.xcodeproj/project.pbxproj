@@ -665,7 +665,6 @@
 				DB844D5B1BA767FA003FD7A9 /* back.png */,
 				DB844D551BA7622D003FD7A9 /* Info.plist */,
 				EFE7D7971C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld */,
-				EF407F201BB3449B0074D2AE /* AmbassadorTheme.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -785,6 +784,15 @@
 				DBA3FC2C1BA8AA5600672D82 /* AMBSRWebSocket.m */,
 			);
 			name = "Socket Rocket";
+			sourceTree = "<group>";
+		};
+		EF185A2B1C528E7800AD6330 /* Custom Alert */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB9B1BA8A24F00672D82 /* AMBSendCompletionModal.h */,
+				DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */,
+			);
+			name = "Custom Alert";
 			sourceTree = "<group>";
 		};
 		EF441B651C345F440038F6BB /* Name Prompt */ = {
@@ -978,10 +986,9 @@
 		EFE7D7911C21BA5F00D7F92C /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				DBA3FB9B1BA8A24F00672D82 /* AMBSendCompletionModal.h */,
-				DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */,
 				DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */,
 				DBA3FBA81BA8A24F00672D82 /* AMBUtilities.m */,
+				EF185A2B1C528E7800AD6330 /* Custom Alert */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
