@@ -8,30 +8,29 @@
 
 #import <objc/runtime.h>
 #import "AMBNetworkObject.h"
-#import "AMBUtilities.h"
 #import "AMBNetworkManager.h"
 
 @implementation AMBNetworkObject
+
+
+#pragma mark - Helper Functions
+
 - (NSMutableDictionary *)toDictionary {
     NSMutableDictionary *returnDictionary = [[NSMutableDictionary alloc] init];
     unsigned int numProperties = 0;
     objc_property_t *propertyArray = class_copyPropertyList([self class], &numProperties);
+    
     for (NSUInteger i = 0; i <numProperties; ++i) {
         objc_property_t property = propertyArray[i];
         NSString *key = [[NSString alloc] initWithUTF8String:property_getName(property)];
         [returnDictionary setValue:[self valueForKey:key] forKey:key];
     }
+    
     return returnDictionary;
 }
 
-- (NSError *)validate { return nil; }
-
 - (void)fillWithDictionary:(NSMutableDictionary *)dictionary {
     [self setValuesForKeysWithDictionary:dictionary];
-}
-
-- (NSData *)toDataError:(NSError *__autoreleasing*)e {
-    return [NSJSONSerialization dataWithJSONObject:[self toDictionary] options:0 error:e];
 }
 
 - (NSData*)toData {
@@ -39,100 +38,28 @@
     return [NSJSONSerialization dataWithJSONObject:[self toDictionary] options:0 error:&error];
 }
 
+@end
 
 
-#pragma mark - NSCoding
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    unsigned int numProperties = 0;
-    objc_property_t *propertyArray = class_copyPropertyList([self class], &numProperties);
-    for (NSUInteger i = 0; i <numProperties; ++i) {
-        objc_property_t property = propertyArray[i];
-        NSString *key = [[NSString alloc] initWithUTF8String:property_getName(property)];
-        [aCoder encodeObject:[self valueForKey:key] forKey:key];
-    }
-}
+#pragma mark - Pusher Auth Object
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super init]) {
-        unsigned int numProperties = 0;
-        objc_property_t *propertyArray = class_copyPropertyList([self class], &numProperties);
-        for (NSUInteger i = 0; i <numProperties; ++i) {
-            objc_property_t property = propertyArray[i];
-            NSString *key = [[NSString alloc] initWithUTF8String:property_getName(property)];
-            [self setValue:[aDecoder decodeObjectForKey:key] forKey:key];
-        }
-    }
+@implementation AMBPusherAuthNetworkObject
+
+- (instancetype)init {
+    self =[super init];
+    self.auth_type = @"";
+    self.channel = @"";
+    self.socket_id = @"";
+    
     return self;
 }
 
-
-
-#pragma mark - storage
-- (NSString *)rootPath {
-    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-}
-
-- (void)save {
-    [NSKeyedArchiver archiveRootObject:self toFile:[[self rootPath] stringByAppendingPathComponent:NSStringFromClass([self class])]];
-}
-
-+ (instancetype)loadFromDisk {
-    return [NSKeyedUnarchiver unarchiveObjectWithFile:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:NSStringFromClass([self class])]];
-}
-
-+ (void)deleteFromDisk {
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath:rootPath error:&error];
-}
-
-@end
-
-
-
-@implementation AMBPusherSessionSubscribeNetworkObject
-- (void)fillWithDictionary:(NSMutableDictionary *)d {
-    self.channel_name = (NSString *)d[@"channel_name"];
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.zzz"];
-    self.expires_at = [df dateFromString:(NSString *)d[@"expires_at"]];
-    self.client_session_uid = (NSString *)d[@"client_session_uid"];
-}
-
-- (BOOL)isExpired {
-    if ([self.expires_at timeIntervalSinceNow] < 0.0) {
-        return YES;
-    }
-    return NO;
-}
-
-- (NSMutableDictionary *)additionalNetworkHeaders {
-    NSMutableDictionary *returnVal = [[NSMutableDictionary alloc] init];
-    [returnVal setValue:self.client_session_uid forKey:@"X-Mbsy-Client-Session-ID"];
-    NSString * timestamp = [NSString stringWithFormat:@"%f",[[NSDate date] timeIntervalSince1970] * 1000];
-    [returnVal setValue:timestamp forKey:@"X-Mbsy-Client-Request-ID"];
-    return returnVal;
-}
-@end
-
-
-
-@implementation AMBPusherAuthNetworkObject
 @end
 
 
 #pragma mark - AMBUserNetworkObject
 
 @implementation AMBUserUrlNetworkObject
-
-- (void)fillWithDictionary:(NSMutableDictionary *)d {
-    self.campaign_uid = (NSNumber *)d[@"campaign_uid"];
-    self.short_code = (NSString *)d[@"short_code"];
-    self.subject = (NSString *)d[@"subject"];
-    self.url = (NSString *)d[@"url"];
-    self.has_access = (BOOL)d[@"has_access"];
-    self.is_active = (BOOL)d[@"is_active"];
-}
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict {
     self.campaign_uid = (NSNumber *)dict[@"campaign_uid"];
@@ -148,9 +75,11 @@
 @end
 
 
+#pragma mark - User Object
 
 @implementation AMBUserNetworkObject
 
+// Used if pusher payload is too big to get back and only external url is given back
 - (void)fillWithUrl:(NSString *)url completion:(void(^)(NSString *error))completion {
     [[AMBNetworkManager sharedInstance] getLargePusherPayloadFromUrl:url success:^(NSDictionary *response) {
         [self fillWithDictionary:(NSMutableDictionary*)response];
@@ -160,6 +89,7 @@
     }];
 }
 
+// Override fillWithDictionary because we set a custom object -- AMBUserUrlNetworkObject
 - (void)fillWithDictionary:(NSMutableDictionary *)d {
     NSMutableDictionary *bodyDict = (d[@"body"]) ? d[@"body"] : d;
     self.email = bodyDict[@"email"];
@@ -182,38 +112,45 @@
     for (AMBUserUrlNetworkObject *url in self.urls) {
         if ([url.campaign_uid isEqual:cID]) { return url; }
     }
+    
     return nil;
 }
 
 @end
 
 
+#pragma mark - Identify Object
 
 @implementation AMBIdentifyNetworkObject
+
 - (instancetype)init {
-    if (self = [super init]) {
-        self.email = @"";
-        self.campaign_id = @"";
-        self.enroll = NO;
-        self.source = @"";
-    }
+    self = [super init];
+    self.email = @"";
+    self.campaign_id = @"";
+    self.enroll = NO;
+    self.source = @"";
+    
     return self;
 }
+
 @end
 
 
+#pragma mark - Share Track Object
 
 @implementation AMBShareTrackNetworkObject
+
 -(instancetype)init {
-    if (self = [super init]) {
-        self.recipient_username = @"";
-        self.recipient_email = @"";
-        self.short_code = @"";
-        self.social_name = @"";
-        self.from_email =  ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
-    }
+    self = [super init];
+    self.recipient_username = @"";
+    self.recipient_email = @"";
+    self.short_code = @"";
+    self.social_name = @"";
+    self.from_email =  ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
+    
     return self;
 }
+
 @end
 
 
@@ -221,12 +158,12 @@
 
 @implementation AMBBulkShareEmailObject
 
-- (instancetype)initWithEmails:(NSArray*)emails shortCode:(NSString*)shortCode message:(NSString*)message subjectLine:(NSString*)subjectLine {
+- (instancetype)initWithEmails:(NSArray*)emails message:(NSString*)message {
     self = [super init];
     self.to_emails = [[NSArray alloc] initWithArray:emails];
-    self.short_code = shortCode;
+    self.short_code = [AMBValues getUserURLObject].short_code;
     self.message = message;
-    self.subject_line = subjectLine;
+    self.subject_line = [AMBValues getUserURLObject].subject;
     self.from_email = ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
     
     return self;
@@ -252,14 +189,13 @@
 @end
 
 
-#pragma mark - AMBUpdateNameObject
+#pragma mark - Update Name Object
 
 @implementation AMBUpdateNameObject
 
 - (instancetype)initWithFirstName:(NSString *)firstName lastName:(NSString *)lastName email:(NSString *)email {
     self = [super init];
-    self.update_data = [[NSDictionary alloc] initWithObjectsAndKeys:firstName, @"first_name",
-                        lastName, @"last_name", nil];
+    self.update_data = [[NSDictionary alloc] initWithObjectsAndKeys:firstName, @"first_name", lastName, @"last_name", nil];
     self.email = email;
     
     return self;

@@ -14,6 +14,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "AMBSendCompletionModal.h"
 
 // Protocal
 @protocol AMBUtilitiesDelegate <NSObject>
@@ -24,7 +25,7 @@
 @end
 
 
-@interface AMBUtilities : NSObject
+@interface AMBUtilities : NSObject <AMBSendCompletionDelegate>
 
 @property (nonatomic, weak)id <AMBUtilitiesDelegate> delegate;
 @property (nonatomic, strong) UIView *loadingView;
