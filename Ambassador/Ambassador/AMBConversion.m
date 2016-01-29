@@ -15,15 +15,6 @@
 #import "AMBErrors.h"
 
 
-#pragma mark - Local Constants
-
-#if AMBPRODUCTION
-NSString * const AMB_CONVERSION_URL = @"https://api.getambassador.com/universal/action/conversion/";
-#else
-NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/";
-#endif
-
-
 @implementation AMBConversion
 
 
@@ -66,19 +57,6 @@ NSString * const AMB_CONVERSION_URL = @"https://dev-ambassador-api.herokuapp.com
         }
     } else {
         DLog(@"No conversions ready to be sent");
-    }
-}
-
-
-#pragma mark - NSURL Delegete
-
-// Allows certain requests to be made for dev servers when running in unit tests for Circle
-- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler{
-    if([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
-        if([challenge.protectionSpace.host isEqualToString:@"dev-ambassador-api.herokuapp.com"]) { // Makes sure that it's our url being challenged
-            NSURLCredential *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
-            completionHandler(NSURLSessionAuthChallengeUseCredential,credential);
-        }
     }
 }
 
