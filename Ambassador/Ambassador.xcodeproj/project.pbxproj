@@ -782,6 +782,15 @@
 			name = "Socket Rocket";
 			sourceTree = "<group>";
 		};
+		EF185A2B1C528E7800AD6330 /* Custom Alert */ = {
+			isa = PBXGroup;
+			children = (
+				DBA3FB9B1BA8A24F00672D82 /* AMBSendCompletionModal.h */,
+				DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */,
+			);
+			name = "Custom Alert";
+			sourceTree = "<group>";
+		};
 		EF441B651C345F440038F6BB /* Name Prompt */ = {
 			isa = PBXGroup;
 			children = (
@@ -971,10 +980,9 @@
 		EFE7D7911C21BA5F00D7F92C /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				DBA3FB9B1BA8A24F00672D82 /* AMBSendCompletionModal.h */,
-				DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */,
 				DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */,
 				DBA3FBA81BA8A24F00672D82 /* AMBUtilities.m */,
+				EF185A2B1C528E7800AD6330 /* Custom Alert */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";

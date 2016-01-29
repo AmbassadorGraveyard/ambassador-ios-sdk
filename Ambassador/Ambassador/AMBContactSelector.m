@@ -23,7 +23,7 @@
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                 AMBSelectedCellDelegate, UITextFieldDelegate,
                                 UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate,
-                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate, AMBContactCellDelegate>
+                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate, AMBContactCellDelegate, UIAlertViewDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UITableView *contactsTable;
@@ -101,21 +101,8 @@ BOOL keyboardShowing = NO;
 #pragma mark - IBActions
 
 - (IBAction)sendButtonTapped:(id)sender {
-    if (self.selected.count > 0 && ![self validateString:self.shortURL inString:self.composeMessageTextView.text]) {
-        NSString *message = [NSString stringWithFormat:@"Please include your url in the message: %@", self.shortURL];
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:@"missingURL" forViewController:self shouldDismissVCImmediately:NO];
-        return;
-    } else if ([self.selected count] > 0 && [self validateString:self.shortURL inString:self.composeMessageTextView.text]) {
-        switch (self.type) {
-            case AMBSocialServiceTypeEmail:
-                [self sendEmail];
-                break;
-            case AMBSocialServiceTypeSMS:
-                [self sendSMS];
-                break;
-            default:
-                break;
-        }
+    if ([self messageContainsURL]) {
+        [self sendMessage];
     }
 }
 
@@ -258,6 +245,17 @@ BOOL keyboardShowing = NO;
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     if (!self.isEditing) { [self editMessageButtonTapped:nil]; }
     return YES;
+}
+
+
+#pragma mark - UIAlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self insertURL];
+    } else if (buttonIndex == 1) {
+        [self sendMessage];
+    }
 }
 
 
@@ -495,8 +493,15 @@ BOOL keyboardShowing = NO;
     self.filteredData = (NSMutableArray *)[self.data filteredArrayUsingPredicate:predicate];
 }
 
-- (BOOL)validateString:(NSString *)string inString:(NSString *)inString {
-    return [inString rangeOfString:string].location != NSNotFound;
+- (BOOL)messageContainsURL {
+    if ([self.composeMessageTextView.text containsString:[AMBValues getUserURLObject].url]) {
+        return YES;
+    } else {
+        NSString *alertString = [NSString stringWithFormat:@"Your share link is not included in the message: %@", [AMBValues getUserURLObject].url];
+        UIAlertView *missingURLAlert = [[UIAlertView alloc] initWithTitle:@"Hold On!" message:alertString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Insert Link", @"Continue Sending", nil];
+        [missingURLAlert show];
+        return NO;
+    }
 }
 
 - (void)refreshAllIncludingContacts:(BOOL)refreshContactsTable {
@@ -510,6 +515,42 @@ BOOL keyboardShowing = NO;
     [self.selected removeAllObjects];
     [self updateButton];
     [self.refreshControl endRefreshing];
+}
+
+- (void)sendMessage {
+    if (self.type == AMBSocialServiceTypeEmail) {
+        [self sendEmail];
+    } else if (self.type == AMBSocialServiceTypeSMS) {
+        [self sendSMS];
+    }
+}
+
+- (void)insertURL {
+    NSMutableString *newString = [NSMutableString stringWithString:self.composeMessageTextView.text];
+    
+    if ([self customContainsString:newString subString:@"http://"]) {
+        NSRange rangeOfString = [self.composeMessageTextView.text rangeOfString:@"http://"];
+        NSString *existingHttpString = [self.composeMessageTextView.text substringFromIndex:rangeOfString.location];
+        NSString *httpString = ([existingHttpString containsString:@" "]) ? [existingHttpString substringToIndex:[existingHttpString rangeOfString:@" "].location] : existingHttpString;
+        
+        [newString replaceOccurrencesOfString:httpString withString:@"" options:0 range:[self.composeMessageTextView.text rangeOfString:self.composeMessageTextView.text]];
+        [newString insertString:[AMBValues getUserURLObject].url atIndex:rangeOfString.location];
+        self.composeMessageTextView.text = newString;
+        
+        return;
+    }
+    
+    [newString appendString:[AMBValues getUserURLObject].url];
+    self.composeMessageTextView.text = newString;
+}
+
+// This method will only need to be used until we stop supporting iOS 7
+- (BOOL)customContainsString:(NSString*)string subString:(NSString*)subString {
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        return [string containsString:subString]; // This function will crash the app on iOS 7 or below
+    } else {
+        return [string rangeOfString:subString].location != NSNotFound;
+    }
 }
 
 
