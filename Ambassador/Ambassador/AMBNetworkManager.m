@@ -175,7 +175,7 @@ static NSURLSession * urlSession;
 }
 
 - (void)bulkShareEmailWithMessage:(NSString*)message emailAddresses:(NSArray*)addresses success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
-    AMBBulkShareEmailObject *emailObject = [[AMBBulkShareEmailObject alloc] initWithEmails:addresses shortCode:[AMBValues getUserURLObject].short_code message:message subjectLine:[AMBValues getUserURLObject].subject];
+    AMBBulkShareEmailObject *emailObject = [[AMBBulkShareEmailObject alloc] initWithEmails:addresses message:message];
     NSMutableURLRequest *emailRequest = [self createURLRequestWithURL:[AMBValues getBulkShareEmailUrl] requestType:@"POST"];
     emailRequest.HTTPBody = [emailObject toData];
     

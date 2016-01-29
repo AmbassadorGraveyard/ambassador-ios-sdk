@@ -7,9 +7,9 @@
 //
 
 #import "AMBUtilities.h"
-#import "AMBSendCompletionModal.h"
 
-@implementation AMBUtilities : NSObject
+
+@implementation AMBUtilities : NSObject 
 
 
 #pragma mark - LifeCycle
@@ -28,21 +28,24 @@
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
     AMBSendCompletionModal *vc = (AMBSendCompletionModal *)[sb instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
     vc.alertMessage = message;
-    [vc shouldUseSuccessIcon:successful];
+    vc.showSuccess = successful;
+    vc.presentingVC = viewController;
+    vc.shouldDismissPresentingVC = shouldDismiss;
+    vc.uniqueIdentifier = uniqueID;
+    vc.delegate = self;
     vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    __weak AMBSendCompletionModal *weakVC = vc;
-    vc.buttonAction = ^() {
-        [weakVC dismissViewControllerAnimated:NO completion:^{
-            if (shouldDismiss) {
-                [viewController dismissViewControllerAnimated:YES completion:nil];
-            } else {
-                if (self.delegate && [self.delegate respondsToSelector:@selector(okayButtonClickedForUniqueID:)]) { [self.delegate okayButtonClickedForUniqueID:uniqueID]; }
-            }
-        }];
-    };
-    
+
     [viewController presentViewController:vc animated:YES completion:nil];
+}
+
+// Custom Alert Delegate
+- (void)buttonClickedWithPresentingVC:(UIViewController *)viewController shouldDismissPresentingVC:(BOOL)dismissPresenter uniqueID:(NSString *)uniqueID {
+    if (dismissPresenter) {
+        [viewController dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(okayButtonClickedForUniqueID:)]) { [self.delegate okayButtonClickedForUniqueID:uniqueID]; }
+    }
 }
 
 
