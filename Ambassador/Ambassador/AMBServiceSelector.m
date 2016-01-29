@@ -203,6 +203,7 @@ int contactServiceType;
 }
 
 
+#pragma mark - CustomAlertView Delegate
 
 - (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
     if ([uniqueID isEqualToString:@"linkedInAuth"]) {

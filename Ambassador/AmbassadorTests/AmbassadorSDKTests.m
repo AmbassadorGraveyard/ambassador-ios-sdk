@@ -14,6 +14,7 @@
 #import "AMBConversion.h"
 #import "AMBPusherManager.h"
 #import <OCMock/OCMock.h>
+#import "AMBServiceSelector.h"
 
 // Testing category made to reveal private methods only in tests
 @interface AmbassadorSDK (Tests)
@@ -176,11 +177,19 @@ NSString * const universalToken = @"9de5757f801ca60916599fa3f3c92131b0e63c6a";
     // GIVEN
     NSString *campID = @"260";
     NSString *plistName = @"GenericTheme";
-    UIViewController *mockController = [[UIViewController alloc] init];
-    id mockVC = [OCMockObject partialMockForObject:mockController];
+
+    id mockVC = [OCMockObject mockForClass:[AMBServiceSelector class]];
+    id mockNav = [OCMockObject mockForClass:[UINavigationController class]];
+    id mockSB = [OCMockObject mockForClass:[UIStoryboard class]];
+
+    [[[mockSB expect] andReturn:mockSB] storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
+    [[[mockSB expect] andReturn:mockNav] instantiateViewControllerWithIdentifier:@"RAFNAV"];
+    [[[mockNav expect] andReturn:@[mockVC]] childViewControllers];
+    [[[mockVC expect] andDo:nil] setCampaignID:campID];
+    [[[mockVC expect] andDo:nil] setThemeName:plistName];
     
     // WHEN
-    [[mockVC expect] presentViewController:[OCMArg isNotNil] animated:YES completion:nil];
+    [[[mockVC expect] andDo:nil] presentViewController:[OCMArg isNotNil] animated:YES completion:nil];
     [self.ambassadorSDK presentRAFForCampaign:campID FromViewController:mockVC withThemePlist:plistName];
     
     // THEN
