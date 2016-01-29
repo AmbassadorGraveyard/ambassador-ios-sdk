@@ -114,7 +114,7 @@
                                    NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"One of the required ConversionParameter properties was not set", nil),
                                    NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Ensure that 'mbsy_revenue', 'mbsy_email', and 'mbsy_campaign' properties are being set. (The other properties are optional", nil)};
         
-        error = [NSError errorWithDomain:AMB_ERROR_DOMAIN code:ECPPROP userInfo:userInfo];
+        error = [NSError errorWithDomain:@"AmbassadorSDKErrorDomain" code:ECPPROP userInfo:userInfo];
     }
     
     return error;
