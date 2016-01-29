@@ -8,38 +8,30 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AMBNetworkObject : NSObject <NSCoding>
+@interface AMBNetworkObject : NSObject
+
 - (NSMutableDictionary *)toDictionary;
-- (NSError *)validate;
 - (void)fillWithDictionary:(NSMutableDictionary *)dictionary;
-- (NSData *)toDataError:(NSError *__autoreleasing*)e;
 - (NSData*)toData;
-- (void)save;
-+ (instancetype)loadFromDisk;
-+ (void)deleteFromDisk;
+
 @end
 
 
-
-@interface AMBPusherSessionSubscribeNetworkObject : AMBNetworkObject
-@property (nonatomic, strong) NSString *channel_name;
-@property (nonatomic, strong) NSString *client_session_uid;
-@property (nonatomic, strong) NSDate *expires_at;
-- (BOOL)isExpired;
-- (NSMutableDictionary *)additionalNetworkHeaders;
-@end
-
-
+#pragma mark - Pusher Auth Object
 
 @interface AMBPusherAuthNetworkObject : AMBNetworkObject
+
 @property (nonatomic, strong) NSString *auth_type;
 @property (nonatomic, strong) NSString *channel;
 @property (nonatomic, strong) NSString *socket_id;
+
 @end
 
 
+#pragma mark - URL Object
 
 @interface AMBUserUrlNetworkObject : AMBNetworkObject
+
 @property (nonatomic, strong) NSNumber *campaign_uid;
 @property (nonatomic, strong) NSString *short_code;
 @property (nonatomic, strong) NSString *subject;
@@ -52,10 +44,10 @@
 @end
 
 
+#pragma mark - User Object
 
 @interface AMBUserNetworkObject : AMBNetworkObject
-//- (void)fillWithUrl:(NSString *)url universalToken:(NSString *)uTok universalID:(NSString *)uID completion:(void(^)(NSError *))c;
-- (void)fillWithUrl:(NSString *)url completion:(void(^)(NSString *error))completion;
+
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *first_name;
 @property (nonatomic, strong) NSString *last_name;
@@ -64,41 +56,57 @@
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSMutableArray *urls;
 
+- (void)fillWithUrl:(NSString *)url completion:(void(^)(NSString *error))completion;
 - (AMBUserUrlNetworkObject *)urlObjForCampaignID:(NSNumber*)cID;
+
 @end
 
 
+#pragma mark - Identify Object
 
 @interface AMBIdentifyNetworkObject : AMBNetworkObject
+
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *campaign_id;
 @property BOOL enroll;
 @property (strong, nonatomic) NSString *source;
 @property (strong, nonatomic) NSDictionary *fp;
+
 @end
 
 
-// Bulk Share Network objects
+#pragma mark - Share Track Object
+
 @interface AMBShareTrackNetworkObject : AMBNetworkObject
+
 @property (nonatomic, strong) NSString *short_code;
 @property (nonatomic, strong) NSString *recipient_email;
 @property (nonatomic, strong) NSString *social_name;
 @property (nonatomic, strong) NSString *recipient_username;
 @property (nonatomic, strong) NSString * from_email;
+
 @end
 
+
+#pragma mark - Bulk Share Email Object
+
 @interface AMBBulkShareEmailObject : AMBNetworkObject
+
 @property (nonatomic, strong) NSArray * to_emails;
 @property (nonatomic, strong) NSString * short_code;
 @property (nonatomic, strong) NSString * message;
 @property (nonatomic, strong) NSString * subject_line;
 @property (nonatomic, strong) NSString * from_email;
 
-- (instancetype)initWithEmails:(NSArray*)emails shortCode:(NSString*)shortCode message:(NSString*)message subjectLine:(NSString*)subjectLine;
+- (instancetype)initWithEmails:(NSArray*)emails message:(NSString*)message;
 
 @end
 
+
+#pragma mark - Bulk Share SMS Object
+
 @interface AMBBulkShareSMSObject : AMBNetworkObject
+
 @property (nonatomic, strong) NSArray * to;
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSString * message;
@@ -107,6 +115,9 @@
 - (instancetype)initWithPhoneNumbers:(NSArray*)phoneNumbers fromSender:(NSString*)sender message:(NSString*)message;
 
 @end
+
+
+#pragma mark - Name Update Object
 
 @interface AMBUpdateNameObject : AMBNetworkObject
 
