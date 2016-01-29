@@ -11,7 +11,7 @@
 #import <OCMock/OCMock.h>
 #import "AMBSendCompletionModal.h"
 
-@interface AMBUtilities (Test)
+@interface AMBUtilities (Test) <AMBSendCompletionDelegate>
 
 - (void)startSpinner;
 - (void)hideLoadingView;
@@ -59,6 +59,7 @@
     // GIVEN
     NSString *alertMessage = @"Alert message";
     BOOL successful = YES;
+    BOOL shouldDismiss = NO;
     
     id mockPresentingVC = [OCMockObject mockForClass:[UIViewController class]];
     id mockSB = [OCMockObject mockForClass:[UIStoryboard class]];
@@ -67,10 +68,13 @@
     [[[mockSB expect] andReturn:mockVC] instantiateViewControllerWithIdentifier:@"sendCompletionModal"];
     
     [[[mockVC expect] andDo:nil] setAlertMessage:alertMessage];
-    [[[mockVC expect] andDo:nil] shouldUseSuccessIcon:successful];
+    [[[mockVC expect] andDo:nil] setShowSuccess: successful];
+    [[[mockVC expect] andDo:nil] setPresentingVC:[OCMArg isKindOfClass:[UIViewController class]]];
+    [[[mockVC expect] andDo:nil] setShouldDismissPresentingVC:shouldDismiss];
+    [[[mockVC expect] andDo:nil] setUniqueIdentifier:nil];
+    [[[mockVC expect] andDo:nil] setDelegate:[OCMArg any]];
     [[[mockVC expect] andDo:nil] setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     [[[mockVC expect] andDo:nil] setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    [[[mockVC expect] andDo:nil] setButtonAction:[OCMArg any]];
     
     [[[mockPresentingVC expect] andDo:nil] presentViewController:mockVC animated:YES completion:nil];
     
@@ -81,6 +85,21 @@
     [mockSB verify];
     [mockVC verify];
     [mockPresentingVC verify];
+}
+
+- (void)testButtonClickDelegateFunction {
+    // GIVEN
+    BOOL dismissPresenter = YES;
+    NSString *uniqueID = @"unique";
+    
+    id mockVC = [OCMockObject mockForClass:[UIViewController class]];
+    [[[mockVC expect] andDo:nil] dismissViewControllerAnimated:YES completion:nil];
+    
+    // WHEN
+    [self.utilities buttonClickedWithPresentingVC:mockVC shouldDismissPresentingVC:dismissPresenter uniqueID:uniqueID];
+    
+    // THEN
+    [mockVC verify];
 }
 
 
@@ -96,6 +115,12 @@
     }
     
     [[[mockView expect] andDo:nil] addSubview:[OCMArg isKindOfClass:[UIView class]]];
+    
+    [[[mockView expect] andDo:^(NSInvocation *invocation) {
+        void (^animations)() = nil;
+        [invocation getArgument:&animations atIndex:4];
+        animations();
+    }] animateWithDuration:0.3 animations:[OCMArg invokeBlock] completion:[OCMArg any]];
     
     // WHEN
     [self.utilities showLoadingScreenForView:mockView];
@@ -126,13 +151,25 @@
 - (void)testHideLoadingView {
     // GIVEN
     self.utilities.loadingView = [[UIView alloc ] init];
+    
+    id mockLoadingView = [OCMockObject partialMockForObject:self.utilities.loadingView];
     id mockView = [OCMockObject mockForClass:[UIView class]];
-    [[mockView expect] animateWithDuration:0.3 animations:[OCMArg any] completion:[OCMArg any]];
+    
+//    [[mockView expect] animateWithDuration:0.3 animations:[OCMArg any] completion:[OCMArg any]];
+    
+    [[[mockView expect] andDo:^(NSInvocation *invocation) {
+        void (^completion)(BOOL finished) = nil;
+        [invocation getArgument:&completion atIndex:4];
+        completion(YES);
+    }] animateWithDuration:0.3 animations:[OCMArg any] completion:[OCMArg invokeBlock]];
+    [[[mockLoadingView expect] andDo:nil] removeFromSuperview];
+    
     
     // WHEN
     [self.utilities hideLoadingView];
     
     // THEN
+    [mockLoadingView verify];
     [mockView verify];
 }
 
@@ -220,14 +257,14 @@
 - (void)testColorIsDark {
     // GIVEN
     UIColor *darkColor = [UIColor blackColor];
-    UIColor *lightColor = [UIColor yellowColor];
+    UIColor *lightColor = [UIColor whiteColor];
     
     // WHEN
     BOOL isDarkTrue = [AMBUtilities colorIsDark:darkColor];
     BOOL isDarkFalse = [AMBUtilities colorIsDark:lightColor];
     
     // THEN
-//    XCTAssertTrue(isDarkTrue); FIXXXX
+    XCTAssertTrue(isDarkTrue);
     XCTAssertFalse(isDarkFalse);
 }
 
