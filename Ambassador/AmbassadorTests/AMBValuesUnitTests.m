@@ -9,6 +9,8 @@
 #import <XCTest/XCTest.h>
 #import "AMBValues.h"
 #import "AmbassadorSDK_Internal.h"
+#import "AMBPusherChannelObject.h"
+#import "AMBNetworkObject.h"
 
 @interface AMBValuesUnitTests : XCTestCase
 
@@ -27,6 +29,9 @@
     [self.mockDefaults removeSuiteNamed:@"AMBDEFAULTS"];
     [super tearDown];
 }
+
+
+#pragma mark - Images Tests
 
 - (void)testImageFromBundle {
     // GIVEN
@@ -64,6 +69,9 @@
     XCTAssertEqual(mockBundle, realBundle);
     XCTAssert([mockBundlePath isEqualToString:realBundlePath], @"Expected %@, but got %@", mockBundlePath, realBundlePath);
 }
+
+
+#pragma mark - Setters and Getters Tests
 
 - (void)testSetAndGetMbsyCookie {
     // GIVEN
@@ -186,6 +194,54 @@
     
     // THEN
     XCTAssertEqualObjects(mockAccessToken, expectedAccessToken);
+}
+
+- (void)testSetAndGetUserEmail {
+    // GIVEN
+    NSString *expectedEmail = @"user@example.com";
+    
+    // WHEN
+    [AMBValues setUserEmail:expectedEmail];
+    NSString *savedEmail = [AMBValues getUserEmail];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedEmail, savedEmail);
+}
+
+- (void)testSetAndGetPusherChannelObject {
+    // GIVEN
+    NSDictionary *expectedDict = @{ @"channel_name" : @"lsdfjsdlfkj@snippet-channel", @"client_session_uid" : @"lsdfjsdlfkj", @"expires_at" : @"2016-02-01T01:01:01.123" };
+    
+    // WHEN
+    [AMBValues setPusherChannelObject:expectedDict];
+    AMBPusherChannelObject *savedObject = [AMBValues getPusherChannelObject];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedDict[@"channel_name"], savedObject.channelName);
+    XCTAssertEqualObjects(expectedDict[@"client_session_uid"], savedObject.sessionId);
+    XCTAssertNotNil(savedObject.expiresAt);
+}
+
+- (void)testSetAndGetUserURLObject {
+    // GIVEN
+    NSDictionary *expectedDict = @{ @"campaign_uid" : @"123456789",
+                                    @"short_code" : @"TeSt",
+                                    @"subject" : @"Unit test line",
+                                    @"url" : @"mbsy.co.test/TeSt",
+                                    @"has_access" : @1,
+                                    @"is_active" : @1 };
+    
+    // WHEN
+    [AMBValues setUserURLObject:expectedDict];
+    AMBUserUrlNetworkObject *savedObject = [AMBValues getUserURLObject];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedDict[@"campaign_uid"], savedObject.campaign_uid);
+    XCTAssertEqualObjects(expectedDict[@"short_code"], savedObject.short_code);
+    XCTAssertEqualObjects(expectedDict[@"subject"], savedObject.subject);
+    XCTAssertEqualObjects(expectedDict[@"url"], savedObject.url);
+    XCTAssertTrue(savedObject.has_access);
+    XCTAssertTrue(savedObject.is_active);
 }
 
 @end
