@@ -15,22 +15,16 @@
     switch (type) {
         case AMBSocialServiceTypeEmail:
             return @"email";
-            break;
         case AMBSocialServiceTypeSMS:
             return @"sms";
-            break;
         case AMBSocialServiceTypeTwitter:
             return @"twitter";
-            break;
         case AMBSocialServiceTypeLinkedIn:
             return @"linkedin";
-            break;
         case AMBSocialServiceTypeFacebook:
             return @"facebook";
-            break;
         default:
             return nil;
-            break;
     }
 }
 
