@@ -15,14 +15,12 @@
 
 #pragma mark - Shared Instance
 
-static NSURLSession * urlSession;
-
 + (instancetype)sharedInstance {
     static AMBNetworkManager* _sharedInsance = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
         _sharedInsance = [[AMBNetworkManager alloc] init];
-        urlSession = [_sharedInsance createURLSession];
+        _sharedInsance.urlSession = [_sharedInsance createURLSession];
     });
     
     return _sharedInsance;
@@ -43,7 +41,7 @@ static NSURLSession * urlSession;
     [identifyRequest setValue:[AMBValues getPusherChannelObject].requestId forHTTPHeaderField:@"X-Mbsy-Client-Request-ID"];
     identifyRequest.HTTPBody = [identifyObject toData];
     
-    [[urlSession dataTaskWithRequest:identifyRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[self.urlSession dataTaskWithRequest:identifyRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         DLog(@"SEND IDENTIFY Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
         if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
             if (success) { success([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
@@ -60,7 +58,7 @@ static NSURLSession * urlSession;
     NSMutableURLRequest *shareTrackRequest = [self createURLRequestWithURL:[AMBValues getShareTrackUrl] requestType:@"POST"];
     shareTrackRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:[AMBBulkShareHelper shareTrackPayload:contactList shareType:socialType] options:0 error:nil];
     
-    [[urlSession dataTaskWithRequest:shareTrackRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[self.urlSession dataTaskWithRequest:shareTrackRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         DLog(@"SHARE TRACK Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
         if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);; }
@@ -160,7 +158,7 @@ static NSURLSession * urlSession;
     NSMutableURLRequest *smsRequest = [self createURLRequestWithURL:[AMBValues getBulkShareSMSUrl] requestType:@"POST"];
     smsRequest.HTTPBody = [smsObject toData];
     
-    [[urlSession dataTaskWithRequest:smsRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[self.urlSession dataTaskWithRequest:smsRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
             DLog(@"SMS Bulk Share SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
@@ -179,7 +177,7 @@ static NSURLSession * urlSession;
     NSMutableURLRequest *emailRequest = [self createURLRequestWithURL:[AMBValues getBulkShareEmailUrl] requestType:@"POST"];
     emailRequest.HTTPBody = [emailObject toData];
     
-    [[urlSession dataTaskWithRequest:emailRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[self.urlSession dataTaskWithRequest:emailRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
             DLog(@"Email Bulk Share SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
@@ -198,7 +196,7 @@ static NSURLSession * urlSession;
     NSMutableURLRequest *nameUpdateRequest = [self createURLRequestWithURL:[AMBValues getSendIdentifyUrl] requestType:@"POST"];
     nameUpdateRequest.HTTPBody = [nameUpdateObject toData];
     
-    [[urlSession dataTaskWithRequest:nameUpdateRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[self.urlSession dataTaskWithRequest:nameUpdateRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         DLog(@"NAME UPDATE Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
         if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
             DLog(@"Updating Names SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
@@ -219,7 +217,7 @@ static NSURLSession * urlSession;
     NSMutableURLRequest *conversionRequest = [self createURLRequestWithURL:[AMBValues getSendConversionUrl] requestType:@"POST"];
     conversionRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:conversionDict options:0 error:nil];
     
-    [[urlSession dataTaskWithRequest:conversionRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[self.urlSession dataTaskWithRequest:conversionRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         DLog(@"SEND CONVERSION Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
         if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
             DLog(@"Sending Conversion SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
@@ -236,7 +234,7 @@ static NSURLSession * urlSession;
 
 - (void)getPusherSessionWithSuccess:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
     NSMutableURLRequest *pusherRequest = [self createURLRequestWithURL:[AMBValues getPusherSessionUrl] requestType:@"POST"];
-    [[urlSession dataTaskWithRequest:pusherRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[self.urlSession dataTaskWithRequest:pusherRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         DLog(@"PUSHER SESSION Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
         if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
             DLog(@"Pusher Session SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
@@ -254,7 +252,7 @@ static NSURLSession * urlSession;
 - (void)getLargePusherPayloadFromUrl:(NSString*)url success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
     NSMutableURLRequest *pusherUrlRequest = [self createURLRequestWithURL:url requestType:@"GET"];
     
-    [[urlSession dataTaskWithRequest:pusherUrlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[self.urlSession dataTaskWithRequest:pusherUrlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         DLog(@"GET LARGE PUSH PAYLOAD status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
         if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
             DLog(@"Large Pusher Payload SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
