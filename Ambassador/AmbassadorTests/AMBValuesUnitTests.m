@@ -71,6 +71,141 @@
 }
 
 
+#pragma mark - URL Tests
+
+- (void)testSendIdentifyURL {
+    // GIVEN
+    NSString *expectedURL = ([AMBValues isProduction]) ? @"https://api.getambassador.com/universal/action/identify/" : @"https://dev-ambassador-api.herokuapp.com/universal/action/identify/";
+    
+    // WHEN
+    NSString *actualURL = [AMBValues getSendIdentifyUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedURL, actualURL);
+}
+
+- (void)testShareTrackURL {
+    // GIVEN
+    NSString *expectedURL = ([AMBValues isProduction]) ? @"https://api.getambassador.com/track/share/" : @"https://dev-ambassador-api.herokuapp.com/track/share/";
+    
+    // WHEN
+    NSString *actualURL = [AMBValues getShareTrackUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedURL, actualURL);
+}
+
+- (void)testLinkedInAuthURL {
+    // GIVEN
+    NSString *expectedURL = @"https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=75sew7u54h2hn0&redirect_uri=http://localhost:2999/&state=987654321&scope=r_basicprofile%20w_share";
+    
+    // WHEN
+    NSString *actualURL = [AMBValues getLinkedInAuthorizationUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedURL, actualURL);
+}
+
+- (void)testLinkedInCallbackURL {
+    // GIVEN
+    NSString *expectedURL =  @"http://localhost:2999/";
+    
+    // WHEN
+    NSString *actualURL = [AMBValues getLinkedInAuthCallbackUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedURL, actualURL);
+}
+
+- (void)testLinkedInRequestTokenURL {
+    // GIVEN
+    NSString *expectedURL = @"https://www.linkedin.com/uas/oauth2/accessToken";
+    
+    // WHEN
+    NSString *actualURL = [AMBValues getLinkedInRequestTokenUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedURL, actualURL);
+}
+
+- (void)testLinkedInValidationURL {
+    // GIVEN
+    NSString *expectedURL = @"https://api.linkedin.com/v1/people/~?format=json";
+    
+    // WHEN
+    NSString *actualURL = [AMBValues getLinkedInValidationUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedURL, actualURL);
+}
+
+- (void)testLinkedInShareURL {
+    // GIVEN
+    NSString *expectedURL = @"https://api.linkedin.com/v1/people/~/shares?format=json";
+    
+    // WHEN
+    NSString *actualURL = [AMBValues getLinkedInShareUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedURL, actualURL);
+}
+
+- (void)testBulkShareSMSURL {
+    // GIVEN
+    NSString *expectedURL = [AMBValues isProduction] ? @"https://api.getambassador.com/share/sms/" : @"https://dev-ambassador-api.herokuapp.com/share/sms/";
+    
+    // WHEN
+    NSString *actualURL = [AMBValues getBulkShareSMSUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedURL, actualURL);
+}
+
+- (void)testBulkShareEmailURL {
+    // GIVEN
+    NSString *expectedURL = [AMBValues isProduction] ? @"https://api.getambassador.com/share/email/" : @"https://dev-ambassador-api.herokuapp.com/share/email/";
+
+    // WHEN
+    NSString *actualURL = [AMBValues getBulkShareEmailUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedURL, actualURL);
+}
+
+- (void)testSendConversionURL {
+    // GIVEN
+    NSString *expectedURL = [AMBValues isProduction] ? @"https://api.getambassador.com/universal/action/conversion/" : @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/";
+    
+    // WHEN
+    NSString *actualURL = [AMBValues getSendConversionUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedURL, actualURL);
+}
+
+- (void)testPusherSessionURL {
+    // GIVEN
+    NSString *expectedURL = [AMBValues isProduction] ? @"https://api.getambassador.com/auth/session/" : @"https://dev-ambassador-api.herokuapp.com/auth/session/";
+    
+    // WHEN
+    NSString *actualURL = [AMBValues getPusherSessionUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedURL, actualURL);
+}
+
+- (void)testPusherAuthURL {
+    // GIVEN
+    NSString *expectedURL = [AMBValues isProduction] ? @"https://api.getambassador.com/auth/subscribe/" : @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
+    
+    // WHEN
+    NSString *actualURL = [AMBValues getPusherAuthUrl];
+    
+    // THEN
+    XCTAssertEqualObjects(expectedURL, actualURL);
+}
+
+
 #pragma mark - Setters and Getters Tests
 
 - (void)testSetAndGetMbsyCookie {
