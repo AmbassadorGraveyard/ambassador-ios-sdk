@@ -184,6 +184,7 @@
 		EFC0371F1C5829DB0062202A /* AMBShareServiceCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC0371E1C5829DB0062202A /* AMBShareServiceCellTests.m */; };
 		EFC037211C5829F70062202A /* AMBAuthorizeLinkedInTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC037201C5829F70062202A /* AMBAuthorizeLinkedInTests.m */; };
 		EFC037231C582A100062202A /* AMBLinkedInShareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC037221C582A100062202A /* AMBLinkedInShareTests.m */; };
+		EFDDAD801C601839002BC5AE /* AMBNetworkManagerUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDDAD7F1C601839002BC5AE /* AMBNetworkManagerUnitTests.m */; };
 		EFDFA0CA1BE148A5002FA3ED /* AMBValues.h in Headers */ = {isa = PBXBuildFile; fileRef = EFDFA0C81BE148A5002FA3ED /* AMBValues.h */; };
 		EFDFA0CB1BE148A5002FA3ED /* AMBValues.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDFA0C91BE148A5002FA3ED /* AMBValues.m */; };
 		EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */ = {isa = PBXBuildFile; fileRef = EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */; };
@@ -468,6 +469,7 @@
 		EFC0371E1C5829DB0062202A /* AMBShareServiceCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBShareServiceCellTests.m; sourceTree = "<group>"; };
 		EFC037201C5829F70062202A /* AMBAuthorizeLinkedInTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBAuthorizeLinkedInTests.m; sourceTree = "<group>"; };
 		EFC037221C582A100062202A /* AMBLinkedInShareTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkedInShareTests.m; sourceTree = "<group>"; };
+		EFDDAD7F1C601839002BC5AE /* AMBNetworkManagerUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworkManagerUnitTests.m; sourceTree = "<group>"; };
 		EFDFA0C81BE148A5002FA3ED /* AMBValues.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = AMBValues.h; sourceTree = "<group>"; };
 		EFDFA0C91BE148A5002FA3ED /* AMBValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValues.m; sourceTree = "<group>"; };
 		EFDFA0CD1BE154B8002FA3ED /* UIColor+AMBColorValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AMBColorValues.h"; sourceTree = "<group>"; };
@@ -618,6 +620,7 @@
 		DB844D361BA75BB8003FD7A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EFDDAD7F1C601839002BC5AE /* AMBNetworkManagerUnitTests.m */,
 				EFC037221C582A100062202A /* AMBLinkedInShareTests.m */,
 				EFC037201C5829F70062202A /* AMBAuthorizeLinkedInTests.m */,
 				EFC0371E1C5829DB0062202A /* AMBShareServiceCellTests.m */,
@@ -1431,6 +1434,7 @@
 				EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */,
 				EF50EFC21C56AE230077CC63 /* AMBConversionModel.xcdatamodel in Sources */,
 				EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */,
+				EFDDAD801C601839002BC5AE /* AMBNetworkManagerUnitTests.m in Sources */,
 				EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */,
 				EFC037231C582A100062202A /* AMBLinkedInShareTests.m in Sources */,
 				DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */,

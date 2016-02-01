@@ -12,6 +12,9 @@
 
 @interface AMBNetworkManager : NSObject <NSURLSessionDataDelegate>
 
+//static NSURLSession * urlSession;
+@property (nonatomic, strong) NSURLSession * urlSession;
+
 + (instancetype)sharedInstance;
 
 // Network calls
