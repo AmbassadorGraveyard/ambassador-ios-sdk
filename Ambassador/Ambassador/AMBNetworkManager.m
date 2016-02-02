@@ -42,10 +42,11 @@
     identifyRequest.HTTPBody = [identifyObject toData];
     
     [[self.urlSession dataTaskWithRequest:identifyRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        DLog(@"SEND IDENTIFY Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
-        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        NSInteger statusCode = (int)((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"SEND IDENTIFY Status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             if (success) { success([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
-        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
             DLog(@"SEND IDENTIFY Error - %@", error);
@@ -59,10 +60,11 @@
     shareTrackRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:[AMBBulkShareHelper shareTrackPayload:contactList shareType:socialType] options:0 error:nil];
     
     [[self.urlSession dataTaskWithRequest:shareTrackRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        DLog(@"SHARE TRACK Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
-        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        NSInteger statusCode = (int)((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"SHARE TRACK Status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);; }
-        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
             DLog(@"SHARE TRACK Error - %@", error);
@@ -81,13 +83,14 @@
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:linkedinRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            DLog(@"LINKEDIN REQUEST TOKEN Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
-            if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+            NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+            DLog(@"LINKEDIN REQUEST TOKEN Status code = %li", (long)statusCode);
+            if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
                 NSMutableDictionary *tokenResponse = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
                 [AMBValues setLinkedInExpirationDate:tokenResponse[@"expires_in"]];
                 [AMBValues setLinkedInAccessToken:tokenResponse[@"access_token"]];
                 if (success) { success(); }
-            } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]){
+            } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]){
                 if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
             } else {
                 DLog(@"LINKEDIN REQUEST TOKEN Error - %@", error);
@@ -107,10 +110,11 @@
     
     NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            if (!error && ((NSHTTPURLResponse*)response).statusCode == 401) {
+            NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
+            if (!error && statusCode == 401) {
                 DLog(@"Nullifying Linkedin Tokens");
                 [AMBValues setLinkedInAccessToken:nil];
-            } else if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
+            } else if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
                 DLog(@"LinkedIn Tokens are still up to date");
             } else {
                 DLog(@"LINKEDIN TOKEN VALIDATION CHECK Error - %@", error);
@@ -134,12 +138,13 @@
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
+            NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
+            if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
                 DLog(@"Linkedin Post SUCCESSFUL!");
                 if (success) { success(); }
-            } else if (!error && ((NSHTTPURLResponse*)response).statusCode == 401) {
+            } else if (!error && statusCode == 401) {
                 if (shouldReauthenticate) { shouldReauthenticate(); }
-            } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
+            } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
                 DLog(@"Linkedin Post FAILED with response - %@", error);
                 if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
             } else {
@@ -178,10 +183,11 @@
     emailRequest.HTTPBody = [emailObject toData];
     
     [[self.urlSession dataTaskWithRequest:emailRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
+        NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Email Bulk Share SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
-        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*)response).statusCode]) {
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Email Bulk Share FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
@@ -197,13 +203,14 @@
     nameUpdateRequest.HTTPBody = [nameUpdateObject toData];
     
     [[self.urlSession dataTaskWithRequest:nameUpdateRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        DLog(@"NAME UPDATE Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
-        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"NAME UPDATE Status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Updating Names SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             [AMBValues setUserFirstNameWithString:firstName];
             [AMBValues setUserLastNameWithString:lastName];
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
-        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Updating Names FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
@@ -218,16 +225,17 @@
     conversionRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:conversionDict options:0 error:nil];
     
     [[self.urlSession dataTaskWithRequest:conversionRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        DLog(@"SEND CONVERSION Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
-        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"SEND CONVERSION Status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Sending Conversion SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:NSUTF8StringEncoding error:nil]); }
-        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Sending Conversion FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-            if (failure) { failure(((NSHTTPURLResponse*) response).statusCode, data); }
+            if (failure) { failure(statusCode, data); }
         } else {
             DLog(@"SEND CONVERSION Error - %@", error);
-            if (failure) { failure(((NSHTTPURLResponse*) response).statusCode, data); }
+            if (failure) { failure(statusCode, data); }
         }
     }] resume];
 }
@@ -235,11 +243,12 @@
 - (void)getPusherSessionWithSuccess:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
     NSMutableURLRequest *pusherRequest = [self createURLRequestWithURL:[AMBValues getPusherSessionUrl] requestType:@"POST"];
     [[self.urlSession dataTaskWithRequest:pusherRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        DLog(@"PUSHER SESSION Status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
-        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"PUSHER SESSION Status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Pusher Session SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
-        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Pusher Session FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
@@ -251,13 +260,13 @@
 
 - (void)getLargePusherPayloadFromUrl:(NSString*)url success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
     NSMutableURLRequest *pusherUrlRequest = [self createURLRequestWithURL:url requestType:@"GET"];
-    
     [[self.urlSession dataTaskWithRequest:pusherUrlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        DLog(@"GET LARGE PUSH PAYLOAD status code = %i", (int)((NSHTTPURLResponse*) response).statusCode);
-        if (!error && [AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"GET LARGE PUSH PAYLOAD status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Large Pusher Payload SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
-        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:((NSHTTPURLResponse*) response).statusCode]) {
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Large Pusher Payload FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
