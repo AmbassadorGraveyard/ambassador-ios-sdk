@@ -12,13 +12,6 @@
 #import "AMBConversionParameters.h"
 #import "AMBConversionParameter_Internal.h"
 
-@interface AMBNetworkManager (Test)
-
-
-
-@end
-
-
 @interface AMBNetworkManagerUnitTests : XCTestCase
 
 @property (nonatomic, strong) AMBNetworkManager * networkManager;
@@ -26,6 +19,7 @@
 @property (nonatomic) id mockResponse;
 
 @end
+
 
 @implementation AMBNetworkManagerUnitTests
 
