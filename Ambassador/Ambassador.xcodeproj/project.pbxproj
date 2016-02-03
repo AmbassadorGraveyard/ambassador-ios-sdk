@@ -146,6 +146,7 @@
 		DBEB70001BA9B2D8005EE0D0 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */; };
 		EF07452A1C52C8E1009AF919 /* OCMock in Resources */ = {isa = PBXBuildFile; fileRef = EF0745291C52C8E1009AF919 /* OCMock */; };
 		EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF07452B1C52C8FA009AF919 /* libOCMock.a */; };
+		EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */; };
 		EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */; };
 		EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */; };
 		EF1CB0B41C3C7F6600F65031 /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1CB0B31C3C7F6600F65031 /* avatar.png */; };
@@ -424,6 +425,7 @@
 		EF07451F1C52C69F009AF919 /* OCMockitoIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMockitoIOS.framework; path = AmbassadorTests/OCMockitoIOS.framework; sourceTree = "<group>"; };
 		EF0745291C52C8E1009AF919 /* OCMock */ = {isa = PBXFileReference; lastKnownFileType = folder; path = OCMock; sourceTree = "<group>"; };
 		EF07452B1C52C8FA009AF919 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
+		EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdenityUnitTests.m; sourceTree = "<group>"; };
 		EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContactCard.h; sourceTree = "<group>"; };
 		EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCard.m; sourceTree = "<group>"; };
 		EF1CB0B31C3C7F6600F65031 /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
@@ -618,6 +620,7 @@
 		DB844D361BA75BB8003FD7A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */,
 				EFC037221C582A100062202A /* AMBLinkedInShareTests.m */,
 				EFC037201C5829F70062202A /* AMBAuthorizeLinkedInTests.m */,
 				EFC0371E1C5829DB0062202A /* AMBShareServiceCellTests.m */,
@@ -1431,6 +1434,7 @@
 				EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */,
 				EF50EFC21C56AE230077CC63 /* AMBConversionModel.xcdatamodel in Sources */,
 				EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */,
+				EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */,
 				EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */,
 				EFC037231C582A100062202A /* AMBLinkedInShareTests.m in Sources */,
 				DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */,
