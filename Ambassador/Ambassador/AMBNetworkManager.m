@@ -81,22 +81,22 @@
     [linkedinRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     linkedinRequest.HTTPBody = [bodyValue dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:linkedinRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
-            DLog(@"LINKEDIN REQUEST TOKEN Status code = %li", (long)statusCode);
-            if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-                NSMutableDictionary *tokenResponse = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
-                [AMBValues setLinkedInExpirationDate:tokenResponse[@"expires_in"]];
-                [AMBValues setLinkedInAccessToken:tokenResponse[@"access_token"]];
-                if (success) { success(); }
-            } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]){
-                if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
-            } else {
-                DLog(@"LINKEDIN REQUEST TOKEN Error - %@", error);
-                if (failure) { failure([error localizedFailureReason]); }
-            }
-        }];
+     NSURLSession *mainQueueSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    
+    NSURLSessionDataTask *task = [mainQueueSession dataTaskWithRequest:linkedinRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"LINKEDIN REQUEST TOKEN Status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            NSMutableDictionary *tokenResponse = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
+            [AMBValues setLinkedInExpirationDate:tokenResponse[@"expires_in"]];
+            [AMBValues setLinkedInAccessToken:tokenResponse[@"access_token"]];
+            if (success) { success(); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]){
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"LINKEDIN REQUEST TOKEN Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
     }];
     
     [task resume];
@@ -108,20 +108,20 @@
     request.HTTPMethod = @"GET";
     [request setValue:[NSString stringWithFormat:@"Bearer %@", [AMBValues getLinkedInAccessToken]] forHTTPHeaderField:@"Authorization"];
     
-    NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
-            if (!error && statusCode == 401) {
-                DLog(@"Nullifying Linkedin Tokens");
-                [AMBValues setLinkedInAccessToken:nil];
-            } else if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-                DLog(@"LinkedIn Tokens are still up to date");
-            } else {
-                DLog(@"LINKEDIN TOKEN VALIDATION CHECK Error - %@", error);
-            }
-            
-            complete();
-        }];
+     NSURLSession *mainQueueSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    
+    NSURLSessionTask *task = [mainQueueSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
+        if (!error && statusCode == 401) {
+            DLog(@"Nullifying Linkedin Tokens");
+            [AMBValues setLinkedInAccessToken:nil];
+        } else if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"LinkedIn Tokens are still up to date");
+        } else {
+            DLog(@"LINKEDIN TOKEN VALIDATION CHECK Error - %@", error);
+        }
+        
+        complete();
     }];
     
     [task resume];
@@ -136,22 +136,22 @@
     [request setValue:[NSString stringWithFormat:@"Bearer %@", [AMBValues getLinkedInAccessToken]] forHTTPHeaderField:@"Authorization"];
     [request setValue:@"json" forHTTPHeaderField:@"x-li-format"];
     
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
-            if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-                DLog(@"Linkedin Post SUCCESSFUL!");
-                if (success) { success(); }
-            } else if (!error && statusCode == 401) {
-                if (shouldReauthenticate) { shouldReauthenticate(); }
-            } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
-                DLog(@"Linkedin Post FAILED with response - %@", error);
-                if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
-            } else {
-                DLog(@"LINKEDIN POST Error - %@", error);
-                if (failure) { failure([error localizedFailureReason]); }
-            }
-        }];
+    NSURLSession *mainQueueSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    
+    NSURLSessionDataTask *task = [mainQueueSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"Linkedin Post SUCCESSFUL!");
+            if (success) { success(); }
+        } else if (!error && statusCode == 401) {
+            if (shouldReauthenticate) { shouldReauthenticate(); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"Linkedin Post FAILED with response - %@", error);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"LINKEDIN POST Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
     }];
     
     [task resume];
