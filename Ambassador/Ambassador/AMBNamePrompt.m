@@ -30,6 +30,9 @@
 
 CGFloat originalTopConstraintValue;
 
+
+#pragma mark - LifeCycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpTheme];
