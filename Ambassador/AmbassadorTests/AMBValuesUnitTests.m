@@ -14,19 +14,15 @@
 
 @interface AMBValuesUnitTests : XCTestCase
 
-@property (nonatomic, strong) NSUserDefaults *mockDefaults;
-
 @end
 
 @implementation AMBValuesUnitTests
 
 - (void)setUp {
     [super setUp];
-    self.mockDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AMBDEFAULTS"];
 }
 
 - (void)tearDown {
-    [self.mockDefaults removeSuiteNamed:@"AMBDEFAULTS"];
     [super tearDown];
 }
 
@@ -210,40 +206,26 @@
 
 - (void)testSetAndGetMbsyCookie {
     // GIVEN
-    NSString *mockSaveKey = @"mbsy_cookie_code";
     NSString *mockValue = @"testValue";
     
-    NSString *mockReturnValue;
-    NSString *realReturnValue;
-    
     // WHEN
-    [self.mockDefaults setValue:mockValue forKey:mockSaveKey];
     [AMBValues setMbsyCookieWithCode:mockValue];
-    
-    mockReturnValue = [self.mockDefaults valueForKey:mockSaveKey];
-    realReturnValue = [AMBValues getMbsyCookieCode];
+    NSString *realReturnValue = [AMBValues getMbsyCookieCode];
     
     // THEN
-    XCTAssertEqualObjects(mockReturnValue, realReturnValue);
+    XCTAssertEqualObjects(mockValue, realReturnValue);
 }
 
 - (void)testSetAndGetDeviceFingerPrint {
     // GIVEN
-    NSString *mockSaveKey = @"device_fingerprint";
     NSDictionary *mockDictionary = @{@"testValue" : @"value"};
     
-    NSDictionary *mockReturnValue;
-    NSDictionary *realReturnValue;
-    
     // WHEN
-    [self.mockDefaults setValue:mockDictionary forKey:mockSaveKey];
     [AMBValues setDeviceFingerPrintWithDictionary:mockDictionary];
-    
-    mockReturnValue = [self.mockDefaults valueForKey:mockSaveKey];
-    realReturnValue = [AMBValues getDeviceFingerPrint];
+    NSDictionary *realReturnValue = [AMBValues getDeviceFingerPrint];
     
     // THEN
-    XCTAssertEqualObjects(mockReturnValue, realReturnValue);
+    XCTAssertEqualObjects(mockDictionary, realReturnValue);
 }
 
 - (void)testSetAndGetHasInstalled {
