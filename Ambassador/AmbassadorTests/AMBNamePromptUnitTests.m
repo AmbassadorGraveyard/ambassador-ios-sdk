@@ -7,8 +7,22 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
+#import "AMBNamePrompt.h"
+
+@interface AMBNamePrompt (Test)
+
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * topConstraint;
+
+- (void)setUpTheme;
+
+@end
+
 
 @interface AMBNamePromptUnitTests : XCTestCase
+
+@property (nonatomic, strong) AMBNamePrompt * namePrompt;
+@property (nonatomic) id mockNamePrompt;
 
 @end
 
@@ -16,24 +30,53 @@
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    if (!self.namePrompt) {
+        self.namePrompt = [[AMBNamePrompt alloc] init];
+    }
+    
+    self.mockNamePrompt = [OCMockObject partialMockForObject:self.namePrompt];
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [self.mockNamePrompt stopMocking];
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+#pragma mark - LifeCycle Tests
+
+- (void)testViewDidLoad {
+    // GIVEN
+    [[[self.mockNamePrompt expect] andDo:nil] setUpTheme];
+    
+    // WHEN
+    [self.namePrompt viewDidLoad];
+    
+    // THEN
+    [self.mockNamePrompt verify];
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void)testViewDidAppear {
+    // GIVEN
+    self.namePrompt.topConstraint.constant = 100;
+    
+    // WHEN
+    CGFloat mockOriginalConstraint = self.namePrompt.topConstraint.constant;
+    
+    // THEN
+    XCTAssertEqual(mockOriginalConstraint, self.namePrompt.topConstraint.constant);
+}
+
+- (void)testViewWillDisappear {
+    // GIVEN
+    id mockObserver = [OCMockObject partialMockForObject:[NSNotificationCenter defaultCenter]];
+    [[[mockObserver expect] andDo:nil] removeObserver:[OCMArg any]];
+    
+    // WHEN
+    [self.namePrompt viewWillDisappear:YES];
+    
+    // THEN
+    [mockObserver verify];
 }
 
 @end
