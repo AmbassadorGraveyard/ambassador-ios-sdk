@@ -96,7 +96,7 @@
     __block XCTestExpectation *successExpectation = [self expectationWithDescription:@"linkedinRequestTokenCompletion"];
     
     id mockURLSession = [OCMockObject mockForClass:[NSURLSession class]];
-    [[[mockURLSession expect] andReturn:mockURLSession] sharedSession];
+    [[[mockURLSession expect] andReturn:mockURLSession] sessionWithConfiguration:[OCMArg any] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     [[[mockURLSession expect] andDo:^(NSInvocation *invocation) {
         void (^completionHandler)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) = nil;
         [invocation getArgument:&completionHandler atIndex:3];
@@ -123,7 +123,7 @@
     [[[failMockResponse expect] andReturnValue:OCMOCK_VALUE((NSInteger)401)] statusCode];
     
     id mockURLSession = [OCMockObject mockForClass:[NSURLSession class]];
-    [[[mockURLSession expect] andReturn:mockURLSession] sharedSession];
+    [[[mockURLSession expect] andReturn:mockURLSession] sessionWithConfiguration:[OCMArg any] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     [[[mockURLSession expect] andDo:^(NSInvocation *invocation) {
         void (^completionHandler)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) = nil;
         [invocation getArgument:&completionHandler atIndex:3];
@@ -149,7 +149,7 @@
     NSDictionary *fakeDict = @{ @"shareValue" : @"message" };
     
     id mockURLSession = [OCMockObject mockForClass:[NSURLSession class]];
-    [[[mockURLSession expect] andReturn:mockURLSession] sharedSession];
+    [[[mockURLSession expect] andReturn:mockURLSession] sessionWithConfiguration:[OCMArg any] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     [[[mockURLSession expect] andDo:^(NSInvocation *invocation) {
         void (^completionHandler)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) = nil;
         [invocation getArgument:&completionHandler atIndex:3];
