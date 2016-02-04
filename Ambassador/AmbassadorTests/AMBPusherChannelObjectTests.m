@@ -25,6 +25,21 @@
     [super tearDown];
 }
 
+- (void)testInitWithDictionary {
+    // GIVEN
+    NSString *channelName = @"fakeChannelName";
+    NSString *dateString = @"2015-11-18T15:11:25.439";
+    NSString *clientSessionId = @"fakeClientSessionId";
+    NSDictionary *fakeDict = @{ @"channel_name" : channelName, @"expires_at" : dateString, @"client_session_uid" : clientSessionId };
+    
+    // WHEN
+    AMBPusherChannelObject *object = [[AMBPusherChannelObject alloc] initWithDictionary:(NSMutableDictionary*)`fakeDict];
+    
+    // THEN
+    XCTAssertEqualObjects(channelName, object.channelName);
+    XCTAssertEqualObjects(clientSessionId, object.sessionId);
+}
+
 - (void)testCreateObjectFromDictionary {
     // GIVEN
     NSString *mockChannelName = @"private-snippet-channel@user=privatetestchannel";
