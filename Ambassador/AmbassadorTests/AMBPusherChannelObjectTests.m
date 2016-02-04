@@ -33,7 +33,7 @@
     NSDictionary *fakeDict = @{ @"channel_name" : channelName, @"expires_at" : dateString, @"client_session_uid" : clientSessionId };
     
     // WHEN
-    AMBPusherChannelObject *object = [[AMBPusherChannelObject alloc] initWithDictionary:(NSMutableDictionary*)`fakeDict];
+    AMBPusherChannelObject *object = [[AMBPusherChannelObject alloc] initWithDictionary:(NSMutableDictionary*)fakeDict];
     
     // THEN
     XCTAssertEqualObjects(channelName, object.channelName);

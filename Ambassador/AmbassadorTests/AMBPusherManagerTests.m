@@ -147,6 +147,10 @@
     // GIVEN
     self.pusherMgr.channel = [self.pusherMgr.client subscribeToPrivateChannelNamed:@"fakeChannel"];
     
+    id mockNotifCenter = [OCMockObject partialMockForObject:[NSNotificationCenter defaultCenter]];
+    [[[mockNotifCenter expect] andDo:nil] postNotificationName:[OCMArg any] object:[OCMArg any]];
+    [[[mockNotifCenter expect] andDo:nil] postNotificationName:[OCMArg any] object:[OCMArg any]];
+    
     id mockChannel = [OCMockObject partialMockForObject:(NSObject*)self.pusherMgr.channel];
     [[[mockChannel expect] andDo:^(NSInvocation *invocation) {
         void (^handleWithBlock)(AMBPTPusherEvent *event) = nil;
@@ -158,6 +162,7 @@
     [self.pusherMgr bindToChannelEvent:@"action"];
     
     // THEN
+    [mockNotifCenter verify];
     [mockChannel verify];
 }
 
