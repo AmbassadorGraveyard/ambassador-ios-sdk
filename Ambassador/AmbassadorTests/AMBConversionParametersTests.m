@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
 #import "AMBConversionParameters.h"
 #import "AMBConversionParameter_Internal.h"
 
@@ -24,6 +25,40 @@
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+}
+
+
+#pragma mark - Initialization Tests
+
+- (void)testInitWithEntity {
+    // GIVEN
+    id mockEntity = [OCMockObject mockForClass:[AMBConversionParametersEntity class]];
+    [[[mockEntity expect] andReturn:@1] mbsy_campaign];
+    [[[mockEntity expect] andReturn:@""] mbsy_email];
+    [[[mockEntity expect] andReturn:@""] mbsy_add_to_group_id];
+    [[[mockEntity expect] andReturn:@""] mbsy_custom1];
+    [[[mockEntity expect] andReturn:@""] mbsy_custom2];
+    [[[mockEntity expect] andReturn:@""] mbsy_custom3];
+    [[[mockEntity expect] andReturn:@""] mbsy_event_data1];
+    [[[mockEntity expect] andReturn:@""] mbsy_event_data2];
+    [[[mockEntity expect] andReturn:@""] mbsy_event_data3];
+    [[[mockEntity expect] andReturn:@""] mbsy_first_name];
+    [[[mockEntity expect] andReturn:@""] mbsy_last_name];
+    [[[mockEntity expect] andReturn:@""] mbsy_transaction_uid];
+    [[[mockEntity expect] andReturn:@""] mbsy_uid];
+    [[[mockEntity expect] andReturn:@YES] mbsy_auto_create];
+    [[[mockEntity expect] andReturn:@YES] mbsy_deactivate_new_ambassador];
+    [[[mockEntity expect] andReturn:@1] mbsy_email_new_ambassador];
+    [[[mockEntity expect] andReturn:@1] mbsy_is_approved];
+    [[[mockEntity expect] andReturn:@1] mbsy_revenue];
+    
+    AMBConversionParameters *parameters = [[AMBConversionParameters alloc] initWithEntity:mockEntity];
+    
+    // WHEN
+    NSError *checkError = [parameters checkForError];
+    
+    // THEN
+    XCTAssertNotNil(checkError);
 }
 
 - (void)testCheckForNoError {
