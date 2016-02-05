@@ -149,29 +149,6 @@
 }
 
 
-#pragma mark - Caching
-
-- (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue {
-    if (!self.cache) { self.cache = [[NSCache alloc] init]; }
-    
-    [self.cache setObject:value forKey:keyValue];
-}
-
-- (NSObject*)getCacheValueWithKey:(NSString*)key {
-    if (self.cache) {
-        return [self.cache objectForKey:key];
-    }
-    
-    return nil;
-}
-
-- (void)removeCacheForKey:(NSString*)keyValue {
-    if (self.cache) {
-        [self.cache removeObjectForKey:keyValue];
-    }
-}
-
-
 #pragma mark - Misc Class Functions
 
 + (NSString*)createRequestID {
@@ -179,14 +156,18 @@
     return [NSString stringWithFormat:@"%f", timeInMiliseconds];
 }
 
-+ (BOOL)colorIsDark:(UIColor*)color {
-    const CGFloat* components = CGColorGetComponents(color.CGColor);
-    double redValue = components[0];
-    CGFloat greenValue = components[1];
-    CGFloat blueValue = components[2];
-    CGFloat darkness = 1 - (299 * redValue + 587 * greenValue + 114 * blueValue)/1000;
-
-    return (darkness < 0.5) ? NO : YES;
++ (BOOL)colorIsDark:(UIColor *)color {
+    size_t count = CGColorGetNumberOfComponents(color.CGColor);
+    const CGFloat *componentColors = CGColorGetComponents(color.CGColor);
+    
+    CGFloat darknessScore = 0;
+    if (count == 2) {
+        darknessScore = (((componentColors[0]*255) * 299) + ((componentColors[0]*255) * 587) + ((componentColors[0]*255) * 114)) / 1000;
+    } else if (count == 4) {
+        darknessScore = (((componentColors[0]*255) * 299) + ((componentColors[1]*255) * 587) + ((componentColors[2]*255) * 114)) / 1000;
+    }
+    
+    return (darknessScore <= 125) ? YES : NO;
 }
 
 + (BOOL)isSuccessfulStatusCode:(NSInteger)statusCode {
