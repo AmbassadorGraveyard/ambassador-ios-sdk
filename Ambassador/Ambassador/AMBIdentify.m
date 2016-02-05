@@ -35,7 +35,7 @@
 }
 
 - (void)performIdentifyForiOS9 {
-    self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AmbassadorSDK sharedInstance].universalID]]];
+    self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AMBValues getUniversalID]]]];
     DLog(@"Performing Identify with SAFARI VC for iOS 9");
     [self.safariVC.view setHidden:YES];
     self.safariVC.delegate = self;
