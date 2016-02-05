@@ -116,4 +116,16 @@
     XCTAssertTrue([strippedNumber2 isEqualToString:expectedNumber2]);
 }
 
+- (void)testShareTrackPayload {
+    // GIVEN
+    AMBSocialServiceType socialType = AMBSocialServiceTypeEmail;
+    NSArray *contacts = @[@"test@example.com", @"test@test.com"];
+    
+    // WHEN
+    NSArray *returnArray = [AMBBulkShareHelper shareTrackPayload:contacts shareType:socialType];
+    
+    // THEN
+    XCTAssertEqual([returnArray count], [contacts count]);
+}
+
 @end

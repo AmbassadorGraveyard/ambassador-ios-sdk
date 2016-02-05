@@ -7,12 +7,16 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
+#import "AMBNetworkManager.h"
 #import "AMBNetworkObject.h"
 #import "AMBTests.h"
+#import "AMBValues.h"
 
 @interface AMBNetworObjectTests : AMBTests
 
 @end
+
 
 @implementation AMBNetworObjectTests
 
@@ -24,20 +28,23 @@
     [super tearDown];
 }
 
-//- (void)testToDictionary {
-//    // GIVEN
-//    NSString *mockMessage = @"Test message";
-//    NSArray *mockEmails = [[NSArray alloc] initWithObjects:@"test@test.com", @"test2@test.com", @"test3@gmail.com", nil];
-//    AMBBulkShareEmailObject *mockShareEmailObj = [[AMBBulkShareEmailObject alloc] initWithEmails:mockEmails message:mockMessage];
-//    
-//    // WHEN
-//    NSMutableDictionary *expectedDictionary = [mockShareEmailObj toDictionary];
-//    
-//    // THEN
-//    XCTAssertEqual(3, expectedDictionary.count, @"Expected count was actually %i, not 5", (int)expectedDictionary.count);
-//    XCTAssertEqualObjects(mockMessage, expectedDictionary[@"message"], @"%@ is not equal to %@", mockMessage, expectedDictionary[@"message"]);
-//    XCTAssertEqualObjects(mockEmails, expectedDictionary[@"to_emails"], @"%@ is not equal to %@", mockEmails, expectedDictionary[@"to_emails"]);
-//}
+
+#pragma mark - NetworkObject Tests
+
+- (void)testToDictionary {
+    // GIVEN
+    AMBIdentifyNetworkObject *identifyObject = [[AMBIdentifyNetworkObject alloc] init];
+    identifyObject.email = @"test@example.com";
+    identifyObject.campaign_id = @"1";
+    
+    // WHEN
+    NSMutableDictionary *expectedDictionary = [identifyObject toDictionary];
+    
+    // THEN
+    XCTAssertEqual(4, expectedDictionary.count);
+    XCTAssertEqualObjects(identifyObject.email, expectedDictionary[@"email"]);
+    XCTAssertEqualObjects(identifyObject.campaign_id, expectedDictionary[@"campaign_id"]);
+}
 
 - (void)testFillWithDictionary {
     // GIVEN
@@ -68,6 +75,164 @@
     XCTAssertEqualObjects(mockUrl, expectedUserUrlNetworkObj.url, @"%@ is not equal to %@", mockUrl, expectedUserUrlNetworkObj);
     XCTAssertEqualObjects([NSNumber numberWithBool:mockActive], [NSNumber numberWithBool:expectedUserUrlNetworkObj.is_active], @"%@ is not equal to %@", [NSNumber numberWithBool:mockActive], [NSNumber numberWithBool:expectedUserUrlNetworkObj.is_active]);
     XCTAssertEqualObjects([NSNumber numberWithBool:mockAccess], [NSNumber numberWithBool:expectedUserUrlNetworkObj.has_access], @"%@ is not equal to %@", [NSNumber numberWithBool:mockAccess], [NSNumber numberWithBool:expectedUserUrlNetworkObj.has_access]);
+}
+
+- (void)testToData {
+    // GIVEN
+    AMBIdentifyNetworkObject *identifyObject = [[AMBIdentifyNetworkObject alloc] init];
+    
+    // WHEN
+    NSData *data = [identifyObject toData];
+    
+    // THEN
+    XCTAssertNotNil(data);
+}
+
+
+#pragma mark - Pusher Auth Tests
+
+- (void)testInit {
+    // GIVEN
+    NSString *blankString = @"";
+    
+    // WHEN
+    AMBPusherAuthNetworkObject *pusherAuth = [[AMBPusherAuthNetworkObject alloc] init];
+    
+    // THEN
+    XCTAssertEqualObjects(pusherAuth.auth_type, blankString);
+    XCTAssertEqualObjects(pusherAuth.channel, blankString);
+    XCTAssertEqualObjects(pusherAuth.socket_id, blankString);
+}
+
+
+#pragma mark - URL Object Tests
+
+- (void)testInitWithDictionary {
+    // GIVEN
+    NSDictionary *mockDict = @{ @"campaign_uid" : @"1", @"short_code" : @"test", @"subject" : @"test subject", @"url" : @"fake.url/test" };
+    
+    // WHEN
+    AMBUserUrlNetworkObject *object = [[AMBUserUrlNetworkObject alloc] initWithDictionary:mockDict];
+    
+    // THEN
+    XCTAssertEqualObjects(mockDict[@"campaign_uid"], object.campaign_uid);
+    XCTAssertEqualObjects(mockDict[@"short_code"], object.short_code);
+    XCTAssertEqualObjects(mockDict[@"subject"], object.subject);
+    XCTAssertEqualObjects(mockDict[@"url"], object.url);
+}
+
+
+#pragma mark - User Object tests
+
+- (void)testFillWithURL {
+    // GIVEN
+    AMBUserNetworkObject *userNetworkObject = [[AMBUserNetworkObject alloc] init];
+    id mockNetworkObject = [OCMockObject partialMockForObject:userNetworkObject];
+    [[mockNetworkObject expect] fillWithDictionary:[OCMArg any]];
+    
+    id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
+    [[[mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
+        void (^success)(NSDictionary *response) = nil;
+        [invocation getArgument:&success atIndex:3];
+        success(nil);
+    }] getLargePusherPayloadFromUrl:[OCMArg any] success:[OCMArg invokeBlock] failure:[OCMArg any]];
+    
+    // WHEN
+    [userNetworkObject fillWithUrl:@"fakeurl" completion:^(NSString *error) {
+        nil;
+    }];
+    
+    // THEN
+    [mockNetworkMgr verify];
+    [mockNetworkObject verify];
+}
+
+
+#pragma mark - Identify Objects Tests
+
+- (void)testIdentifyInit {
+    // GIVEN
+    NSString *blankString = @"";
+    
+    // WHEN
+    AMBIdentifyNetworkObject *identifyObject = [[AMBIdentifyNetworkObject alloc] init];
+    
+    // THEN
+    XCTAssertEqualObjects(identifyObject.email, blankString);
+    XCTAssertEqualObjects(identifyObject.campaign_id, blankString);
+    XCTAssertEqualObjects(identifyObject.source, blankString);
+    XCTAssertFalse(identifyObject.enroll);
+}
+
+
+#pragma mark - Share Track Object Tests
+
+- (void)testShareTrackInit {
+    // GIVEN
+    NSString *blankString = @"";
+    [AMBValues setUserEmail:@"testuser@example.com"];
+    
+    // WHEN
+    AMBShareTrackNetworkObject *trackObject = [[AMBShareTrackNetworkObject alloc] init];
+    
+    // THEN
+    XCTAssertEqualObjects(trackObject.recipient_username, blankString);
+    XCTAssertEqualObjects(trackObject.recipient_email, blankString);
+    XCTAssertEqualObjects(trackObject.short_code, blankString);
+    XCTAssertEqualObjects(trackObject.social_name, blankString);
+    XCTAssertEqualObjects(trackObject.from_email, [AMBValues getUserEmail]);
+}
+
+
+#pragma mark - Bulk Share Email Tests
+
+- (void)testInitWithEmails {
+    // GIVEN
+    NSArray *emails = @[@"test@example.com", @"test2@example.com", @"test3@example.com"];
+    NSString *message = @"This is a test message";
+    
+    // WHEN
+    AMBBulkShareEmailObject *emailObject = [[AMBBulkShareEmailObject alloc] initWithEmails:emails message:message];
+    
+    // THEN
+    XCTAssertEqual([emailObject.to_emails count], [emails count]);
+    XCTAssertEqualObjects(emailObject.message, message);
+}
+
+
+#pragma mark - Bulk Share SMS Tests
+
+- (void)testInitWithPhoneNumbers {
+    // GIVEN
+    NSArray *numbers = @[@"555-555-5555", @"123-456-7891", @"555-455-5654"];
+    NSString *senderName = @"Test McTest";
+    NSString *message = @"Another test message";
+    
+    // WHEN
+    AMBBulkShareSMSObject *smsObject = [[AMBBulkShareSMSObject alloc] initWithPhoneNumbers:numbers fromSender:senderName message:message];
+    
+    // THEN
+    XCTAssertEqualObjects(smsObject.name, senderName);
+    XCTAssertEqualObjects(smsObject.message, message);
+    XCTAssertEqual([smsObject.to count], [numbers count]);
+}
+
+
+#pragma mark - Update Name Tests
+
+- (void)testInitWithFirstName {
+    // GIVEN
+    NSString *firstName = @"Test";
+    NSString *lastName = @"McTest";
+    NSString *email = @"test@example.com";
+    
+    // WHEN
+    AMBUpdateNameObject *updateNameObject = [[AMBUpdateNameObject alloc] initWithFirstName:firstName lastName:lastName email:email];
+    
+    // THEN
+    XCTAssertEqualObjects(updateNameObject.update_data[@"first_name"], firstName);
+    XCTAssertEqualObjects(updateNameObject.update_data[@"last_name"], lastName);
+    XCTAssertEqualObjects(updateNameObject.email, email);
 }
 
 @end
