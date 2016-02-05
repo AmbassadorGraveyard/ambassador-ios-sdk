@@ -6,7 +6,9 @@
 //  Copyright © 2015 Ambassador. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import "AMBOptions.h"
 
 @interface AMBErrors : NSObject
 
