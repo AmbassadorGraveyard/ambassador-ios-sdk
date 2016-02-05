@@ -15,9 +15,9 @@
 
 @interface AMBNamePrompt () <UITextFieldDelegate, UIScrollViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIButton *continueButton;
-@property (weak, nonatomic) IBOutlet UITextField *firstNameField;
-@property (weak, nonatomic) IBOutlet UITextField *lastNameField;
+@property (nonatomic, strong) IBOutlet UIButton *continueButton;
+@property (nonatomic, strong) IBOutlet UITextField *firstNameField;
+@property (nonatomic, strong) IBOutlet UITextField *lastNameField;
 @property (nonatomic, strong) IBOutlet UIButton * btnClose;
 @property (nonatomic, strong) IBOutlet UIView * firstNameUnderLineView;
 @property (nonatomic, strong) IBOutlet UIView * lastNameUnderLineView;
@@ -29,6 +29,9 @@
 @implementation AMBNamePrompt
 
 CGFloat originalTopConstraintValue;
+
+
+#pragma mark - LifeCycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
