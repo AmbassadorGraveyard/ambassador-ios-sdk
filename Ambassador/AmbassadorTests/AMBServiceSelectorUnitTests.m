@@ -549,12 +549,13 @@
 
 - (void)testCheckLinkedinTokenCompletion {
     // GIVEN
+    [AMBValues setLinkedInAccessToken:@"fakeToken"];
     [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
         void (^complete)() = nil;
         [invocation getArgument:&complete atIndex:2];
         complete();
     }] checkForInvalidatedTokenWithCompletion:[OCMArg any]];
-    [[[self.mockSS expect] andDo:nil] performSegueWithIdentifier:[OCMArg any] sender:self.serviceSelector];
+    [[[self.mockSS expect] andDo:nil] presentLinkedInShare];
     
     // WHEN
     [self.serviceSelector checkLinkedInToken];

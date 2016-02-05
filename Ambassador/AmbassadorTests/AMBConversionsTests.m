@@ -49,8 +49,6 @@
 
 - (void)testRegisterConversion {
     // GIVEN
-    XCTestExpectation *expectation = [self expectationWithDescription:@"registerCompletion"];
-    
     AMBConversionParameters *parameters = [[AMBConversionParameters alloc] init];
     parameters.mbsy_campaign = @123456;
     parameters.mbsy_email = @"test@test.com";
@@ -63,15 +61,11 @@
     [[[mockCoreManager expect] andDo:nil] saveNewObjectToCoreDataWithEntityName:@"AMBConversionParametersEntity" valuesToSave:[parameters propertyDictionary]];
     
     // WHEN
-    [self.conversion registerConversionWithParameters:parameters completion:^(NSError *error) {
-        [expectation fulfill];
-    }];
+    [self.conversion registerConversionWithParameters:parameters completion:nil];
     
     // THEN
-    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError * _Nullable error) {
-        [mockCoreManager verify];
-        [mockParams verify];
-    }];
+    [mockCoreManager verify];
+    [mockParams verify];
 }
 
 - (void)testSendConversions {

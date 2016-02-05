@@ -39,6 +39,7 @@
     NSString *expectedFacebookString = [AMBOptions serviceTypeStringValue:AMBSocialServiceTypeFacebook];
     NSString *expectedEmailString = [AMBOptions serviceTypeStringValue:AMBSocialServiceTypeEmail];
     NSString *expectedSMSString = [AMBOptions serviceTypeStringValue:AMBSocialServiceTypeSMS];
+    NSString *expectedNilString = [AMBOptions serviceTypeStringValue:7];
     
     // THEN
     XCTAssertEqualObjects(mockTwitterString, expectedTwitterString, @"%@ is not equal to %@", mockTwitterString, expectedTwitterString);
@@ -46,6 +47,7 @@
     XCTAssertEqualObjects(mockFacebookString, expectedFacebookString, @"%@ is not equal to %@", mockFacebookString, expectedFacebookString);
     XCTAssertEqualObjects(mockEmailString, expectedEmailString, @"%@ is not equal to %@", mockEmailString, expectedEmailString);
     XCTAssertEqualObjects(mockSMSString, expectedSMSString, @"%@ is not equal to %@", mockSMSString, expectedSMSString);
+    XCTAssertNil(expectedNilString);
 }
 
 @end

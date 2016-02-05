@@ -49,11 +49,6 @@
 - (void)removeFadeFromView;
 - (void)rotateFadeForView:(UIView*)view;
 
-// Caching
-- (void)saveToCache:(NSObject*)value forKey:(NSString*)keyValue;
-- (NSObject*)getCacheValueWithKey:(NSString*)key;
-- (void)removeCacheForKey:(NSString*)keyValue;
-
 // Misc Class Functions
 + (NSString*)createRequestID;
 + (BOOL)colorIsDark:(UIColor*)color;
