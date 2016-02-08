@@ -14,9 +14,13 @@
 #import "AMBContactCell.h"
 #import "AMBContact.h"
 #import "AMBNetworkManager.h"
+#import "AMBNamePrompt.h"
 #import "AMBBulkShareHelper.h"
+#import "AMBContactLoader.h"
+#import "AMBErrors.h"
+#import "AMBValues.h"
 
-@interface AMBContactSelector (Test) <UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate>
+@interface AMBContactSelector (Test) <UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, AMBNamePromptDelegate, AMBContactLoaderDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * containerView;
 @property (nonatomic, strong) NSMutableSet *selected;
@@ -25,6 +29,9 @@
 @property (nonatomic) BOOL activeSearch;
 @property (nonatomic, strong) IBOutlet UITableView *contactsTable;
 @property (nonatomic, strong) NSMutableArray *filteredData;
+@property (nonatomic, strong) NSMutableArray *data;
+@property (nonatomic, strong) IBOutlet UITextView *composeMessageTextView;
+@property (nonatomic, strong) IBOutlet UITableView *selectedTable;
 
 - (IBAction)clearAllButtonTapped:(id)sender;
 - (IBAction)sendButtonTapped:(id)sender;
@@ -42,6 +49,11 @@
 - (BOOL)alreadyHaveNames;
 - (void)sendSMS;
 - (void)sendEmail;
+- (void)sendShareTrack:(NSArray *)contacts;
+- (NSMutableArray *)valuesFromContacts:(NSArray *)contacts;
+- (void)refreshContacts;
+- (BOOL)checkValidationForString:(NSString*)valueString;
+- (void)updateButton;
 
 @end
 
@@ -379,6 +391,274 @@
     [mockBulkShare verify];
     [mockNetworkMgr verify];
     [mockNetworkMgr stopMocking];
+}
+
+
+#pragma mark - Share Track Tests 
+
+- (void)testSendShareTrack {
+    // GIVEN
+    self.contactSelector.type = AMBSocialServiceTypeEmail;
+    NSMutableArray *contactArray = [NSMutableArray arrayWithObjects:@"test", @"test2", @"test3", nil];
+    
+    id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
+    [[[mockNetworkMgr expect] andDo:nil] sendShareTrackForServiceType:AMBSocialServiceTypeEmail contactList:contactArray success:[OCMArg any] failure:[OCMArg any]];
+    
+    // WHEN
+    [self.contactSelector sendShareTrack:contactArray];
+    
+    // THEN
+    [mockNetworkMgr verify];
+}
+
+- (void)testValuesFromContacts {
+    // GIVEN
+    AMBContact *contact1 = [[AMBContact alloc] init];
+    contact1.value = @"test@example.com";
+    
+    AMBContact *contact2 = [[AMBContact alloc] init];
+    contact2.value = @"test2@example.com";
+    
+    NSArray *contactArray = @[contact1, contact2];
+    
+    // WHEN
+    NSMutableArray *returnArray = [self.contactSelector valuesFromContacts:contactArray];
+    
+    // THEN
+    XCTAssertEqual([returnArray count], 2);
+    XCTAssertEqual(returnArray[0], contact1.value);
+    XCTAssertEqual(returnArray[1], contact2.value);
+}
+
+
+#pragma mark - NamePrompt Delegate Tests
+
+- (void)testNamesUpdatedSuccessfully {
+    // GIVEN
+    [[[self.mockSelector expect] andDo:nil] sendSMS];
+    
+    // WHEN
+    [self.contactSelector namesUpdatedSuccessfully];
+    
+    // THEN
+    [self.mockSelector verify];
+}
+
+
+#pragma mark - ContactLoader Delegate Tests
+
+- (void)testContactFinishedLoading {
+    // GIVEN
+    id mockQueue = [OCMockObject partialMockForObject:[NSOperationQueue mainQueue]];
+    [[[mockQueue expect] andDo:^(NSInvocation *invocation) {
+        void (^block)() = nil;
+        [invocation getArgument:&block atIndex:2];
+        block();
+    }] addOperationWithBlock:[OCMArg invokeBlock]];
+    
+    id mockUtils = [OCMockObject partialMockForObject:[AMBUtilities sharedInstance]];
+    [[[mockUtils expect] andDo:nil] hideLoadingView];
+    
+    [[[self.mockSelector expect] andDo:nil] refreshContacts];
+    
+    // WHEN
+    [self.contactSelector contactsFinishedLoadingSuccessfully];
+    
+    // THEN
+    [mockQueue verify];
+    [mockUtils verify];
+    [mockQueue stopMocking];
+    [mockUtils stopMocking];
+}
+
+- (void)testContactsFailedToLoad {
+    // GIVEN
+    id mockQueue = [OCMockObject partialMockForObject:[NSOperationQueue mainQueue]];
+    [[[mockQueue expect] andDo:^(NSInvocation *invocation) {
+        void (^block)() = nil;
+        [invocation getArgument:&block atIndex:2];
+        block();
+    }] addOperationWithBlock:[OCMArg invokeBlock]];
+    
+    id mockError = [OCMockObject mockForClass:[AMBErrors class]];
+    [[[mockError expect] andDo:nil] errorLoadingContactsForVC:self.contactSelector];
+    [[[mockError expect] andDo:nil] errorLoadingContactsForVC:self.contactSelector];
+    
+    // WHEN
+    [self.contactSelector contactsFailedToLoadWithError:@"error" message:@"error"];
+    
+    // THEN
+    [mockError verify];
+    [mockQueue verify];
+    [mockError stopMocking];
+    [mockQueue stopMocking];
+}
+
+
+#pragma mark - Helper Function Tests
+
+- (void)testAlreadyHaveNames {
+    // GIVEN
+    [AMBValues setUserFirstNameWithString:@"testFirst"];
+    [AMBValues setUserLastNameWithString:@"testLast"];
+    
+    // WHEN
+    BOOL haveNames = [self.contactSelector alreadyHaveNames];
+    
+    // THEN
+    XCTAssertTrue(haveNames);
+}
+
+- (void)testValidationCheckEmail {
+    // GIVEN
+    NSString *validEmail = @"test@test.com";
+    NSString *invalidEmail = @"test.com";
+    self.contactSelector.type = AMBSocialServiceTypeEmail;
+    
+    // WHEN
+    BOOL isValid = [self.contactSelector checkValidationForString:validEmail];
+    BOOL isInvalid = [self.contactSelector checkValidationForString:invalidEmail];
+    
+    // THEN
+    XCTAssertTrue(isValid);
+    XCTAssertFalse(isInvalid);
+}
+
+- (void)testValidationCheckSMS {
+    // GIVEN
+    NSString *validNumber = @"555-555-5555";
+    NSString *invalidNumber = @"123";
+    self.contactSelector.type = AMBSocialServiceTypeSMS;
+    
+    // WHEN
+    BOOL isValid = [self.contactSelector checkValidationForString:validNumber];
+    BOOL isInvalid = [self.contactSelector checkValidationForString:invalidNumber];
+    
+    // THEN
+    XCTAssertTrue(isValid);
+    XCTAssertFalse(isInvalid);
+}
+
+- (void)testSearchWithText {
+    // GIVEN
+    NSString *searchString = @"test";
+    
+    AMBContact *contact1 = [[AMBContact alloc] init];
+    contact1.firstName = @"test";
+    
+    AMBContact *contact2 = [[AMBContact alloc] init];
+    contact2.lastName = @"test";
+    
+    AMBContact *contact3 = [[AMBContact alloc] init];
+    contact3.firstName = @"noMatch";
+    
+    self.contactSelector.data = [NSMutableArray arrayWithObjects:contact1, contact2, contact3, nil];
+    
+    // WHEN
+    [self.contactSelector searchWithText:searchString];
+    
+    // THEN
+    XCTAssertEqual([self.contactSelector.filteredData count], 2);
+    XCTAssertEqual(contact1, self.contactSelector.filteredData[0]);
+    XCTAssertEqual(contact2, self.contactSelector.filteredData[1]);
+}
+
+- (void)testMessageContainsURL {
+    // GIVEN
+    NSDictionary *dict = @{@"url" : @"fakeurl/fake"};
+    [AMBValues setUserURLObject:dict];
+    self.contactSelector.composeMessageTextView = [[UITextView alloc] init];
+    self.contactSelector.composeMessageTextView.text = @"Hello! fakeurl/fake";
+    
+    // WHEN
+    BOOL containsMessage = [self.contactSelector messageContainsURL];
+    
+    // THEN
+    XCTAssertTrue(containsMessage);
+}
+
+- (void)testMessageDoesNotContainURL {
+    // GIVEN
+    NSDictionary *dict = @{@"url" : @"fakeurl/fake"};
+    [AMBValues setUserURLObject:dict];
+    self.contactSelector.composeMessageTextView = [[UITextView alloc] init];
+    self.contactSelector.composeMessageTextView.text = @"Hello! fakeurl";
+    
+    // WHEN
+    BOOL containsMessage = [self.contactSelector messageContainsURL];
+    
+    // THEN
+    XCTAssertFalse(containsMessage);
+}
+
+- (void)testRefreshAllIncludingContacts {
+    // GIVEN
+    id mockContactTable = [OCMockObject mockForClass:[UITableView class]];
+    id mockSelectedTable = [OCMockObject mockForClass:[UITableView class]];
+    
+    self.contactSelector.contactsTable = mockContactTable;
+    self.contactSelector.selectedTable = mockSelectedTable;
+    
+    [[[mockContactTable expect] andDo:nil] reloadData];
+    [[[mockSelectedTable expect] andDo:nil] reloadData];
+    [[[self.mockSelector expect] andDo:nil] updateButton];
+    
+    // WHEN
+    [self.contactSelector refreshAllIncludingContacts:YES];
+    
+    // THEN
+    [mockContactTable verify];
+    [mockSelectedTable verify];
+    [self.mockSelector verify];
+    [mockContactTable stopMocking];
+    [mockSelectedTable stopMocking];
+}
+
+- (void)testRefreshAllWithContacts {
+    // GIVEN
+    id mockContactTable = [OCMockObject mockForClass:[UITableView class]];
+    id mockSelectedTable = [OCMockObject mockForClass:[UITableView class]];
+    
+    self.contactSelector.contactsTable = mockContactTable;
+    self.contactSelector.selectedTable = mockSelectedTable;
+    
+    [[mockContactTable reject] reloadData];
+    [[[mockSelectedTable expect] andDo:nil] reloadData];
+    [[[self.mockSelector expect] andDo:nil] updateButton];
+    
+    // WHEN
+    [self.contactSelector refreshAllIncludingContacts:NO];
+    
+    // THEN
+    [mockContactTable verify];
+    [mockSelectedTable verify];
+    [self.mockSelector verify];
+    [mockContactTable stopMocking];
+    [mockSelectedTable stopMocking];
+}
+
+- (void)testSendMessageEmail {
+    // GIVEN
+    self.contactSelector.type = AMBSocialServiceTypeEmail;
+    [[[self.mockSelector expect] andDo:nil] sendEmail];
+    
+    // WHEN
+    [self.contactSelector sendMessage];
+    
+    // THEN
+    [self.mockSelector verify];
+}
+
+- (void)testSendMessageSMS {
+    // GIVEN
+    self.contactSelector.type = AMBSocialServiceTypeSMS;
+    [[[self.mockSelector expect] andDo:nil] sendSMS];
+    
+    // WHEN
+    [self.contactSelector sendMessage];
+    
+    // THEN
+    [self.mockSelector verify];
 }
 
 @end
