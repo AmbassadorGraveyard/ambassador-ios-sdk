@@ -13,8 +13,10 @@
 #import "AMBContactSelector.h"
 #import "AMBContactCell.h"
 #import "AMBContact.h"
+#import "AMBNetworkManager.h"
+#import "AMBBulkShareHelper.h"
 
-@interface AMBContactSelector (Test) <UITableViewDataSource, UITextFieldDelegate>
+@interface AMBContactSelector (Test) <UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * containerView;
 @property (nonatomic, strong) NSMutableSet *selected;
@@ -35,6 +37,11 @@
 - (void)refreshAllIncludingContacts:(BOOL)refreshContactsTable;
 - (void)showOrHideSearchDoneButton;
 - (void)searchWithText:(NSString *)searchText;
+- (void)keyboardWillShow:(NSNotification*)sender;
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification;
+- (BOOL)alreadyHaveNames;
+- (void)sendSMS;
+- (void)sendEmail;
 
 @end
 
@@ -269,6 +276,109 @@
     // THEN
     XCTAssertTrue(expectedBool);
     [mockField verify];
+}
+
+
+#pragma mark - UITextView Delegate Tests
+
+- (void)testViewShouldBeginEditing {
+    // GIVEN
+    self.contactSelector.isEditing = NO;
+    [[[self.mockSelector expect] andDo:nil] editMessageButtonTapped:nil];
+    
+    id mockTextView = [OCMockObject mockForClass:[UITextView class]];
+    
+    // WHEN
+    BOOL expectedBool = [self.contactSelector textViewShouldBeginEditing:mockTextView];
+    
+    // THEN
+    XCTAssertTrue(expectedBool);
+    [self.mockSelector verify];
+}
+
+
+#pragma mark - Keyboard Tests
+
+- (void)testRegisterForKeyboardNotif {
+    // GIVEN
+    id mockNotif = [OCMockObject partialMockForObject:[NSNotificationCenter defaultCenter]];
+    [[[mockNotif expect] andDo:nil] addObserver:self.contactSelector selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[[mockNotif expect] andDo:nil] addObserver:self.contactSelector selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    
+    // WHEN
+    [self.contactSelector registerForKeyboardNotifications];
+    
+    // THEN
+    [mockNotif verify];
+}
+
+- (void)testKeyboardWillShow {
+    // GIVEN
+    id mockView = [OCMockObject mockForClass:[UIView class]];
+    [[[self.mockSelector expect] andReturn:mockView] view];
+    [[[mockView expect] andDo:nil] layoutIfNeeded];
+    
+    // WHEN
+    [self.contactSelector keyboardWillShow:nil];
+    
+    // THEN
+    [mockView verify];
+}
+
+
+#pragma mark - Send Function Tests
+
+- (void)testSendSMS {
+    // GIVEN
+    [[[self.mockSelector expect] andReturnValue:OCMOCK_VALUE(NO)] alreadyHaveNames];
+    [[[self.mockSelector expect] andDo:nil] performSegueWithIdentifier:[OCMArg any] sender:self.contactSelector];
+    
+    // WHEN
+    [self.contactSelector sendSMS];
+    
+    // THEN
+    [self.mockSelector verify];
+}
+
+- (void)testSendSMSWithNames {
+    // GIVEN
+    NSArray *array = @[@"555-555-5555"];
+    
+    id mockBulkShare = [OCMockObject mockForClass:[AMBBulkShareHelper class]];
+    [[[mockBulkShare expect] andReturnValue:OCMOCK_VALUE(array)] validatedPhoneNumbers:[OCMArg any]];
+    
+    [[[self.mockSelector expect] andReturnValue:OCMOCK_VALUE(YES)] alreadyHaveNames];
+    
+    id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
+    [[[mockNetworkMgr expect] andDo:nil] bulkShareSmsWithMessage:[OCMArg any] phoneNumbers:array success:[OCMArg any] failure:[OCMArg any]];
+    
+    // WHEN
+    [self.contactSelector sendSMS];
+    
+    // THEN
+    [mockBulkShare verify];
+    [mockNetworkMgr verify];
+    [mockNetworkMgr stopMocking];
+    [self.mockSelector verify];
+}
+
+- (void)testSendEmail {
+    // GIVEN
+    NSArray *array = @[@"test@example.com"];
+    
+    id mockBulkShare = [OCMockObject mockForClass:[AMBBulkShareHelper class]];
+    [[[mockBulkShare expect] andReturnValue:OCMOCK_VALUE(array)] validatedEmails:[OCMArg any]];
+    
+    id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
+    [[[mockNetworkMgr expect] andDo:nil] bulkShareEmailWithMessage:[OCMArg any] emailAddresses:array success:[OCMArg any] failure:[OCMArg any]];
+    
+    // WHEN
+    [self.contactSelector sendEmail];
+    
+    // THEN
+    [mockBulkShare verify];
+    [mockNetworkMgr verify];
+    [mockNetworkMgr stopMocking];
 }
 
 @end
