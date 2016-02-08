@@ -7,7 +7,16 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <AddressBook/AddressBook.h>
 #import "AMBContact.h"
+
+@interface AMBFullContact (Test)
+
+- (NSMutableArray*)getPhoneNumbers:(ABRecordRef)recordRef withFirstName:(NSString*)firstName lastName:(NSString*)lastName contactImage:(UIImage*)image;
+- (NSMutableArray*)getEmailAddresses:(ABRecordRef)recordRef withFirstName:(NSString*)firstName lastName:(NSString*)lastName contactImage:(UIImage*)image;
+
+@end
+
 
 @interface AMBContactTests : XCTestCase
 
@@ -25,6 +34,20 @@
     [super tearDown];
 }
 
+
+#pragma mark - AMBContact Tests
+
+- (void)testInit {
+    // GIVEN
+    ABRecordRef ref = [self createRef];
+    
+    // WHEN
+    AMBFullContact *contact = [[AMBFullContact alloc] initWithABPersonRef:ref];
+    
+    // THEN
+    XCTAssertNotNil(contact);
+}
+
 - (void)testFullName {
     // GIVEN
     NSString *mockFullName = @"Test McTesty";
@@ -37,6 +60,43 @@
     
     // THEN
     XCTAssertEqualObjects(mockFullName, expectedFullName, @"%@ is not equal to %@", mockFullName, expectedFullName);
+}
+
+
+#pragma mark - AMBFullContact Tests
+
+- (void)testGetPhoneNumbers {
+    // GIVEN
+    ABRecordRef ref = [self createRef];
+    AMBFullContact *fullContact = [[AMBFullContact alloc] init];
+    
+    // WHEN
+    NSMutableArray *returnArray = [fullContact getPhoneNumbers:ref withFirstName:@"FirstTest" lastName:@"LastTest" contactImage:nil];
+    
+    // THEN
+    XCTAssertNotEqual([returnArray count], 0);
+}
+
+- (void)testGetEmailAddresses {
+    // GIVEN
+    ABRecordRef ref = [self createRef];
+    AMBFullContact *fullContact = [[AMBFullContact alloc] init];
+    
+    // WHEN
+    NSMutableArray *returnArray = [fullContact getEmailAddresses:ref withFirstName:@"First" lastName:@"Last" contactImage:nil];
+    
+    // THEN
+    XCTAssertNotEqual([returnArray count], 0);
+}
+
+
+#pragma mark - Helper Functions
+
+- (ABRecordRef)createRef {
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
+    NSArray *contactArray = (__bridge NSArray *)ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonFirstNameProperty);
+    return (__bridge ABRecordRef)contactArray[1];
 }
 
 @end
