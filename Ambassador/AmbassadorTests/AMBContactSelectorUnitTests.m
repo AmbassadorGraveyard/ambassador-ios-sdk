@@ -11,13 +11,18 @@
 #import "AMBUtilities.h"
 #import "AMBThemeManager.h"
 #import "AMBContactSelector.h"
+#import "AMBContactCell.h"
+#import "AMBContact.h"
 
-@interface AMBContactSelector (Test)
+@interface AMBContactSelector (Test) <UITableViewDataSource>
 
 @property (nonatomic, strong) IBOutlet UIView * containerView;
 @property (nonatomic, strong) NSMutableSet *selected;
 @property (nonatomic, strong) IBOutlet UITextField *searchBar;
 @property (nonatomic) BOOL isEditing;
+@property (nonatomic) BOOL activeSearch;
+@property (nonatomic, strong) IBOutlet UITableView *contactsTable;
+@property (nonatomic, strong) NSMutableArray *filteredData;
 
 - (IBAction)clearAllButtonTapped:(id)sender;
 - (IBAction)sendButtonTapped:(id)sender;
@@ -169,6 +174,50 @@
     
     // THEN
     [mockUtils verify];
+}
+
+
+#pragma mark - TableView DataSource Tests
+
+- (void)testTableNumberOfRows {
+    // GIVEN
+    id mockContactTable = [OCMockObject mockForClass:[UITableView class]];
+    self.contactSelector.contactsTable = mockContactTable;
+    
+    self.contactSelector.activeSearch = YES;
+    self.contactSelector.filteredData = [NSMutableArray arrayWithObject:@"data"];
+    
+    // WHEN
+    NSInteger numRows = [self.contactSelector tableView:mockContactTable numberOfRowsInSection:0];
+    
+    // THEN
+    XCTAssertEqual(numRows, [self.contactSelector.filteredData count]);
+}
+
+- (void)testTableCellForRow {
+    // GIVEN
+    self.contactSelector.activeSearch = YES;
+    id mockContact = [OCMockObject mockForClass:[AMBContact class]];
+    
+    id mockArray = [OCMockObject mockForClass:[NSMutableArray class]];
+    self.contactSelector.filteredData = mockArray;
+    [[[mockArray expect] andReturn:mockContact] objectAtIndexedSubscript:0];
+    
+    id mockContactTable = [OCMockObject mockForClass:[UITableView class]];
+    self.contactSelector.contactsTable = mockContactTable;
+    
+    id mockCell = [OCMockObject mockForClass:[AMBContactCell class]];
+    [[[mockContactTable expect] andReturn:mockCell] dequeueReusableCellWithIdentifier:@"contactCell"];
+    [[[mockCell expect] andDo:nil] setUpCellWithContact:[OCMArg any] isSelected:NO];
+    [[[mockCell expect] andDo:nil] setDelegate:[OCMArg any]];
+    
+    // WHEN
+    [self.contactSelector tableView:mockContactTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    
+    // THEN
+    [mockContactTable verify];
+    [mockCell verify];
+    [mockArray verify];
 }
 
 @end
