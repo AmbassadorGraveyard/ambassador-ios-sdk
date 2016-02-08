@@ -15,13 +15,20 @@
 @interface AMBContactSelector (Test)
 
 @property (nonatomic, strong) IBOutlet UIView * containerView;
+@property (nonatomic, strong) NSMutableSet *selected;
+@property (nonatomic, strong) IBOutlet UITextField *searchBar;
+@property (nonatomic) BOOL isEditing;
 
+- (IBAction)clearAllButtonTapped:(id)sender;
 - (IBAction)sendButtonTapped:(id)sender;
-
+- (IBAction)doneSearchingButtonTapped:(id)sender;
+- (IBAction)editMessageButtonTapped:(id)sender;
 - (void)setUpTheme;
 - (void)registerForKeyboardNotifications;
 - (BOOL)messageContainsURL;
 - (void)sendMessage;
+- (void)refreshAllIncludingContacts:(BOOL)refreshContactsTable;
+- (void)showOrHideSearchDoneButton;
 
 @end
 
@@ -90,6 +97,78 @@
     
     // THEN
     [mockDefaults verify];
+}
+
+
+#pragma mark - IBActions Tests
+
+- (void)testSendButton {
+    // GIVEN
+    [[[self.mockSelector expect] andReturnValue:OCMOCK_VALUE(YES)] messageContainsURL];
+    [[[self.mockSelector expect] andDo:nil] sendMessage];
+    
+    // WHEN
+    [self.contactSelector sendButtonTapped:nil];
+    
+    // THEN
+    [self.mockSelector verify];
+}
+
+- (void)testClearAllButton {
+    // GIVEN
+    id mockSeleted = [OCMockObject mockForClass:[NSMutableArray class]];
+    self.contactSelector.selected = mockSeleted;
+    [[[mockSeleted expect] andDo:nil] removeAllObjects];
+    [[[self.mockSelector expect] andDo:nil] refreshAllIncludingContacts:YES];
+    
+    // WHEN
+    [self.contactSelector clearAllButtonTapped:nil];
+    
+    // THEN
+    [mockSeleted verify];
+    [self.mockSelector verify];
+}
+
+- (void)testDoneSearchingTapped {
+    // GIVEN
+    id mockSearch = [OCMockObject mockForClass:[UITextField class]];
+    self.contactSelector.searchBar = mockSearch;
+    [[[mockSearch expect] andDo:nil] resignFirstResponder];
+    [[[mockSearch expect] andDo:nil] setText:[OCMArg any]];
+    [[[self.mockSelector expect] andDo:nil] showOrHideSearchDoneButton];
+    
+    // WHEN
+    [self.contactSelector doneSearchingButtonTapped:nil];
+    
+    // THEN
+    [mockSearch verify];
+    [self.mockSelector verify];
+}
+
+- (void)testEditMessageTappedEditing {
+    // GIVEN
+    self.contactSelector.isEditing = NO;
+    id mockUtils = [OCMockObject partialMockForObject:[AMBUtilities sharedInstance]];
+    [[[mockUtils expect] andDo:nil] addFadeToView:[OCMArg any]];
+    
+    // WHEN
+    [self.contactSelector editMessageButtonTapped:nil];
+    
+    // THEN
+    [mockUtils verify];
+}
+
+- (void)testEditMessageTappedNotEditing {
+    // GIVEN
+    self.contactSelector.isEditing = YES;
+    id mockUtils = [OCMockObject partialMockForObject:[AMBUtilities sharedInstance]];
+    [[[mockUtils expect] andDo:nil] removeFadeFromView];
+    
+    // WHEN
+    [self.contactSelector editMessageButtonTapped:nil];
+    
+    // THEN
+    [mockUtils verify];
 }
 
 @end
