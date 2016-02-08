@@ -9,11 +9,15 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "AMBContactLoader.h"
+#import <AddressBook/AddressBook.h>
 
 @interface AMBContactLoader (Test)
 
 - (void)loadContacts;
 - (void)emptyOutArrays;
+- (void)requestContactsPermission;
+- (void)throwContactLoadError;
+- (BOOL)hasCachedArrays;
 
 @end
 
@@ -41,6 +45,9 @@
     [super tearDown];
 }
 
+
+#pragma mark - LifeCycle Tests
+
 - (void)testSharedInstance {
     XCTAssertNotNil(self.loader);
 }
@@ -57,6 +64,9 @@
     // THEN
     XCTAssertFalse(expectedCache);
 }
+
+
+#pragma mark - Loading Tests
 
 - (void)testLoadContactsWithCache {
     // GIVEN
@@ -101,6 +111,59 @@
     
     // THEN
     [self.mockLoader verify];
+}
+
+
+#pragma mark - Permissions Tests
+
+- (void)testThrowContactError {
+    // GIVEN
+    self.loader.delegate = self;
+    id mockDelegate = [OCMockObject partialMockForObject:self.loader.delegate];
+    [[[mockDelegate expect] andDo:nil] contactsFailedToLoadWithError:[OCMArg isKindOfClass:[NSString class]] message:[OCMArg isKindOfClass:[NSString class]]];
+    
+    // WHEN
+    [self.loader throwContactLoadError];
+    
+    // THEN
+    [mockDelegate verify];
+}
+
+
+#pragma mark - Helper Tests
+
+- (void)testHasCachedArraysTrue {
+    // GIVEN
+    self.loader.phoneNumbers = [NSMutableArray arrayWithObject:@"555-555--5555"];
+    self.loader.emailAddresses = [NSMutableArray arrayWithObject:@"test@example.com"];
+    
+    // WHEN
+    BOOL hasCachedArrays = [self.loader hasCachedArrays];
+    
+    // THEN
+    XCTAssertTrue(hasCachedArrays);
+    [self.loader emptyOutArrays];
+}
+
+- (void)testHasCachedArraysFalse {
+    // WHEN
+    BOOL hasCachedArrays = [self.loader hasCachedArrays];
+    
+    // THEN
+    XCTAssertFalse(hasCachedArrays);
+}
+
+- (void)testEmptyOutArrays {
+    // GIVEN
+    self.loader.phoneNumbers = [NSMutableArray arrayWithObject:@"555-555--5555"];
+    self.loader.emailAddresses = [NSMutableArray arrayWithObject:@"test@example.com"];
+    
+    // WHEN
+    [self.loader emptyOutArrays];
+    
+    // THEN
+    XCTAssertEqual([self.loader.phoneNumbers count], 0);
+    XCTAssertEqual([self.loader.emailAddresses count], 0);
 }
 
 @end
