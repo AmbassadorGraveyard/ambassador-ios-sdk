@@ -37,6 +37,17 @@
 
 #pragma mark - AMBContact Tests
 
+- (void)testInit {
+    // GIVEN
+    ABRecordRef ref = [self createRef];
+    
+    // WHEN
+    AMBFullContact *contact = [[AMBFullContact alloc] initWithABPersonRef:ref];
+    
+    // THEN
+    XCTAssertNotNil(contact);
+}
+
 - (void)testFullName {
     // GIVEN
     NSString *mockFullName = @"Test McTesty";
