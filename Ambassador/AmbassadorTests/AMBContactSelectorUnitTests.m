@@ -7,8 +7,29 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
+#import "AMBUtilities.h"
+#import "AMBThemeManager.h"
+#import "AMBContactSelector.h"
+
+@interface AMBContactSelector (Test)
+
+@property (nonatomic, strong) IBOutlet UIView * containerView;
+
+- (IBAction)sendButtonTapped:(id)sender;
+
+- (void)setUpTheme;
+- (void)registerForKeyboardNotifications;
+- (BOOL)messageContainsURL;
+- (void)sendMessage;
+
+@end
+
 
 @interface AMBContactSelectorUnitTests : XCTestCase
+
+@property (nonatomic, strong) AMBContactSelector * contactSelector;
+@property (nonatomic) id mockSelector;
 
 @end
 
@@ -16,24 +37,59 @@
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    if (!self.contactSelector) {
+        [[AMBThemeManager sharedInstance] createDicFromPlist:@"GenericTheme"];
+        self.contactSelector = [[AMBContactSelector alloc] init];
+    }
+    
+    self.mockSelector = [OCMockObject partialMockForObject:self.contactSelector];
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [self.mockSelector stopMocking];
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+#pragma mark - LifeCycle Tests
+
+- (void)testViewDidLoad {
+    // GIVEN
+    NSString *expectedTitle = @"Refer your friends";
+    [[[self.mockSelector expect] andDo:nil] setUpTheme];
+    [[[self.mockSelector expect] andDo:nil] registerForKeyboardNotifications];
+    
+    // WHEN
+    [self.contactSelector viewDidLoad];
+    
+    // THEN
+    [self.mockSelector verify];
+    XCTAssertEqualObjects(expectedTitle, self.contactSelector.title);
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void)testWillRotate {
+    // GIVEN
+    id mockUtils = [OCMockObject partialMockForObject:[AMBUtilities sharedInstance]];
+    [[[mockUtils expect] andDo:nil] rotateLoadingView:self.contactSelector.view orientation:UIInterfaceOrientationLandscapeLeft];
+    [[[mockUtils expect] andDo:nil] rotateFadeForView:self.contactSelector.containerView];
+    
+    // WHEN
+    [self.contactSelector willAnimateRotationToInterfaceOrientation:UIInterfaceOrientationLandscapeLeft duration:1.0];
+    
+    // THEN
+    [mockUtils verify];
+}
+
+- (void)testViewWillDisappear {
+    // GIVEN
+    id mockDefaults = [OCMockObject partialMockForObject:[NSUserDefaults standardUserDefaults]];
+    [[[mockDefaults expect] andDo:nil] setValue:@(YES) forKey:@"_UIConstraintBasedLayoutLogUnsatisfiable"];
+    
+    // WHEN
+    [self.contactSelector viewWillDisappear:YES];
+    
+    // THEN
+    [mockDefaults verify];
 }
 
 @end
