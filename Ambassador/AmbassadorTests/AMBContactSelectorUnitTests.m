@@ -14,7 +14,7 @@
 #import "AMBContactCell.h"
 #import "AMBContact.h"
 
-@interface AMBContactSelector (Test) <UITableViewDataSource>
+@interface AMBContactSelector (Test) <UITableViewDataSource, UITextFieldDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * containerView;
 @property (nonatomic, strong) NSMutableSet *selected;
@@ -34,6 +34,7 @@
 - (void)sendMessage;
 - (void)refreshAllIncludingContacts:(BOOL)refreshContactsTable;
 - (void)showOrHideSearchDoneButton;
+- (void)searchWithText:(NSString *)searchText;
 
 @end
 
@@ -218,6 +219,56 @@
     [mockContactTable verify];
     [mockCell verify];
     [mockArray verify];
+}
+
+
+#pragma mark - TextField delegate tests
+
+- (void)testFieldDidBeginEditing {
+    // GIVEN
+    [[[self.mockSelector expect] andDo:nil] showOrHideSearchDoneButton];
+    
+    // WHEN
+    [self.contactSelector textFieldDidBeginEditing:self.contactSelector.searchBar];
+    
+    // THEN
+    [self.mockSelector verify];
+}
+
+- (void)testFieldShouldChangeCharacter {
+    // GIVEN
+    NSRange mockRange = NSRangeFromString(@"test");
+    NSString *stringValue = @"test";
+    
+    id mockTextField = [OCMockObject mockForClass:[UITextField class]];
+    id mockString = [OCMockObject mockForClass:[NSString class]];
+    
+    
+    [[[mockTextField expect] andReturn:mockString] text];
+    [[[mockString expect] andReturnValue:OCMOCK_VALUE(stringValue)] stringByReplacingCharactersInRange:mockRange withString:[OCMArg any]];
+    
+    [[[self.mockSelector expect] andDo:nil] searchWithText:stringValue];
+    
+    // WHEN
+    [self.contactSelector textField:mockTextField shouldChangeCharactersInRange:mockRange replacementString:stringValue];
+    
+    // THEN
+    [mockTextField verify];
+    [mockString verify];
+    [self.mockSelector verify];
+}
+
+- (void)testFieldShouldReturn {
+    // GIVEN
+    id mockField = [OCMockObject mockForClass:[UITextField class]];
+    [[[mockField expect] andDo:nil] resignFirstResponder];
+    
+    // WHEN
+    BOOL expectedBool = [self.contactSelector textFieldShouldReturn:mockField];
+    
+    // THEN
+    XCTAssertTrue(expectedBool);
+    [mockField verify];
 }
 
 @end
