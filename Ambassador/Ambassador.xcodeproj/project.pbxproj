@@ -146,7 +146,6 @@
 		DBEB70001BA9B2D8005EE0D0 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */; };
 		EF07452A1C52C8E1009AF919 /* OCMock in Resources */ = {isa = PBXBuildFile; fileRef = EF0745291C52C8E1009AF919 /* OCMock */; };
 		EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF07452B1C52C8FA009AF919 /* libOCMock.a */; };
-		EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */; };
 		EF1399AC1C6551AB0005054D /* AMBContactLoaderUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */; };
 		EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */; };
 		EF1C82A21C6285B00033A364 /* AMBNamePromptUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */; };
@@ -437,7 +436,6 @@
 		EF07451F1C52C69F009AF919 /* OCMockitoIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMockitoIOS.framework; path = AmbassadorTests/OCMockitoIOS.framework; sourceTree = "<group>"; };
 		EF0745291C52C8E1009AF919 /* OCMock */ = {isa = PBXFileReference; lastKnownFileType = folder; path = OCMock; sourceTree = "<group>"; };
 		EF07452B1C52C8FA009AF919 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
-		EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdenityUnitTests.m; sourceTree = "<group>"; };
 		EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactLoaderUnitTests.m; sourceTree = "<group>"; };
 		EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdenityUnitTests.m; sourceTree = "<group>"; };
 		EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNamePromptUnitTests.m; sourceTree = "<group>"; };
@@ -648,6 +646,8 @@
 				EFBF8E061C69007800F2B5F9 /* AMBSelectedCellUnitTests.m */,
 				EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */,
 				EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */,
+				EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */,
+				EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */,
 				EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */,
 				EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */,
 				EFDDAD7F1C601839002BC5AE /* AMBNetworkManagerUnitTests.m */,
