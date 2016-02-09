@@ -9,11 +9,13 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "AMBContactCell.h"
+#import "UIColor+AMBColorValues.h"
 
 @interface AMBContactCell (Test)
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint * checkmarkConstraint;
 @property (nonatomic, weak) IBOutlet UIImageView * checkmarkView;
+@property (nonatomic, weak) IBOutlet UIImageView * avatarImage;
 
 - (void)setCellSelectionColor;
 - (void)longPressTriggered:(UILongPressGestureRecognizer*)sender;
@@ -46,30 +48,16 @@
 
 - (void)testSetUpCell {
     // GIVEN
+    AMBContact *contact = [[AMBContact alloc] init];
+    contact.firstName = @"Test`";
+    contact.contactImage = nil;
     
     // WHEN
+    [self.contactCell setUpCellWithContact:contact isSelected:NO];
     
     // THEN
+    XCTAssertFalse(self.contactCell.avatarImage.hidden);
 }
-
-
-#pragma mark - Helper Function Tests
-
-//- (void)testLongPressTriggered {
-//    // GIVEN
-//    id mockGesture = [OCMockObject mockForClass:[UILongPressGestureRecognizer class]];
-//    [[[mockGesture expect] andReturnValue:OCMOCK_VALUE(UIGestureRecognizerStateBegan)] state];
-//    
-//    id mockDelegate = [OCMockObject mockForProtocol:@protocol(AMBContactCellDelegate)];
-//    [[[mockDelegate expect] andDo:nil] longPressTriggeredForContact:[OCMArg any]];
-//    
-//    // WHEN
-//    [self.contactCell longPressTriggered:mockGesture];
-//    
-//    // THEN
-//    [mockGesture verify];
-//    [mockDelegate verify];
-//}
 
 
 #pragma mark - UI Functions Tests
@@ -113,18 +101,11 @@
 }
 
 - (void)testSetCellSelectionColor {
-    // GIVEN
-    id mockView = [OCMockObject mockForClass:[UIView class]];
-    [[[mockView expect] andReturnValue:mockView] alloc];
-    [[[mockView expect] andDo:nil] setBackgroundColor:[OCMArg any]];
-    
     // WHEN
     [self.contactCell setCellSelectionColor];
     
-    
     // THEN
-    [mockView verify];
-    XCTAssertEqual(self.contactCell.selectedBackgroundView, mockView);
+    XCTAssertEqualObjects(self.contactCell.selectedBackgroundView.backgroundColor, [UIColor cellSelectionGray]);
 }
 
 @end
