@@ -39,7 +39,7 @@
 - (void)setUp {
     [super setUp];
     if (!self.pusherMgr) {
-        self.pusherMgr = [AMBPusherManager sharedInstanceWithAuthorization:@"testAuth"];
+        self.pusherMgr = [[AMBPusherManager alloc] initWithAuthorization:@"fakeAuth"];
     }
     
     self.mockPusherMgr = [OCMockObject partialMockForObject:self.pusherMgr];
