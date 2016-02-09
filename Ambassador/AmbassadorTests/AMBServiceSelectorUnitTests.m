@@ -624,29 +624,29 @@
     [self.mockNetworkMgr verify];
 }
 
-- (void)testPerformIdentifyResubscribeCompletion {
-    // GIVEN
-    id mockPusherManager = OCMClassMock([AMBPusherManager class]);
-    [AmbassadorSDK sharedInstance].pusherManager = [[AMBPusherManager alloc] init];
-    [AmbassadorSDK sharedInstance].pusherManager.connectionState = PTPusherConnectionDisconnected;
-    [AmbassadorSDK sharedInstance].pusherManager = mockPusherManager;
-    [[[mockPusherManager expect] andDo:^(NSInvocation *invocation) {
-        void (^completion)(AMBPTPusherChannel *channelName, NSError *error) = nil;
-        [invocation getArgument:&completion atIndex:2];
-        completion(nil, nil);
-    }] resubscribeToExistingChannelWithCompletion:[OCMArg invokeBlock]];
-    
-    NSDictionary *pusherChannelDict = @{ @"channel_name" : @"private-channel@user=gAAAAABWp9VD55okqsd4attaQEkXkXSDnBDYzcHc6a8p1dSKdMBsqXKDuUGi6UzTXd9G-1jOgNVONVlc4jYVgrsD3CLQmyCx867qFPItiL2PowHpCP0rLG4kyN1qhCwFzANvFCdl2jW4",
-                                         @"client_session_uid" : @"gAAAAABWp9VD55okqsd4attaQEkXkXSDnBDYzcHc6a8p1dSKdMBsqXKDuUGi6UzTXd9G-1jOgNVONVlc4jYVgrsD3CLQmyCx867qFPItiL2PowHpCP0rLG4kyN1qhCwFzANvFCdl2jW4",
-                                         @"expires_at" : @"2900-02-02T20:21:23.885" };
-    
-    [AMBValues setPusherChannelObject:pusherChannelDict];
-    
-    // WHEN
-    [self.serviceSelector performIdentify];
-    
-    // THEN
-    [mockPusherManager verify];
-}
+//- (void)testPerformIdentifyResubscribeCompletion {
+//    // GIVEN
+//    id mockPusherManager = OCMClassMock([AMBPusherManager class]);
+//    [AmbassadorSDK sharedInstance].pusherManager = [[AMBPusherManager alloc] init];
+//    [AmbassadorSDK sharedInstance].pusherManager.connectionState = PTPusherConnectionDisconnected;
+//    [AmbassadorSDK sharedInstance].pusherManager = mockPusherManager;
+//    [[[mockPusherManager expect] andDo:^(NSInvocation *invocation) {
+//        void (^completion)(AMBPTPusherChannel *channelName, NSError *error) = nil;
+//        [invocation getArgument:&completion atIndex:2];
+//        completion(nil, nil);
+//    }] resubscribeToExistingChannelWithCompletion:[OCMArg invokeBlock]];
+//    
+//    NSDictionary *pusherChannelDict = @{ @"channel_name" : @"private-channel@user=gAAAAABWp9VD55okqsd4attaQEkXkXSDnBDYzcHc6a8p1dSKdMBsqXKDuUGi6UzTXd9G-1jOgNVONVlc4jYVgrsD3CLQmyCx867qFPItiL2PowHpCP0rLG4kyN1qhCwFzANvFCdl2jW4",
+//                                         @"client_session_uid" : @"gAAAAABWp9VD55okqsd4attaQEkXkXSDnBDYzcHc6a8p1dSKdMBsqXKDuUGi6UzTXd9G-1jOgNVONVlc4jYVgrsD3CLQmyCx867qFPItiL2PowHpCP0rLG4kyN1qhCwFzANvFCdl2jW4",
+//                                         @"expires_at" : @"2900-02-02T20:21:23.885" };
+//    
+//    [AMBValues setPusherChannelObject:pusherChannelDict];
+//    
+//    // WHEN
+//    [self.serviceSelector performIdentify];
+//    
+//    // THEN
+//    [mockPusherManager verify];
+//}
 
 @end
