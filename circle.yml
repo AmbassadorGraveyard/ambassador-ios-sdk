@@ -5,7 +5,7 @@ machine:
   timezone:
     America/Detroit
   xcode:
-    version: "7.0"
+    version: "7.2"
 checkout:
   post:
     - git submodule sync
@@ -27,5 +27,3 @@ test:
       -project 'Ambassador.xcodeproj'
       -scheme "Ambassador"
       build build-tests run-tests
-
-   
