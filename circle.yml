@@ -3,7 +3,7 @@ general:
 
 machine:
   xcode:
-    version: "7.2"
+    version: "7.0"
 checkout:
   post:
     - git submodule sync
@@ -17,7 +17,7 @@ test:
       -reporter pretty
       -reporter junit:$CIRCLE_TEST_REPORTS/xcode/results.xml
       -reporter plain:$CIRCLE_ARTIFACTS/xctool.log
-      -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
+      -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.2'
       -sdk iphonesimulator
       -project 'Ambassador.xcodeproj'
       -scheme "Ambassador"
