@@ -1735,6 +1735,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/AmbassadorTests",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1765,6 +1767,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/AmbassadorTests",
 				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AmbassadorTests";
 				INFOPLIST_FILE = AmbassadorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
