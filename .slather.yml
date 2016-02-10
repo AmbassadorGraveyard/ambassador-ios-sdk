@@ -1,2 +1,4 @@
+ci_service: circleci
 coverage_service: coveralls
-xcodeproj: ../Ambassador
+xcodeproj: Ambassador.xcodeproj
+source_directory: ./
