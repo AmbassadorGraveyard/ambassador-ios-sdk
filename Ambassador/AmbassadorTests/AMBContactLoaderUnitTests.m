@@ -54,6 +54,7 @@
 
 - (void)testAttemptLoadWithoutCache {
     // GIVEN
+    [self.loader emptyOutArrays];
     __block BOOL expectedCache;
     
     // WHEN
