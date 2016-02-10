@@ -19,13 +19,11 @@ test:
       -reporter pretty
       -reporter junit:$CIRCLE_TEST_REPORTS/xcode/results.xml
       -reporter plain:$CIRCLE_ARTIFACTS/xctool.log
-      CODE_SIGNING_REQUIRED=NO
-      CODE_SIGN_IDENTITY=
-      PROVISIONING_PROFILE=
       -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
       -sdk iphonesimulator
       -project 'Ambassador.xcodeproj'
       -scheme "Ambassador"
-      build build-tests run-tests
-
-   
+      build build-tests
+      GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test | xcpretty -c
+  post:
+    - bundle exec slather
