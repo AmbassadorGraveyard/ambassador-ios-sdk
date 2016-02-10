@@ -13,7 +13,6 @@ checkout:
 dependencies:
   pre:
     - brew uninstall xctool && brew install --HEAD xctool
-    - gem install cocoapods xcpretty obcd slather -N
 test:
   override:
     - xctool
