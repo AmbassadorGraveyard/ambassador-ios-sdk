@@ -24,5 +24,5 @@ test:
       -sdk iphonesimulator
       -project 'Ambassador.xcodeproj'
       -scheme "Ambassador"
-      build build-tests
-      GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test | xcpretty -c
+      build 
+      xctool test ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
