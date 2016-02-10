@@ -1,2 +1,2 @@
 coverage_service: coveralls
-xcodeproj: Ambassador/Ambassador.xcodeproj
+xcodeproj: Ambassador.xcodeproj
