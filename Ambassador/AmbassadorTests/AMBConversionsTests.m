@@ -70,6 +70,7 @@
 
 - (void)testSendConversions {
     // GIVEN
+    [AMBValues setDeviceFingerPrintWithDictionary:@{}];
     [AMBValues setMbsyCookieWithCode:@"tEsT"];
 
     id mockEntity = [OCMockObject mockForClass:[AMBConversionParametersEntity class]];

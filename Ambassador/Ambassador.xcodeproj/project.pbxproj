@@ -187,6 +187,9 @@
 		EF9DA74D1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */; };
 		EFBC1B2B1BD81B1A006E7C54 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */; };
 		EFBC1B2C1BD81B1A006E7C54 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */; };
+		EFBF8E031C69004800F2B5F9 /* AMBContactSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */; };
+		EFBF8E051C69006400F2B5F9 /* AMBContactCellUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */; };
+		EFBF8E071C69007800F2B5F9 /* AMBSelectedCellUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E061C69007800F2B5F9 /* AMBSelectedCellUnitTests.m */; };
 		EFC0371F1C5829DB0062202A /* AMBShareServiceCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC0371E1C5829DB0062202A /* AMBShareServiceCellTests.m */; };
 		EFC037211C5829F70062202A /* AMBAuthorizeLinkedInTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC037201C5829F70062202A /* AMBAuthorizeLinkedInTests.m */; };
 		EFC037231C582A100062202A /* AMBLinkedInShareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC037221C582A100062202A /* AMBLinkedInShareTests.m */; };
@@ -479,6 +482,9 @@
 		EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBC1B291BD81B1A006E7C54 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMBPusherChannelObject.h; path = fmdb/AMBPusherChannelObject.h; sourceTree = "<group>"; };
 		EFBC1B2A1BD81B1A006E7C54 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMBPusherChannelObject.m; path = fmdb/AMBPusherChannelObject.m; sourceTree = "<group>"; };
+		EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactSelectorUnitTests.m; sourceTree = "<group>"; };
+		EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCellUnitTests.m; sourceTree = "<group>"; };
+		EFBF8E061C69007800F2B5F9 /* AMBSelectedCellUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSelectedCellUnitTests.m; sourceTree = "<group>"; };
 		EFC0371E1C5829DB0062202A /* AMBShareServiceCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBShareServiceCellTests.m; sourceTree = "<group>"; };
 		EFC037201C5829F70062202A /* AMBAuthorizeLinkedInTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBAuthorizeLinkedInTests.m; sourceTree = "<group>"; };
 		EFC037221C582A100062202A /* AMBLinkedInShareTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkedInShareTests.m; sourceTree = "<group>"; };
@@ -634,6 +640,9 @@
 		DB844D361BA75BB8003FD7A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EFBF8E061C69007800F2B5F9 /* AMBSelectedCellUnitTests.m */,
+				EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */,
+				EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */,
 				EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */,
 				EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */,
 				EFDDAD7F1C601839002BC5AE /* AMBNetworkManagerUnitTests.m */,
@@ -1449,11 +1458,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF7CA9D21BF3EAB7006EBD6A /* AMBContactTests.m in Sources */,
+				EFBF8E071C69007800F2B5F9 /* AMBSelectedCellUnitTests.m in Sources */,
 				EFCEBCA31C5FA1E8009A6421 /* AMBErrorsUnitTests.m in Sources */,
 				EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */,
 				DB6A24861BD1847900CE3230 /* AmbassadorSDKTests.m in Sources */,
 				DB6A24741BD1259000CE3230 /* AMBPusherManagerTests.m in Sources */,
 				EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */,
+				EFBF8E051C69006400F2B5F9 /* AMBContactCellUnitTests.m in Sources */,
 				EF50EFC21C56AE230077CC63 /* AMBConversionModel.xcdatamodel in Sources */,
 				EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */,
 				EFDDAD801C601839002BC5AE /* AMBNetworkManagerUnitTests.m in Sources */,
@@ -1466,6 +1477,7 @@
 				EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */,
 				EF7D076C1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m in Sources */,
 				EF1C82A21C6285B00033A364 /* AMBNamePromptUnitTests.m in Sources */,
+				EFBF8E031C69004800F2B5F9 /* AMBContactSelectorUnitTests.m in Sources */,
 				EFC037211C5829F70062202A /* AMBAuthorizeLinkedInTests.m in Sources */,
 				EF7D076E1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m in Sources */,
 				EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */,

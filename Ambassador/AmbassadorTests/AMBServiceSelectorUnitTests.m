@@ -210,17 +210,6 @@
     [mockCell verify];
 }
 
-//- (void)testCollectionViewLayout {
-//    // GIVEN
-//    CGSize expectedSize = (CGSize)CGSizeMake(self.serviceSelector.collectionView.frame.size.width/3, 105);
-//    
-//    // WHEN
-//    CGSize size = [self.serviceSelector collectionView:self.serviceSelector.collectionView layout:[UICollectionViewLayout alloc] sizeForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-//    CGSize newSize = CGSizeMake(size.width, size.height);
-//    
-//    // THEN
-//    XCTAssertNotNil(newSize);
-//}
 - (void)testDidSelectItemCollectionView {
     // GIVEN
     [[self.mockSS expect] stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
