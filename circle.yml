@@ -37,6 +37,7 @@ test:
        BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
 
     -xcrun llvm-cov show
-       -instr-profile ${PROFDATA}  ${BINARY}
+       -instr-profile ${PROFDATA}
+       ${BINARY}
   post:
       - bundle exec slather coverage -s Ambassador.xcodeproj
