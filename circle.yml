@@ -8,8 +8,7 @@ machine:
     version: "7.0"
 
   environment:
-    BUILD_SETTINGS: build-settings.txt
-    PROJECT_TEMP_ROOT: $(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+    PROJECT_TEMP_ROOT: $(grep -m1 PROJECT_TEMP_ROOT /DerivedData/Ambassador/Build/Intermediates/CodeCoverage/TestApplication | cut -d= -f2 | xargs)
     PROFDATA: $(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
     BINARY: $(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
 
