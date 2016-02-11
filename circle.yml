@@ -8,7 +8,7 @@ machine:
     version: "7.0"
 
   environment:
-
+    BUILD_SETTINGS: build-settings.txt
 
 checkout:
   post:
@@ -27,8 +27,6 @@ test:
         -enableCodeCoverage YES
         clean test
 
-
-
     - xcodebuild
        -project 'Ambassador.xcodeproj'
        -scheme "TestApplication"
@@ -36,10 +34,9 @@ test:
        -configuration 'Debug'
        -showBuildSettings > ${BUILD_SETTINGS}
 
-
-       PROJECT_TEMP_ROOT = $(grep -m1 PROJECT_TEMP_ROOT /DerivedData/Ambassador/Build/Intermediates/CodeCoverage/TestApplication | cut -d= -f2 | xargs)
-       PROFDATA = $(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
-       BINARY = $(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
+    - export PROJECT_TEMP_ROOT = $(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+    - export PROFDATA = $(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
+    - export BINARY = $(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
 
     - xcrun llvm-cov show -instr-profile ${PROFDATA} ${BINARY}
 
