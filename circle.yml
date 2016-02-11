@@ -56,9 +56,4 @@ test:
   #   BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
 
   post:
-    -bundle exec slather coverage
-     -input-format "profdata"
-     -ignore "../**/*/Xcode*"
-     -output-directory "slather-report"
-     -scheme "TestApplication"
-    Ambassador.xcodeproj
+    -bundle exec slather coverage Ambassador.xcodeproj
