@@ -23,7 +23,7 @@ test:
         -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
         -configuration 'Debug'
         -enableCodeCoverage YES
-        clean build test
+        GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test | xcpretty -c 
 
       # BUILD_SETTINGS=build-settings.txt
 
