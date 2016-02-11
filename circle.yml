@@ -36,8 +36,8 @@ test:
        PROFDATA=$(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
        BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
 
-    -xcrun llvm-cov show
-       > -instr-profile ${PROFDATA}
-       > ${BINARY}
+
   post:
+    -xcrun llvm-cov show
+       -instr-profile ${PROFDATA}
       - bundle exec slather coverage -s Ambassador.xcodeproj
