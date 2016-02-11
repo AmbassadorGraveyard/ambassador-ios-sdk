@@ -39,7 +39,7 @@ test:
        -configuration 'Debug'
        -showBuildSettings > ${BUILD_SETTINGS}
 
-    - xcrun llvm-cov show -instr-profile ${PROFDATA} -xcrun llvm-cov show ${BINARY}
+    - xcrun llvm-cov show -instr-profile ${PROFDATA} ${BINARY}
 
   post:
 
