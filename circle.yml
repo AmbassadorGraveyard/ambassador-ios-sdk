@@ -22,7 +22,7 @@ test:
         PROVISIONING_PROFILE=
         -sdk iphonesimulator
         -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
-        -project Ambassador.xcodeprj
+        -project Ambassador.xcodeproj
         -scheme "TestApplication"
         clean build test |
       tee $CIRCLE_ARTIFACTS/xcode_raw.log |
