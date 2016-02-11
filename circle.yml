@@ -1,6 +1,12 @@
 general:
   build_dir: Ambassador
 
+environment:
+  BUILD_SETTINGS: build-settings.txt
+  PROJECT_TEMP_ROOT: $(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+  PROFDATA: $(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
+  BINARY: $(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
+
 machine:
   timezone:
     America/Detroit
@@ -15,6 +21,7 @@ dependencies:
     - sudo gem install cocoapods xcpretty obcd slather -N
 test:
   override:
+    commands:
     - xcodebuild
         -project 'Ambassador.xcodeproj'
         -scheme "TestApplication"
@@ -22,7 +29,7 @@ test:
         -configuration 'Debug'
         -enableCodeCoverage YES
         clean test
-        echo $BUILD_SETTINGS
+
 
 
     - xcodebuild
@@ -31,8 +38,6 @@ test:
        -sdk iphonesimulator
        -configuration 'Debug'
        -showBuildSettings > ${BUILD_SETTINGS}
-
-       echo $PROJECT_TEMP_ROOT
 
     - xcrun llvm-cov show -instr-profile ${PROFDATA} -xcrun llvm-cov show ${BINARY}
 
