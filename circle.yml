@@ -26,6 +26,17 @@ test:
         test
 
       BUILD_SETTINGS=build-settings.txt
+
+      xcodebuild
+        -project Ambassador.xcodeproj
+        -scheme "TestApplication"
+        -sdk iphonesimulator
+        -configuration 'Debug'
+        -showBuildSettings > ${BUILD_SETTINGS}
+
+      PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+      PROFDATA=$(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
+      BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
    #
   #  -xcodebuild -project Ambassador.xcodeproj
   #    -scheme "TestApplication"
