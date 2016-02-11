@@ -21,8 +21,11 @@ test:
       -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
       -sdk iphonesimulator
       -project 'Ambassador.xcodeproj'
-      -scheme "Ambassador"
-      build build-tests
-      GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test | xcpretty -c
-  post:
-    - bundle exec slather coverage --output-directory $CIRCLE_TEST_REPORTS/coverage_reports/
+      -scheme "ci"
+      clean build \
+      ONLY_ACTIVE_ARCH=NO \
+      TEST_AFTER_BUILD=YES \
+      GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES \
+      GCC_GENERATE_TEST_COVERAGE_FILES=YES
+  # post:
+  #   - bundle exec slather coverage --output-directory $CIRCLE_TEST_REPORTS/coverage_reports/
