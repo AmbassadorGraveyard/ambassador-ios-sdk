@@ -17,11 +17,11 @@ test:
   override:
     - set -o pipefail &&
        xcodebuild -project Ambassador.xcodeproj
-         BUILD_SETTINGS=build-settings.txt
+        #  BUILD_SETTINGS=build-settings.txt
          -scheme "TestApplication"
          -sdk iphonesimulator
          -configuration Debug
-         -showBuildSettings > ${BUILD_SETTINGS}
+        #  -showBuildSettings > ${BUILD_SETTINGS}
         # CODE_SIGNING_REQUIRED=NO
         # CODE_SIGN_IDENTITY=
         # PROVISIONING_PROFILE=
