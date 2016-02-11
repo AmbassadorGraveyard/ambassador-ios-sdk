@@ -16,8 +16,8 @@ dependencies:
 test:
   override:
     -xcodebuild test
-      -project Ambassador.xcodeproj
-      -scheme TestApplication
+      -project 'Ambassador.xcodeproj'
+      -scheme "TestApplication"
       -sdk iphonesimulator
       -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
       -configuration Debug
@@ -26,7 +26,7 @@ test:
       BUILD_SETTINGS=build-settings.txt
 
    -xcodebuild -project Ambassador.xcodeproj
-     -scheme TestApplication
+     -scheme "TestApplication"
      -sdk iphonesimulator
      -configuration Debug
      -showBuildSettings > ${BUILD_SETTINGS}
