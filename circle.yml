@@ -15,25 +15,30 @@ dependencies:
     - brew uninstall xctool && brew install --HEAD xctool
 test:
   override:
-    -xcodebuild test
-      -project 'Ambassador.xcodeproj'
-      -scheme "TestApplication"
-      -sdk iphonesimulator
-      -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.0'
-      -configuration Debug
-      -enableCodeCoverage YES
+    - set -o pipefail &&
+      xcodebuild
+        CODE_SIGNING_REQUIRED=NO
+        CODE_SIGN_IDENTITY=
+        PROVISIONING_PROFILE=
+        -sdk iphonesimulator
+        -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
+        -project Ambassador.xcodeprj
+        -scheme "Test Application"
+        clean build test |
+      tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml
 
-      BUILD_SETTINGS=build-settings.txt
-
-   -xcodebuild -project Ambassador.xcodeproj
-     -scheme "TestApplication"
-     -sdk iphonesimulator
-     -configuration Debug
-     -showBuildSettings > ${BUILD_SETTINGS}
-
-    PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
-    PROFDATA=$(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
-    BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
+  #     BUILD_SETTINGS=build-settings.txt
+   #
+  #  -xcodebuild -project Ambassador.xcodeproj
+  #    -scheme "TestApplication"
+  #    -sdk iphonesimulator
+  #    -configuration Debug
+  #    -showBuildSettings > ${BUILD_SETTINGS}
+   #
+  #   PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+  #   PROFDATA=$(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
+  #   BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
 
   post:
     - bundle exec slather coverage -s Ambassador.xcodeproj
