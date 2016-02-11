@@ -1,17 +1,18 @@
 general:
   build_dir: Ambassador
 
-environment:
-  BUILD_SETTINGS: build-settings.txt
-  PROJECT_TEMP_ROOT: $(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
-  PROFDATA: $(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
-  BINARY: $(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
-
 machine:
   timezone:
     America/Detroit
   xcode:
     version: "7.0"
+
+  environment:
+    BUILD_SETTINGS: build-settings.txt
+    PROJECT_TEMP_ROOT: $(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+    PROFDATA: $(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
+    BINARY: $(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
+    
 checkout:
   post:
     - git submodule sync
