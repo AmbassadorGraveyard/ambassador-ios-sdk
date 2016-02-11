@@ -34,9 +34,9 @@ test:
        -configuration 'Debug'
        -showBuildSettings > ${BUILD_SETTINGS}
 
-    - export PROJECT_TEMP_ROOT = $(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
-    - export PROFDATA = $(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
-    - export BINARY = $(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
+    - PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+    - PROFDATA=$(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
+    - BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
 
     - xcrun llvm-cov show -instr-profile ${PROFDATA} ${BINARY}
 
