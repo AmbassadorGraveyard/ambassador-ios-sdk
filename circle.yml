@@ -16,27 +16,26 @@ dependencies:
 test:
   override:
     - set -o pipefail &&
-       xcodebuild -project Ambassador.xcodeproj
-         -scheme "TestApplication"
-         -sdk iphonesimulator
-         -configuration Debug
+      xcodebuild
+        -project Ambassador.xcodeproj
+        -scheme "TestApplication"
+        -sdk iphonesimulator
+        -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
+        -configuration 'Debug'
+        -enableCodeCoverage YES
+        clean build test
+
+  #     BUILD_SETTINGS=build-settings.txt
+   #
+  #  -xcodebuild -project Ambassador.xcodeproj
+  #    -scheme "TestApplication"
+  #    -sdk iphonesimulator
+  #    -configuration Debug
+  #    -showBuildSettings > ${BUILD_SETTINGS}
+   #
+  #   PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+  #   PROFDATA=$(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
+  #   BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
+
   post:
     - bundle exec slather coverage -s Ambassador.xcodeproj
-     #  BUILD_SETTINGS=build-settings.txt
-    #  -showBuildSettings > ${BUILD_SETTINGS}
-    # CODE_SIGNING_REQUIRED=NO
-    # CODE_SIGN_IDENTITY=
-    # PROVISIONING_PROFILE=
-    # -sdk iphonesimulator
-    # -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
-    # -project Ambassador.xcodeproj
-    # -scheme "TestApplication"
-    # clean build test
-
-
-
-
-#
-#   PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
-#   PROFDATA=$(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
-#   BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
