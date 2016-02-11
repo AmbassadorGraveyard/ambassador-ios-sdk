@@ -35,8 +35,15 @@ test:
         -showBuildSettings > ${BUILD_SETTINGS}
 
       PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+      echo $PROJECT_TEMP_ROOT
       PROFDATA=$(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
+      echo $PROFDATA
       BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
+      echo $BINARY
+
+      xcrun llvm-cov show
+        -instr-profile ${PROFDATA}
+        ${BINARY}
    #
   #  -xcodebuild -project Ambassador.xcodeproj
   #    -scheme "TestApplication"
