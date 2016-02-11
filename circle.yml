@@ -23,7 +23,7 @@ test:
         -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
         -configuration 'Debug'
         -enableCodeCoverage YES
-        test
+        clean build test
 
       BUILD_SETTINGS=build-settings.txt
 
@@ -41,9 +41,9 @@ test:
       BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
       echo $BINARY
 
-      xcrun llvm-cov show
-        -instr-profile ${PROFDATA}
-        ${BINARY}
+      # xcrun llvm-cov show
+      #   -instr-profile ${PROFDATA}
+      #   ${BINARY}
    #
   #  -xcodebuild -project Ambassador.xcodeproj
   #    -scheme "TestApplication"
