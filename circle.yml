@@ -1,5 +1,6 @@
 general:
   build_dir: Ambassador
+
 machine:
   timezone:
     America/Detroit
@@ -22,10 +23,7 @@ test:
       -sdk iphonesimulator
       -project 'Ambassador.xcodeproj'
       -scheme "ci"
-      -clean test
-      ONLY_ACTIVE_ARCH=NO
-      TEST_AFTER_BUILD=YES
-      GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES
-      GCC_GENERATE_TEST_COVERAGE_FILES=YES
-  # post:
-  #   - bundle exec slather coverage --output-directory $CIRCLE_TEST_REPORTS/coverage_reports/
+      build build-tests
+      GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test | xcpretty -c
+  post:
+    # - bundle exec slather
