@@ -15,11 +15,28 @@ dependencies:
     - sudo gem install cocoapods xcpretty obcd slather -N
 test:
   override:
-    - set -o pipefail && xcodebuild
+    - xcodebuild
         -project 'Ambassador.xcodeproj'
         -scheme "TestApplication"
         -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
-        GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test | xcpretty -c
-        --report junit --output ${CIRCLE_TEST_REPORTS}/junit.xml
+        -configuration 'Debug'
+        -enableCodeCoverage YES
+        clean test
+
+        BUILD_SETTINGS=build-settings.txt
+
+    - xcodebuild
+       -project 'Ambassador.xcodeproj'
+       -scheme "TestApplication"
+       -sdk iphonesimulator
+       -configuration 'Debug'
+       -showBuildSettings > ${BUILD_SETTINGS}
+
+       PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+       PROFDATA=$(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
+       BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
+
+    -xcrun llvm-cov show
+       -instr-profile ${PROFDATA}  ${BINARY}
   post:
       - bundle exec slather coverage -s Ambassador.xcodeproj
