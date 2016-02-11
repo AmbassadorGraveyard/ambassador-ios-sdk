@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/viteinfinite/slather.git
+  revision: 6a19585ca31bb44ab22912a9ac4fa759929ae06f
+  branch: feature-profdata
+  specs:
+    slather (1.8.2)
+      clamp (~> 0.6)
+      nokogiri (~> 1.6.3)
+      xcodeproj (~> 0.28.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -16,10 +26,6 @@ GEM
     minitest (5.8.4)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
-    slather (2.0.0)
-      clamp (~> 0.6)
-      nokogiri (~> 1.6.3)
-      xcodeproj (>= 0.28.2, < 1.1.0)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -32,4 +38,4 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  slather
+  slather!
