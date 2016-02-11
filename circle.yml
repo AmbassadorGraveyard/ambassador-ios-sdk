@@ -25,4 +25,4 @@ test:
       build build-tests
       GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test | xcpretty -c
   post:
-    - bundle exec slather coverage --output-directory $CIRCLE_ARTIFACTS/coverage_reports/
+    - bundle exec slather coverage --output-directory $CIRCLE_TEST_REPORTS/coverage_reports/
