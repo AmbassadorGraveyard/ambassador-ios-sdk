@@ -38,6 +38,5 @@ test:
 
 
   post:
-    -xcrun llvm-cov show
-       -instr-profile ${PROFDATA}
-      - bundle exec slather coverage -s Ambassador.xcodeproj
+    -xcrun llvm-cov show -instr-profile ${PROFDATA} -xcrun llvm-cov show ${BINARY}
+    - bundle exec slather coverage -s Ambassador.xcodeproj
