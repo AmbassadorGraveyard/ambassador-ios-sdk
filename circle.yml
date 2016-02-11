@@ -21,6 +21,5 @@ test:
         -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
         GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test | xcpretty -c
         --report junit --output ${CIRCLE_TEST_REPORTS}/junit.xml
-    - pod lib lint --quick
   post:
-      - slather
+      - bundle exec slather coverage -s Ambassador.xcodeproj
