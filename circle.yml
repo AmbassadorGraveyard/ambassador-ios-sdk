@@ -22,7 +22,7 @@ test:
         -configuration 'Debug'
         -enableCodeCoverage YES
         clean test
-
+        echo $BUILD_SETTINGS
 
 
     - xcodebuild
@@ -31,6 +31,8 @@ test:
        -sdk iphonesimulator
        -configuration 'Debug'
        -showBuildSettings > ${BUILD_SETTINGS}
+
+       echo $PROJECT_TEMP_ROOT
 
     - xcrun llvm-cov show -instr-profile ${PROFDATA} -xcrun llvm-cov show ${BINARY}
 
