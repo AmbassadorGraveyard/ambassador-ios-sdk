@@ -21,7 +21,7 @@ test:
         -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
         -configuration 'Debug'
         -enableCodeCoverage YES
-        BUILD_SETTINGS=build-settings.txt
+        BUILD_SETTINGS:build-settings.txt
         clean test
 
 
@@ -33,9 +33,9 @@ test:
        -configuration 'Debug'
        -showBuildSettings > ${BUILD_SETTINGS}
 
-       PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
-       PROFDATA=$(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
-       BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
+       PROJECT_TEMP_ROOT:$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+       PROFDATA:$(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
+       BINARY:$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
 
     - xcrun llvm-cov show -instr-profile ${PROFDATA} -xcrun llvm-cov show ${BINARY}
 
