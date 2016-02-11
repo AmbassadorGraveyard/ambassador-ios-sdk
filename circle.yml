@@ -38,7 +38,7 @@ test:
        -sdk iphonesimulator
        -configuration 'Debug'
        -showBuildSettings > ${BUILD_SETTINGS}
-
+       echo ${BUILD_SETTINGS}
     - xcrun llvm-cov show -instr-profile ${PROFDATA} ${BINARY}
 
   post:
