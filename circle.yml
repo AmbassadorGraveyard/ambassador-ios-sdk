@@ -20,6 +20,6 @@ test:
        -configuration Debug
        -scheme TestApplication
        VALID_ARCHS=x86_64
-       clean build test
+       test
   post:
     - slather coverage Ambassador.xcodeproj
