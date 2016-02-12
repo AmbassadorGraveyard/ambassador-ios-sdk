@@ -19,29 +19,19 @@ dependencies:
     - sudo gem install cocoapods xcpretty obcd slather -N
 test:
   override:
-    - xcodebuild
-        -project 'Ambassador.xcodeproj'
-        -scheme "TestApplication"
-        -sdk iphonesimulator
-        -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
-        -configuration 'Debug'
-        -enableCodeCoverage YES
-        clean test
-
-    - xcodebuild
-       -project 'Ambassador.xcodeproj'
-       -scheme "TestApplication"
-       -sdk iphonesimulator
-       -configuration 'Debug'
-       -showBuildSettings > ${BUILD_SETTINGS}
-
-    # - bash PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
-    # - bash echo $PROJECT_TEMP_ROOT
-    # - bash PROFDATA=$(find ${PROJECT_TEMP_ROOT} \-name "Coverage.profdata")
-    # - bash BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
-
-    # - xcrun llvm-cov show -instr-profile ${PROFDATA} ${BINARY}
-
-  post:
-
-    - bundle exec slather 
+        - xctool
+          -reporter pretty
+          -reporter junit:$CIRCLE_TEST_REPORTS/xcode/results.xml
+          -reporter plain:$CIRCLE_ARTIFACTS/xctool.log
+          CODE_SIGNING_REQUIRED=NO
+          CODE_SIGN_IDENTITY=
+          PROVISIONING_PROFILE=
+          GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES
+          GCC_GENERATE_TEST_COVERAGE_FILES=YES
+          -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
+          -sdk iphonesimulator
+          -project 'Ambassador.xcodeproj'
+          -scheme 'TestApplication'
+          build build-tests run-tests
+    post:
+        - bundle exec slather coverage --output-directory $CIRCLE_ARTIFACTS/coverage_reports/
