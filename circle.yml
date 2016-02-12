@@ -35,7 +35,8 @@ test:
        -showBuildSettings > ${BUILD_SETTINGS}
 
     - PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
-    - PROFDATA=$(find ${PROJECT_TEMP_ROOT} -name "Coverage.profdata")
+    - echo $PROJECT_TEMP_ROOT
+    - PROFDATA=$(find ${PROJECT_TEMP_ROOT} \-name "Coverage.profdata")
     - BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
 
     - xcrun llvm-cov show -instr-profile ${PROFDATA} ${BINARY}
