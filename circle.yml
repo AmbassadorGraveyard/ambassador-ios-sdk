@@ -35,13 +35,13 @@ test:
        -configuration 'Debug'
        -showBuildSettings > ${BUILD_SETTINGS}
 
-    - bash PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
-    - bash echo $PROJECT_TEMP_ROOT
-    - bash PROFDATA=$(find ${PROJECT_TEMP_ROOT} \-name "Coverage.profdata")
-    - bash BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
+    # - bash PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+    # - bash echo $PROJECT_TEMP_ROOT
+    # - bash PROFDATA=$(find ${PROJECT_TEMP_ROOT} \-name "Coverage.profdata")
+    # - bash BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
 
-    - xcrun llvm-cov show -instr-profile ${PROFDATA} ${BINARY}
+    # - xcrun llvm-cov show -instr-profile ${PROFDATA} ${BINARY}
 
   post:
 
-    - bundle exec slather coverage -s Ambassador.xcodeproj
+    - bundle exec slather 
