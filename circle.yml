@@ -19,12 +19,13 @@ dependencies:
     - sudo gem install cocoapods xcpretty obcd slather -N
 test:
   override:
-    -xcodebuild -project Ambassador.xcodeproj
+    - xcodebuild -project Ambassador.xcodeproj
       -sdk iphonesimulator
        -destination 'platform=iOS Simulator,OS=9.2,name=iPhone 6'
        -configuration Debug
        -scheme TestApplication
-       VALID_ARCHS=x86_64 test
+       VALID_ARCHS=x86_64
+       test
 
   post:
     - bundle exec slather coverage Ambassador.xcodeproj
