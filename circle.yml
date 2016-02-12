@@ -16,11 +16,10 @@ test:
   override:
     - xcodebuild -project Ambassador.xcodeproj
       -sdk iphonesimulator
-       -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
+       -destination 'platform=iOS Simulator,OS=9.2,name=iPhone 6'
        -configuration Debug
        -scheme TestApplication
        VALID_ARCHS=x86_64
-       build build-tests run-tests
-
+       clean build test
   post:
-    - slather coverage Ambassador.xcodeproj
+    - bundle exec slather coverage Ambassador.xcodeproj
