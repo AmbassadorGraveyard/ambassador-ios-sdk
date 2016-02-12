@@ -22,7 +22,8 @@ test:
     - xcodebuild
         -project 'Ambassador.xcodeproj'
         -scheme "TestApplication"
-        -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
+        -sdk iphonesimulator
+        -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
         -configuration 'Debug'
         -enableCodeCoverage YES
         clean test
@@ -34,10 +35,10 @@ test:
        -configuration 'Debug'
        -showBuildSettings > ${BUILD_SETTINGS}
 
-    - PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
-    - echo $PROJECT_TEMP_ROOT
-    - PROFDATA=$(find ${PROJECT_TEMP_ROOT} \-name "Coverage.profdata")
-    - BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
+    - bash PROJECT_TEMP_ROOT=$(grep -m1 PROJECT_TEMP_ROOT ${BUILD_SETTINGS} | cut -d= -f2 | xargs)
+    - bash echo $PROJECT_TEMP_ROOT
+    - bash PROFDATA=$(find ${PROJECT_TEMP_ROOT} \-name "Coverage.profdata")
+    - bash BINARY=$(find ${PROJECT_TEMP_ROOT} -path "*TestApplication.app/TestApplication")
 
     - xcrun llvm-cov show -instr-profile ${PROFDATA} ${BINARY}
 
