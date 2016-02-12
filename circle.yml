@@ -33,5 +33,6 @@ test:
           -project 'Ambassador.xcodeproj'
           -scheme 'TestApplication'
           build build-tests run-tests
-    post:
+
+  post:
         - bundle exec slather coverage --output-directory $CIRCLE_ARTIFACTS/coverage_reports/
