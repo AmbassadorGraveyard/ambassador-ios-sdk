@@ -4,3 +4,4 @@ xcodeproj: Ambassador.xcodeproj
 ignore:
   - Ambassador/fmdb/*
   - TestApplication/*
+  - ../**/*/Xcode*
