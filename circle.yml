@@ -22,4 +22,4 @@ test:
        VALID_ARCHS=x86_64
        clean build test
   post:
-    - bundle exec slather coverage Ambassador.xcodeproj
+    - slather coverage Ambassador.xcodeproj
