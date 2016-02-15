@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.rafTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.rafNameArray = @[@"Ambassador Shoes RAF", @"Ambassador RAF", @"Ambassador Shirt RAF", @"PIQ Custom RAF"];
+    self.rafNameArray = @[@"Ambassador Shoes RAF", @"Ambassador RAF", @"Ambassador Shirt RAF", @"Custom Branded RAF"];
     self.tfCampaignId.delegate = self;
 }
 
@@ -60,7 +60,7 @@
             [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self withThemePlist:@"AmbassadorShirt"];
             break;
         case 3:
-            [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self withThemePlist:@"PIQTheme"];
+            [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self withThemePlist:@"CustomBrandTheme"];
             break;
         default:
             break;
