@@ -5,7 +5,7 @@
 	<key>NAVIGATION BAR -- - -- - - - - </key>
 	<string></string>
 	<key>NavBarColor</key>
-	<string>#ED1E24</string>
+	<string>#00a1e4</string>
 	<key>NavBarTextMessage</key>
 	<string>Refer a Friend!</string>
 	<key>NavBarTextColor</key>
@@ -17,7 +17,7 @@
 	<key>RAFBackgroundColor</key>
 	<string>#FFFFFF</string>
 	<key>RAFLogo</key>
-	<string>piqTennisAccessory, 2</string>
+	<string>podifyImage, 2</string>
 	<key>SHARE URL FIELD ----------------</key>
 	<string></string>
 	<key>ShareFieldBackgroundColor</key>
@@ -35,7 +35,7 @@
 	<key>RAF WELCOME LABEL ----------</key>
 	<string></string>
 	<key>RAFWelcomeTextMessage</key>
-	<string>Tell a friend about the Mobitee! For every one purchased, you&apos;ll get one half off!</string>
+	<string>Refer your friends to Podify and we’ll waive fees for a month.</string>
 	<key>RAFWelcomeTextColor</key>
 	<string>#000000</string>
 	<key>RAFWelcomeTextFont</key>
@@ -53,7 +53,7 @@
 	<key>CONTACT SEND BUTTON ---------</key>
 	<string></string>
 	<key>ContactSendButtonBackgroundColor</key>
-	<string>#ED1E24</string>
+	<string>#00a1e4</string>
 	<key>ContactSendButtonTextColor</key>
 	<string>#FFFFFF</string>
 	<key>ContactSendButtonTextFont</key>
@@ -67,19 +67,19 @@
 	<key>CONTACT TABLEVIEW ------------</key>
 	<string></string>
 	<key>ContactTableCheckMarkColor</key>
-	<string>#ED1E24</string>
+	<string>#00a1e4</string>
 	<key>ContactTableNameTextFont</key>
 	<string>Helvetica, 17</string>
 	<key>ContactTableInfoTextFont</key>
 	<string>Helvetica, 13</string>
 	<key>ContactAvatarBackgroundColor</key>
-	<string>#ED1E24</string>
+	<string>#00a1e4</string>
 	<key>ContactAvatarColor</key>
 	<string>#FFFFFF</string>
 	<key>ALERT BUTTON ----------------</key>
 	<string></string>
 	<key>AlertButtonBackgroundColor</key>
-	<string>#ED1E24</string>
+	<string>#00a1e4</string>
 	<key>AlertButtonTextColor</key>
 	<string>#FFFFFF</string>
 	<key>SOCIAL SHARE GRID ------------</key>
