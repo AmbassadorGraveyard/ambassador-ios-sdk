@@ -157,6 +157,7 @@
 		EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */; };
 		EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */; };
 		EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */; };
+		EF3079191C6E3B5300403F56 /* CustomBrandTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF50EFC01C5692E70077CC63 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */; };
@@ -448,6 +449,7 @@
 		EF24D1E41BECFAC000561476 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = ../../../../Desktop/iOS/libOCMock.a; sourceTree = "<group>"; };
 		EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBConversionsTests.m; sourceTree = "<group>"; };
 		EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBOptionsTests.m; sourceTree = "<group>"; };
+		EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CustomBrandTheme.plist; sourceTree = "<group>"; };
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GenericTheme.plist; sourceTree = "<group>"; };
@@ -694,6 +696,7 @@
 				EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */,
 				EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */,
 				EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */,
+				EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */,
 				EF1CB0B31C3C7F6600F65031 /* avatar.png */,
 				DBEB6FE31BA9B2D8005EE0D0 /* blank.png */,
 				DBEB6FE41BA9B2D8005EE0D0 /* check.png */,
@@ -1331,6 +1334,7 @@
 				EF5390DC1C458FFD005F6944 /* GenericTheme.plist in Resources */,
 				EF1CB0B41C3C7F6600F65031 /* avatar.png in Resources */,
 				DBEB6FF41BA9B2D8005EE0D0 /* clipboard.png in Resources */,
+				EF3079191C6E3B5300403F56 /* CustomBrandTheme.plist in Resources */,
 				DBEB6FF31BA9B2D8005EE0D0 /* check.png in Resources */,
 				DBEB6FF21BA9B2D8005EE0D0 /* blank.png in Resources */,
 				DBEB6FF61BA9B2D8005EE0D0 /* email.png in Resources */,
