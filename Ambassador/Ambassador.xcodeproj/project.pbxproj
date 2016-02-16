@@ -159,11 +159,7 @@
 		EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */; };
 		EF3079161C6E205800403F56 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */; };
 		EF3079171C6E205800403F56 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3079151C6E205800403F56 /* AMBPusherChannelObject.m */; };
-		EF33DCE51C73911E009689CA /* Raven.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCDF1C73911E009689CA /* Raven.h */; };
-		EF33DCE61C73911E009689CA /* RavenClient.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCE01C73911E009689CA /* RavenClient.h */; };
 		EF33DCE71C73911E009689CA /* RavenClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCE11C73911E009689CA /* RavenClient.m */; };
-		EF33DCE81C73911E009689CA /* RavenClient_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCE21C73911E009689CA /* RavenClient_Private.h */; };
-		EF33DCE91C73911E009689CA /* RavenConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCE31C73911E009689CA /* RavenConfig.h */; };
 		EF33DCEA1C73911E009689CA /* RavenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCE41C73911E009689CA /* RavenConfig.m */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
@@ -253,13 +249,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = DB844D511BA7622D003FD7A9;
 			remoteInfo = AmbassadorResources;
-		};
-		DB844D8C1BA76C82003FD7A9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DB844D471BA75F9F003FD7A9;
-			remoteInfo = Framework;
 		};
 		EF33DCEE1C73949A009689CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1096,8 +1085,6 @@
 			files = (
 				DBA3FC161BA8AA1D00672D82 /* AMBPTPusherConnection.h in Headers */,
 				DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */,
-				EF33DCE81C73911E009689CA /* RavenClient_Private.h in Headers */,
-				EF33DCE91C73911E009689CA /* RavenConfig.h in Headers */,
 				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
 				EFE7D7951C21C19B00D7F92C /* AMBCoreDataDelegate.h in Headers */,
 				DBA3FC051BA8AA1D00672D82 /* AMBPTJSON.h in Headers */,
@@ -1117,7 +1104,6 @@
 				EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */,
 				DB6A24841BD1842800CE3230 /* AmbassadorSDK_Internal.h in Headers */,
 				DBA3FC1F1BA8AA1D00672D82 /* AMBPTPusherMacros.h in Headers */,
-				EF33DCE51C73911E009689CA /* Raven.h in Headers */,
 				DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
 				DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */,
@@ -1156,7 +1142,6 @@
 				DBA3FC1A1BA8AA1D00672D82 /* AMBPTPusherEvent.h in Headers */,
 				DBA3FB8E1BA8A23C00672D82 /* AMBIdentify.h in Headers */,
 				DBA3FB731BA8A23C00672D82 /* AMBAuthorizeLinkedIn.h in Headers */,
-				EF33DCE61C73911E009689CA /* RavenClient.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1231,7 +1216,6 @@
 			);
 			dependencies = (
 				EF33DCEF1C73949A009689CA /* PBXTargetDependency */,
-				DB844D8D1BA76C82003FD7A9 /* PBXTargetDependency */,
 				DB844D8B1BA76C76003FD7A9 /* PBXTargetDependency */,
 			);
 			name = TestApplication;
@@ -1596,11 +1580,6 @@
 			isa = PBXTargetDependency;
 			target = DB844D511BA7622D003FD7A9 /* AmbassadorResources */;
 			targetProxy = DB844D8A1BA76C76003FD7A9 /* PBXContainerItemProxy */;
-		};
-		DB844D8D1BA76C82003FD7A9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DB844D471BA75F9F003FD7A9 /* Framework */;
-			targetProxy = DB844D8C1BA76C82003FD7A9 /* PBXContainerItemProxy */;
 		};
 		EF33DCEF1C73949A009689CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
