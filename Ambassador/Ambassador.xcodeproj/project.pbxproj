@@ -159,12 +159,12 @@
 		EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */; };
 		EF3079161C6E205800403F56 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */; };
 		EF3079171C6E205800403F56 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3079151C6E205800403F56 /* AMBPusherChannelObject.m */; };
-		EF33DCD61C73895A009689CA /* Raven.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCD01C738959009689CA /* Raven.h */; };
-		EF33DCD71C73895A009689CA /* RavenClient.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCD11C738959009689CA /* RavenClient.h */; };
-		EF33DCD81C73895A009689CA /* RavenClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCD21C738959009689CA /* RavenClient.m */; };
-		EF33DCD91C73895A009689CA /* RavenClient_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCD31C738959009689CA /* RavenClient_Private.h */; };
-		EF33DCDA1C73895A009689CA /* RavenConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCD41C73895A009689CA /* RavenConfig.h */; };
-		EF33DCDB1C73895A009689CA /* RavenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCD51C73895A009689CA /* RavenConfig.m */; };
+		EF33DCE51C73911E009689CA /* Raven.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCDF1C73911E009689CA /* Raven.h */; };
+		EF33DCE61C73911E009689CA /* RavenClient.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCE01C73911E009689CA /* RavenClient.h */; };
+		EF33DCE71C73911E009689CA /* RavenClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCE11C73911E009689CA /* RavenClient.m */; };
+		EF33DCE81C73911E009689CA /* RavenClient_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCE21C73911E009689CA /* RavenClient_Private.h */; };
+		EF33DCE91C73911E009689CA /* RavenConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCE31C73911E009689CA /* RavenConfig.h */; };
+		EF33DCEA1C73911E009689CA /* RavenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCE41C73911E009689CA /* RavenConfig.m */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF50EFC01C5692E70077CC63 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */; };
@@ -456,13 +456,13 @@
 		EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBOptionsTests.m; sourceTree = "<group>"; };
 		EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPusherChannelObject.h; sourceTree = "<group>"; };
 		EF3079151C6E205800403F56 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPusherChannelObject.m; sourceTree = "<group>"; };
-		EF33DCCF1C738959009689CA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EF33DCD01C738959009689CA /* Raven.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raven.h; sourceTree = "<group>"; };
-		EF33DCD11C738959009689CA /* RavenClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient.h; sourceTree = "<group>"; };
-		EF33DCD21C738959009689CA /* RavenClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenClient.m; sourceTree = "<group>"; };
-		EF33DCD31C738959009689CA /* RavenClient_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient_Private.h; sourceTree = "<group>"; };
-		EF33DCD41C73895A009689CA /* RavenConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenConfig.h; sourceTree = "<group>"; };
-		EF33DCD51C73895A009689CA /* RavenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenConfig.m; sourceTree = "<group>"; };
+		EF33DCDE1C73911E009689CA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF33DCDF1C73911E009689CA /* Raven.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raven.h; sourceTree = "<group>"; };
+		EF33DCE01C73911E009689CA /* RavenClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient.h; sourceTree = "<group>"; };
+		EF33DCE11C73911E009689CA /* RavenClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenClient.m; sourceTree = "<group>"; };
+		EF33DCE21C73911E009689CA /* RavenClient_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient_Private.h; sourceTree = "<group>"; };
+		EF33DCE31C73911E009689CA /* RavenConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenConfig.h; sourceTree = "<group>"; };
+		EF33DCE41C73911E009689CA /* RavenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenConfig.m; sourceTree = "<group>"; };
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GenericTheme.plist; sourceTree = "<group>"; };
@@ -857,16 +857,16 @@
 			name = "Custom Alert";
 			sourceTree = "<group>";
 		};
-		EF33DCCE1C738959009689CA /* Raven */ = {
+		EF33DCDD1C73911E009689CA /* Raven */ = {
 			isa = PBXGroup;
 			children = (
-				EF33DCCF1C738959009689CA /* Info.plist */,
-				EF33DCD01C738959009689CA /* Raven.h */,
-				EF33DCD11C738959009689CA /* RavenClient.h */,
-				EF33DCD21C738959009689CA /* RavenClient.m */,
-				EF33DCD31C738959009689CA /* RavenClient_Private.h */,
-				EF33DCD41C73895A009689CA /* RavenConfig.h */,
-				EF33DCD51C73895A009689CA /* RavenConfig.m */,
+				EF33DCDE1C73911E009689CA /* Info.plist */,
+				EF33DCDF1C73911E009689CA /* Raven.h */,
+				EF33DCE01C73911E009689CA /* RavenClient.h */,
+				EF33DCE11C73911E009689CA /* RavenClient.m */,
+				EF33DCE21C73911E009689CA /* RavenClient_Private.h */,
+				EF33DCE31C73911E009689CA /* RavenConfig.h */,
+				EF33DCE41C73911E009689CA /* RavenConfig.m */,
 			);
 			name = Raven;
 			path = "../../raven-objc/Raven";
@@ -991,7 +991,7 @@
 		EFE7D78A1C21B7EA00D7F92C /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				EF33DCCE1C738959009689CA /* Raven */,
+				EF33DCDD1C73911E009689CA /* Raven */,
 				DBA3FBD81BA8A9CA00672D82 /* Pusher */,
 			);
 			name = Libraries;
@@ -1089,8 +1089,8 @@
 			files = (
 				DBA3FC161BA8AA1D00672D82 /* AMBPTPusherConnection.h in Headers */,
 				DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */,
-				EF33DCD91C73895A009689CA /* RavenClient_Private.h in Headers */,
-				EF33DCDA1C73895A009689CA /* RavenConfig.h in Headers */,
+				EF33DCE81C73911E009689CA /* RavenClient_Private.h in Headers */,
+				EF33DCE91C73911E009689CA /* RavenConfig.h in Headers */,
 				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
 				EFE7D7951C21C19B00D7F92C /* AMBCoreDataDelegate.h in Headers */,
 				DBA3FC051BA8AA1D00672D82 /* AMBPTJSON.h in Headers */,
@@ -1110,7 +1110,7 @@
 				EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */,
 				DB6A24841BD1842800CE3230 /* AmbassadorSDK_Internal.h in Headers */,
 				DBA3FC1F1BA8AA1D00672D82 /* AMBPTPusherMacros.h in Headers */,
-				EF33DCD61C73895A009689CA /* Raven.h in Headers */,
+				EF33DCE51C73911E009689CA /* Raven.h in Headers */,
 				DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
 				DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */,
@@ -1149,7 +1149,7 @@
 				DBA3FC1A1BA8AA1D00672D82 /* AMBPTPusherEvent.h in Headers */,
 				DBA3FB8E1BA8A23C00672D82 /* AMBIdentify.h in Headers */,
 				DBA3FB731BA8A23C00672D82 /* AMBAuthorizeLinkedIn.h in Headers */,
-				EF33DCD71C73895A009689CA /* RavenClient.h in Headers */,
+				EF33DCE61C73911E009689CA /* RavenClient.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1437,12 +1437,12 @@
 				DBA3FC0E1BA8AA1D00672D82 /* AMBPTPusher.m in Sources */,
 				DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */,
 				EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */,
-				EF33DCDB1C73895A009689CA /* RavenConfig.m in Sources */,
+				EF33DCEA1C73911E009689CA /* RavenConfig.m in Sources */,
 				DBA3FB7E1BA8A23C00672D82 /* AMBContactSelector.m in Sources */,
 				DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */,
 				DBA3FC121BA8AA1D00672D82 /* AMBPTPusherAPI.m in Sources */,
 				DBA3FC001BA8AA1D00672D82 /* NSDictionary+QueryString.m in Sources */,
-				EF33DCD81C73895A009689CA /* RavenClient.m in Sources */,
+				EF33DCE71C73911E009689CA /* RavenClient.m in Sources */,
 				DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */,
 				DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */,
 				DBA3FC231BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m in Sources */,
