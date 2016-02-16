@@ -1,14 +1,12 @@
 general:
   build_dir: Ambassador
 machine:
-  timezone:
-    America/Detroit
   xcode:
     version: "7.0"
 checkout:
   post:
     - git submodule sync
-    - git submodule update 
+    - git submodule update
 dependencies:
   pre:
     - sudo gem install cocoapods xcpretty obcd slather -N
