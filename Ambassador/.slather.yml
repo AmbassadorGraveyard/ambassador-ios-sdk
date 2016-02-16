@@ -4,5 +4,6 @@ xcodeproj: Ambassador.xcodeproj
 source_directory: Ambassador/*
 ignore:
   - Ambassador/fmdb/*
+  - Ambassador/Raven/*
   - TestApplication/*
   - Ambassador/AMBContactCard.m
