@@ -8,7 +8,7 @@ machine:
 checkout:
   post:
     - git submodule sync
-    - git submodule update --init
+    - git submodule update 
 dependencies:
   pre:
     - sudo gem install cocoapods xcpretty obcd slather -N
