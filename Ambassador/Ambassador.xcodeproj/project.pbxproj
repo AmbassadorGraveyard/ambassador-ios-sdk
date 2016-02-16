@@ -261,6 +261,13 @@
 			remoteGlobalIDString = DB844D471BA75F9F003FD7A9;
 			remoteInfo = Framework;
 		};
+		EF33DCEE1C73949A009689CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB844D251BA75BB8003FD7A9;
+			remoteInfo = Ambassador;
+		};
 		EF64CFA81BE2A47D0072014B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
@@ -1223,6 +1230,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				EF33DCEF1C73949A009689CA /* PBXTargetDependency */,
 				DB844D8D1BA76C82003FD7A9 /* PBXTargetDependency */,
 				DB844D8B1BA76C76003FD7A9 /* PBXTargetDependency */,
 			);
@@ -1593,6 +1601,11 @@
 			isa = PBXTargetDependency;
 			target = DB844D471BA75F9F003FD7A9 /* Framework */;
 			targetProxy = DB844D8C1BA76C82003FD7A9 /* PBXContainerItemProxy */;
+		};
+		EF33DCEF1C73949A009689CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB844D251BA75BB8003FD7A9 /* Ambassador */;
+			targetProxy = EF33DCEE1C73949A009689CA /* PBXContainerItemProxy */;
 		};
 		EF64CFA91BE2A47D0072014B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
