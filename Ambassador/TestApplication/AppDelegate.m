@@ -26,6 +26,7 @@
     [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // DEV CREDENTIALS
 //    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // PROD CREDENTIALS
 
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
 
     return YES;
 }
@@ -51,6 +52,26 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+#pragma mark - Notifications
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"Device Token = %@", token);
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"Failed to register for remote notifications");
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"Info received from notification - %@", userInfo);
+}
+
+
+#pragma mark - Helper Functions
 
 - (void)setUpAppearance {
     [[UITabBar appearance] setBarTintColor:[AppDelegate colorFromHexString:@"#25313f"]];
