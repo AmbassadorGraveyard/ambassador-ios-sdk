@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NAVIGATION BAR -- - -- - - - - </key>
+	<string></string>
+	<key>NavBarColor</key>
+	<string>#00a1e4</string>
+	<key>NavBarTextMessage</key>
+	<string>Refer a Friend!</string>
+	<key>NavBarTextColor</key>
+	<string>#FFFFFF</string>
+	<key>NavBarTextFont</key>
+	<string>HelveticaNeue, 20</string>
+	<key>RAF PAGE ------------------------</key>
+	<string></string>
+	<key>RAFBackgroundColor</key>
+	<string>#FFFFFF</string>
+	<key>RAFLogo</key>
+	<string>customBrandedImage, 2</string>
+	<key>SHARE URL FIELD ----------------</key>
+	<string></string>
+	<key>ShareFieldBackgroundColor</key>
+	<string>#F1F1F1</string>
+	<key>ShareFieldHeight</key>
+	<integer>40</integer>
+	<key>ShareFieldTextColor</key>
+	<string>#8A9198</string>
+	<key>ShareFieldTextFont</key>
+	<string>HelveticaNeue, 15</string>
+	<key>ShareFieldCornerRadius</key>
+	<integer>5</integer>
+	<key>New item</key>
+	<string></string>
+	<key>RAF WELCOME LABEL ----------</key>
+	<string></string>
+	<key>RAFWelcomeTextMessage</key>
+	<string>Refer your friends to Podify and we’ll waive fees for a month.</string>
+	<key>RAFWelcomeTextColor</key>
+	<string>#000000</string>
+	<key>RAFWelcomeTextFont</key>
+	<string>HelveticaNeue, 16</string>
+	<key>RAF DESCRIPTION LABEL ------</key>
+	<string></string>
+	<key>RAFDescriptionTextMessage</key>
+	<string>Share using any of the methods below</string>
+	<key>RAFDescriptionTextColor</key>
+	<string>#9198AB</string>
+	<key>RAFDescriptionTextFont</key>
+	<string>HelveticaNeue, 11</string>
+	<key>DefaultShareMessage</key>
+	<string>I&apos;m a fan of this company, check them out!</string>
+	<key>CONTACT SEND BUTTON ---------</key>
+	<string></string>
+	<key>ContactSendButtonBackgroundColor</key>
+	<string>#00a1e4</string>
+	<key>ContactSendButtonTextColor</key>
+	<string>#FFFFFF</string>
+	<key>ContactSendButtonTextFont</key>
+	<string>HelveticaNeue, 16</string>
+	<key>CONTACT SEARCH BAR ----------</key>
+	<string></string>
+	<key>ContactSearchBackgroundColor</key>
+	<string>#DEDEDE</string>
+	<key>ContactSearchDoneButtonTextColor</key>
+	<string>#979797</string>
+	<key>CONTACT TABLEVIEW ------------</key>
+	<string></string>
+	<key>ContactTableCheckMarkColor</key>
+	<string>#00a1e4</string>
+	<key>ContactTableNameTextFont</key>
+	<string>Helvetica, 17</string>
+	<key>ContactTableInfoTextFont</key>
+	<string>Helvetica, 13</string>
+	<key>ContactAvatarBackgroundColor</key>
+	<string>#00a1e4</string>
+	<key>ContactAvatarColor</key>
+	<string>#FFFFFF</string>
+	<key>ALERT BUTTON ----------------</key>
+	<string></string>
+	<key>AlertButtonBackgroundColor</key>
+	<string>#00a1e4</string>
+	<key>AlertButtonTextColor</key>
+	<string>#FFFFFF</string>
+	<key>SOCIAL SHARE GRID ------------</key>
+	<string></string>
+	<key>Channels</key>
+	<string>Facebook, Twitter, LinkedIn, SMS, Email</string>
+</dict>
+</plist>
