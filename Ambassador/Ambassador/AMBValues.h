@@ -45,6 +45,7 @@
 + (void)setUserEmail:(NSString*)email;
 + (void)setPusherChannelObject:(NSDictionary*)pusherChannel;
 + (void)setUserURLObject:(NSDictionary*)urlObject;
++ (void)setAPNDeviceToken:(NSString*)deviceToken;
 + (void)resetHasInstalled; // Should only be used for TESTING
 
 // Default getters
@@ -60,5 +61,6 @@
 + (NSString*)getUserEmail;
 + (AMBPusherChannelObject*)getPusherChannelObject;
 + (AMBUserUrlNetworkObject*)getUserURLObject;
++ (NSString*)getAPNDeviceToken;
 
 @end
