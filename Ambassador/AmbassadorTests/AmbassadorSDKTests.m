@@ -28,7 +28,7 @@
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist;
 - (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion;
 - (void)checkConversionQueue;
-- (void)localRegisterDeviceToken;
+- (void)sendAPNDeviceToken;
 
 @end
 
@@ -253,7 +253,7 @@ NSString * const universalToken = @"9de5757f801ca60916599fa3f3c92131b0e63c6a";
     [[[mockNetworkMgr expect] andDo:nil] updateAPNDeviceToken:deviceToken success:nil failure:nil];
     
     // WHEN
-    [[AmbassadorSDK sharedInstance] localRegisterDeviceToken];
+    [[AmbassadorSDK sharedInstance] sendAPNDeviceToken];
     
     // THEN
     [mockNetworkMgr verify];
