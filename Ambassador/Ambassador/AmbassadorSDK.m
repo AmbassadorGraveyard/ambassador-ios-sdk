@@ -102,6 +102,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 - (void)localIdentifyWithEmail:(NSString*)email {
     [AMBValues setUserEmail:email];
+    [self localRegisterDeviceToken];
     [self subscribeToPusherWithCompletion:nil];
 }
 
@@ -172,6 +173,21 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     } failure:^(NSString *error) {
         DLog(@"Unable to get PUSHER SESSION");
     }];
+}
+
+
+#pragma mark - Remote Notifications
+
++ (void)registerDeviceToken:(NSString*)deviceToken {
+    if (deviceToken && ![deviceToken isEqualToString:@""]) {
+        [AMBValues setAPNDeviceToken:deviceToken];
+    }
+}
+
+- (void)localRegisterDeviceToken {
+    if ([AMBValues getAPNDeviceToken] && ![[AMBValues getAPNDeviceToken] isEqualToString:@""] && ![[AMBValues getUserEmail] isEqualToString:@""]) {
+        [[AMBNetworkManager sharedInstance] updateAPNDeviceToken:[AMBValues getAPNDeviceToken] success:nil failure:nil];
+    }
 }
 
 @end
