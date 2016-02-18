@@ -62,6 +62,7 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [AmbassadorSDK registerDeviceToken:token];
     NSLog(@"Device Token = %@", token);
 }
 
@@ -70,6 +71,7 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [AmbassadorSDK handleAmbassadorRemoteNotification:userInfo];
     NSLog(@"Info received from notification - %@", userInfo);
 }
 

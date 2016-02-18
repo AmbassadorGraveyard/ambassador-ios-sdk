@@ -24,4 +24,7 @@
 /**Registers a device's APN Device Token in order to send notifications*/
 + (void)registerDeviceToken:(NSString*)deviceToken;
 
+/**Handles remote notifications that are sent from Ambassador**/
++ (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification;
+
 @end
