@@ -102,7 +102,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 - (void)localIdentifyWithEmail:(NSString*)email {
     [AMBValues setUserEmail:email];
-    [self localRegisterDeviceToken];
+    [self sendAPNDeviceToken];
     [self subscribeToPusherWithCompletion:nil];
 }
 
@@ -184,10 +184,15 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     }
 }
 
-- (void)localRegisterDeviceToken {
+- (void)sendAPNDeviceToken {
     if ([AMBValues getAPNDeviceToken] && ![[AMBValues getAPNDeviceToken] isEqualToString:@""] && ![[AMBValues getUserEmail] isEqualToString:@""]) {
         [[AMBNetworkManager sharedInstance] updateAPNDeviceToken:[AMBValues getAPNDeviceToken] success:nil failure:nil];
     }
+}
+
++ (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification {
+    // TODO: Add functionality when surveys are implemented into app
+    DLog(@"AmbassadorNotification Received - %@", notification);
 }
 
 @end
