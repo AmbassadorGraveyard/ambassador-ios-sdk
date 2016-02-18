@@ -202,3 +202,18 @@
 }
 
 @end
+
+
+#pragma mark - Update APN Token Object
+
+@implementation AMBUpdateAPNTokenObject
+
+- (instancetype)initWithAPNDeviceToken:(NSString *)apnToken {
+    self = [super init];
+    self.update_data = @{@"apnToken" : apnToken};
+    self.email = ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
+    
+    return self;
+}
+
+@end

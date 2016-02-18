@@ -34,7 +34,7 @@
 		DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24701BD04E3900CE3230 /* AMBPusherManager.m */; };
 		DB6A24741BD1259000CE3230 /* AMBPusherManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24731BD1259000CE3230 /* AMBPusherManagerTests.m */; };
 		DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24751BD125FF00CE3230 /* AMBTests.m */; };
-		DB6A247E1BD14F4900CE3230 /* AMBNetworObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A247D1BD14F4900CE3230 /* AMBNetworObjectTests.m */; };
+		DB6A247E1BD14F4900CE3230 /* AMBNetworkObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A247D1BD14F4900CE3230 /* AMBNetworkObjectTests.m */; };
 		DB6A24841BD1842800CE3230 /* AmbassadorSDK_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24831BD1842800CE3230 /* AmbassadorSDK_Internal.h */; };
 		DB6A24861BD1847900CE3230 /* AmbassadorSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A24851BD1847900CE3230 /* AmbassadorSDKTests.m */; };
 		DB844D2A1BA75BB8003FD7A9 /* Ambassador.h in Copy Files */ = {isa = PBXBuildFile; fileRef = DB844D291BA75BB8003FD7A9 /* Ambassador.h */; };
@@ -314,7 +314,7 @@
 		DB6A24751BD125FF00CE3230 /* AMBTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBTests.m; sourceTree = "<group>"; };
 		DB6A24771BD129A000CE3230 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		DB6A24791BD12A2A00CE3230 /* AMBTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBTests.h; sourceTree = "<group>"; };
-		DB6A247D1BD14F4900CE3230 /* AMBNetworObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworObjectTests.m; sourceTree = "<group>"; };
+		DB6A247D1BD14F4900CE3230 /* AMBNetworkObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworkObjectTests.m; sourceTree = "<group>"; };
 		DB6A24831BD1842800CE3230 /* AmbassadorSDK_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmbassadorSDK_Internal.h; sourceTree = "<group>"; };
 		DB6A24851BD1847900CE3230 /* AmbassadorSDKTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorSDKTests.m; sourceTree = "<group>"; };
 		DB844D261BA75BB8003FD7A9 /* libAmbassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAmbassador.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -686,7 +686,7 @@
 				DB6A24791BD12A2A00CE3230 /* AMBTests.h */,
 				DB6A24751BD125FF00CE3230 /* AMBTests.m */,
 				DB6A24731BD1259000CE3230 /* AMBPusherManagerTests.m */,
-				DB6A247D1BD14F4900CE3230 /* AMBNetworObjectTests.m */,
+				DB6A247D1BD14F4900CE3230 /* AMBNetworkObjectTests.m */,
 				DB6A24851BD1847900CE3230 /* AmbassadorSDKTests.m */,
 			);
 			name = "Supporting Files";
@@ -1529,7 +1529,7 @@
 				EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */,
 				EFC0371F1C5829DB0062202A /* AMBShareServiceCellTests.m in Sources */,
 				EF7CA9D01BF3DDB3006EBD6A /* AMBConversionParametersTests.m in Sources */,
-				DB6A247E1BD14F4900CE3230 /* AMBNetworObjectTests.m in Sources */,
+				DB6A247E1BD14F4900CE3230 /* AMBNetworkObjectTests.m in Sources */,
 				EF9DA74D1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
