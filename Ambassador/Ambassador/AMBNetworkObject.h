@@ -128,4 +128,17 @@
 
 @end
 
+#pragma mark - APN Token Update Object
+
+@interface AMBUpdateAPNTokenObject : AMBNetworkObject
+
+@property (nonatomic, strong) NSDictionary * update_data;
+@property (nonatomic, strong) NSString * email;
+
+- (instancetype)initWithAPNDeviceToken:(NSString*)apnToken;
+
+@end
+
+
+
 
