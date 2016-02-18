@@ -21,4 +21,7 @@
 /**Presents a full-page modal 'Refer-A-Friend' (RAF) ViewController*/
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist;
 
+/**Registers a device's APN Device Token in order to send notifications*/
++ (void)registerDeviceToken:(NSString*)deviceToken;
+
 @end
