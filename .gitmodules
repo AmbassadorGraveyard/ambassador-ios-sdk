@@ -1,0 +1,4 @@
+
+[submodule "raven-objc"]
+	path = raven-objc
+	url = git://github.com/getsentry/raven-objc
