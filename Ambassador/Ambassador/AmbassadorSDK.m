@@ -15,6 +15,7 @@
 #import "AMBPusherManager.h"
 #import "AMBNetworkManager.h"
 #import "AMBErrors.h"
+#import "RavenClient.h"
 
 @interface AmbassadorSDK ()
 
@@ -41,6 +42,33 @@
 }
 
 
+#pragma mark - Crash Analytics
+
+NSUncaughtExceptionHandler *parentHandler = nil;
+
+void ambassadorUncaughtExceptionHandler(NSException *exception) {
+    if (stackTraceForContainsString(exception, @"AmbassadorSDK")) {
+        [[RavenClient sharedClient] captureException:exception sendNow:NO];
+    }
+    
+    // If the parent app has an exceptionHandler already, we call it
+    if (parentHandler) {
+        parentHandler(exception);
+    }
+}
+
+BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
+    NSArray *callStackArray = [NSArray arrayWithArray:exception.callStackSymbols];
+    for (NSMutableString *callBackString in callStackArray) {
+        if ([callBackString containsString:keyString]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+
 #pragma mark - RunWith Functions
 
 + (void)runWithUniversalToken:(NSString *)universalToken universalID:(NSString *)universalID {
@@ -55,6 +83,20 @@
     [AMBValues setUniversalTokenWithToken:universalToken];
     if (!self.conversionTimer.isValid) { self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES]; }
     self.conversion = [[AMBConversion alloc] init];
+    
+    [self setUpCrashAnalytics];
+}
+
+- (void)setUpCrashAnalytics {
+    // Sets up Sentry if in release mode
+    if ([AMBValues isProduction]) {
+        RavenClient *client = [RavenClient clientWithDSN:@"https://***REMOVED***@app.getsentry.com/67182"];
+        [RavenClient setSharedClient:client];
+        parentHandler = NSGetUncaughtExceptionHandler(); // Creates a reference to parent project's exceptionHandler in order to fire it in override
+        
+        [[RavenClient sharedClient] setupExceptionHandler]; // Is overridden to use our custom handler but still grabs crashes
+        NSSetUncaughtExceptionHandler(ambassadorUncaughtExceptionHandler); // Sets our overridden exceptionHandler that only sends on AmbassadorSDK stacktraces
+    }
 }
 
 
