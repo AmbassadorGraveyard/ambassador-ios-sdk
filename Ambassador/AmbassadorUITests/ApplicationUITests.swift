@@ -17,6 +17,7 @@ class ApplicationUITests: XCTestCase {
         if app == nil {
             app = XCUIApplication()
             app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
+            app.launchEnvironment = ["AutoCorrection": "Disabled"]
             app.launch()
             identifyWithLogin()
         }
@@ -70,16 +71,37 @@ extension ApplicationUITests {
 // Helper Functions
 extension ApplicationUITests {
     func identifyWithLogin() {
+        
+        let app = XCUIApplication()
+        let loginButton = app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"]
+        loginButton.tap()
+        app.alerts["Cannot log in"].collectionViews.buttons["Okay"].tap()
+        
         let usernameTextField = app.textFields["Username"]
         usernameTextField.tap()
-        usernameTextField.typeText("jake@getambassador.com")
+        usernameTextField.typeText("jake")
+        
+        let moreNumbersKey = app.keys["more, numbers"]
+        moreNumbersKey.tap()
+        usernameTextField.typeText("@")
+        
+        let moreLettersKey = app.keys["more, letters"]
+        moreLettersKey.tap()
+        usernameTextField.typeText("getambassador")
+        moreNumbersKey.tap()
+        usernameTextField.typeText(".")
+        moreLettersKey.tap()
+        usernameTextField.typeText("com")
         
         let passwordSecureTextField = app.secureTextFields["Password"]
         passwordSecureTextField.tap()
-        passwordSecureTextField.typeText("testpassword")
-//        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
+        passwordSecureTextField.tap()
+        passwordSecureTextField.typeText("test")
+        loginButton.tap()
         
-        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
+        
+        
+        
 //        XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
         
 //        let app = XCUIApplication()
