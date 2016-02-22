@@ -18,7 +18,7 @@ class ApplicationUITests: XCTestCase {
             app = XCUIApplication()
             app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
             app.launch()
-            identifyWithLogin()
+//            identifyWithLogin()
         }
         
         // Checks to see if the RAF is still up and dismisses it if so
