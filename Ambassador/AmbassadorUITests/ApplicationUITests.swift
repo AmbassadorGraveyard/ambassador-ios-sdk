@@ -19,7 +19,7 @@ class ApplicationUITests: XCTestCase {
             app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
             app.launchEnvironment = ["AutoCorrection": "Disabled"]
             app.launch()
-//            identifyWithLogin()
+            identifyWithLogin()
         }
         
         // Checks to see if the RAF is still up and dismisses it if so
@@ -70,53 +70,20 @@ extension ApplicationUITests {
 
 // Helper Functions
 extension ApplicationUITests {
-    func testIdentifyWithLogin() {
+    func identifyWithLogin() {
         app.tabBars.buttons["Login"].tap()
-        let loginButton = app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"]
-        loginButton.tap()
-        app.alerts["Cannot log in"].collectionViews.buttons["Okay"].tap()
         
         let usernameTextField = app.textFields["Username"]
         usernameTextField.tap()
-        usernameTextField.typeText("jake")
-        
-        let moreNumbersKey = app.keys["more, numbers"]
-        moreNumbersKey.tap()
-        usernameTextField.typeText("@")
-        
-        let moreLettersKey = app.keys["more, letters"]
-        moreLettersKey.tap()
-        usernameTextField.typeText("getambassador")
-        moreNumbersKey.tap()
-        usernameTextField.typeText(".")
-        moreLettersKey.tap()
-        usernameTextField.typeText("com")
+        usernameTextField.typeText("jake@getambassador.com")
+        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
         
         let passwordSecureTextField = app.secureTextFields["Password"]
         passwordSecureTextField.tap()
-        passwordSecureTextField.tap()
-        passwordSecureTextField.typeText("test")
-        loginButton.tap()
+        passwordSecureTextField.typeText("testpassword")
+
         
-        
-        
-        
-//        XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
-        
-//        let app = XCUIApplication()
-//        app.tabBars.buttons["Login"].tap()
-//        
-//        let usernameTextField = app.textFields["Username"]
-//        usernameTextField.tap()
-//        usernameTextField.typeText("jake@getambassador.com")
-//        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
-//        
-//        let passwordSecureTextField = app.secureTextFields["Password"]
-//        passwordSecureTextField.tap()
-//        passwordSecureTextField.typeText("testpassword")
-//
-//        
-//        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
-//        XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
+        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
+        XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
     }
 }
