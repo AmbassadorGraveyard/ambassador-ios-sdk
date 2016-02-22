@@ -19,7 +19,6 @@ class ApplicationUITests: XCTestCase {
             app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
             app.launchEnvironment = ["AutoCorrection": "Disabled"]
             app.launch()
-            identifyWithLogin()
         }
         
         // Checks to see if the RAF is still up and dismisses it if so
@@ -36,6 +35,18 @@ class ApplicationUITests: XCTestCase {
 
 // UI Tests
 extension ApplicationUITests {
+    func testLogin() {
+        app.tabBars.buttons["Login"].tap()
+        let usernameTextField = app.textFields["Username"]
+        usernameTextField.tap()
+        usernameTextField.typeText("jake@getambassador.com")
+        
+        let passwordSecureTextField = app.secureTextFields["Password"]
+        passwordSecureTextField.tap()
+        passwordSecureTextField.typeText("TestPassword")
+        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
+    }
+    
     func testSignUpInstallConversion() {
         app.tabBars.buttons["Sign Up"].tap()
         
@@ -65,22 +76,5 @@ extension ApplicationUITests {
         let doneButton = app.alerts["Purchase successful"].collectionViews.buttons["Done"]
         doneButton.tap()
         XCTAssertFalse(doneButton.exists)
-    }
-}
-
-// Helper Functions
-extension ApplicationUITests {
-    func identifyWithLogin() {
-        
-        let app = XCUIApplication()
-        let usernameTextField = app.textFields["Username"]
-        usernameTextField.tap()
-        usernameTextField.typeText("jake@getambassador.com")
-        
-        let passwordSecureTextField = app.secureTextFields["Password"]
-        passwordSecureTextField.tap()
-        passwordSecureTextField.typeText("TestPassword")
-        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
-        
     }
 }
