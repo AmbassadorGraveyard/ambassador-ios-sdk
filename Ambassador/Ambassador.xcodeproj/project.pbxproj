@@ -185,7 +185,6 @@
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
 		EF6BDC771C63FD75004CCDF8 /* AMBCoreDataManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */; };
-		EF7485E71C7B600F008EF708 /* TestApplicationUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7485E61C7B600F008EF708 /* TestApplicationUITests.m */; };
 		EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */; };
 		EF7BA1CD1BDEB17E00788160 /* AMBBulkShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */; };
 		EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7CA9CD1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m */; };
@@ -490,7 +489,6 @@
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF64CFAD1BE2AACE0072014B /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBCoreDataManagerTests.m; sourceTree = "<group>"; };
-		EF7485E61C7B600F008EF708 /* TestApplicationUITests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestApplicationUITests.m; sourceTree = "<group>"; };
 		EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBBulkShareHelper.h; sourceTree = "<group>"; };
 		EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBBulkShareHelper.m; sourceTree = "<group>"; };
 		EF7CA9CD1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPusherChannelObjectTests.m; sourceTree = "<group>"; };
@@ -602,7 +600,6 @@
 		DB844D1D1BA75BB8003FD7A9 = {
 			isa = PBXGroup;
 			children = (
-				EF7485E61C7B600F008EF708 /* TestApplicationUITests.m */,
 				DB844D281BA75BB8003FD7A9 /* Ambassador */,
 				DB844D531BA7622D003FD7A9 /* AmbassadorResources */,
 				DB844D351BA75BB8003FD7A9 /* AmbassadorTests */,
@@ -1517,7 +1514,6 @@
 				DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */,
 				EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */,
 				EF7D076C1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m in Sources */,
-				EF7485E71C7B600F008EF708 /* TestApplicationUITests.m in Sources */,
 				EF1C82A21C6285B00033A364 /* AMBNamePromptUnitTests.m in Sources */,
 				EFBF8E031C69004800F2B5F9 /* AMBContactSelectorUnitTests.m in Sources */,
 				EFC037211C5829F70062202A /* AMBAuthorizeLinkedInTests.m in Sources */,
