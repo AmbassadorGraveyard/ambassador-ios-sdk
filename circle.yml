@@ -21,6 +21,8 @@ test:
        VALID_ARCHS=x86_64
        clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
       xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml
+      - mkdir $CIRCLE_ARTIFACTS/unit-test-results
+      - mv xcode/results.xml $CIRCLE_ARTIFACTS/unit-test-results
   post:
     - slather coverage Ambassador.xcodeproj
 
@@ -33,3 +35,5 @@ test:
        VALID_ARCHS=x86_64
        clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
       xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml
+      - mkdir $CIRCLE_ARTIFACTS/ui-test-results
+      - mv xcode/results.xml $CIRCLE_ARTIFACTS/ui-test-results
