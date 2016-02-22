@@ -19,7 +19,7 @@ class ApplicationUITests: XCTestCase {
             app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
             app.launchEnvironment = ["AutoCorrection": "Disabled"]
             app.launch()
-            identifyWithLogin()
+//            identifyWithLogin()
         }
         
         // Checks to see if the RAF is still up and dismisses it if so
@@ -70,9 +70,8 @@ extension ApplicationUITests {
 
 // Helper Functions
 extension ApplicationUITests {
-    func identifyWithLogin() {
-        
-        let app = XCUIApplication()
+    func testIdentifyWithLogin() {
+        app.tabBars.buttons["Login"].tap()
         let loginButton = app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"]
         loginButton.tap()
         app.alerts["Cannot log in"].collectionViews.buttons["Okay"].tap()
