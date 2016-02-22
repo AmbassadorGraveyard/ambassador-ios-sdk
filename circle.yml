@@ -20,6 +20,6 @@ test:
        -scheme TestApplication
        VALID_ARCHS=x86_64
        clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
-      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml
   post:
     - slather coverage Ambassador.xcodeproj
