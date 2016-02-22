@@ -159,13 +159,13 @@
 		EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */; };
 		EF3079161C6E205800403F56 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */; };
 		EF3079171C6E205800403F56 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3079151C6E205800403F56 /* AMBPusherChannelObject.m */; };
+		EF3079191C6E3B5300403F56 /* CustomBrandTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */; };
 		EF33DCF81C739D6A009689CA /* Raven.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF21C739D6A009689CA /* Raven.h */; };
 		EF33DCF91C739D6A009689CA /* RavenClient.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF31C739D6A009689CA /* RavenClient.h */; };
 		EF33DCFA1C739D6A009689CA /* RavenClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCF41C739D6A009689CA /* RavenClient.m */; };
 		EF33DCFB1C739D6A009689CA /* RavenClient_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF51C739D6A009689CA /* RavenClient_Private.h */; };
 		EF33DCFC1C739D6A009689CA /* RavenConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF61C739D6A009689CA /* RavenConfig.h */; };
 		EF33DCFD1C739D6A009689CA /* RavenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCF71C739D6A009689CA /* RavenConfig.m */; };
-		EF3079191C6E3B5300403F56 /* CustomBrandTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF50EFC01C5692E70077CC63 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */; };
@@ -185,6 +185,7 @@
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
 		EF6BDC771C63FD75004CCDF8 /* AMBCoreDataManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */; };
+		EF7485E71C7B600F008EF708 /* TestApplicationUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7485E61C7B600F008EF708 /* TestApplicationUITests.m */; };
 		EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */; };
 		EF7BA1CD1BDEB17E00788160 /* AMBBulkShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */; };
 		EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7CA9CD1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m */; };
@@ -457,6 +458,7 @@
 		EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBOptionsTests.m; sourceTree = "<group>"; };
 		EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPusherChannelObject.h; sourceTree = "<group>"; };
 		EF3079151C6E205800403F56 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPusherChannelObject.m; sourceTree = "<group>"; };
+		EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CustomBrandTheme.plist; sourceTree = "<group>"; };
 		EF33DCF11C739D6A009689CA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF33DCF21C739D6A009689CA /* Raven.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raven.h; sourceTree = "<group>"; };
 		EF33DCF31C739D6A009689CA /* RavenClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient.h; sourceTree = "<group>"; };
@@ -464,7 +466,6 @@
 		EF33DCF51C739D6A009689CA /* RavenClient_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient_Private.h; sourceTree = "<group>"; };
 		EF33DCF61C739D6A009689CA /* RavenConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenConfig.h; sourceTree = "<group>"; };
 		EF33DCF71C739D6A009689CA /* RavenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenConfig.m; sourceTree = "<group>"; };
-		EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CustomBrandTheme.plist; sourceTree = "<group>"; };
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GenericTheme.plist; sourceTree = "<group>"; };
@@ -489,6 +490,7 @@
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF64CFAD1BE2AACE0072014B /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBCoreDataManagerTests.m; sourceTree = "<group>"; };
+		EF7485E61C7B600F008EF708 /* TestApplicationUITests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestApplicationUITests.m; sourceTree = "<group>"; };
 		EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBBulkShareHelper.h; sourceTree = "<group>"; };
 		EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBBulkShareHelper.m; sourceTree = "<group>"; };
 		EF7CA9CD1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPusherChannelObjectTests.m; sourceTree = "<group>"; };
@@ -600,6 +602,7 @@
 		DB844D1D1BA75BB8003FD7A9 = {
 			isa = PBXGroup;
 			children = (
+				EF7485E61C7B600F008EF708 /* TestApplicationUITests.m */,
 				DB844D281BA75BB8003FD7A9 /* Ambassador */,
 				DB844D531BA7622D003FD7A9 /* AmbassadorResources */,
 				DB844D351BA75BB8003FD7A9 /* AmbassadorTests */,
@@ -1275,7 +1278,7 @@
 		DB844D1E1BA75BB8003FD7A9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = Ambassador;
 				TargetAttributes = {
@@ -1514,6 +1517,7 @@
 				DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */,
 				EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */,
 				EF7D076C1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m in Sources */,
+				EF7485E71C7B600F008EF708 /* TestApplicationUITests.m in Sources */,
 				EF1C82A21C6285B00033A364 /* AMBNamePromptUnitTests.m in Sources */,
 				EFBF8E031C69004800F2B5F9 /* AMBContactSelectorUnitTests.m in Sources */,
 				EFC037211C5829F70062202A /* AMBAuthorizeLinkedInTests.m in Sources */,
@@ -1973,6 +1977,7 @@
 		EF64CFAB1BE2A47D0072014B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_CODE_COVERAGE = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = AmbassadorUITests/Info.plist;
@@ -1990,6 +1995,7 @@
 		EF64CFAC1BE2A47D0072014B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_CODE_COVERAGE = NO;
 				INFOPLIST_FILE = AmbassadorUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
