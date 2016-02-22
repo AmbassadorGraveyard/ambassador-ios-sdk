@@ -18,7 +18,7 @@ class ApplicationUITests: XCTestCase {
             app = XCUIApplication()
             app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
             app.launch()
-//            identifyWithLogin()
+            identifyWithLogin()
         }
         
         // Checks to see if the RAF is still up and dismisses it if so
@@ -70,13 +70,9 @@ extension ApplicationUITests {
 // Helper Functions
 extension ApplicationUITests {
     func identifyWithLogin() {
-        let app = XCUIApplication()
-        app.tabBars.buttons["Login"].tap()
-        
         let usernameTextField = app.textFields["Username"]
         usernameTextField.tap()
         usernameTextField.typeText("jake@getambassador.com")
-        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
         
         let passwordSecureTextField = app.secureTextFields["Password"]
         passwordSecureTextField.tap()
@@ -85,5 +81,21 @@ extension ApplicationUITests {
         
         app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
         XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
+        
+//        let app = XCUIApplication()
+//        app.tabBars.buttons["Login"].tap()
+//        
+//        let usernameTextField = app.textFields["Username"]
+//        usernameTextField.tap()
+//        usernameTextField.typeText("jake@getambassador.com")
+//        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
+//        
+//        let passwordSecureTextField = app.secureTextFields["Password"]
+//        passwordSecureTextField.tap()
+//        passwordSecureTextField.typeText("testpassword")
+//
+//        
+//        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
+//        XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
     }
 }
