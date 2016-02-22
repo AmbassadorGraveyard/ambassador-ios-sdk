@@ -12,12 +12,14 @@ dependencies:
     - sudo gem install cocoapods xcpretty obcd slather -N
 test:
   override:
-    - xcodebuild -project Ambassador.xcodeproj
+    - set -o pipefail &&
+     xcodebuild -project Ambassador.xcodeproj
       -sdk iphonesimulator
        -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
        -configuration Debug
        -scheme TestApplication
        VALID_ARCHS=x86_64
-       test
+       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/
   post:
     - slather coverage Ambassador.xcodeproj
