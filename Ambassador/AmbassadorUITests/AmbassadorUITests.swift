@@ -9,7 +9,6 @@
 import XCTest
 
 var app : XCUIApplication!
-var rafLoaded = false
 
 class AmbassadorUITests: XCTestCase {
     override func setUp() {
@@ -35,7 +34,6 @@ extension AmbassadorUITests {
         
         // Check to make sure there are the correct number of cells in the collectionView
         XCTAssertEqual(app.collectionViews.cells.count, 5)
-        rafLoaded = true
     }
     
     func testCopyButton() {
