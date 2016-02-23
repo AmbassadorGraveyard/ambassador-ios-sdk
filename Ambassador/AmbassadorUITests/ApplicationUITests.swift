@@ -14,16 +14,9 @@ class ApplicationUITests: XCTestCase {
         super.setUp()
         continueAfterFailure = true
         
-        if app == nil {
-            app = XCUIApplication()
-            app.launchArguments = ["isUITesting"]
-            app.launch()
-        }
-        
-        // Checks to see if the RAF is still up and dismisses it if so
-        if XCUIApplication().navigationBars["Refer a Friend!"].exists {
-            XCUIApplication().navigationBars["Refer a Friend!"].childrenMatchingType(.Button).elementBoundByIndex(1).tap()
-        }
+        app = XCUIApplication()
+        app.launchArguments = ["isUITesting"]
+        app.launch()
     }
     
     override func tearDown() {
@@ -56,12 +49,12 @@ extension ApplicationUITests {
         XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
     }
     
-//    func testBuyConversion() {
-//        app.tabBars.buttons["Buy Now"].tap()
-//        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Buy Now"].tap()
-//        
-//        let doneButton = app.alerts["Purchase successful"].collectionViews.buttons["Done"]
-//        doneButton.tap()
-//        XCTAssertFalse(doneButton.exists)
-//    }
+    func testBuyConversion() {
+        app.tabBars.buttons["Buy Now"].tap()
+        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Buy Now"].tap()
+        
+        let doneButton = app.alerts["Purchase successful"].collectionViews.buttons["Done"]
+        doneButton.tap()
+        XCTAssertFalse(doneButton.exists)
+    }
 }
