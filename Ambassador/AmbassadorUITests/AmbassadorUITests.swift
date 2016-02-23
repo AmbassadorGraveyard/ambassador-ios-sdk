@@ -18,7 +18,6 @@ class AmbassadorUITests: XCTestCase {
         app = XCUIApplication()
         app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
         app.launch()
-        NSThread.sleepForTimeInterval(3)
         presentRAF()
     }
     
@@ -29,14 +28,14 @@ class AmbassadorUITests: XCTestCase {
 
 // UI Tests
 extension AmbassadorUITests {
-//    func testLoadRAF() {
-//        // When the RAF page is hit, we check to make sure that all of the correct labels are shown
-//        XCTAssert(app.staticTexts.elementMatchingType(XCUIElementType.StaticText, identifier: "urlLabel").exists)
-//        
-//        // Check to make sure there are the correct number of cells in the collectionView
-//        XCTAssertEqual(app.collectionViews.cells.count, 5)
-//    }
-//    
+    func testLoadRAF() {
+        // When the RAF page is hit, we check to make sure that all of the correct labels are shown
+        XCTAssert(app.staticTexts.elementMatchingType(XCUIElementType.StaticText, identifier: "urlLabel").exists)
+        
+        // Check to make sure there are the correct number of cells in the collectionView
+        XCTAssertEqual(app.collectionViews.cells.count, 5)
+    }
+//
 //    func testCopyButton() {
 //        // Tap the copy button and make sure that the copied label is shown on the screen
 //        XCUIApplication().buttons["btnEdit"].tap()
@@ -195,26 +194,19 @@ extension AmbassadorUITests {
 // Helper Functions
 extension AmbassadorUITests {
     func identifyWithLogin() {
-        let app = XCUIApplication()
         app.tabBars.buttons["Login"].tap()
-        
         let usernameTextField = app.textFields["Username"]
         usernameTextField.tap()
         usernameTextField.typeText("jake@getambassador.com")
-        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
         
         let passwordSecureTextField = app.secureTextFields["Password"]
         passwordSecureTextField.tap()
-        passwordSecureTextField.typeText("testpassword")
-        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
-        
+        passwordSecureTextField.typeText("TestPassword")
         app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
-        XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
     }
     
     func presentRAF() {
         identifyWithLogin()
-        
         app.tabBars.buttons["Refer a Friend"].tap()
         app.tables.staticTexts["Ambassador Shoes RAF"].tap()
         while (app.otherElements["LoadingView"].exists) {
