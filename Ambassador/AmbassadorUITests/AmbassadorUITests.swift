@@ -18,7 +18,6 @@ class AmbassadorUITests: XCTestCase {
         app = XCUIApplication()
         app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
         app.launch()
-        presentRAF()
     }
     
     override func tearDown() {
@@ -29,6 +28,7 @@ class AmbassadorUITests: XCTestCase {
 // UI Tests
 extension AmbassadorUITests {
     func testLoadRAF() {
+        presentRAF()
         // When the RAF page is hit, we check to make sure that all of the correct labels are shown
         XCTAssert(app.staticTexts.elementMatchingType(XCUIElementType.StaticText, identifier: "urlLabel").exists)
         
