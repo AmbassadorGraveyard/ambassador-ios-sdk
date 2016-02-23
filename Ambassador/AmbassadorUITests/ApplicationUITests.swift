@@ -14,17 +14,10 @@ class ApplicationUITests: XCTestCase {
         super.setUp()
         continueAfterFailure = true
         
-//        if app == nil {
-            app = XCUIApplication()
-            app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
-            app.launchEnvironment = ["AutoCorrection": "Disabled"]
-            app.launch()
-//        }
-        
-        // Checks to see if the RAF is still up and dismisses it if so
-        if XCUIApplication().navigationBars["Refer a Friend!"].exists {
-            XCUIApplication().navigationBars["Refer a Friend!"].childrenMatchingType(.Button).elementBoundByIndex(1).tap()
-        }
+        app = XCUIApplication()
+        app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
+        app.launchEnvironment = ["AutoCorrection": "Disabled"]
+        app.launch()
     }
     
     override func tearDown() {
