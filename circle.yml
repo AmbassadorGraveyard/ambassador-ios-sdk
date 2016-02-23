@@ -2,7 +2,7 @@ general:
   build_dir: Ambassador
 machine:
   xcode:
-    version: "7.0"
+    version: "7.1"
 checkout:
   post:
     - git submodule sync
@@ -26,8 +26,8 @@ test:
     - set -o pipefail &&
      xcodebuild -project Ambassador.xcodeproj
       -sdk iphonesimulator
-       -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
+       -destination 'platform=iOS Simulator,OS=9.2,name=iPhone 6'
        -configuration Debug
        -scheme AmbassadorUITests
-       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+       test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
       xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
