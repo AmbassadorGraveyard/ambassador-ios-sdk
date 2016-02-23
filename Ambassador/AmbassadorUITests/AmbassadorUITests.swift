@@ -13,7 +13,7 @@ var app : XCUIApplication!
 class AmbassadorUITests: XCTestCase {
     override func setUp() {
         super.setUp()
-        continueAfterFailure = true
+        continueAfterFailure = false
         
         app = XCUIApplication()
         app.launchArguments = ["isUITesting"]
