@@ -16,7 +16,6 @@ class ApplicationUITests: XCTestCase {
         
         app = XCUIApplication()
         app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
-        app.launchEnvironment = ["AutoCorrection": "Disabled"]
         app.launch()
     }
     
