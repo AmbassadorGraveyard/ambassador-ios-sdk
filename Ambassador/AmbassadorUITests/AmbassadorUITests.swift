@@ -18,6 +18,7 @@ class AmbassadorUITests: XCTestCase {
         app = XCUIApplication()
         app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
         app.launch()
+        NSThread.sleepForTimeInterval(3)
         presentRAF()
     }
     
