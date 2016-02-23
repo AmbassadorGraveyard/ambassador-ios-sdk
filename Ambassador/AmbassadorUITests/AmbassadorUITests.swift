@@ -229,9 +229,12 @@ extension AmbassadorUITests {
         identifyWithLogin()
         app.tabBars.buttons["Refer a Friend"].tap()
         app.tables.staticTexts["Ambassador Shoes RAF"].tap()
-        while (app.otherElements["LoadingView"].exists) {
-            let smallDelay = NSDate().dateByAddingTimeInterval(1)
-            NSRunLoop.mainRunLoop().runUntilDate(smallDelay)
-        }
+        let existsPredicate = NSPredicate(format: "exists == 0")
+        expectationForPredicate(existsPredicate, evaluatedWithObject: app.otherElements["LoadingView"], handler: nil)
+        waitForExpectationsWithTimeout(10, handler: nil)
+//        while (app.otherElements["LoadingView"].exists) {
+//            let smallDelay = NSDate().dateByAddingTimeInterval(1)
+//            NSRunLoop.mainRunLoop().runUntilDate(smallDelay)
+//        }
     }
 }
