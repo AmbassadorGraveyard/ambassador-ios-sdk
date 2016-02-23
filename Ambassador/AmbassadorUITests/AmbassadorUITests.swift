@@ -30,13 +30,13 @@ class AmbassadorUITests: XCTestCase {
 
 // UI Tests
 extension AmbassadorUITests {
-    func testLoadRAF() {
-        // When the RAF page is hit, we check to make sure that all of the correct labels are shown
-        XCTAssert(app.staticTexts.elementMatchingType(XCUIElementType.StaticText, identifier: "urlLabel").exists)
-        
-        // Check to make sure there are the correct number of cells in the collectionView
-        XCTAssertEqual(app.collectionViews.cells.count, 5)
-    }
+//    func testLoadRAF() {
+//        // When the RAF page is hit, we check to make sure that all of the correct labels are shown
+//        XCTAssert(app.staticTexts.elementMatchingType(XCUIElementType.StaticText, identifier: "urlLabel").exists)
+//        
+//        // Check to make sure there are the correct number of cells in the collectionView
+//        XCTAssertEqual(app.collectionViews.cells.count, 5)
+//    }
 
     func testCopyButton() {
         // Tap the copy button and make sure that the copied label is shown on the screen

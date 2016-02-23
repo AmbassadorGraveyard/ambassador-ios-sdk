@@ -34,18 +34,6 @@ class ApplicationUITests: XCTestCase {
 
 // UI Tests
 extension ApplicationUITests {
-    func testLogin() {
-        app.tabBars.buttons["Login"].tap()
-        let usernameTextField = app.textFields["Username"]
-        usernameTextField.tap()
-        usernameTextField.typeText("jake@getambassador.com")
-        
-        let passwordSecureTextField = app.secureTextFields["Password"]
-        passwordSecureTextField.tap()
-        passwordSecureTextField.typeText("TestPassword")
-        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
-    }
-    
     func testSignUpInstallConversion() {
         app.tabBars.buttons["Sign Up"].tap()
         
@@ -68,12 +56,12 @@ extension ApplicationUITests {
         XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
     }
     
-    func testBuyConversion() {
-        app.tabBars.buttons["Buy Now"].tap()
-        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Buy Now"].tap()
-        
-        let doneButton = app.alerts["Purchase successful"].collectionViews.buttons["Done"]
-        doneButton.tap()
-        XCTAssertFalse(doneButton.exists)
-    }
+//    func testBuyConversion() {
+//        app.tabBars.buttons["Buy Now"].tap()
+//        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Buy Now"].tap()
+//        
+//        let doneButton = app.alerts["Purchase successful"].collectionViews.buttons["Done"]
+//        doneButton.tap()
+//        XCTAssertFalse(doneButton.exists)
+//    }
 }
