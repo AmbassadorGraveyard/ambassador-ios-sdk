@@ -2,7 +2,7 @@ general:
   build_dir: Ambassador
 machine:
   xcode:
-    version: "7.2"
+    version: "7.0"
 checkout:
   post:
     - git submodule sync
@@ -12,21 +12,21 @@ dependencies:
     - sudo gem install cocoapods xcpretty obcd slather -N
 test:
   override:
-  #   - set -o pipefail &&
-  #    xcodebuild -project Ambassador.xcodeproj
-  #     -sdk iphonesimulator
-  #      -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
-  #      -configuration Debug
-  #      -scheme TestApplication
-  #      VALID_ARCHS=x86_64
-  #      clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
-  #     xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
-  # post:
-  #   - slather coverage Ambassador.xcodeproj
     - set -o pipefail &&
      xcodebuild -project Ambassador.xcodeproj
       -sdk iphonesimulator
-       -destination 'platform=iOS Simulator,OS=9.2,name=iPhone 6'
+       -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
+       -configuration Debug
+       -scheme TestApplication
+       VALID_ARCHS=x86_64
+       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
+  post:
+    - slather coverage Ambassador.xcodeproj
+    - set -o pipefail &&
+     xcodebuild -project Ambassador.xcodeproj
+      -sdk iphonesimulator
+       -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
        -scheme AmbassadorUITests
        clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
       xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
