@@ -167,12 +167,10 @@ extension AmbassadorUITests {
         
         // Select some contacts
         let tablesQuery = app.tables
-        tablesQuery.staticTexts["Home - anna-haro@mac.com"].tap()
-        tablesQuery.staticTexts["Home - d-higgins@mac.com"].tap()
+        tablesQuery.staticTexts.elementBoundByIndex(0).tap()
+        tablesQuery.staticTexts.elementBoundByIndex(1).tap()
         
-        let homeFakeFakeComStaticText = tablesQuery.staticTexts["Work - hank-zakroff@mac.com"]
-        homeFakeFakeComStaticText.tap()
-        homeFakeFakeComStaticText.tap()
+        tablesQuery.staticTexts.elementBoundByIndex(3).tap()
         
         // Tap the send button
         app.buttons["sendButton"].tap()
