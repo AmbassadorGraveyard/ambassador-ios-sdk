@@ -90,54 +90,6 @@ extension AmbassadorUITests {
             XCTAssertEqual(app.buttons["OKAY"].exists, false)
         }
     }
-//    
-//    func testLinkedIn() {        
-//        // Tap the linkedIn cell
-//        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(2).tap()
-//        
-//        // Since defaults get cleared, we will be brought to the login page -- here we login using meldium credentials
-//        let emailTextField = app.textFields["Email"]
-//        emailTextField.tap()
-//        emailTextField.typeText("developers@getambassador.com")
-//        
-//        // Type password for linkedin
-//        let passwordSecureTextField = app.secureTextFields["Password"]
-//        passwordSecureTextField.tap()
-//        passwordSecureTextField.typeText("domorefaster")
-//        
-//        // Tap the sign in and allow button
-//        app.buttons["Sign in and allow"].tap()
-//        
-//        // After we get popped back to the ServiceSelector page, we tap cancel in the linkedin share vc
-//        app.navigationBars["LinkedIn"].buttons["Cancel"].tap()
-//        
-//        // Now we tap the linkedinCell again and confirm that our credentials were saved to defaults
-//        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(2).tap()
-//
-//        // We post and check for success and that it went away after tapping ok
-//        app.navigationBars["LinkedIn"].buttons["Post"].tap()
-//        app.buttons["OKAY"].tap()
-//        XCTAssertEqual(app.buttons["OKAY"].exists, false)
-//        
-////        let cell = app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(2)
-////        cell.tap()
-////        
-////        let emailTextField = app.textFields["Email"]
-////        emailTextField.tap()
-////        emailTextField.typeText("developers@getambassador.com")
-////        
-////        let passwordSecureTextField = app.secureTextFields["Password"]
-////        passwordSecureTextField.tap()
-////        passwordSecureTextField.typeText("domorefaster")
-////        app.buttons["Sign in and allow"].tap()
-////        
-////        let linkedinNavigationBar = app.navigationBars["LinkedIn"]
-////        linkedinNavigationBar.buttons["Cancel"].tap()
-////        cell.tap()
-////        linkedinNavigationBar.buttons["Post"].tap()
-////        app.buttons["OKAY"].tap()
-////        
-//    }
     
     func testSMS() {
         // Tap the SMS cell
@@ -224,9 +176,5 @@ extension AmbassadorUITests {
         let existsPredicate = NSPredicate(format: "exists == 0")
         expectationForPredicate(existsPredicate, evaluatedWithObject: app.otherElements["LoadingView"], handler: nil)
         waitForExpectationsWithTimeout(20, handler: nil)
-//        while (app.otherElements["LoadingView"].exists) {
-//            let smallDelay = NSDate().dateByAddingTimeInterval(1)
-//            NSRunLoop.mainRunLoop().runUntilDate(smallDelay)
-//        }
     }
 }
