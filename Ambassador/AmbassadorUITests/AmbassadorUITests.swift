@@ -15,12 +15,12 @@ class AmbassadorUITests: XCTestCase {
         super.setUp()
         continueAfterFailure = true
         
-        if app == nil {
+//        if app == nil {
             app = XCUIApplication()
             app.launchArguments = ["isUITesting"]
             app.launch()
             presentRAF()
-        }
+//        }
     }
     
     override func tearDown() {
@@ -35,38 +35,38 @@ extension AmbassadorUITests {
         XCTAssert(app.staticTexts.elementMatchingType(XCUIElementType.StaticText, identifier: "urlLabel").exists)
         
         // Check to make sure there are the correct number of cells in the collectionView
-        XCTAssertEqual(app.collectionViews.cells.count, 5)
+//        XCTAssertEqual(app.collectionViews.cells.count, 5)
     }
 
     func testCopyButton() {
         // Tap the copy button and make sure that the copied label is shown on the screen
         XCUIApplication().buttons["btnEdit"].tap()
-        XCTAssertEqual(app.staticTexts["lblCopied"].exists, true)
+//        XCTAssertEqual(app.staticTexts["lblCopied"].exists, true)
     }
-//
-//    func testFacebook() {
-//        // Tap the facebook cell
-//        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(0).tap()
-//        
-//        NSRunLoop.mainRunLoop().runUntilDate(NSDate().dateByAddingTimeInterval(2))
-//        
-//        if app.alerts["No Facebook Account"].exists {
-//            let cancelButton = app.alerts["No Facebook Account"].collectionViews.buttons["Cancel"]
-//            cancelButton.tap()
-//        } else {
-//            // First make sure that the cancel button functions correctly
-//            let facebookNavigationBar = app.navigationBars["Facebook"]
-//            facebookNavigationBar.buttons["Cancel"].tap()
-//            
-//            // Tap the facebook cell again, but this time post the message
-//            app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(0).tap()
-//            facebookNavigationBar.buttons["Post"].tap()
-//            
-//            // Tap the OKAY button and assure that the success screen is hidden
-//            app.buttons["OKAY"].tap()
-//            XCTAssertEqual(app.buttons["OKAY"].exists, false)
-//        }
-//    }
+
+    func testFacebook() {
+        // Tap the facebook cell
+        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(0).tap()
+        
+        NSRunLoop.mainRunLoop().runUntilDate(NSDate().dateByAddingTimeInterval(2))
+        
+        if app.alerts["No Facebook Account"].exists {
+            let cancelButton = app.alerts["No Facebook Account"].collectionViews.buttons["Cancel"]
+            cancelButton.tap()
+        } else {
+            // First make sure that the cancel button functions correctly
+            let facebookNavigationBar = app.navigationBars["Facebook"]
+            facebookNavigationBar.buttons["Cancel"].tap()
+            
+            // Tap the facebook cell again, but this time post the message
+            app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(0).tap()
+            facebookNavigationBar.buttons["Post"].tap()
+            
+            // Tap the OKAY button and assure that the success screen is hidden
+            app.buttons["OKAY"].tap()
+            XCTAssertEqual(app.buttons["OKAY"].exists, false)
+        }
+    }
 //
 //    func testTwitter() {
 //        // Tap the twitter cell
@@ -231,7 +231,7 @@ extension AmbassadorUITests {
         app.tables.staticTexts["Ambassador Shoes RAF"].tap()
         let existsPredicate = NSPredicate(format: "exists == 0")
         expectationForPredicate(existsPredicate, evaluatedWithObject: app.otherElements["LoadingView"], handler: nil)
-        waitForExpectationsWithTimeout(10, handler: nil)
+        waitForExpectationsWithTimeout(20, handler: nil)
 //        while (app.otherElements["LoadingView"].exists) {
 //            let smallDelay = NSDate().dateByAddingTimeInterval(1)
 //            NSRunLoop.mainRunLoop().runUntilDate(smallDelay)
