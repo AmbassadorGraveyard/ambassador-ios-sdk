@@ -90,7 +90,7 @@
 }
 
 // Override fillWithDictionary because we set a custom object -- AMBUserUrlNetworkObject
-- (void)fillWithDictionary:(NSMutableDictionary *)d {
+- (void)fillWithDictionary:(NSMutableDictionary *)d completion:(void(^)())completion {
     NSMutableDictionary *bodyDict = (d[@"body"]) ? d[@"body"] : d;
     self.email = bodyDict[@"email"];
     self.first_name = bodyDict[@"first_name"];
@@ -105,6 +105,10 @@
         AMBUserUrlNetworkObject *urlObj = [[AMBUserUrlNetworkObject alloc] init];
         [urlObj fillWithDictionary:url];
         [self.urls addObject:urlObj];
+        
+        if ([urls indexOfObject:url] == ([urls count] -1)) {
+            completion();
+        }
     }
 }
 
