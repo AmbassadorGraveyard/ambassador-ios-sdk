@@ -16,6 +16,7 @@
 + (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type tintable:(BOOL)tintable;
 + (NSBundle*)AMBframeworkBundle;
 + (BOOL)isProduction;
++ (BOOL)isUITestRun;
 
 // URLs
 + (NSString *)identifyUrlWithUniversalID:(NSString *)uid;

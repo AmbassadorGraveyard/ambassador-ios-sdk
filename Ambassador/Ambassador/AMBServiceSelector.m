@@ -56,7 +56,6 @@ int contactServiceType;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self checkIfUITest];
     [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLoadingView) name:@"PusherReceived" object:nil]; // Subscribe to the notification that gets sent out when we get our pusher payload back
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
@@ -439,13 +438,6 @@ int contactServiceType;
     } failure:^(NSString *error) {
         DLog(@"SEND IDENTIFY Response - %@", error);
     }];
-}
-
-- (void)checkIfUITest {
-    // UI Testing setup
-    if ([[[NSProcessInfo processInfo] arguments] containsObject:@"isUITesting"]) {
-        [AMBValues setLinkedInAccessToken:@""];
-    }
 }
 
 @end

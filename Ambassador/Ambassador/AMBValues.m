@@ -65,6 +65,9 @@
 #endif
 }
 
++ (BOOL)isUITestRun {
+    return ([[[NSProcessInfo processInfo] arguments] containsObject:@"isUITesting"]);
+}
 
 #pragma mark - URLs
 
