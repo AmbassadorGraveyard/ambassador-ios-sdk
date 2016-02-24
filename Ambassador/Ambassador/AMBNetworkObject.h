@@ -57,6 +57,7 @@
 @property (nonatomic, strong) NSMutableArray *urls;
 
 - (void)fillWithUrl:(NSString *)url completion:(void(^)(NSString *error))completion;
+- (void)fillWithDictionary:(NSMutableDictionary *)d completion:(void(^)())completion;
 - (AMBUserUrlNetworkObject *)urlObjForCampaignID:(NSNumber*)cID;
 
 @end

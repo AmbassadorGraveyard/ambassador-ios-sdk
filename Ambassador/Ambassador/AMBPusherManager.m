@@ -90,11 +90,12 @@
             [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
             [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
         } else {
-            [user fillWithDictionary:json];
-            [AmbassadorSDK sharedInstance].user = user;
-            [AMBValues setUserFirstNameWithString:user.first_name];
-            [AMBValues setUserLastNameWithString:user.last_name];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
+            [user fillWithDictionary:json completion:^{
+                [AmbassadorSDK sharedInstance].user = user;
+                [AMBValues setUserFirstNameWithString:user.first_name];
+                [AMBValues setUserLastNameWithString:user.last_name];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
+            }];
         }
     }];
 }
