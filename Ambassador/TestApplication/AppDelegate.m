@@ -23,8 +23,8 @@
     
     [self setUpAppearance];
     
-    [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32"]; // DEV CREDENTIALS
-//    [AmbassadorSDK runWithUniversalToken:@"84444f4022a8cd4fce299114bc2e323e57e32188" universalID:@"830883cd-b2a7-449c-8a3c-d1850aa8bc6b"]; // PROD CREDENTIALS
+//    [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32"]; // DEV CREDENTIALS
+    [AmbassadorSDK runWithUniversalToken:@"236a3a2e7aa59a3016c687bddbde9f785e823ef9" universalID:@"c067a011-bd39-4b6d-86e0-9210e5b5f53b"]; // PROD CREDENTIALS
 
 
     return YES;
