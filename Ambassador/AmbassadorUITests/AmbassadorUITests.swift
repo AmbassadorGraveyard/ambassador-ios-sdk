@@ -39,6 +39,7 @@ extension AmbassadorUITests {
     func testCopyButton() {
         // Tap the copy button and make sure that the copied label is shown on the screen
         XCUIApplication().buttons["btnEdit"].tap()
+        XCTAssertTrue(app.staticTexts["Copied!"].exists)
     }
 
     func testFacebook() {
@@ -63,6 +64,8 @@ extension AmbassadorUITests {
             app.buttons["OKAY"].tap()
             XCTAssertEqual(app.buttons["OKAY"].exists, false)
         }
+        
+        
     }
 
     func testTwitter() {
@@ -106,7 +109,9 @@ extension AmbassadorUITests {
         app.buttons["sendButton"].tap()
         
         // Make sure the call goes through by checking for success message
-        XCTAssertTrue(app.staticTexts["Message successfully shared!"].exists)
+        let existsPredicate = NSPredicate(format: "exists == 1")
+        expectationForPredicate(existsPredicate, evaluatedWithObject: app.staticTexts["Message successfully shared!"], handler: nil)
+        waitForExpectationsWithTimeout(2, handler: nil)
         app.buttons["OKAY"].tap()
     }
     
@@ -125,7 +130,9 @@ extension AmbassadorUITests {
         app.buttons["sendButton"].tap()
         
         // Check for message success
-        XCTAssertTrue(app.staticTexts["Message successfully shared!"].exists)
+        let existsPredicate = NSPredicate(format: "exists == 1")
+        expectationForPredicate(existsPredicate, evaluatedWithObject: app.staticTexts["Message successfully shared!"], handler: nil)
+        waitForExpectationsWithTimeout(2, handler: nil)
         app.buttons["OKAY"].tap()
     }
     
