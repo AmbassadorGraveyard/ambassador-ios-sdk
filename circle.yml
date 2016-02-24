@@ -7,9 +7,6 @@ checkout:
   post:
     - git submodule sync
     - git submodule update
-dependencies:
-  pre:
-    - sudo gem install cocoapods xcpretty obcd slather -N
 test:
   override:
     - set -o pipefail &&
@@ -22,8 +19,8 @@ test:
        clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
       xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
   post:
-    - slather coverage Ambassador.xcodeproj
-    
+    - bundle exec slather coverage Ambassador.xcodeproj
+
     - set -o pipefail &&
      xcodebuild -project Ambassador.xcodeproj
       -sdk iphonesimulator
