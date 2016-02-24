@@ -134,6 +134,10 @@
     return [AMBValues isProduction] ? @"https://api.getambassador.com/auth/subscribe/" : @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
 }
 
++ (NSString*)getSentryDSNValue {
+    return @"https://***REMOVED***@app.getsentry.com/67182";
+}
+
 
 #pragma mark - AMB Defaults
 

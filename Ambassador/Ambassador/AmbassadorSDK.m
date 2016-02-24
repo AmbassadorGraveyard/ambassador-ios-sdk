@@ -85,7 +85,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     self.conversion = [[AMBConversion alloc] init];
     
     // Sets up Sentry
-    RavenClient *client = [RavenClient clientWithDSN:@"https://***REMOVED***@app.getsentry.com/67182"];
+    RavenClient *client = [RavenClient clientWithDSN:[AMBValues getSentryDSNValue]];
     [RavenClient setSharedClient:client];
     parentHandler = NSGetUncaughtExceptionHandler(); // Creates a reference to parent project's exceptionHandler in order to fire it in override
     
