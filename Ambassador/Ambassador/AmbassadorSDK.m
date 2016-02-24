@@ -83,14 +83,20 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     [AMBValues setUniversalTokenWithToken:universalToken];
     if (!self.conversionTimer.isValid) { self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES]; }
     self.conversion = [[AMBConversion alloc] init];
-    
-    // Sets up Sentry
-    RavenClient *client = [RavenClient clientWithDSN:[AMBValues getSentryDSNValue]];
-    [RavenClient setSharedClient:client];
-    parentHandler = NSGetUncaughtExceptionHandler(); // Creates a reference to parent project's exceptionHandler in order to fire it in override
-    
-    [[RavenClient sharedClient] setupExceptionHandler]; // Is overridden to use our custom handler but still grabs crashes
-    NSSetUncaughtExceptionHandler(ambassadorUncaughtExceptionHandler); // Sets our overridden exceptionHandler that only sends on AmbassadorSDK stacktraces
+
+    [self setUpCrashAnalytics];
+}
+
+- (void)setUpCrashAnalytics {
+    // Sets up Sentry if in release mode
+    if ([AMBValues isProduction]) {
+        RavenClient *client = [RavenClient clientWithDSN:[AMBValues getSentryDSNValue]];
+        [RavenClient setSharedClient:client];
+        parentHandler = NSGetUncaughtExceptionHandler(); // Creates a reference to parent project's exceptionHandler in order to fire it in override
+        
+        [[RavenClient sharedClient] setupExceptionHandler]; // Is overridden to use our custom handler but still grabs crashes
+        NSSetUncaughtExceptionHandler(ambassadorUncaughtExceptionHandler); // Sets our overridden exceptionHandler that only sends on AmbassadorSDK stacktraces
+    }
 }
 
 
