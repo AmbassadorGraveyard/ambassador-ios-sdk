@@ -19,12 +19,12 @@
     [self setUpAppearance];
     
     if ([[[NSProcessInfo processInfo] arguments] containsObject:@"isUITesting"]) {
-        [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // PROD CREDENTIALS
-    } else {
+        [UIView setAnimationsEnabled:NO];
         [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // DEV CREDENTIALS
-//        [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // PROD CREDENTIALS
     }
-
+    
+    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // DEV CREDENTIALS
+    //        [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // PROD CREDENTIALS
 
     return YES;
 }
