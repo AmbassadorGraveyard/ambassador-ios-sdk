@@ -31,6 +31,7 @@
 + (NSString*)getSendConversionUrl;
 + (NSString*)getPusherSessionUrl;
 + (NSString*)getPusherAuthUrl;
++ (NSString*)getSentryDSNValue;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
