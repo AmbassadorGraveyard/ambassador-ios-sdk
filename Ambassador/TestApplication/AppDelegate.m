@@ -19,12 +19,12 @@
     [self setUpAppearance];
     
     if ([[[NSProcessInfo processInfo] arguments] containsObject:@"isUITesting"]) {
-        [AmbassadorSDK runWithUniversalToken:@"84444f4022a8cd4fce299114bc2e323e57e32188" universalID:@"830883cd-b2a7-449c-8a3c-d1850aa8bc6b"]; // PROD CREDENTIALS
-    } else {
+        [UIView setAnimationsEnabled:NO];
         [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32"]; // DEV CREDENTIALS
-//        [AmbassadorSDK runWithUniversalToken:@"84444f4022a8cd4fce299114bc2e323e57e32188" universalID:@"830883cd-b2a7-449c-8a3c-d1850aa8bc6b"]; // PROD CREDENTIALS
     }
-
+    
+    [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32"]; // DEV CREDENTIALS
+    //        [AmbassadorSDK runWithUniversalToken:@"84444f4022a8cd4fce299114bc2e323e57e32188" universalID:@"830883cd-b2a7-449c-8a3c-d1850aa8bc6b"]; // PROD CREDENTIALS
 
     return YES;
 }
