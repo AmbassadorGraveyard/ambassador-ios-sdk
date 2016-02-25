@@ -405,6 +405,7 @@ BOOL keyboardShowing = NO;
 #pragma mark - UI Functions
 
 - (void)setUpTheme {
+    self.contactsTable.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableBackgroundColor];
     self.searchFieldBackground.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSearchBackgroundColor];
     [self.doneSearchingButton setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:ContactSearchDoneButtonTextColor] forState:UIControlStateNormal];
     self.composeMessageTextView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
