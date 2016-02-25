@@ -240,6 +240,8 @@ Any blank or incorrect values inserted into the `GenericTheme.plist` will defaul
 * Messages - **"NO PLIST VALUE FOUND"**
 * Images - No image will be added
 
+**If you are UPDATING the SDK, make sure to copy any customized plists to a safe place so that you can re-add them later**
+
 The `GenericTheme.plist` will come with preconfigured values looking like this:
 
   <img src="screenShots/themePlist.png" width="600" />
