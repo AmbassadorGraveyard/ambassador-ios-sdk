@@ -32,8 +32,10 @@
 
     self.name.text = [contact fullName];
     self.name.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableNameTextFont];
+    self.name.textColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableNameTextColor];
     self.value.text = [NSString stringWithFormat:@"%@ - %@", contact.label, contact.value];
     self.value.font = [[AMBThemeManager sharedInstance] fontForKey:ContactTableInfoTextFont];
+    self.value.textColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableInfoTextColor];
     
     self.avatarImage.hidden = (contact.contactImage) ? YES : NO;
     if (!self.avatarImage.hidden) {
