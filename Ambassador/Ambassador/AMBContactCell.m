@@ -59,7 +59,7 @@
     if (highlighted) {
         self.backgroundColor = [UIColor cellSelectionGray];
     } else {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
     }
 }
 
