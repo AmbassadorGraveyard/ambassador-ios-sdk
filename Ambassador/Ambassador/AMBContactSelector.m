@@ -413,6 +413,7 @@ BOOL keyboardShowing = NO;
     
     self.navigationController.navigationBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
     [self.sendButton.titleLabel setFont:[[AMBThemeManager sharedInstance] fontForKey:ContactSendButtonTextFont]];
+    [self.sendButton setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonTextColor] forState:UIControlStateNormal];
     
     [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
     [[self.btnEditMessage imageView] setContentMode:UIViewContentModeScaleAspectFit];
