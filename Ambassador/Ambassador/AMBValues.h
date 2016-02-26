@@ -31,6 +31,7 @@
 + (NSString*)getSendConversionUrl;
 + (NSString*)getPusherSessionUrl;
 + (NSString*)getPusherAuthUrl;
++ (NSString*)getSentryDSNValue;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
@@ -45,6 +46,7 @@
 + (void)setUserEmail:(NSString*)email;
 + (void)setPusherChannelObject:(NSDictionary*)pusherChannel;
 + (void)setUserURLObject:(NSDictionary*)urlObject;
++ (void)setAPNDeviceToken:(NSString*)deviceToken;
 + (void)resetHasInstalled; // Should only be used for TESTING
 
 // Default getters
@@ -60,5 +62,6 @@
 + (NSString*)getUserEmail;
 + (AMBPusherChannelObject*)getPusherChannelObject;
 + (AMBUserUrlNetworkObject*)getUserURLObject;
++ (NSString*)getAPNDeviceToken;
 
 @end
