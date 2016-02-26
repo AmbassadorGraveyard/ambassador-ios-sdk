@@ -361,4 +361,16 @@
     XCTAssertTrue(savedObject.is_active);
 }
 
+- (void)testSetAndGetAPNDeviceToken {
+    // GIVEN
+    NSString *apnDeviceToken = @"sdfa65484v86sf5e54v55";
+    
+    // WHEN
+    [AMBValues setAPNDeviceToken:apnDeviceToken];
+    NSString *expectedToken = [AMBValues getAPNDeviceToken];
+    
+    // THEN
+    XCTAssertEqualObjects(apnDeviceToken, expectedToken);
+}
+
 @end

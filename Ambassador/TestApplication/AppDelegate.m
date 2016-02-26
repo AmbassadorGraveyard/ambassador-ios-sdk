@@ -26,6 +26,11 @@
 //    [AmbassadorSDK runWithUniversalToken:@"9de5757f801ca60916599fa3f3c92131b0e63c6a" universalID:@"abfd1c89-4379-44e2-8361-ee7b87332e32"]; // DEV CREDENTIALS
     [AmbassadorSDK runWithUniversalToken:@"236a3a2e7aa59a3016c687bddbde9f785e823ef9" universalID:@"c067a011-bd39-4b6d-86e0-9210e5b5f53b"]; // PROD CREDENTIALS
 
+    // Registers app for notifications
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound|UIUserNotificationTypeAlert|UIUserNotificationTypeBadge) categories:nil];
+    [application registerForRemoteNotifications];
+    [application registerUserNotificationSettings:settings];
+
 
     return YES;
 }
@@ -51,6 +56,28 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+#pragma mark - Notifications
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [AmbassadorSDK registerDeviceToken:token];
+    NSLog(@"Device Token = %@", token);
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"Failed to register for remote notifications");
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [AmbassadorSDK handleAmbassadorRemoteNotification:userInfo];
+    NSLog(@"Info received from notification - %@", userInfo);
+}
+
+
+#pragma mark - Helper Functions
 
 - (void)setUpAppearance {
     [[UITabBar appearance] setBarTintColor:[AppDelegate colorFromHexString:@"#25313f"]];
