@@ -14,7 +14,7 @@
 #pragma mark - Error Logs
 
 + (void)errorLogCannotSendConversion:(NSInteger)statusCode errorData:(NSData*)data {
-    NSLog(@"[Ambassador] Error Sending Conversion - Status Code=%li Failure Reason=%@", (long)statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
+    DLog(@"[Ambassador] Error Sending Conversion - Status Code=%li Failure Reason=%@", (long)statusCode, [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]);
 }
 
 + (void)errorLogNoMatchingCampaignIdError:(NSString*)campaignId {
