@@ -13,12 +13,12 @@
 #import "AMBTests.h"
 #import "AMBValues.h"
 
-@interface AMBNetworObjectTests : AMBTests
+@interface AMBNetworkObjectTests : AMBTests
 
 @end
 
 
-@implementation AMBNetworObjectTests
+@implementation AMBNetworkObjectTests
 
 - (void)setUp {
     [super setUp];
@@ -233,6 +233,23 @@
     XCTAssertEqualObjects(updateNameObject.update_data[@"first_name"], firstName);
     XCTAssertEqualObjects(updateNameObject.update_data[@"last_name"], lastName);
     XCTAssertEqualObjects(updateNameObject.email, email);
+}
+
+
+#pragma mark - Update APNToken Tests
+
+- (void)testInitWithAPNToken {
+    // GIVEN
+    NSString *apnDeviceToken = @"54dsf65s433c24x35cva8s984";
+    NSString *email = @"test@example.com";
+    [AMBValues setUserEmail:email];
+    
+    // WHEN
+    AMBUpdateAPNTokenObject *updateAPNTokenObject = [[AMBUpdateAPNTokenObject alloc] initWithAPNDeviceToken:apnDeviceToken];
+    
+    // THEN
+    XCTAssertEqualObjects(updateAPNTokenObject.update_data[@"apnToken"], apnDeviceToken);
+    XCTAssertEqualObjects(updateAPNTokenObject.email, email);
 }
 
 @end

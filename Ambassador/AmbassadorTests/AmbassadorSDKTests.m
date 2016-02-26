@@ -15,6 +15,7 @@
 #import "AMBPusherManager.h"
 #import <OCMock/OCMock.h>
 #import "AMBServiceSelector.h"
+#import "AMBNetworkManager.h"
 
 // Testing category made to reveal private methods only in tests
 @interface AmbassadorSDK (Tests)
@@ -27,6 +28,7 @@
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist;
 - (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion;
 - (void)checkConversionQueue;
+- (void)sendAPNDeviceToken;
 
 @end
 
@@ -227,6 +229,35 @@ NSString * const universalToken = @"***REMOVED***";
             [pusherMgrMock verify];
         }];
     }];
+}
+
+- (void)testClassRegisterDeviceToken {
+    // GIVEN
+    NSString *deviceToken = @"56d84v64v9a46w4e6846fd4g6dfh46";
+    
+    // WHEN
+    [AmbassadorSDK registerDeviceToken:deviceToken];
+    NSString *expectedToken = [AMBValues getAPNDeviceToken];
+    
+    // THEN
+    XCTAssertEqualObjects(deviceToken, expectedToken);
+}
+
+- (void)testLocalRegisterDeviceToken {
+    // GIVEN
+    NSString *deviceToken = @"D4654SD6FAd4f6sdf";
+    [AMBValues setAPNDeviceToken:deviceToken];
+    [AMBValues setUserEmail:@"test@example.com"];
+    
+    id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
+    [[[mockNetworkMgr expect] andDo:nil] updateAPNDeviceToken:deviceToken success:nil failure:nil];
+    
+    // WHEN
+    [[AmbassadorSDK sharedInstance] sendAPNDeviceToken];
+    
+    // THEN
+    [mockNetworkMgr verify];
+    [mockNetworkMgr stopMocking];
 }
 
 @end
