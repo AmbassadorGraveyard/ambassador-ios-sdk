@@ -9,7 +9,7 @@ checkout:
     - git submodule update
 dependencies:
   pre:
-    - sudo gem install cocoapods xcpretty obcd slather --version 2.0.0
+    - sudo gem install cocoapods xcpretty obcd slather 2.0.0
 test:
   override:
     - xcodebuild -project Ambassador.xcodeproj
