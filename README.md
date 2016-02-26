@@ -246,7 +246,7 @@ Any blank or incorrect values inserted into the `GenericTheme.plist` will defaul
 
 The `GenericTheme.plist` will come with preconfigured values looking like this:
 
-  <img src="screenShots/themePlist.png" width="600" />
+  <img src="screenShots/fullPlist.png" width="600" />
 
 This is what the default theme will look like with the preconfigured values in the `GenericTheme.plist`.
 
