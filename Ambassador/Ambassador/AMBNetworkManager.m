@@ -220,6 +220,27 @@
     }] resume];
 }
 
+- (void)updateAPNDeviceToken:(NSString*)deviceToken success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
+    AMBUpdateAPNTokenObject *apnTokenUpdateObject = [[AMBUpdateAPNTokenObject alloc] initWithAPNDeviceToken:deviceToken];
+    NSMutableURLRequest *apnUpdateRequest = [self createURLRequestWithURL:[AMBValues getSendIdentifyUrl] requestType:@"POST"];
+    apnUpdateRequest.HTTPBody = [apnTokenUpdateObject toData];
+    
+    [[self.urlSession dataTaskWithRequest:apnUpdateRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"APN TOKEN UPDATE Status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"Updating APN Token SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"Updating APN Token FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"APN TOKEN UPDATE Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
+    }] resume];
+}
+
 - (void)sendRegisteredConversion:(NSDictionary*)conversionDict success:(void(^)(NSDictionary *response))success failure:(void(^)(NSInteger statusCode, NSData *data))failure {
     NSMutableURLRequest *conversionRequest = [self createURLRequestWithURL:[AMBValues getSendConversionUrl] requestType:@"POST"];
     conversionRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:conversionDict options:0 error:nil];

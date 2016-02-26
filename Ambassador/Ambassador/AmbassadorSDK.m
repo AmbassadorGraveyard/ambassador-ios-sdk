@@ -83,14 +83,14 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     [AMBValues setUniversalTokenWithToken:universalToken];
     if (!self.conversionTimer.isValid) { self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES]; }
     self.conversion = [[AMBConversion alloc] init];
-    
+
     [self setUpCrashAnalytics];
 }
 
 - (void)setUpCrashAnalytics {
     // Sets up Sentry if in release mode
     if ([AMBValues isProduction]) {
-        RavenClient *client = [RavenClient clientWithDSN:@"https://***REMOVED***@app.getsentry.com/67182"];
+        RavenClient *client = [RavenClient clientWithDSN:[AMBValues getSentryDSNValue]];
         [RavenClient setSharedClient:client];
         parentHandler = NSGetUncaughtExceptionHandler(); // Creates a reference to parent project's exceptionHandler in order to fire it in override
         
@@ -108,6 +108,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 - (void)localIdentifyWithEmail:(NSString*)email {
     [AMBValues setUserEmail:email];
+    [self sendAPNDeviceToken];
     [self subscribeToPusherWithCompletion:nil];
 }
 
@@ -178,6 +179,26 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     } failure:^(NSString *error) {
         DLog(@"Unable to get PUSHER SESSION");
     }];
+}
+
+
+#pragma mark - Remote Notifications
+
++ (void)registerDeviceToken:(NSString*)deviceToken {
+    if (deviceToken && ![deviceToken isEqualToString:@""]) {
+        [AMBValues setAPNDeviceToken:deviceToken];
+    }
+}
+
+- (void)sendAPNDeviceToken {
+    if ([AMBValues getAPNDeviceToken] && ![[AMBValues getAPNDeviceToken] isEqualToString:@""] && ![[AMBValues getUserEmail] isEqualToString:@""]) {
+        [[AMBNetworkManager sharedInstance] updateAPNDeviceToken:[AMBValues getAPNDeviceToken] success:nil failure:nil];
+    }
+}
+
++ (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification {
+    // TODO: Add functionality when surveys are implemented into app
+    DLog(@"AmbassadorNotification Received - %@", notification);
 }
 
 @end

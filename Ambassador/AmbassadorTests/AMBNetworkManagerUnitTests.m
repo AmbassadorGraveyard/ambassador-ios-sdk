@@ -284,6 +284,23 @@
     }];
 }
 
+- (void)testUpdateAPNDeviceToken {
+    // GIVEN
+    XCTestExpectation *successExpectation = [self expectationWithDescription:@"updateAPN"];
+    NSString *deviceToken = @"6sd4f6df79ev1re7rt";
+    [self setUpURLCompletionWithData:[NSJSONSerialization dataWithJSONObject:@{@"test" : @"testValue"} options:0 error:nil] response:self.mockResponse error:nil];
+    
+    // WHEN
+    [self.networkManager updateAPNDeviceToken:deviceToken success:^(NSDictionary *response) {
+        [successExpectation fulfill];
+    } failure:nil];
+    
+    // THEN
+    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError * _Nullable error) {
+        [self.mockURLSession verify];
+    }];
+}
+
 
 #pragma mark - Helper Functions
 
