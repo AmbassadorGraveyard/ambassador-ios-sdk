@@ -7,9 +7,6 @@ checkout:
   post:
     - git submodule sync
     - git submodule update
-dependencies:
-  pre:
-    - sudo gem install cocoapods xcpretty obcd slather 2.0.0
 test:
   override:
     - xcodebuild -project Ambassador.xcodeproj
@@ -20,4 +17,4 @@ test:
        VALID_ARCHS=x86_64
        test
   post:
-    - slather coverage Ambassador.xcodeproj
+    - bundle exec slather coverage Ambassador.xcodeproj
