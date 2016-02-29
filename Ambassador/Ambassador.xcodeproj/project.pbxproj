@@ -181,6 +181,8 @@
 		EF5390E01C45A644005F6944 /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */; };
 		EF5390E21C46CFE5005F6944 /* ApplicationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5390E11C46CFE5005F6944 /* ApplicationUITests.swift */; };
 		EF5390E41C46E93C005F6944 /* AmbassadorShirt.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */; };
+		EF5579FA1C84F65500F66761 /* AMBWelcomeScreenViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */; };
+		EF5579FB1C84F65500F66761 /* AMBWelcomeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
@@ -484,6 +486,8 @@
 		EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorTheme.plist; sourceTree = "<group>"; };
 		EF5390E11C46CFE5005F6944 /* ApplicationUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationUITests.swift; sourceTree = "<group>"; };
 		EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorShirt.plist; sourceTree = "<group>"; };
+		EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenViewController.h; sourceTree = "<group>"; };
+		EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenViewController.m; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -627,6 +631,7 @@
 		DB844D281BA75BB8003FD7A9 /* Ambassador */ = {
 			isa = PBXGroup;
 			children = (
+				EF5579F71C84F63400F66761 /* Welcome Screen */,
 				DB844D291BA75BB8003FD7A9 /* Ambassador.h */,
 				DBA3FB521BA8A23B00672D82 /* AmbassadorSDK.h */,
 				DBA3FB531BA8A23B00672D82 /* AmbassadorSDK.m */,
@@ -894,6 +899,15 @@
 			name = "Contact Selector";
 			sourceTree = "<group>";
 		};
+		EF5579F71C84F63400F66761 /* Welcome Screen */ = {
+			isa = PBXGroup;
+			children = (
+				EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */,
+				EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */,
+			);
+			name = "Welcome Screen";
+			sourceTree = "<group>";
+		};
 		EF64CFA41BE2A47D0072014B /* AmbassadorUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1123,6 +1137,7 @@
 				EFE7D79C1C21CB2D00D7F92C /* AMBCoreDataManager.h in Headers */,
 				DBA3FC091BA8AA1D00672D82 /* AMBPTURLRequestOperation.h in Headers */,
 				DBA3FC1E1BA8AA1D00672D82 /* AMBPTPusherEventPublisher.h in Headers */,
+				EF5579FA1C84F65500F66761 /* AMBWelcomeScreenViewController.h in Headers */,
 				EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */,
 				DBA3FC251BA8AA1D00672D82 /* AMBPusher.h in Headers */,
 				DBA3FC0B1BA8AA1D00672D82 /* AMBPTEventListener.h in Headers */,
@@ -1473,6 +1488,7 @@
 				EFE7D79D1C21CB2D00D7F92C /* AMBCoreDataManager.m in Sources */,
 				DBA3FB721BA8A23C00672D82 /* AmbassadorSDK.m in Sources */,
 				DBA3FC0A1BA8AA1D00672D82 /* AMBPTBlockEventListener.m in Sources */,
+				EF5579FB1C84F65500F66761 /* AMBWelcomeScreenViewController.m in Sources */,
 				DBA3FC151BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m in Sources */,
 				DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */,
 				DBA3FB801BA8A23C00672D82 /* AMBConversion.m in Sources */,
