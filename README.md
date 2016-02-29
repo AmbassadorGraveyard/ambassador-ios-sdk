@@ -208,7 +208,7 @@ AmbassadorSDK.registerConversion(parameters, restrictToInsall: false) { (error) 
 
 ## Presenting the 'Refer A Friend' Screen (RAF)
 
-In order to present a RAF Screen, just call the function below.  The campaignID parameter refers to the campaign that you want to associate with the RAF, the viewController parameter refers to the controller that will be presenting the RAF, and the themePlist parameter refers to the name of the customized plist you want use to theme the RAF which is described in more detail below.
+In order to present a RAF Screen, just call the function below.  The **campaignID** parameter refers to the campaign that you want to associate with the RAF, the **viewController** parameter refers to the controller that will be presenting the RAF, and the **themePlist** parameter refers to the name of the customized plist you want to use to theme the RAF, which is described in more detail below.
 
 ### Presenting the RAF
 **Objective-c**
