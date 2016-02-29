@@ -16,6 +16,7 @@
 #import "AMBNetworkManager.h"
 #import "AMBErrors.h"
 #import "RavenClient.h"
+#import "AMBWelcomeScreenViewController.h"
 
 @interface AmbassadorSDK ()
 
@@ -199,6 +200,16 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 + (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification {
     // TODO: Add functionality when surveys are implemented into app
     DLog(@"AmbassadorNotification Received - %@", notification);
+}
+
+
+#pragma mark - Welcome Screen
+
++ (void)presentWelcomeScreen:(UIViewController*)viewController {
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
+//    UINavigationController *nav = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
+    AMBWelcomeScreenViewController *welcomeController = (AMBWelcomeScreenViewController*)[sb instantiateViewControllerWithIdentifier:@"WELCOME_SCREEN"];
+    [viewController presentViewController:welcomeController animated:YES completion:nil];
 }
 
 @end
