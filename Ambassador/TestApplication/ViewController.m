@@ -27,6 +27,10 @@
 
 - (void)viewDidLoad {
     [self setUpTheme];
+    
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressLogin)];
+    [longPress setMinimumPressDuration:0.1];
+    [self.btnLogin setGestureRecognizers:@[longPress]];
 }
 
 
@@ -35,6 +39,10 @@
 - (IBAction)loginTapped:(id)sender {
     [self.view endEditing:YES];
     [self identifyOnSignIn];
+}
+
+- (void)longPressLogin {
+    [AmbassadorSDK presentWelcomeScreen:self];
 }
 
 
