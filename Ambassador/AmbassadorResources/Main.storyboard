@@ -1211,8 +1211,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M81-Zy-daN">
-                                <rect key="frame" x="30" y="52" width="540" height="498"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M81-Zy-daN">
+                                <rect key="frame" x="30" y="57" width="540" height="486"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0D2-5o-rE9">
                                         <rect key="frame" x="190" y="56" width="160" height="160"/>
@@ -1251,12 +1251,12 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="INS-bX-o1L">
                                         <rect key="frame" x="185" y="316" width="170" height="45"/>
-                                        <color key="backgroundColor" red="0.20430885004908059" green="0.54589650238308651" blue="0.83595862113784902" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.18894219627423697" green="0.50483806293220701" blue="0.77308377896613178" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="6AD-eM-vbd"/>
                                             <constraint firstAttribute="width" constant="170" id="o6P-SG-dM9"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                         <state key="normal" title="CREATE AN ACCOUNT">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1280,7 +1280,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="b1S-Xe-qXb">
-                                        <rect key="frame" x="30" y="441" width="480" height="40"/>
+                                        <rect key="frame" x="30" y="436" width="480" height="40"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="OfW-cF-ijy"/>
@@ -1330,9 +1330,9 @@
                                     <constraint firstItem="9t8-TI-smB" firstAttribute="leading" secondItem="M81-Zy-daN" secondAttribute="leading" id="5oR-0g-mml"/>
                                     <constraint firstItem="INS-bX-o1L" firstAttribute="top" secondItem="U0F-YX-xEW" secondAttribute="bottom" constant="25" id="7cT-7S-jbH"/>
                                     <constraint firstItem="0D2-5o-rE9" firstAttribute="centerX" secondItem="M81-Zy-daN" secondAttribute="centerX" id="80W-Ue-gz1"/>
-                                    <constraint firstItem="b1S-Xe-qXb" firstAttribute="top" secondItem="ipf-dA-9nF" secondAttribute="bottom" constant="15" id="KLz-qh-X3M"/>
+                                    <constraint firstItem="b1S-Xe-qXb" firstAttribute="top" secondItem="ipf-dA-9nF" secondAttribute="bottom" constant="10" id="KLz-qh-X3M"/>
                                     <constraint firstItem="INS-bX-o1L" firstAttribute="centerX" secondItem="M81-Zy-daN" secondAttribute="centerX" id="QOy-Ga-sGs"/>
-                                    <constraint firstAttribute="bottom" secondItem="b1S-Xe-qXb" secondAttribute="bottom" constant="12" id="QbE-Yu-ZbC"/>
+                                    <constraint firstAttribute="bottom" secondItem="b1S-Xe-qXb" secondAttribute="bottom" constant="10" id="QbE-Yu-ZbC"/>
                                     <constraint firstItem="b1S-Xe-qXb" firstAttribute="leading" secondItem="M81-Zy-daN" secondAttribute="leading" constant="30" id="Quw-IL-hlu"/>
                                     <constraint firstItem="U0F-YX-xEW" firstAttribute="leading" secondItem="M81-Zy-daN" secondAttribute="leading" constant="20" id="SK1-xa-dsq"/>
                                     <constraint firstItem="U0F-YX-xEW" firstAttribute="centerX" secondItem="M81-Zy-daN" secondAttribute="centerX" id="UC3-bD-x8e"/>
@@ -1372,6 +1372,7 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="6Hh-Y8-7QB"/>
+                                <exclude reference="iq2-Ny-fQ6"/>
                             </mask>
                         </variation>
                     </view>
@@ -1385,7 +1386,7 @@
                         <outlet property="lblReferred" destination="U0F-YX-xEW" id="t5q-Ze-UG8"/>
                         <outlet property="linkCollectionView" destination="b1S-Xe-qXb" id="MO9-YL-bba"/>
                         <outlet property="masterView" destination="M81-Zy-daN" id="8S5-yx-ReJ"/>
-                        <outlet property="masterViewTop" destination="rnj-l0-eNd" id="T03-bP-L7E"/>
+                        <outlet property="masterViewCenter" destination="oay-aW-whB" id="S2U-ON-xED"/>
                         <outlet property="referralTextBottom" destination="7cT-7S-jbH" id="Gxv-1R-cYz"/>
                     </connections>
                 </viewController>
