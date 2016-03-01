@@ -20,7 +20,7 @@
     
     if ([[[NSProcessInfo processInfo] arguments] containsObject:@"isUITesting"]) {
         [UIView setAnimationsEnabled:NO];
-        [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // DEV CREDENTIALS
+        [AmbassadorSDK runWithUniversalToken:@"7a654edde7929be3708db90fdad0b1c04ad79ad1" universalID:@"32a7540b-0000-4dcc-8ea3-4ea145e40f0d"]; // DEV CREDENTIALS
     }
     
     [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // DEV CREDENTIALS
