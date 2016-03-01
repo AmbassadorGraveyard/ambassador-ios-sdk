@@ -11,16 +11,28 @@
 @interface AMBLinkCell()
 
 @property (nonatomic, strong) IBOutlet UIButton * btnLinkName;
+@property (nonatomic, strong) NSInteger rowNumber;
 
 @end
 
 
 @implementation AMBLinkCell
 
-- (void)setupCellWithLinkName:(NSString*)linkName tintColor:(UIColor*)tintColor {
+
+#pragma mark - LifeCycle
+
+- (void)setupCellWithLinkName:(NSString*)linkName tintColor:(UIColor*)tintColor rowNum:(NSInteger)rowNum {
     self.backgroundColor = [UIColor clearColor];
     self.btnLinkName.tintColor = tintColor;
     [self.btnLinkName setTitle:linkName forState:UIControlStateNormal];
+    self.rowNumber = rowNum;
+}
+
+
+#pragma mark - IBActions
+
+- (IBAction)buttonPressed:(id)sender {
+    [self.delegate buttonPressedAtIndex:self.rowNumber];
 }
 
 @end

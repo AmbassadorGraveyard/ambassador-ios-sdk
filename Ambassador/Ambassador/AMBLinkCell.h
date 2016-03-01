@@ -8,8 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol AMBLinkCellDelegate <NSObject>
+
+- (void)buttonPressedAtIndex:(NSInteger)cellIndex;
+
+@end
+
+
 @interface AMBLinkCell : UICollectionViewCell
 
-- (void)setupCellWithLinkName:(NSString*)linkName tintColor:(UIColor*)tintColor;
+@property (nonatomic, weak) id<AMBLinkCellDelegate> delegate;
+
+- (void)setupCellWithLinkName:(NSString*)linkName tintColor:(UIColor*)tintColor rowNum:(NSInteger)rowNum;
 
 @end
