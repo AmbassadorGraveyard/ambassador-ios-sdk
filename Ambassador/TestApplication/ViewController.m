@@ -43,9 +43,9 @@
 
 - (void)longPressLogin {
     AMBWelcomeScreenParameters *welcomeParams = [[AMBWelcomeScreenParameters alloc] init];
-    welcomeParams.detailMessage = @"test message";
+    welcomeParams.detailMessage = @"Learn more about our company by tapping on either of the links below";
     welcomeParams.referralMessage = @"John Doe has referred you to Noodles and Co.";
-    welcomeParams.accentColor = [UIColor redColor];
+    welcomeParams.accentColor = self.btnLogin.backgroundColor;
     welcomeParams.linkArray = @[@"Link One", @"Link Two"];
     welcomeParams.actionButtonTitle = @"CREATE AN ACCOUNT";
     

@@ -21,7 +21,7 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * collectionViewHeight;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * buttonHeight;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * referralTextBottom;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint * masterViewTop;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * masterViewCenter;
 
 @property (nonatomic, strong) NSArray * linkArray;
 @property (nonatomic, strong) UIColor * welcomeScreenAccent;
@@ -40,16 +40,17 @@ NSInteger const CELL_HEIGHT = 25;
     [super viewDidLoad];
     NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://fraziercreative.agency/wp-content/uploads/2013/07/cool-guy.jpg"]];
     self.ivProfilePic.image = [UIImage imageWithData:imageData];
-    self.masterViewTop.constant = -(self.masterViewTop.constant + self.masterView.frame.size.height);
+    self.masterViewCenter.constant = -(self.masterView.frame.size.width + 30);
     [self setTheme];
     [self setupCollectionView];
 }
 
 - (void)viewDidLayoutSubviews {
-    if (self.masterViewTop.constant < 30) {
-        self.masterViewTop.constant = 30;
+    if (self.masterViewCenter.constant != 0) {
+        
         [UIView animateKeyframesWithDuration:0.5 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
             [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.4 animations:^{
+                self.masterViewCenter.constant = 0;
                 [self.view layoutIfNeeded];
                 self.ivProfilePic.layer.cornerRadius = self.ivProfilePic.frame.size.height/2;
             }];
