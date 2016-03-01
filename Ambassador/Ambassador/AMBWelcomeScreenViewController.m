@@ -16,12 +16,14 @@
 @property (nonatomic, strong) IBOutlet UILabel * lblReferred;
 @property (nonatomic, strong) IBOutlet UILabel * lblDescription;
 @property (nonatomic, strong) IBOutlet UIButton * btnAction;
+@property (nonatomic, strong) IBOutlet UIButton * btnClose;
 @property (nonatomic, strong) IBOutlet UICollectionView * linkCollectionView;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * collectionViewHeight;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * buttonHeight;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * masterViewTop;
 
 @property (nonatomic, strong) NSArray * linkArray;
+@property (nonatomic, strong) UIColor * welcomeScreenAccent;
 
 @end
 
@@ -35,12 +37,10 @@ NSInteger const CELL_HEIGHT = 25;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setTheme];
     NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://fraziercreative.agency/wp-content/uploads/2013/07/cool-guy.jpg"]];
     self.ivProfilePic.image = [UIImage imageWithData:imageData];
     self.masterViewTop.constant = -(self.masterViewTop.constant + self.masterView.frame.size.height);
-    
-    self.linkArray = @[@"Link Two", @"Link One"];
+    [self setTheme];
     [self setupCollectionView];
 }
 
@@ -72,7 +72,7 @@ NSInteger const CELL_HEIGHT = 25;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     AMBLinkCell *linkCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"linkCell" forIndexPath:indexPath];
-    [linkCell setupCellWithLinkName:self.linkArray[indexPath.row] tintColor:self.btnAction.backgroundColor];
+    [linkCell setupCellWithLinkName:self.linkArray[indexPath.row] tintColor:self.welcomeScreenAccent];
     return linkCell;
 }
 
@@ -85,13 +85,24 @@ NSInteger const CELL_HEIGHT = 25;
 #pragma mark - UI Functions
 
 - (void)setTheme {
+    self.welcomeScreenAccent = self.parameters.accentColor;
+    
     // Master View
     self.masterView.layer.cornerRadius = 6;
     
     // Image View
     self.ivProfilePic.layer.cornerRadius = self.ivProfilePic.frame.size.height/2;
-    self.ivProfilePic.layer.borderColor = self.btnAction.backgroundColor.CGColor;
+    self.ivProfilePic.layer.borderColor = self.welcomeScreenAccent.CGColor;
     self.ivProfilePic.layer.borderWidth = 2;
+    
+    // Buttons
+    self.btnAction.backgroundColor = self.welcomeScreenAccent;
+    self.btnClose.tintColor = self.welcomeScreenAccent;
+    
+    // Labels
+    self.lblReferred.text = self.parameters.referralMessage;
+    self.lblDescription.text = self.parameters.detailMessage;
+    self.linkArray = self.parameters.linkArray;
 }
 
 - (void)setupCollectionView {

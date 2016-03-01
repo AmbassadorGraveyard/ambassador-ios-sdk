@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AMBWelcomeScreenParameters.h"
 
 @interface AMBWelcomeScreenViewController : UIViewController
+
+@property (nonatomic, strong) AMBWelcomeScreenParameters * parameters;
 
 @end
