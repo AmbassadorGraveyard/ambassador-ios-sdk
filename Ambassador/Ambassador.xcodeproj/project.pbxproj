@@ -183,6 +183,8 @@
 		EF5390E41C46E93C005F6944 /* AmbassadorShirt.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */; };
 		EF5579FA1C84F65500F66761 /* AMBWelcomeScreenViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */; };
 		EF5579FB1C84F65500F66761 /* AMBWelcomeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */; };
+		EF557A001C85E34600F66761 /* AMBLinkCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5579FE1C85E34600F66761 /* AMBLinkCell.h */; };
+		EF557A011C85E34600F66761 /* AMBLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5579FF1C85E34600F66761 /* AMBLinkCell.m */; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
@@ -488,6 +490,8 @@
 		EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorShirt.plist; sourceTree = "<group>"; };
 		EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenViewController.h; sourceTree = "<group>"; };
 		EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenViewController.m; sourceTree = "<group>"; };
+		EF5579FE1C85E34600F66761 /* AMBLinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBLinkCell.h; sourceTree = "<group>"; };
+		EF5579FF1C85E34600F66761 /* AMBLinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkCell.m; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -631,7 +635,6 @@
 		DB844D281BA75BB8003FD7A9 /* Ambassador */ = {
 			isa = PBXGroup;
 			children = (
-				EF5579F71C84F63400F66761 /* Welcome Screen */,
 				DB844D291BA75BB8003FD7A9 /* Ambassador.h */,
 				DBA3FB521BA8A23B00672D82 /* AmbassadorSDK.h */,
 				DBA3FB531BA8A23B00672D82 /* AmbassadorSDK.m */,
@@ -642,6 +645,7 @@
 				EFE7D7861C21B49C00D7F92C /* Conversions */,
 				EFE7D7881C21B6DF00D7F92C /* Networking */,
 				EFE7D7891C21B74D00D7F92C /* Misc */,
+				EF5579F71C84F63400F66761 /* Welcome Screen */,
 				EFE7D78A1C21B7EA00D7F92C /* Libraries */,
 			);
 			path = Ambassador;
@@ -904,6 +908,8 @@
 			children = (
 				EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */,
 				EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */,
+				EF5579FE1C85E34600F66761 /* AMBLinkCell.h */,
+				EF5579FF1C85E34600F66761 /* AMBLinkCell.m */,
 			);
 			name = "Welcome Screen";
 			sourceTree = "<group>";
@@ -1130,6 +1136,7 @@
 				DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
 				DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */,
+				EF557A001C85E34600F66761 /* AMBLinkCell.h in Headers */,
 				DBA3FC191BA8AA1D00672D82 /* AMBPTPusherErrors.h in Headers */,
 				EFE7D7B51C2202C900D7F92C /* AMBConversionParametersEntity.h in Headers */,
 				DB95D7671BD821D9006A1E4A /* AMBOptions.h in Headers */,
@@ -1501,6 +1508,7 @@
 				DBA3FB741BA8A23C00672D82 /* AMBAuthorizeLinkedIn.m in Sources */,
 				EF7BA1CD1BDEB17E00788160 /* AMBBulkShareHelper.m in Sources */,
 				EFE7D7B61C2202C900D7F92C /* AMBConversionParametersEntity.m in Sources */,
+				EF557A011C85E34600F66761 /* AMBLinkCell.m in Sources */,
 				EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */,
 				DBA3FC0C1BA8AA1D00672D82 /* AMBPTJSON.m in Sources */,
 				DBA3FC2D1BA8AA5600672D82 /* base64.c in Sources */,
