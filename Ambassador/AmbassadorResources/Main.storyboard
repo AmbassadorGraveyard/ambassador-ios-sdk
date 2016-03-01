@@ -1242,7 +1242,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sih-aM-WtF">
-                                        <rect key="frame" x="8" y="0.0" width="35" height="35"/>
+                                        <rect key="frame" x="10" y="0.0" width="35" height="35"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="Close"/>
                                         <connections>
@@ -1340,7 +1340,7 @@
                                     <constraint firstItem="9t8-TI-smB" firstAttribute="top" secondItem="M81-Zy-daN" secondAttribute="top" constant="35" id="cdG-Lu-bNM"/>
                                     <constraint firstAttribute="trailing" secondItem="9t8-TI-smB" secondAttribute="trailing" id="hAs-Cw-9Kg"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="570" id="hHm-yy-KLm"/>
-                                    <constraint firstItem="Sih-aM-WtF" firstAttribute="leading" secondItem="M81-Zy-daN" secondAttribute="leading" constant="8" id="kAG-O0-GIn"/>
+                                    <constraint firstItem="Sih-aM-WtF" firstAttribute="leading" secondItem="M81-Zy-daN" secondAttribute="leading" constant="10" id="kAG-O0-GIn"/>
                                     <constraint firstItem="NiK-a2-fXc" firstAttribute="centerX" secondItem="M81-Zy-daN" secondAttribute="centerX" id="l06-kd-NR8"/>
                                     <constraint firstAttribute="trailing" secondItem="U0F-YX-xEW" secondAttribute="trailing" constant="20" id="pqj-Jn-Dsw"/>
                                     <constraint firstItem="ipf-dA-9nF" firstAttribute="top" secondItem="INS-bX-o1L" secondAttribute="bottom" constant="25" id="tbE-io-czP"/>
@@ -1377,6 +1377,8 @@
                     </view>
                     <connections>
                         <outlet property="btnAction" destination="INS-bX-o1L" id="OGc-yb-rNs"/>
+                        <outlet property="btnClose" destination="Sih-aM-WtF" id="PIA-9M-A3w"/>
+                        <outlet property="buttonHeight" destination="6AD-eM-vbd" id="uMt-Pd-MAk"/>
                         <outlet property="collectionViewHeight" destination="OfW-cF-ijy" id="V7y-7a-1tr"/>
                         <outlet property="ivProfilePic" destination="0D2-5o-rE9" id="0ur-9q-EdX"/>
                         <outlet property="lblDescription" destination="ipf-dA-9nF" id="ebg-lr-45S"/>
@@ -1384,6 +1386,7 @@
                         <outlet property="linkCollectionView" destination="b1S-Xe-qXb" id="MO9-YL-bba"/>
                         <outlet property="masterView" destination="M81-Zy-daN" id="8S5-yx-ReJ"/>
                         <outlet property="masterViewTop" destination="rnj-l0-eNd" id="T03-bP-L7E"/>
+                        <outlet property="referralTextBottom" destination="7cT-7S-jbH" id="Gxv-1R-cYz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nNU-uZ-Maj" userLabel="First Responder" sceneMemberID="firstResponder"/>
