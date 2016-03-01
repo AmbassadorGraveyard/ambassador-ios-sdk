@@ -1260,6 +1260,9 @@
                                         <state key="normal" title="CREATE AN ACCOUNT">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="actionButtonTapped:" destination="KYe-Eb-XWu" eventType="touchUpInside" id="kyA-uO-zCp"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Doe as referred you to a cool company" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="U0F-YX-xEW">
                                         <rect key="frame" x="20" y="241" width="500" height="50"/>
@@ -1286,23 +1289,26 @@
                                             <constraint firstAttribute="height" constant="40" id="OfW-cF-ijy"/>
                                         </constraints>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="xgF-dM-fgK">
-                                            <size key="itemSize" width="93" height="109"/>
+                                            <size key="itemSize" width="93" height="40"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="linkCell" id="EEn-9O-RLQ" customClass="AMBLinkCell">
-                                                <rect key="frame" x="0.0" y="0.0" width="93" height="109"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="93" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="93" height="109"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="93" height="40"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tdR-aa-vR3">
-                                                            <rect key="frame" x="0.0" y="38" width="93" height="33"/>
+                                                            <rect key="frame" x="0.0" y="4" width="93" height="33"/>
                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                                             <state key="normal" title="Button"/>
+                                                            <connections>
+                                                                <action selector="buttonPressed:" destination="EEn-9O-RLQ" eventType="touchUpInside" id="blO-ls-4ug"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

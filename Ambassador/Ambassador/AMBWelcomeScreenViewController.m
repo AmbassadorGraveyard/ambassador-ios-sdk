@@ -9,7 +9,7 @@
 #import "AMBWelcomeScreenViewController.h"
 #import "AMBLinkCell.h"
 
-@interface AMBWelcomeScreenViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface AMBWelcomeScreenViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, AMBLinkCellDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * masterView;
 @property (nonatomic, strong) IBOutlet UIImageView * ivProfilePic;
@@ -65,8 +65,12 @@ NSInteger const CELL_HEIGHT = 25;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)actionButtonTapped:(id)sender {
+    [self.delegate welcomeScreenActionButtonPressed:self.btnAction];
+}
 
-#pragma mark - CollectionView Delegate
+
+#pragma mark - CollectionView DataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [self.linkArray count];
@@ -74,13 +78,27 @@ NSInteger const CELL_HEIGHT = 25;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     AMBLinkCell *linkCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"linkCell" forIndexPath:indexPath];
-    [linkCell setupCellWithLinkName:self.linkArray[indexPath.row] tintColor:self.welcomeScreenAccent];
+    [linkCell setupCellWithLinkName:self.linkArray[indexPath.row] tintColor:self.welcomeScreenAccent rowNum:indexPath.row];
     return linkCell;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGSize cellSize = [self.linkArray count] > 2 ? CGSizeMake(collectionView.frame.size.width, CELL_HEIGHT) : CGSizeMake(collectionView.frame.size.width/2, collectionView.frame.size.height);
     return cellSize;
+}
+
+
+#pragma mark - Collection Delegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.delegate welcomeScreenLinkPressedAtIndex:indexPath.row];
+}
+
+
+#pragma mark - AMBLinkCell Delegate
+
+- (void)buttonPressedAtIndex:(NSInteger)cellIndex {
+    [self.delegate welcomeScreenLinkPressedAtIndex:cellIndex];
 }
 
 

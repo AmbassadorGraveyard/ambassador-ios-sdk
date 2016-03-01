@@ -9,8 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "AMBWelcomeScreenParameters.h"
 
+@protocol AMBWelcomeScreenDelegate <NSObject>
+
+- (void)welcomeScreenActionButtonPressed:(UIButton*)actionButton;
+- (void)welcomeScreenLinkPressedAtIndex:(NSInteger)linkIndex;
+
+@end
+
+
 @interface AMBWelcomeScreenViewController : UIViewController
 
 @property (nonatomic, strong) AMBWelcomeScreenParameters * parameters;
+@property (nonatomic, weak) id<AMBWelcomeScreenDelegate> delegate;
 
 @end
+
+
+
