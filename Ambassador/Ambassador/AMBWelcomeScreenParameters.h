@@ -10,9 +10,12 @@
 
 @interface AMBWelcomeScreenParameters : NSObject
 
-- (void)setReferralMessage:(NSString *)referralMessage;
-- (void)setDetailMessage:(NSString *)detailMessage;
-- (void)setActionButtonTitle:(NSString *)actionButtonTitle;
-- (void)setLinkArray:(NSArray *)linkArray;
+- (instancetype)init;
+
+@property (nonatomic, strong) NSString * referralMessage;
+@property (nonatomic, strong) NSString * detailMessage;
+@property (nonatomic, strong) NSString * actionButtonTitle;
+@property (nonatomic, strong) NSArray * linkArray;
+@property (nonatomic, strong) UIColor * accentColor;
 
 @end
