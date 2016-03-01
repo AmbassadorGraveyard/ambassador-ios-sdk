@@ -496,7 +496,6 @@
 		EF5579FF1C85E34600F66761 /* AMBLinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkCell.m; sourceTree = "<group>"; };
 		EF557A021C86038F00F66761 /* AMBWelcomeScreenParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenParameters.h; sourceTree = "<group>"; };
 		EF557A031C86038F00F66761 /* AMBWelcomeScreenParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenParameters.m; sourceTree = "<group>"; };
-		EF557A081C861F2F00F66761 /* AMBWelcomeScreenParameters_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenParameters_Internal.h; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -922,7 +921,6 @@
 		EF557A061C86040A00F66761 /* Parameters */ = {
 			isa = PBXGroup;
 			children = (
-				EF557A081C861F2F00F66761 /* AMBWelcomeScreenParameters_Internal.h */,
 				EF557A021C86038F00F66761 /* AMBWelcomeScreenParameters.h */,
 				EF557A031C86038F00F66761 /* AMBWelcomeScreenParameters.m */,
 			);
