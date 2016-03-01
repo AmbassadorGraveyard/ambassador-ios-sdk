@@ -42,7 +42,12 @@
 }
 
 - (void)longPressLogin {
-    [AmbassadorSDK presentWelcomeScreen:self];
+    AMBWelcomeScreenParameters *welcomeParams = [[AMBWelcomeScreenParameters alloc] init];
+    welcomeParams.detailMessage = @"test message";
+    welcomeParams.referralMessage = @"John Doe has referred you to Noodles and Co.";
+    welcomeParams.accentColor = [UIColor redColor];
+    welcomeParams.linkArray = @[@"Link One", @"Link Two"];
+    [AmbassadorSDK presentWelcomeScreen:self withParameters:welcomeParams];
 }
 
 
