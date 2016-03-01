@@ -185,6 +185,8 @@
 		EF5579FB1C84F65500F66761 /* AMBWelcomeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */; };
 		EF557A001C85E34600F66761 /* AMBLinkCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5579FE1C85E34600F66761 /* AMBLinkCell.h */; };
 		EF557A011C85E34600F66761 /* AMBLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5579FF1C85E34600F66761 /* AMBLinkCell.m */; };
+		EF557A041C86038F00F66761 /* AMBWelcomeScreenParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = EF557A021C86038F00F66761 /* AMBWelcomeScreenParameters.h */; };
+		EF557A051C86038F00F66761 /* AMBWelcomeScreenParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A031C86038F00F66761 /* AMBWelcomeScreenParameters.m */; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
@@ -492,6 +494,9 @@
 		EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenViewController.m; sourceTree = "<group>"; };
 		EF5579FE1C85E34600F66761 /* AMBLinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBLinkCell.h; sourceTree = "<group>"; };
 		EF5579FF1C85E34600F66761 /* AMBLinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkCell.m; sourceTree = "<group>"; };
+		EF557A021C86038F00F66761 /* AMBWelcomeScreenParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenParameters.h; sourceTree = "<group>"; };
+		EF557A031C86038F00F66761 /* AMBWelcomeScreenParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenParameters.m; sourceTree = "<group>"; };
+		EF557A081C861F2F00F66761 /* AMBWelcomeScreenParameters_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenParameters_Internal.h; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -908,10 +913,29 @@
 			children = (
 				EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */,
 				EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */,
+				EF557A071C86041A00F66761 /* Custom Cells */,
+				EF557A061C86040A00F66761 /* Parameters */,
+			);
+			name = "Welcome Screen";
+			sourceTree = "<group>";
+		};
+		EF557A061C86040A00F66761 /* Parameters */ = {
+			isa = PBXGroup;
+			children = (
+				EF557A081C861F2F00F66761 /* AMBWelcomeScreenParameters_Internal.h */,
+				EF557A021C86038F00F66761 /* AMBWelcomeScreenParameters.h */,
+				EF557A031C86038F00F66761 /* AMBWelcomeScreenParameters.m */,
+			);
+			name = Parameters;
+			sourceTree = "<group>";
+		};
+		EF557A071C86041A00F66761 /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
 				EF5579FE1C85E34600F66761 /* AMBLinkCell.h */,
 				EF5579FF1C85E34600F66761 /* AMBLinkCell.m */,
 			);
-			name = "Welcome Screen";
+			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
 		EF64CFA41BE2A47D0072014B /* AmbassadorUITests */ = {
@@ -1150,6 +1174,7 @@
 				DBA3FC0B1BA8AA1D00672D82 /* AMBPTEventListener.h in Headers */,
 				DBA3FB7F1BA8A23C00672D82 /* AMBConversion.h in Headers */,
 				EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */,
+				EF557A041C86038F00F66761 /* AMBWelcomeScreenParameters.h in Headers */,
 				DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */,
 				EFDFA0CA1BE148A5002FA3ED /* AMBValues.h in Headers */,
 				DB6A24671BD01D8A00CE3230 /* AMBNetworkObject.h in Headers */,
@@ -1487,6 +1512,7 @@
 				EFDFA0D01BE154B8002FA3ED /* UIColor+AMBColorValues.m in Sources */,
 				DBA3FB7C1BA8A23C00672D82 /* AMBContactLoader.m in Sources */,
 				DBA3FBBC1BA8A24F00672D82 /* AMBShareServiceCell.m in Sources */,
+				EF557A051C86038F00F66761 /* AMBWelcomeScreenParameters.m in Sources */,
 				DBB8BD0B1BAC6B6D00B87896 /* AMBPTPusher+Testing.m in Sources */,
 				DBA3FC241BA8AA1D00672D82 /* AMBPTURLRequestOperation.m in Sources */,
 				DB6A24681BD01D8A00CE3230 /* AMBNetworkObject.m in Sources */,
