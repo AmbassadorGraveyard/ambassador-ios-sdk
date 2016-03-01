@@ -16,7 +16,6 @@
 #import "AMBNetworkManager.h"
 #import "AMBErrors.h"
 #import "RavenClient.h"
-#import "AMBWelcomeScreenViewController.h"
 
 @interface AmbassadorSDK ()
 
@@ -156,7 +155,6 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     serviceSelectorVC.themeName = themePlist;
 
     [viewController presentViewController:nav animated:YES completion:nil];
-
 }
 
 
@@ -205,10 +203,10 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 #pragma mark - Welcome Screen
 
-+ (void)presentWelcomeScreen:(UIViewController*)viewController {
++ (void)presentWelcomeScreen:(UIViewController*)viewController withParameters:(AMBWelcomeScreenParameters*)parameters {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
-//    UINavigationController *nav = (UINavigationController *)[sb instantiateViewControllerWithIdentifier:@"RAFNAV"];
     AMBWelcomeScreenViewController *welcomeController = (AMBWelcomeScreenViewController*)[sb instantiateViewControllerWithIdentifier:@"WELCOME_SCREEN"];
+    welcomeController.parameters = parameters;
     [viewController presentViewController:welcomeController animated:YES completion:nil];
 }
 
