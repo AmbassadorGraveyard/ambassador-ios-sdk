@@ -47,6 +47,8 @@
     welcomeParams.referralMessage = @"John Doe has referred you to Noodles and Co.";
     welcomeParams.accentColor = [UIColor redColor];
     welcomeParams.linkArray = @[@"Link One", @"Link Two"];
+    welcomeParams.actionButtonTitle = @"CREATE AN ACCOUNT";
+    
     [AmbassadorSDK presentWelcomeScreen:self withParameters:welcomeParams];
 }
 

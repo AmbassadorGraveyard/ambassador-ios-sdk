@@ -20,6 +20,7 @@
 @property (nonatomic, strong) IBOutlet UICollectionView * linkCollectionView;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * collectionViewHeight;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * buttonHeight;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * referralTextBottom;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * masterViewTop;
 
 @property (nonatomic, strong) NSArray * linkArray;
@@ -96,8 +97,16 @@ NSInteger const CELL_HEIGHT = 25;
     self.ivProfilePic.layer.borderWidth = 2;
     
     // Buttons
-    self.btnAction.backgroundColor = self.welcomeScreenAccent;
     self.btnClose.tintColor = self.welcomeScreenAccent;
+    
+    BOOL showButton = self.parameters.actionButtonTitle && ![self.parameters.actionButtonTitle isEqualToString:@""];
+    if (!showButton) {
+        self.buttonHeight.constant = 0;
+        self.referralTextBottom.constant = 0;
+    } else {
+        [self.btnAction setTitle:self.parameters.actionButtonTitle forState:UIControlStateNormal];
+        self.btnAction.backgroundColor = self.welcomeScreenAccent;
+    }
     
     // Labels
     self.lblReferred.text = self.parameters.referralMessage;

@@ -19,6 +19,7 @@
     self.referralMessage = @"You have been referred to this company";
     self.detailMessage = @"Welcome to our app!";
     self.linkArray = @[];
+    self.actionButtonTitle = @"";
     self.accentColor = [UIColor redColor];
     
     return self;
