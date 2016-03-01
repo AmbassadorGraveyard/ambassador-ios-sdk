@@ -146,14 +146,14 @@ extension AmbassadorUITests {
         searchContactsTextField.typeText("anna")
         
         // Make sure that only one contact is returned
-        XCTAssertTrue(app.tables.cells.count > 0)
+        XCTAssertEqual(app.tables.cells.count, 1)
   
         // Tap done to restart the search
         let doneButton = app.buttons["DONE"]
         doneButton.tap()
         
         // Confirm that all contacts were returned
-        XCTAssertTrue(app.tables.cells.count > 0)
+        XCTAssertTrue(app.tables.cells.count > 1)
         
         // Pop back to ServiceSelector
         app.navigationBars.buttons["Back"].tap()
