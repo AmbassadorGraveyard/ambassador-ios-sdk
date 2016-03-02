@@ -841,7 +841,7 @@
                                                 <rect key="frame" x="0.0" y="22" width="600" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qnu-a1-5BV" id="5Ap-fV-JNz">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFY-Fk-jda">
@@ -1209,7 +1209,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M81-Zy-daN">
-                                <rect key="frame" x="30" y="57" width="540" height="486"/>
+                                <rect key="frame" x="30" y="50" width="540" height="501"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NiK-a2-fXc">
                                         <rect key="frame" x="237" y="4" width="67" height="27"/>
@@ -1257,12 +1257,12 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, adipiscing elit, sed do eiusmod" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="ipf-dA-9nF">
-                                        <rect key="frame" x="20" y="386" width="500" height="40"/>
+                                        <rect key="frame" x="20" y="386" width="500" height="55"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="0xF-hd-tlc">
                                                 <variation key="heightClass=compact" constant="250"/>
                                             </constraint>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="vF7-1K-MxH">
+                                            <constraint firstAttribute="height" constant="55" id="vF7-1K-MxH">
                                                 <variation key="heightClass=compact" constant="55"/>
                                             </constraint>
                                         </constraints>
@@ -1311,7 +1311,7 @@
                                         </variation>
                                     </imageView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="b1S-Xe-qXb">
-                                        <rect key="frame" x="30" y="436" width="480" height="40"/>
+                                        <rect key="frame" x="30" y="451" width="480" height="40"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="F5D-xl-Esf"/>
@@ -1420,8 +1420,8 @@
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="b1S-Xe-qXb" secondAttribute="trailing" constant="5" id="YCg-Mk-wsa"/>
                                     <constraint firstAttribute="height" constant="470" id="a3V-cl-b3h"/>
                                     <constraint firstItem="9t8-TI-smB" firstAttribute="top" secondItem="M81-Zy-daN" secondAttribute="top" constant="35" id="cdG-Lu-bNM"/>
-                                    <constraint firstItem="INS-bX-o1L" firstAttribute="top" relation="lessThanOrEqual" secondItem="9t8-TI-smB" secondAttribute="bottom" constant="54" id="dKN-e6-bvZ">
-                                        <variation key="heightClass=compact" constant="45"/>
+                                    <constraint firstItem="INS-bX-o1L" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9t8-TI-smB" secondAttribute="bottom" constant="54" id="dKN-e6-bvZ">
+                                        <variation key="heightClass=compact" constant="10"/>
                                     </constraint>
                                     <constraint firstItem="0D2-5o-rE9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="M81-Zy-daN" secondAttribute="leading" constant="30" id="dPg-PM-mBN"/>
                                     <constraint firstItem="ipf-dA-9nF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0D2-5o-rE9" secondAttribute="trailing" constant="50" id="ghv-5Y-mP0"/>
