@@ -8,6 +8,7 @@
 
 #import "AMBLinkedInShare.h"
 #import "AMBNetworkManager.h"
+#import "AMBThemeManager.h"
 
 @implementation AMBLinkedInShare
 

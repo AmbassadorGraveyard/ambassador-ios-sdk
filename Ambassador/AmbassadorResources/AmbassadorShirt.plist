@@ -64,12 +64,18 @@
 	<string>#979797</string>
 	<key>CONTACT TABLEVIEW ------------</key>
 	<string></string>
+	<key>ContactTableBackgroundColor</key>
+	<string>#FFFFFF</string>
 	<key>ContactTableCheckMarkColor</key>
 	<string>#D9232E</string>
 	<key>ContactTableNameTextFont</key>
 	<string>Helvetica, 17</string>
+	<key>ContactTableNameTextColor</key>
+	<string>#000000</string>
 	<key>ContactTableInfoTextFont</key>
 	<string>Helvetica, 13</string>
+	<key>ContactTableInfoTextColor</key>
+	<string>#C9C9C9</string>
 	<key>ContactAvatarBackgroundColor</key>
 	<string>#D9232E</string>
 	<key>ContactAvatarColor</key>
