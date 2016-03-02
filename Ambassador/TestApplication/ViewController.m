@@ -43,10 +43,10 @@
 
 - (void)longPressLogin {
     AMBWelcomeScreenParameters *welcomeParams = [[AMBWelcomeScreenParameters alloc] init];
-    welcomeParams.detailMessage = @"Learn more about our company by tapping on either of the links below";
-    welcomeParams.referralMessage = @"John Doe has referred you to Noodles and Co.";
+    welcomeParams.detailMessage = @"You understand the value of referrals. Maybe you've even explored referral marketing software.";
+    welcomeParams.referralMessage = @"John Doe has referred you to Ambassador";
     welcomeParams.accentColor = self.btnLogin.backgroundColor;
-    welcomeParams.linkArray = @[@"Link One", @"Link Two"];
+    welcomeParams.linkArray = @[@"Testimonials", @"Request Demo"];
     welcomeParams.actionButtonTitle = @"CREATE AN ACCOUNT";
     
     [AmbassadorSDK presentWelcomeScreen:self withParameters:welcomeParams];

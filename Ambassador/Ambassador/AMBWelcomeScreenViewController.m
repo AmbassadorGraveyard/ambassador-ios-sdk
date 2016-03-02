@@ -38,8 +38,9 @@ NSInteger const CELL_HEIGHT = 25;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://fraziercreative.agency/wp-content/uploads/2013/07/cool-guy.jpg"]];
-    self.ivProfilePic.image = [UIImage imageWithData:imageData];
+    // Temporary until we get use an actual network call
+    self.ivProfilePic.image = [UIImage imageNamed:@"coolGuy"];
+    
     self.masterViewCenter.constant = -(self.masterView.frame.size.width + 30);
     [self setTheme];
     [self setupCollectionView];
@@ -47,7 +48,6 @@ NSInteger const CELL_HEIGHT = 25;
 
 - (void)viewDidLayoutSubviews {
     if (self.masterViewCenter.constant != 0) {
-        
         [UIView animateKeyframesWithDuration:0.5 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
             [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.4 animations:^{
                 self.masterViewCenter.constant = 0;
@@ -56,6 +56,11 @@ NSInteger const CELL_HEIGHT = 25;
             }];
         } completion:nil];
     }
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self.linkCollectionView reloadData];
+    self.ivProfilePic.layer.cornerRadius = self.ivProfilePic.frame.size.height/2;
 }
 
 
