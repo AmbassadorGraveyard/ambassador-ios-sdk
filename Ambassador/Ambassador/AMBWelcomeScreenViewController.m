@@ -25,6 +25,7 @@
 
 @property (nonatomic, strong) NSArray * linkArray;
 @property (nonatomic, strong) UIColor * welcomeScreenAccent;
+@property (nonatomic, strong) NSString * referrerName;
 
 @end
 
@@ -40,6 +41,7 @@ NSInteger const CELL_HEIGHT = 25;
     [super viewDidLoad];
     // Temporary until we get use an actual network call
     self.ivProfilePic.image = [UIImage imageNamed:@"coolGuy"];
+    self.referrerName = @"John Doe";
     
     self.masterViewCenter.constant = -(self.masterView.frame.size.width + 30);
     [self setTheme];
@@ -131,7 +133,7 @@ NSInteger const CELL_HEIGHT = 25;
     }
     
     // Labels
-    self.lblReferred.text = self.parameters.referralMessage;
+    self.lblReferred.text = [self getCorrectString:self.parameters.referralMessage];
     self.lblDescription.text = self.parameters.detailMessage;
     self.linkArray = self.parameters.linkArray;
 }
@@ -142,6 +144,29 @@ NSInteger const CELL_HEIGHT = 25;
     [self.linkCollectionView setCollectionViewLayout:layout];
     self.linkCollectionView.scrollEnabled = [self.linkArray count] > 2 ? YES : NO;
     if ([self.linkArray count] > 2) { self.collectionViewHeight.constant = 100; }
+}
+
+
+#pragma mark - Helper Functions
+
+- (NSString*)getCorrectString:(NSString*)string {
+    BOOL containsNameValue = [self customContainsString:string subString:@"{{ name }}"];
+    NSMutableString *newString = [NSMutableString stringWithString:string];
+    
+    if (containsNameValue) {
+        [newString replaceOccurrencesOfString:@"{{ name }}" withString:self.referrerName options:0 range:NSMakeRange(0, [newString length])];
+    }
+    
+    return newString;
+}
+
+// This method will only need to be used until we stop supporting iOS 7
+- (BOOL)customContainsString:(NSString*)string subString:(NSString*)subString {
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        return [string containsString:subString]; // This function will crash the app on iOS 7 or below
+    } else {
+        return [string rangeOfString:subString].location != NSNotFound;
+    }
 }
 
 @end
