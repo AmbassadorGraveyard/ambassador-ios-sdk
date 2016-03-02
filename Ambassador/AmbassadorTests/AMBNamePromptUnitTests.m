@@ -130,6 +130,7 @@
     // THEN
     [mockNetworkMgr verify];
     [self.mockNamePrompt verify];
+    [mockNetworkMgr stopMocking];
 }
 
 

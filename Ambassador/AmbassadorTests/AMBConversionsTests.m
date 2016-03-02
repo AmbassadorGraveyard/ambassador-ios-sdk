@@ -115,6 +115,7 @@
     [mockEntity verify];
     [mockNetworkMgr verify];
     [mockCoreManager verify];
+    [mockNetworkMgr stopMocking];
 }
 
 - (void)testPayloadForConversion {

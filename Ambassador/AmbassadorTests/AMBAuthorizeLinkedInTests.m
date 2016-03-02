@@ -128,6 +128,7 @@
     
     // THEN
     [mockNetworkManager verify];
+    [mockNetworkManager stopMocking];
 }
 
 @end

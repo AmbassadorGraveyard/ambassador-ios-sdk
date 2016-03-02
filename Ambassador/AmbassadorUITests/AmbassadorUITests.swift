@@ -9,21 +9,16 @@
 import XCTest
 
 var app : XCUIApplication!
-var rafLoaded = false
 
 class AmbassadorUITests: XCTestCase {
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
         
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        if app == nil {
-            app = XCUIApplication()
-            app.launchArguments = ["USE_MOCK_SERVER", "isUITesting"]
-            app.launch()
-            identifyWithLogin()
-            presentRAF()
-        }
+        app = XCUIApplication()
+        app.launchArguments = ["isUITesting"]
+        app.launch()
+        presentRAF()
     }
     
     override func tearDown() {
@@ -39,15 +34,14 @@ extension AmbassadorUITests {
         
         // Check to make sure there are the correct number of cells in the collectionView
         XCTAssertEqual(app.collectionViews.cells.count, 5)
-        rafLoaded = true
     }
-    
+
     func testCopyButton() {
         // Tap the copy button and make sure that the copied label is shown on the screen
-        app.buttons["clipboard"].tap()
-        XCTAssertEqual(app.staticTexts["lblCopied"].exists, true)
+        XCUIApplication().buttons["btnEdit"].tap()
+        XCTAssertTrue(app.staticTexts["Copied!"].exists)
     }
-    
+
     func testFacebook() {
         // Tap the facebook cell
         app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(0).tap()
@@ -70,6 +64,8 @@ extension AmbassadorUITests {
             app.buttons["OKAY"].tap()
             XCTAssertEqual(app.buttons["OKAY"].exists, false)
         }
+        
+        
     }
 
     func testTwitter() {
@@ -98,56 +94,24 @@ extension AmbassadorUITests {
         }
     }
     
-    func testLinkedIn() {        
-        // Tap the linkedIn cell
-        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(2).tap()
-        
-        // Since defaults get cleared, we will be brought to the login page -- here we login using meldium credentials
-        let emailTextField = app.textFields["Email"]
-        emailTextField.tap()
-        emailTextField.typeText("developers@getambassador.com")
-        
-        // Type password for linkedin
-        let passwordSecureTextField = app.secureTextFields["Password"]
-        passwordSecureTextField.tap()
-        passwordSecureTextField.typeText("domorefaster")
-        
-        // Tap the sign in and allow button
-        app.buttons["Sign in and allow"].tap()
-        
-        // After we get popped back to the ServiceSelector page, we tap cancel in the linkedin share vc
-        app.navigationBars["LinkedIn"].buttons["Cancel"].tap()
-        
-        // Now we tap the linkedinCell again and confirm that our credentials were saved to defaults
-        app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(2).tap()
-
-        // We post and check for success and that it went away after tapping ok
-        app.navigationBars["LinkedIn"].buttons["Post"].tap()
-        app.buttons["OKAY"].tap()
-        XCTAssertEqual(app.buttons["OKAY"].exists, false)
-    }
-    
     func testSMS() {
         // Tap the SMS cell
         app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(3).tap()
         
         // Select 3 contacts and then unselect one
         let tablesQuery = app.tables
-        tablesQuery.staticTexts["Home - (555) 522-8243"].tap()
-        
-        let danielHigginsStaticText = tablesQuery.cells.containingType(.StaticText, identifier:"Home - (555) 478-7672").staticTexts["Daniel Higgins"]
-        danielHigginsStaticText.tap()
-        
-        tablesQuery.staticTexts["Mobile - (408) 555-5270"].tap()
-        danielHigginsStaticText.tap()
-        
-        tablesQuery.cells.containingType(.StaticText, identifier:"HomeFAX - (408) 555-3514").staticTexts["Daniel Higgins"].doubleTap()
+        tablesQuery.staticTexts.elementBoundByIndex(0).tap()
+        tablesQuery.staticTexts.elementBoundByIndex(1).tap()
+        tablesQuery.staticTexts.elementBoundByIndex(2).tap()
+        tablesQuery.staticTexts.elementBoundByIndex(1).doubleTap()
         
         // Tap the send button
         app.buttons["sendButton"].tap()
         
         // Make sure the call goes through by checking for success message
-        XCTAssertTrue(app.staticTexts["Message successfully shared!"].exists)
+        let existsPredicate = NSPredicate(format: "exists == 1")
+        expectationForPredicate(existsPredicate, evaluatedWithObject: app.staticTexts["Message successfully shared!"], handler: nil)
+        waitForExpectationsWithTimeout(2, handler: nil)
         app.buttons["OKAY"].tap()
     }
     
@@ -157,18 +121,18 @@ extension AmbassadorUITests {
         
         // Select some contacts
         let tablesQuery = app.tables
-        tablesQuery.staticTexts["Home - anna-haro@mac.com"].tap()
-        tablesQuery.staticTexts["Home - d-higgins@mac.com"].tap()
+        tablesQuery.staticTexts.elementBoundByIndex(0).tap()
+        tablesQuery.staticTexts.elementBoundByIndex(1).tap()
         
-        let homeFakeFakeComStaticText = tablesQuery.staticTexts["Work - hank-zakroff@mac.com"]
-        homeFakeFakeComStaticText.tap()
-        homeFakeFakeComStaticText.tap()
+        tablesQuery.staticTexts.elementBoundByIndex(3).tap()
         
         // Tap the send button
         app.buttons["sendButton"].tap()
         
         // Check for message success
-        XCTAssertTrue(app.staticTexts["Message successfully shared!"].exists)
+        let existsPredicate = NSPredicate(format: "exists == 1")
+        expectationForPredicate(existsPredicate, evaluatedWithObject: app.staticTexts["Message successfully shared!"], handler: nil)
+        waitForExpectationsWithTimeout(2, handler: nil)
         app.buttons["OKAY"].tap()
     }
     
@@ -187,14 +151,9 @@ extension AmbassadorUITests {
         // Tap done to restart the search
         let doneButton = app.buttons["DONE"]
         doneButton.tap()
-
-        // Search for dani
-        searchContactsTextField.tap()
-        searchContactsTextField.typeText("dani")
         
-        // Confirm that 3 contacts were returned
-        XCTAssertEqual(app.tables.cells.count, 3)
-        doneButton.tap()
+        // Confirm that all contacts were returned
+        XCTAssertTrue(app.tables.cells.count > 1)
         
         // Pop back to ServiceSelector
         app.navigationBars.buttons["Back"].tap()
@@ -205,30 +164,24 @@ extension AmbassadorUITests {
 // Helper Functions
 extension AmbassadorUITests {
     func identifyWithLogin() {
-        let app = XCUIApplication()
         app.tabBars.buttons["Login"].tap()
-        
         let usernameTextField = app.textFields["Username"]
         usernameTextField.tap()
         usernameTextField.typeText("jake@getambassador.com")
-        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
         
         let passwordSecureTextField = app.secureTextFields["Password"]
         passwordSecureTextField.tap()
-        passwordSecureTextField.typeText("testpassword")
-        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
-        
+        passwordSecureTextField.typeText("TestPassword")
         app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
-        XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
+        NSThread.sleepForTimeInterval(2)
     }
     
     func presentRAF() {
-        let app = XCUIApplication()
+        identifyWithLogin()
         app.tabBars.buttons["Refer a Friend"].tap()
-        app.tables.staticTexts["Shopping Cart RAF"].tap()
-        while (app.otherElements["LoadingView"].exists) {
-            let smallDelay = NSDate().dateByAddingTimeInterval(1)
-            NSRunLoop.mainRunLoop().runUntilDate(smallDelay)
-        }
+        app.tables.staticTexts["Ambassador Shoes RAF"].tap()
+        let existsPredicate = NSPredicate(format: "exists == 0")
+        expectationForPredicate(existsPredicate, evaluatedWithObject: app.otherElements["LoadingView"], handler: nil)
+        waitForExpectationsWithTimeout(20, handler: nil)
     }
 }

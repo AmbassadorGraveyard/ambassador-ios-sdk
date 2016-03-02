@@ -82,8 +82,9 @@
 // Used if pusher payload is too big to get back and only external url is given back
 - (void)fillWithUrl:(NSString *)url completion:(void(^)(NSString *error))completion {
     [[AMBNetworkManager sharedInstance] getLargePusherPayloadFromUrl:url success:^(NSDictionary *response) {
-        [self fillWithDictionary:(NSMutableDictionary*)response];
-        completion(nil);
+        [self fillWithDictionary:(NSMutableDictionary*)response completion:^{
+            completion(nil);
+        }];
     } failure:^(NSString *error) {
         completion(error);
     }];
