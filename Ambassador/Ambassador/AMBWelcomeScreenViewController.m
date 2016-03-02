@@ -66,7 +66,9 @@ NSInteger const CELL_HEIGHT = 25;
 }
 
 - (IBAction)actionButtonTapped:(id)sender {
-    [self.delegate welcomeScreenActionButtonPressed:self.btnAction];
+    if ([self.delegate respondsToSelector:@selector(welcomeScreenActionButtonPressed:)]) {
+        [self.delegate welcomeScreenActionButtonPressed:self.btnAction];
+    }
 }
 
 
@@ -79,6 +81,7 @@ NSInteger const CELL_HEIGHT = 25;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     AMBLinkCell *linkCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"linkCell" forIndexPath:indexPath];
     [linkCell setupCellWithLinkName:self.linkArray[indexPath.row] tintColor:self.welcomeScreenAccent rowNum:indexPath.row];
+    linkCell.delegate = self;
     return linkCell;
 }
 
@@ -88,17 +91,12 @@ NSInteger const CELL_HEIGHT = 25;
 }
 
 
-#pragma mark - Collection Delegate
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self.delegate welcomeScreenLinkPressedAtIndex:indexPath.row];
-}
-
-
 #pragma mark - AMBLinkCell Delegate
 
 - (void)buttonPressedAtIndex:(NSInteger)cellIndex {
-    [self.delegate welcomeScreenLinkPressedAtIndex:cellIndex];
+    if ([self.delegate respondsToSelector:@selector(welcomeScreenLinkPressedAtIndex:)]) {
+        [self.delegate welcomeScreenLinkPressedAtIndex:cellIndex];
+    }
 }
 
 
