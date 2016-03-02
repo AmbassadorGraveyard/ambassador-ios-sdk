@@ -12,6 +12,7 @@
 #import "AMBTests.h"
 #import "AMBPTPusher.h"
 #import "AMBValues.h"
+#import "AMBNetworkObject.h"
 
 @interface AMBPusherManager (Test) <AMBPTPusherDelegate>
 
@@ -147,22 +148,17 @@
     // GIVEN
     self.pusherMgr.channel = [self.pusherMgr.client subscribeToPrivateChannelNamed:@"fakeChannel"];
     
-    id mockNotifCenter = [OCMockObject partialMockForObject:[NSNotificationCenter defaultCenter]];
-    [[[mockNotifCenter expect] andDo:nil] postNotificationName:[OCMArg any] object:[OCMArg any]];
-    [[[mockNotifCenter expect] andDo:nil] postNotificationName:[OCMArg any] object:[OCMArg any]];
-    
     id mockChannel = [OCMockObject partialMockForObject:(NSObject*)self.pusherMgr.channel];
     [[[mockChannel expect] andDo:^(NSInvocation *invocation) {
         void (^handleWithBlock)(AMBPTPusherEvent *event) = nil;
         [invocation getArgument:&handleWithBlock atIndex:3];
         handleWithBlock(nil);
     }] bindToEventNamed:@"action" handleWithBlock:[OCMArg invokeBlock]];
-    
+
     // WHEN
     [self.pusherMgr bindToChannelEvent:@"action"];
     
     // THEN
-    [mockNotifCenter verify];
     [mockChannel verify];
 }
 
