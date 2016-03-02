@@ -128,7 +128,7 @@
     // GIVEN
     AMBUserNetworkObject *userNetworkObject = [[AMBUserNetworkObject alloc] init];
     id mockNetworkObject = [OCMockObject partialMockForObject:userNetworkObject];
-    [[mockNetworkObject expect] fillWithDictionary:[OCMArg any]];
+    [[mockNetworkObject expect] fillWithDictionary:[OCMArg any] completion:[OCMArg any]];
     
     id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
     [[[mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
@@ -145,6 +145,7 @@
     // THEN
     [mockNetworkMgr verify];
     [mockNetworkObject verify];
+    [mockNetworkMgr stopMocking];
 }
 
 

@@ -93,6 +93,7 @@
     // THEN
     [mockNetworkMgr verify];
     [mockPresentingVC verify];
+    [mockNetworkMgr stopMocking];
 }
 
 - (void)testDidSelectCancel {
@@ -127,6 +128,7 @@
     
     // THEN
     [mockNetworkMgr verify];
+    [mockNetworkMgr stopMocking];
 }
 
 - (void)testNeedReauthenticaitonBlock {
@@ -143,6 +145,7 @@
     
     // THEN
     [mockNetworkMgr verify];
+    [mockNetworkMgr stopMocking];
 }
 
 - (void)testFailureBlock {
@@ -159,6 +162,7 @@
     
     // THEN
     [mockNetworkMgr verify];
+    [mockNetworkMgr stopMocking];
 }
 
 @end

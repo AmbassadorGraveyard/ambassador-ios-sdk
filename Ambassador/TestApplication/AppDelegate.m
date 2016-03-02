@@ -15,22 +15,23 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // UI Testing setup
-    if ([[[NSProcessInfo processInfo] arguments] containsObject:@"isUITesting"]) {
-        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
-    }
-    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {  
     [self setUpAppearance];
     
-//    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // DEV CREDENTIALS
-    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // PROD CREDENTIALS
+    if ([[[NSProcessInfo processInfo] arguments] containsObject:@"isUITesting"]) {
+        [UIView setAnimationsEnabled:NO];
+        [AmbassadorSDK runWithUniversalToken:@"7a654edde7929be3708db90fdad0b1c04ad79ad1" universalID:@"32a7540b-0000-4dcc-8ea3-4ea145e40f0d"]; // DEV CREDENTIALS
+    }
+
+    [self setUpAppearance];
+    
+    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // DEV CREDENTIALS
+//    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // PROD CREDENTIALS
 
     // Registers app for notifications
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound|UIUserNotificationTypeAlert|UIUserNotificationTypeBadge) categories:nil];
     [application registerForRemoteNotifications];
     [application registerUserNotificationSettings:settings];
-
 
     return YES;
 }
