@@ -207,6 +207,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
     AMBWelcomeScreenViewController *welcomeController = (AMBWelcomeScreenViewController*)[sb instantiateViewControllerWithIdentifier:@"WELCOME_SCREEN"];
     welcomeController.parameters = parameters;
+    welcomeController.delegate = viewController;
     [viewController presentViewController:welcomeController animated:YES completion:nil];
 }
 

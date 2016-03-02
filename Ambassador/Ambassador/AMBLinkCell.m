@@ -11,7 +11,7 @@
 @interface AMBLinkCell()
 
 @property (nonatomic, strong) IBOutlet UIButton * btnLinkName;
-@property (nonatomic, strong) NSInteger rowNumber;
+@property (nonatomic) NSInteger rowNumber;
 
 @end
 

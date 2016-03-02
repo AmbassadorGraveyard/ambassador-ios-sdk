@@ -11,6 +11,7 @@
 
 @protocol AMBWelcomeScreenDelegate <NSObject>
 
+@optional
 - (void)welcomeScreenActionButtonPressed:(UIButton*)actionButton;
 - (void)welcomeScreenLinkPressedAtIndex:(NSInteger)linkIndex;
 
