@@ -137,6 +137,10 @@
     return [AMBValues isProduction] ? @"https://api.getambassador.com/auth/subscribe/" : @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
 }
 
++ (NSString*)getSentryDSNValue {
+    return @"https://***REMOVED***@app.getsentry.com/67182";
+}
+
 
 #pragma mark - AMB Defaults
 
@@ -197,6 +201,10 @@
     [[AMBValues ambUserDefaults] setObject:urlObject forKey:@"user_url_object"];
 }
 
++ (void)setAPNDeviceToken:(NSString*)deviceToken {
+    [[AMBValues ambUserDefaults] setObject:deviceToken forKey:@"apn_device_token"];
+}
+
 // Should only be used for TESTING
 + (void)resetHasInstalled {
     NSUserDefaults *ambDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AMBTEST"];
@@ -251,6 +259,10 @@
 
 + (AMBUserUrlNetworkObject*)getUserURLObject {
     return [[AMBUserUrlNetworkObject alloc] initWithDictionary:[[AMBValues ambUserDefaults] valueForKey:@"user_url_object"]];
+}
+
++ (NSString*)getAPNDeviceToken {
+    return [[AMBValues ambUserDefaults] valueForKey:@"apn_device_token"];
 }
 
 @end

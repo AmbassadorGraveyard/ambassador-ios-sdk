@@ -22,9 +22,16 @@
         [UIView setAnimationsEnabled:NO];
         [AmbassadorSDK runWithUniversalToken:@"7a654edde7929be3708db90fdad0b1c04ad79ad1" universalID:@"32a7540b-0000-4dcc-8ea3-4ea145e40f0d"]; // DEV CREDENTIALS
     }
+
+    [self setUpAppearance];
     
     [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // DEV CREDENTIALS
-    //        [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // PROD CREDENTIALS
+//    [AmbassadorSDK runWithUniversalToken:@"***REMOVED***" universalID:@"***REMOVED***"]; // PROD CREDENTIALS
+
+    // Registers app for notifications
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound|UIUserNotificationTypeAlert|UIUserNotificationTypeBadge) categories:nil];
+    [application registerForRemoteNotifications];
+    [application registerUserNotificationSettings:settings];
 
     return YES;
 }
@@ -50,6 +57,28 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+#pragma mark - Notifications
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [AmbassadorSDK registerDeviceToken:token];
+    NSLog(@"Device Token = %@", token);
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"Failed to register for remote notifications");
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [AmbassadorSDK handleAmbassadorRemoteNotification:userInfo];
+    NSLog(@"Info received from notification - %@", userInfo);
+}
+
+
+#pragma mark - Helper Functions
 
 - (void)setUpAppearance {
     [[UITabBar appearance] setBarTintColor:[AppDelegate colorFromHexString:@"#25313f"]];

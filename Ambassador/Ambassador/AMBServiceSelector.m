@@ -65,11 +65,11 @@ int contactServiceType;
     [self setUpCloseButton];
     [self performIdentify];
     self.services = [[AMBThemeManager sharedInstance] customSocialGridArray];
-    [AMBUtilities sharedInstance].delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.collectionView reloadData];
+    [AMBUtilities sharedInstance].delegate = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

@@ -208,6 +208,8 @@ AmbassadorSDK.registerConversion(parameters, restrictToInsall: false) { (error) 
 
 ## Presenting the 'Refer A Friend' Screen (RAF)
 
+In order to present a RAF Screen, just call the function below.  The **campaignID** parameter refers to the campaign that you want to associate with the RAF, the **viewController** parameter refers to the controller that will be presenting the RAF, and the **themePlist** parameter refers to the name of the customized plist you want to use to theme the RAF, which is described in more detail below.
+
 ### Presenting the RAF
 **Objective-c**
 ```objective-c
@@ -240,9 +242,11 @@ Any blank or incorrect values inserted into the `GenericTheme.plist` will defaul
 * Messages - **"NO PLIST VALUE FOUND"**
 * Images - No image will be added
 
+**If you are UPDATING the SDK, make sure to copy any customized plists to a safe place so that you can re-add them later**
+
 The `GenericTheme.plist` will come with preconfigured values looking like this:
 
-  <img src="screenShots/themePlist.png" width="600" />
+  <img src="screenShots/fullPlist.png" width="600" />
 
 This is what the default theme will look like with the preconfigured values in the `GenericTheme.plist`.
 
@@ -295,34 +299,6 @@ Removing __LinkedIn__ from the list would result in the LinkedIn Sharing Channel
   <img src="screenShots/disabledOptionPlist.png" width="600" />
 
   <img src="screenShots/disabledLinkedin.png" width="350" />
-
-### Theming multiple RAFs using different Theming plists
-
-Your app may include various RAF Screens that triggered by different events. You can use different themes for each RAF by following the steps below:
-
-Right click __GenericTheme.plist__ and select __Show in Finder__
-
-  <img src="screenShots/themeRightClick.png" width="400" />
-
-You should now see the __GenericTheme.plist__ in a Finder window
-
-  <img src="screenShots/themeInFinder.png" width="500" />
-
-Right click __GenericTheme.plist__ and select __Duplicate__
-
-  <img src="screenShots/themeDuplicate.png" width="500" />
-
-Rename the duplicate to the name of your new plist. The new plist should now show up in your project navigator
-
-  <img src="screenShots/newplist.png" width=300 />
-
-You can now alter your new plist's values to create a new look for a different RAF. You would apply it to a new RAF by using the following code:
-
-```objective-c
-// Present the RAF Modal View
-[AmbassadorSDK presentRAFForCampaign:<campaign ID> FromViewController:self withThemePlist:@"newPlist"];
-```
-You can use as many plists as you want and apply them to different RAFs throughout your app
 
 **NOTES FOR CUSTOM THEMES**
 * **Colors must be entered as Hex Code values**
