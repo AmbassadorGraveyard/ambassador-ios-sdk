@@ -405,6 +405,7 @@ BOOL keyboardShowing = NO;
 #pragma mark - UI Functions
 
 - (void)setUpTheme {
+    self.contactsTable.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactTableBackgroundColor];
     self.searchFieldBackground.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSearchBackgroundColor];
     [self.doneSearchingButton setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:ContactSearchDoneButtonTextColor] forState:UIControlStateNormal];
     self.composeMessageTextView.tintColor = [[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonBackgroundColor];
@@ -412,6 +413,7 @@ BOOL keyboardShowing = NO;
     
     self.navigationController.navigationBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
     [self.sendButton.titleLabel setFont:[[AMBThemeManager sharedInstance] fontForKey:ContactSendButtonTextFont]];
+    [self.sendButton setTitleColor:[[AMBThemeManager sharedInstance] colorForKey:ContactSendButtonTextColor] forState:UIControlStateNormal];
     
     [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
     [[self.btnEditMessage imageView] setContentMode:UIViewContentModeScaleAspectFit];

@@ -57,6 +57,7 @@
 @property (nonatomic, strong) NSMutableArray *urls;
 
 - (void)fillWithUrl:(NSString *)url completion:(void(^)(NSString *error))completion;
+- (void)fillWithDictionary:(NSMutableDictionary *)d completion:(void(^)())completion;
 - (AMBUserUrlNetworkObject *)urlObjForCampaignID:(NSNumber*)cID;
 
 @end
@@ -127,5 +128,18 @@
 - (instancetype)initWithFirstName:(NSString*)firstName lastName:(NSString*)lastName email:(NSString*)email;
 
 @end
+
+#pragma mark - APN Token Update Object
+
+@interface AMBUpdateAPNTokenObject : AMBNetworkObject
+
+@property (nonatomic, strong) NSDictionary * update_data;
+@property (nonatomic, strong) NSString * email;
+
+- (instancetype)initWithAPNDeviceToken:(NSString*)apnToken;
+
+@end
+
+
 
 
