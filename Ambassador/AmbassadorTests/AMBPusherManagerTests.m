@@ -12,7 +12,6 @@
 #import "AMBTests.h"
 #import "AMBPTPusher.h"
 #import "AMBValues.h"
-#import "AMBNetworkObject.h"
 
 @interface AMBPusherManager (Test) <AMBPTPusherDelegate>
 
