@@ -9,12 +9,23 @@ checkout:
     - git submodule update
 test:
   override:
-    - xcodebuild -project Ambassador.xcodeproj
+    - set -o pipefail &&
+     xcodebuild -project Ambassador.xcodeproj
       -sdk iphonesimulator
        -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
        -configuration Debug
        -scheme TestApplication
        VALID_ARCHS=x86_64
-       test
+       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
   post:
     - bundle exec slather coverage Ambassador.xcodeproj
+
+    - set -o pipefail &&
+     xcodebuild -project Ambassador.xcodeproj
+      -sdk iphonesimulator
+       -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
+       -scheme AmbassadorUITests
+       -configuration Debug
+       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
