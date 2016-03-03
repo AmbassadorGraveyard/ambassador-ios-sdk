@@ -7,6 +7,7 @@
 //
 
 #import "AmbassadorLoginViewController.h"
+#import "DefaultsHandler.h"
 
 @interface AmbassadorLoginViewController()
 
@@ -76,7 +77,18 @@
 }
 
 - (void)handleSuccessfulLogin:(NSDictionary*)dictionary {
+    // Avatar
+    [DefaultsHandler setUserImage:dictionary[@"company"][@"avatar_url"]];
     
+    // Name
+    NSString *firstName = dictionary[@"company"][@"first_name"];
+    NSString *lastName = dictionary[@"company"][@"last_name"];
+    [DefaultsHandler setFullName:firstName lastName:lastName];
+    
+    // Tokens
+    NSString *sdkToken = [NSString stringWithFormat:@"SDKToken %@", dictionary[@"company"][@"sdk_token"]];
+    [DefaultsHandler setSDKToken:sdkToken];
+    [DefaultsHandler setUniversalID:dictionary[@"company"][@"universal_id"]];
 }
 
 @end

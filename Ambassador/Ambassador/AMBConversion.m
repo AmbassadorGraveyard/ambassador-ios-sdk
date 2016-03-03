@@ -33,7 +33,6 @@
 }
 
 - (void)sendConversions {
-    DLog(@"Checking for Conversions to send");
     NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint]; // If no device fingerprint is available, an empty dictionary will be returned
 
     // Checks to make sure we have either a short code OR device fingerprint before moving on
@@ -55,9 +54,7 @@
                 [AMBErrors errorLogCannotSendConversion:statusCode errorData:data];
             }];
         }
-    } else {
-        DLog(@"No conversions ready to be sent");
-    }
+    } 
 }
 
 
