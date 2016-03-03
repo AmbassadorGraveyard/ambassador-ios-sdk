@@ -181,6 +181,7 @@
 		EF5390E01C45A644005F6944 /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */; };
 		EF5390E21C46CFE5005F6944 /* ApplicationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5390E11C46CFE5005F6944 /* ApplicationUITests.swift */; };
 		EF5390E41C46E93C005F6944 /* AmbassadorShirt.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */; };
+		EF557A181C88B4D000F66761 /* AmbassadorLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A171C88B4D000F66761 /* AmbassadorLoginViewController.m */; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
@@ -484,6 +485,8 @@
 		EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorTheme.plist; sourceTree = "<group>"; };
 		EF5390E11C46CFE5005F6944 /* ApplicationUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationUITests.swift; sourceTree = "<group>"; };
 		EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorShirt.plist; sourceTree = "<group>"; };
+		EF557A161C88B4D000F66761 /* AmbassadorLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmbassadorLoginViewController.h; sourceTree = "<group>"; };
+		EF557A171C88B4D000F66761 /* AmbassadorLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorLoginViewController.m; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -737,22 +740,17 @@
 		DB844D621BA76BDE003FD7A9 /* TestApplication */ = {
 			isa = PBXGroup;
 			children = (
+				EF557A151C88B4AE00F66761 /* Login */,
+				EF557A141C88B4A100F66761 /* Identify */,
+				EF557A131C88B49700F66761 /* RAF */,
+				EF557A121C88B48600F66761 /* Buy Now */,
+				EF557A111C88B47700F66761 /* Sign Up */,
 				DB844D671BA76BDE003FD7A9 /* AppDelegate.h */,
 				DB844D681BA76BDE003FD7A9 /* AppDelegate.m */,
-				DB844D6A1BA76BDE003FD7A9 /* ViewController.h */,
-				DB844D6B1BA76BDE003FD7A9 /* ViewController.m */,
 				DB844D6D1BA76BDE003FD7A9 /* Main.storyboard */,
 				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
 				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
 				DB844D631BA76BDE003FD7A9 /* Supporting Files */,
-				EF5390CF1C445BF2005F6944 /* SignUpViewController.h */,
-				EF5390D01C445BF2005F6944 /* SignUpViewController.m */,
-				EF5390D21C446693005F6944 /* BuyNowViewController.h */,
-				EF5390D31C446693005F6944 /* BuyNowViewController.m */,
-				EF5390D51C4469AF005F6944 /* ReferAFriendViewController.h */,
-				EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */,
-				EF5390D81C4565D9005F6944 /* RAFCell.h */,
-				EF5390D91C4565D9005F6944 /* RAFCell.m */,
 			);
 			path = TestApplication;
 			sourceTree = "<group>";
@@ -892,6 +890,53 @@
 				EFE7D78E1C21B9FC00D7F92C /* Custom Cells */,
 			);
 			name = "Contact Selector";
+			sourceTree = "<group>";
+		};
+		EF557A111C88B47700F66761 /* Sign Up */ = {
+			isa = PBXGroup;
+			children = (
+				EF5390CF1C445BF2005F6944 /* SignUpViewController.h */,
+				EF5390D01C445BF2005F6944 /* SignUpViewController.m */,
+			);
+			name = "Sign Up";
+			sourceTree = "<group>";
+		};
+		EF557A121C88B48600F66761 /* Buy Now */ = {
+			isa = PBXGroup;
+			children = (
+				EF5390D21C446693005F6944 /* BuyNowViewController.h */,
+				EF5390D31C446693005F6944 /* BuyNowViewController.m */,
+			);
+			name = "Buy Now";
+			sourceTree = "<group>";
+		};
+		EF557A131C88B49700F66761 /* RAF */ = {
+			isa = PBXGroup;
+			children = (
+				EF5390D51C4469AF005F6944 /* ReferAFriendViewController.h */,
+				EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */,
+				EF5390D81C4565D9005F6944 /* RAFCell.h */,
+				EF5390D91C4565D9005F6944 /* RAFCell.m */,
+			);
+			name = RAF;
+			sourceTree = "<group>";
+		};
+		EF557A141C88B4A100F66761 /* Identify */ = {
+			isa = PBXGroup;
+			children = (
+				DB844D6A1BA76BDE003FD7A9 /* ViewController.h */,
+				DB844D6B1BA76BDE003FD7A9 /* ViewController.m */,
+			);
+			name = Identify;
+			sourceTree = "<group>";
+		};
+		EF557A151C88B4AE00F66761 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				EF557A161C88B4D000F66761 /* AmbassadorLoginViewController.h */,
+				EF557A171C88B4D000F66761 /* AmbassadorLoginViewController.m */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		EF64CFA41BE2A47D0072014B /* AmbassadorUITests */ = {
@@ -1552,6 +1597,7 @@
 				EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */,
 				DB844D661BA76BDE003FD7A9 /* main.m in Sources */,
 				EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */,
+				EF557A181C88B4D000F66761 /* AmbassadorLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
