@@ -81,6 +81,7 @@
 #pragma mark - Helper Functions
 
 - (void)setUpAppearance {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UITabBar appearance] setBarTintColor:[AppDelegate colorFromHexString:@"#25313f"]];
     [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
 }
