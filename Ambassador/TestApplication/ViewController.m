@@ -9,17 +9,19 @@
 #import "ViewController.h"
 #import <Ambassador/Ambassador.h>
 #import "DefaultsHandler.h"
+#import "AmbassadorLoginViewController.h"
 
-@interface ViewController ()
+@interface ViewController () <AmbassadorLoginDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * loginView;
 @property (nonatomic, strong) IBOutlet UIButton * btnLogin;
-@property (nonatomic, strong) IBOutlet UIButton * btnDrawer;
 @property (nonatomic, strong) IBOutlet UITextField * tfUsername;
 @property (nonatomic, strong) IBOutlet UITextField * tfPassword;
 @property (nonatomic, strong) IBOutlet UIView * signInCrossbar;
+@property (nonatomic) BOOL hasPerformedRunWithKeys;
 
 @end
+
 
 @implementation ViewController
 
@@ -33,7 +35,9 @@ NSString * loginSegue = @"ambassador_login_segue";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self checkForLogin];
+    if (!self.hasPerformedRunWithKeys) {
+        [self checkForLogin];
+    }
 }
 
 
@@ -42,6 +46,23 @@ NSString * loginSegue = @"ambassador_login_segue";
 - (IBAction)loginTapped:(id)sender {
     [self.view endEditing:YES];
     [self identifyOnSignIn];
+}
+
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:loginSegue]) {
+        AmbassadorLoginViewController *loginVC = (AmbassadorLoginViewController*)segue.destinationViewController;
+        loginVC.delegate = self;
+    }
+}
+
+
+#pragma mark - Ambassador Login Delegate
+
+- (void)userSuccessfullyLoggedIn {
+    [self checkForLogin];
 }
 
 
@@ -79,6 +100,7 @@ NSString * loginSegue = @"ambassador_login_segue";
     if ([[DefaultsHandler getSDKToken] isEqualToString:@""] || [[DefaultsHandler getUniversalID] isEqualToString:@""]) {
         [self performSegueWithIdentifier:loginSegue sender:self];
     } else {
+        self.hasPerformedRunWithKeys = YES;
         [AmbassadorSDK runWithUniversalToken:[DefaultsHandler getSDKToken] universalID:[DefaultsHandler getUniversalID]];
     }
 }
