@@ -701,7 +701,7 @@
                         <outlet property="signInCrossbar" destination="QZj-cJ-0mX" id="uya-Yb-Nxa"/>
                         <outlet property="tfPassword" destination="r0b-qi-F3o" id="J8J-8Z-0hB"/>
                         <outlet property="tfUsername" destination="2iQ-M2-zxk" id="MC5-vk-whN"/>
-                        <segue destination="09T-02-CVU" kind="presentation" identifier="ambassador_login_segue" id="AYp-Bf-8nH"/>
+                        <segue destination="09T-02-CVU" kind="presentation" id="AYp-Bf-8nH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uoB-r7-Lcz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -841,11 +841,106 @@
                         <segue destination="9YV-9x-emY" kind="relationship" relationship="viewControllers" id="7hp-rl-5Fi"/>
                         <segue destination="Uyy-Ly-PsL" kind="relationship" relationship="viewControllers" id="cwS-4b-N9j"/>
                         <segue destination="scf-li-MTd" kind="relationship" relationship="viewControllers" id="HLb-ve-WH0"/>
+                        <segue destination="njJ-N1-dk0" kind="relationship" relationship="viewControllers" id="QBV-4G-3gC"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IHb-rh-kIS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="90" y="450"/>
+        </scene>
+        <!--Profile-->
+        <scene sceneID="j8p-bc-CRo">
+            <objects>
+                <viewController id="njJ-N1-dk0" customClass="ProfileViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fAt-4J-NL5"/>
+                        <viewControllerLayoutGuide type="bottom" id="fFK-8H-2Ce"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="n8h-JX-7Ly">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firstname Lastname" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVc-lZ-Q0b">
+                                <rect key="frame" x="207" y="260" width="186" height="26"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="21"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGR-5K-pHp">
+                                <rect key="frame" x="200" y="316" width="200" height="42"/>
+                                <color key="backgroundColor" red="0.80095416480986326" green="0.21213397516251373" blue="0.25903454227309292" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="abu-mm-bFE"/>
+                                    <constraint firstAttribute="height" constant="42" id="nYO-2f-yDk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                <state key="normal" title="Sign Out">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H1A-BP-YDH">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ambassador Demo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gtq-TB-HMH">
+                                        <rect key="frame" x="231" y="27" width="139" height="19"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.15686274510000001" green="0.39607843139999999" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Gtq-TB-HMH" firstAttribute="centerY" secondItem="H1A-BP-YDH" secondAttribute="centerY" id="0RP-Bj-Kah"/>
+                                    <constraint firstAttribute="height" constant="60" id="Iww-KF-qvO"/>
+                                    <constraint firstAttribute="bottom" secondItem="Gtq-TB-HMH" secondAttribute="bottom" constant="14" id="aME-AA-0eK"/>
+                                    <constraint firstItem="Gtq-TB-HMH" firstAttribute="centerX" secondItem="H1A-BP-YDH" secondAttribute="centerX" id="gSn-AN-e3c"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="0RP-Bj-Kah"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MSL-g2-7Jn">
+                                <rect key="frame" x="230" y="90" width="140" height="140"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="140" id="IPj-4R-FRy"/>
+                                    <constraint firstAttribute="width" constant="140" id="aRO-fQ-oPS"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="MSL-g2-7Jn" firstAttribute="top" secondItem="H1A-BP-YDH" secondAttribute="bottom" constant="30" id="KvU-ut-IVU"/>
+                            <constraint firstItem="MSL-g2-7Jn" firstAttribute="centerX" secondItem="n8h-JX-7Ly" secondAttribute="centerX" id="V0J-MD-rIa"/>
+                            <constraint firstItem="H1A-BP-YDH" firstAttribute="leading" secondItem="n8h-JX-7Ly" secondAttribute="leading" id="Vrt-Cm-8Zn"/>
+                            <constraint firstItem="HGR-5K-pHp" firstAttribute="centerX" secondItem="n8h-JX-7Ly" secondAttribute="centerX" id="Yau-G5-ka1"/>
+                            <constraint firstAttribute="trailing" secondItem="H1A-BP-YDH" secondAttribute="trailing" id="bN1-ST-g2j"/>
+                            <constraint firstItem="MSL-g2-7Jn" firstAttribute="top" secondItem="fAt-4J-NL5" secondAttribute="bottom" constant="35" id="gC0-IH-Lb5"/>
+                            <constraint firstItem="H1A-BP-YDH" firstAttribute="top" secondItem="n8h-JX-7Ly" secondAttribute="top" id="k2t-F5-3lY"/>
+                            <constraint firstItem="FVc-lZ-Q0b" firstAttribute="centerX" secondItem="MSL-g2-7Jn" secondAttribute="centerX" id="lwf-3a-SNc"/>
+                            <constraint firstItem="FVc-lZ-Q0b" firstAttribute="top" secondItem="MSL-g2-7Jn" secondAttribute="bottom" constant="30" id="q2n-NO-rWQ"/>
+                            <constraint firstItem="HGR-5K-pHp" firstAttribute="top" secondItem="FVc-lZ-Q0b" secondAttribute="bottom" constant="30" id="qV4-EQ-Day"/>
+                            <constraint firstItem="fFK-8H-2Ce" firstAttribute="top" secondItem="HGR-5K-pHp" secondAttribute="bottom" constant="30" id="xko-cb-0ab"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="gC0-IH-Lb5"/>
+                                <exclude reference="xko-cb-0ab"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Profile" image="signUpIcon" id="SpI-cQ-LOE"/>
+                    <connections>
+                        <outlet property="btnSignOut" destination="HGR-5K-pHp" id="9QA-2A-CkK"/>
+                        <outlet property="customNav" destination="H1A-BP-YDH" id="yjU-os-haP"/>
+                        <outlet property="ivAvatar" destination="MSL-g2-7Jn" id="jyL-7w-vsl"/>
+                        <outlet property="lblFullName" destination="FVc-lZ-Q0b" id="SSq-CK-AKs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wiy-aH-zie" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-175" y="1183"/>
         </scene>
     </scenes>
     <resources>

@@ -183,6 +183,7 @@
 		EF5390E41C46E93C005F6944 /* AmbassadorShirt.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */; };
 		EF557A181C88B4D000F66761 /* AmbassadorLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A171C88B4D000F66761 /* AmbassadorLoginViewController.m */; };
 		EF557A1B1C88D39C00F66761 /* DefaultsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */; };
+		EF557A231C88E6BE00F66761 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A221C88E6BE00F66761 /* ProfileViewController.m */; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
@@ -490,6 +491,8 @@
 		EF557A171C88B4D000F66761 /* AmbassadorLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorLoginViewController.m; sourceTree = "<group>"; };
 		EF557A191C88D39C00F66761 /* DefaultsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultsHandler.h; sourceTree = "<group>"; };
 		EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultsHandler.m; sourceTree = "<group>"; };
+		EF557A211C88E6BE00F66761 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		EF557A221C88E6BE00F66761 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -743,14 +746,15 @@
 		DB844D621BA76BDE003FD7A9 /* TestApplication */ = {
 			isa = PBXGroup;
 			children = (
+				DB844D6D1BA76BDE003FD7A9 /* Main.storyboard */,
+				DB844D671BA76BDE003FD7A9 /* AppDelegate.h */,
+				DB844D681BA76BDE003FD7A9 /* AppDelegate.m */,
 				EF557A151C88B4AE00F66761 /* Login */,
 				EF557A141C88B4A100F66761 /* Identify */,
 				EF557A131C88B49700F66761 /* RAF */,
 				EF557A121C88B48600F66761 /* Buy Now */,
 				EF557A111C88B47700F66761 /* Sign Up */,
-				DB844D671BA76BDE003FD7A9 /* AppDelegate.h */,
-				DB844D681BA76BDE003FD7A9 /* AppDelegate.m */,
-				DB844D6D1BA76BDE003FD7A9 /* Main.storyboard */,
+				EF557A201C88E67700F66761 /* Profile */,
 				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
 				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
 				DB844D631BA76BDE003FD7A9 /* Supporting Files */,
@@ -942,6 +946,15 @@
 				EF557A171C88B4D000F66761 /* AmbassadorLoginViewController.m */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		EF557A201C88E67700F66761 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				EF557A211C88E6BE00F66761 /* ProfileViewController.h */,
+				EF557A221C88E6BE00F66761 /* ProfileViewController.m */,
+			);
+			name = Profile;
 			sourceTree = "<group>";
 		};
 		EF64CFA41BE2A47D0072014B /* AmbassadorUITests */ = {
@@ -1602,6 +1615,7 @@
 				EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */,
 				DB844D661BA76BDE003FD7A9 /* main.m in Sources */,
 				EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */,
+				EF557A231C88E6BE00F66761 /* ProfileViewController.m in Sources */,
 				EF557A1B1C88D39C00F66761 /* DefaultsHandler.m in Sources */,
 				EF557A181C88B4D000F66761 /* AmbassadorLoginViewController.m in Sources */,
 			);
