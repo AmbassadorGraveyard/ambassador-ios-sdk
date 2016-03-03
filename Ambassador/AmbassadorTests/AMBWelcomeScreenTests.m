@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * masterViewCenter;
 @property (nonatomic, strong) IBOutlet UICollectionView * linkCollectionView;
+@property (nonatomic, strong) IBOutlet UIButton * btnAction;
 @property (nonatomic, strong) NSArray * linkArray;
 @property (nonatomic, strong) NSString * referrerName;
 
@@ -154,6 +155,45 @@
     // THEN
     [mockDelegate verify];
     [mockDelegate stopMocking];
+}
+
+
+#pragma mark - UI Function Tests 
+
+- (void)testSetTheme {
+    // GIVEN
+    id mockButton = [OCMockObject mockForClass:[UIButton class]];
+    self.welcomeVC.btnAction = mockButton;
+    [[[mockButton expect] andDo:nil] setTitle:[OCMArg any] forState:UIControlStateNormal];
+    [[[mockButton expect] andDo:nil] setBackgroundColor:[OCMArg any]];
+    
+    AMBWelcomeScreenParameters *params = [[AMBWelcomeScreenParameters alloc] init];
+    params.actionButtonTitle = @"Test";
+    
+    self.welcomeVC.parameters = params;
+    
+    // WHEN
+    [self.welcomeVC setTheme];
+    
+    // THEN
+    [mockButton verify];
+    [mockButton stopMocking];
+}
+
+- (void)testSetupCollectionView {
+    // GIVEN
+    id mockCollectionView = [OCMockObject mockForClass:[UICollectionView class]];
+    self.welcomeVC.linkCollectionView =  mockCollectionView;
+    [[[mockCollectionView expect] andDo:nil] setScrollEnabled:YES];
+    [[[mockCollectionView expect] andDo:nil] setCollectionViewLayout:[OCMArg any]];
+    
+    self.welcomeVC.linkArray = @[@"Test", @"test2", @"test3"];
+    
+    // WHEN
+    [self.welcomeVC setupCollectionView];
+    
+    // THEN
+    [mockCollectionView verify];
 }
 
 
