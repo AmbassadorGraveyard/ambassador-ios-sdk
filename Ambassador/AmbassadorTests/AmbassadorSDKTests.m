@@ -260,4 +260,27 @@ NSString * const universalToken = @"***REMOVED***";
     [mockNetworkMgr stopMocking];
 }
 
+- (void)testPresentWelcomeScreen {
+    // GIVEN
+    AMBWelcomeScreenParameters *fakeParams = [[AMBWelcomeScreenParameters alloc] init];
+    
+    id mockPresentingVC = [OCMockObject mockForClass:[UIViewController class]];
+    id mockVC = [OCMockObject mockForClass:[AMBWelcomeScreenViewController class]];
+    id mockSB = [OCMockObject mockForClass:[UIStoryboard class]];
+    
+    [[[mockPresentingVC expect] andDo:nil] presentViewController:[OCMArg any] animated:YES completion:nil];
+    [[[mockSB expect] andReturn:mockSB] storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
+    [[[mockSB expect] andReturn:mockVC] instantiateViewControllerWithIdentifier:@"WELCOME_SCREEN"];
+    [[[mockVC expect] andDo:nil] setParameters:[OCMArg any]];
+    [[[mockVC expect] andDo:nil] setDelegate:[OCMArg any]];
+    
+    // WHEN
+    [AmbassadorSDK presentWelcomeScreen:mockPresentingVC withParameters:fakeParams];
+    
+    // THEN
+    [mockVC verify];
+    [mockPresentingVC verify];
+    [mockSB verify];
+}
+
 @end

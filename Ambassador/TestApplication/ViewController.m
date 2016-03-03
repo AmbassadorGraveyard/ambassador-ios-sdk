@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import <Ambassador/Ambassador.h>
 
-@interface ViewController ()
+@interface ViewController () <AMBWelcomeScreenDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * loginView;
 @property (nonatomic, strong) IBOutlet UIButton * btnLogin;
@@ -27,6 +27,10 @@
 
 - (void)viewDidLoad {
     [self setUpTheme];
+    
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressLogin)];
+    [longPress setMinimumPressDuration:0.3];
+    [self.btnLogin setGestureRecognizers:@[longPress]];
 }
 
 
@@ -35,6 +39,17 @@
 - (IBAction)loginTapped:(id)sender {
     [self.view endEditing:YES];
     [self identifyOnSignIn];
+}
+
+- (void)longPressLogin {
+    AMBWelcomeScreenParameters *welcomeParams = [[AMBWelcomeScreenParameters alloc] init];
+    welcomeParams.detailMessage = @"You understand the value of referrals. Maybe you've even explored referral marketing software.";
+    welcomeParams.referralMessage = @"{{ name }} has referred you to Ambassador";
+    welcomeParams.accentColor = self.btnLogin.backgroundColor;
+    welcomeParams.linkArray = @[@"Testimonials", @"Request Demo"];
+    welcomeParams.actionButtonTitle = @"CREATE AN ACCOUNT";
+    
+    [AmbassadorSDK presentWelcomeScreen:self withParameters:welcomeParams];
 }
 
 
@@ -66,6 +81,19 @@
 
 - (BOOL)allowSignIn {
     return (![self.tfPassword.text  isEqual: @""] && ![self.tfUsername.text  isEqual: @""]) ? YES : NO;
+}
+
+
+#pragma mark - WelcomeScreen Delegate
+
+- (void)welcomeScreenActionButtonPressed:(UIButton *)actionButton {
+    UIAlertView *actionAlert = [[UIAlertView alloc] initWithTitle:@"Action Button" message:@"You pressed the action button on the welcome screen" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [actionAlert show];
+}
+
+- (void)welcomeScreenLinkPressedAtIndex:(NSInteger)linkIndex {
+    UIAlertView *linkAlert = [[UIAlertView alloc] initWithTitle:@"Link Tapped" message:[NSString stringWithFormat:@"You tapped a link at index %li", (long)linkIndex] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [linkAlert show];
 }
 
 @end

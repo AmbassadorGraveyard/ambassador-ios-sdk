@@ -155,7 +155,6 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     serviceSelectorVC.themeName = themePlist;
 
     [viewController presentViewController:nav animated:YES completion:nil];
-
 }
 
 
@@ -199,6 +198,17 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 + (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification {
     // TODO: Add functionality when surveys are implemented into app
     DLog(@"AmbassadorNotification Received - %@", notification);
+}
+
+
+#pragma mark - Welcome Screen
+
++ (void)presentWelcomeScreen:(UIViewController*)viewController withParameters:(AMBWelcomeScreenParameters*)parameters {
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
+    AMBWelcomeScreenViewController *welcomeController = (AMBWelcomeScreenViewController*)[sb instantiateViewControllerWithIdentifier:@"WELCOME_SCREEN"];
+    welcomeController.parameters = parameters;
+    welcomeController.delegate = viewController;
+    [viewController presentViewController:welcomeController animated:YES completion:nil];
 }
 
 @end
