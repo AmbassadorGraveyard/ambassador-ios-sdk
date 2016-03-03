@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol AmbassadorLoginDelegate <NSObject>
+
+- (void)userSuccessfullyLoggedIn;
+
+@end
+
+
 @interface AmbassadorLoginViewController : UIViewController
+
+@property (nonatomic, weak) id<AmbassadorLoginDelegate> delegate;
 
 @end

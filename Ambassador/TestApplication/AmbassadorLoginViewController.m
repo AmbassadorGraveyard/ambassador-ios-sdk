@@ -91,8 +91,7 @@
     [DefaultsHandler setSDKToken:sdkToken];
     [DefaultsHandler setUniversalID:dictionary[@"company"][@"universal_id"]];
     
-    [AmbassadorSDK runWithUniversalToken:[DefaultsHandler getSDKToken] universalID:[DefaultsHandler getUniversalID]];
-    
+    [self.delegate userSuccessfullyLoggedIn];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
