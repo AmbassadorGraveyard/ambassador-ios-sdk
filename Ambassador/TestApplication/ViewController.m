@@ -76,7 +76,7 @@ NSString * loginSegue = @"ambassador_login_segue";
 }
 
 - (void)checkForLogin {
-    if (![DefaultsHandler getSDKToken] || ![DefaultsHandler getUniversalID]) {
+    if ([[DefaultsHandler getSDKToken] isEqualToString:@""] || [[DefaultsHandler getUniversalID] isEqualToString:@""]) {
         [self performSegueWithIdentifier:loginSegue sender:self];
     } else {
         [AmbassadorSDK runWithUniversalToken:[DefaultsHandler getSDKToken] universalID:[DefaultsHandler getUniversalID]];

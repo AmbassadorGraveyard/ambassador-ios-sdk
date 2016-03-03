@@ -61,7 +61,7 @@
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:bodyDict options:0 error:nil];
     
     // Makes network call
-    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
         if (!error && [self isValidStatusCode:statusCode]) {
             NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);

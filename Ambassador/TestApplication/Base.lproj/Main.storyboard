@@ -701,7 +701,7 @@
                         <outlet property="signInCrossbar" destination="QZj-cJ-0mX" id="uya-Yb-Nxa"/>
                         <outlet property="tfPassword" destination="r0b-qi-F3o" id="J8J-8Z-0hB"/>
                         <outlet property="tfUsername" destination="2iQ-M2-zxk" id="MC5-vk-whN"/>
-                        <segue destination="09T-02-CVU" kind="presentation" id="AYp-Bf-8nH"/>
+                        <segue destination="09T-02-CVU" kind="presentation" identifier="ambassador_login_segue" id="AYp-Bf-8nH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uoB-r7-Lcz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -877,6 +877,9 @@
                                 <state key="normal" title="Sign Out">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="signOut:" destination="njJ-N1-dk0" eventType="touchUpInside" id="C5c-Tl-e5C"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H1A-BP-YDH">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
