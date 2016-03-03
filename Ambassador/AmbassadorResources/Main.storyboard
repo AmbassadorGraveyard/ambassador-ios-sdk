@@ -841,7 +841,7 @@
                                                 <rect key="frame" x="0.0" y="22" width="600" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qnu-a1-5BV" id="5Ap-fV-JNz">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UFY-Fk-jda">
@@ -1334,7 +1334,7 @@
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tdR-aa-vR3">
                                                             <rect key="frame" x="0.0" y="4" width="93" height="32"/>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                                                             <state key="normal" title="Button"/>
                                                             <connections>
                                                                 <action selector="buttonPressed:" destination="EEn-9O-RLQ" eventType="touchUpInside" id="blO-ls-4ug"/>
@@ -1463,12 +1463,12 @@
                                         <exclude reference="46Y-l9-jhW"/>
                                         <exclude reference="mZq-pH-u49"/>
                                         <exclude reference="nFm-TY-oOD"/>
-                                        <exclude reference="Sd0-NG-5b1"/>
-                                        <exclude reference="ghv-5Y-mP0"/>
                                         <exclude reference="Bad-0w-cqb"/>
                                         <exclude reference="UNN-e0-Def"/>
                                         <exclude reference="dKN-e6-bvZ"/>
                                         <exclude reference="zhF-U6-D3O"/>
+                                        <exclude reference="Sd0-NG-5b1"/>
+                                        <exclude reference="ghv-5Y-mP0"/>
                                         <exclude reference="8XP-dz-5Ks"/>
                                         <exclude reference="BL4-4O-n6v"/>
                                         <exclude reference="PZ0-cv-lsm"/>
@@ -1489,16 +1489,16 @@
                                         <include reference="mZq-pH-u49"/>
                                         <include reference="nFm-TY-oOD"/>
                                         <exclude reference="pqj-Jn-Dsw"/>
-                                        <exclude reference="B4A-A3-tuR"/>
-                                        <include reference="Sd0-NG-5b1"/>
-                                        <include reference="ghv-5Y-mP0"/>
-                                        <exclude reference="yb2-Iy-bbB"/>
                                         <exclude reference="7cT-7S-jbH"/>
                                         <include reference="Bad-0w-cqb"/>
                                         <exclude reference="QOy-Ga-sGs"/>
                                         <exclude reference="UNN-e0-Def"/>
                                         <include reference="dKN-e6-bvZ"/>
                                         <include reference="zhF-U6-D3O"/>
+                                        <exclude reference="B4A-A3-tuR"/>
+                                        <include reference="Sd0-NG-5b1"/>
+                                        <include reference="ghv-5Y-mP0"/>
+                                        <exclude reference="yb2-Iy-bbB"/>
                                         <include reference="8XP-dz-5Ks"/>
                                         <include reference="BL4-4O-n6v"/>
                                         <exclude reference="PZ0-cv-lsm"/>
@@ -1563,7 +1563,6 @@
                         <outlet property="lblReferred" destination="U0F-YX-xEW" id="t5q-Ze-UG8"/>
                         <outlet property="linkCollectionView" destination="b1S-Xe-qXb" id="MO9-YL-bba"/>
                         <outlet property="masterView" destination="M81-Zy-daN" id="8S5-yx-ReJ"/>
-                        <outlet property="masterViewCenter" destination="oay-aW-whB" id="S2U-ON-xED"/>
                         <outlet property="referralTextBottom" destination="7cT-7S-jbH" id="Gxv-1R-cYz"/>
                     </connections>
                 </viewController>

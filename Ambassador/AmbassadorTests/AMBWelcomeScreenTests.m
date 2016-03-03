@@ -13,7 +13,6 @@
 
 @interface AMBWelcomeScreenViewController (Test) <UICollectionViewDataSource, AMBLinkCellDelegate>
 
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint * masterViewCenter;
 @property (nonatomic, strong) IBOutlet UICollectionView * linkCollectionView;
 @property (nonatomic, strong) IBOutlet UIButton * btnAction;
 @property (nonatomic, strong) NSArray * linkArray;
@@ -66,21 +65,6 @@
     
     // THEN
     [self.mockWelcomeVC verify];
-}
-
-- (void)testViewDidLayoutSubviews {
-    // GIVEN
-    self.welcomeVC.masterViewCenter = [[NSLayoutConstraint alloc] init];
-    self.welcomeVC.masterViewCenter.constant = 1;
-    
-    id mockView = [OCMockObject mockForClass:[UIView class]];
-    [[[mockView expect] andDo:nil] animateKeyframesWithDuration:0.5 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:[OCMArg any] completion:nil];
-    
-    // WHEN
-    [self.welcomeVC viewDidLayoutSubviews];
-    
-    // THEN
-    [mockView verify];
 }
 
 - (void)testWillAnimateRotation {
