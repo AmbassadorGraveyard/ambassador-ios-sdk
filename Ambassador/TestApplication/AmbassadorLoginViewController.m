@@ -29,6 +29,12 @@
 }
 
 
+#pragma mark - IBActions
+
+- (IBAction)performLogin:(id)sender {
+    [self makeAmbassadorLoginRequest];
+}
+
 #pragma mark - UI Functions
 
 - (void)setupUI {
@@ -37,6 +43,40 @@
     
     // Login button
     self.btnLogin.layer.cornerRadius = 6;
+}
+
+
+#pragma mark - Helper Functions
+
+- (void)makeAmbassadorLoginRequest {
+    // Sets up request
+    NSURL *ambassadorURL = [NSURL URLWithString:@"https://api.getambassador.com/v2-auth/"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:ambassadorURL];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    NSDictionary *bodyDict = @{@"email" : self.tfUserName.text, @"password" : self.tfPassword.text};
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:bodyDict options:0 error:nil];
+    
+    // Makes network call
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        if (!error && [self isValidStatusCode:statusCode]) {
+            NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            [self handleSuccessfulLogin:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not Sign In" message:@"There was an error when signing in. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+            [alert show];
+        }
+    }] resume];
+}
+
+- (BOOL)isValidStatusCode:(NSInteger)statusCode {
+    return statusCode >= 200 && statusCode <= 299 ? YES : NO;
+}
+
+- (void)handleSuccessfulLogin:(NSDictionary*)dictionary {
+    
 }
 
 @end
