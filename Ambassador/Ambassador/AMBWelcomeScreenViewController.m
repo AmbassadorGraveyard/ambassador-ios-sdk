@@ -21,7 +21,6 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * collectionViewHeight;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * buttonHeight;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * referralTextBottom;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint * masterViewCenter;
 
 @property (nonatomic, strong) NSArray * linkArray;
 @property (nonatomic, strong) UIColor * welcomeScreenAccent;
@@ -43,21 +42,8 @@ NSInteger const CELL_HEIGHT = 25;
     self.ivProfilePic.image = [UIImage imageNamed:@"coolGuy"];
     self.referrerName = @"John Doe";
     
-    self.masterViewCenter.constant = -(self.masterView.frame.size.width + 30);
     [self setTheme];
     [self setupCollectionView];
-}
-
-- (void)viewDidLayoutSubviews {
-    if (self.masterViewCenter.constant != 0) {
-        [UIView animateKeyframesWithDuration:0.5 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
-            [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.4 animations:^{
-                self.masterViewCenter.constant = 0;
-                [self.view layoutIfNeeded];
-                self.ivProfilePic.layer.cornerRadius = self.ivProfilePic.frame.size.height/2;
-            }];
-        } completion:nil];
-    }
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
