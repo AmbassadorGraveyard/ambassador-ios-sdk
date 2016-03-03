@@ -187,6 +187,7 @@
 		EF557A011C85E34600F66761 /* AMBLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5579FF1C85E34600F66761 /* AMBLinkCell.m */; };
 		EF557A041C86038F00F66761 /* AMBWelcomeScreenParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = EF557A021C86038F00F66761 /* AMBWelcomeScreenParameters.h */; };
 		EF557A051C86038F00F66761 /* AMBWelcomeScreenParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A031C86038F00F66761 /* AMBWelcomeScreenParameters.m */; };
+		EF557A0A1C888E5100F66761 /* AMBWelcomeScreenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A091C888E5100F66761 /* AMBWelcomeScreenTests.m */; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
@@ -496,6 +497,7 @@
 		EF5579FF1C85E34600F66761 /* AMBLinkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkCell.m; sourceTree = "<group>"; };
 		EF557A021C86038F00F66761 /* AMBWelcomeScreenParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenParameters.h; sourceTree = "<group>"; };
 		EF557A031C86038F00F66761 /* AMBWelcomeScreenParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenParameters.m; sourceTree = "<group>"; };
+		EF557A091C888E5100F66761 /* AMBWelcomeScreenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenTests.m; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -668,6 +670,7 @@
 		DB844D361BA75BB8003FD7A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EF557A091C888E5100F66761 /* AMBWelcomeScreenTests.m */,
 				EFBF8E061C69007800F2B5F9 /* AMBSelectedCellUnitTests.m */,
 				EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */,
 				EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */,
@@ -1554,6 +1557,7 @@
 				EF7CA9D21BF3EAB7006EBD6A /* AMBContactTests.m in Sources */,
 				EFBF8E071C69007800F2B5F9 /* AMBSelectedCellUnitTests.m in Sources */,
 				EFCEBCA31C5FA1E8009A6421 /* AMBErrorsUnitTests.m in Sources */,
+				EF557A0A1C888E5100F66761 /* AMBWelcomeScreenTests.m in Sources */,
 				EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */,
 				DB6A24861BD1847900CE3230 /* AmbassadorSDKTests.m in Sources */,
 				DB6A24741BD1259000CE3230 /* AMBPusherManagerTests.m in Sources */,
