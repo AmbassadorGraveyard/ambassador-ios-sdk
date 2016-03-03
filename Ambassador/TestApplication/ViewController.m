@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import <Ambassador/Ambassador.h>
+#import "DefaultsHandler.h"
 
 @interface ViewController ()
 
@@ -22,11 +23,17 @@
 
 @implementation ViewController
 
+NSString * loginSegue = @"ambassador_login_segue";
+
 
 #pragma mark - LifeCycle
 
 - (void)viewDidLoad {
     [self setUpTheme];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self checkForLogin];
 }
 
 
@@ -66,6 +73,14 @@
 
 - (BOOL)allowSignIn {
     return (![self.tfPassword.text  isEqual: @""] && ![self.tfUsername.text  isEqual: @""]) ? YES : NO;
+}
+
+- (void)checkForLogin {
+    if (![DefaultsHandler getSDKToken] || ![DefaultsHandler getUniversalID]) {
+        [self performSegueWithIdentifier:loginSegue sender:self];
+    } else {
+        [AmbassadorSDK runWithUniversalToken:[DefaultsHandler getSDKToken] universalID:[DefaultsHandler getUniversalID]];
+    }
 }
 
 @end

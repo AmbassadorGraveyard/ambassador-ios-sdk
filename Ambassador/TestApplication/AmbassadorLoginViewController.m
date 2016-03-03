@@ -8,6 +8,7 @@
 
 #import "AmbassadorLoginViewController.h"
 #import "DefaultsHandler.h"
+#import <Ambassador/Ambassador.h>
 
 @interface AmbassadorLoginViewController()
 
@@ -89,6 +90,10 @@
     NSString *sdkToken = [NSString stringWithFormat:@"SDKToken %@", dictionary[@"company"][@"sdk_token"]];
     [DefaultsHandler setSDKToken:sdkToken];
     [DefaultsHandler setUniversalID:dictionary[@"company"][@"universal_id"]];
+    
+    [AmbassadorSDK runWithUniversalToken:[DefaultsHandler getSDKToken] universalID:[DefaultsHandler getUniversalID]];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
