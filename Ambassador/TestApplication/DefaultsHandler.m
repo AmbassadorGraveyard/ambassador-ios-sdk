@@ -34,20 +34,30 @@
 #pragma mark - Getters
 
 + (NSString*)getSDKToken {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"SDK_TOKEN"];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"SDK_TOKEN"] ? [[NSUserDefaults standardUserDefaults] objectForKey:@"SDK_TOKEN"] : @"";
 }
 
 + (NSString*)getUniversalID {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"UNIV_ID"];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"UNIV_ID"] ? [[NSUserDefaults standardUserDefaults] objectForKey:@"UNIV_ID"] : @"";
 }
 
 + (NSString*)getFullName {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"FULL_NAME"];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"FULL_NAME"] ? [[NSUserDefaults standardUserDefaults] objectForKey:@"FULL_NAME"] : @"";
 }
 
 + (UIImage*)getUserImage {
     NSData *imageData = [[NSUserDefaults standardUserDefaults] objectForKey:@"USER_IMAGE"];
     return [UIImage imageWithData:imageData];
+}
+
+
+#pragma mark - Helper Functions
+
++ (void)clearUserValues {
+    [DefaultsHandler setSDKToken:@""];
+    [DefaultsHandler setUniversalID:@""];
+    [DefaultsHandler setFullName:@"" lastName:@""];
+    [DefaultsHandler setUserImage:@""];
 }
 
 @end

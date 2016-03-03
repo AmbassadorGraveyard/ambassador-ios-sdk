@@ -23,4 +23,7 @@
 + (NSString*)getFullName;
 + (UIImage*)getUserImage;
 
+// HELPER FUNCTIONS
++ (void)clearUserValues;
+
 @end

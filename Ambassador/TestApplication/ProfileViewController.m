@@ -45,4 +45,14 @@
     self.btnSignOut.layer.cornerRadius = 6;
 }
 
+
+#pragma mark - IBActions
+
+- (IBAction)signOut:(id)sender {
+    [DefaultsHandler clearUserValues];
+    [self.tabBarController setSelectedIndex:0];
+    UIViewController *initialController = [self.tabBarController viewControllers][0];
+    [initialController viewDidAppear:YES];
+}
+
 @end
