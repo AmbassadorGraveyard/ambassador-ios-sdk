@@ -25,7 +25,7 @@
 
 #pragma mark - LifeCycle
 
-- (void)viewDidLoad {
+- (void)viewWillAppear:(BOOL)animated {
     [self setupUI];
 }
 
