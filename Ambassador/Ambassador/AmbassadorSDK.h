@@ -6,6 +6,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "AMBConversionParameters.h"
+#import "AMBWelcomeScreenViewController.h"
 
 @interface AmbassadorSDK : NSObject
 
@@ -26,5 +27,7 @@
 
 /**Handles remote notifications that are sent from Ambassador**/
 + (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification;
+
++ (void)presentWelcomeScreen:(UIViewController*)viewController withParameters:(AMBWelcomeScreenParameters*)parameters;
 
 @end
