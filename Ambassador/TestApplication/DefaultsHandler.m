@@ -57,7 +57,7 @@
     [DefaultsHandler setSDKToken:@""];
     [DefaultsHandler setUniversalID:@""];
     [DefaultsHandler setFullName:@"" lastName:@""];
-    [DefaultsHandler setUserImage:@""];
+    [DefaultsHandler setUserImage:@"0"];
 }
 
 @end
