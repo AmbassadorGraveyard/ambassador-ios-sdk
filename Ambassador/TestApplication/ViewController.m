@@ -11,7 +11,7 @@
 #import "DefaultsHandler.h"
 #import "AmbassadorLoginViewController.h"
 
-@interface ViewController () <AmbassadorLoginDelegate>
+@interface ViewController () <AMBWelcomeScreenDelegate, AmbassadorLoginDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * loginView;
 @property (nonatomic, strong) IBOutlet UIButton * btnLogin;
@@ -32,6 +32,10 @@ NSString * loginSegue = @"ambassador_login_segue";
 
 - (void)viewDidLoad {
     [self setUpTheme];
+    
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressLogin)];
+    [longPress setMinimumPressDuration:0.3];
+    [self.btnLogin setGestureRecognizers:@[longPress]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -46,6 +50,17 @@ NSString * loginSegue = @"ambassador_login_segue";
 - (IBAction)loginTapped:(id)sender {
     [self.view endEditing:YES];
     [self identifyOnSignIn];
+}
+
+- (void)longPressLogin {
+    AMBWelcomeScreenParameters *welcomeParams = [[AMBWelcomeScreenParameters alloc] init];
+    welcomeParams.detailMessage = @"You understand the value of referrals. Maybe you've even explored referral marketing software.";
+    welcomeParams.referralMessage = @"{{ name }} has referred you to Ambassador";
+    welcomeParams.accentColor = self.btnLogin.backgroundColor;
+    welcomeParams.linkArray = @[@"Testimonials", @"Request Demo"];
+    welcomeParams.actionButtonTitle = @"CREATE AN ACCOUNT";
+    
+    [AmbassadorSDK presentWelcomeScreen:self withParameters:welcomeParams];
 }
 
 
@@ -63,6 +78,19 @@ NSString * loginSegue = @"ambassador_login_segue";
 
 - (void)userSuccessfullyLoggedIn {
     [self checkForLogin];
+}
+
+
+#pragma mark - WelcomeScreen Delegate
+
+- (void)welcomeScreenActionButtonPressed:(UIButton *)actionButton {
+    UIAlertView *actionAlert = [[UIAlertView alloc] initWithTitle:@"Action Button" message:@"You pressed the action button on the welcome screen" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [actionAlert show];
+}
+
+- (void)welcomeScreenLinkPressedAtIndex:(NSInteger)linkIndex {
+    UIAlertView *linkAlert = [[UIAlertView alloc] initWithTitle:@"Link Tapped" message:[NSString stringWithFormat:@"You tapped a link at index %li", (long)linkIndex] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [linkAlert show];
 }
 
 
