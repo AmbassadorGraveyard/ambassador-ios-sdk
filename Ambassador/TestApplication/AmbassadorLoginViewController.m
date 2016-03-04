@@ -52,7 +52,13 @@
 
 - (void)makeAmbassadorLoginRequest {
     // Sets up request
-    NSURL *ambassadorURL = [NSURL URLWithString:@"https://api.getambassador.com/v2-auth/"];
+    NSURL *ambassadorURL;
+#if AMBPRODUCTION
+    ambassadorURL = [NSURL URLWithString:@"https://api.getambassador.com/v2-auth/"];
+#else
+    ambassadorURL = [NSURL URLWithString:@"https://dev-ambassador-api.herokuapp.com/v2-auth/"];
+#endif
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:ambassadorURL];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
