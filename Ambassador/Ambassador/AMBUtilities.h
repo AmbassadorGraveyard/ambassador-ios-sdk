@@ -51,6 +51,7 @@
 
 // Misc Class Functions
 + (NSString*)createRequestID;
++ (NSString*)create32CharCode;
 + (BOOL)colorIsDark:(UIColor*)color;
 + (BOOL)isSuccessfulStatusCode:(NSInteger)statusCode;
 + (NSDictionary*)dictionaryFromQueryString:(NSString*)queryString;
