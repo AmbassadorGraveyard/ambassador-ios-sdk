@@ -148,7 +148,7 @@
 }
 
 + (NSString*)getLinkedinClientValuesUrl:(NSString*)clientUID {
-    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getambassador.com/companies/%@", clientUID] : [NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/companies/%@", clientUID];
+    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getambassador.com/companies/%@/", clientUID] : [NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/companies/%@/", clientUID];
 }
 
 

@@ -298,6 +298,47 @@
 }
 
 
+#pragma mark - LinkedIn Requests
+
+- (void)getCompanyUIDWithSuccess:(void(^)(NSString *companyUID))success failure:(void(^)(NSString *error))failure {
+    NSMutableURLRequest *companyUrlRequest = [self createURLRequestWithURL:[AMBValues getCompanyDetailsUrl] requestType:@"GET"];
+    [[self.urlSession dataTaskWithRequest:companyUrlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"GET COMPANY DETAILS PAYLOAD status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            NSDictionary *returnDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            DLog(@"Company Details SUCCESSFUL with response - %@", returnDict);
+            if (success) { success([NSString stringWithFormat:@"%@", returnDict[@"results"][0][@"uid"]]); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"Company Details FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"Get Company Details Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
+    }] resume];
+}
+
+- (void)getLinkedInClientValuesWithUID:(NSString*)companyUID success:(void(^)(NSDictionary *clientValues))success failure:(void(^)(NSString *error))failure {
+    NSMutableURLRequest *linkedinClientRequest = [self createURLRequestWithURL:[AMBValues getLinkedinClientValuesUrl:companyUID] requestType:@"GET"];
+    [[self.urlSession dataTaskWithRequest:linkedinClientRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"GET LINKEDIN CLIENT PAYLOAD status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            NSDictionary *returnDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            DLog(@"LinkedIn Client SUCCESSFUL with response - %@", returnDict);
+            if (success) { success(returnDict); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"LinkedIn Client FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"Get LinkedIn Client Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
+    }] resume];
+}
+
+
 #pragma mark - Helper Functions
 
 - (NSURLSession*)createURLSession {
