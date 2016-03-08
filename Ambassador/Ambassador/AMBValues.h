@@ -35,6 +35,7 @@
 + (NSString*)getSentryDSNValue;
 + (NSString*)getCompanyDetailsUrl;
 + (NSString*)getLinkedinClientValuesUrl:(NSString*)clientUID;
++ (NSString*)getLinkedinAccessTokenUrl:(NSString*)popupValue;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
