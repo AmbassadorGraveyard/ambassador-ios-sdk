@@ -338,6 +338,25 @@
     }] resume];
 }
 
+- (void)getLinkedInAccessTokenWithPopupValue:(NSString*)popupValue success:(void(^)(NSString *accessToken))success failure:(void(^)(NSString *error))failure {
+    NSMutableURLRequest *linkedinAccessRequest = [self createURLRequestWithURL:[AMBValues getLinkedinAccessTokenUrl:popupValue] requestType:@"GET"];
+    [[self.urlSession dataTaskWithRequest:linkedinAccessRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"GET LINKEDIN ACCESS TOKEN status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            NSDictionary *returnDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            DLog(@"LinkedIn Access Token SUCCESSFUL with response - %@", returnDict);
+            if (success) { success(returnDict[@"access_toke"]); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"LinkedIn Access Token FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"Get LinkedIn Access Token Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
+    }] resume];
+}
+
 
 #pragma mark - Helper Functions
 

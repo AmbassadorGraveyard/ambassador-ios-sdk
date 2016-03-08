@@ -100,7 +100,8 @@
 + (NSString*)getLinkedInAuthorizationUrl {
     // Creates a unique value that will be used to match up and get Linkedin access token from Envoy
     NSString *popupvalue = [NSString stringWithFormat:@"%@%@%@", [AMBValues getLinkedInClientID], [AMBUtilities createRequestID], [AMBUtilities create32CharCode]];
-    return [NSString stringWithFormat:@"https://api.getenvoy.co/oauth/authenticate/?client_id=%@&client_secret=%@&provider=linkedin&popup=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupvalue];
+    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getenvoy.co/oauth/authenticate/?client_id=%@&client_secret=%@&provider=linkedin&popup=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupvalue] :
+        [NSString stringWithFormat:@"https://dev-envoy-api.herokuapp.com/oauth/authenticate/?client_id=%@&client_secret=%@&provider=linkedin&popup=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupvalue];
 }
 
 + (NSString*)getLinkedInAuthCallbackUrl {
@@ -149,6 +150,11 @@
 
 + (NSString*)getLinkedinClientValuesUrl:(NSString*)clientUID {
     return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getambassador.com/companies/%@/", clientUID] : [NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/companies/%@/", clientUID];
+}
+
++ (NSString*)getLinkedinAccessTokenUrl:(NSString*)popupValue {
+    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getenvoy.co/oauth/access_token?client_id=%@&client_secret=%@&popup=%@/", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupValue] :
+        [NSString stringWithFormat:@"https://dev-envoy-api.herokuapp.com/oauth/access_token?client_id=%@&client_secret=%@&popup=%@/", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupValue];
 }
 
 
