@@ -98,7 +98,9 @@
 }
 
 + (NSString*)getLinkedInAuthorizationUrl {
-    return @"https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=***REMOVED***&redirect_uri=http://localhost:2999/&state=987654321&scope=r_basicprofile%20w_share";
+    // Creates a unique value that will be used to match up and get Linkedin access token from Envoy
+    NSString *popupvalue = [NSString stringWithFormat:@"%@%@%@", [AMBValues getLinkedInClientID], [AMBUtilities createRequestID], [AMBUtilities create32CharCode]];
+    return [NSString stringWithFormat:@"https://api.getenvoy.co/oauth/authenticate/?client_id=%@&client_secret=%@&provider=linkedin&popup=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupvalue];
 }
 
 + (NSString*)getLinkedInAuthCallbackUrl {
@@ -139,6 +141,14 @@
 
 + (NSString*)getSentryDSNValue {
     return @"https://***REMOVED***@app.getsentry.com/67182";
+}
+
++ (NSString*)getCompanyDetailsUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/companies/" : @"https://dev-ambassador-api.herokuapp.com/companies/";
+}
+
++ (NSString*)getLinkedinClientValuesUrl:(NSString*)clientUID {
+    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getambassador.com/companies/%@", clientUID] : [NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/companies/%@", clientUID];
 }
 
 
@@ -205,6 +215,15 @@
     [[AMBValues ambUserDefaults] setObject:deviceToken forKey:@"apn_device_token"];
 }
 
++ (void)setLinkedInClientID:(NSString*)clientID {
+    [[AMBValues ambUserDefaults] setObject:clientID forKey:@"linkedin_client_id"];
+}
+
++ (void)setLinkedInClientSecret:(NSString*)clientSecret {
+    [[AMBValues ambUserDefaults] setObject:clientSecret forKey:@"linkedin_client_secret"];
+}
+
+
 // Should only be used for TESTING
 + (void)resetHasInstalled {
     NSUserDefaults *ambDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AMBTEST"];
@@ -263,6 +282,14 @@
 
 + (NSString*)getAPNDeviceToken {
     return [[AMBValues ambUserDefaults] valueForKey:@"apn_device_token"];
+}
+
++ (NSString*)getLinkedInClientID {
+    return [[AMBValues ambUserDefaults] valueForKey:@"linkedin_client_id"];
+}
+
++ (NSString*)getLinkedInClientSecret {
+    return [[AMBValues ambUserDefaults] valueForKey:@"linkedin_client_secret"];
 }
 
 @end
