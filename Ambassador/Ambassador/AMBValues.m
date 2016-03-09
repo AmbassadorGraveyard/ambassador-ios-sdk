@@ -104,18 +104,6 @@
         [NSString stringWithFormat:@"https://dev-envoy-api.herokuapp.com/oauth/authenticate/?client_id=%@&client_secret=%@&provider=linkedin&popup=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupvalue];
 }
 
-+ (NSString*)getLinkedInAuthCallbackUrl {
-    return @"http://localhost:2999/";
-}
-
-+ (NSString*)getLinkedInRequestTokenUrl {
-    return @"https://www.linkedin.com/uas/oauth2/accessToken";
-}
-
-+ (NSString*)getLinkedInValidationUrl {
-    return @"https://api.linkedin.com/v1/people/~?format=json";
-}
-
 + (NSString*)getLinkedInShareUrlWithMessage:(NSString*)message {
     return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getenvoy.co/provider/linkedin/share/?client_id=%@&client_secret=%@&access_token=%@&message=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], [AMBValues getLinkedInAccessToken], message] :
         [NSString stringWithFormat:@"https://dev-envoy-api.herokuapp.com/provider/linkedin/share/?client_id=%@&client_secret=%@&access_token=%@&message=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], [AMBValues getLinkedInAccessToken], message];

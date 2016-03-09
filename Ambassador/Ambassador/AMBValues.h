@@ -23,9 +23,6 @@
 + (NSString*)getSendIdentifyUrl;
 + (NSString*)getShareTrackUrl;
 + (NSString*)getLinkedInAuthorizationUrl;
-+ (NSString*)getLinkedInAuthCallbackUrl;
-+ (NSString*)getLinkedInRequestTokenUrl;
-+ (NSString*)getLinkedInValidationUrl;
 + (NSString*)getLinkedInShareUrlWithMessage:(NSString*)message;
 + (NSString*)getBulkShareSMSUrl;
 + (NSString*)getBulkShareEmailUrl;
