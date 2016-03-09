@@ -79,7 +79,7 @@
 - (void)testDidSelectPost {
     // GIVEN
     id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
-    [[mockNetworkMgr expect] shareToLinkedinWithPayload:[OCMArg isKindOfClass:[NSDictionary class]] success:[OCMArg any] needsReauthentication:[OCMArg any] failure:[OCMArg any]];
+    [[mockNetworkMgr expect] shareToLinkedInWithMessage:[OCMArg any] success:[OCMArg any] failure:[OCMArg any]];
     
     id mockPresentingVC = [OCMockObject mockForClass:[UIViewController class]];
     [[mockPresentingVC expect] dismissViewControllerAnimated:YES completion:nil];
@@ -121,24 +121,7 @@
         void (^success)() = nil;
         [invocation getArgument:&success atIndex:3];
         success();
-    }] shareToLinkedinWithPayload:[OCMArg isKindOfClass:[NSDictionary class]] success:[OCMArg invokeBlock] needsReauthentication:[OCMArg any] failure:[OCMArg any]];
-    
-    // WHEN
-    [self.linkedInShareVC didSelectPost];
-    
-    // THEN
-    [mockNetworkMgr verify];
-    [mockNetworkMgr stopMocking];
-}
-
-- (void)testNeedReauthenticaitonBlock {
-    // GIVEN
-    id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
-    [[[mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
-        void (^needsReauthentication)() = nil;
-        [invocation getArgument:&needsReauthentication atIndex:3];
-        needsReauthentication();
-    }] shareToLinkedinWithPayload:[OCMArg isKindOfClass:[NSDictionary class]] success:[OCMArg any] needsReauthentication:[OCMArg invokeBlock] failure:[OCMArg any]];
+    }] shareToLinkedInWithMessage:[OCMArg isKindOfClass:[NSString class]] success:[OCMArg invokeBlock] failure:[OCMArg any]];
     
     // WHEN
     [self.linkedInShareVC didSelectPost];
@@ -155,7 +138,7 @@
         void (^failure)() = nil;
         [invocation getArgument:&failure atIndex:3];
         failure();
-    }] shareToLinkedinWithPayload:[OCMArg isKindOfClass:[NSDictionary class]] success:[OCMArg any] needsReauthentication:[OCMArg any] failure:[OCMArg invokeBlock]];
+    }] shareToLinkedInWithMessage:[OCMArg isKindOfClass:[NSString class]] success:[OCMArg any] failure:[OCMArg invokeBlock]];
     
     // WHEN
     [self.linkedInShareVC didSelectPost];

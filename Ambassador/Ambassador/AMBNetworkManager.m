@@ -73,60 +73,6 @@
     }] resume];
 }
 
-- (void)getLinkedInRequestTokenWithKey:(NSString*)key success:(void(^)())success failure:(void(^)(NSString *error))failure {
-    NSString *bodyValue = [NSString stringWithFormat:@"grant_type=authorization_code&code=%@&redirect_uri=http://localhost:2999/&client_id=75sew7u54h2hn0&client_secret=pX72VGlgpjMnzTGs", key];
-    
-    NSMutableURLRequest *linkedinRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[AMBValues getLinkedInRequestTokenUrl]]];
-    linkedinRequest.HTTPMethod = @"POST";
-    [linkedinRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    linkedinRequest.HTTPBody = [bodyValue dataUsingEncoding:NSUTF8StringEncoding];
-    
-     NSURLSession *mainQueueSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    
-    NSURLSessionDataTask *task = [mainQueueSession dataTaskWithRequest:linkedinRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
-        DLog(@"LINKEDIN REQUEST TOKEN Status code = %li", (long)statusCode);
-        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-            NSMutableDictionary *tokenResponse = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
-            [AMBValues setLinkedInExpirationDate:tokenResponse[@"expires_in"]];
-            [AMBValues setLinkedInAccessToken:tokenResponse[@"access_token"]];
-            if (success) { success(); }
-        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]){
-            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
-        } else {
-            DLog(@"LINKEDIN REQUEST TOKEN Error - %@", error);
-            if (failure) { failure([error localizedFailureReason]); }
-        }
-    }];
-    
-    [task resume];
-}
-
-- (void)checkForInvalidatedTokenWithCompletion:(void(^)())complete {
-    NSURL *url = [NSURL URLWithString:[AMBValues getLinkedInValidationUrl]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"GET";
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", [AMBValues getLinkedInAccessToken]] forHTTPHeaderField:@"Authorization"];
-    
-     NSURLSession *mainQueueSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    
-    NSURLSessionTask *task = [mainQueueSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
-        if (!error && statusCode == 401) {
-            DLog(@"Nullifying Linkedin Tokens");
-            [AMBValues setLinkedInAccessToken:nil];
-        } else if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-            DLog(@"LinkedIn Tokens are still up to date");
-        } else {
-            DLog(@"LINKEDIN TOKEN VALIDATION CHECK Error - %@", error);
-        }
-        
-        complete();
-    }];
-    
-    [task resume];
-}
-
 - (void)bulkShareSmsWithMessage:(NSString*)message phoneNumbers:(NSArray*)phoneNumbers success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
     NSString *senderName = [NSString stringWithFormat:@"%@ %@", [AMBValues getUserFirstName], [AMBValues getUserLastName]];
     AMBBulkShareSMSObject *smsObject = [[AMBBulkShareSMSObject alloc] initWithPhoneNumbers:phoneNumbers fromSender:senderName message:message];
@@ -327,7 +273,6 @@
         }
     }] resume];
 }
-
 
 - (void)shareToLinkedInWithMessage:(NSString*)message success:(void(^)(NSString *successMessage))success failure:(void(^)(NSString *error))failure {
     // Encodes the url because of the spaces in the message

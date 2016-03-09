@@ -32,6 +32,7 @@
     self.mockURLSession = [OCMockObject partialMockForObject:self.networkManager.urlSession];
     self.mockResponse = [OCMockObject mockForClass:[NSHTTPURLResponse class]];
     [[[self.mockResponse expect] andReturnValue:OCMOCK_VALUE((NSInteger)200)] statusCode];
+    self.networkManager.urlSession = self.mockURLSession;
 }
 
 - (void)tearDown {
@@ -88,85 +89,6 @@
     [self waitForExpectationsWithTimeout:2.0 handler:^(NSError * _Nullable error) {
         XCTAssertEqual([returnValue count], 1);
         [self.mockURLSession verify];
-    }];
-}
-
-- (void)testGetLinkedInRequestToken {
-    // GIVEN
-    __block XCTestExpectation *successExpectation = [self expectationWithDescription:@"linkedinRequestTokenCompletion"];
-    
-    id mockURLSession = [OCMockObject mockForClass:[NSURLSession class]];
-    [[[mockURLSession expect] andReturn:mockURLSession] sessionWithConfiguration:[OCMArg any] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    [[[mockURLSession expect] andDo:^(NSInvocation *invocation) {
-        void (^completionHandler)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) = nil;
-        [invocation getArgument:&completionHandler atIndex:3];
-        completionHandler([NSJSONSerialization dataWithJSONObject:@{@"test" : @"testValue" } options:0 error:nil], self.mockResponse, nil);
-    }] dataTaskWithRequest:[OCMArg any] completionHandler:[OCMArg invokeBlock]];
-    
-    // WHEN
-    [self.networkManager getLinkedInRequestTokenWithKey:@"fakeKey" success:^{
-        [successExpectation fulfill];
-        successExpectation = nil;
-    } failure:nil];
-    
-    // THEN
-    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError * _Nullable error) {
-        [mockURLSession verify];
-    }];
-}
-
-- (void)testCheckForInvalidatedLinkedinToken {
-    // GIVEN
-    __block XCTestExpectation *successExpectation = [self expectationWithDescription:@"linkedinInvalidationTokenCompletion"];
-    
-    id failMockResponse = [OCMockObject mockForClass:[NSHTTPURLResponse class]];
-    [[[failMockResponse expect] andReturnValue:OCMOCK_VALUE((NSInteger)401)] statusCode];
-    
-    id mockURLSession = [OCMockObject mockForClass:[NSURLSession class]];
-    [[[mockURLSession expect] andReturn:mockURLSession] sessionWithConfiguration:[OCMArg any] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    [[[mockURLSession expect] andDo:^(NSInvocation *invocation) {
-        void (^completionHandler)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) = nil;
-        [invocation getArgument:&completionHandler atIndex:3];
-        completionHandler([NSJSONSerialization dataWithJSONObject:@{@"test" : @"testValue" } options:0 error:nil], failMockResponse, nil);
-    }] dataTaskWithRequest:[OCMArg any] completionHandler:[OCMArg invokeBlock]];
-    
-    // WHEN
-    [self.networkManager checkForInvalidatedTokenWithCompletion:^{
-        [successExpectation fulfill];
-        successExpectation = nil;
-    }];
-    
-    // THEN
-    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError * _Nullable error) {
-        [mockURLSession verify];
-    }];
-}
-
-- (void)testShareToLinkedIn {
-    // GIVEN
-    __block XCTestExpectation *successExpectation = [self expectationWithDescription:@"linkedinShareCompletion"];
-    
-    NSDictionary *fakeDict = @{ @"shareValue" : @"message" };
-    
-    id mockURLSession = [OCMockObject mockForClass:[NSURLSession class]];
-    [[[mockURLSession expect] andReturn:mockURLSession] sessionWithConfiguration:[OCMArg any] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    [[[mockURLSession expect] andDo:^(NSInvocation *invocation) {
-        void (^completionHandler)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) = nil;
-        [invocation getArgument:&completionHandler atIndex:3];
-        completionHandler([NSJSONSerialization dataWithJSONObject:@{@"test" : @"testValue" } options:0 error:nil], self.mockResponse, nil);
-    }] dataTaskWithRequest:[OCMArg any] completionHandler:[OCMArg invokeBlock]];
-    
-    // WHEN
-    [self.networkManager shareToLinkedinWithPayload:fakeDict success:^{
-        [successExpectation fulfill];
-        successExpectation = nil;
-    } needsReauthentication:^{
-        nil;
-    } failure:nil];
-    
-    // THEN
-    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError * _Nullable error) {
-        [mockURLSession verify];
     }];
 }
 

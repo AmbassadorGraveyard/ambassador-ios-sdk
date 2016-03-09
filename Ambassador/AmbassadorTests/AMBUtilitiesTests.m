@@ -295,4 +295,26 @@
     XCTAssertEqualObjects(expectedDict[@"testkey2"], resultDict[@"testkey2"]);
 }
 
+- (void)testCreate32CharCode {
+    // WHEN
+    NSString *randomString = [AMBUtilities create32CharCode];
+    
+    // THEN
+    XCTAssertEqual(randomString.length, 32);
+}
+
+- (void)testStringIsEmpty {
+    // GIVEN
+    NSString *emptyString = @"";
+    NSString *nonEmtpyString = @"test";
+    
+    // WHEN
+    BOOL emptyTest1 = [AMBUtilities stringIsEmpty:emptyString];
+    BOOL emptyTest2 = [AMBUtilities stringIsEmpty:nonEmtpyString];
+    
+    // THEN
+    XCTAssertTrue(emptyTest1);
+    XCTAssertFalse(emptyTest2);
+}
+
 @end
