@@ -98,8 +98,7 @@
             [[AMBUtilities sharedInstance] showLoadingScreenForView:self.webView];
             
             [[AMBNetworkManager sharedInstance] getLinkedInAccessTokenWithPopupValue:self.popupString success:^(NSString *accessToken) {
-                [AMBValues setLinkedInAccessToken:accessToken];
-                [self.navigationController popViewControllerAnimated:YES];
+                [self.delegate userDidContinue];
             } failure:^(NSString *error) {
                 [self.navigationController popViewControllerAnimated:YES];
             }];
@@ -110,8 +109,6 @@
 - (void)getLinkedInClientInfo {
     [[AMBNetworkManager sharedInstance] getCompanyUIDWithSuccess:^(NSString *companyUID) {
         [[AMBNetworkManager sharedInstance] getLinkedInClientValuesWithUID:companyUID success:^(NSDictionary *clientValues) {
-            [AMBValues setLinkedInClientID:clientValues[@"envoy_client_id"]];
-            [AMBValues setLinkedInClientSecret:clientValues[@"envoy_client_secret"]];
             [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[AMBValues getLinkedInAuthorizationUrl]]]];
         } failure:^(NSString *error) {
             DLog(@"Unable to get client values - %@", error);
