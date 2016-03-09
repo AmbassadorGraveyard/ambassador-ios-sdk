@@ -10,8 +10,9 @@
 #import "AMBConstants.h"
 #import "AMBNetworkManager.h"
 #import "AMBThemeManager.h"
+#import "AMBUtilities.h"
 
-@interface AMBAuthorizeLinkedIn () <UIWebViewDelegate, UIAlertViewDelegate>
+@interface AMBAuthorizeLinkedIn () <UIWebViewDelegate, AMBUtilitiesDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (nonatomic, strong) NSString * popupString;
@@ -29,6 +30,7 @@
     self.navigationItem.title = @"Authorize LinkedIn";
     self.navigationController.navigationBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
     [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
+    [AMBUtilities sharedInstance].delegate = self;
     [self getLinkedInClientInfo];
 }
 
@@ -61,6 +63,15 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [[AMBUtilities sharedInstance] hideLoadingView];
+}
+
+
+#pragma mark - Utilities Delegate
+
+- (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
+    if ([uniqueID isEqualToString:@"linkedError"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 
@@ -103,10 +114,11 @@
             [AMBValues setLinkedInClientSecret:clientValues[@"envoy_client_secret"]];
             [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[AMBValues getLinkedInAuthorizationUrl]]]];
         } failure:^(NSString *error) {
-            DLog(@"Unable to get client values");
+            DLog(@"Unable to get client values - %@", error);
+            [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"LinkedIn is currently unavailable" withUniqueID:@"linkedError" forViewController:self shouldDismissVCImmediately:NO];
         }];
     } failure:^(NSString *error) {
-        [self.navigationController popViewControllerAnimated:YES];
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"LinkedIn is currently unavailable" withUniqueID:@"linkedError" forViewController:self shouldDismissVCImmediately:NO];
     }];
 }
 
