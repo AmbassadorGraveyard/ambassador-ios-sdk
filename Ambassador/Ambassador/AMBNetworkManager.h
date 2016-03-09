@@ -34,6 +34,6 @@
 - (void)getCompanyUIDWithSuccess:(void(^)(NSString *companyUID))success failure:(void(^)(NSString *error))failure;
 - (void)getLinkedInClientValuesWithUID:(NSString*)companyUID success:(void(^)(NSDictionary *clientValues))success failure:(void(^)(NSString *error))failure;
 - (void)getLinkedInAccessTokenWithPopupValue:(NSString*)popupValue success:(void(^)(NSString *accessToken))success failure:(void(^)(NSString *error))failure;
-- (void)shareToLinkedInWithMessage:(NSString*)message success:(void(^)(NSString *accessToken))success failure:(void(^)(NSString *error))failure;
+- (void)shareToLinkedInWithMessage:(NSString*)message success:(void(^)(NSString *successMessage))success failure:(void(^)(NSString *error))failure;
 
 @end

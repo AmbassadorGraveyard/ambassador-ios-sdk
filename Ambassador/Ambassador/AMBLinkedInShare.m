@@ -29,7 +29,10 @@
 #pragma mark - SLComposeView Delegate 
 
 - (void)didSelectPost {
-    [[AMBNetworkManager sharedInstance] shareToLinkedInWithMessage:self.textView.text success:^(NSString *accessToken) {
+    // Appends the share url to the message before sending
+    NSString *fullShareString = [NSString stringWithFormat:@"%@ %@", self.textView.text, [AMBValues getUserURLObject].url];
+    
+    [[AMBNetworkManager sharedInstance] shareToLinkedInWithMessage:fullShareString success:^(NSString *accessToken) {
         [self.delegate userDidPostFromService:@"LinkedIn"];
     } failure:^(NSString *error) {
         [self.delegate networkError:@"Posting Error" message:@"Your post couldn't be completed due to a network error"];
