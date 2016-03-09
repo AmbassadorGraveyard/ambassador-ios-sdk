@@ -9,6 +9,7 @@
 #import "AMBAuthorizeLinkedIn.h"
 #import "AMBConstants.h"
 #import "AMBNetworkManager.h"
+#import "AMBThemeManager.h"
 
 @interface AMBAuthorizeLinkedIn () <UIWebViewDelegate, UIAlertViewDelegate>
 
@@ -26,12 +27,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Authorize LinkedIn";
+    self.navigationController.navigationBar.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
     [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
     [self getLinkedInClientInfo];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [[AMBUtilities sharedInstance] rotateLoadingView:self.view orientation:toInterfaceOrientation];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[AMBUtilities sharedInstance] hideLoadingView];
 }
 
 
@@ -77,8 +83,12 @@
     
         // Lets us know that the user was successfully logged in and ready to grab the access token
         if ([[queryPair firstObject] isEqualToString:@"code"]) {
+            // Shows loading screen once we know the user has been successfully logged in
+            [[AMBUtilities sharedInstance] showLoadingScreenForView:self.webView];
+            
             [[AMBNetworkManager sharedInstance] getLinkedInAccessTokenWithPopupValue:self.popupString success:^(NSString *accessToken) {
                 [AMBValues setLinkedInAccessToken:accessToken];
+                [self.navigationController popViewControllerAnimated:YES];
             } failure:^(NSString *error) {
                 [self.navigationController popViewControllerAnimated:YES];
             }];

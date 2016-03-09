@@ -356,7 +356,7 @@ int contactServiceType;
 }
 
 - (void)checkLinkedInToken {
-    if ([AMBValues getLinkedInAccessToken]) {
+    if ([AMBValues getLinkedInAccessToken] && ![AMBUtilities stringIsEmpty:[AMBValues getLinkedInAccessToken]]) {
         [self presentLinkedInShare];
     } else {
         [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];

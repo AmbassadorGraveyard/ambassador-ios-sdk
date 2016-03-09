@@ -201,5 +201,9 @@
     
     return result;
 }
+
++ (BOOL)stringIsEmpty:(NSString*)string {
+    return [string isEqualToString:@""] ? YES : NO;
+}
     
 @end

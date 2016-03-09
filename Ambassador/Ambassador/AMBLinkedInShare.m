@@ -36,6 +36,9 @@
         [self.delegate userDidPostFromService:@"LinkedIn"];
     } failure:^(NSString *error) {
         [self.delegate networkError:@"Posting Error" message:@"Your post couldn't be completed due to a network error"];
+        
+        // Sets the linkedin access token to an empty string so that the user is forced to log in again
+        [AMBValues setLinkedInAccessToken:@""];
     }];
     
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
