@@ -329,8 +329,11 @@
 }
 
 
-- (void)shareToLinkedInWithMessage:(NSString*)message success:(void(^)(NSString *accessToken))success failure:(void(^)(NSString *error))failure {
-    NSMutableURLRequest *linkedInShareRequest = [self createURLRequestWithURL:[AMBValues getLinkedInShareUrlWithMessage:message] requestType:@"GET"];
+- (void)shareToLinkedInWithMessage:(NSString*)message success:(void(^)(NSString *successMessage))success failure:(void(^)(NSString *error))failure {
+    // Encodes the url because of the spaces in the message
+    NSString *encodedUrl = [[AMBValues getLinkedInShareUrlWithMessage:message] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSMutableURLRequest *linkedInShareRequest = [self createURLRequestWithURL:encodedUrl requestType:@"GET"];
     [[self.urlSession dataTaskWithRequest:linkedInShareRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
         DLog(@"LINKEDIN SHARE status code = %li", (long)statusCode);
