@@ -26,7 +26,7 @@
 + (NSString*)getLinkedInAuthCallbackUrl;
 + (NSString*)getLinkedInRequestTokenUrl;
 + (NSString*)getLinkedInValidationUrl;
-+ (NSString*)getLinkedInShareUrl;
++ (NSString*)getLinkedInShareUrlWithMessage:(NSString*)message;
 + (NSString*)getBulkShareSMSUrl;
 + (NSString*)getBulkShareEmailUrl;
 + (NSString*)getSendConversionUrl;

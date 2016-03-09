@@ -116,8 +116,9 @@
     return @"https://api.linkedin.com/v1/people/~?format=json";
 }
 
-+ (NSString*)getLinkedInShareUrl {
-    return @"https://api.linkedin.com/v1/people/~/shares?format=json";
++ (NSString*)getLinkedInShareUrlWithMessage:(NSString*)message {
+    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getenvoy.co/provider/linkedin/share/?client_id=%@&client_secret=%@&access_token=%@&message=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], [AMBValues getLinkedInAccessToken], message] :
+        [NSString stringWithFormat:@"https://dev-envoy-api.herokuapp.com/provider/linkedin/share/?client_id=%@&client_secret=%@&access_token=%@&message=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], [AMBValues getLinkedInAccessToken], message];
 }
 
 + (NSString*)getBulkShareSMSUrl {
@@ -153,8 +154,8 @@
 }
 
 + (NSString*)getLinkedinAccessTokenUrl:(NSString*)popupValue {
-    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getenvoy.co/oauth/access_token?client_id=%@&client_secret=%@&popup=%@/", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupValue] :
-        [NSString stringWithFormat:@"https://dev-envoy-api.herokuapp.com/oauth/access_token?client_id=%@&client_secret=%@&popup=%@/", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupValue];
+    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getenvoy.co/oauth/access_token/?client_id=%@&client_secret=%@&popup=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupValue] :
+        [NSString stringWithFormat:@"https://dev-envoy-api.herokuapp.com/oauth/access_token/?client_id=%@&client_secret=%@&popup=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupValue];
 }
 
 

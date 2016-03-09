@@ -127,36 +127,6 @@
     [task resume];
 }
 
-- (void)shareToLinkedinWithPayload:(NSDictionary*)payload success:(void(^)())success needsReauthentication:(void(^)())shouldReauthenticate failure:(void(^)(NSString *error))failure {
-    NSURL *url = [NSURL URLWithString:[AMBValues getLinkedInShareUrl]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
-    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", [AMBValues getLinkedInAccessToken]] forHTTPHeaderField:@"Authorization"];
-    [request setValue:@"json" forHTTPHeaderField:@"x-li-format"];
-    
-    NSURLSession *mainQueueSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    
-    NSURLSessionDataTask *task = [mainQueueSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
-        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-            DLog(@"Linkedin Post SUCCESSFUL!");
-            if (success) { success(); }
-        } else if (!error && statusCode == 401) {
-            if (shouldReauthenticate) { shouldReauthenticate(); }
-        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
-            DLog(@"Linkedin Post FAILED with response - %@", error);
-            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
-        } else {
-            DLog(@"LINKEDIN POST Error - %@", error);
-            if (failure) { failure([error localizedFailureReason]); }
-        }
-    }];
-    
-    [task resume];
-}
-
 - (void)bulkShareSmsWithMessage:(NSString*)message phoneNumbers:(NSArray*)phoneNumbers success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
     NSString *senderName = [NSString stringWithFormat:@"%@ %@", [AMBValues getUserFirstName], [AMBValues getUserLastName]];
     AMBBulkShareSMSObject *smsObject = [[AMBBulkShareSMSObject alloc] initWithPhoneNumbers:phoneNumbers fromSender:senderName message:message];
@@ -340,18 +310,39 @@
 
 - (void)getLinkedInAccessTokenWithPopupValue:(NSString*)popupValue success:(void(^)(NSString *accessToken))success failure:(void(^)(NSString *error))failure {
     NSMutableURLRequest *linkedinAccessRequest = [self createURLRequestWithURL:[AMBValues getLinkedinAccessTokenUrl:popupValue] requestType:@"GET"];
+
     [[self.urlSession dataTaskWithRequest:linkedinAccessRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
         DLog(@"GET LINKEDIN ACCESS TOKEN status code = %li", (long)statusCode);
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             NSDictionary *returnDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             DLog(@"LinkedIn Access Token SUCCESSFUL with response - %@", returnDict);
-            if (success) { success(returnDict[@"access_toke"]); }
+            if (success) { success(returnDict[@"access_token"]); }
         } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"LinkedIn Access Token FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
             DLog(@"Get LinkedIn Access Token Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
+    }] resume];
+}
+
+
+- (void)shareToLinkedInWithMessage:(NSString*)message success:(void(^)(NSString *accessToken))success failure:(void(^)(NSString *error))failure {
+    NSMutableURLRequest *linkedInShareRequest = [self createURLRequestWithURL:[AMBValues getLinkedInShareUrlWithMessage:message] requestType:@"GET"];
+    [[self.urlSession dataTaskWithRequest:linkedInShareRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"LINKEDIN SHARE status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            DLog(@"Linkedin Share SUCCESSFUL with response - %@", returnString);
+            if (success) { success(returnString); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"LinkedIn Share FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"LinkedIn Share Error - %@", error);
             if (failure) { failure([error localizedFailureReason]); }
         }
     }] resume];
@@ -382,7 +373,7 @@
 // Allows certain requests to be made for dev servers when running in unit tests for Circle
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler{
     if([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
-        if([challenge.protectionSpace.host isEqualToString:@"dev-ambassador-api.herokuapp.com"]) { // Makes sure that it's our url being challenged
+        if([challenge.protectionSpace.host isEqualToString:@"dev-ambassador-api.herokuapp.com"] || [challenge.protectionSpace.host isEqualToString:@"dev-envoy-api.herokuapp.com"]) { // Makes sure that it's our url being challenged
             NSURLCredential *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
             completionHandler(NSURLSessionAuthChallengeUseCredential,credential);
         }
