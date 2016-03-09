@@ -11,7 +11,6 @@ test:
   override:
     - set -o pipefail &&
      xcodebuild -project Ambassador.xcodeproj
-      -sdk iphonesimulator
        -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
        -configuration Debug
        -scheme TestApplication
@@ -23,8 +22,7 @@ test:
 
     - set -o pipefail &&
      xcodebuild -project Ambassador.xcodeproj
-      -sdk iphonesimulator
-       -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
+       -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
        -scheme AmbassadorUITests
        -configuration Debug
        clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
