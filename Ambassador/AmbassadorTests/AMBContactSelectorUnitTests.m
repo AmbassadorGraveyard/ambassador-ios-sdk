@@ -409,6 +409,7 @@
     
     // THEN
     [mockNetworkMgr verify];
+    [mockNetworkMgr stopMocking];
 }
 
 - (void)testValuesFromContacts {
