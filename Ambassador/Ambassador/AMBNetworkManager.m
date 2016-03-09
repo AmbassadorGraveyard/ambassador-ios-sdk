@@ -243,6 +243,8 @@
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             NSDictionary *returnDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             DLog(@"LinkedIn Client SUCCESSFUL with response - %@", returnDict);
+            [AMBValues setLinkedInClientID:returnDict[@"envoy_client_id"]];
+            [AMBValues setLinkedInClientSecret:returnDict[@"envoy_client_secret"]];
             if (success) { success(returnDict); }
         } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"LinkedIn Client FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
@@ -263,6 +265,7 @@
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             NSDictionary *returnDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             DLog(@"LinkedIn Access Token SUCCESSFUL with response - %@", returnDict);
+            [AMBValues setLinkedInAccessToken:returnDict[@"access_token"]];
             if (success) { success(returnDict[@"access_token"]); }
         } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"LinkedIn Access Token FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
