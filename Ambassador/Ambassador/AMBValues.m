@@ -191,7 +191,7 @@
 }
 
 + (void)setLinkedInAccessToken:(NSString*)accessToken {
-    [[AMBValues ambUserDefaults] setValue:accessToken forKey:@"lnkdin_access_token"];
+    [[AMBValues ambUserDefaults] setValue:accessToken forKey:@"envoy_access_token"];
 }
 
 + (void)setUserEmail:(NSString*)email {
@@ -260,7 +260,7 @@
 }
 
 + (NSString*)getLinkedInAccessToken {
-    return [[AMBValues ambUserDefaults] valueForKey:@"lnkdin_access_token"];
+    return [[AMBValues ambUserDefaults] valueForKey:@"envoy_access_token"];
 }
 
 + (NSString*)getUserEmail {
