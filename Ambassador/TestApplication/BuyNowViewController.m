@@ -29,9 +29,9 @@
     AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];
     conversionParameters.mbsy_email = [[NSUserDefaults standardUserDefaults] valueForKey:@"loginEmail"];
     conversionParameters.mbsy_campaign = @260;
-    conversionParameters.mbsy_revenue = @200;
+    conversionParameters.mbsy_revenue = @24.99;
     conversionParameters.mbsy_custom1 = @"This is a conversion from the Ambassador iOS Test Application";
-    conversionParameters.mbsy_custom2 = @"Buy conversion registered for $24.00";
+    conversionParameters.mbsy_custom2 = @"Buy conversion registered for $24.99";
     
     [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {
         if (error) {

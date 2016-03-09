@@ -484,6 +484,8 @@
 		EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorTheme.plist; sourceTree = "<group>"; };
 		EF5390E11C46CFE5005F6944 /* ApplicationUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationUITests.swift; sourceTree = "<group>"; };
 		EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorShirt.plist; sourceTree = "<group>"; };
+		EF5B00841C90AD1B002BD361 /* AMBConversionModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AMBConversionModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		EF5B00851C90AD69002BD361 /* AMBConversionModel_2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMBConversionModel_2.xcdatamodel; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2093,9 +2095,11 @@
 		EFE7D7971C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				EF5B00851C90AD69002BD361 /* AMBConversionModel_2.xcdatamodel */,
+				EF5B00841C90AD1B002BD361 /* AMBConversionModel 2.xcdatamodel */,
 				EFE7D7981C21C9C700D7F92C /* AMBConversionModel.xcdatamodel */,
 			);
-			currentVersion = EFE7D7981C21C9C700D7F92C /* AMBConversionModel.xcdatamodel */;
+			currentVersion = EF5B00841C90AD1B002BD361 /* AMBConversionModel 2.xcdatamodel */;
 			name = AMBConversionModel.xcdatamodeld;
 			path = ../Ambassador/AMBConversionModel.xcdatamodeld;
 			sourceTree = "<group>";
