@@ -93,8 +93,7 @@
     [DefaultsHandler setFullName:firstName lastName:lastName];
     
     // Tokens
-    NSString *sdkToken = [NSString stringWithFormat:@"SDKToken %@", dictionary[@"company"][@"sdk_token"]];
-    [DefaultsHandler setSDKToken:sdkToken];
+    [DefaultsHandler setSDKToken:dictionary[@"company"][@"sdk_token"]];
     [DefaultsHandler setUniversalID:dictionary[@"company"][@"universal_id"]];
     
     [self.delegate userSuccessfullyLoggedIn];

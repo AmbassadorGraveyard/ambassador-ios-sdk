@@ -55,6 +55,7 @@
 + (BOOL)colorIsDark:(UIColor*)color;
 + (BOOL)isSuccessfulStatusCode:(NSInteger)statusCode;
 + (NSDictionary*)dictionaryFromQueryString:(NSString*)queryString;
++ (BOOL)stringIsEmpty:(NSString*)string;
 
 @end
 
