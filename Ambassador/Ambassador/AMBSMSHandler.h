@@ -11,7 +11,7 @@
 // Protocol Functions
 @protocol AMBSMSHandlerDelegate <NSObject>
 
-- (void)AMBSMSHandlerMessageSharedSuccessfully;
+- (void)AMBSMSHandlerMessageSharedSuccessfullyWithContacts:(NSArray*)validatedContacts;
 - (void)AMBSMSHandlerRequestName;
 - (void)AMBSMSHandlerMessageShareFailure;
 
@@ -22,6 +22,10 @@
 @interface AMBSMSHandler : NSObject
 
 @property (nonatomic, weak) id<AMBSMSHandlerDelegate> delegate;
+
+- (instancetype)initWithController:(UIViewController*)controller;
+- (void)sendSMSWithMessage:(NSString*)message;
+- (void)setContactArray:(NSArray*)contactArray;
 
 @end
 
