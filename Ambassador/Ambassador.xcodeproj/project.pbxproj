@@ -193,6 +193,8 @@
 		EF557A181C88B4D000F66761 /* AmbassadorLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A171C88B4D000F66761 /* AmbassadorLoginViewController.m */; };
 		EF557A1B1C88D39C00F66761 /* DefaultsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */; };
 		EF557A231C88E6BE00F66761 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A221C88E6BE00F66761 /* ProfileViewController.m */; };
+		EF5B00881C91C22A002BD361 /* AMBSMSHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5B00861C91C22A002BD361 /* AMBSMSHandler.h */; };
+		EF5B00891C91C22A002BD361 /* AMBSMSHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5B00871C91C22A002BD361 /* AMBSMSHandler.m */; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
@@ -511,6 +513,8 @@
 		EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultsHandler.m; sourceTree = "<group>"; };
 		EF557A211C88E6BE00F66761 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		EF557A221C88E6BE00F66761 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		EF5B00861C91C22A002BD361 /* AMBSMSHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBSMSHandler.h; sourceTree = "<group>"; };
+		EF5B00871C91C22A002BD361 /* AMBSMSHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSMSHandler.m; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -919,6 +923,8 @@
 				DBA3FB5F1BA8A23B00672D82 /* AMBContactSelector.m */,
 				EF7082C81C4997EA0068145E /* Contact Card */,
 				EFE7D78E1C21B9FC00D7F92C /* Custom Cells */,
+				EF5B00861C91C22A002BD361 /* AMBSMSHandler.h */,
+				EF5B00871C91C22A002BD361 /* AMBSMSHandler.m */,
 			);
 			name = "Contact Selector";
 			sourceTree = "<group>";
@@ -1254,6 +1260,7 @@
 				DBA3FC061BA8AA1D00672D82 /* AMBPTPusherChannel_Private.h in Headers */,
 				DBA3FC311BA8AA5600672D82 /* AMBSRWebSocket.h in Headers */,
 				DBA3FBAD1BA8A24F00672D82 /* AMBNamePrompt.h in Headers */,
+				EF5B00881C91C22A002BD361 /* AMBSMSHandler.h in Headers */,
 				DBA3FC111BA8AA1D00672D82 /* AMBPTPusherAPI.h in Headers */,
 				DBA3FC2E1BA8AA5600672D82 /* base64.h in Headers */,
 				DBA3FC181BA8AA1D00672D82 /* AMBPTPusherDelegate.h in Headers */,
@@ -1596,6 +1603,7 @@
 				DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */,
 				DBA3FB801BA8A23C00672D82 /* AMBConversion.m in Sources */,
 				DBA3FB8F1BA8A23C00672D82 /* AMBIdentify.m in Sources */,
+				EF5B00891C91C22A002BD361 /* AMBSMSHandler.m in Sources */,
 				DBA3FC011BA8AA1D00672D82 /* NSString+Hashing.m in Sources */,
 				DB6A24601BD00F3F00CE3230 /* AMBNetworkManager.m in Sources */,
 				DBA3FC1B1BA8AA1D00672D82 /* AMBPTPusherEvent.m in Sources */,
