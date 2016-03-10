@@ -80,13 +80,13 @@
 #pragma mark - MFMessageCompose ViewController Delegate
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [self.parentController dismissViewControllerAnimated:YES completion:nil];
+    
     if (result == MessageComposeResultSent) {
         [self.delegate AMBSMSHandlerMessageSharedSuccessfullyWithContacts:self.contactArray];
     } else if (result == MessageComposeResultFailed) {
         [self.delegate AMBSMSHandlerMessageShareFailureWithError:@"MFMessageComposeViewController failed to send SMS message"];
     }
-    
-    [self.parentController dismissViewControllerAnimated:YES completion:nil];
 }
 
 

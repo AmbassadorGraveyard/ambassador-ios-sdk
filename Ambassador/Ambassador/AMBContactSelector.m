@@ -19,11 +19,13 @@
 #import "AMBContactCard.h"
 #import "AMBNetworkManager.h"
 #import "AMBErrors.h"
+#import "AMBSMSHandler.h"
+#import <MessageUI/MessageUI.h>
 
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                 AMBSelectedCellDelegate, UITextFieldDelegate,
                                 UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate,
-                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate, AMBContactCellDelegate, UIAlertViewDelegate>
+                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate, AMBContactCellDelegate, UIAlertViewDelegate, AMBSMSHandlerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UITableView *contactsTable;
@@ -49,6 +51,7 @@
 @property (nonatomic, strong) AMBContactLoader *contactLoader;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) AMBContact * selectedContact;
+@property (nonatomic, strong) AMBSMSHandler *smsHandler;
 @property (nonatomic) BOOL activeSearch;
 @property (nonatomic) BOOL isEditing;
 
@@ -300,27 +303,30 @@ BOOL keyboardShowing = NO;
 }
 
 
+#pragma mark - AMBSMSHandler Delegate
+
+- (void)AMBSMSHandlerMessageSharedSuccessfullyWithContacts:(NSArray *)validatedContacts {
+    [self sendShareTrack:validatedContacts];
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
+    [AMBUtilities sharedInstance].delegate = self;
+}
+
+- (void)AMBSMSHandlerMessageShareFailureWithError:(NSString *)error {
+    [AMBErrors errorSharingMessageForVC:self withErrorMessage:error];
+}
+
+- (void)AMBSMSHandlerRequestName {
+    [self performSegueWithIdentifier:NAME_PROMPT_SEGUE_IDENTIFIER sender:self];
+}
+
+
 #pragma mark - Send Functions
 
 - (void)sendSMS {
-    if (![self alreadyHaveNames]) {
-        [self performSegueWithIdentifier:NAME_PROMPT_SEGUE_IDENTIFIER sender:self];
-        return;
-    }
-    
-    NSArray *validatedNumbers = [AMBBulkShareHelper validatedPhoneNumbers:[self.selected allObjects]];
-    
-    if (validatedNumbers.count > 0) {
-        [[AMBNetworkManager sharedInstance] bulkShareSmsWithMessage:self.composeMessageTextView.text phoneNumbers:validatedNumbers success:^(NSDictionary *response) {
-            [self sendShareTrack:validatedNumbers];
-            [[AMBUtilities sharedInstance] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:self shouldDismissVCImmediately:NO];
-            [AMBUtilities sharedInstance].delegate = self;
-        } failure:^(NSString *error) {
-            [AMBErrors errorSharingMessageForVC:self withErrorMessage:error];
-        }];
-    } else {
-        [AMBErrors errorSendingInvalidPhoneNumbersForVC:self];
-    }
+    if (!self.smsHandler) { self.smsHandler = [[AMBSMSHandler alloc] initWithController:self];}
+    self.smsHandler.delegate = self;
+    [self.smsHandler setContacts:[self.selected allObjects]];
+    [self.smsHandler sendSMSWithMessage:self.composeMessageTextView.text];
 }
 
 - (void)sendEmail {
@@ -396,7 +402,7 @@ BOOL keyboardShowing = NO;
 #pragma mark - AMBUtitlites Delegate
 
 - (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
-    if (![uniqueID isEqualToString:@"missingURL"]) {
+    if (![uniqueID isEqualToString:@"missingURL"] && ![uniqueID isEqualToString:@"unsupportedSMS"]) {
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
