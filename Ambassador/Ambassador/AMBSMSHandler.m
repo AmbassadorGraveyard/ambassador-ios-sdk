@@ -11,10 +11,11 @@
 #import "AMBBulkShareHelper.h"
 #import "AMBNetworkManager.h"
 #import "AMBErrors.h"
+#import "AMBContactSelector.h"
 
 @interface AMBSMSHandler() <MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
 
-@property (nonatomic, strong) UIViewController * parentController;
+@property (nonatomic, strong) AMBContactSelector * parentController;
 @property (nonatomic, strong) NSArray * contactArray;
 @property (nonatomic, strong) NSString * messageString;
 
@@ -28,7 +29,7 @@
 
 - (instancetype)initWithController:(UIViewController*)controller {
     self = [super init];
-    self.parentController = controller;
+    self.parentController = (AMBContactSelector*)controller;
     
     return self;
 }
@@ -53,8 +54,9 @@
 }
 
 - (void)sendViaDirectSMS {
+    // If the device does not support SMS like a simulator, then we use twilio to send instead
     if (![MFMessageComposeViewController canSendText]) {
-        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"This device does not support SMS" withUniqueID:@"unsupportedSMS" forViewController:self.parentController shouldDismissVCImmediately:NO];
+        [self sendBulkViaTwilio];
         return;
     }
     
@@ -63,6 +65,9 @@
     smsController.messageComposeDelegate = self;
     [smsController setRecipients:self.contactArray];
     [smsController setBody:self.messageString];
+    
+    // Removes keyboard notifications contactSelector is not still reacting to the keyboard showing and hiding
+    [[NSNotificationCenter defaultCenter] removeObserver:self.parentController];
     
     [self.parentController presentViewController:smsController animated:YES completion:nil];
 }
@@ -80,7 +85,11 @@
 #pragma mark - MFMessageCompose ViewController Delegate
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    // The 'Cancel' and 'Send' buttons do not automatically dismiss the SMS viewController, so we must do it ourselves 
     [self.parentController dismissViewControllerAnimated:YES completion:nil];
+    
+    // Resubscribes the contactSelector to keyboard notifications
+    [self.parentController registerForKeyboardNotifications];
     
     if (result == MessageComposeResultSent) {
         [self.delegate AMBSMSHandlerMessageSharedSuccessfullyWithContacts:self.contactArray];
