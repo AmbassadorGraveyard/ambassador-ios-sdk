@@ -8,6 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AMBSMSHandler : NSObject
+// Protocol Functions
+@protocol AMBSMSHandlerDelegate <NSObject>
+
+- (void)AMBSMSHandlerMessageSharedSuccessfully;
+- (void)AMBSMSHandlerRequestName;
+- (void)AMBSMSHandlerMessageShareFailure;
 
 @end
+
+
+// Public functions/properties
+@interface AMBSMSHandler : NSObject
+
+@property (nonatomic, weak) id<AMBSMSHandlerDelegate> delegate;
+
+@end
+
