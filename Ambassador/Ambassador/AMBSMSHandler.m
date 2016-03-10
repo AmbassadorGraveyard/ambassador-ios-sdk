@@ -71,6 +71,17 @@
 }
 
 
+#pragma mark - MFMessageCompose ViewController Delegate
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    if (result == MessageComposeResultSent) {
+        [self.delegate AMBSMSHandlerMessageSharedSuccessfully];
+    } else if (result == MessageComposeResultFailed) {
+        [self.delegate AMBSMSHandlerMessageShareFailure];
+    }
+}
+
+
 #pragma mark - Helper Functions
 
 - (BOOL)alreadyHaveNames {
