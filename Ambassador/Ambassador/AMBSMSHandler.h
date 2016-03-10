@@ -13,7 +13,7 @@
 
 - (void)AMBSMSHandlerMessageSharedSuccessfullyWithContacts:(NSArray*)validatedContacts;
 - (void)AMBSMSHandlerRequestName;
-- (void)AMBSMSHandlerMessageShareFailure;
+- (void)AMBSMSHandlerMessageShareFailureWithError:(NSString*)error;
 
 @end
 
@@ -25,7 +25,7 @@
 
 - (instancetype)initWithController:(UIViewController*)controller;
 - (void)sendSMSWithMessage:(NSString*)message;
-- (void)setContactArray:(NSArray*)contactArray;
+- (void)setContacts:(NSArray*)contactArray;
 
 @end
 

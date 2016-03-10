@@ -12,7 +12,7 @@
 #import "AMBNetworkManager.h"
 #import "AMBErrors.h"
 
-@interface AMBSMSHandler() <MFMessageComposeViewControllerDelegate>
+@interface AMBSMSHandler() <MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) UIViewController * parentController;
 @property (nonatomic, strong) NSArray * contactArray;
@@ -48,11 +48,16 @@
     [[AMBNetworkManager sharedInstance] bulkShareSmsWithMessage:self.messageString phoneNumbers:self.contactArray success:^(NSDictionary *response) {
         [self.delegate AMBSMSHandlerMessageSharedSuccessfullyWithContacts:self.contactArray];
     } failure:^(NSString *error) {
-        [self.delegate AMBSMSHandlerMessageShareFailure];
+        [self.delegate AMBSMSHandlerMessageShareFailureWithError:error];
     }];
 }
 
 - (void)sendViaDirectSMS {
+    if (![MFMessageComposeViewController canSendText]) {
+        [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"This device does not support SMS" withUniqueID:@"unsupportedSMS" forViewController:self.parentController shouldDismissVCImmediately:NO];
+        return;
+    }
+    
     // Sets up an SMS Message ViewController
     MFMessageComposeViewController *smsController = [[MFMessageComposeViewController alloc] init];
     smsController.messageComposeDelegate = self;
@@ -65,9 +70,10 @@
 
 #pragma mark - Setters
 
-- (void)setContactArray:(NSArray*)contactArray {
+- (void)setContacts:(NSArray*)contactArray {
     // Instantly validates numbers
-    self.contactArray = [AMBBulkShareHelper validatedPhoneNumbers:self.contactArray];
+    NSArray *validatedArray = (NSArray*)[AMBBulkShareHelper validatedPhoneNumbers:contactArray];
+    self.contactArray = [NSArray arrayWithArray:validatedArray];
 }
 
 
@@ -77,8 +83,10 @@
     if (result == MessageComposeResultSent) {
         [self.delegate AMBSMSHandlerMessageSharedSuccessfullyWithContacts:self.contactArray];
     } else if (result == MessageComposeResultFailed) {
-        [self.delegate AMBSMSHandlerMessageShareFailure];
+        [self.delegate AMBSMSHandlerMessageShareFailureWithError:@"MFMessageComposeViewController failed to send SMS message"];
     }
+    
+    [self.parentController dismissViewControllerAnimated:YES completion:nil];
 }
 
 

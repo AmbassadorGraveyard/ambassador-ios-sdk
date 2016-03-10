@@ -2142,11 +2142,13 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.65326752533783783" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="kD4-C2-Ozm" firstAttribute="leading" secondItem="jjc-Zq-imD" secondAttribute="leadingMargin" id="3IF-Q1-ihA"/>
+                            <constraint firstItem="kD4-C2-Ozm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jjc-Zq-imD" secondAttribute="leading" constant="20" id="LTf-Ec-1b8"/>
                             <constraint firstAttribute="centerY" secondItem="kD4-C2-Ozm" secondAttribute="centerY" multiplier="1.25" id="U99-7L-aXA"/>
                             <constraint firstAttribute="centerY" secondItem="kD4-C2-Ozm" secondAttribute="centerY" multiplier="1.5" id="cix-jw-Qre"/>
                             <constraint firstItem="kD4-C2-Ozm" firstAttribute="top" secondItem="xC3-uq-LMH" secondAttribute="bottom" constant="100" id="crW-l8-Ya5"/>
                             <constraint firstAttribute="centerX" secondItem="kD4-C2-Ozm" secondAttribute="centerX" constant="0.5" id="gQl-Ja-QfM"/>
                             <constraint firstAttribute="centerX" secondItem="kD4-C2-Ozm" secondAttribute="centerX" id="k25-L5-neu"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kD4-C2-Ozm" secondAttribute="trailing" constant="20" id="lby-qZ-gBb"/>
                             <constraint firstItem="kD4-C2-Ozm" firstAttribute="trailing" secondItem="jjc-Zq-imD" secondAttribute="trailingMargin" id="rxR-zo-Qpy"/>
                         </constraints>
                         <variation key="default">
