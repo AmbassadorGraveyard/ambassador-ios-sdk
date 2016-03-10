@@ -16,7 +16,7 @@
         <attribute name="mbsy_first_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mbsy_is_approved" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="mbsy_last_name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="mbsy_revenue" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="mbsy_revenue" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
         <attribute name="mbsy_transaction_uid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mbsy_uid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
