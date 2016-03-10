@@ -498,6 +498,14 @@
 		EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorTheme.plist; sourceTree = "<group>"; };
 		EF5390E11C46CFE5005F6944 /* ApplicationUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationUITests.swift; sourceTree = "<group>"; };
 		EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorShirt.plist; sourceTree = "<group>"; };
+		EF5B00841C90AD1B002BD361 /* AMBConversionModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AMBConversionModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		EF5B00851C90AD69002BD361 /* AMBConversionModel_2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMBConversionModel_2.xcdatamodel; sourceTree = "<group>"; };
+		EF557A161C88B4D000F66761 /* AmbassadorLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmbassadorLoginViewController.h; sourceTree = "<group>"; };
+		EF557A171C88B4D000F66761 /* AmbassadorLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorLoginViewController.m; sourceTree = "<group>"; };
+		EF557A191C88D39C00F66761 /* DefaultsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultsHandler.h; sourceTree = "<group>"; };
+		EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultsHandler.m; sourceTree = "<group>"; };
+		EF557A211C88E6BE00F66761 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		EF557A221C88E6BE00F66761 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenViewController.h; sourceTree = "<group>"; };
 		EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenViewController.m; sourceTree = "<group>"; };
 		EF5579FE1C85E34600F66761 /* AMBLinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBLinkCell.h; sourceTree = "<group>"; };
@@ -2231,9 +2239,11 @@
 		EFE7D7971C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				EF5B00851C90AD69002BD361 /* AMBConversionModel_2.xcdatamodel */,
+				EF5B00841C90AD1B002BD361 /* AMBConversionModel 2.xcdatamodel */,
 				EFE7D7981C21C9C700D7F92C /* AMBConversionModel.xcdatamodel */,
 			);
-			currentVersion = EFE7D7981C21C9C700D7F92C /* AMBConversionModel.xcdatamodel */;
+			currentVersion = EF5B00841C90AD1B002BD361 /* AMBConversionModel 2.xcdatamodel */;
 			name = AMBConversionModel.xcdatamodeld;
 			path = ../Ambassador/AMBConversionModel.xcdatamodeld;
 			sourceTree = "<group>";
