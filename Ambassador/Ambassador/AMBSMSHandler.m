@@ -46,7 +46,7 @@
 
 - (void)sendBulkViaTwilio {
     [[AMBNetworkManager sharedInstance] bulkShareSmsWithMessage:self.messageString phoneNumbers:self.contactArray success:^(NSDictionary *response) {
-        [self.delegate AMBSMSHandlerMessageSharedSuccessfully];
+        [self.delegate AMBSMSHandlerMessageSharedSuccessfullyWithContacts:self.contactArray];
     } failure:^(NSString *error) {
         [self.delegate AMBSMSHandlerMessageShareFailure];
     }];
@@ -75,7 +75,7 @@
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
     if (result == MessageComposeResultSent) {
-        [self.delegate AMBSMSHandlerMessageSharedSuccessfully];
+        [self.delegate AMBSMSHandlerMessageSharedSuccessfullyWithContacts:self.contactArray];
     } else if (result == MessageComposeResultFailed) {
         [self.delegate AMBSMSHandlerMessageShareFailure];
     }
