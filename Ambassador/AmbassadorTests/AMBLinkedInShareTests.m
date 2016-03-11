@@ -44,20 +44,6 @@
 
 #pragma mark - LifeCycle Tests
 
-- (void)testViewDidLoad {
-    // GIVEN
-    NSString *titleString = @"LinkedIn";
-    NSString *fakeDefaultMessage = @"Share stuff!";
-    self.linkedInShareVC.defaultMessage = fakeDefaultMessage;
-    
-    // WHEN
-    [self.linkedInShareVC viewDidLoad];
-    
-    // THEN
-    XCTAssertEqualObjects(titleString, self.linkedInShareVC.title);
-    XCTAssertEqualObjects(fakeDefaultMessage, self.linkedInShareVC.textView.text);
-}
-
 - (void)testViewDidAppear {
     // GIVEN
     id mockTextView = [OCMockObject mockForClass:[UITextView class]];
