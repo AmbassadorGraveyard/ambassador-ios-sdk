@@ -159,10 +159,25 @@ extension AmbassadorUITests {
         app.navigationBars.buttons["Back"].tap()
     }
     
+    
+    
 }
 
 // Helper Functions
 extension AmbassadorUITests {
+    func ambassadorLogin() {
+        if app.buttons["Sign In"].exists {
+            let usernameTextField = app.textFields["Username"]
+            usernameTextField.tap()
+            usernameTextField.typeText("jake+test@getambassador.com")
+            
+            let passwordSecureTextField = app.secureTextFields["Password"]
+            passwordSecureTextField.tap()
+            passwordSecureTextField.typeText("p3opl3first409")
+            app.buttons["Sign In"].tap()
+        }
+    }
+    
     func identifyWithLogin() {
         app.tabBars.buttons["Login"].tap()
         let usernameTextField = app.textFields["Username"]
@@ -177,6 +192,7 @@ extension AmbassadorUITests {
     }
     
     func presentRAF() {
+        ambassadorLogin()
         identifyWithLogin()
         app.tabBars.buttons["Refer a Friend"].tap()
         app.tables.staticTexts["Ambassador Shoes RAF"].tap()

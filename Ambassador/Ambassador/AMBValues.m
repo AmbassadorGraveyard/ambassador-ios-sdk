@@ -98,23 +98,15 @@
 }
 
 + (NSString*)getLinkedInAuthorizationUrl {
-    return @"https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=75sew7u54h2hn0&redirect_uri=http://localhost:2999/&state=987654321&scope=r_basicprofile%20w_share";
+    // Creates a unique value that will be used to match up and get Linkedin access token from Envoy
+    NSString *popupvalue = [NSString stringWithFormat:@"%@%@%@", [AMBValues getLinkedInClientID], [AMBUtilities createRequestID], [AMBUtilities create32CharCode]];
+    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getenvoy.co/oauth/authenticate/?client_id=%@&client_secret=%@&provider=linkedin&popup=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupvalue] :
+        [NSString stringWithFormat:@"https://dev-envoy-api.herokuapp.com/oauth/authenticate/?client_id=%@&client_secret=%@&provider=linkedin&popup=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupvalue];
 }
 
-+ (NSString*)getLinkedInAuthCallbackUrl {
-    return @"http://localhost:2999/";
-}
-
-+ (NSString*)getLinkedInRequestTokenUrl {
-    return @"https://www.linkedin.com/uas/oauth2/accessToken";
-}
-
-+ (NSString*)getLinkedInValidationUrl {
-    return @"https://api.linkedin.com/v1/people/~?format=json";
-}
-
-+ (NSString*)getLinkedInShareUrl {
-    return @"https://api.linkedin.com/v1/people/~/shares?format=json";
++ (NSString*)getLinkedInShareUrlWithMessage:(NSString*)message {
+    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getenvoy.co/provider/linkedin/share/?client_id=%@&client_secret=%@&access_token=%@&message=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], [AMBValues getLinkedInAccessToken], message] :
+        [NSString stringWithFormat:@"https://dev-envoy-api.herokuapp.com/provider/linkedin/share/?client_id=%@&client_secret=%@&access_token=%@&message=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], [AMBValues getLinkedInAccessToken], message];
 }
 
 + (NSString*)getBulkShareSMSUrl {
@@ -139,6 +131,19 @@
 
 + (NSString*)getSentryDSNValue {
     return @"https://648fb68f721d450e8ede94a914e5b4c6:9bc0f235f45c4a6aaa05dc709c4b6c4a@app.getsentry.com/67182";
+}
+
++ (NSString*)getCompanyDetailsUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/companies/" : @"https://dev-ambassador-api.herokuapp.com/companies/";
+}
+
++ (NSString*)getLinkedinClientValuesUrl:(NSString*)clientUID {
+    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getambassador.com/companies/%@/", clientUID] : [NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/companies/%@/", clientUID];
+}
+
++ (NSString*)getLinkedinAccessTokenUrl:(NSString*)popupValue {
+    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getenvoy.co/oauth/access_token/?client_id=%@&client_secret=%@&popup=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupValue] :
+        [NSString stringWithFormat:@"https://dev-envoy-api.herokuapp.com/oauth/access_token/?client_id=%@&client_secret=%@&popup=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupValue];
 }
 
 
@@ -186,7 +191,7 @@
 }
 
 + (void)setLinkedInAccessToken:(NSString*)accessToken {
-    [[AMBValues ambUserDefaults] setValue:accessToken forKey:@"lnkdin_access_token"];
+    [[AMBValues ambUserDefaults] setValue:accessToken forKey:@"envoy_access_token"];
 }
 
 + (void)setUserEmail:(NSString*)email {
@@ -204,6 +209,15 @@
 + (void)setAPNDeviceToken:(NSString*)deviceToken {
     [[AMBValues ambUserDefaults] setObject:deviceToken forKey:@"apn_device_token"];
 }
+
++ (void)setLinkedInClientID:(NSString*)clientID {
+    [[AMBValues ambUserDefaults] setObject:clientID forKey:@"linkedin_client_id"];
+}
+
++ (void)setLinkedInClientSecret:(NSString*)clientSecret {
+    [[AMBValues ambUserDefaults] setObject:clientSecret forKey:@"linkedin_client_secret"];
+}
+
 
 // Should only be used for TESTING
 + (void)resetHasInstalled {
@@ -246,7 +260,7 @@
 }
 
 + (NSString*)getLinkedInAccessToken {
-    return [[AMBValues ambUserDefaults] valueForKey:@"lnkdin_access_token"];
+    return [[AMBValues ambUserDefaults] valueForKey:@"envoy_access_token"];
 }
 
 + (NSString*)getUserEmail {
@@ -263,6 +277,14 @@
 
 + (NSString*)getAPNDeviceToken {
     return [[AMBValues ambUserDefaults] valueForKey:@"apn_device_token"];
+}
+
++ (NSString*)getLinkedInClientID {
+    return [[AMBValues ambUserDefaults] valueForKey:@"linkedin_client_id"];
+}
+
++ (NSString*)getLinkedInClientSecret {
+    return [[AMBValues ambUserDefaults] valueForKey:@"linkedin_client_secret"];
 }
 
 @end

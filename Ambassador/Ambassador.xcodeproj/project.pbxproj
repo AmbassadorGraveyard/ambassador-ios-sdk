@@ -513,6 +513,12 @@
 		EF557A091C888E5100F66761 /* AMBWelcomeScreenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenTests.m; sourceTree = "<group>"; };
 		EF557A0D1C88AC3700F66761 /* AMBLinkCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBLinkCellTests.m; sourceTree = "<group>"; };
 		EF557A0F1C88AE0600F66761 /* AMBWelcomeScreenParametersTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenParametersTests.m; sourceTree = "<group>"; };
+		EF557A161C88B4D000F66761 /* AmbassadorLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmbassadorLoginViewController.h; sourceTree = "<group>"; };
+		EF557A171C88B4D000F66761 /* AmbassadorLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorLoginViewController.m; sourceTree = "<group>"; };
+		EF557A191C88D39C00F66761 /* DefaultsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultsHandler.h; sourceTree = "<group>"; };
+		EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultsHandler.m; sourceTree = "<group>"; };
+		EF557A211C88E6BE00F66761 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		EF557A221C88E6BE00F66761 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -925,6 +931,35 @@
 			name = "Contact Selector";
 			sourceTree = "<group>";
 		};
+		EF5579F71C84F63400F66761 /* Welcome Screen */ = {
+			isa = PBXGroup;
+			children = (
+				EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */,
+				EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */,
+				EF557A071C86041A00F66761 /* Custom Cells */,
+				EF557A061C86040A00F66761 /* Parameters */,
+			);
+			name = "Welcome Screen";
+			sourceTree = "<group>";
+		};
+		EF557A061C86040A00F66761 /* Parameters */ = {
+			isa = PBXGroup;
+			children = (
+				EF557A021C86038F00F66761 /* AMBWelcomeScreenParameters.h */,
+				EF557A031C86038F00F66761 /* AMBWelcomeScreenParameters.m */,
+			);
+			name = Parameters;
+			sourceTree = "<group>";
+		};
+		EF557A071C86041A00F66761 /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EF5579FE1C85E34600F66761 /* AMBLinkCell.h */,
+				EF5579FF1C85E34600F66761 /* AMBLinkCell.m */,
+			);
+			name = "Custom Cells";
+			sourceTree = "<group>";
+		};
 		EF557A111C88B47700F66761 /* Sign Up */ = {
 			isa = PBXGroup;
 			children = (
@@ -979,35 +1014,6 @@
 				EF557A221C88E6BE00F66761 /* ProfileViewController.m */,
 			);
 			name = Profile;
-			sourceTree = "<group>";
-		};
-		EF5579F71C84F63400F66761 /* Welcome Screen */ = {
-			isa = PBXGroup;
-			children = (
-				EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */,
-				EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */,
-				EF557A071C86041A00F66761 /* Custom Cells */,
-				EF557A061C86040A00F66761 /* Parameters */,
-			);
-			name = "Welcome Screen";
-			sourceTree = "<group>";
-		};
-		EF557A061C86040A00F66761 /* Parameters */ = {
-			isa = PBXGroup;
-			children = (
-				EF557A021C86038F00F66761 /* AMBWelcomeScreenParameters.h */,
-				EF557A031C86038F00F66761 /* AMBWelcomeScreenParameters.m */,
-			);
-			name = Parameters;
-			sourceTree = "<group>";
-		};
-		EF557A071C86041A00F66761 /* Custom Cells */ = {
-			isa = PBXGroup;
-			children = (
-				EF5579FE1C85E34600F66761 /* AMBLinkCell.h */,
-				EF5579FF1C85E34600F66761 /* AMBLinkCell.m */,
-			);
-			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
 		EF64CFA41BE2A47D0072014B /* AmbassadorUITests */ = {

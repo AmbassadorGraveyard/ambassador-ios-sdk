@@ -152,8 +152,19 @@
 #pragma mark - Misc Class Functions
 
 + (NSString*)createRequestID {
-    NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970] * 1000;
-    return [NSString stringWithFormat:@"%f", timeInMiliseconds];
+    NSTimeInterval timeInMiliseconds = [[NSDate date] timeIntervalSince1970];
+    return [NSString stringWithFormat:@"%i", (int)timeInMiliseconds];
+}
+
++ (NSString*)create32CharCode {
+    NSMutableString *codeString = [[NSMutableString alloc] init];
+    
+    for (int i = 0; i < 32; i++) {
+        int j = arc4random_uniform(9);
+        [codeString appendString:[NSString stringWithFormat:@"%i", j]];
+    }
+    
+    return codeString;
 }
 
 + (BOOL)colorIsDark:(UIColor *)color {
@@ -189,6 +200,10 @@
     }
     
     return result;
+}
+
++ (BOOL)stringIsEmpty:(NSString*)string {
+    return [string isEqualToString:@""] ? YES : NO;
 }
     
 @end

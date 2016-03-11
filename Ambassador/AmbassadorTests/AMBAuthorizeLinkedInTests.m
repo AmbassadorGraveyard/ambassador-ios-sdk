@@ -121,7 +121,7 @@
      NSArray *mockParamArray = @[@"code=thisisatestcode"];
     
     id mockNetworkManager = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
-    [[mockNetworkManager expect] getLinkedInRequestTokenWithKey:@"thisisatestcode" success:[OCMArg any] failure:[OCMArg any]];
+    [[mockNetworkManager expect] getLinkedInAccessTokenWithPopupValue:[OCMArg any] success:[OCMArg any] failure:[OCMArg any]];
    
     // WHEN
     [self.ambAuthorizeLinkedin saveValuesFromQueryParams:mockParamArray];
