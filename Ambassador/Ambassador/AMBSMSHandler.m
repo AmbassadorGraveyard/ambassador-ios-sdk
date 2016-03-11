@@ -82,7 +82,7 @@
 }
 
 
-#pragma mark - MFMessageCompose ViewController Delegate
+#pragma mark - MFMessageComposeViewController Delegate
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
     // The 'Cancel' and 'Send' buttons do not automatically dismiss the SMS viewController, so we must do it ourselves 
