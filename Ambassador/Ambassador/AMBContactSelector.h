@@ -18,4 +18,6 @@
 @property (nonatomic) AMBSocialServiceType type;
 @property (nonatomic, strong) AMBUserUrlNetworkObject *urlNetworkObject;
 
+- (void)registerForKeyboardNotifications;
+
 @end

@@ -19,8 +19,9 @@
 #import "AMBContactLoader.h"
 #import "AMBErrors.h"
 #import "AMBValues.h"
+#import "AMBSMSHandler.h"
 
-@interface AMBContactSelector (Test) <UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, AMBNamePromptDelegate, AMBContactLoaderDelegate>
+@interface AMBContactSelector (Test) <UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, AMBNamePromptDelegate, AMBContactLoaderDelegate, AMBSMSHandlerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * containerView;
 @property (nonatomic, strong) NSMutableSet *selected;
@@ -338,40 +339,70 @@
 }
 
 
-#pragma mark - Send Function Tests
+#pragma mark - SMS Handler Delegate
 
-- (void)testSendSMS {
+- (void)testSMSHandlerSuccess {
     // GIVEN
-    [[[self.mockSelector expect] andReturnValue:OCMOCK_VALUE(NO)] alreadyHaveNames];
-    [[[self.mockSelector expect] andDo:nil] performSegueWithIdentifier:[OCMArg any] sender:self.contactSelector];
+    NSArray *mockArray = @[@"555-555-5555"];
+    
+    [[[self.mockSelector expect] andDo:nil] sendShareTrack:mockArray];
+    id mockUtils = [OCMockObject partialMockForObject:[AMBUtilities sharedInstance]];
+    [[[mockUtils expect] andDo:nil] presentAlertWithSuccess:YES message:@"Message successfully shared!" withUniqueID:nil forViewController:[OCMArg any] shouldDismissVCImmediately:NO];
     
     // WHEN
-    [self.contactSelector sendSMS];
+    [self.contactSelector AMBSMSHandlerMessageSharedSuccessfullyWithContacts:mockArray];
+    
+    // THEN
+    [self.mockSelector verify];
+    [mockUtils verify];
+    [mockUtils stopMocking];
+}
+
+- (void)testSMSHandlerFailure {
+    // GIVEN
+    NSString *errorString = @"Error!";
+    
+    id mockError = [OCMockObject mockForClass:[AMBErrors class]];
+    [[[mockError expect] andDo:nil] errorSharingMessageForVC:[OCMArg any] withErrorMessage:errorString];
+    
+    // WHEN
+    [self.contactSelector AMBSMSHandlerMessageShareFailureWithError:errorString];
+    
+    // THEN
+    [mockError verify];
+    [mockError stopMocking];
+}
+
+- (void)testSMSHandlerRequestName {
+    // GIVEN
+    [[[self.mockSelector expect] andDo:nil] performSegueWithIdentifier:@"goToNamePrompt" sender:self.contactSelector];
+    
+    // WHEN
+    [self.contactSelector AMBSMSHandlerRequestName];
     
     // THEN
     [self.mockSelector verify];
 }
 
-- (void)testSendSMSWithNames {
+
+#pragma mark - Send Function Tests
+
+- (void)testSendSMS {
     // GIVEN
-    NSArray *array = @[@"555-555-5555"];
+    NSMutableSet *mockSet = [NSMutableSet setWithObject:@[@"555-555-5555"]];
+    self.contactSelector.selected = mockSet;
     
-    id mockBulkShare = [OCMockObject mockForClass:[AMBBulkShareHelper class]];
-    [[[mockBulkShare expect] andReturnValue:OCMOCK_VALUE(array)] validatedPhoneNumbers:[OCMArg any]];
-    
-    [[[self.mockSelector expect] andReturnValue:OCMOCK_VALUE(YES)] alreadyHaveNames];
-    
-    id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
-    [[[mockNetworkMgr expect] andDo:nil] bulkShareSmsWithMessage:[OCMArg any] phoneNumbers:array success:[OCMArg any] failure:[OCMArg any]];
+    id mockHandler = [OCMockObject mockForClass:[AMBSMSHandler class]];
+    [[[mockHandler expect] andReturn:mockHandler] alloc];
+    mockHandler = [[[mockHandler expect] andDo:nil] initWithController:[OCMArg any]];
+    [[[mockHandler expect] andDo:nil] setContacts:[mockSet allObjects]];
+    [[[mockHandler expect] andDo:nil] sendSMSWithMessage:@"message"];
     
     // WHEN
     [self.contactSelector sendSMS];
     
     // THEN
-    [mockBulkShare verify];
-    [mockNetworkMgr verify];
-    [mockNetworkMgr stopMocking];
-    [self.mockSelector verify];
+    [mockHandler verify];
 }
 
 - (void)testSendEmail {
