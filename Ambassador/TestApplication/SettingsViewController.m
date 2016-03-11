@@ -6,11 +6,11 @@
 //  Copyright © 2016 Ambassador. All rights reserved.
 //
 
-#import "ProfileViewController.h"
+#import "SettingsViewController.h"
 #import "DefaultsHandler.h"
 #import "ViewController.h"
 
-@interface ProfileViewController()
+@interface SettingsViewController()
 
 @property (nonatomic, strong) IBOutlet UIImageView * ivAvatar;
 @property (nonatomic, strong) IBOutlet UILabel * lblFullName;
