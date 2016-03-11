@@ -73,90 +73,6 @@
     }] resume];
 }
 
-- (void)getLinkedInRequestTokenWithKey:(NSString*)key success:(void(^)())success failure:(void(^)(NSString *error))failure {
-    NSString *bodyValue = [NSString stringWithFormat:@"grant_type=authorization_code&code=%@&redirect_uri=http://localhost:2999/&client_id=***REMOVED***&client_secret=***REMOVED***", key];
-    
-    NSMutableURLRequest *linkedinRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[AMBValues getLinkedInRequestTokenUrl]]];
-    linkedinRequest.HTTPMethod = @"POST";
-    [linkedinRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    linkedinRequest.HTTPBody = [bodyValue dataUsingEncoding:NSUTF8StringEncoding];
-    
-     NSURLSession *mainQueueSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    
-    NSURLSessionDataTask *task = [mainQueueSession dataTaskWithRequest:linkedinRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
-        DLog(@"LINKEDIN REQUEST TOKEN Status code = %li", (long)statusCode);
-        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-            NSMutableDictionary *tokenResponse = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
-            [AMBValues setLinkedInExpirationDate:tokenResponse[@"expires_in"]];
-            [AMBValues setLinkedInAccessToken:tokenResponse[@"access_token"]];
-            if (success) { success(); }
-        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]){
-            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
-        } else {
-            DLog(@"LINKEDIN REQUEST TOKEN Error - %@", error);
-            if (failure) { failure([error localizedFailureReason]); }
-        }
-    }];
-    
-    [task resume];
-}
-
-- (void)checkForInvalidatedTokenWithCompletion:(void(^)())complete {
-    NSURL *url = [NSURL URLWithString:[AMBValues getLinkedInValidationUrl]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"GET";
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", [AMBValues getLinkedInAccessToken]] forHTTPHeaderField:@"Authorization"];
-    
-     NSURLSession *mainQueueSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    
-    NSURLSessionTask *task = [mainQueueSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
-        if (!error && statusCode == 401) {
-            DLog(@"Nullifying Linkedin Tokens");
-            [AMBValues setLinkedInAccessToken:nil];
-        } else if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-            DLog(@"LinkedIn Tokens are still up to date");
-        } else {
-            DLog(@"LINKEDIN TOKEN VALIDATION CHECK Error - %@", error);
-        }
-        
-        complete();
-    }];
-    
-    [task resume];
-}
-
-- (void)shareToLinkedinWithPayload:(NSDictionary*)payload success:(void(^)())success needsReauthentication:(void(^)())shouldReauthenticate failure:(void(^)(NSString *error))failure {
-    NSURL *url = [NSURL URLWithString:[AMBValues getLinkedInShareUrl]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
-    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[NSString stringWithFormat:@"Bearer %@", [AMBValues getLinkedInAccessToken]] forHTTPHeaderField:@"Authorization"];
-    [request setValue:@"json" forHTTPHeaderField:@"x-li-format"];
-    
-    NSURLSession *mainQueueSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
-    
-    NSURLSessionDataTask *task = [mainQueueSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
-        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-            DLog(@"Linkedin Post SUCCESSFUL!");
-            if (success) { success(); }
-        } else if (!error && statusCode == 401) {
-            if (shouldReauthenticate) { shouldReauthenticate(); }
-        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
-            DLog(@"Linkedin Post FAILED with response - %@", error);
-            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
-        } else {
-            DLog(@"LINKEDIN POST Error - %@", error);
-            if (failure) { failure([error localizedFailureReason]); }
-        }
-    }];
-    
-    [task resume];
-}
-
 - (void)bulkShareSmsWithMessage:(NSString*)message phoneNumbers:(NSArray*)phoneNumbers success:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
     NSString *senderName = [NSString stringWithFormat:@"%@ %@", [AMBValues getUserFirstName], [AMBValues getUserLastName]];
     AMBBulkShareSMSObject *smsObject = [[AMBBulkShareSMSObject alloc] initWithPhoneNumbers:phoneNumbers fromSender:senderName message:message];
@@ -298,6 +214,92 @@
 }
 
 
+#pragma mark - LinkedIn Requests
+
+- (void)getCompanyUIDWithSuccess:(void(^)(NSString *companyUID))success failure:(void(^)(NSString *error))failure {
+    NSMutableURLRequest *companyUrlRequest = [self createURLRequestWithURL:[AMBValues getCompanyDetailsUrl] requestType:@"GET"];
+    [[self.urlSession dataTaskWithRequest:companyUrlRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"GET COMPANY DETAILS PAYLOAD status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            NSDictionary *returnDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            DLog(@"Company Details SUCCESSFUL with response - %@", returnDict);
+            if (success) { success([NSString stringWithFormat:@"%@", returnDict[@"results"][0][@"uid"]]); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"Company Details FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"Get Company Details Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
+    }] resume];
+}
+
+- (void)getLinkedInClientValuesWithUID:(NSString*)companyUID success:(void(^)(NSDictionary *clientValues))success failure:(void(^)(NSString *error))failure {
+    NSMutableURLRequest *linkedinClientRequest = [self createURLRequestWithURL:[AMBValues getLinkedinClientValuesUrl:companyUID] requestType:@"GET"];
+    [[self.urlSession dataTaskWithRequest:linkedinClientRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"GET LINKEDIN CLIENT PAYLOAD status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            NSDictionary *returnDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            DLog(@"LinkedIn Client SUCCESSFUL with response - %@", returnDict);
+            [AMBValues setLinkedInClientID:returnDict[@"envoy_client_id"]];
+            [AMBValues setLinkedInClientSecret:returnDict[@"envoy_client_secret"]];
+            if (success) { success(returnDict); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"LinkedIn Client FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"Get LinkedIn Client Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
+    }] resume];
+}
+
+- (void)getLinkedInAccessTokenWithPopupValue:(NSString*)popupValue success:(void(^)(NSString *accessToken))success failure:(void(^)(NSString *error))failure {
+    NSMutableURLRequest *linkedinAccessRequest = [self createURLRequestWithURL:[AMBValues getLinkedinAccessTokenUrl:popupValue] requestType:@"GET"];
+
+    [[self.urlSession dataTaskWithRequest:linkedinAccessRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"GET LINKEDIN ACCESS TOKEN status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            NSDictionary *returnDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            DLog(@"LinkedIn Access Token SUCCESSFUL with response - %@", returnDict);
+            [AMBValues setLinkedInAccessToken:returnDict[@"access_token"]];
+            if (success) { success(returnDict[@"access_token"]); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"LinkedIn Access Token FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"Get LinkedIn Access Token Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
+    }] resume];
+}
+
+- (void)shareToLinkedInWithMessage:(NSString*)message success:(void(^)(NSString *successMessage))success failure:(void(^)(NSString *error))failure {
+    // Encodes the url because of the spaces in the message
+    NSString *encodedUrl = [[AMBValues getLinkedInShareUrlWithMessage:message] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSMutableURLRequest *linkedInShareRequest = [self createURLRequestWithURL:encodedUrl requestType:@"GET"];
+    [[self.urlSession dataTaskWithRequest:linkedInShareRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"LINKEDIN SHARE status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            DLog(@"Linkedin Share SUCCESSFUL with response - %@", returnString);
+            if (success) { success(returnString); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"LinkedIn Share FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"LinkedIn Share Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
+    }] resume];
+}
+
+
 #pragma mark - Helper Functions
 
 - (NSURLSession*)createURLSession {
@@ -322,7 +324,7 @@
 // Allows certain requests to be made for dev servers when running in unit tests for Circle
 - (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler{
     if([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
-        if([challenge.protectionSpace.host isEqualToString:@"dev-ambassador-api.herokuapp.com"]) { // Makes sure that it's our url being challenged
+        if([challenge.protectionSpace.host isEqualToString:@"dev-ambassador-api.herokuapp.com"] || [challenge.protectionSpace.host isEqualToString:@"dev-envoy-api.herokuapp.com"]) { // Makes sure that it's our url being challenged
             NSURLCredential *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
             completionHandler(NSURLSessionAuthChallengeUseCredential,credential);
         }

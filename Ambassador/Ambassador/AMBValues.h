@@ -23,16 +23,16 @@
 + (NSString*)getSendIdentifyUrl;
 + (NSString*)getShareTrackUrl;
 + (NSString*)getLinkedInAuthorizationUrl;
-+ (NSString*)getLinkedInAuthCallbackUrl;
-+ (NSString*)getLinkedInRequestTokenUrl;
-+ (NSString*)getLinkedInValidationUrl;
-+ (NSString*)getLinkedInShareUrl;
++ (NSString*)getLinkedInShareUrlWithMessage:(NSString*)message;
 + (NSString*)getBulkShareSMSUrl;
 + (NSString*)getBulkShareEmailUrl;
 + (NSString*)getSendConversionUrl;
 + (NSString*)getPusherSessionUrl;
 + (NSString*)getPusherAuthUrl;
 + (NSString*)getSentryDSNValue;
++ (NSString*)getCompanyDetailsUrl;
++ (NSString*)getLinkedinClientValuesUrl:(NSString*)clientUID;
++ (NSString*)getLinkedinAccessTokenUrl:(NSString*)popupValue;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
@@ -48,6 +48,8 @@
 + (void)setPusherChannelObject:(NSDictionary*)pusherChannel;
 + (void)setUserURLObject:(NSDictionary*)urlObject;
 + (void)setAPNDeviceToken:(NSString*)deviceToken;
++ (void)setLinkedInClientID:(NSString*)clientID;
++ (void)setLinkedInClientSecret:(NSString*)clientSecret;
 + (void)resetHasInstalled; // Should only be used for TESTING
 
 // Default getters
@@ -64,5 +66,7 @@
 + (AMBPusherChannelObject*)getPusherChannelObject;
 + (AMBUserUrlNetworkObject*)getUserURLObject;
 + (NSString*)getAPNDeviceToken;
++ (NSString*)getLinkedInClientID;
++ (NSString*)getLinkedInClientSecret;
 
 @end

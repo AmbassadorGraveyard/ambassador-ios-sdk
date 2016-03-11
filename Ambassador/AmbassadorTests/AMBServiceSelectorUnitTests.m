@@ -380,14 +380,14 @@
 
 - (void)testCheckLinkedInTokenFail {
     // GIVEN
-    [[[self.mockNetworkMgr expect] andDo:nil] checkForInvalidatedTokenWithCompletion:[OCMArg any]];
-    OCMStub([self.mockSS performSegueWithIdentifier:[OCMArg any] sender:self.serviceSelector])._andDo(nil);
+    [AMBValues setLinkedInAccessToken:@"fakeToken"];
+    [[[self.mockSS expect] andDo:nil] presentLinkedInShare];
     
     // WHEN
     [self.serviceSelector checkLinkedInToken];
     
     // THEN
-    [self.mockNetworkMgr verify];
+    [self.mockSS verify];
 }
 
 - (void)testPresentLinkedInShare {
@@ -535,23 +535,6 @@
 }
 
 #pragma mark - Block Tests 
-
-- (void)testCheckLinkedinTokenCompletion {
-    // GIVEN
-    [AMBValues setLinkedInAccessToken:@"fakeToken"];
-    [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
-        void (^complete)() = nil;
-        [invocation getArgument:&complete atIndex:2];
-        complete();
-    }] checkForInvalidatedTokenWithCompletion:[OCMArg any]];
-    [[[self.mockSS expect] andDo:nil] presentLinkedInShare];
-    
-    // WHEN
-    [self.serviceSelector checkLinkedInToken];
-    
-    // THEN
-    [self.mockNetworkMgr verify];
-}
 
 - (void)testShareTrackCompletion {
     // GIVEN

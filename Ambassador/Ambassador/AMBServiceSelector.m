@@ -356,13 +356,11 @@ int contactServiceType;
 }
 
 - (void)checkLinkedInToken {
-    [[AMBNetworkManager sharedInstance] checkForInvalidatedTokenWithCompletion:^{
-        if ([AMBValues getLinkedInAccessToken]) {
-            [self presentLinkedInShare];
-        } else {
-            [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
-        }
-    }];
+    if ([AMBValues getLinkedInAccessToken] && ![AMBUtilities stringIsEmpty:[AMBValues getLinkedInAccessToken]]) {
+        [self presentLinkedInShare];
+    } else {
+        [self performSegueWithIdentifier:LKND_AUTHORIZE_SEGUE sender:self];
+    }
 }
 
 - (void)presentLinkedInShare {

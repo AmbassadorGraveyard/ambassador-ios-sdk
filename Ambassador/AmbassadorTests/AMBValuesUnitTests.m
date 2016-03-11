@@ -7,10 +7,12 @@
 //
 
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
 #import "AMBValues.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBPusherChannelObject.h"
 #import "AMBNetworkObject.h"
+#import "AMBUtilities.h"
 
 @interface AMBValuesUnitTests : XCTestCase
 
@@ -93,54 +95,26 @@
 
 - (void)testLinkedInAuthURL {
     // GIVEN
-    NSString *expectedURL = @"https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=***REMOVED***&redirect_uri=http://localhost:2999/&state=987654321&scope=r_basicprofile%20w_share";
+    [AMBValues setLinkedInClientID:@"testID"];
+    [AMBValues setLinkedInClientSecret:@"testSecret"];
+    NSString *expectedURL = @"https://dev-envoy-api.herokuapp.com/oauth/authenticate/?client_id=testID&client_secret=testSecret&provider=linkedin&popup=";
     
     // WHEN
     NSString *actualURL = [AMBValues getLinkedInAuthorizationUrl];
     
     // THEN
-    XCTAssertEqualObjects(expectedURL, actualURL);
-}
-
-- (void)testLinkedInCallbackURL {
-    // GIVEN
-    NSString *expectedURL =  @"http://localhost:2999/";
-    
-    // WHEN
-    NSString *actualURL = [AMBValues getLinkedInAuthCallbackUrl];
-    
-    // THEN
-    XCTAssertEqualObjects(expectedURL, actualURL);
-}
-
-- (void)testLinkedInRequestTokenURL {
-    // GIVEN
-    NSString *expectedURL = @"https://www.linkedin.com/uas/oauth2/accessToken";
-    
-    // WHEN
-    NSString *actualURL = [AMBValues getLinkedInRequestTokenUrl];
-    
-    // THEN
-    XCTAssertEqualObjects(expectedURL, actualURL);
-}
-
-- (void)testLinkedInValidationURL {
-    // GIVEN
-    NSString *expectedURL = @"https://api.linkedin.com/v1/people/~?format=json";
-    
-    // WHEN
-    NSString *actualURL = [AMBValues getLinkedInValidationUrl];
-    
-    // THEN
-    XCTAssertEqualObjects(expectedURL, actualURL);
+    XCTAssertTrue([actualURL containsString:expectedURL]);
 }
 
 - (void)testLinkedInShareURL {
     // GIVEN
-    NSString *expectedURL = @"https://api.linkedin.com/v1/people/~/shares?format=json";
+    [AMBValues setLinkedInClientID:@"testID"];
+    [AMBValues setLinkedInClientSecret:@"testSecret"];
+    [AMBValues setLinkedInAccessToken:@"fakeToken"];
+    NSString *expectedURL = @"https://dev-envoy-api.herokuapp.com/provider/linkedin/share/?client_id=testID&client_secret=testSecret&access_token=fakeToken&message=test";
     
     // WHEN
-    NSString *actualURL = [AMBValues getLinkedInShareUrl];
+    NSString *actualURL = [AMBValues getLinkedInShareUrlWithMessage:@"test"];
     
     // THEN
     XCTAssertEqualObjects(expectedURL, actualURL);
@@ -371,6 +345,30 @@
     
     // THEN
     XCTAssertEqualObjects(apnDeviceToken, expectedToken);
+}
+
+- (void)testSetAndGetClientID {
+    // GIVEN
+    NSString *clientID = @"testID";
+    
+    // WHEN
+    [AMBValues setLinkedInClientID:clientID];
+    NSString *expectedString = [AMBValues getLinkedInClientID];
+    
+    // THEN
+    XCTAssertEqualObjects(clientID, expectedString);
+}
+
+- (void)testSetAndGetClientSecret {
+    // GIVEN
+    NSString *clientSecret = @"testSecret";
+    
+    // WHEN
+    [AMBValues setLinkedInClientSecret:clientSecret];
+    NSString *expectedString = [AMBValues getLinkedInClientSecret];
+    
+    // THEN
+    XCTAssertEqualObjects(clientSecret, expectedString);
 }
 
 @end

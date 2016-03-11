@@ -29,13 +29,16 @@
 #pragma mark - SLComposeView Delegate 
 
 - (void)didSelectPost {
-    NSDictionary *payload = @{ @"comment" : [NSString stringWithFormat:@"%@ %@", self.textView.text, self.shortURL], @"visibility" : @{ @"code" : @"connections-only" } };
-    [[AMBNetworkManager sharedInstance] shareToLinkedinWithPayload:payload success:^{
+    // Appends the share url to the message before sending
+    NSString *fullShareString = [NSString stringWithFormat:@"%@ %@", self.textView.text, [AMBValues getUserURLObject].url];
+    
+    [[AMBNetworkManager sharedInstance] shareToLinkedInWithMessage:fullShareString success:^(NSString *accessToken) {
         [self.delegate userDidPostFromService:@"LinkedIn"];
-    } needsReauthentication:^{
-        [self.delegate userMustReauthenticate];
     } failure:^(NSString *error) {
-        [self.delegate networkError:@"Posting Error" message:@"Your post couldn't be completed do to a network error"];
+        [self.delegate networkError:@"Posting Error" message:@"Your post couldn't be completed due to a network error"];
+        
+        // Sets the linkedin access token to an empty string so that the user is forced to log in again
+        [AMBValues setLinkedInAccessToken:@""];
     }];
     
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
