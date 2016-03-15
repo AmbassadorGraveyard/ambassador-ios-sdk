@@ -262,25 +262,35 @@ NSString * const universalToken = @"***REMOVED***";
 
 - (void)testPresentWelcomeScreen {
     // GIVEN
+    [AMBValues setMbsyCookieWithCode:@"fakeCode"];
+    
+    id mockNtwkMng = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
+    NSDictionary *returnDict = @{@"image" : @"imagename", @"name" : @"referrerName"};
+    [[[mockNtwkMng expect] andDo:^(NSInvocation *invocation) {
+        void (^success)(NSDictionary *referrerInfo) = nil;
+        [invocation getArgument:&success atIndex:3];
+        success(returnDict);
+    }] getReferrerInformationWithSuccess:[OCMArg invokeBlock] failure:[OCMArg any]];
+    
     AMBWelcomeScreenParameters *fakeParams = [[AMBWelcomeScreenParameters alloc] init];
     
-    id mockPresentingVC = [OCMockObject mockForClass:[UIViewController class]];
     id mockVC = [OCMockObject mockForClass:[AMBWelcomeScreenViewController class]];
     id mockSB = [OCMockObject mockForClass:[UIStoryboard class]];
-    
-    [[[mockPresentingVC expect] andDo:nil] presentViewController:[OCMArg any] animated:YES completion:nil];
+
     [[[mockSB expect] andReturn:mockSB] storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
     [[[mockSB expect] andReturn:mockVC] instantiateViewControllerWithIdentifier:@"WELCOME_SCREEN"];
     [[[mockVC expect] andDo:nil] setParameters:[OCMArg any]];
-    [[[mockVC expect] andDo:nil] setDelegate:[OCMArg any]];
+    [[[mockVC expect] andDo:nil] setReferrerImage:[OCMArg any]];
+    [[[mockVC expect] andDo:nil] setReferrerName:[OCMArg any]];
     
     // WHEN
-    [AmbassadorSDK presentWelcomeScreen:mockPresentingVC withParameters:fakeParams];
+    [AmbassadorSDK presentWelcomeScreen:fakeParams ifAvailable:nil];
     
     // THEN
     [mockVC verify];
-    [mockPresentingVC verify];
     [mockSB verify];
+    [mockNtwkMng verify];
+    [mockNtwkMng stopMocking];
 }
 
 @end
