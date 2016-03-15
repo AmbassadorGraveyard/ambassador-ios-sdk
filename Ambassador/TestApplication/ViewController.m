@@ -33,9 +33,9 @@ NSString * loginSegue = @"ambassador_login_segue";
 - (void)viewDidLoad {
     [self setUpTheme];
     
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressLogin)];
-    [longPress setMinimumPressDuration:0.3];
-    [self.btnLogin setGestureRecognizers:@[longPress]];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressLogin:)];
+//    [longPress setMinimumPressDuration:0.6];
+    [self.btnLogin addGestureRecognizer:longPress];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -52,15 +52,19 @@ NSString * loginSegue = @"ambassador_login_segue";
     [self identifyOnSignIn];
 }
 
-- (void)longPressLogin {
-    AMBWelcomeScreenParameters *welcomeParams = [[AMBWelcomeScreenParameters alloc] init];
-    welcomeParams.detailMessage = @"You understand the value of referrals. Maybe you've even explored referral marketing software.";
-    welcomeParams.referralMessage = @"{{ name }} has referred you to Ambassador";
-    welcomeParams.accentColor = self.btnLogin.backgroundColor;
-    welcomeParams.linkArray = @[@"Testimonials", @"Request Demo"];
-    welcomeParams.actionButtonTitle = @"CREATE AN ACCOUNT";
-    
-    [AmbassadorSDK presentWelcomeScreen:self withParameters:welcomeParams];
+- (void)longPressLogin:(UITapGestureRecognizer*)gesture {
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        AMBWelcomeScreenParameters *welcomeParams = [[AMBWelcomeScreenParameters alloc] init];
+        welcomeParams.detailMessage = @"You understand the value of referrals. Maybe you've even explored referral marketing software.";
+        welcomeParams.referralMessage = @"{{ name }} has referred you to Ambassador";
+        welcomeParams.accentColor = self.btnLogin.backgroundColor;
+        welcomeParams.linkArray = @[@"Testimonials", @"Request Demo"];
+        welcomeParams.actionButtonTitle = @"CREATE AN ACCOUNT";
+        
+        [AmbassadorSDK presentWelcomeScreen:welcomeParams ifAvailable:^(AMBWelcomeScreenViewController *welcomeScreenVC) {
+            [self presentViewController:welcomeScreenVC animated:YES completion:nil];
+        }];
+    }
 }
 
 
