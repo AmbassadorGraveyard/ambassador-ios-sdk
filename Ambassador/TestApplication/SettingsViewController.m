@@ -29,6 +29,10 @@
     [self setupUI];
 }
 
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    self.ivAvatar.layer.cornerRadius = self.ivAvatar.frame.size.height/2;
+}
+
 
 #pragma mark - UI Functions
 
@@ -36,8 +40,6 @@
     // Avatar
     self.ivAvatar.image = [DefaultsHandler getUserImage];
     self.ivAvatar.layer.cornerRadius = self.ivAvatar.frame.size.height/2;
-    self.ivAvatar.layer.borderColor = self.customNav.backgroundColor.CGColor;
-    self.ivAvatar.layer.borderWidth = 2;
     
     // Label
     self.lblFullName.text = [DefaultsHandler getFullName];
@@ -45,6 +47,8 @@
     // Button
     [self.btnSignOut setImage:[self.btnSignOut.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     self.btnSignOut.imageView.tintColor = self.btnSignOut.titleLabel.textColor;
+    self.btnSignOut.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.btnSignOut setImageEdgeInsets:UIEdgeInsetsMake(4, 4, 4, 4)];
 }
 
 
