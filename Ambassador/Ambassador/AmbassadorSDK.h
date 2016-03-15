@@ -28,6 +28,6 @@
 /**Handles remote notifications that are sent from Ambassador**/
 + (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification;
 
-+ (void)presentWelcomeScreen:(UIViewController*)viewController withParameters:(AMBWelcomeScreenParameters*)parameters;
++ (void)presentWelcomeScreen:(AMBWelcomeScreenParameters*)parameters ifAvailable:(void(^)(AMBWelcomeScreenViewController *welcomeScreenVC))available;
 
 @end
