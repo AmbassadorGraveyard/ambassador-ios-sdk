@@ -11,6 +11,7 @@
 #import "AMBNetworkObject.h"
 #import "AMBPusherManager.h"
 #import "AMBPusher.h"
+#import "AMBWelcomeScreenViewController_Internal.h"
 
 @interface AmbassadorSDK ()
 
