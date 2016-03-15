@@ -146,6 +146,10 @@
         [NSString stringWithFormat:@"https://dev-envoy-api.herokuapp.com/oauth/access_token/?client_id=%@&client_secret=%@&popup=%@", [AMBValues getLinkedInClientID], [AMBValues getLinkedInClientSecret], popupValue];
 }
 
++ (NSString*)getReferrerInformationUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/ambassadors/profile/" : @"https://dev-ambassador-api.herokuapp.com/ambassadors/profile/";
+}
+
 
 #pragma mark - AMB Defaults
 
