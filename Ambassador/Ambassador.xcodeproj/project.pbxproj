@@ -153,6 +153,7 @@
 		EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */; };
 		EF1CB0B41C3C7F6600F65031 /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1CB0B31C3C7F6600F65031 /* avatar.png */; };
 		EF1CC7FB1C93127A00C2752B /* AMBSMSHandlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC7FA1C93127A00C2752B /* AMBSMSHandlerTests.m */; };
+		EF1CC8001C9860C300C2752B /* AMBWelcomeScreenViewController_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CC7FE1C9860C300C2752B /* AMBWelcomeScreenViewController_Internal.h */; };
 		EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */; };
 		EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */; };
 		EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */; };
@@ -464,6 +465,7 @@
 		EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCard.m; sourceTree = "<group>"; };
 		EF1CB0B31C3C7F6600F65031 /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
 		EF1CC7FA1C93127A00C2752B /* AMBSMSHandlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSMSHandlerTests.m; sourceTree = "<group>"; };
+		EF1CC7FE1C9860C300C2752B /* AMBWelcomeScreenViewController_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenViewController_Internal.h; sourceTree = "<group>"; };
 		EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValuesUnitTests.m; sourceTree = "<group>"; };
 		EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBBulkShareHelperUnitTests.m; sourceTree = "<group>"; };
 		EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManagerUnitTests.m; sourceTree = "<group>"; };
@@ -500,14 +502,6 @@
 		EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorTheme.plist; sourceTree = "<group>"; };
 		EF5390E11C46CFE5005F6944 /* ApplicationUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationUITests.swift; sourceTree = "<group>"; };
 		EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorShirt.plist; sourceTree = "<group>"; };
-		EF5B00841C90AD1B002BD361 /* AMBConversionModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "AMBConversionModel 2.xcdatamodel"; sourceTree = "<group>"; };
-		EF5B00851C90AD69002BD361 /* AMBConversionModel_2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMBConversionModel_2.xcdatamodel; sourceTree = "<group>"; };
-		EF557A161C88B4D000F66761 /* AmbassadorLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmbassadorLoginViewController.h; sourceTree = "<group>"; };
-		EF557A171C88B4D000F66761 /* AmbassadorLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorLoginViewController.m; sourceTree = "<group>"; };
-		EF557A191C88D39C00F66761 /* DefaultsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultsHandler.h; sourceTree = "<group>"; };
-		EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultsHandler.m; sourceTree = "<group>"; };
-		EF557A211C88E6BE00F66761 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
-		EF557A221C88E6BE00F66761 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenViewController.h; sourceTree = "<group>"; };
 		EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenViewController.m; sourceTree = "<group>"; };
 		EF5579FE1C85E34600F66761 /* AMBLinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBLinkCell.h; sourceTree = "<group>"; };
@@ -946,6 +940,7 @@
 			children = (
 				EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */,
 				EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */,
+				EF1CC7FE1C9860C300C2752B /* AMBWelcomeScreenViewController_Internal.h */,
 				EF557A071C86041A00F66761 /* Custom Cells */,
 				EF557A061C86040A00F66761 /* Parameters */,
 			);
@@ -1244,6 +1239,7 @@
 				DBA3FC081BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h in Headers */,
 				DBA3FC041BA8AA1D00672D82 /* AMBPTBlockEventListener.h in Headers */,
 				EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */,
+				EF1CC8001C9860C300C2752B /* AMBWelcomeScreenViewController_Internal.h in Headers */,
 				DB6A24711BD04E3900CE3230 /* AMBPusherManager.h in Headers */,
 				DBA3FC071BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h in Headers */,
 				DBA3FC201BA8AA1D00672D82 /* AMBPTPusherMockConnection.h in Headers */,
