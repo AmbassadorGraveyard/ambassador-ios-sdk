@@ -135,11 +135,23 @@ NSInteger const CELL_HEIGHT = 25;
 #pragma mark - Helper Functions
 
 - (NSString*)getCorrectString:(NSString*)string {
-    BOOL containsNameValue = [self customContainsString:string subString:@"{{ name }}"];
+    // Creates a mutable string based on the string passed from params
     NSMutableString *newString = [NSMutableString stringWithString:string];
-    
-    if (containsNameValue) {
-        [newString replaceOccurrencesOfString:@"{{ name }}" withString:self.referrerName options:0 range:NSMakeRange(0, [newString length])];
+
+    while ([self customContainsString:newString subString:@"{{ name }}"]) {
+        // Gets index of {{ name }}
+        NSRange range = [newString rangeOfString:@"{{ name }}"];
+
+        // Creates a mutable copy of the referrer name
+        NSMutableString *mutableReferrerName = [[NSMutableString alloc] initWithString:self.referrerName];
+        
+        // Checks if we are using the default name value - 'An ambassador of COMPANY' - and checks where is it in the message to see if we should capitalize An or not
+        if ([self usingReferrerDefaultValue] && [self nameIsMidSentence:newString charSpot:range.location]) {
+            NSRange replaceRange = [mutableReferrerName rangeOfString:@"An"];
+            [mutableReferrerName replaceOccurrencesOfString:@"An" withString:@"an" options:0 range:replaceRange];
+        }
+        
+        newString = (NSMutableString*)[newString stringByReplacingCharactersInRange:range withString:mutableReferrerName];
     }
     
     return newString;
@@ -152,6 +164,30 @@ NSInteger const CELL_HEIGHT = 25;
     } else {
         return [string rangeOfString:subString].location != NSNotFound;
     }
+}
+
+- (BOOL)nameIsMidSentence:(NSString*)text charSpot:(NSUInteger)spot {
+    if (spot > 0) {
+        int indexCheck = 1;
+        
+        NSString *charString = [NSString stringWithFormat:@"%c", [text characterAtIndex:spot - indexCheck]];
+        
+        // Keeps searching for the character before {{ name }} until it finds one that is not a " " value
+        while ([charString isEqualToString:@" "]) {
+            indexCheck++;
+            charString = [NSString stringWithFormat:@"%c", [text characterAtIndex:spot - indexCheck]];
+        }
+        
+        // If the character is not equal to one of the values in sentenceEnderString, then we can assume its in the middle of a sentence
+        NSString *sentenceEnderString = @".?!";
+        return [sentenceEnderString containsString:charString] ? NO : YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)usingReferrerDefaultValue {
+    return [self customContainsString:self.referrerName subString:@"An ambassador of"] ? YES : NO;
 }
 
 @end
