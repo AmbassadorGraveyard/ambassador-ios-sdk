@@ -7,6 +7,7 @@
 //
 
 #import "AMBWelcomeScreenViewController.h"
+#import "AMBWelcomeScreenViewController_Internal.h"
 #import "AMBLinkCell.h"
 
 @interface AMBWelcomeScreenViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, AMBLinkCellDelegate>
@@ -24,7 +25,6 @@
 
 @property (nonatomic, strong) NSArray * linkArray;
 @property (nonatomic, strong) UIColor * welcomeScreenAccent;
-@property (nonatomic, strong) NSString * referrerName;
 
 @end
 
@@ -38,9 +38,8 @@ NSInteger const CELL_HEIGHT = 25;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Temporary until we get use an actual network call
-    self.ivProfilePic.image = [UIImage imageNamed:@"coolGuy"];
-    self.referrerName = @"John Doe";
+    
+    self.ivProfilePic.image = self.referrerImage;
     
     [self setTheme];
     [self setupCollectionView];
