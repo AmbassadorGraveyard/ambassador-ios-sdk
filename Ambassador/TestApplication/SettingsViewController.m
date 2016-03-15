@@ -20,7 +20,7 @@
 @end
 
 
-@implementation ProfileViewController
+@implementation SettingsViewController
 
 
 #pragma mark - LifeCycle
@@ -43,7 +43,8 @@
     self.lblFullName.text = [DefaultsHandler getFullName];
     
     // Button
-    self.btnSignOut.layer.cornerRadius = 6;
+    [self.btnSignOut setImage:[self.btnSignOut.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    self.btnSignOut.imageView.tintColor = self.btnSignOut.titleLabel.textColor;
 }
 
 
