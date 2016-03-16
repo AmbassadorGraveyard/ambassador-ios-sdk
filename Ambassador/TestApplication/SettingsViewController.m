@@ -41,16 +41,17 @@
 - (void)viewDidAppear:(BOOL)animated {
     if (!self.lblCopied) {
         self.lblCopied = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 100, self.view.frame.size.height, 200, 50)];
-        self.lblCopied.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
+        self.lblCopied.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:16];
         self.lblCopied.text = @"Copied!";
         self.lblCopied.textAlignment = NSTextAlignmentCenter;
-        self.lblCopied.textColor = [UIColor darkGrayColor];
+        self.lblCopied.textColor = [UIColor lightGrayColor];
         [self.view addSubview:self.lblCopied];
     }
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     self.ivAvatar.layer.cornerRadius = self.ivAvatar.frame.size.height/2;
+    self.lblCopied.frame = CGRectMake(self.view.frame.size.width/2 - 100, self.view.frame.size.height, 200, 50);
 }
 
 
@@ -79,7 +80,7 @@
 - (void)showCopiedLabel {
     if (!self.lblCopiedShowing) {
         [UIView animateWithDuration:0.2 animations:^{
-            self.lblCopied.frame = CGRectMake(self.view.frame.size.width/2 - 100, self.lblCopied.frame.origin.y - 105, 200, 50);
+            self.lblCopied.frame = CGRectMake(self.view.frame.size.width/2 - 100, self.lblCopied.frame.origin.y - 96, 200, 50);
             self.lblCopiedShowing = YES;
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:0.3 delay:1.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
