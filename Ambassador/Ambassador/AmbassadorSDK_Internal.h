@@ -11,8 +11,9 @@
 #import "AMBNetworkObject.h"
 #import "AMBPusherManager.h"
 #import "AMBPusher.h"
+#import "AMBInputAlert.h"
 
-@interface AmbassadorSDK ()
+@interface AmbassadorSDK () <AMBInputAlertDelegate>
 
 + (AmbassadorSDK*)sharedInstance;
 - (void)subscribeToPusherWithCompletion:(void(^)())completion;
@@ -21,5 +22,10 @@
 @property (nonatomic, strong) AMBUserNetworkObject *user;
 @property (nonatomic, strong) NSString *universalToken;
 @property (nonatomic, strong) NSString *universalID;
+
+// Used to call present RAF is email prompt presented
+@property (nonatomic, weak) NSString * tempCampID;
+@property (nonatomic, weak) NSString * tempPlistName;
+@property (nonatomic, weak) UIViewController * tempPresentController;
 
 @end

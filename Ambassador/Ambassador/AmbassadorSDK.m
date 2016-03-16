@@ -144,7 +144,15 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 + (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist {
     if (!themePlist || [themePlist isEqualToString:@""]) { themePlist = @"GenericTheme"; }
-    [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withThemePlist:themePlist];
+    
+    // Checks to see if we have the user email
+    if (![AMBValues getUserEmail] || [AMBUtilities stringIsEmpty:[AMBValues getUserEmail]]) {
+        // If we do NOT have it, we present an email prompt
+        [[AmbassadorSDK sharedInstance] presentEmailPrompt:viewController campID:ID themePlist:themePlist];
+    } else {
+        // Otherwise- present RAF as normal
+        [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withThemePlist:themePlist];
+    }
 }
 
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist {
@@ -156,6 +164,23 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     serviceSelectorVC.themeName = themePlist;
 
     [viewController presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)presentEmailPrompt:(UIViewController*)viewController campID:(NSString*)campID themePlist:(NSString*)themePlist {
+    // Temporarily saves values to use for presenting raf on continuation
+    self.tempCampID = campID;
+    self.tempPresentController = viewController;
+    self.tempPlistName = themePlist;
+    
+    AMBInputAlert *emailAlert = [[AMBInputAlert alloc] initWithTitle:@"Refer your friends!" message:@"Enter your email below to get started." placeHolder:@"Email" actionButton:@"Continue"];
+    emailAlert.delegate = self;
+    [viewController presentViewController:emailAlert animated:YES completion:nil];
+}
+
+// AMBInputAlert Delegate
+- (void)AMBInputAlertActionButtonTapped:(NSString *)inputValue {
+    [self localIdentifyWithEmail:inputValue];
+    [self presentRAFForCampaign:self.tempCampID FromViewController:self.tempPresentController withThemePlist:self.tempPlistName];
 }
 
 
