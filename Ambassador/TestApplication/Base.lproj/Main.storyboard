@@ -798,24 +798,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firstname Lastname" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVc-lZ-Q0b">
-                                <rect key="frame" x="224" y="135" width="154" height="20"/>
+                                <rect key="frame" x="224" y="115" width="154" height="20"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MSL-g2-7Jn">
-                                <rect key="frame" x="250" y="25" width="100" height="100"/>
+                                <rect key="frame" x="260" y="25" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="IPj-4R-FRy">
+                                    <constraint firstAttribute="height" constant="80" id="IPj-4R-FRy">
                                         <variation key="heightClass=compact" constant="50"/>
                                     </constraint>
-                                    <constraint firstAttribute="width" constant="100" id="aRO-fQ-oPS">
+                                    <constraint firstAttribute="width" constant="80" id="aRO-fQ-oPS">
                                         <variation key="heightClass=compact" constant="50"/>
                                     </constraint>
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phn-jH-cLG">
-                                <rect key="frame" x="0.0" y="170" width="600" height="35"/>
+                                <rect key="frame" x="0.0" y="150" width="600" height="35"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Universal ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FaI-BI-MtV">
                                         <rect key="frame" x="15" y="10" width="71" height="16"/>
@@ -838,12 +838,12 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ucd-dF-ycl">
-                                <rect key="frame" x="15" y="220" width="570" height="35"/>
+                                <rect key="frame" x="15" y="200" width="570" height="35"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Universal ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="DDB-9h-2Wd">
                                         <rect key="frame" x="10" y="10" width="527" height="16"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
-                                        <color key="textColor" red="0.318359375" green="0.318359375" blue="0.318359375" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.5161971275252526" green="0.5161971275252526" blue="0.5161971275252526" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REp-yg-KnV">
@@ -883,7 +883,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b5h-Iy-Jyb">
-                                <rect key="frame" x="0.0" y="270" width="600" height="35"/>
+                                <rect key="frame" x="0.0" y="250" width="600" height="35"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SDK Token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5LG-Gh-99v">
                                         <rect key="frame" x="15" y="10" width="66" height="16"/>
@@ -906,12 +906,12 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kGc-Pe-d2S">
-                                <rect key="frame" x="15" y="320" width="570" height="35"/>
+                                <rect key="frame" x="15" y="300" width="570" height="35"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SDK Token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="jlK-c3-B16">
                                         <rect key="frame" x="10" y="10" width="527" height="16"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
-                                        <color key="textColor" red="0.318359375" green="0.318359375" blue="0.318359375" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pQJ-vA-82L">
@@ -951,7 +951,7 @@
                                 </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGR-5K-pHp">
-                                <rect key="frame" x="8" y="375" width="90" height="36"/>
+                                <rect key="frame" x="8" y="355" width="90" height="36"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="  Logout" image="loginIcon">
