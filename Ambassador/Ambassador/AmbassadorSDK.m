@@ -81,6 +81,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     self.universalToken = universalToken;
     [AMBValues setUniversalIDWithID:universalID];
     [AMBValues setUniversalTokenWithToken:universalToken];
+    [AMBValues setPusherChannelObject:@{}];
     if (!self.conversionTimer.isValid) { self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES]; }
     self.conversion = [[AMBConversion alloc] init];
 
