@@ -50,7 +50,8 @@
 #pragma mark - IBActions
 
 - (IBAction)actionButtonTapped:(id)sender {
-    [self.delegate actionButtonTapped];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate AMBInputAlertActionButtonTapped:self.tfInput.text];
 }
 
 - (IBAction)closeButtonTapped:(id)sender {
