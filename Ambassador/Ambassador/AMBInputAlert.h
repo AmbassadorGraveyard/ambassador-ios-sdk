@@ -10,7 +10,7 @@
 
 @protocol AMBInputAlertDelegate <NSObject>
 
-- (void)actionButtonTapped;
+- (void)AMBInputAlertActionButtonTapped:(NSString*)inputValue;
 
 @end
 
