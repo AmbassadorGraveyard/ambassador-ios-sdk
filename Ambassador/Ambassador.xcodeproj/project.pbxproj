@@ -1131,6 +1131,7 @@
 				EFDFA0C81BE148A5002FA3ED /* AMBValues.h */,
 				EFDFA0C91BE148A5002FA3ED /* AMBValues.m */,
 				EFE7D7921C21BA7400D7F92C /* Theme Manager */,
+				EF1CC8051C99E11000C2752B /* Custom Input */,
 				EFE7D7911C21BA5F00D7F92C /* Utilities */,
 			);
 			name = Misc;
@@ -1212,7 +1213,6 @@
 			children = (
 				DBA3FBA71BA8A24F00672D82 /* AMBUtilities.h */,
 				DBA3FBA81BA8A24F00672D82 /* AMBUtilities.m */,
-				EF1CC8051C99E11000C2752B /* Custom Input */,
 				EF185A2B1C528E7800AD6330 /* Custom Alert */,
 			);
 			name = Utilities;
