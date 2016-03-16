@@ -37,6 +37,9 @@
 #pragma mark - UI Functions
 
 - (void)setupUI {
+    // Nav Bar
+    self.tabBarController.title = @"Settings";
+    
     // Avatar
     self.ivAvatar.image = [DefaultsHandler getUserImage];
     self.ivAvatar.layer.cornerRadius = self.ivAvatar.frame.size.height/2;
