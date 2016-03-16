@@ -48,6 +48,10 @@
     // TODO
 }
 
+- (IBAction)closeButtonTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 #pragma mark - UITextField Delegate
 

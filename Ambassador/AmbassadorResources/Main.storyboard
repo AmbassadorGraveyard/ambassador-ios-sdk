@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="h1V-x8-bgO">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -60,7 +61,7 @@
                                     <constraint firstAttribute="height" id="DnW-NF-QZf"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nBM-iI-tni">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nBM-iI-tni">
                                 <rect key="frame" x="300" y="86" width="0.0" height="0.0"/>
                                 <constraints>
                                     <constraint firstAttribute="width" id="GzU-VF-AqZ"/>
@@ -1232,6 +1233,9 @@
                                         <state key="normal" title="CONTINUE">
                                             <color key="titleColor" red="0.23529411759999999" green="0.59215686270000001" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="actionButtonTapped:" destination="eEd-S3-mCc" eventType="touchUpInside" id="n2t-O7-hdd"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z0I-rk-OPA">
                                         <rect key="frame" x="282" y="20" width="18" height="18"/>
@@ -1240,6 +1244,9 @@
                                             <constraint firstAttribute="width" constant="18" id="btD-7W-dbn"/>
                                         </constraints>
                                         <state key="normal" image="close"/>
+                                        <connections>
+                                            <action selector="closeButtonTapped:" destination="eEd-S3-mCc" eventType="touchUpInside" id="tyb-xd-PpG"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1273,6 +1280,13 @@
                             <constraint firstItem="ybV-BX-ygc" firstAttribute="centerX" secondItem="e6x-d6-LLa" secondAttribute="centerX" id="zp8-yx-HDn"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="btnAction" destination="hk5-uC-M8o" id="P9l-iw-0lZ"/>
+                        <outlet property="lblMessage" destination="OX3-qa-S3S" id="Pbp-Qx-goQ"/>
+                        <outlet property="lblTitle" destination="Pef-97-b1a" id="6OD-kl-c2o"/>
+                        <outlet property="masterView" destination="ybV-BX-ygc" id="ZgQ-7k-pMP"/>
+                        <outlet property="tfInput" destination="kJf-sc-Lor" id="dG8-gZ-Rfg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f0E-2H-kIj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
