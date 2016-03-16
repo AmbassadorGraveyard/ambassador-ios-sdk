@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AMBCustomInputController : UIViewController
+@interface AMBInputAlert : UIViewController
 
 - (instancetype)initWithTitle:(NSString*)title message:(NSString*)message placeHolder:(NSString*)placeHolder actionButton:(NSString*)actionButton;
 

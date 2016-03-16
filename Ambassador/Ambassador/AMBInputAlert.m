@@ -6,9 +6,9 @@
 //  Copyright © 2016 Ambassador. All rights reserved.
 //
 
-#import "AMBCustomInputController.h"
+#import "AMBInputAlert.h"
 
-@interface AMBCustomInputController() <UITextFieldDelegate>
+@interface AMBInputAlert() <UITextFieldDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * masterView;
 @property (nonatomic, strong) IBOutlet UILabel * lblTitle;
@@ -23,7 +23,7 @@
 @end
 
 
-@implementation AMBCustomInputController
+@implementation AMBInputAlert
 
 
 #pragma mark - LifeCycle
