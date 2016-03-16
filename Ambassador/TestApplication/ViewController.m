@@ -38,7 +38,7 @@ NSString * loginSegue = @"ambassador_login_segue";
     [self.btnLogin setGestureRecognizers:@[longPress]];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     if (!self.hasPerformedRunWithKeys) {
         [self checkForLogin];
     }
