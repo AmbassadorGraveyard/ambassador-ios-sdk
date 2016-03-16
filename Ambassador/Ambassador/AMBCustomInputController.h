@@ -10,4 +10,6 @@
 
 @interface AMBCustomInputController : UIViewController
 
+- (instancetype)initWithTitle:(NSString*)title message:(NSString*)message placeHolder:(NSString*)placeHolder actionButton:(NSString*)actionButton;
+
 @end
