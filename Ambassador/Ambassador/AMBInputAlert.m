@@ -15,6 +15,7 @@
 @property (nonatomic, strong) IBOutlet UILabel * lblMessage;
 @property (nonatomic, strong) IBOutlet UITextField * tfInput;
 @property (nonatomic, strong) IBOutlet UIButton * btnAction;
+@property (nonatomic, strong) IBOutlet UIView * emailUnderline;
 
 @property (nonatomic, strong) NSString * titleText;
 @property (nonatomic, strong) NSString * messageText;
@@ -50,8 +51,12 @@
 #pragma mark - IBActions
 
 - (IBAction)actionButtonTapped:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [self.delegate AMBInputAlertActionButtonTapped:self.tfInput.text];
+    if ([[self.tfInput.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
+        [self showErrorLine];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.delegate AMBInputAlertActionButtonTapped:self.tfInput.text];
+    }
 }
 
 - (IBAction)closeButtonTapped:(id)sender {
@@ -60,6 +65,11 @@
 
 
 #pragma mark - UITextField Delegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    [self hideErrorLine];
+    return YES;
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField endEditing:YES];
@@ -82,6 +92,18 @@
     
     // Buttons
     [self.btnAction setTitle:self.actionButtonTitle forState:UIControlStateNormal];
+}
+
+- (void)showErrorLine {
+    [UIView animateWithDuration:0.2 animations:^{
+        self.emailUnderline.backgroundColor = [UIColor errorRed];
+    }];
+}
+
+- (void)hideErrorLine {
+    [UIView animateWithDuration:0.2 animations:^{
+        self.emailUnderline.backgroundColor = [UIColor darkGrayColor];
+    }];
 }
 
 @end
