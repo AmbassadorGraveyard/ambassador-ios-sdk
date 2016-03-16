@@ -8,8 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol AMBInputAlertDelegate <NSObject>
+
+- (void)actionButtonTapped;
+
+@end
+
+
 @interface AMBInputAlert : UIViewController
 
+// Public properties
+@property (nonatomic, weak) id<AMBInputAlertDelegate> delegate;
+
+// Public functions
 - (instancetype)initWithTitle:(NSString*)title message:(NSString*)message placeHolder:(NSString*)placeHolder actionButton:(NSString*)actionButton;
 
 @end

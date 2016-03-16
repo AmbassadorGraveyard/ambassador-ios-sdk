@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString * titleText;
 @property (nonatomic, strong) NSString * messageText;
 @property (nonatomic, strong) NSString * actionButtonTitle;
+@property (nonatomic, strong) NSString * placeHolderText;
 
 @end
 
@@ -34,6 +35,9 @@
     self.titleText = title;
     self.messageText = message;
     self.actionButtonTitle = actionButton;
+    self.placeHolderText = placeHolder;
+    self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
     return self;
 }
@@ -42,10 +46,11 @@
     [self setUpUI];
 }
 
+
 #pragma mark - IBActions
 
 - (IBAction)actionButtonTapped:(id)sender {
-    // TODO
+    [self.delegate actionButtonTapped];
 }
 
 - (IBAction)closeButtonTapped:(id)sender {
@@ -70,6 +75,9 @@
     // Labels
     self.lblTitle.text = self.titleText;
     self.lblMessage.text = self.messageText;
+    
+    // TextFields
+    [self.tfInput setPlaceholder:self.placeHolderText];
     
     // Buttons
     [self.btnAction setTitle:self.actionButtonTitle forState:UIControlStateNormal];
