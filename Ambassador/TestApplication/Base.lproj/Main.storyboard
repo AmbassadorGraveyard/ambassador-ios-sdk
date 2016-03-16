@@ -763,10 +763,10 @@
             </objects>
             <point key="canvasLocation" x="-576" y="450"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--My Tab Bar Controller-->
         <scene sceneID="Wyf-pR-0gr">
             <objects>
-                <tabBarController id="l3D-7s-gjK" sceneMemberID="viewController">
+                <tabBarController id="l3D-7s-gjK" customClass="MyTabBarController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="Wn8-R4-cry"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="tow-vP-sNW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -798,7 +798,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firstname Lastname" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVc-lZ-Q0b">
-                                <rect key="frame" x="224" y="135" width="153" height="20"/>
+                                <rect key="frame" x="224" y="135" width="154" height="20"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -817,10 +817,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phn-jH-cLG">
                                 <rect key="frame" x="0.0" y="170" width="600" height="35"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FaI-BI-MtV">
-                                        <rect key="frame" x="15" y="10" width="36" height="16"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Universal ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FaI-BI-MtV">
+                                        <rect key="frame" x="15" y="10" width="71" height="16"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
-                                        <color key="textColor" red="0.59631470959595956" green="0.59631470959595956" blue="0.59631470959595956" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.50479403409090895" green="0.50479403409090895" blue="0.50479403409090895" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -840,7 +840,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ucd-dF-ycl">
                                 <rect key="frame" x="15" y="220" width="570" height="35"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDB-9h-2Wd">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Universal ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="DDB-9h-2Wd">
                                         <rect key="frame" x="10" y="10" width="527" height="16"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                         <color key="textColor" red="0.318359375" green="0.318359375" blue="0.318359375" alpha="1" colorSpace="calibratedRGB"/>
@@ -859,6 +859,9 @@
                                                 <exclude reference="C0p-Fb-dnU"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <action selector="copyIDToClipboard:" destination="njJ-N1-dk0" eventType="touchUpInside" id="Y5T-kQ-U8F"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -882,10 +885,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b5h-Iy-Jyb">
                                 <rect key="frame" x="0.0" y="270" width="600" height="35"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Secret" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5LG-Gh-99v">
-                                        <rect key="frame" x="15" y="10" width="40" height="16"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SDK Token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5LG-Gh-99v">
+                                        <rect key="frame" x="15" y="10" width="66" height="16"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
-                                        <color key="textColor" red="0.59631470959999999" green="0.59631470959999999" blue="0.59631470959999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -905,7 +908,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kGc-Pe-d2S">
                                 <rect key="frame" x="15" y="320" width="570" height="35"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Secret" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jlK-c3-B16">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SDK Token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="jlK-c3-B16">
                                         <rect key="frame" x="10" y="10" width="527" height="16"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                         <color key="textColor" red="0.318359375" green="0.318359375" blue="0.318359375" alpha="1" colorSpace="calibratedRGB"/>
@@ -924,6 +927,9 @@
                                                 <exclude reference="hye-d5-nao"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <action selector="copyTokenToClipboard:" destination="njJ-N1-dk0" eventType="touchUpInside" id="nVg-wd-izN"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -991,26 +997,26 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="Mgk-Cz-Wvg"/>
                                 <exclude reference="gC0-IH-Lb5"/>
                                 <exclude reference="lrR-wx-6KD"/>
                                 <exclude reference="T2O-Bg-Zco"/>
                                 <exclude reference="oTe-Iv-Fks"/>
-                                <exclude reference="Mgk-Cz-Wvg"/>
-                                <exclude reference="xko-cb-0ab"/>
                                 <exclude reference="6bK-XM-2Ks"/>
                                 <exclude reference="Akw-7N-Bvp"/>
+                                <exclude reference="xko-cb-0ab"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
+                                <include reference="Mgk-Cz-Wvg"/>
+                                <exclude reference="pui-DG-uWL"/>
                                 <exclude reference="V0J-MD-rIa"/>
                                 <include reference="lrR-wx-6KD"/>
                                 <include reference="T2O-Bg-Zco"/>
                                 <exclude reference="lwf-3a-SNc"/>
                                 <include reference="oTe-Iv-Fks"/>
                                 <exclude reference="q2n-NO-rWQ"/>
-                                <include reference="Mgk-Cz-Wvg"/>
-                                <exclude reference="pui-DG-uWL"/>
                                 <include reference="6bK-XM-2Ks"/>
                                 <exclude reference="839-h8-xVh"/>
                                 <include reference="Akw-7N-Bvp"/>
@@ -1021,9 +1027,15 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="Settings" image="settings" id="SpI-cQ-LOE"/>
                     <connections>
+                        <outlet property="btnCopyID" destination="REp-yg-KnV" id="cxx-C5-bLa"/>
+                        <outlet property="btnCopyToken" destination="pQJ-vA-82L" id="OEG-Dj-UGK"/>
                         <outlet property="btnSignOut" destination="HGR-5K-pHp" id="9QA-2A-CkK"/>
+                        <outlet property="idBackgroundView" destination="ucd-dF-ycl" id="cjz-nG-W2c"/>
                         <outlet property="ivAvatar" destination="MSL-g2-7Jn" id="jyL-7w-vsl"/>
                         <outlet property="lblFullName" destination="FVc-lZ-Q0b" id="SSq-CK-AKs"/>
+                        <outlet property="lblSDKToken" destination="jlK-c3-B16" id="CBW-fy-Z7U"/>
+                        <outlet property="lblUniversalID" destination="DDB-9h-2Wd" id="gKy-7f-FhC"/>
+                        <outlet property="tokenBackgroundView" destination="kGc-Pe-d2S" id="lnj-dR-tgJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wiy-aH-zie" userLabel="First Responder" sceneMemberID="firstResponder"/>
