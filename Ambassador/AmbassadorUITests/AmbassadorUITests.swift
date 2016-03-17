@@ -187,7 +187,7 @@ extension AmbassadorUITests {
         let passwordSecureTextField = app.secureTextFields["Password"]
         passwordSecureTextField.tap()
         passwordSecureTextField.typeText("TestPassword")
-        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
+        app.otherElements.containingType(.NavigationBar, identifier:"MyTabBar").childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
         NSThread.sleepForTimeInterval(2)
     }
     
