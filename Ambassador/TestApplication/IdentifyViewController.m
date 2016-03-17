@@ -18,6 +18,8 @@
 @property (nonatomic, strong) IBOutlet UITextField * tfEmail;
 @property (nonatomic, strong) IBOutlet UIView * imageBGView;
 
+@property (nonatomic, strong) NSString * codeExportString;
+
 @end
 
 
@@ -36,6 +38,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.tabBarController.title = @"Identify";
+    [self addExportButton];
 }
 
 
@@ -96,20 +99,52 @@
     self.imageBGView.layer.cornerRadius = 5;
 }
 
+- (void)addExportButton {
+    UIBarButtonItem *btnExport = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"exportIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(exportCode)];
+    self.tabBarController.navigationItem.rightBarButtonItem = btnExport;
+}
+
 
 #pragma mark - Helper Functions
 
 - (void)identify {
-    if ([Validator isValidEmail:self.tfEmail.text]) {
+    NSString *email = self.tfEmail.text;
+    
+    if ([Validator isValidEmail:email]) {
         [AmbassadorSDK identifyWithEmail:self.tfEmail.text];
-        UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Great!"
-                                                               message:[NSString stringWithFormat:@"You have succesfully identified as %@! You can now track conversion events and create commissions!", self.tfEmail.text]
-                                                        delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [successAlert show];
-    } else {
-        UIAlertView *emailAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"Please enter a valid email address before identifying." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [emailAlert show];
+        
+        NSString *confirmationMessage = [NSString stringWithFormat:@"You have succesfully identified as %@! You can now track conversion events and create commissions!", email];
+        UIAlertView *confirmationAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:confirmationMessage delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [confirmationAlert show];
+        
+        return;
     }
+    
+    [self showValidationError:@"identifying"];
+    
+}
+
+- (void)exportCode {
+    NSString *email = self.tfEmail.text;
+    
+    if ([Validator isValidEmail:email]) {
+        // Create a code snippet based on the info entered into the identify field
+        NSString *codeSnippet = [NSString stringWithFormat:@"[AmbassadorSDK identifyWithEmail:%@];", email];
+        
+        // Package up snippet to share
+        NSArray * shareItems = @[codeSnippet];
+        UIActivityViewController * avc = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];
+        [self presentViewController:avc animated:YES completion:nil];
+        
+        return;
+    }
+    
+    [self showValidationError:@"exporting"];
+}
+
+- (void)showValidationError:(NSString*)action {
+    UIAlertView *invalidEmailAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:[NSString stringWithFormat:@"Please enter a valid email address before %@.", action]  delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [invalidEmailAlert show];
 }
 
 @end
