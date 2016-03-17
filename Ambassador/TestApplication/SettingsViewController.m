@@ -9,7 +9,7 @@
 
 #import "SettingsViewController.h"
 #import "DefaultsHandler.h"
-#import "ViewController.h"
+#import "IdentifyViewController.h"
 
 @interface SettingsViewController()
 
@@ -98,7 +98,7 @@
 - (IBAction)signOut:(id)sender {
     [DefaultsHandler clearUserValues];
     [self.tabBarController setSelectedIndex:0];
-    ViewController *initialController = [self.tabBarController viewControllers][0];
+    IdentifyViewController *initialController = [self.tabBarController viewControllers][0];
     [initialController checkForLogin];
 }
 

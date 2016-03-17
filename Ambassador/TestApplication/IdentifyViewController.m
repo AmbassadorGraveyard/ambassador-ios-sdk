@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Ambassador. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "IdentifyViewController.h"
 #import <Ambassador/Ambassador.h>
 #import "DefaultsHandler.h"
 #import "AmbassadorLoginViewController.h"
 
-@interface ViewController () <AMBWelcomeScreenDelegate, AmbassadorLoginDelegate>
+@interface IdentifyViewController () <AMBWelcomeScreenDelegate, AmbassadorLoginDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * loginView;
 @property (nonatomic, strong) IBOutlet UIButton * btnLogin;
@@ -23,7 +23,7 @@
 @end
 
 
-@implementation ViewController
+@implementation IdentifyViewController
 
 NSString * loginSegue = @"ambassador_login_segue";
 
