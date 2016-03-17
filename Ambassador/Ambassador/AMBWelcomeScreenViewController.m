@@ -113,14 +113,14 @@ NSInteger const CELL_HEIGHT = 25;
         self.buttonHeight.constant = 0;
         self.referralTextBottom.constant = 0;
     } else {
-        [self.btnAction setTitle:self.parameters.actionButtonTitle forState:UIControlStateNormal];
+        [self.btnAction setTitle:[self getCorrectString:self.parameters.actionButtonTitle] forState:UIControlStateNormal];
         self.btnAction.backgroundColor = self.welcomeScreenAccent;
     }
     
     // Labels
     self.lblReferred.text = [self getCorrectString:self.parameters.referralMessage];
-    self.lblDescription.text = self.parameters.detailMessage;
-    self.linkArray = self.parameters.linkArray;
+    self.lblDescription.text = [self getCorrectString:self.parameters.detailMessage];
+    self.linkArray = [self getUpdatedLinkArray];
 }
 
 - (void)setupCollectionView {
@@ -155,6 +155,17 @@ NSInteger const CELL_HEIGHT = 25;
     }
     
     return newString;
+}
+
+- (NSArray*)getUpdatedLinkArray {
+    NSMutableArray *newLinkArray = [[NSMutableArray alloc] init];
+    
+    // Goes through each link and handles for {{ name }} in any them
+    for (NSString *link in self.parameters.linkArray) {
+        [newLinkArray addObject:[self getCorrectString:link]];
+    }
+    
+    return newLinkArray;
 }
 
 // This method will only need to be used until we stop supporting iOS 7
