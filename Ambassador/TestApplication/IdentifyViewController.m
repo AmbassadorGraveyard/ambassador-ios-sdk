@@ -11,21 +11,16 @@
 #import "DefaultsHandler.h"
 #import "AmbassadorLoginViewController.h"
 
-@interface IdentifyViewController () <AMBWelcomeScreenDelegate, AmbassadorLoginDelegate>
+@interface IdentifyViewController () <AMBWelcomeScreenDelegate>
 
-@property (nonatomic, strong) IBOutlet UIView * loginView;
-@property (nonatomic, strong) IBOutlet UIButton * btnLogin;
-@property (nonatomic, strong) IBOutlet UITextField * tfUsername;
-@property (nonatomic, strong) IBOutlet UITextField * tfPassword;
-@property (nonatomic, strong) IBOutlet UIView * signInCrossbar;
-@property (nonatomic) BOOL hasPerformedRunWithKeys;
+@property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
+@property (nonatomic, strong) IBOutlet UITextField * tfEmail;
+@property (nonatomic, strong) IBOutlet UIView * imageBGView;
 
 @end
 
 
 @implementation IdentifyViewController
-
-NSString * loginSegue = @"ambassador_login_segue";
 
 
 #pragma mark - LifeCycle
@@ -35,42 +30,30 @@ NSString * loginSegue = @"ambassador_login_segue";
     
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressLogin)];
     [longPress setMinimumPressDuration:0.3];
-    [self.btnLogin setGestureRecognizers:@[longPress]];
+    [self.btnSubmit setGestureRecognizers:@[longPress]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    if (!self.hasPerformedRunWithKeys) {
-        [self checkForLogin];
-    }
+    self.tabBarController.title = @"Identify";
 }
 
 
 #pragma mark - IBActions
 
 - (IBAction)loginTapped:(id)sender {
-    [self.view endEditing:YES];
-    [self identifyOnSignIn];
+    [self.tfEmail resignFirstResponder];
+    [self identify];
 }
 
 - (void)longPressLogin {
     AMBWelcomeScreenParameters *welcomeParams = [[AMBWelcomeScreenParameters alloc] init];
     welcomeParams.detailMessage = @"You understand the value of referrals. Maybe you've even explored referral marketing software.";
     welcomeParams.referralMessage = @"{{ name }} has referred you to Ambassador";
-    welcomeParams.accentColor = self.btnLogin.backgroundColor;
+    welcomeParams.accentColor = self.btnSubmit.backgroundColor;
     welcomeParams.linkArray = @[@"Testimonials", @"Request Demo"];
     welcomeParams.actionButtonTitle = @"CREATE AN ACCOUNT";
     
     [AmbassadorSDK presentWelcomeScreen:self withParameters:welcomeParams];
-}
-
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:loginSegue]) {
-        AmbassadorLoginViewController *loginVC = (AmbassadorLoginViewController*)segue.destinationViewController;
-        loginVC.delegate = self;
-    }
 }
 
 
@@ -96,41 +79,27 @@ NSString * loginSegue = @"ambassador_login_segue";
 
 #pragma mark - UI Functions
 
-- (void)setUpTheme {    
-    // Login View
-    self.loginView.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1].CGColor;
-    self.signInCrossbar.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
-    self.loginView.layer.borderWidth = 1;
-    self.loginView.layer.cornerRadius = 4;
+- (void)setUpTheme {
+    // TextFields
+    self.tfEmail.tintColor = self.btnSubmit.backgroundColor;
+    
+    // Sets padding for text/placeholder text
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 20)];
+    self.tfEmail.leftView = paddingView;
+    self.tfEmail.leftViewMode = UITextFieldViewModeAlways;
     
     // Login Button
-    self.btnLogin.layer.cornerRadius = 4;
+    self.btnSubmit.layer.cornerRadius = 5;
+    
+    // Images
+    self.imageBGView.layer.cornerRadius = 5;
 }
 
 
 #pragma mark - Helper Functions
 
-- (void)identifyOnSignIn {
-    if ([self allowSignIn]) {
-        [AmbassadorSDK identifyWithEmail:self.tfUsername.text];
-        [[NSUserDefaults standardUserDefaults] setValue:self.tfUsername.text forKey:@"loginEmail"];
-    } else {
-        UIAlertView *blankAlert = [[UIAlertView alloc] initWithTitle:@"Cannot log in" message:@"All fields must be filled out before signing in" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [blankAlert show];
-    }
-}
-
-- (BOOL)allowSignIn {
-    return (![self.tfPassword.text  isEqual: @""] && ![self.tfUsername.text  isEqual: @""]) ? YES : NO;
-}
-
-- (void)checkForLogin {
-    if ([[DefaultsHandler getSDKToken] isEqualToString:@""] || [[DefaultsHandler getUniversalID] isEqualToString:@""]) {
-        [self performSegueWithIdentifier:loginSegue sender:self];
-    } else {
-        self.hasPerformedRunWithKeys = YES;
-        [AmbassadorSDK runWithUniversalToken:[DefaultsHandler getSDKToken] universalID:[DefaultsHandler getUniversalID]];
-    }
+- (void)identify {
+    [AmbassadorSDK identifyWithEmail:self.tfEmail.text];
 }
 
 @end
