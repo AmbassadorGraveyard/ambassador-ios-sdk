@@ -8,6 +8,6 @@
 
 #import "IdentifyViewController.h"
 
-@interface ConversionViewController : IdentifyViewController
+@interface ConversionViewController : UIViewController
 
 @end
