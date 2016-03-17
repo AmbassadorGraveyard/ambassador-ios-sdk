@@ -10,6 +10,7 @@
 #import <Ambassador/Ambassador.h>
 #import "DefaultsHandler.h"
 #import "AmbassadorLoginViewController.h"
+#import "Validator.h"
 
 @interface IdentifyViewController () <AMBWelcomeScreenDelegate>
 
@@ -99,7 +100,16 @@
 #pragma mark - Helper Functions
 
 - (void)identify {
-    [AmbassadorSDK identifyWithEmail:self.tfEmail.text];
+    if ([Validator isValidEmail:self.tfEmail.text]) {
+        [AmbassadorSDK identifyWithEmail:self.tfEmail.text];
+        UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Great!"
+                                                               message:[NSString stringWithFormat:@"You have succesfully identified as %@! You can now track conversion events and create commissions!", self.tfEmail.text]
+                                                        delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [successAlert show];
+    } else {
+        UIAlertView *emailAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"Please enter a valid email address before identifying." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [emailAlert show];
+    }
 }
 
 @end

@@ -792,15 +792,15 @@
 				EF557A121C88B48600F66761 /* Buy Now */,
 				EF557A111C88B47700F66761 /* Sign Up */,
 				EF557A201C88E67700F66761 /* Settings */,
-				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
-				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
-				DB844D631BA76BDE003FD7A9 /* Supporting Files */,
 				EF557A191C88D39C00F66761 /* DefaultsHandler.h */,
 				EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */,
 				EF1CC8021C9993EE00C2752B /* MyTabBarController.h */,
 				EF1CC8031C9993EE00C2752B /* MyTabBarController.m */,
 				EF1CC80C1C9B3C6300C2752B /* Validator.h */,
 				EF1CC80D1C9B3C6300C2752B /* Validator.m */,
+				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
+				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
+				DB844D631BA76BDE003FD7A9 /* Supporting Files */,
 			);
 			path = TestApplication;
 			sourceTree = "<group>";
