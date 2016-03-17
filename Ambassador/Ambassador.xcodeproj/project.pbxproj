@@ -175,8 +175,7 @@
 		EF50EFC21C56AE230077CC63 /* AMBConversionModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = EF50EFC11C56AE230077CC63 /* AMBConversionModel.xcdatamodel */; };
 		EF5356501BF109A400BC80C4 /* unitTestImage.png in Resources */ = {isa = PBXBuildFile; fileRef = EF53564F1BF109A400BC80C4 /* unitTestImage.png */; };
 		EF5356521BF10C0700BC80C4 /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */; };
-		EF5390D11C445BF2005F6944 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D01C445BF2005F6944 /* SignUpViewController.m */; };
-		EF5390D41C446693005F6944 /* BuyNowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D31C446693005F6944 /* BuyNowViewController.m */; };
+		EF5390D11C445BF2005F6944 /* ConversionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D01C445BF2005F6944 /* ConversionViewController.m */; };
 		EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */; };
 		EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D91C4565D9005F6944 /* RAFCell.m */; };
 		EF5390DC1C458FFD005F6944 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390DB1C458FFD005F6944 /* GenericTheme.plist */; };
@@ -493,10 +492,8 @@
 		EF50EFC11C56AE230077CC63 /* AMBConversionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMBConversionModel.xcdatamodel; sourceTree = "<group>"; };
 		EF53564F1BF109A400BC80C4 /* unitTestImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unitTestImage.png; sourceTree = "<group>"; };
 		EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorTheme.plist; sourceTree = "<group>"; };
-		EF5390CF1C445BF2005F6944 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
-		EF5390D01C445BF2005F6944 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
-		EF5390D21C446693005F6944 /* BuyNowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyNowViewController.h; sourceTree = "<group>"; };
-		EF5390D31C446693005F6944 /* BuyNowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyNowViewController.m; sourceTree = "<group>"; };
+		EF5390CF1C445BF2005F6944 /* ConversionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversionViewController.h; sourceTree = "<group>"; };
+		EF5390D01C445BF2005F6944 /* ConversionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversionViewController.m; sourceTree = "<group>"; };
 		EF5390D51C4469AF005F6944 /* ReferAFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferAFriendViewController.h; sourceTree = "<group>"; };
 		EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferAFriendViewController.m; sourceTree = "<group>"; };
 		EF5390D81C4565D9005F6944 /* RAFCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFCell.h; sourceTree = "<group>"; };
@@ -789,8 +786,7 @@
 				EF557A151C88B4AE00F66761 /* Login */,
 				EF557A141C88B4A100F66761 /* Identify */,
 				EF557A131C88B49700F66761 /* RAF */,
-				EF557A121C88B48600F66761 /* Buy Now */,
-				EF557A111C88B47700F66761 /* Sign Up */,
+				EF557A111C88B47700F66761 /* Conversion */,
 				EF557A201C88E67700F66761 /* Settings */,
 				EF557A191C88D39C00F66761 /* DefaultsHandler.h */,
 				EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */,
@@ -972,22 +968,13 @@
 			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
-		EF557A111C88B47700F66761 /* Sign Up */ = {
+		EF557A111C88B47700F66761 /* Conversion */ = {
 			isa = PBXGroup;
 			children = (
-				EF5390CF1C445BF2005F6944 /* SignUpViewController.h */,
-				EF5390D01C445BF2005F6944 /* SignUpViewController.m */,
+				EF5390CF1C445BF2005F6944 /* ConversionViewController.h */,
+				EF5390D01C445BF2005F6944 /* ConversionViewController.m */,
 			);
-			name = "Sign Up";
-			sourceTree = "<group>";
-		};
-		EF557A121C88B48600F66761 /* Buy Now */ = {
-			isa = PBXGroup;
-			children = (
-				EF5390D21C446693005F6944 /* BuyNowViewController.h */,
-				EF5390D31C446693005F6944 /* BuyNowViewController.m */,
-			);
-			name = "Buy Now";
+			name = Conversion;
 			sourceTree = "<group>";
 		};
 		EF557A131C88B49700F66761 /* RAF */ = {
@@ -1700,9 +1687,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF5390D41C446693005F6944 /* BuyNowViewController.m in Sources */,
 				DB844D6C1BA76BDE003FD7A9 /* IdentifyViewController.m in Sources */,
-				EF5390D11C445BF2005F6944 /* SignUpViewController.m in Sources */,
+				EF5390D11C445BF2005F6944 /* ConversionViewController.m in Sources */,
 				DB844D691BA76BDE003FD7A9 /* AppDelegate.m in Sources */,
 				EF1CC80E1C9B3C6300C2752B /* Validator.m in Sources */,
 				EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */,

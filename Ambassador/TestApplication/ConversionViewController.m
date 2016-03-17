@@ -6,10 +6,10 @@
 //  Copyright © 2016 Ambassador. All rights reserved.
 //
 
-#import "SignUpViewController.h"
+#import "ConversionViewController.h"
 #import <Ambassador/Ambassador.h>
 
-@interface SignUpViewController ()
+@interface ConversionViewController ()
 
 @property (nonatomic, strong) IBOutlet UIView * loginView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSignUp;
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation SignUpViewController
+@implementation ConversionViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
