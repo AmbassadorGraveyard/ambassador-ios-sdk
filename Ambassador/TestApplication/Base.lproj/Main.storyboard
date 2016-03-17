@@ -372,7 +372,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="erK-pz-KTq">
-                                <rect key="frame" x="278" y="30" width="45" height="45"/>
+                                <rect key="frame" x="278" y="20" width="45" height="45"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="identifyIconLg" translatesAutoresizingMaskIntoConstraints="NO" id="utW-hk-nOD">
                                         <rect key="frame" x="7" y="7" width="31" height="31"/>
@@ -388,35 +388,41 @@
                                     <constraint firstAttribute="height" constant="45" id="yrN-nC-iua"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Identify" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7PY-gE-hqN">
-                                <rect key="frame" x="270" y="88" width="62" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Identify" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7PY-gE-hqN">
+                                <rect key="frame" x="271" y="78" width="61" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use this method to identify your users.  Enter an email below to see how this works." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="de4-0l-uXf">
-                                <rect key="frame" x="41" y="118" width="519" height="36"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Use this method to identify your users.  Enter an email below to see how this works." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="de4-0l-uXf">
+                                <rect key="frame" x="42" y="108" width="518" height="36"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                 <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dur-be-1KX">
-                                <rect key="frame" x="177" y="174" width="245" height="41"/>
+                                <rect key="frame" x="177" y="164" width="245" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="41" id="kM5-67-Nh3"/>
                                     <constraint firstAttribute="width" constant="245" id="ng5-o6-kGb"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
+                                <connections>
+                                    <outlet property="delegate" destination="O36-Ew-33q" id="CRQ-6v-4u8"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIH-OJ-Vng">
-                                <rect key="frame" x="177" y="225" width="245" height="41"/>
+                                <rect key="frame" x="177" y="215" width="245" height="41"/>
                                 <color key="backgroundColor" red="0.23529411764705882" green="0.59215686274509804" blue="0.82745098039215681" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                 <state key="normal" title="Submit">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="loginTapped:" destination="O36-Ew-33q" eventType="touchUpInside" id="3U3-oX-Akb"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -427,7 +433,7 @@
                             <constraint firstItem="TIH-OJ-Vng" firstAttribute="centerX" secondItem="Dur-be-1KX" secondAttribute="centerX" id="9cV-HP-eYg"/>
                             <constraint firstItem="Dur-be-1KX" firstAttribute="centerX" secondItem="de4-0l-uXf" secondAttribute="centerX" id="ACF-RN-sc0"/>
                             <constraint firstItem="7PY-gE-hqN" firstAttribute="centerX" secondItem="erK-pz-KTq" secondAttribute="centerX" id="CW3-tm-j2t"/>
-                            <constraint firstItem="erK-pz-KTq" firstAttribute="top" secondItem="e62-wf-Do9" secondAttribute="bottom" constant="30" id="Jc6-WW-9Gf"/>
+                            <constraint firstItem="erK-pz-KTq" firstAttribute="top" secondItem="e62-wf-Do9" secondAttribute="bottom" constant="20" id="Jc6-WW-9Gf"/>
                             <constraint firstItem="erK-pz-KTq" firstAttribute="centerX" secondItem="KK1-Sd-Hlz" secondAttribute="centerX" id="LFQ-JM-UK0"/>
                             <constraint firstItem="de4-0l-uXf" firstAttribute="centerX" secondItem="7PY-gE-hqN" secondAttribute="centerX" id="bYd-3F-orS"/>
                             <constraint firstItem="TIH-OJ-Vng" firstAttribute="top" secondItem="Dur-be-1KX" secondAttribute="bottom" constant="10" id="cDF-Mk-Y3V"/>
@@ -447,6 +453,11 @@
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-3"/>
                     </tabBarItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <connections>
+                        <outlet property="btnSubmit" destination="TIH-OJ-Vng" id="bxL-mE-Nba"/>
+                        <outlet property="imageBGView" destination="erK-pz-KTq" id="Tuh-2X-qgP"/>
+                        <outlet property="tfEmail" destination="Dur-be-1KX" id="bSu-Ql-nRP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uoB-r7-Lcz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
