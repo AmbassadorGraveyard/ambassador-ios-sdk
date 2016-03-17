@@ -10,7 +10,7 @@
         <!--Sign Up-->
         <scene sceneID="o0p-OQ-TcU">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="9YV-9x-emY" customClass="SignUpViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="9YV-9x-emY" customClass="ConversionViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Bs2-IC-G7R"/>
                         <viewControllerLayoutGuide type="bottom" id="EBt-vf-cQ7"/>

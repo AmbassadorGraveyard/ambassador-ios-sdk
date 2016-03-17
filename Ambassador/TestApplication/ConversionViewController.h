@@ -8,6 +8,6 @@
 
 #import "IdentifyViewController.h"
 
-@interface SignUpViewController : IdentifyViewController
+@interface ConversionViewController : IdentifyViewController
 
 @end
