@@ -7,6 +7,8 @@
 //
 
 #import "AMBInputAlert.h"
+#import "AMBBulkShareHelper.h"
+#import "AMBErrors.h"
 
 @interface AMBInputAlert() <UITextFieldDelegate>
 
@@ -51,7 +53,7 @@
 #pragma mark - IBActions
 
 - (IBAction)actionButtonTapped:(id)sender {
-    if ([[self.tfInput.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
+    if ([[self.tfInput.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""] || ![self inputIsValid]) {
         [self showErrorLine];
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -104,6 +106,19 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.emailUnderline.backgroundColor = [UIColor darkGrayColor];
     }];
+}
+
+- (BOOL)inputIsValid {
+    // Simplifies string to ignore spaces and case
+    NSString *simplifiedPlaceHolderTxt = [[self.placeHolderText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] lowercaseString];
+    
+    // Checks textField placeholder to see if its expecting an email address
+    if ([simplifiedPlaceHolderTxt isEqualToString:@"email"] && ![AMBBulkShareHelper isValidEmail:self.tfInput.text]) {
+        [AMBErrors errorSimpleInvalidEmail:self.tfInput.text];
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end
