@@ -886,7 +886,7 @@
                                 <rect key="frame" x="0.0" y="250" width="600" height="35"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SDK Token" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5LG-Gh-99v">
-                                        <rect key="frame" x="15" y="10" width="66" height="16"/>
+                                        <rect key="frame" x="15" y="10" width="65.5" height="16"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                         <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -951,10 +951,14 @@
                                 </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGR-5K-pHp">
-                                <rect key="frame" x="8" y="355" width="90" height="36"/>
+                                <rect key="frame" x="8" y="355" width="100" height="36"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="51S-Vm-kr5"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="  Logout" image="loginIcon">
+                                <inset key="titleEdgeInsets" minX="4" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Logout" image="loginIcon">
                                     <color key="titleColor" red="0.23529411764705882" green="0.59215686274509804" blue="0.82745098039215681" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -998,10 +1002,10 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="Mgk-Cz-Wvg"/>
-                                <exclude reference="gC0-IH-Lb5"/>
-                                <exclude reference="lrR-wx-6KD"/>
                                 <exclude reference="T2O-Bg-Zco"/>
                                 <exclude reference="oTe-Iv-Fks"/>
+                                <exclude reference="gC0-IH-Lb5"/>
+                                <exclude reference="lrR-wx-6KD"/>
                                 <exclude reference="6bK-XM-2Ks"/>
                                 <exclude reference="Akw-7N-Bvp"/>
                                 <exclude reference="xko-cb-0ab"/>
@@ -1011,12 +1015,12 @@
                             <mask key="constraints">
                                 <include reference="Mgk-Cz-Wvg"/>
                                 <exclude reference="pui-DG-uWL"/>
-                                <exclude reference="V0J-MD-rIa"/>
-                                <include reference="lrR-wx-6KD"/>
                                 <include reference="T2O-Bg-Zco"/>
                                 <exclude reference="lwf-3a-SNc"/>
                                 <include reference="oTe-Iv-Fks"/>
                                 <exclude reference="q2n-NO-rWQ"/>
+                                <exclude reference="V0J-MD-rIa"/>
+                                <include reference="lrR-wx-6KD"/>
                                 <include reference="6bK-XM-2Ks"/>
                                 <exclude reference="839-h8-xVh"/>
                                 <include reference="Akw-7N-Bvp"/>
