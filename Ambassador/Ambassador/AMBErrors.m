@@ -89,4 +89,9 @@
     [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"Sharing requires access to your contact book. You can enable this in your settings." withUniqueID:@"contactError" forViewController:viewController shouldDismissVCImmediately:NO];
 }
 
++ (void)errorSimpleInvalidEmail:(NSString*)attemptedEmail {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid Email" message:[NSString stringWithFormat:@"You have entered an invalid email: %@", attemptedEmail] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [alertView show];
+}
+
 @end
