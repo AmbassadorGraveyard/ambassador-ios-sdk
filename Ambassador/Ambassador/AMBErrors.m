@@ -90,7 +90,7 @@
 }
 
 + (void)errorSimpleInvalidEmail:(NSString*)attemptedEmail {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid Email" message:[NSString stringWithFormat:@"You have entered an invalid email: %@", attemptedEmail] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid Email" message:[NSString stringWithFormat:@"You have entered an invalid email: %@. Please try again.", attemptedEmail] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
     [alertView show];
 }
 
