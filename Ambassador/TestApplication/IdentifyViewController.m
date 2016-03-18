@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
     [self setUpTheme];
     
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressLogin)];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressSubmit)];
     [longPress setMinimumPressDuration:0.3];
     [self.btnSubmit setGestureRecognizers:@[longPress]];
 }
@@ -44,12 +44,12 @@
 
 #pragma mark - IBActions
 
-- (IBAction)loginTapped:(id)sender {
+- (IBAction)submitTapped:(id)sender {
     [self.tfEmail resignFirstResponder];
     [self identify];
 }
 
-- (void)longPressLogin {
+- (void)longPressSubmit {
     AMBWelcomeScreenParameters *welcomeParams = [[AMBWelcomeScreenParameters alloc] init];
     welcomeParams.detailMessage = @"You understand the value of referrals. Maybe you've even explored referral marketing software.";
     welcomeParams.referralMessage = @"{{ name }} has referred you to Ambassador";
