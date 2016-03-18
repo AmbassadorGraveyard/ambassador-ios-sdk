@@ -112,9 +112,9 @@
 - (void)exportConversionCode {
     if (![self invalidFields]) {
         NSString *titleString = @"Ambassador Conversion Code Snippet";
-        NSString *fullCodeSnippet = [NSString stringWithFormat:@"Objective-C\n\n%@\n\n\n\nSwift\n\n%@", [self getObjcSnippet], [self getSwiftSnippet]];
+        NSString *fullCodeSnippet = [NSString stringWithFormat:@"Objective-C\n\n%@\n\n\nSwift\n\n%@", [self getObjcSnippet], [self getSwiftSnippet]];
         
-        NSAttributedString *shareString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n%@", titleString, fullCodeSnippet]];
+        NSString *shareString = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n%@", titleString, fullCodeSnippet]];
         
         // Package up snippet to share
         NSArray * shareItems = @[shareString];
