@@ -129,10 +129,15 @@
     
     if ([Validator isValidEmail:email]) {
         // Create a code snippet based on the info entered into the identify field
-        NSString *codeSnippet = [NSString stringWithFormat:@"[AmbassadorSDK identifyWithEmail:%@];", email];
+        NSString *titleString = [NSString stringWithFormat:@"Ambassador Identify Code Snippet"];
+        NSString *objcCodeSnippet = [NSString stringWithFormat:@"[AmbassadorSDK identifyWithEmail:@\"%@\"];", email];
+        NSString *swiftCodeSnippet = [NSString stringWithFormat:@"AmbassadorSDK.identifyWithEmail(\"%@\")", email];
+        NSString *fullCodeSnippet = [NSString stringWithFormat:@"Objective-C\n\n%@\n\n\nSwift\n\n%@", objcCodeSnippet, swiftCodeSnippet];
+        
+        NSString *shareString = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n%@", titleString, fullCodeSnippet]];
         
         // Package up snippet to share
-        NSArray * shareItems = @[codeSnippet];
+        NSArray * shareItems = @[shareString];
         UIActivityViewController * avc = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];
         [self presentViewController:avc animated:YES completion:nil];
         
