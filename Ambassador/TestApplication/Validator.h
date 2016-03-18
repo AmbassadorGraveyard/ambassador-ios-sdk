@@ -11,5 +11,6 @@
 @interface Validator : NSObject
 
 + (BOOL)isValidEmail:(NSString*)emailAddress;
++ (BOOL)emptyString:(NSString*)string;
 
 @end

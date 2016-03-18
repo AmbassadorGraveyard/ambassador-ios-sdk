@@ -17,4 +17,15 @@
     return [emailTest evaluateWithObject:emailAddress];
 }
 
++ (BOOL)emptyString:(NSString*)string {
+    // Gets string value without any spaces
+    NSString *stringWithNoSpaces = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if ([stringWithNoSpaces isEqualToString:@""]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 @end

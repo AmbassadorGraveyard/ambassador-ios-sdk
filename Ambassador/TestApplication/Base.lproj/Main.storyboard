@@ -41,15 +41,15 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f73-o9-0i0">
-                                <rect key="frame" x="41" y="172" width="520" height="36"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f73-o9-0i0">
+                                <rect key="frame" x="40" y="172" width="521" height="36"/>
                                 <string key="text">Use this method to track conversion events and create commisions. Test out different options using the form below to see how this works.</string>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                 <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="NOTE: You'll need to identify before a commision can be created." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L7M-hH-fXq">
-                                <rect key="frame" x="133" y="218" width="336" height="13"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOTE: You'll need to identify before a commision can be created." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L7M-hH-fXq">
+                                <rect key="frame" x="132" y="218" width="337" height="13"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                 <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -94,7 +94,7 @@
                                 <rect key="frame" x="374" y="402" width="51" height="31"/>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hoI-cn-pxe">
-                                <rect key="frame" x="178" y="441" width="245" height="41"/>
+                                <rect key="frame" x="178" y="443" width="245" height="41"/>
                                 <color key="backgroundColor" red="0.23529411759999999" green="0.59215686270000001" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="41" id="1uZ-yp-hRN"/>
@@ -105,7 +105,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="loginTapped:" destination="O36-Ew-33q" eventType="touchUpInside" id="x7G-Ae-byw"/>
+                                    <action selector="submitTapped:" destination="9YV-9x-emY" eventType="touchUpInside" id="Gxo-Xk-Y9s"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -116,7 +116,7 @@
                             <constraint firstItem="f5v-an-FzK" firstAttribute="top" secondItem="Jn5-KO-QkN" secondAttribute="bottom" constant="8" id="M19-6w-hjv"/>
                             <constraint firstItem="eaQ-VK-vGi" firstAttribute="top" secondItem="Bs2-IC-G7R" secondAttribute="bottom" constant="20" id="Mof-dh-wlf"/>
                             <constraint firstItem="f73-o9-0i0" firstAttribute="top" secondItem="eF3-NE-C3z" secondAttribute="bottom" constant="9" id="NfY-wq-Ysb"/>
-                            <constraint firstItem="hoI-cn-pxe" firstAttribute="top" secondItem="ZTf-ze-rg0" secondAttribute="bottom" constant="8" id="U4K-D2-iww"/>
+                            <constraint firstItem="hoI-cn-pxe" firstAttribute="top" secondItem="ZTf-ze-rg0" secondAttribute="bottom" constant="10" id="U4K-D2-iww"/>
                             <constraint firstItem="f73-o9-0i0" firstAttribute="centerX" secondItem="eF3-NE-C3z" secondAttribute="centerX" id="Uhz-yv-wW3"/>
                             <constraint firstItem="ZTf-ze-rg0" firstAttribute="centerY" secondItem="snk-7g-VXV" secondAttribute="centerY" id="VLA-1W-QgY"/>
                             <constraint firstItem="Jn5-KO-QkN" firstAttribute="centerX" secondItem="diQ-Zd-Nsh" secondAttribute="centerX" id="Y9L-hf-vrn"/>
@@ -392,7 +392,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="loginTapped:" destination="O36-Ew-33q" eventType="touchUpInside" id="3U3-oX-Akb"/>
+                                    <action selector="submitTapped:" destination="O36-Ew-33q" eventType="touchUpInside" id="PWZ-Ah-lPT"/>
                                 </connections>
                             </button>
                         </subviews>
