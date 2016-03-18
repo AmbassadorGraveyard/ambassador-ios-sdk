@@ -10,7 +10,7 @@
 #import <Ambassador/Ambassador.h>
 #import "Validator.h"
 
-@interface ConversionViewController ()
+@interface ConversionViewController () <UITextFieldDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -45,6 +45,14 @@
 }
 
 
+#pragma mark - TextField Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+
 #pragma mark - UI Functions
 
 - (void)setUpTheme {
@@ -55,24 +63,14 @@
     self.imgBGView.layer.cornerRadius = 5;
     
     // TextFields
-//    [self setTextFieldValues];
+    self.tfCampID.tintColor = self.btnSubmit.backgroundColor;
+    self.tfRefEmail.tintColor = self.btnSubmit.backgroundColor;
+    self.tfRevAmt.tintColor = self.btnSubmit.backgroundColor;
 }
 
 - (void)addConversionExportButton {
     UIBarButtonItem *btnExport = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"exportIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(exportConversionCode)];
     self.tabBarController.navigationItem.rightBarButtonItem = btnExport;
-}
-
-- (void)setTextFieldValues {
-    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 20)];
-    
-    for (UITextField *textField in [self.view subviews]) {
-        if ([textField isKindOfClass:[UITextField class]]) {
-            textField.leftView = paddingView;
-            textField.leftViewMode = UITextFieldViewModeAlways;
-            textField.tintColor = self.btnSubmit.backgroundColor;
-        }
-    }
 }
 
 
@@ -112,7 +110,71 @@
 }
 
 - (void)exportConversionCode {
+    if (![self invalidFields]) {
+        NSString *titleString = @"Ambassador Conversion Code Snippet";
+        NSString *fullCodeSnippet = [NSString stringWithFormat:@"Objective-C\n\n%@\n\n\n\nSwift\n\n%@", [self getObjcSnippet], [self getSwiftSnippet]];
+        
+        NSAttributedString *shareString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n%@", titleString, fullCodeSnippet]];
+        
+        // Package up snippet to share
+        NSArray * shareItems = @[shareString];
+        UIActivityViewController * avc = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];
+        [self presentViewController:avc animated:YES completion:nil];
+    }
+}
+
+- (NSString*)getObjcSnippet {
+    // Creates string from boolean
+    NSString *boolString = [self.swtApproved isOn] ? @"YES" : @"NO";
     
+    // Create a code snippet based on the info entered into the fields for the conversion
+    NSString *snippetLine1 = @"AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];";
+    NSString *snippetLine2 = [NSString stringWithFormat:@"conversionParameters.mbsy_email = @\"%@\";", self.tfRefEmail.text];
+    NSString *snippetLine3 = [NSString stringWithFormat:@"conversionParameters.mbsy_campaign = @%@;", self.tfCampID.text];
+    NSString *snippetLine4 = [NSString stringWithFormat:@"conversionParameters.mbsy_revenue = @%@;", self.tfRevAmt.text];
+    NSString *snippetLine5 = [NSString stringWithFormat:@"conversionParameters.mbsy_is_approved = %@", boolString];
+    
+    NSString *registerLine = @"[AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {";
+    NSString *registerLine2 = @"    if (error) {";
+    NSString *registerLine3 = @"        NSLog(@\"Error registering conversion - %@\", error);";
+    NSString *registerLine4 = @"    } else {";
+    NSString *registerLine5 = @"        NSLog(@\"Conversion registered successfully!\");";
+    NSString *registerLine6 = @"    }";
+    NSString *registerLine7 = @"}];";
+    
+    NSString *paramsString = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@", snippetLine1, snippetLine2, snippetLine3, snippetLine4, snippetLine5];
+    NSString *implementationString = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@\n%@\n%@", registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
+    
+    NSString *objcSnippet = [NSString stringWithFormat:@"%@\n\n%@", paramsString, implementationString];
+    
+    return objcSnippet;
+}
+
+- (NSString*)getSwiftSnippet {
+    // Creates string from boolean
+    NSString *boolString = [self.swtApproved isOn] ? @"true" : @"false";
+    
+    // Create a code snippet based on the info entered into the fields for the conversion
+    NSString *snippetLine1 = @"let conversionParameters = AMBConversionParameters()";
+    NSString *snippetLine2 = [NSString stringWithFormat:@"conversionParameters.mbsy_email = \"%@\";", self.tfRefEmail.text];
+    NSString *snippetLine3 = [NSString stringWithFormat:@"conversionParameters.mbsy_campaign = %@;", self.tfCampID.text];
+    NSString *snippetLine4 = [NSString stringWithFormat:@"conversionParameters.mbsy_revenue = %@;", self.tfRevAmt.text];
+    NSString *snippetLine5 = [NSString stringWithFormat:@"conversionParameters.mbsy_is_approved = %@", boolString];
+    
+    NSString *registerLine = @"AmbassadorSDK.registerConversion(conversionParameters, restrictToInstall: false) { (error) -> Void in";
+    NSString *registerLine2 = @"    if ((error) != nil) {";
+    NSString *registerLine3 = @"        print(\"Error \(error)\")";
+    NSString *registerLine4 = @"    } else {";
+    NSString *registerLine5 = @"        print(\"All conversion parameters are set properly\")";
+    NSString *registerLine6 = @"    }";
+    NSString *registerLine7 = @"}";
+    
+    NSString *paramsString = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@", snippetLine1, snippetLine2, snippetLine3, snippetLine4, snippetLine5];
+    NSString *implementationString = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@\n%@\n%@", registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
+    
+    NSString *swiftSnippet = [NSString stringWithFormat:@"%@\n\n%@", paramsString, implementationString];
+    
+    return swiftSnippet;
 }
 
 - (BOOL)invalidFields {
