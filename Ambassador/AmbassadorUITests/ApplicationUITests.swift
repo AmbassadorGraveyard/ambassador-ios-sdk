@@ -30,6 +30,7 @@ class ApplicationUITests: XCTestCase {
 extension ApplicationUITests {
     func testIdentify() {
         app.tabBars.buttons["Identify"].tap()
+
         
         let submitButton = app.buttons["Submit"]
         submitButton.tap()
@@ -111,7 +112,8 @@ extension ApplicationUITests {
         let element = app.otherElements.containingType(.NavigationBar, identifier:"Settings").childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element
         element.childrenMatchingType(.Other).elementBoundByIndex(2).buttons["copyIcon"].tap()
         element.childrenMatchingType(.Other).elementBoundByIndex(4).buttons["copyIcon"].tap()
-        app.buttons["  Logout"].tap()
+        
+        app.buttons["Logout"].tap()
     }
 }
 
