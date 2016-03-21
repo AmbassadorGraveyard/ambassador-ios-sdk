@@ -186,7 +186,7 @@ CGFloat currentOffset;
     NSString *snippetLine2 = [NSString stringWithFormat:@"conversionParameters.mbsy_email = @\"%@\";", self.tfRefEmail.text];
     NSString *snippetLine3 = [NSString stringWithFormat:@"conversionParameters.mbsy_campaign = @%@;", self.tfCampID.text];
     NSString *snippetLine4 = [NSString stringWithFormat:@"conversionParameters.mbsy_revenue = @%@;", self.tfRevAmt.text];
-    NSString *snippetLine5 = [NSString stringWithFormat:@"conversionParameters.mbsy_is_approved = %@", boolString];
+    NSString *snippetLine5 = [NSString stringWithFormat:@"conversionParameters.mbsy_is_approved = @%@;", boolString];
     
     NSString *registerLine = @"[AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {";
     NSString *registerLine2 = @"    if (error) {";
@@ -196,10 +196,23 @@ CGFloat currentOffset;
     NSString *registerLine6 = @"    }";
     NSString *registerLine7 = @"}];";
     
-    NSString *paramsString = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@", snippetLine1, snippetLine2, snippetLine3, snippetLine4, snippetLine5];
-    NSString *implementationString = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@\n%@\n%@", registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
+    // Creates first part of snippet for setting params
+    NSArray *stringArray1 = @[snippetLine1, snippetLine2, snippetLine3, snippetLine4, snippetLine5];
+    NSMutableString *conversionParamString = [[NSMutableString alloc] init];
     
-    NSString *objcSnippet = [NSString stringWithFormat:@"%@\n\n%@", paramsString, implementationString];
+    for (NSString *string in stringArray1) {
+        [conversionParamString appendString:[NSString stringWithFormat:@"%@\n", string]];
+    }
+    
+    // Creates second part of snippet for registering conversion
+    NSArray *stringArray2 = @[registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
+    NSMutableString *implementationString = [[NSMutableString alloc] init];
+    
+    for (NSString *string in stringArray2) {
+        [implementationString appendString:[NSString stringWithFormat:@"%@\n", string]];
+    }
+    
+    NSString *objcSnippet = [NSString stringWithFormat:@"%@\n%@", conversionParamString, implementationString];
     
     return objcSnippet;
 }
@@ -222,11 +235,24 @@ CGFloat currentOffset;
     NSString *registerLine5 = @"        print(\"All conversion parameters are set properly\")";
     NSString *registerLine6 = @"    }";
     NSString *registerLine7 = @"}";
+
+    // Creates first part of snippet for setting params
+    NSArray *stringArray1 = @[snippetLine1, snippetLine2, snippetLine3, snippetLine4, snippetLine5];
+    NSMutableString *conversionParamString = [[NSMutableString alloc] init];
     
-    NSString *paramsString = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@", snippetLine1, snippetLine2, snippetLine3, snippetLine4, snippetLine5];
-    NSString *implementationString = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n%@\n%@\n%@", registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
+    for (NSString *string in stringArray1) {
+        [conversionParamString appendString:[NSString stringWithFormat:@"%@\n", string]];
+    }
     
-    NSString *swiftSnippet = [NSString stringWithFormat:@"%@\n\n%@", paramsString, implementationString];
+    // Creates second part of snippet for registering conversion
+    NSArray *stringArray2 = @[registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
+    NSMutableString *implementationString = [[NSMutableString alloc] init];
+    
+    for (NSString *string in stringArray2) {
+        [implementationString appendString:[NSString stringWithFormat:@"%@\n", string]];
+    }
+    
+    NSString *swiftSnippet = [NSString stringWithFormat:@"%@\n%@", conversionParamString, implementationString];
     
     return swiftSnippet;
 }
