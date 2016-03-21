@@ -38,7 +38,8 @@ extension ApplicationUITests {
         passwordSecureTextField.tap()
         passwordSecureTextField.typeText("TestPassword")
         
-        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
+        app.otherElements.containingType(.NavigationBar, identifier:"MyTabBar").childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
+
         XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
     }
     
