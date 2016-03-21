@@ -11,7 +11,7 @@
 @interface RAFCell : UITableViewCell
 
 @property (nonatomic, strong) IBOutlet UILabel * rafName;
-@property (nonatomic, strong) IBOutlet UIImageView * arrowImage;
+@property (nonatomic, strong) IBOutlet UIButton * btnExport;
 
 - (void)setUpCellWithRafName:(NSString*)rafName;
 

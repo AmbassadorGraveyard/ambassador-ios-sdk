@@ -12,20 +12,43 @@
 
 @interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
+// IBOutlets
+@property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UITableView * rafTable;
-@property (nonatomic, strong) IBOutlet UITextField * tfCampaignId;
 
+// Private properties
 @property (nonatomic, strong) NSArray * rafNameArray;
 
 @end
 
 @implementation ReferAFriendViewController
 
+
+#pragma mark - LifeCycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.rafTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self setupUI];
     self.rafNameArray = @[@"Ambassador Shoes RAF", @"Ambassador RAF", @"Ambassador Shirt RAF", @"Custom Branded RAF"];
-    self.tfCampaignId.delegate = self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self setNavBarButtons];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    self.tabBarController.navigationItem.leftBarButtonItem = nil;
+}
+
+
+#pragma mark - Button Actions
+
+- (void)addNewRAF {
+    // TODO: Add customize RAF page
+}
+
+- (void)editRAF {
+    // TODO: Add ability to edit RAF
 }
 
 
@@ -37,9 +60,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     RAFCell *rafCell = [tableView dequeueReusableCellWithIdentifier:@"rafCell"];
-    [rafCell setUpCellWithRafName:self.rafNameArray[indexPath.row]];
     
-    return rafCell;
+    if (rafCell) {
+        [rafCell setUpCellWithRafName:self.rafNameArray[indexPath.row]];
+        return rafCell;
+    }
+    
+    UITableViewCell *blankCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    return blankCell;
 }
 
 
@@ -47,7 +75,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSString *campaignId = self.tfCampaignId.text;
+    NSString *campaignId = @"1026"; // TEMPORARY
     
     switch (indexPath.row) {
         case 0:
@@ -73,6 +101,25 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+
+#pragma mark - UI Functions
+
+- (void)setupUI {
+    // Views
+    self.imgBGView.layer.cornerRadius = 5;
+    
+    // TableView
+    self.rafTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (void)setNavBarButtons {
+    UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewRAF)];
+    self.tabBarController.navigationItem.rightBarButtonItem = btnAdd;
+    
+    UIBarButtonItem *btnEdit = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editRAF)];
+    self.tabBarController.navigationItem.leftBarButtonItem = btnEdit;
 }
 
 @end
