@@ -153,10 +153,10 @@
 		EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */; };
 		EF1CB0B41C3C7F6600F65031 /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1CB0B31C3C7F6600F65031 /* avatar.png */; };
 		EF1CC7FB1C93127A00C2752B /* AMBSMSHandlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC7FA1C93127A00C2752B /* AMBSMSHandlerTests.m */; };
+		EF1CC8041C9993EE00C2752B /* MyTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC8031C9993EE00C2752B /* MyTabBarController.m */; };
 		EF1CC8081C99E13800C2752B /* AMBInputAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CC8061C99E13800C2752B /* AMBInputAlert.h */; };
 		EF1CC8091C99E13800C2752B /* AMBInputAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC8071C99E13800C2752B /* AMBInputAlert.m */; };
 		EF1CC80B1C9A028800C2752B /* AMBInputAlertTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC80A1C9A028800C2752B /* AMBInputAlertTests.m */; };
-		EF1CC8041C9993EE00C2752B /* MyTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC8031C9993EE00C2752B /* MyTabBarController.m */; };
 		EF1CC80E1C9B3C6300C2752B /* Validator.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC80D1C9B3C6300C2752B /* Validator.m */; };
 		EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */; };
 		EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */; };
@@ -469,11 +469,11 @@
 		EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCard.m; sourceTree = "<group>"; };
 		EF1CB0B31C3C7F6600F65031 /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
 		EF1CC7FA1C93127A00C2752B /* AMBSMSHandlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSMSHandlerTests.m; sourceTree = "<group>"; };
+		EF1CC8021C9993EE00C2752B /* MyTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabBarController.h; sourceTree = "<group>"; };
+		EF1CC8031C9993EE00C2752B /* MyTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabBarController.m; sourceTree = "<group>"; };
 		EF1CC8061C99E13800C2752B /* AMBInputAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBInputAlert.h; sourceTree = "<group>"; };
 		EF1CC8071C99E13800C2752B /* AMBInputAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBInputAlert.m; sourceTree = "<group>"; };
 		EF1CC80A1C9A028800C2752B /* AMBInputAlertTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBInputAlertTests.m; sourceTree = "<group>"; };
-		EF1CC8021C9993EE00C2752B /* MyTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabBarController.h; sourceTree = "<group>"; };
-		EF1CC8031C9993EE00C2752B /* MyTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabBarController.m; sourceTree = "<group>"; };
 		EF1CC80C1C9B3C6300C2752B /* Validator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Validator.h; sourceTree = "<group>"; };
 		EF1CC80D1C9B3C6300C2752B /* Validator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Validator.m; sourceTree = "<group>"; };
 		EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValuesUnitTests.m; sourceTree = "<group>"; };
@@ -485,7 +485,7 @@
 		EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBOptionsTests.m; sourceTree = "<group>"; };
 		EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPusherChannelObject.h; sourceTree = "<group>"; };
 		EF3079151C6E205800403F56 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPusherChannelObject.m; sourceTree = "<group>"; };
-		EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CustomBrandTheme.plist; sourceTree = "<group>"; };
+		EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CustomBrandTheme.plist; path = ../AmbassadorResources/CustomBrandTheme.plist; sourceTree = "<group>"; };
 		EF33DCF11C739D6A009689CA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF33DCF21C739D6A009689CA /* Raven.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raven.h; sourceTree = "<group>"; };
 		EF33DCF31C739D6A009689CA /* RavenClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient.h; sourceTree = "<group>"; };
@@ -506,10 +506,10 @@
 		EF5390D81C4565D9005F6944 /* RAFCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFCell.h; sourceTree = "<group>"; };
 		EF5390D91C4565D9005F6944 /* RAFCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFCell.m; sourceTree = "<group>"; };
 		EF5390DB1C458FFD005F6944 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GenericTheme.plist; sourceTree = "<group>"; };
-		EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorShoes.plist; sourceTree = "<group>"; };
-		EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorTheme.plist; sourceTree = "<group>"; };
+		EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AmbassadorShoes.plist; path = ../AmbassadorResources/AmbassadorShoes.plist; sourceTree = "<group>"; };
+		EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AmbassadorTheme.plist; path = ../AmbassadorResources/AmbassadorTheme.plist; sourceTree = "<group>"; };
 		EF5390E11C46CFE5005F6944 /* ApplicationUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationUITests.swift; sourceTree = "<group>"; };
-		EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorShirt.plist; sourceTree = "<group>"; };
+		EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AmbassadorShirt.plist; path = ../AmbassadorResources/AmbassadorShirt.plist; sourceTree = "<group>"; };
 		EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenViewController.h; sourceTree = "<group>"; };
 		EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenViewController.m; sourceTree = "<group>"; };
 		EF5579FE1C85E34600F66761 /* AMBLinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBLinkCell.h; sourceTree = "<group>"; };
@@ -759,10 +759,6 @@
 			children = (
 				DBEB6FE11BA9AD04005EE0D0 /* Main.storyboard */,
 				EF5390DB1C458FFD005F6944 /* GenericTheme.plist */,
-				EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */,
-				EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */,
-				EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */,
-				EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */,
 				EF1CB0B31C3C7F6600F65031 /* avatar.png */,
 				DBEB6FE31BA9B2D8005EE0D0 /* blank.png */,
 				DBEB6FE41BA9B2D8005EE0D0 /* check.png */,
@@ -790,25 +786,18 @@
 		DB844D621BA76BDE003FD7A9 /* TestApplication */ = {
 			isa = PBXGroup;
 			children = (
-				DB844D6D1BA76BDE003FD7A9 /* Main.storyboard */,
 				DB844D671BA76BDE003FD7A9 /* AppDelegate.h */,
 				DB844D681BA76BDE003FD7A9 /* AppDelegate.m */,
+				EF1CC8021C9993EE00C2752B /* MyTabBarController.h */,
+				EF1CC8031C9993EE00C2752B /* MyTabBarController.m */,
 				EF557A151C88B4AE00F66761 /* Login */,
 				EF557A141C88B4A100F66761 /* Identify */,
 				EF557A111C88B47700F66761 /* Conversion */,
 				EF557A131C88B49700F66761 /* RAF */,
 				EF557A201C88E67700F66761 /* Settings */,
-				EF557A191C88D39C00F66761 /* DefaultsHandler.h */,
-				EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */,
-				EF1CC8021C9993EE00C2752B /* MyTabBarController.h */,
-				EF1CC8031C9993EE00C2752B /* MyTabBarController.m */,
-				EF1CC80C1C9B3C6300C2752B /* Validator.h */,
-				EF1CC80D1C9B3C6300C2752B /* Validator.m */,
-				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
-				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
+				EF783C091CA076A500079B65 /* UI */,
+				EF783C0A1CA077FE00079B65 /* Misc */,
 				DB844D631BA76BDE003FD7A9 /* Supporting Files */,
-				EF783BBD1C9C7D6600079B65 /* LeftIndentedTextField.h */,
-				EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */,
 			);
 			path = TestApplication;
 			sourceTree = "<group>";
@@ -1062,6 +1051,33 @@
 				EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */,
 			);
 			name = "Contact Card";
+			sourceTree = "<group>";
+		};
+		EF783C091CA076A500079B65 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				DB844D6D1BA76BDE003FD7A9 /* Main.storyboard */,
+				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
+				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
+				EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */,
+				EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */,
+				EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */,
+				EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		EF783C0A1CA077FE00079B65 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				EF557A191C88D39C00F66761 /* DefaultsHandler.h */,
+				EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */,
+				EF1CC80C1C9B3C6300C2752B /* Validator.h */,
+				EF1CC80D1C9B3C6300C2752B /* Validator.m */,
+				EF783BBD1C9C7D6600079B65 /* LeftIndentedTextField.h */,
+				EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */,
+			);
+			name = Misc;
 			sourceTree = "<group>";
 		};
 		EF7D80B91C24B9E00098D054 /* Conversion Parameters */ = {
