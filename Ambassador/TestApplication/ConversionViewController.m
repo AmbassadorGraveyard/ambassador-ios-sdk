@@ -18,11 +18,15 @@
 @property (nonatomic, strong) IBOutlet UITextField * tfRevAmt;
 @property (nonatomic, strong) IBOutlet UITextField * tfCampID;
 @property (nonatomic, strong) IBOutlet UISwitch * swtApproved;
+@property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
+
+@property (nonatomic, strong) UITextField * selectedTextField;
 
 @end
 
 @implementation ConversionViewController
 
+CGFloat currentOffset;
 
 #pragma mark - LifeCycle
 
@@ -33,7 +37,13 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.tabBarController.title = @"Conversion";
+    [self registerForKeyboardNotificaitons];
     [self addConversionExportButton];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    // Unregisters view for keyboard notificaitons
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -51,9 +61,42 @@
 
 #pragma mark - TextField Delegate
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    self.selectedTextField = textField;
+    return YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+
+#pragma mark - Keyboard Listeners
+
+- (void)registerForKeyboardNotificaitons {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification*)notificaiton {
+    // Saves where the scrollview was currently at before scrolling
+    currentOffset = self.scrollView.contentOffset.y;
+    
+    CGRect keyboardFrame = [notificaiton.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    CGFloat textfieldPosition = self.selectedTextField.frame.origin.y + 10;
+    CGFloat difference = self.scrollView.frame.size.height - textfieldPosition;
+    
+    if (keyboardFrame.size.height > difference) {
+        CGFloat newY = keyboardFrame.size.height - difference;
+        [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)notification {
+    // Resets the scrollview to original position
+    [self.scrollView setContentOffset:CGPointMake(0, currentOffset) animated:YES];
 }
 
 
