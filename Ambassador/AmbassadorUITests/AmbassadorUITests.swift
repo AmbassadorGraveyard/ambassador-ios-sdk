@@ -175,7 +175,7 @@ extension AmbassadorUITests {
             app.buttons["Sign In"].tap()
         }
     }
-    
+
     func handleEmailPrompt() {
         if app.textFields["Email"].exists == true {
             let emailTextField = app.textFields["Email"]
@@ -183,6 +183,7 @@ extension AmbassadorUITests {
             emailTextField.typeText("jake@getambassador.com")
             app.buttons["Continue"].tap()
         }
+
     }
     
     func presentRAF() {
