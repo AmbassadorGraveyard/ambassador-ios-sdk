@@ -45,8 +45,8 @@
 #pragma mark - IBActions
 
 - (IBAction)submitTapped:(id)sender {
-    [self.tfEmail resignFirstResponder];
     [self identify];
+    [self.tfEmail resignFirstResponder];
 }
 
 - (void)longPressSubmit {
@@ -61,10 +61,11 @@
 }
 
 
-#pragma mark - Ambassador Login Delegate
+#pragma mark - TextField Delegate
 
-- (void)userSuccessfullyLoggedIn {
-    [self checkForLogin];
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 
@@ -125,6 +126,7 @@
 }
 
 - (void)exportCode {
+    [self.tfEmail resignFirstResponder];
     NSString *email = self.tfEmail.text;
     
     if ([Validator isValidEmail:email]) {

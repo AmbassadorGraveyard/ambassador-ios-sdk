@@ -10,4 +10,6 @@
 
 @interface MyTabBarController : UITabBarController
 
+- (void)checkForLogin;
+
 @end
