@@ -205,6 +205,10 @@
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
 		EF6BDC771C63FD75004CCDF8 /* AMBCoreDataManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */; };
 		EF783BBF1C9C7D6600079B65 /* LeftIndentedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */; };
+		EF783C0B1CA07AB900079B65 /* AmbassadorShoes.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */; };
+		EF783C0C1CA07AB900079B65 /* AmbassadorTheme.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */; };
+		EF783C0D1CA07AB900079B65 /* AmbassadorShirt.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */; };
+		EF783C0E1CA07AB900079B65 /* CustomBrandTheme.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */; };
 		EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */; };
 		EF7BA1CD1BDEB17E00788160 /* AMBBulkShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */; };
 		EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7CA9CD1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m */; };
@@ -1728,6 +1732,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF783C0B1CA07AB900079B65 /* AmbassadorShoes.plist in Sources */,
+				EF783C0C1CA07AB900079B65 /* AmbassadorTheme.plist in Sources */,
+				EF783C0D1CA07AB900079B65 /* AmbassadorShirt.plist in Sources */,
+				EF783C0E1CA07AB900079B65 /* CustomBrandTheme.plist in Sources */,
 				DB844D6C1BA76BDE003FD7A9 /* IdentifyViewController.m in Sources */,
 				EF783BBF1C9C7D6600079B65 /* LeftIndentedTextField.m in Sources */,
 				EF5390D11C445BF2005F6944 /* ConversionViewController.m in Sources */,
