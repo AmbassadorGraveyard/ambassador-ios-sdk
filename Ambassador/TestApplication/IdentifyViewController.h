@@ -10,7 +10,5 @@
 
 @interface IdentifyViewController : UIViewController
 
-- (void)checkForLogin;
-
 @end
 

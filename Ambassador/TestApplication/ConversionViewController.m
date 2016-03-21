@@ -44,6 +44,10 @@
     [self performConversionAction];
 }
 
+- (void)doneClicked:(id)sender {
+    [self.view endEditing:YES];
+}
+
 
 #pragma mark - TextField Delegate
 
@@ -66,6 +70,13 @@
     self.tfCampID.tintColor = self.btnSubmit.backgroundColor;
     self.tfRefEmail.tintColor = self.btnSubmit.backgroundColor;
     self.tfRevAmt.tintColor = self.btnSubmit.backgroundColor;
+    
+    UIToolbar *keyboardDoneButtonView = [[UIToolbar alloc] init];
+    [keyboardDoneButtonView sizeToFit];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneClicked:)];
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
+    self.tfCampID.inputAccessoryView = keyboardDoneButtonView;
+    self.tfRevAmt.inputAccessoryView = keyboardDoneButtonView;
 }
 
 - (void)addConversionExportButton {
