@@ -64,8 +64,6 @@ extension AmbassadorUITests {
             app.buttons["OKAY"].tap()
             XCTAssertEqual(app.buttons["OKAY"].exists, false)
         }
-        
-        
     }
 
     func testTwitter() {
@@ -177,25 +175,25 @@ extension AmbassadorUITests {
             app.buttons["Sign In"].tap()
         }
     }
-    
-    func identifyWithLogin() {
-        app.tabBars.buttons["Login"].tap()
-        let usernameTextField = app.textFields["Username"]
-        usernameTextField.tap()
-        usernameTextField.typeText("jake@getambassador.com")
-        
-        let passwordSecureTextField = app.secureTextFields["Password"]
-        passwordSecureTextField.tap()
-        passwordSecureTextField.typeText("TestPassword")
-        app.otherElements.containingType(.NavigationBar, identifier:"MyTabBar").childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
-        NSThread.sleepForTimeInterval(2)
+
+    func handleEmailPrompt() {
+        if app.textFields["Email"].exists == true {
+            let emailTextField = app.textFields["Email"]
+            emailTextField.tap()
+            emailTextField.typeText("jake@getambassador.com")
+            app.buttons["Continue"].tap()
+        }
+
     }
     
     func presentRAF() {
         ambassadorLogin()
-        identifyWithLogin()
+        
         app.tabBars.buttons["Refer a Friend"].tap()
         app.tables.staticTexts["Ambassador Shoes RAF"].tap()
+        
+        handleEmailPrompt()
+        
         let existsPredicate = NSPredicate(format: "exists == 0")
         expectationForPredicate(existsPredicate, evaluatedWithObject: app.otherElements["LoadingView"], handler: nil)
         waitForExpectationsWithTimeout(20, handler: nil)

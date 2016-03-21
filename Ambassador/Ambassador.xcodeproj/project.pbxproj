@@ -153,6 +153,9 @@
 		EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */; };
 		EF1CB0B41C3C7F6600F65031 /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1CB0B31C3C7F6600F65031 /* avatar.png */; };
 		EF1CC7FB1C93127A00C2752B /* AMBSMSHandlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC7FA1C93127A00C2752B /* AMBSMSHandlerTests.m */; };
+		EF1CC8081C99E13800C2752B /* AMBInputAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CC8061C99E13800C2752B /* AMBInputAlert.h */; };
+		EF1CC8091C99E13800C2752B /* AMBInputAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC8071C99E13800C2752B /* AMBInputAlert.m */; };
+		EF1CC80B1C9A028800C2752B /* AMBInputAlertTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC80A1C9A028800C2752B /* AMBInputAlertTests.m */; };
 		EF1CC8041C9993EE00C2752B /* MyTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC8031C9993EE00C2752B /* MyTabBarController.m */; };
 		EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */; };
 		EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */; };
@@ -465,6 +468,9 @@
 		EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCard.m; sourceTree = "<group>"; };
 		EF1CB0B31C3C7F6600F65031 /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
 		EF1CC7FA1C93127A00C2752B /* AMBSMSHandlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSMSHandlerTests.m; sourceTree = "<group>"; };
+		EF1CC8061C99E13800C2752B /* AMBInputAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBInputAlert.h; sourceTree = "<group>"; };
+		EF1CC8071C99E13800C2752B /* AMBInputAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBInputAlert.m; sourceTree = "<group>"; };
+		EF1CC80A1C9A028800C2752B /* AMBInputAlertTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBInputAlertTests.m; sourceTree = "<group>"; };
 		EF1CC8021C9993EE00C2752B /* MyTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabBarController.h; sourceTree = "<group>"; };
 		EF1CC8031C9993EE00C2752B /* MyTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabBarController.m; sourceTree = "<group>"; };
 		EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValuesUnitTests.m; sourceTree = "<group>"; };
@@ -694,6 +700,7 @@
 		DB844D361BA75BB8003FD7A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EF1CC80A1C9A028800C2752B /* AMBInputAlertTests.m */,
 				EF1CC7FA1C93127A00C2752B /* AMBSMSHandlerTests.m */,
 				EF557A0F1C88AE0600F66761 /* AMBWelcomeScreenParametersTests.m */,
 				EF557A0D1C88AC3700F66761 /* AMBLinkCellTests.m */,
@@ -901,6 +908,15 @@
 				DBA3FB9C1BA8A24F00672D82 /* AMBSendCompletionModal.m */,
 			);
 			name = "Custom Alert";
+			sourceTree = "<group>";
+		};
+		EF1CC8051C99E11000C2752B /* Custom Input */ = {
+			isa = PBXGroup;
+			children = (
+				EF1CC8061C99E13800C2752B /* AMBInputAlert.h */,
+				EF1CC8071C99E13800C2752B /* AMBInputAlert.m */,
+			);
+			name = "Custom Input";
 			sourceTree = "<group>";
 		};
 		EF33DCF01C739D6A009689CA /* Raven */ = {
@@ -1123,6 +1139,7 @@
 				EFDFA0C81BE148A5002FA3ED /* AMBValues.h */,
 				EFDFA0C91BE148A5002FA3ED /* AMBValues.m */,
 				EFE7D7921C21BA7400D7F92C /* Theme Manager */,
+				EF1CC8051C99E11000C2752B /* Custom Input */,
 				EFE7D7911C21BA5F00D7F92C /* Utilities */,
 			);
 			name = Misc;
@@ -1282,6 +1299,7 @@
 				DBA3FC111BA8AA1D00672D82 /* AMBPTPusherAPI.h in Headers */,
 				DBA3FC2E1BA8AA5600672D82 /* base64.h in Headers */,
 				DBA3FC181BA8AA1D00672D82 /* AMBPTPusherDelegate.h in Headers */,
+				EF1CC8081C99E13800C2752B /* AMBInputAlert.h in Headers */,
 				DBA3FBB11BA8A24F00672D82 /* AMBSelectedCell.h in Headers */,
 				DBA3FBBF1BA8A24F00672D82 /* AMBUtilities.h in Headers */,
 				DBA3FC2F1BA8AA5600672D82 /* NSData+SRB64Additions.h in Headers */,
@@ -1639,6 +1657,7 @@
 				DBA3FBAE1BA8A24F00672D82 /* AMBNamePrompt.m in Sources */,
 				DBA3FBB21BA8A24F00672D82 /* AMBSelectedCell.m in Sources */,
 				DBA3FC171BA8AA1D00672D82 /* AMBPTPusherConnection.m in Sources */,
+				EF1CC8091C99E13800C2752B /* AMBInputAlert.m in Sources */,
 				DBA3FC1D1BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m in Sources */,
 				DBA3FC321BA8AA5600672D82 /* AMBSRWebSocket.m in Sources */,
 				EFDFA0CB1BE148A5002FA3ED /* AMBValues.m in Sources */,
@@ -1662,6 +1681,7 @@
 				EF557A101C88AE0600F66761 /* AMBWelcomeScreenParametersTests.m in Sources */,
 				EFBF8E051C69006400F2B5F9 /* AMBContactCellUnitTests.m in Sources */,
 				EF50EFC21C56AE230077CC63 /* AMBConversionModel.xcdatamodel in Sources */,
+				EF1CC80B1C9A028800C2752B /* AMBInputAlertTests.m in Sources */,
 				EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */,
 				EFDDAD801C601839002BC5AE /* AMBNetworkManagerUnitTests.m in Sources */,
 				EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */,

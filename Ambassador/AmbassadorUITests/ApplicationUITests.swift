@@ -28,6 +28,21 @@ class ApplicationUITests: XCTestCase {
 
 // UI Tests
 extension ApplicationUITests {
+    func testIdentifyWithLogin() {
+        app.tabBars.buttons["Login"].tap()
+        let usernameTextField = app.textFields["Username"]
+        usernameTextField.tap()
+        usernameTextField.typeText("jake@getambassador.com")
+
+        let passwordSecureTextField = app.secureTextFields["Password"]
+        passwordSecureTextField.tap()
+        passwordSecureTextField.typeText("TestPassword")
+        
+        app.otherElements.containingType(.NavigationBar, identifier:"MyTabBar").childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Login"].tap()
+
+        XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
+    }
+    
     func testSignUpInstallConversion() {
         app.tabBars.buttons["Sign Up"].tap()
         
