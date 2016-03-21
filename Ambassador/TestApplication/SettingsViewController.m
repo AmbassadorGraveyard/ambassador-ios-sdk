@@ -60,6 +60,7 @@
 - (void)setupUI {
     // Nav Bar
     self.tabBarController.title = @"Settings";
+    self.tabBarController.navigationItem.rightBarButtonItem = nil;
     
     // Avatar
     self.ivAvatar.image = [DefaultsHandler getUserImage];
