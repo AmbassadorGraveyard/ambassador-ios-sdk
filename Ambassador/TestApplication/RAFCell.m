@@ -14,6 +14,9 @@
     self.rafName.text = rafName;
     [self.btnExport setImage:[self.btnExport.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     self.btnExport.tintColor = [UIColor lightGrayColor];
+    self.preservesSuperviewLayoutMargins = NO;
+    self.separatorInset = UIEdgeInsetsZero;
+    self.layoutMargins = UIEdgeInsetsZero;
 }
 
 @end

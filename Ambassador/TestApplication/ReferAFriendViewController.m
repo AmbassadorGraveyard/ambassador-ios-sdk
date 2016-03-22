@@ -70,6 +70,17 @@
     return blankCell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0.6f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = [UIColor lightGrayColor];
+    
+    return headerView;
+}
+
 
 #pragma mark - TableView Delegate
 
