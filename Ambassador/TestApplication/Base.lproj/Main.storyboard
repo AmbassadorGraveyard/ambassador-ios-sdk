@@ -307,16 +307,19 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="61"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="smJ-zd-BOl" id="HLW-t9-CG6">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="60.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zgs-Up-GdQ">
-                                                    <rect key="frame" x="550" y="13" width="35" height="35"/>
+                                                    <rect key="frame" x="563" y="22" width="17" height="17"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="35" id="54p-Le-b1q"/>
-                                                        <constraint firstAttribute="height" constant="35" id="I5W-FT-Hy0"/>
+                                                        <constraint firstAttribute="width" constant="17" id="54p-Le-b1q"/>
+                                                        <constraint firstAttribute="height" constant="17" id="I5W-FT-Hy0"/>
                                                     </constraints>
                                                     <state key="normal" image="exportIcon"/>
+                                                    <connections>
+                                                        <action selector="exportTapped:" destination="smJ-zd-BOl" eventType="touchUpInside" id="xp4-Qc-KGN"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ya-dF-Og2">
                                                     <rect key="frame" x="20" y="21" width="20" height="20"/>
@@ -325,6 +328,9 @@
                                                         <constraint firstAttribute="width" constant="20" id="iuW-Ue-1QI"/>
                                                     </constraints>
                                                     <state key="normal" image="removeIcon"/>
+                                                    <connections>
+                                                        <action selector="deleteTapped:" destination="smJ-zd-BOl" eventType="touchUpInside" id="J6S-v1-Ght"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="created on 01/07/2015 at 10:22pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hC-Dv-COo">
                                                     <rect key="frame" x="60" y="35" width="178" height="14"/>
@@ -347,7 +353,7 @@
                                                 <constraint firstItem="NJ0-Ad-Q6d" firstAttribute="top" secondItem="HLW-t9-CG6" secondAttribute="top" constant="15" id="XFE-pG-tsV"/>
                                                 <constraint firstItem="zgs-Up-GdQ" firstAttribute="centerY" secondItem="HLW-t9-CG6" secondAttribute="centerY" id="XUg-7w-Coa"/>
                                                 <constraint firstItem="6Ya-dF-Og2" firstAttribute="leading" secondItem="HLW-t9-CG6" secondAttribute="leading" constant="20" id="YjD-gR-m7a"/>
-                                                <constraint firstAttribute="trailing" secondItem="zgs-Up-GdQ" secondAttribute="trailing" constant="15" id="YtA-di-Udv"/>
+                                                <constraint firstAttribute="trailing" secondItem="zgs-Up-GdQ" secondAttribute="trailing" constant="20" id="YtA-di-Udv"/>
                                                 <constraint firstItem="8hC-Dv-COo" firstAttribute="top" secondItem="NJ0-Ad-Q6d" secondAttribute="bottom" constant="2" id="aRW-nO-UnS"/>
                                                 <constraint firstItem="NJ0-Ad-Q6d" firstAttribute="leading" secondItem="HLW-t9-CG6" secondAttribute="leading" constant="20" id="m07-Ku-8w3"/>
                                                 <constraint firstItem="8hC-Dv-COo" firstAttribute="leading" secondItem="HLW-t9-CG6" secondAttribute="leading" constant="20" id="wib-kf-wp3"/>
