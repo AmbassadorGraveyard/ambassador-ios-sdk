@@ -11,6 +11,8 @@
 
 @interface RAFCell : UITableViewCell
 
+@property (nonatomic) BOOL isEditing;
+
 - (void)setUpCellWithRaf:(RAFItem*)rafItem;
 
 @end
