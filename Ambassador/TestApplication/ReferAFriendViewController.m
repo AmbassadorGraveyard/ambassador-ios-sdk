@@ -12,7 +12,7 @@
 #import "ThemeHandler.h"
 #import "DefaultsHandler.h"
 
-@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
+@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
@@ -57,7 +57,7 @@
 - (void)editRAF {
     self.tableEditing = !self.tableEditing;
     [self setNavBarButtons];
-    [self reloadThemes];
+    [self reloadThemesWithFade:NO];
 }
 
 
@@ -72,6 +72,7 @@
     
     if (rafCell) {
         rafCell.isEditing = self.tableEditing;
+        rafCell.delegate = self;
         [rafCell setUpCellWithRaf:self.rafArray[indexPath.row]];
         return rafCell;
     }
@@ -124,6 +125,19 @@
 }
 
 
+#pragma mark - RAFCell Delegate
+
+- (void)RAFCellDeleteTappedForRAFItem:(RAFItem *)rafItem {
+    ThemeHandler *handler = [[ThemeHandler alloc] init];
+    [handler deleteRafItem:rafItem];
+    [self reloadThemesWithFade:YES];
+}
+
+- (void)RAFCellExportTappedForRAFItem:(RAFItem *)rafItem {
+    
+}
+
+
 #pragma mark - UI Functions
 
 - (void)setupUI {
@@ -146,9 +160,15 @@
 
 #pragma mark - Helper Functions
 
-- (void)reloadThemes {
+- (void)reloadThemesWithFade:(BOOL)fade {
     self.rafArray = [DefaultsHandler getThemeArray];
-    [self.rafTable reloadData];
+    
+    // Only perform fade if deleting or adding
+    if (fade) {
+        [self.rafTable reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    } else {
+        [self.rafTable reloadData];
+    }
 }
 
 - (void)saveNewTheme:(NSString*)themeName {
@@ -162,7 +182,7 @@
     ThemeHandler *handler = [[ThemeHandler alloc] init];
     [handler saveNewTheme:item];
     
-    [self reloadThemes];
+    [self reloadThemesWithFade:YES];
 }
 
 @end

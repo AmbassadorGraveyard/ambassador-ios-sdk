@@ -30,7 +30,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"USER_IMAGE"];
 }
 
-+ (void)setThemeArray:(NSArray*)themeArray {
++ (void)setThemeArray:(NSMutableArray*)themeArray {
     NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:themeArray];
     [[NSUserDefaults standardUserDefaults] setObject:encodedObject forKey:@"THEME_ARRAY"];
 }
@@ -55,10 +55,10 @@
     return [UIImage imageWithData:imageData];
 }
 
-+ (NSArray*)getThemeArray {
++ (NSMutableArray*)getThemeArray {
     NSData *encodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:@"THEME_ARRAY"];
     NSArray *returnArray = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
-    return [[NSArray alloc] initWithArray:returnArray];
+    return [[NSMutableArray alloc] initWithArray:returnArray];
 }
 
 
