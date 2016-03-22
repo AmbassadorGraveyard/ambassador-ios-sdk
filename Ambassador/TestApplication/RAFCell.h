@@ -7,12 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RAFItem.h"
 
 @interface RAFCell : UITableViewCell
 
-@property (nonatomic, strong) IBOutlet UILabel * rafName;
-@property (nonatomic, strong) IBOutlet UIButton * btnExport;
-
-- (void)setUpCellWithRafName:(NSString*)rafName;
+- (void)setUpCellWithRaf:(RAFItem*)rafItem;
 
 @end
