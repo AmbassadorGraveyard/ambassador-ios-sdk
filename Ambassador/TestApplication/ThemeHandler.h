@@ -12,5 +12,6 @@
 @interface ThemeHandler : NSObject
 
 - (void)saveNewTheme:(RAFItem*)rafTheme;
+- (void)deleteRafItem:(RAFItem*)rafItem;
 
 @end

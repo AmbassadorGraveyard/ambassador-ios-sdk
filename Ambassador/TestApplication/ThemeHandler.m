@@ -21,12 +21,11 @@
 
 - (void)saveNewTheme:(RAFItem*)rafTheme {
     // Gets current array of RAFItems(themes) and add the new RAFitem
-    NSMutableArray *currentThemeArray = [[NSMutableArray alloc] initWithArray:[DefaultsHandler getThemeArray]];
+    NSMutableArray *currentThemeArray = [DefaultsHandler getThemeArray];
     [currentThemeArray addObject:rafTheme];
     
     // Saves the updated Array of RAFItems to user defaults
-    NSArray *saveArray = [NSArray arrayWithArray:currentThemeArray];
-    [DefaultsHandler setThemeArray:saveArray];
+    [DefaultsHandler setThemeArray:currentThemeArray];
     
     // Creats a copy of genericTheme to alter and save as new plist
     NSMutableDictionary *dictionary = [self getGenericTheme];
@@ -38,6 +37,30 @@
     [self writeToDocumentsPathWithThemeName:rafTheme.plistFullName dictionary:dictionary];
 }
 
+- (void)deleteRafItem:(RAFItem*)rafItem {
+    // Get current array of themes
+    NSMutableArray *currentThemeArray = [DefaultsHandler getThemeArray];
+    
+    /* Need to loop though items and check names
+    rather than removing object directly because 
+    references are different since the array was 
+    encoded and decoded */
+    NSMutableArray *removeArray = [[NSMutableArray alloc] init];
+    for (RAFItem *item in currentThemeArray) {
+        if ([item.rafName isEqualToString:rafItem.rafName]) {
+            [removeArray addObject:item];
+        }
+    }
+    
+    [currentThemeArray removeObjectsInArray:removeArray];
+
+    // Re-save the array once the rafItem has been removed
+    [DefaultsHandler setThemeArray:currentThemeArray];
+    
+    // Remove the plist from Documents
+    [self removeFileFromPathWithThemeName:rafItem.plistFullName];
+}
+
 - (void)writeToDocumentsPathWithThemeName:(NSString*)name dictionary:(NSMutableDictionary*)writeDict {
     // Gets path for Documents folder
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -46,6 +69,26 @@
     // Creates and writes to a new or existing file path with the path name
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", name]];
     [writeDict writeToFile:filePath atomically:NO];
+}
+
+- (void)removeFileFromPathWithThemeName:(NSString*)name {
+    // Gets path for Documents folder
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    // Creates and writes to a new or existing file path with the path name
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", name]];
+    
+    // Use the file manager to remove the file at path
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *fileMngError;
+    BOOL removed = [fileManager removeItemAtPath:filePath error:&fileMngError];
+    
+    if (removed) {
+        NSLog(@"File removed successfully!");
+    } else {
+        NSLog(@"Failed to removed file - %@", fileMngError);
+    }
 }
 
 @end
