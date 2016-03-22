@@ -217,6 +217,8 @@
 		EF7D076C1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */; };
 		EF7D076E1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */; };
 		EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
+		EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C41CA1839600F5711F /* ThemeHandler.m */; };
+		EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C71CA1906400F5711F /* RAFItem.m */; };
 		EF9DA74D1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */; };
 		EFBF8E031C69004800F2B5F9 /* AMBContactSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */; };
 		EFBF8E051C69006400F2B5F9 /* AMBContactCellUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */; };
@@ -547,6 +549,10 @@
 		EF7CA9D11BF3EAB7006EBD6A /* AMBContactTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactTests.m; sourceTree = "<group>"; };
 		EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBUtilitiesTests.m; sourceTree = "<group>"; };
 		EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSendCompletionTests.m; sourceTree = "<group>"; };
+		EF9D98C31CA1839600F5711F /* ThemeHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeHandler.h; sourceTree = "<group>"; };
+		EF9D98C41CA1839600F5711F /* ThemeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeHandler.m; sourceTree = "<group>"; };
+		EF9D98C61CA1906400F5711F /* RAFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFItem.h; sourceTree = "<group>"; };
+		EF9D98C71CA1906400F5711F /* RAFItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFItem.m; sourceTree = "<group>"; };
 		EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCellUnitTests.m; sourceTree = "<group>"; };
@@ -996,8 +1002,11 @@
 			children = (
 				EF5390D51C4469AF005F6944 /* ReferAFriendViewController.h */,
 				EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */,
-				EF5390D81C4565D9005F6944 /* RAFCell.h */,
-				EF5390D91C4565D9005F6944 /* RAFCell.m */,
+				EF9D98C31CA1839600F5711F /* ThemeHandler.h */,
+				EF9D98C41CA1839600F5711F /* ThemeHandler.m */,
+				EF9D98C61CA1906400F5711F /* RAFItem.h */,
+				EF9D98C71CA1906400F5711F /* RAFItem.m */,
+				EF9D98C91CA1AD4F00F5711F /* Custom Cells */,
 			);
 			name = RAF;
 			sourceTree = "<group>";
@@ -1094,6 +1103,15 @@
 				EFE7D7C71C24671600D7F92C /* AMBConversionParameter_Internal.h */,
 			);
 			name = "Conversion Parameters";
+			sourceTree = "<group>";
+		};
+		EF9D98C91CA1AD4F00F5711F /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EF5390D81C4565D9005F6944 /* RAFCell.h */,
+				EF5390D91C4565D9005F6944 /* RAFCell.m */,
+			);
+			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
 		EFE7D7851C21B2B600D7F92C /* Service Selector (RAF) */ = {
@@ -1736,7 +1754,9 @@
 				EF783C0C1CA07AB900079B65 /* AmbassadorTheme.plist in Sources */,
 				EF783C0D1CA07AB900079B65 /* AmbassadorShirt.plist in Sources */,
 				EF783C0E1CA07AB900079B65 /* CustomBrandTheme.plist in Sources */,
+				EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */,
 				DB844D6C1BA76BDE003FD7A9 /* IdentifyViewController.m in Sources */,
+				EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */,
 				EF783BBF1C9C7D6600079B65 /* LeftIndentedTextField.m in Sources */,
 				EF5390D11C445BF2005F6944 /* ConversionViewController.m in Sources */,
 				DB844D691BA76BDE003FD7A9 /* AppDelegate.m in Sources */,
