@@ -23,7 +23,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		9FDC6B30B666AC065E0B6583 /* libPods-Ambassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0079A83364A4D337331258FB /* libPods-Ambassador.a */; };
 		DB6A245F1BD00F3F00CE3230 /* AMBNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */; };
 		DB6A24601BD00F3F00CE3230 /* AMBNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */; };
 		DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24611BD017A700CE3230 /* AMBErrors.h */; };
@@ -127,6 +126,7 @@
 		DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FC2A1BA8AA5600672D82 /* NSData+SRB64Additions.m */; };
 		DBA3FC311BA8AA5600672D82 /* AMBSRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = DBA3FC2B1BA8AA5600672D82 /* AMBSRWebSocket.h */; };
 		DBA3FC321BA8AA5600672D82 /* AMBSRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DBA3FC2C1BA8AA5600672D82 /* AMBSRWebSocket.m */; };
+		DBA98F38C2C3CAA44F255276 /* libPods-TestApplication.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C128C3383D1721F1F87EF25 /* libPods-TestApplication.a */; };
 		DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */ = {isa = PBXBuildFile; fileRef = DBB8BD081BAC6B6D00B87896 /* AMBPTPusher+Testing.h */; };
 		DBB8BD0B1BAC6B6D00B87896 /* AMBPTPusher+Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = DBB8BD091BAC6B6D00B87896 /* AMBPTPusher+Testing.m */; };
 		DBEB6FE21BA9AD04005EE0D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FE11BA9AD04005EE0D0 /* Main.storyboard */; };
@@ -220,6 +220,7 @@
 		EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C41CA1839600F5711F /* ThemeHandler.m */; };
 		EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C71CA1906400F5711F /* RAFItem.m */; };
+		EF9D98D11CA1F19500F5711F /* libobjective-zip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF9D98D01CA1F19500F5711F /* libobjective-zip.a */; };
 		EF9DA74D1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */; };
 		EFBF8E031C69004800F2B5F9 /* AMBContactSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */; };
 		EFBF8E051C69006400F2B5F9 /* AMBContactCellUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */; };
@@ -329,7 +330,10 @@
 /* Begin PBXFileReference section */
 		0079A83364A4D337331258FB /* libPods-Ambassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ambassador.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A47EBEA1D60C44F384D7022 /* Pods-Ambassador.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ambassador.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ambassador/Pods-Ambassador.release.xcconfig"; sourceTree = "<group>"; };
+		6C128C3383D1721F1F87EF25 /* libPods-TestApplication.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TestApplication.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FB986901906A3DD3E86D546 /* Pods-TestApplication.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApplication.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestApplication/Pods-TestApplication.release.xcconfig"; sourceTree = "<group>"; };
 		75B51AA7CD49D1C0E04EC243 /* Pods-Ambassador.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ambassador.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ambassador/Pods-Ambassador.debug.xcconfig"; sourceTree = "<group>"; };
+		D4D2ED3AB7E35941B5B43CCE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNetworkManager.h; sourceTree = "<group>"; };
 		DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworkManager.m; sourceTree = "<group>"; };
 		DB6A24611BD017A700CE3230 /* AMBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBErrors.h; sourceTree = "<group>"; };
@@ -557,6 +561,10 @@
 		EF9D98C41CA1839600F5711F /* ThemeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeHandler.m; sourceTree = "<group>"; };
 		EF9D98C61CA1906400F5711F /* RAFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFItem.h; sourceTree = "<group>"; };
 		EF9D98C71CA1906400F5711F /* RAFItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFItem.m; sourceTree = "<group>"; };
+		EF9D98CA1CA1EA5600F5711F /* libobjective-zip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjective-zip.a"; path = "Pods/../build/Debug-iphoneos/libobjective-zip.a"; sourceTree = "<group>"; };
+		EF9D98CC1CA1F09F00F5711F /* libobjective-zip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjective-zip.a"; path = "Pods/../build/Debug-iphoneos/libobjective-zip.a"; sourceTree = "<group>"; };
+		EF9D98CE1CA1F10B00F5711F /* libobjective-zip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjective-zip.a"; path = "Pods/../build/Debug-iphoneos/libobjective-zip.a"; sourceTree = "<group>"; };
+		EF9D98D01CA1F19500F5711F /* libobjective-zip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjective-zip.a"; path = "Pods/../build/Debug-iphoneos/libobjective-zip.a"; sourceTree = "<group>"; };
 		EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCellUnitTests.m; sourceTree = "<group>"; };
@@ -581,6 +589,7 @@
 		EFE7D7C71C24671600D7F92C /* AMBConversionParameter_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBConversionParameter_Internal.h; sourceTree = "<group>"; };
 		EFED7B041BDA9F0A00F6C360 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AMBMedia.xcassets; sourceTree = "<group>"; };
+		FE9134FEDC8C6784B298583E /* Pods-TestApplication.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApplication.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestApplication/Pods-TestApplication.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -588,7 +597,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FDC6B30B666AC065E0B6583 /* libPods-Ambassador.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,8 +623,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF9D98D11CA1F19500F5711F /* libobjective-zip.a in Frameworks */,
 				EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */,
 				DB844D891BA76C1E003FD7A9 /* libAmbassador.a in Frameworks */,
+				DBA98F38C2C3CAA44F255276 /* libPods-TestApplication.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +650,10 @@
 		0D24CFB05292A555B6506D41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EF9D98D01CA1F19500F5711F /* libobjective-zip.a */,
+				EF9D98CE1CA1F10B00F5711F /* libobjective-zip.a */,
+				EF9D98CC1CA1F09F00F5711F /* libobjective-zip.a */,
+				EF9D98CA1CA1EA5600F5711F /* libobjective-zip.a */,
 				EF07451F1C52C69F009AF919 /* OCMockitoIOS.framework */,
 				EF24D1E41BECFAC000561476 /* libOCMock.a */,
 				EF24D1E21BECFA7A00561476 /* iOS */,
@@ -656,6 +670,8 @@
 				DBA3FC391BA8AC3A00672D82 /* libcommonCrypto.dylib */,
 				DBA3FC371BA8AC3100672D82 /* libsystem_coreservices.dylib */,
 				0079A83364A4D337331258FB /* libPods-Ambassador.a */,
+				D4D2ED3AB7E35941B5B43CCE /* libPods.a */,
+				6C128C3383D1721F1F87EF25 /* libPods-TestApplication.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -665,6 +681,8 @@
 			children = (
 				75B51AA7CD49D1C0E04EC243 /* Pods-Ambassador.debug.xcconfig */,
 				6A47EBEA1D60C44F384D7022 /* Pods-Ambassador.release.xcconfig */,
+				FE9134FEDC8C6784B298583E /* Pods-TestApplication.debug.xcconfig */,
+				6FB986901906A3DD3E86D546 /* Pods-TestApplication.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1373,13 +1391,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DB844D3A1BA75BB8003FD7A9 /* Build configuration list for PBXNativeTarget "Ambassador" */;
 			buildPhases = (
-				245BFA115AF383B1221B1B76 /* Check Pods Manifest.lock */,
 				DB844D221BA75BB8003FD7A9 /* Sources */,
 				DB844D231BA75BB8003FD7A9 /* Frameworks */,
 				DB844D241BA75BB8003FD7A9 /* Copy Files */,
 				DB844D401BA75CDC003FD7A9 /* Headers */,
 				DB844D421BA75E54003FD7A9 /* Prepare Framework */,
-				195B1DCECEF62DF3CEDB7D4D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1431,9 +1447,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DB844D811BA76BDE003FD7A9 /* Build configuration list for PBXNativeTarget "TestApplication" */;
 			buildPhases = (
+				536BF9A266AC4200E0694AEB /* Check Pods Manifest.lock */,
 				DB844D5D1BA76BDE003FD7A9 /* Sources */,
 				DB844D5E1BA76BDE003FD7A9 /* Frameworks */,
 				DB844D5F1BA76BDE003FD7A9 /* Resources */,
+				4451B3C637E1C2AE23BE1AC4 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1623,7 +1641,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		195B1DCECEF62DF3CEDB7D4D /* Copy Pods Resources */ = {
+		4451B3C637E1C2AE23BE1AC4 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1635,10 +1653,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ambassador/Pods-Ambassador-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TestApplication/Pods-TestApplication-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		245BFA115AF383B1221B1B76 /* Check Pods Manifest.lock */ = {
+		536BF9A266AC4200E0694AEB /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2012,6 +2030,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
@@ -2038,6 +2057,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
@@ -2166,6 +2186,7 @@
 		};
 		DB844D821BA76BDE003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE9134FEDC8C6784B298583E /* Pods-TestApplication.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2181,7 +2202,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTestApplication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2192,6 +2213,7 @@
 		};
 		DB844D831BA76BDE003FD7A9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6FB986901906A3DD3E86D546 /* Pods-TestApplication.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
