@@ -20,6 +20,7 @@
 
 // Private properties
 @property (nonatomic, strong) NSArray * rafArray;
+@property (nonatomic) BOOL tableEditing;
 
 @end
 
@@ -54,7 +55,9 @@
 }
 
 - (void)editRAF {
-    // TODO: Add ability to edit RAF
+    self.tableEditing = !self.tableEditing;
+    [self setNavBarButtons];
+    [self reloadThemes];
 }
 
 
@@ -68,6 +71,7 @@
     RAFCell *rafCell = [tableView dequeueReusableCellWithIdentifier:@"rafCell"];
     
     if (rafCell) {
+        rafCell.isEditing = self.tableEditing;
         [rafCell setUpCellWithRaf:self.rafArray[indexPath.row]];
         return rafCell;
     }
@@ -134,7 +138,8 @@
     UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewRAF)];
     self.tabBarController.navigationItem.rightBarButtonItem = btnAdd;
     
-    UIBarButtonItem *btnEdit = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editRAF)];
+    NSString *editTitle = (self.tableEditing) ? @"Done" : @"Edit";
+    UIBarButtonItem *btnEdit = [[UIBarButtonItem alloc] initWithTitle:editTitle style:UIBarButtonItemStylePlain target:self action:@selector(editRAF)];
     self.tabBarController.navigationItem.leftBarButtonItem = btnEdit;
 }
 

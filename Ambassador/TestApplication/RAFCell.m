@@ -13,6 +13,8 @@
 @property (nonatomic, strong) IBOutlet UILabel * rafName;
 @property (nonatomic, strong) IBOutlet UILabel * lblDateCreated;
 @property (nonatomic, strong) IBOutlet UIButton * btnExport;
+@property (nonatomic, strong) IBOutlet UIButton * btnDelete;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * removeButtonLeading;
 
 @end
 
@@ -31,6 +33,9 @@
     // Button
     [self.btnExport setImage:[self.btnExport.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     self.btnExport.tintColor = [UIColor lightGrayColor];
+    
+    // Constraints
+    [self showHideDeleteButton];
 }
 
 - (NSString*)stringFromDate:(NSDate*)date {
@@ -39,12 +44,21 @@
     dayFormatter.dateFormat = @"MM/dd/yyyy";
     NSString *dateString = [dayFormatter stringFromDate:date];
     
-    // Gets time 12:00:00 AM
+    // Gets time '12:00:00 AM'
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
     timeFormatter.dateFormat = @"HH:mm:ss a";
     NSString *timeString = [timeFormatter stringFromDate:date];
     
     return [NSString stringWithFormat:@"created on %@ at %@", dateString, timeString];
+}
+
+- (void)showHideDeleteButton {
+    self.removeButtonLeading.constant = (self.isEditing) ? 20 : -(self.btnDelete.frame.size.width);
+    [UIView animateKeyframesWithDuration:0.3 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.3 animations:^{
+            [self layoutIfNeeded];
+        }];
+    } completion:nil];
 }
 
 @end
