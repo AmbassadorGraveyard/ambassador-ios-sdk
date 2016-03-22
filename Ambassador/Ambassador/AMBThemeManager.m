@@ -35,13 +35,22 @@ static NSDictionary * valuesDic;
     // Checks to is running unit tests, which will use the unit test bundle
     if (NSClassFromString(@"XCTest")) {
         bundle = [NSBundle bundleForClass:[self class]];
-    } else {
-        // Checks to see if using GenericTheme or is using custom made theme from TestApplication which is prepended with AMBTESTAPP
-        bundle = ([plistName isEqualToString:@"GenericTheme"] || [plistName containsString:@"AMBTESTAPP"]) ? ambassadorBundle : [NSBundle mainBundle];
+    // Makes sure that the plist is not a custom made theme from the Test Application -- we WONT use a bundle is that is the case
+    } else if (![plistName containsString:@"AMBTESTAPP"]) {
+        // Checks to see if using GenericTheme
+        bundle = ([plistName isEqualToString:@"GenericTheme"]) ? ambassadorBundle : [NSBundle mainBundle];
     }
 
     // Grabs the plist path-- if the path doesn't exist, we default to use the Generic Theme from Ambassador Bundle
-    NSString *plistPath = ([bundle pathForResource:plistName ofType:@"plist"]) ? [bundle pathForResource:plistName ofType:@"plist"] : [ambassadorBundle pathForResource:@"GenericTheme" ofType:@"plist"];
+    NSString *plistPath;
+    
+    if (bundle) {
+        plistPath = ([bundle pathForResource:plistName ofType:@"plist"]) ? [bundle pathForResource:plistName ofType:@"plist"] : [ambassadorBundle pathForResource:@"GenericTheme" ofType:@"plist"];
+    } else {
+        // Must mean that the theme was created from within the Test Application and will grab from the Documents folder if exists -- else use Generic Theme
+        plistPath = ([self getDocumentsPathWithName:plistName]) ? [self getDocumentsPathWithName:plistName] : [ambassadorBundle pathForResource:@"GenericTheme" ofType:@"plist"];
+    }
+    
     valuesDic = [NSDictionary dictionaryWithContentsOfFile:plistPath];
 }
 
@@ -280,6 +289,16 @@ static NSDictionary * valuesDic;
 
 - (BOOL)keyExists:(NSString*)keyName {
     return ([[valuesDic allKeys] containsObject:keyName] && ![[valuesDic valueForKey:keyName] isEqual: @""]) ? YES : NO;
+}
+
+- (NSString*)getDocumentsPathWithName:(NSString*)themeName {
+    // Gets path for Documents folder
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    // Creates and writes to a new or existing file path with the path name
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", themeName]];
+    return filePath;
 }
 
 @end
