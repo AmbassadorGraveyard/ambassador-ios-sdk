@@ -16,12 +16,14 @@
 + (void)setUniversalID:(NSString*)univId;
 + (void)setFullName:(NSString*)firstName lastName:(NSString*)lastName;
 + (void)setUserImage:(NSString*)imageUrl;
++ (void)setThemeArray:(NSArray*)themeArray;
 
 // GETTERS
 + (NSString*)getSDKToken;
 + (NSString*)getUniversalID;
 + (NSString*)getFullName;
 + (UIImage*)getUserImage;
++ (NSArray*)getThemeArray;
 
 // HELPER FUNCTIONS
 + (void)clearUserValues;

@@ -30,6 +30,11 @@
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"USER_IMAGE"];
 }
 
++ (void)setThemeArray:(NSArray*)themeArray {
+    NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:themeArray];
+    [[NSUserDefaults standardUserDefaults] setObject:encodedObject forKey:@"THEME_ARRAY"];
+}
+
 
 #pragma mark - Getters
 
@@ -48,6 +53,12 @@
 + (UIImage*)getUserImage {
     NSData *imageData = [[NSUserDefaults standardUserDefaults] objectForKey:@"USER_IMAGE"];
     return [UIImage imageWithData:imageData];
+}
+
++ (NSArray*)getThemeArray {
+    NSData *encodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:@"THEME_ARRAY"];
+    NSArray *returnArray = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+    return [[NSArray alloc] initWithArray:returnArray];
 }
 
 
