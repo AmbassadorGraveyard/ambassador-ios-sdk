@@ -7,13 +7,10 @@ checkout:
   post:
     - git submodule sync
     - git submodule update
-dependencies:
-  pre:
-    - pod install
 test:
   override:
     - set -o pipefail &&
-     xcodebuild -workspace Ambassador.xcworkspace
+     xcodebuild -project Ambassador.xcodeproj
       -sdk iphonesimulator
        -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
        -configuration Debug
@@ -25,7 +22,7 @@ test:
     - bundle exec slather coverage Ambassador.xcodeproj
 
     - set -o pipefail &&
-     xcodebuild -workspace Ambassador.xcworkspace
+     xcodebuild -project Ambassador.xcodeproj
       -sdk iphonesimulator
        -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
        -scheme AmbassadorUITests
