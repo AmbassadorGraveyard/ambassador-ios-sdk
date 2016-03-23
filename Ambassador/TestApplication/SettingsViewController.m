@@ -9,7 +9,7 @@
 
 #import "SettingsViewController.h"
 #import "DefaultsHandler.h"
-#import "ViewController.h"
+#import "MyTabBarController.h"
 
 @interface SettingsViewController()
 
@@ -60,6 +60,7 @@
 - (void)setupUI {
     // Nav Bar
     self.tabBarController.title = @"Settings";
+    self.tabBarController.navigationItem.rightBarButtonItem = nil;
     
     // Avatar
     self.ivAvatar.image = [DefaultsHandler getUserImage];
@@ -98,8 +99,8 @@
 - (IBAction)signOut:(id)sender {
     [DefaultsHandler clearUserValues];
     [self.tabBarController setSelectedIndex:0];
-    ViewController *initialController = [self.tabBarController viewControllers][0];
-    [initialController checkForLogin];
+    MyTabBarController *controller = (MyTabBarController*)self.tabBarController;
+    [controller checkForLogin];
 }
 
 - (IBAction)copyTokenToClipboard:(id)sender {
