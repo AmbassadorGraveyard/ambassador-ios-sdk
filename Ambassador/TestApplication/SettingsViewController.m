@@ -61,6 +61,7 @@
     // Nav Bar
     self.tabBarController.title = @"Settings";
     self.tabBarController.navigationItem.rightBarButtonItem = nil;
+    self.tabBarController.navigationItem.leftBarButtonItem = nil;
     
     // Avatar
     self.ivAvatar.image = [DefaultsHandler getUserImage];
