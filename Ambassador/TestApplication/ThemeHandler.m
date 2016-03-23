@@ -91,4 +91,14 @@
     }
 }
 
+- (NSString*)getDocumentsPathWithName:(NSString*)themeName {
+    // Gets path for Documents folder
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    // Gets file path for plist
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", themeName]];
+    return filePath;
+}
+
 @end
