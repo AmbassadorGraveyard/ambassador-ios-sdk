@@ -29,8 +29,19 @@ static NSDictionary * valuesDic;
 }
 
 - (void)createDicFromPlist:(NSString*)plistName {
-    NSBundle *bundle = ([NSBundle bundleWithIdentifier:@"AmbassadorBundle"]) ? [NSBundle bundleWithIdentifier:@"AmbassadorBundle"] : [NSBundle bundleForClass:[self class]]; // Returns correct bundle based on whether unit testing or not
-    NSString *plistPath = ([bundle pathForResource:plistName ofType:@"plist"]) ? [bundle pathForResource:plistName ofType:@"plist"] : [bundle pathForResource:@"GenericTheme" ofType:@"plist"];
+    NSBundle *bundle = nil;
+    NSBundle *ambassadorBundle = [NSBundle bundleWithIdentifier:@"AmbassadorBundle"];
+    
+    // Checks to is running unit tests, which will use the unit test bundle
+    if (NSClassFromString(@"XCTest")) {
+        bundle = [NSBundle bundleForClass:[self class]];
+    } else {
+        // Checks to see if using GenericTheme or is using custom made theme from TestApplication which is prepended with AMBTESTAPP
+        bundle = ([plistName isEqualToString:@"GenericTheme"] || [plistName containsString:@"AMBTESTAPP"]) ? ambassadorBundle : [NSBundle mainBundle];
+    }
+
+    // Grabs the plist path-- if the path doesn't exist, we default to use the Generic Theme from Ambassador Bundle
+    NSString *plistPath = ([bundle pathForResource:plistName ofType:@"plist"]) ? [bundle pathForResource:plistName ofType:@"plist"] : [ambassadorBundle pathForResource:@"GenericTheme" ofType:@"plist"];
     valuesDic = [NSDictionary dictionaryWithContentsOfFile:plistPath];
 }
 
