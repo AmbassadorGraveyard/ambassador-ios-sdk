@@ -29,6 +29,8 @@
 
 @implementation ReferAFriendViewController
 
+NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
+
 
 #pragma mark - LifeCycle
 
@@ -48,9 +50,10 @@
 
 - (void)addNewRAF {
     // TODO: Replace with presenting RAF customizer
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Theme" message:@"Type your theme name below." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Theme" message:@"Type your theme name below." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
+//    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    [alert show];
+    [self performSegueWithIdentifier:RAF_CUSTOMIZE_SEGUE sender:self];
 }
 
 - (void)editRAF {
