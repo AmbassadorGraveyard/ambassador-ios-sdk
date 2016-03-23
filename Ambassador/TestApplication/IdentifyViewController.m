@@ -143,6 +143,7 @@
         // Package up snippet to share
         NSArray * shareItems = @[shareString];
         UIActivityViewController * avc = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];
+        [avc setValue:@"Ambassador Identify Code Snippet" forKey:@"subject"];
         [self presentViewController:avc animated:YES completion:nil];
         
         return;
