@@ -35,6 +35,10 @@
     [[NSUserDefaults standardUserDefaults] setObject:encodedObject forKey:@"THEME_ARRAY"];
 }
 
++ (void)setAddedDefaultRAFTrue {
+    [[NSUserDefaults standardUserDefaults] setValue:@"true" forKey:@"ADDED_DEFAULT"];
+}
+
 
 #pragma mark - Getters
 
@@ -59,6 +63,11 @@
     NSData *encodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:@"THEME_ARRAY"];
     NSArray *returnArray = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
     return [[NSMutableArray alloc] initWithArray:returnArray];
+}
+
++ (BOOL)hasAddedDefault {
+    NSString *defaultsString = [[NSUserDefaults standardUserDefaults] valueForKey:@"ADDED_DEFAULT"];
+    return ([defaultsString isEqualToString:@"true"]) ? YES : NO;
 }
 
 

@@ -34,6 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
+    [self addDefaultIfFirstLaunch];
     self.rafArray = [DefaultsHandler getThemeArray];
 }
 
@@ -144,8 +145,7 @@
 #pragma mark - RAFCell Delegate
 
 - (void)RAFCellDeleteTappedForRAFItem:(RAFItem *)rafItem {
-    ThemeHandler *handler = [[ThemeHandler alloc] init];
-    [handler deleteRafItem:rafItem];
+    [ThemeHandler deleteRafItem:rafItem];
     [self reloadThemesWithFade:YES];
 }
 
@@ -168,7 +168,7 @@
     UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewRAF)];
     self.tabBarController.navigationItem.rightBarButtonItem = btnAdd;
     
-    NSString *editTitle = (self.tableEditing) ? @"Done" : @"Edit";
+    NSString *editTitle = (self.tableEditing && self.rafArray.count >= 1) ? @"Done" : @"Edit";
     UIBarButtonItem *btnEdit = [[UIBarButtonItem alloc] initWithTitle:editTitle style:UIBarButtonItemStylePlain target:self action:@selector(editRAF)];
     self.tabBarController.navigationItem.leftBarButtonItem = btnEdit;
 }
@@ -178,6 +178,11 @@
 
 - (void)reloadThemesWithFade:(BOOL)fade {
     self.rafArray = [DefaultsHandler getThemeArray];
+    
+    if (self.rafArray.count == 0) {
+        [self setNavBarButtons];
+        self.tableEditing = NO;
+    }
     
     // Only perform fade if deleting or adding
     if (fade) {
@@ -195,16 +200,14 @@
     item.dateCreated = [NSDate date];
     
     // Saves a new plist item using the RAF item name
-    ThemeHandler *handler = [[ThemeHandler alloc] init];
-    [handler saveNewTheme:item];
+    [ThemeHandler saveNewTheme:item];
     
     [self reloadThemesWithFade:YES];
 }
 
 - (void)exportRAFTheme:(RAFItem*)rafItem {
     // Gets the path for the plist being exported
-    ThemeHandler *handler = [[ThemeHandler alloc] init];
-    NSString *path = [handler getDocumentsPathWithName:rafItem.plistFullName];
+    NSString *path = [ThemeHandler getDocumentsPathWithName:rafItem.plistFullName];
     
     // Creates data to be sent as an attachment for the email
     NSData *dataToAttach = [NSData dataWithContentsOfFile:path];
@@ -237,6 +240,14 @@
     NSString *fullSwift = [NSString stringWithFormat:@"%@\n%@", swiftHeaderString, swiftRAFSnippet];
     
     return [NSString stringWithFormat:@"%@\n\n\n%@", fullObjc, fullSwift];
+}
+
+- (void)addDefaultIfFirstLaunch {
+    // Adds a default RAF if one has not already been created
+    if (![DefaultsHandler hasAddedDefault]) {
+        [self saveNewTheme:@"Ambassador Default RAF"];
+        [DefaultsHandler setAddedDefaultRAFTrue];
+    }
 }
 
 @end
