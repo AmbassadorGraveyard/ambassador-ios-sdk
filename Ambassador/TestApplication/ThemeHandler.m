@@ -11,7 +11,7 @@
 
 @implementation ThemeHandler
 
-- (NSMutableDictionary *)getGenericTheme {
++ (NSMutableDictionary *)getGenericTheme {
     // Creates and returns a copy of the GenericTheme
     NSString *genericThemePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Ambassador.bundle"];
     NSMutableDictionary *genericThemeDict = [NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle bundleWithPath:genericThemePath] pathForResource:@"GenericTheme" ofType:@"plist"]];
@@ -19,7 +19,7 @@
     return genericThemeDict;
 }
 
-- (void)saveNewTheme:(RAFItem*)rafTheme {
++ (void)saveNewTheme:(RAFItem*)rafTheme {
     // Gets current array of RAFItems(themes) and add the new RAFitem
     NSMutableArray *currentThemeArray = [DefaultsHandler getThemeArray];
     [currentThemeArray addObject:rafTheme];
@@ -28,16 +28,16 @@
     [DefaultsHandler setThemeArray:currentThemeArray];
     
     // Creats a copy of genericTheme to alter and save as new plist
-    NSMutableDictionary *dictionary = [self getGenericTheme];
+    NSMutableDictionary *dictionary = [ThemeHandler getGenericTheme];
     
     /* New plists created from within the TestApp are
     appended with AMBTESTAPP so that the SDK knows
     to grab them from the Documents folder. The
     Documents folder is the recommended area for writing to files*/
-    [self writeToDocumentsPathWithThemeName:rafTheme.plistFullName dictionary:dictionary];
+    [ThemeHandler writeToDocumentsPathWithThemeName:rafTheme.plistFullName dictionary:dictionary];
 }
 
-- (void)deleteRafItem:(RAFItem*)rafItem {
++ (void)deleteRafItem:(RAFItem*)rafItem {
     // Get current array of themes
     NSMutableArray *currentThemeArray = [DefaultsHandler getThemeArray];
     
@@ -58,10 +58,10 @@
     [DefaultsHandler setThemeArray:currentThemeArray];
     
     // Remove the plist from Documents
-    [self removeFileFromPathWithThemeName:rafItem.plistFullName];
+    [ThemeHandler removeFileFromPathWithThemeName:rafItem.plistFullName];
 }
 
-- (void)writeToDocumentsPathWithThemeName:(NSString*)name dictionary:(NSMutableDictionary*)writeDict {
++ (void)writeToDocumentsPathWithThemeName:(NSString*)name dictionary:(NSMutableDictionary*)writeDict {
     // Gets path for Documents folder
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -71,7 +71,7 @@
     [writeDict writeToFile:filePath atomically:NO];
 }
 
-- (void)removeFileFromPathWithThemeName:(NSString*)name {
++ (void)removeFileFromPathWithThemeName:(NSString*)name {
     // Gets path for Documents folder
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -91,7 +91,7 @@
     }
 }
 
-- (NSString*)getDocumentsPathWithName:(NSString*)themeName {
++ (NSString*)getDocumentsPathWithName:(NSString*)themeName {
     // Gets path for Documents folder
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
