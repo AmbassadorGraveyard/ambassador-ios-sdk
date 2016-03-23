@@ -190,7 +190,7 @@ extension AmbassadorUITests {
         ambassadorLogin()
         
         app.tabBars.buttons["Refer a Friend"].tap()
-        app.tables.staticTexts["Ambassador Shoes RAF"].tap()
+        app.tables.staticTexts["Ambassador Default RAF"].tap()
         
         handleEmailPrompt()
         
