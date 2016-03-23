@@ -125,6 +125,7 @@ CGFloat currentOffset;
 - (void)addConversionExportButton {
     UIBarButtonItem *btnExport = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"exportIconSm"] style:UIBarButtonItemStylePlain target:self action:@selector(exportConversionCode)];
     self.tabBarController.navigationItem.rightBarButtonItem = btnExport;
+    self.tabBarController.navigationItem.leftBarButtonItem = nil;
 }
 
 

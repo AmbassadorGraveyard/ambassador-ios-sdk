@@ -42,10 +42,6 @@
     [self setNavBarButtons];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    self.tabBarController.navigationItem.leftBarButtonItem = nil;
-}
-
 
 #pragma mark - Button Actions
 
@@ -104,7 +100,7 @@
     
     // Gets RAFItem at array and presents a raf using the plist name value
     RAFItem *item = self.rafArray[indexPath.row];
-    [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self withThemePlist:item.plistFullName];
+    [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self.tabBarController withThemePlist:item.plistFullName];
 }
 
 
