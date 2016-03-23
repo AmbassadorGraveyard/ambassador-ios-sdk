@@ -8,9 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
-- (void)checkForLogin;
+@interface IdentifyViewController : UIViewController
 
 @end
 

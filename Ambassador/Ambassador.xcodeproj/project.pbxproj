@@ -43,7 +43,7 @@
 		DB844D5C1BA767FA003FD7A9 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = DB844D5B1BA767FA003FD7A9 /* back.png */; };
 		DB844D661BA76BDE003FD7A9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DB844D651BA76BDE003FD7A9 /* main.m */; };
 		DB844D691BA76BDE003FD7A9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DB844D681BA76BDE003FD7A9 /* AppDelegate.m */; };
-		DB844D6C1BA76BDE003FD7A9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB844D6B1BA76BDE003FD7A9 /* ViewController.m */; };
+		DB844D6C1BA76BDE003FD7A9 /* IdentifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB844D6B1BA76BDE003FD7A9 /* IdentifyViewController.m */; };
 		DB844D6F1BA76BDE003FD7A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB844D6D1BA76BDE003FD7A9 /* Main.storyboard */; };
 		DB844D711BA76BDE003FD7A9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB844D701BA76BDE003FD7A9 /* Images.xcassets */; };
 		DB844D741BA76BDE003FD7A9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */; };
@@ -157,6 +157,7 @@
 		EF1CC8091C99E13800C2752B /* AMBInputAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC8071C99E13800C2752B /* AMBInputAlert.m */; };
 		EF1CC80B1C9A028800C2752B /* AMBInputAlertTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC80A1C9A028800C2752B /* AMBInputAlertTests.m */; };
 		EF1CC8041C9993EE00C2752B /* MyTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC8031C9993EE00C2752B /* MyTabBarController.m */; };
+		EF1CC80E1C9B3C6300C2752B /* Validator.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC80D1C9B3C6300C2752B /* Validator.m */; };
 		EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */; };
 		EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */; };
 		EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */; };
@@ -177,8 +178,7 @@
 		EF50EFC21C56AE230077CC63 /* AMBConversionModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = EF50EFC11C56AE230077CC63 /* AMBConversionModel.xcdatamodel */; };
 		EF5356501BF109A400BC80C4 /* unitTestImage.png in Resources */ = {isa = PBXBuildFile; fileRef = EF53564F1BF109A400BC80C4 /* unitTestImage.png */; };
 		EF5356521BF10C0700BC80C4 /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */; };
-		EF5390D11C445BF2005F6944 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D01C445BF2005F6944 /* SignUpViewController.m */; };
-		EF5390D41C446693005F6944 /* BuyNowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D31C446693005F6944 /* BuyNowViewController.m */; };
+		EF5390D11C445BF2005F6944 /* ConversionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D01C445BF2005F6944 /* ConversionViewController.m */; };
 		EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */; };
 		EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D91C4565D9005F6944 /* RAFCell.m */; };
 		EF5390DC1C458FFD005F6944 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390DB1C458FFD005F6944 /* GenericTheme.plist */; };
@@ -204,6 +204,7 @@
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
 		EF6BDC771C63FD75004CCDF8 /* AMBCoreDataManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */; };
+		EF783BBF1C9C7D6600079B65 /* LeftIndentedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */; };
 		EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */; };
 		EF7BA1CD1BDEB17E00788160 /* AMBBulkShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */; };
 		EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7CA9CD1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m */; };
@@ -348,8 +349,8 @@
 		DB844D651BA76BDE003FD7A9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DB844D671BA76BDE003FD7A9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DB844D681BA76BDE003FD7A9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DB844D6A1BA76BDE003FD7A9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		DB844D6B1BA76BDE003FD7A9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		DB844D6A1BA76BDE003FD7A9 /* IdentifyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentifyViewController.h; sourceTree = "<group>"; };
+		DB844D6B1BA76BDE003FD7A9 /* IdentifyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IdentifyViewController.m; sourceTree = "<group>"; };
 		DB844D6E1BA76BDE003FD7A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB844D701BA76BDE003FD7A9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DB844D731BA76BDE003FD7A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -473,6 +474,8 @@
 		EF1CC80A1C9A028800C2752B /* AMBInputAlertTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBInputAlertTests.m; sourceTree = "<group>"; };
 		EF1CC8021C9993EE00C2752B /* MyTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabBarController.h; sourceTree = "<group>"; };
 		EF1CC8031C9993EE00C2752B /* MyTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabBarController.m; sourceTree = "<group>"; };
+		EF1CC80C1C9B3C6300C2752B /* Validator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Validator.h; sourceTree = "<group>"; };
+		EF1CC80D1C9B3C6300C2752B /* Validator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Validator.m; sourceTree = "<group>"; };
 		EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValuesUnitTests.m; sourceTree = "<group>"; };
 		EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBBulkShareHelperUnitTests.m; sourceTree = "<group>"; };
 		EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManagerUnitTests.m; sourceTree = "<group>"; };
@@ -496,10 +499,8 @@
 		EF50EFC11C56AE230077CC63 /* AMBConversionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMBConversionModel.xcdatamodel; sourceTree = "<group>"; };
 		EF53564F1BF109A400BC80C4 /* unitTestImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unitTestImage.png; sourceTree = "<group>"; };
 		EF5356511BF10C0700BC80C4 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorTheme.plist; sourceTree = "<group>"; };
-		EF5390CF1C445BF2005F6944 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
-		EF5390D01C445BF2005F6944 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
-		EF5390D21C446693005F6944 /* BuyNowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyNowViewController.h; sourceTree = "<group>"; };
-		EF5390D31C446693005F6944 /* BuyNowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BuyNowViewController.m; sourceTree = "<group>"; };
+		EF5390CF1C445BF2005F6944 /* ConversionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversionViewController.h; sourceTree = "<group>"; };
+		EF5390D01C445BF2005F6944 /* ConversionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversionViewController.m; sourceTree = "<group>"; };
 		EF5390D51C4469AF005F6944 /* ReferAFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferAFriendViewController.h; sourceTree = "<group>"; };
 		EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferAFriendViewController.m; sourceTree = "<group>"; };
 		EF5390D81C4565D9005F6944 /* RAFCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFCell.h; sourceTree = "<group>"; };
@@ -533,6 +534,8 @@
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF64CFAD1BE2AACE0072014B /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBCoreDataManagerTests.m; sourceTree = "<group>"; };
+		EF783BBD1C9C7D6600079B65 /* LeftIndentedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftIndentedTextField.h; sourceTree = "<group>"; };
+		EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftIndentedTextField.m; sourceTree = "<group>"; };
 		EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBBulkShareHelper.h; sourceTree = "<group>"; };
 		EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBBulkShareHelper.m; sourceTree = "<group>"; };
 		EF7CA9CD1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPusherChannelObjectTests.m; sourceTree = "<group>"; };
@@ -792,17 +795,20 @@
 				DB844D681BA76BDE003FD7A9 /* AppDelegate.m */,
 				EF557A151C88B4AE00F66761 /* Login */,
 				EF557A141C88B4A100F66761 /* Identify */,
+				EF557A111C88B47700F66761 /* Conversion */,
 				EF557A131C88B49700F66761 /* RAF */,
-				EF557A121C88B48600F66761 /* Buy Now */,
-				EF557A111C88B47700F66761 /* Sign Up */,
 				EF557A201C88E67700F66761 /* Settings */,
-				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
-				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
-				DB844D631BA76BDE003FD7A9 /* Supporting Files */,
 				EF557A191C88D39C00F66761 /* DefaultsHandler.h */,
 				EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */,
 				EF1CC8021C9993EE00C2752B /* MyTabBarController.h */,
 				EF1CC8031C9993EE00C2752B /* MyTabBarController.m */,
+				EF1CC80C1C9B3C6300C2752B /* Validator.h */,
+				EF1CC80D1C9B3C6300C2752B /* Validator.m */,
+				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
+				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
+				DB844D631BA76BDE003FD7A9 /* Supporting Files */,
+				EF783BBD1C9C7D6600079B65 /* LeftIndentedTextField.h */,
+				EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */,
 			);
 			path = TestApplication;
 			sourceTree = "<group>";
@@ -983,22 +989,13 @@
 			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
-		EF557A111C88B47700F66761 /* Sign Up */ = {
+		EF557A111C88B47700F66761 /* Conversion */ = {
 			isa = PBXGroup;
 			children = (
-				EF5390CF1C445BF2005F6944 /* SignUpViewController.h */,
-				EF5390D01C445BF2005F6944 /* SignUpViewController.m */,
+				EF5390CF1C445BF2005F6944 /* ConversionViewController.h */,
+				EF5390D01C445BF2005F6944 /* ConversionViewController.m */,
 			);
-			name = "Sign Up";
-			sourceTree = "<group>";
-		};
-		EF557A121C88B48600F66761 /* Buy Now */ = {
-			isa = PBXGroup;
-			children = (
-				EF5390D21C446693005F6944 /* BuyNowViewController.h */,
-				EF5390D31C446693005F6944 /* BuyNowViewController.m */,
-			);
-			name = "Buy Now";
+			name = Conversion;
 			sourceTree = "<group>";
 		};
 		EF557A131C88B49700F66761 /* RAF */ = {
@@ -1015,8 +1012,8 @@
 		EF557A141C88B4A100F66761 /* Identify */ = {
 			isa = PBXGroup;
 			children = (
-				DB844D6A1BA76BDE003FD7A9 /* ViewController.h */,
-				DB844D6B1BA76BDE003FD7A9 /* ViewController.m */,
+				DB844D6A1BA76BDE003FD7A9 /* IdentifyViewController.h */,
+				DB844D6B1BA76BDE003FD7A9 /* IdentifyViewController.m */,
 			);
 			name = Identify;
 			sourceTree = "<group>";
@@ -1715,10 +1712,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF5390D41C446693005F6944 /* BuyNowViewController.m in Sources */,
-				DB844D6C1BA76BDE003FD7A9 /* ViewController.m in Sources */,
-				EF5390D11C445BF2005F6944 /* SignUpViewController.m in Sources */,
+				DB844D6C1BA76BDE003FD7A9 /* IdentifyViewController.m in Sources */,
+				EF783BBF1C9C7D6600079B65 /* LeftIndentedTextField.m in Sources */,
+				EF5390D11C445BF2005F6944 /* ConversionViewController.m in Sources */,
 				DB844D691BA76BDE003FD7A9 /* AppDelegate.m in Sources */,
+				EF1CC80E1C9B3C6300C2752B /* Validator.m in Sources */,
 				EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */,
 				DB844D661BA76BDE003FD7A9 /* main.m in Sources */,
 				EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */,
