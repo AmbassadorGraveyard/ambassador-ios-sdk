@@ -219,6 +219,7 @@
 		EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C41CA1839600F5711F /* ThemeHandler.m */; };
 		EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C71CA1906400F5711F /* RAFItem.m */; };
+		EF9D98D41CA31A5F00F5711F /* ValuesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */; };
 		EF9DA74D1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */; };
 		EFBF8E031C69004800F2B5F9 /* AMBContactSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */; };
 		EFBF8E051C69006400F2B5F9 /* AMBContactCellUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */; };
@@ -563,6 +564,8 @@
 		EF9D98CC1CA1F09F00F5711F /* libobjective-zip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjective-zip.a"; path = "Pods/../build/Debug-iphoneos/libobjective-zip.a"; sourceTree = "<group>"; };
 		EF9D98CE1CA1F10B00F5711F /* libobjective-zip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjective-zip.a"; path = "Pods/../build/Debug-iphoneos/libobjective-zip.a"; sourceTree = "<group>"; };
 		EF9D98D01CA1F19500F5711F /* libobjective-zip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjective-zip.a"; path = "Pods/../build/Debug-iphoneos/libobjective-zip.a"; sourceTree = "<group>"; };
+		EF9D98D21CA31A5F00F5711F /* ValuesHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValuesHandler.h; sourceTree = "<group>"; };
+		EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValuesHandler.m; sourceTree = "<group>"; };
 		EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCellUnitTests.m; sourceTree = "<group>"; };
@@ -1119,6 +1122,8 @@
 				EF1CC80D1C9B3C6300C2752B /* Validator.m */,
 				EF783BBD1C9C7D6600079B65 /* LeftIndentedTextField.h */,
 				EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */,
+				EF9D98D21CA31A5F00F5711F /* ValuesHandler.h */,
+				EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -1785,6 +1790,7 @@
 				EF783C0D1CA07AB900079B65 /* AmbassadorShirt.plist in Sources */,
 				EF783C0E1CA07AB900079B65 /* CustomBrandTheme.plist in Sources */,
 				EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */,
+				EF9D98D41CA31A5F00F5711F /* ValuesHandler.m in Sources */,
 				DB844D6C1BA76BDE003FD7A9 /* IdentifyViewController.m in Sources */,
 				EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */,
 				EF783BBF1C9C7D6600079B65 /* LeftIndentedTextField.m in Sources */,

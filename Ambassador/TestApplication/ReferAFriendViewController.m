@@ -12,6 +12,7 @@
 #import <MessageUI/MessageUI.h>
 #import "ThemeHandler.h"
 #import "DefaultsHandler.h"
+#import "ValuesHandler.h"
 
 @interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, MFMailComposeViewControllerDelegate>
 
@@ -209,7 +210,7 @@
     NSData *dataToAttach = [NSData dataWithContentsOfFile:path];
     
     // Creates a code snippet to add in email
-    NSString *bodyString = [NSString stringWithFormat:@"Ambassador RAF Code Snippet\n\n%@", [self getCodeSnippet:rafItem.rafName]];
+    NSString *bodyString = [NSString stringWithFormat:@"Ambassador RAF Code Snippet v%@\n\n%@", [ValuesHandler getVersionNumber], [self getCodeSnippet:rafItem.rafName]];
     
     // Creates a mail compose message to share via email with snippet and plist attachment
     MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
