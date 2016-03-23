@@ -13,5 +13,6 @@
 
 - (void)saveNewTheme:(RAFItem*)rafTheme;
 - (void)deleteRafItem:(RAFItem*)rafItem;
+- (NSString*)getDocumentsPathWithName:(NSString*)themeName;
 
 @end

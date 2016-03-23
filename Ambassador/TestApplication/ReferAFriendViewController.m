@@ -9,10 +9,12 @@
 #import "ReferAFriendViewController.h"
 #import "RAFCell.h"
 #import <Ambassador/Ambassador.h>
+#import <MessageUI/MessageUI.h>
 #import "ThemeHandler.h"
 #import "DefaultsHandler.h"
+#import "Objective-Zip.h"
 
-@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate>
+@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, MFMailComposeViewControllerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
@@ -125,6 +127,21 @@
 }
 
 
+#pragma mark - MFMailComposeVc Delegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    
+    if (result == MFMailComposeResultSent) {
+        NSLog(@"Message sent successfully!");
+    } else if (result == MFMailComposeResultFailed) {
+        NSLog(@"Message failed to send");
+    } else {
+        NSLog(@"Message was not sent");
+    }
+}
+
+
 #pragma mark - RAFCell Delegate
 
 - (void)RAFCellDeleteTappedForRAFItem:(RAFItem *)rafItem {
@@ -134,7 +151,7 @@
 }
 
 - (void)RAFCellExportTappedForRAFItem:(RAFItem *)rafItem {
-    
+    [self exportRAFTheme:rafItem];
 }
 
 
@@ -183,6 +200,44 @@
     [handler saveNewTheme:item];
     
     [self reloadThemesWithFade:YES];
+}
+
+- (void)exportRAFTheme:(RAFItem*)rafItem {
+    // Gets the path for the plist being exported
+    ThemeHandler *handler = [[ThemeHandler alloc] init];
+    NSString *path = [handler getDocumentsPathWithName:rafItem.plistFullName];
+    
+    // Creates data to be sent as an attachment for the email
+    NSData *dataToAttach = [NSData dataWithContentsOfFile:path];
+    
+    // Creates a code snippet to add in email
+    NSString *bodyString = [NSString stringWithFormat:@"Ambassador RAF Code Snippet\n\n%@", [self getCodeSnippet:rafItem.rafName]];
+    
+    // Creates a mail compose message to share via email with snippet and plist attachment
+    MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
+    mailVc.mailComposeDelegate = self;
+    [mailVc addAttachmentData:dataToAttach mimeType:@"application/plist" fileName:[NSString stringWithFormat:@"%@.plist", rafItem.rafName]];
+    [mailVc setSubject:@"Ambassador Theme Plist"];
+    [mailVc setMessageBody:bodyString isHTML:NO];
+    
+    [self presentViewController:mailVc animated:YES completion:nil];
+}
+
+- (NSString*)getCodeSnippet:(NSString*)rafName {
+    // TODO: Get campaign id from user on RAF page present
+    NSString *campID = @"1026"; // Temp
+    
+    // Creates Obj-c snippet
+    NSString *objcHeaderString = @"Objective-C \n";
+    NSString *objcRAFSnippet = [NSString stringWithFormat:@"[AmbassadorSDK presentRAFForCampaign:%@ FromViewController:self withThemePlist:@\"%@\"];", campID, rafName];
+    NSString *fullObjc = [NSString stringWithFormat:@"%@\n%@", objcHeaderString, objcRAFSnippet];
+    
+    // Creates Swift snippet
+    NSString *swiftHeaderString = @"Swift \n";
+    NSString *swiftRAFSnippet = [NSString stringWithFormat:@"AmbassadorSDK.presentRAFForCampaign(%@, fromViewController: self, withThemePlist: \"%@\")", campID, rafName];
+    NSString *fullSwift = [NSString stringWithFormat:@"%@\n%@", swiftHeaderString, swiftRAFSnippet];
+    
+    return [NSString stringWithFormat:@"%@\n\n\n%@", fullObjc, fullSwift];
 }
 
 @end
