@@ -217,6 +217,9 @@
 		EF7D076C1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */; };
 		EF7D076E1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */; };
 		EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
+		EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C41CA1839600F5711F /* ThemeHandler.m */; };
+		EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C71CA1906400F5711F /* RAFItem.m */; };
+		EF9D98D41CA31A5F00F5711F /* ValuesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */; };
 		EF9DA74D1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */; };
 		EFBF8E031C69004800F2B5F9 /* AMBContactSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */; };
 		EFBF8E051C69006400F2B5F9 /* AMBContactCellUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */; };
@@ -324,6 +327,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0079A83364A4D337331258FB /* libPods-Ambassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ambassador.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A47EBEA1D60C44F384D7022 /* Pods-Ambassador.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ambassador.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ambassador/Pods-Ambassador.release.xcconfig"; sourceTree = "<group>"; };
+		6C128C3383D1721F1F87EF25 /* libPods-TestApplication.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TestApplication.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FB986901906A3DD3E86D546 /* Pods-TestApplication.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApplication.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestApplication/Pods-TestApplication.release.xcconfig"; sourceTree = "<group>"; };
+		75B51AA7CD49D1C0E04EC243 /* Pods-Ambassador.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ambassador.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ambassador/Pods-Ambassador.debug.xcconfig"; sourceTree = "<group>"; };
+		D4D2ED3AB7E35941B5B43CCE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNetworkManager.h; sourceTree = "<group>"; };
 		DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworkManager.m; sourceTree = "<group>"; };
 		DB6A24611BD017A700CE3230 /* AMBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBErrors.h; sourceTree = "<group>"; };
@@ -547,6 +556,16 @@
 		EF7CA9D11BF3EAB7006EBD6A /* AMBContactTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactTests.m; sourceTree = "<group>"; };
 		EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBUtilitiesTests.m; sourceTree = "<group>"; };
 		EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSendCompletionTests.m; sourceTree = "<group>"; };
+		EF9D98C31CA1839600F5711F /* ThemeHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeHandler.h; sourceTree = "<group>"; };
+		EF9D98C41CA1839600F5711F /* ThemeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeHandler.m; sourceTree = "<group>"; };
+		EF9D98C61CA1906400F5711F /* RAFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFItem.h; sourceTree = "<group>"; };
+		EF9D98C71CA1906400F5711F /* RAFItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFItem.m; sourceTree = "<group>"; };
+		EF9D98CA1CA1EA5600F5711F /* libobjective-zip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjective-zip.a"; path = "Pods/../build/Debug-iphoneos/libobjective-zip.a"; sourceTree = "<group>"; };
+		EF9D98CC1CA1F09F00F5711F /* libobjective-zip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjective-zip.a"; path = "Pods/../build/Debug-iphoneos/libobjective-zip.a"; sourceTree = "<group>"; };
+		EF9D98CE1CA1F10B00F5711F /* libobjective-zip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjective-zip.a"; path = "Pods/../build/Debug-iphoneos/libobjective-zip.a"; sourceTree = "<group>"; };
+		EF9D98D01CA1F19500F5711F /* libobjective-zip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjective-zip.a"; path = "Pods/../build/Debug-iphoneos/libobjective-zip.a"; sourceTree = "<group>"; };
+		EF9D98D21CA31A5F00F5711F /* ValuesHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValuesHandler.h; sourceTree = "<group>"; };
+		EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValuesHandler.m; sourceTree = "<group>"; };
 		EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCellUnitTests.m; sourceTree = "<group>"; };
@@ -571,6 +590,7 @@
 		EFE7D7C71C24671600D7F92C /* AMBConversionParameter_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBConversionParameter_Internal.h; sourceTree = "<group>"; };
 		EFED7B041BDA9F0A00F6C360 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AMBMedia.xcassets; sourceTree = "<group>"; };
+		FE9134FEDC8C6784B298583E /* Pods-TestApplication.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApplication.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestApplication/Pods-TestApplication.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -629,6 +649,10 @@
 		0D24CFB05292A555B6506D41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EF9D98D01CA1F19500F5711F /* libobjective-zip.a */,
+				EF9D98CE1CA1F10B00F5711F /* libobjective-zip.a */,
+				EF9D98CC1CA1F09F00F5711F /* libobjective-zip.a */,
+				EF9D98CA1CA1EA5600F5711F /* libobjective-zip.a */,
 				EF07451F1C52C69F009AF919 /* OCMockitoIOS.framework */,
 				EF24D1E41BECFAC000561476 /* libOCMock.a */,
 				EF24D1E21BECFA7A00561476 /* iOS */,
@@ -644,8 +668,22 @@
 				DBA3FC3B1BA8AC5400672D82 /* Security.framework */,
 				DBA3FC391BA8AC3A00672D82 /* libcommonCrypto.dylib */,
 				DBA3FC371BA8AC3100672D82 /* libsystem_coreservices.dylib */,
+				0079A83364A4D337331258FB /* libPods-Ambassador.a */,
+				D4D2ED3AB7E35941B5B43CCE /* libPods.a */,
+				6C128C3383D1721F1F87EF25 /* libPods-TestApplication.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		27B8BF6A2922B5E6C03D8090 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				75B51AA7CD49D1C0E04EC243 /* Pods-Ambassador.debug.xcconfig */,
+				6A47EBEA1D60C44F384D7022 /* Pods-Ambassador.release.xcconfig */,
+				FE9134FEDC8C6784B298583E /* Pods-TestApplication.debug.xcconfig */,
+				6FB986901906A3DD3E86D546 /* Pods-TestApplication.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		DB844D1D1BA75BB8003FD7A9 = {
@@ -659,6 +697,7 @@
 				EF64CFA41BE2A47D0072014B /* AmbassadorUITests */,
 				DB844D271BA75BB8003FD7A9 /* Products */,
 				0D24CFB05292A555B6506D41 /* Frameworks */,
+				27B8BF6A2922B5E6C03D8090 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -795,9 +834,9 @@
 				EF1CC8021C9993EE00C2752B /* MyTabBarController.h */,
 				EF1CC8031C9993EE00C2752B /* MyTabBarController.m */,
 				EF557A151C88B4AE00F66761 /* Login */,
+				EF557A131C88B49700F66761 /* RAF */,
 				EF557A141C88B4A100F66761 /* Identify */,
 				EF557A111C88B47700F66761 /* Conversion */,
-				EF557A131C88B49700F66761 /* RAF */,
 				EF557A201C88E67700F66761 /* Settings */,
 				EF783C091CA076A500079B65 /* UI */,
 				EF783C0A1CA077FE00079B65 /* Misc */,
@@ -996,8 +1035,11 @@
 			children = (
 				EF5390D51C4469AF005F6944 /* ReferAFriendViewController.h */,
 				EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */,
-				EF5390D81C4565D9005F6944 /* RAFCell.h */,
-				EF5390D91C4565D9005F6944 /* RAFCell.m */,
+				EF9D98C31CA1839600F5711F /* ThemeHandler.h */,
+				EF9D98C41CA1839600F5711F /* ThemeHandler.m */,
+				EF9D98C61CA1906400F5711F /* RAFItem.h */,
+				EF9D98C71CA1906400F5711F /* RAFItem.m */,
+				EF9D98C91CA1AD4F00F5711F /* Custom Cells */,
 			);
 			name = RAF;
 			sourceTree = "<group>";
@@ -1080,6 +1122,8 @@
 				EF1CC80D1C9B3C6300C2752B /* Validator.m */,
 				EF783BBD1C9C7D6600079B65 /* LeftIndentedTextField.h */,
 				EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */,
+				EF9D98D21CA31A5F00F5711F /* ValuesHandler.h */,
+				EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -1094,6 +1138,15 @@
 				EFE7D7C71C24671600D7F92C /* AMBConversionParameter_Internal.h */,
 			);
 			name = "Conversion Parameters";
+			sourceTree = "<group>";
+		};
+		EF9D98C91CA1AD4F00F5711F /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EF5390D81C4565D9005F6944 /* RAFCell.h */,
+				EF5390D91C4565D9005F6944 /* RAFCell.m */,
+			);
+			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
 		EFE7D7851C21B2B600D7F92C /* Service Selector (RAF) */ = {
@@ -1736,7 +1789,10 @@
 				EF783C0C1CA07AB900079B65 /* AmbassadorTheme.plist in Sources */,
 				EF783C0D1CA07AB900079B65 /* AmbassadorShirt.plist in Sources */,
 				EF783C0E1CA07AB900079B65 /* CustomBrandTheme.plist in Sources */,
+				EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */,
+				EF9D98D41CA31A5F00F5711F /* ValuesHandler.m in Sources */,
 				DB844D6C1BA76BDE003FD7A9 /* IdentifyViewController.m in Sources */,
+				EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */,
 				EF783BBF1C9C7D6600079B65 /* LeftIndentedTextField.m in Sources */,
 				EF5390D11C445BF2005F6944 /* ConversionViewController.m in Sources */,
 				DB844D691BA76BDE003FD7A9 /* AppDelegate.m in Sources */,
@@ -1932,6 +1988,7 @@
 		};
 		DB844D3B1BA75BB8003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 75B51AA7CD49D1C0E04EC243 /* Pods-Ambassador.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -1943,6 +2000,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
@@ -1957,6 +2015,7 @@
 		};
 		DB844D3C1BA75BB8003FD7A9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6A47EBEA1D60C44F384D7022 /* Pods-Ambassador.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -1968,6 +2027,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
@@ -2096,6 +2156,7 @@
 		};
 		DB844D821BA76BDE003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FE9134FEDC8C6784B298583E /* Pods-TestApplication.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2111,7 +2172,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTestApplication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2122,6 +2183,7 @@
 		};
 		DB844D831BA76BDE003FD7A9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6FB986901906A3DD3E86D546 /* Pods-TestApplication.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

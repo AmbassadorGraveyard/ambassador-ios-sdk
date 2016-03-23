@@ -8,6 +8,6 @@
 
 #import "IdentifyViewController.h"
 
-@interface ReferAFriendViewController : IdentifyViewController
+@interface ReferAFriendViewController : UIViewController
 
 @end

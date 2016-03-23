@@ -7,12 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RAFItem.h"
+
+@protocol RAFCellDelegate <NSObject>
+
+- (void)RAFCellDeleteTappedForRAFItem:(RAFItem*)rafItem;
+- (void)RAFCellExportTappedForRAFItem:(RAFItem*)rafItem;
+
+@end
+
 
 @interface RAFCell : UITableViewCell
 
-@property (nonatomic, strong) IBOutlet UILabel * rafName;
-@property (nonatomic, strong) IBOutlet UIImageView * arrowImage;
+@property (nonatomic) BOOL isEditing;
+@property (nonatomic, weak) id<RAFCellDelegate> delegate;
 
-- (void)setUpCellWithRafName:(NSString*)rafName;
+- (void)setUpCellWithRaf:(RAFItem*)rafItem;
 
 @end
