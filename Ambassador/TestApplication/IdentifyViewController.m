@@ -101,7 +101,7 @@
 }
 
 - (void)addExportButton {
-    UIBarButtonItem *btnExport = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"exportIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(exportCode)];
+    UIBarButtonItem *btnExport = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"exportIconSm"] style:UIBarButtonItemStylePlain target:self action:@selector(exportCode)];
     self.tabBarController.navigationItem.rightBarButtonItem = btnExport;
 }
 

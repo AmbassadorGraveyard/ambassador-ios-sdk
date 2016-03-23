@@ -12,7 +12,6 @@
 #import <MessageUI/MessageUI.h>
 #import "ThemeHandler.h"
 #import "DefaultsHandler.h"
-#import "Objective-Zip.h"
 
 @interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, MFMailComposeViewControllerDelegate>
 
@@ -42,7 +41,7 @@
     [self setNavBarButtons];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewDidDisappear:(BOOL)animated {
     self.tabBarController.navigationItem.leftBarButtonItem = nil;
 }
 
