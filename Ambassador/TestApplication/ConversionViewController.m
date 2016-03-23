@@ -175,6 +175,7 @@ CGFloat currentOffset;
         // Package up snippet to share
         NSArray * shareItems = @[shareString];
         UIActivityViewController * avc = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];
+        [avc setValue:@"Ambassador Conversion Code Snippet" forKey:@"subject"];
         [self presentViewController:avc animated:YES completion:nil];
     }
 }
