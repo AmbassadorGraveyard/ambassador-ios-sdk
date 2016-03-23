@@ -2,14 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "identify large icon.pdf"
-    },
-    {
-      "idiom" : "universal",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "refer a friend icon active.png",
       "scale" : "2x"
     },
     {

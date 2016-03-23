@@ -9,6 +9,7 @@
 #import "ConversionViewController.h"
 #import <Ambassador/Ambassador.h>
 #import "Validator.h"
+#import "ValuesHandler.h"
 
 @interface ConversionViewController () <UITextFieldDelegate>
 
@@ -123,8 +124,9 @@ CGFloat currentOffset;
 }
 
 - (void)addConversionExportButton {
-    UIBarButtonItem *btnExport = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"exportIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(exportConversionCode)];
+    UIBarButtonItem *btnExport = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"exportIconSm"] style:UIBarButtonItemStylePlain target:self action:@selector(exportConversionCode)];
     self.tabBarController.navigationItem.rightBarButtonItem = btnExport;
+    self.tabBarController.navigationItem.leftBarButtonItem = nil;
 }
 
 
@@ -165,7 +167,7 @@ CGFloat currentOffset;
 
 - (void)exportConversionCode {
     if (![self invalidFields]) {
-        NSString *titleString = @"Ambassador Conversion Code Snippet";
+        NSString *titleString = [NSString stringWithFormat:@"Ambassador Conversion Code Snippet v%@", [ValuesHandler getVersionNumber]];
         NSString *fullCodeSnippet = [NSString stringWithFormat:@"Objective-C\n\n%@\n\n\nSwift\n\n%@", [self getObjcSnippet], [self getSwiftSnippet]];
         
         NSString *shareString = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n%@", titleString, fullCodeSnippet]];

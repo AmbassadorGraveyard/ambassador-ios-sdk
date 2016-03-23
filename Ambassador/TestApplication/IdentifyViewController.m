@@ -11,6 +11,7 @@
 #import "DefaultsHandler.h"
 #import "AmbassadorLoginViewController.h"
 #import "Validator.h"
+#import "ValuesHandler.h"
 
 @interface IdentifyViewController () <AMBWelcomeScreenDelegate>
 
@@ -101,8 +102,9 @@
 }
 
 - (void)addExportButton {
-    UIBarButtonItem *btnExport = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"exportIcon"] style:UIBarButtonItemStylePlain target:self action:@selector(exportCode)];
+    UIBarButtonItem *btnExport = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"exportIconSm"] style:UIBarButtonItemStylePlain target:self action:@selector(exportCode)];
     self.tabBarController.navigationItem.rightBarButtonItem = btnExport;
+    self.tabBarController.navigationItem.leftBarButtonItem = nil;
 }
 
 
@@ -131,7 +133,7 @@
     
     if ([Validator isValidEmail:email]) {
         // Create a code snippet based on the info entered into the identify field
-        NSString *titleString = [NSString stringWithFormat:@"Ambassador Identify Code Snippet"];
+        NSString *titleString = [NSString stringWithFormat:@"Ambassador Identify Code Snippet v%@", [ValuesHandler getVersionNumber]];
         NSString *objcCodeSnippet = [NSString stringWithFormat:@"[AmbassadorSDK identifyWithEmail:@\"%@\"];", email];
         NSString *swiftCodeSnippet = [NSString stringWithFormat:@"AmbassadorSDK.identifyWithEmail(\"%@\")", email];
         NSString *fullCodeSnippet = [NSString stringWithFormat:@"Objective-C\n\n%@\n\n\nSwift\n\n%@", objcCodeSnippet, swiftCodeSnippet];
