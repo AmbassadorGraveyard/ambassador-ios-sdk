@@ -228,12 +228,12 @@
     
     // Creates Obj-c snippet
     NSString *objcHeaderString = @"Objective-C \n";
-    NSString *objcRAFSnippet = [NSString stringWithFormat:@"[AmbassadorSDK presentRAFForCampaign:%@ FromViewController:self withThemePlist:@\"%@\"];", campID, rafName];
+    NSString *objcRAFSnippet = [NSString stringWithFormat:@"[AmbassadorSDK presentRAFForCampaign:@\"%@\" FromViewController:self withThemePlist:@\"%@\"];", campID, rafName];
     NSString *fullObjc = [NSString stringWithFormat:@"%@\n%@", objcHeaderString, objcRAFSnippet];
     
     // Creates Swift snippet
     NSString *swiftHeaderString = @"Swift \n";
-    NSString *swiftRAFSnippet = [NSString stringWithFormat:@"AmbassadorSDK.presentRAFForCampaign(%@, fromViewController: self, withThemePlist: \"%@\")", campID, rafName];
+    NSString *swiftRAFSnippet = [NSString stringWithFormat:@"AmbassadorSDK.presentRAFForCampaign(\"%@\", fromViewController: self, withThemePlist: \"%@\")", campID, rafName];
     NSString *fullSwift = [NSString stringWithFormat:@"%@\n%@", swiftHeaderString, swiftRAFSnippet];
     
     return [NSString stringWithFormat:@"%@\n\n\n%@", fullObjc, fullSwift];
