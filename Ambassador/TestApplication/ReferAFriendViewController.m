@@ -13,8 +13,9 @@
 #import "ThemeHandler.h"
 #import "DefaultsHandler.h"
 #import "ValuesHandler.h"
+#import "RAFCustomizer.h"
 
-@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, MFMailComposeViewControllerDelegate>
+@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, MFMailComposeViewControllerDelegate, RAFCustomizerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
@@ -23,6 +24,7 @@
 // Private properties
 @property (nonatomic, strong) NSArray * rafArray;
 @property (nonatomic) BOOL tableEditing;
+@property (nonatomic, strong) RAFItem * rafForCustomizer;
 
 @end
 
@@ -49,10 +51,6 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 #pragma mark - Button Actions
 
 - (void)addNewRAF {
-    // TODO: Replace with presenting RAF customizer
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Theme" message:@"Type your theme name below." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
-//    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-//    [alert show];
     [self performSegueWithIdentifier:RAF_CUSTOMIZE_SEGUE sender:self];
 }
 
@@ -60,6 +58,18 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
     self.tableEditing = !self.tableEditing;
     [self setNavBarButtons];
     [self reloadThemesWithFade:NO];
+}
+
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:RAF_CUSTOMIZE_SEGUE]) {
+        UINavigationController *nav = (UINavigationController*)segue.destinationViewController;
+        RAFCustomizer *customizer = nav.viewControllers[0];
+        customizer.rafItem = self.rafForCustomizer;
+        customizer.delegate = self;
+    }
 }
 
 
@@ -116,17 +126,6 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 }
 
 
-#pragma mark - AlertView Delegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    // If user clicks save
-    if (buttonIndex == 1) {
-        NSString *themeName = [[alertView textFieldAtIndex:0] text];
-        [self saveNewTheme:themeName];
-    }
-}
-
-
 #pragma mark - MFMailComposeVc Delegate
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
@@ -139,6 +138,13 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
     } else {
         NSLog(@"Message was not sent");
     }
+}
+
+
+#pragma mark - RAFCustomizer Delegate
+
+- (void)RAFCustomizerSavedRAF:(RAFItem *)rafItem {
+    [self saveNewTheme:rafItem];
 }
 
 
@@ -192,16 +198,9 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
     }
 }
 
-- (void)saveNewTheme:(NSString*)themeName {
-    // Creates a new RAF item which will be stored to defaults
-    RAFItem *item = [[RAFItem alloc] init];
-    item.rafName = themeName;
-    item.plistFullName = [NSString stringWithFormat:@"AMBTESTAPP%@", themeName];
-    item.dateCreated = [NSDate date];
-    
-    // Saves a new plist item using the RAF item name
-    [ThemeHandler saveNewTheme:item];
-    
+- (void)saveNewTheme:(RAFItem*)saveItem {
+    // Saves a new plist item using the RAF item name and reloads table
+    [ThemeHandler saveNewTheme:saveItem];
     [self reloadThemesWithFade:YES];
 }
 
@@ -245,7 +244,8 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 - (void)addDefaultIfFirstLaunch {
     // Adds a default RAF if one has not already been created
     if (![DefaultsHandler hasAddedDefault]) {
-        [self saveNewTheme:@"Ambassador Default RAF"];
+        RAFItem *defaultItem = [[RAFItem alloc] initWithName:@"Ambassador Default RAF" plistDict:[ThemeHandler getGenericTheme]];
+        [self saveNewTheme:defaultItem];
         [DefaultsHandler setAddedDefaultRAFTrue];
     }
 }
