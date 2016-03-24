@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RAFItem.h"
+
+@protocol RAFCustomizerDelegate <NSObject>
+
+- (void)RAFCustomizerSavedRAF:(RAFItem*)rafItem;
+
+@end
+
 
 @interface RAFCustomizer : UIViewController
+
+@property (nonatomic, strong) RAFItem * rafItem;
+@property (nonatomic, weak) id<RAFCustomizerDelegate> delegate;
 
 @end
