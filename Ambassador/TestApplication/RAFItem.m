@@ -33,6 +33,7 @@
     self.rafName = name;
     self.plistFullName = [NSString stringWithFormat:@"AMBTESTAPP%@", name];
     self.dateCreated = [NSDate date];
+    self.plistDict = dict;
     
     return self;
 }

@@ -19,6 +19,13 @@
     return genericThemeDict;
 }
 
++ (NSMutableDictionary *)dictionaryFromPlist:(RAFItem*)item {
+    NSString *rafPath = [ThemeHandler getDocumentsPathWithName:item.plistFullName];
+    NSMutableDictionary *plistDictionary = [NSMutableDictionary dictionaryWithContentsOfFile:rafPath];
+    
+    return plistDictionary;
+}
+
 + (void)saveNewTheme:(RAFItem*)rafTheme {
     // Gets current array of RAFItems(themes) and add the new RAFitem
     NSMutableArray *currentThemeArray = [DefaultsHandler getThemeArray];
@@ -28,7 +35,7 @@
     [DefaultsHandler setThemeArray:currentThemeArray];
     
     // Creats a copy of genericTheme to alter and save as new plist
-    NSMutableDictionary *dictionary = [ThemeHandler getGenericTheme];
+    NSMutableDictionary *dictionary = rafTheme.plistDict;
     
     /* New plists created from within the TestApp are
     appended with AMBTESTAPP so that the SDK knows
@@ -91,7 +98,7 @@
     }
 }
 
-+ (NSString*)getDocumentsPathWithName:(NSString*)themeName {
++ (NSString *)getDocumentsPathWithName:(NSString*)themeName {
     // Gets path for Documents folder
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];

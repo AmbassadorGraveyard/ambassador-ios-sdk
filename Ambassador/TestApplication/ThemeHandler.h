@@ -13,6 +13,8 @@
 
 + (void)saveNewTheme:(RAFItem*)rafTheme;
 + (void)deleteRafItem:(RAFItem*)rafItem;
-+ (NSString*)getDocumentsPathWithName:(NSString*)themeName;
++ (NSString *)getDocumentsPathWithName:(NSString*)themeName;
++ (NSMutableDictionary *)dictionaryFromPlist:(RAFItem*)item;
++ (NSMutableDictionary *)getGenericTheme;
 
 @end
