@@ -13,5 +13,8 @@
 @property (nonatomic, strong) NSString * rafName;
 @property (nonatomic, strong) NSString * plistFullName;
 @property (nonatomic, strong) NSDate * dateCreated;
+@property (nonatomic, strong) NSMutableDictionary * plistDict;
+
+- (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict;
 
 @end

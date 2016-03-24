@@ -28,4 +28,13 @@
     [encoder encodeObject:self.dateCreated forKey:@"dateCreated"];
 }
 
+- (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict {
+    self = [super init];
+    self.rafName = name;
+    self.plistFullName = [NSString stringWithFormat:@"AMBTESTAPP%@", name];
+    self.dateCreated = [NSDate date];
+    
+    return self;
+}
+
 @end
