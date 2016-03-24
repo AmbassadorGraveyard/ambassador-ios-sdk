@@ -9,6 +9,7 @@
 #import "RAFCustomizer.h"
 #import "ThemeHandler.h"
 #import "UIColor+AMBColorValues.h"
+#import "ColorPicker.h"
 
 @interface RAFCustomizer()
 
@@ -41,6 +42,13 @@
 
 
 #pragma mark - Button Actions
+
+- (IBAction)colorButtonTapped:(id)sender {
+    UIButton *buttonTapped = (UIButton*)sender;
+    
+    ColorPicker *picker = [[ColorPicker alloc] initWithColor:[UIColor hexStringForColor:buttonTapped.backgroundColor]];
+    [self presentViewController:picker animated:YES completion:nil];
+}
 
 - (void)saveTapped {
     [self dismissViewControllerAnimated:YES completion:nil];
