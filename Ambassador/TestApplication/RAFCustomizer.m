@@ -7,6 +7,8 @@
 //
 
 #import "RAFCustomizer.h"
+#import "ThemeHandler.h"
+#import "UIColor+AMBColorValues.h"
 
 @interface RAFCustomizer()
 
@@ -20,7 +22,9 @@
 @property (nonatomic, strong) IBOutlet UITextView * tvText1;
 @property (nonatomic, strong) IBOutlet UITextView * tvText2;
 @property (nonatomic, strong) IBOutlet UITableView * tblSocial;
+@property (nonatomic, strong) IBOutlet UIView * masterView;
 
+@property (nonatomic, strong) NSMutableDictionary * plistDict;
 
 @end
 
@@ -32,13 +36,20 @@
 
 - (void)viewDidLoad {
     [self setupUI];
+    [self setValuesWithPlistDict];
 }
 
 
 #pragma mark - Button Actions
 
 - (void)saveTapped {
+    [self dismissViewControllerAnimated:YES completion:nil];
     
+    if ([self.delegate respondsToSelector:@selector(RAFCustomizerSavedRAF:)]) {
+        NSString *rafName = self.tfRafName.text;
+        RAFItem *item = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict];
+        [self.delegate RAFCustomizerSavedRAF:item];
+    }
 }
 
 - (void)cancelTapped {
@@ -65,10 +76,28 @@
     self.ivProductPhoto.layer.cornerRadius = self.ivProductPhoto.frame.size.height/2;
     
     // Buttons
-    self.btnHeaderColor.layer.cornerRadius = self.btnHeaderColor.frame.size.height/2;
-    self.btnTextColor1.layer.cornerRadius = self.btnTextColor1.frame.size.height/2;
-    self.btnTextColor2.layer.cornerRadius = self.btnTextColor2.frame.size.height/2;
-    self.btnButtonColor.layer.cornerRadius = self.btnButtonColor.frame.size.height/2;
+    for (UIView *button in [self.masterView subviews]) {
+        if ([button isKindOfClass:[UIButton class]]) {
+            button.layer.borderWidth = 0.6;
+            button.layer.borderColor = [UIColor colorWithWhite:0.85 alpha:1].CGColor;
+            button.layer.cornerRadius = button.frame.size.height/2;
+        }
+    }
+}
+
+- (void)setValuesWithPlistDict {
+    self.plistDict = (self.rafItem) ? [ThemeHandler dictionaryFromPlist:self.rafItem] : [ThemeHandler getGenericTheme];
+    
+    // Colors
+    self.btnHeaderColor.backgroundColor = [UIColor colorFromHexString:[self.plistDict valueForKey:@"NavBarColor"]];
+    self.btnTextColor1.backgroundColor = [UIColor colorFromHexString:[self.plistDict valueForKey:@"RAFWelcomeTextColor"]];
+    self.btnTextColor2.backgroundColor = [UIColor colorFromHexString:[self.plistDict valueForKey:@"RAFDescriptionTextColor"]];
+    self.btnButtonColor.backgroundColor = [UIColor colorFromHexString:[self.plistDict valueForKey:@"AlertButtonBackgroundColor"]];
+    
+    // Text Values
+    self.tvText1.text = [self.plistDict valueForKey:@"RAFWelcomeTextMessage"];
+    self.tvText2.text = [self.plistDict valueForKey:@"RAFDescriptionTextMessage"];
+    self.tfRafName.text = self.rafItem.rafName;
 }
 
 @end
