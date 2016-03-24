@@ -221,6 +221,7 @@
 		EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C71CA1906400F5711F /* RAFItem.m */; };
 		EF9D98D41CA31A5F00F5711F /* ValuesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */; };
 		EF9D98D81CA341A700F5711F /* RAFCustomizer.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98D71CA341A700F5711F /* RAFCustomizer.m */; };
+		EF9D98DB1CA4487A00F5711F /* ColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98DA1CA4487900F5711F /* ColorPicker.m */; };
 		EF9DA74D1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */; };
 		EFBF8E031C69004800F2B5F9 /* AMBContactSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */; };
 		EFBF8E051C69006400F2B5F9 /* AMBContactCellUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */; };
@@ -569,6 +570,8 @@
 		EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValuesHandler.m; sourceTree = "<group>"; };
 		EF9D98D61CA341A700F5711F /* RAFCustomizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFCustomizer.h; sourceTree = "<group>"; };
 		EF9D98D71CA341A700F5711F /* RAFCustomizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFCustomizer.m; sourceTree = "<group>"; };
+		EF9D98D91CA4487900F5711F /* ColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPicker.h; sourceTree = "<group>"; };
+		EF9D98DA1CA4487900F5711F /* ColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPicker.m; sourceTree = "<group>"; };
 		EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCellUnitTests.m; sourceTree = "<group>"; };
@@ -1036,14 +1039,11 @@
 		EF557A131C88B49700F66761 /* RAF */ = {
 			isa = PBXGroup;
 			children = (
+				EF9D98DC1CA4881E00F5711F /* RAF Page */,
+				EF9D98DD1CA4883F00F5711F /* RAF Theme Handler */,
 				EF9D98D51CA33C1800F5711F /* RAF Customizer */,
-				EF5390D51C4469AF005F6944 /* ReferAFriendViewController.h */,
-				EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */,
-				EF9D98C31CA1839600F5711F /* ThemeHandler.h */,
-				EF9D98C41CA1839600F5711F /* ThemeHandler.m */,
 				EF9D98C61CA1906400F5711F /* RAFItem.h */,
 				EF9D98C71CA1906400F5711F /* RAFItem.m */,
-				EF9D98C91CA1AD4F00F5711F /* Custom Cells */,
 			);
 			name = RAF;
 			sourceTree = "<group>";
@@ -1113,6 +1113,7 @@
 				EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */,
 				EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */,
 				EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */,
+				EF9D98DE1CA4886200F5711F /* Color Picker */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1160,6 +1161,34 @@
 				EF9D98D71CA341A700F5711F /* RAFCustomizer.m */,
 			);
 			name = "RAF Customizer";
+			sourceTree = "<group>";
+		};
+		EF9D98DC1CA4881E00F5711F /* RAF Page */ = {
+			isa = PBXGroup;
+			children = (
+				EF9D98C91CA1AD4F00F5711F /* Custom Cells */,
+				EF5390D51C4469AF005F6944 /* ReferAFriendViewController.h */,
+				EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */,
+			);
+			name = "RAF Page";
+			sourceTree = "<group>";
+		};
+		EF9D98DD1CA4883F00F5711F /* RAF Theme Handler */ = {
+			isa = PBXGroup;
+			children = (
+				EF9D98C31CA1839600F5711F /* ThemeHandler.h */,
+				EF9D98C41CA1839600F5711F /* ThemeHandler.m */,
+			);
+			name = "RAF Theme Handler";
+			sourceTree = "<group>";
+		};
+		EF9D98DE1CA4886200F5711F /* Color Picker */ = {
+			isa = PBXGroup;
+			children = (
+				EF9D98D91CA4487900F5711F /* ColorPicker.h */,
+				EF9D98DA1CA4487900F5711F /* ColorPicker.m */,
+			);
+			name = "Color Picker";
 			sourceTree = "<group>";
 		};
 		EFE7D7851C21B2B600D7F92C /* Service Selector (RAF) */ = {
@@ -1815,6 +1844,7 @@
 				DB844D661BA76BDE003FD7A9 /* main.m in Sources */,
 				EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */,
 				EF557A231C88E6BE00F66761 /* SettingsViewController.m in Sources */,
+				EF9D98DB1CA4487A00F5711F /* ColorPicker.m in Sources */,
 				EF557A1B1C88D39C00F66761 /* DefaultsHandler.m in Sources */,
 				EF1CC8041C9993EE00C2752B /* MyTabBarController.m in Sources */,
 				EF557A181C88B4D000F66761 /* AmbassadorLoginViewController.m in Sources */,
