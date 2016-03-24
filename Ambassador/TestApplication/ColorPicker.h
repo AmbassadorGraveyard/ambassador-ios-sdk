@@ -10,4 +10,6 @@
 
 @interface ColorPicker : UIViewController
 
+- (instancetype)initWithColor:(NSString*)color;
+
 @end

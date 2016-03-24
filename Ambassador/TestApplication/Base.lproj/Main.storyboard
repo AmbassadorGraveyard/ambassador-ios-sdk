@@ -411,6 +411,7 @@
                         <outlet property="currentColorView" destination="ae5-TV-5wf" id="TQd-2n-tqQ"/>
                         <outlet property="ivColorPicker" destination="Mhr-YY-ccA" id="grb-fA-Xak"/>
                         <outlet property="masterView" destination="JP3-Cv-6ca" id="rpi-P2-WlK"/>
+                        <outlet property="tfHexCode" destination="e3L-Rm-zcp" id="KsK-UB-2l5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XFD-xY-Usi" userLabel="First Responder" sceneMemberID="firstResponder"/>
