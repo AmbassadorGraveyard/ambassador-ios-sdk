@@ -8,7 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ColorPickerDelegate <NSObject>
+
+- (void)colorPickerColorSaved:(UIColor*)color;
+
+@end
+
+
 @interface ColorPicker : UIViewController
+
+@property (nonatomic, weak) id<ColorPickerDelegate> delegate;
 
 - (instancetype)initWithColor:(NSString*)color;
 
