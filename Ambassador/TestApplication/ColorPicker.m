@@ -9,13 +9,14 @@
 #import "ColorPicker.h"
 #import "UIColor+AMBColorValues.h"
 
-@interface ColorPicker()
+@interface ColorPicker() <UITextFieldDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIImageView * ivColorPicker;
 @property (nonatomic, strong) IBOutlet UIView * currentColorView;
 @property (nonatomic, strong) IBOutlet UIView * masterView;
 @property (nonatomic, strong) IBOutlet UITextField * tfHexCode;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * masterMidConstraint;
 
 // Private properties
 @property (nonatomic, strong) UIColor * selectedColor;
@@ -56,7 +57,7 @@
 
 - (IBAction)saveTapped:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-    // TODO: Add delegate function
+    [self.delegate colorPickerColorSaved:self.selectedColor];
 }
 
 
@@ -80,6 +81,33 @@
 }
 
 
+#pragma mark - TextField Delegate
+
+- (void)textFieldDidChange {
+    self.selectedColor = [UIColor colorFromHexString:self.tfHexCode.text];
+    self.currentColorView.backgroundColor = self.selectedColor;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    self.masterMidConstraint.constant = 0;
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    self.masterMidConstraint.constant = -100;
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+    
+    return YES;
+}
+
+
 #pragma mark - UI Functions
 
 - (void)setupUI {
@@ -93,6 +121,9 @@
     // Image Views
     self.ivColorPicker.layer.cornerRadius = self.ivColorPicker.frame.size.height/2;
     self.ivColorPicker.userInteractionEnabled = YES;
+    
+    // TextField
+    [self.tfHexCode addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
 }
 
 
