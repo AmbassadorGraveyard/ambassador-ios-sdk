@@ -218,6 +218,7 @@
 		EF7D076E1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */; };
 		EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF8FD8A41CA5965F00C0ADB7 /* CampaignObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */; };
+		EF8FD8A81CA59EEA00C0ADB7 /* CampaignListController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8A71CA59EEA00C0ADB7 /* CampaignListController.m */; };
 		EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C41CA1839600F5711F /* ThemeHandler.m */; };
 		EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C71CA1906400F5711F /* RAFItem.m */; };
 		EF9D98D41CA31A5F00F5711F /* ValuesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */; };
@@ -561,6 +562,8 @@
 		EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSendCompletionTests.m; sourceTree = "<group>"; };
 		EF8FD8A21CA5965F00C0ADB7 /* CampaignObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CampaignObject.h; sourceTree = "<group>"; };
 		EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CampaignObject.m; sourceTree = "<group>"; };
+		EF8FD8A61CA59EEA00C0ADB7 /* CampaignListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CampaignListController.h; sourceTree = "<group>"; };
+		EF8FD8A71CA59EEA00C0ADB7 /* CampaignListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CampaignListController.m; sourceTree = "<group>"; };
 		EF9D98C31CA1839600F5711F /* ThemeHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeHandler.h; sourceTree = "<group>"; };
 		EF9D98C41CA1839600F5711F /* ThemeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeHandler.m; sourceTree = "<group>"; };
 		EF9D98C61CA1906400F5711F /* RAFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFItem.h; sourceTree = "<group>"; };
@@ -1124,6 +1127,7 @@
 		EF783C0A1CA077FE00079B65 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				EF8FD8A51CA59EB600C0ADB7 /* Campaigns */,
 				EF557A191C88D39C00F66761 /* DefaultsHandler.h */,
 				EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */,
 				EF1CC80C1C9B3C6300C2752B /* Validator.h */,
@@ -1132,8 +1136,6 @@
 				EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */,
 				EF9D98D21CA31A5F00F5711F /* ValuesHandler.h */,
 				EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */,
-				EF8FD8A21CA5965F00C0ADB7 /* CampaignObject.h */,
-				EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -1148,6 +1150,17 @@
 				EFE7D7C71C24671600D7F92C /* AMBConversionParameter_Internal.h */,
 			);
 			name = "Conversion Parameters";
+			sourceTree = "<group>";
+		};
+		EF8FD8A51CA59EB600C0ADB7 /* Campaigns */ = {
+			isa = PBXGroup;
+			children = (
+				EF8FD8A21CA5965F00C0ADB7 /* CampaignObject.h */,
+				EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */,
+				EF8FD8A61CA59EEA00C0ADB7 /* CampaignListController.h */,
+				EF8FD8A71CA59EEA00C0ADB7 /* CampaignListController.m */,
+			);
+			name = Campaigns;
 			sourceTree = "<group>";
 		};
 		EF9D98C91CA1AD4F00F5711F /* Custom Cells */ = {
@@ -1854,6 +1867,7 @@
 				EF557A1B1C88D39C00F66761 /* DefaultsHandler.m in Sources */,
 				EF1CC8041C9993EE00C2752B /* MyTabBarController.m in Sources */,
 				EF557A181C88B4D000F66761 /* AmbassadorLoginViewController.m in Sources */,
+				EF8FD8A81CA59EEA00C0ADB7 /* CampaignListController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

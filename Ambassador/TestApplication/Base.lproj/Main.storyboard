@@ -420,7 +420,46 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XFD-xY-Usi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-233" y="2552"/>
+            <point key="canvasLocation" x="-612" y="2552"/>
+        </scene>
+        <!--Campaign List Controller-->
+        <scene sceneID="dYc-g8-gNB">
+            <objects>
+                <viewController storyboardIdentifier="campaignList" modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="vqV-dB-dB1" customClass="CampaignListController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ccN-GF-dxi"/>
+                        <viewControllerLayoutGuide type="bottom" id="bnK-J9-mK0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1ua-RB-1Mq">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Opd-in-156">
+                                <rect key="frame" x="150" y="100" width="300" height="400"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="cSZ-A7-mmU"/>
+                                    <constraint firstAttribute="height" constant="400" id="z9D-MC-A4G"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dataSource" destination="vqV-dB-dB1" id="HyA-hq-zkq"/>
+                                    <outlet property="delegate" destination="vqV-dB-dB1" id="YOy-9S-rzf"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.58551520270270274" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Opd-in-156" firstAttribute="centerY" secondItem="1ua-RB-1Mq" secondAttribute="centerY" id="HJn-ss-b2e"/>
+                            <constraint firstItem="Opd-in-156" firstAttribute="centerX" secondItem="1ua-RB-1Mq" secondAttribute="centerX" id="RuQ-t4-I1h"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="Opd-in-156" id="h9A-0v-SJz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pz7-h0-If5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="97" y="2552"/>
         </scene>
         <!--Refer a Friend-->
         <scene sceneID="baE-qk-n4s">
