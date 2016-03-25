@@ -18,6 +18,8 @@
 + (void)setUserImage:(NSString*)imageUrl;
 + (void)setThemeArray:(NSMutableArray*)themeArray;
 + (void)setAddedDefaultRAFTrue;
++ (void)setUniversalToken:(NSString*)univToken;
++ (void)saveCampaignList:(NSArray*)campList;
 
 // GETTERS
 + (NSString*)getSDKToken;
@@ -26,6 +28,8 @@
 + (UIImage*)getUserImage;
 + (NSMutableArray*)getThemeArray;
 + (BOOL)hasAddedDefault;
++ (NSString*)getUniversalToken;
++ (NSArray*)getCampaignList;
 
 // HELPER FUNCTIONS
 + (void)clearUserValues;

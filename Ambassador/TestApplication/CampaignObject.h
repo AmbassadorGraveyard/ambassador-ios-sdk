@@ -10,4 +10,7 @@
 
 @interface CampaignObject : NSObject
 
+@property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSString * campID;
+
 @end

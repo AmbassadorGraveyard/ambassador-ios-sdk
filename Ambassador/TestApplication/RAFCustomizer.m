@@ -10,6 +10,9 @@
 #import "ThemeHandler.h"
 #import "UIColor+AMBColorValues.h"
 #import "ColorPicker.h"
+#import "DefaultsHandler.h"
+#import "AMBUtilities.h"
+#import "CampaignObject.h"
 
 @interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate>
 
@@ -80,6 +83,15 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (textField == self.tfCampId) {
+        [self getCampaignList];
+        return NO;
+    }
+    
     return YES;
 }
 
@@ -175,6 +187,51 @@
     // Overrides strings in plist
     [self.plistDict setValue:self.tvText1.text forKey:@"RAFWelcomeTextMessage"];
     [self.plistDict setValue:self.tvText2.text forKey:@"RAFDescriptionTextMessage"];
+}
+
+- (void)getCampaignList {
+    // Sets up request
+    NSURL *ambassadorURL;
+    #if AMBPRODUCTION
+        ambassadorURL = [NSURL URLWithString:@"https://api.getambassador.com/campaigns/"];
+    #else
+        ambassadorURL = [NSURL URLWithString:@"https://dev-ambassador-api.herokuapp.com/campaigns/"];
+    #endif
+    
+    NSString *authString = [NSString stringWithFormat:@"UniversalToken %@", [DefaultsHandler getUniversalToken]];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:ambassadorURL];
+    [request setHTTPMethod:@"GET"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:authString forHTTPHeaderField:@"Authorization"];
+    
+    // Makes network call
+    [[[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSLog(@"%@", results);
+            [self saveCampaings:results];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not Sign In" message:@"There was an error when signing in. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+            [alert show];
+        }
+    }] resume];
+}
+
+- (void)saveCampaings:(NSDictionary*)results {
+    NSArray *campaignArray = results[@"results"];
+    NSMutableArray *arrayToSave = [[NSMutableArray alloc] init];
+    for (int i = 0; i < campaignArray.count; i++) {
+        NSDictionary *campaign = campaignArray[i];
+        CampaignObject *object = [[CampaignObject alloc] init];
+        object.name = campaign[@"name"];
+        object.campID = campaign[@"uid"];
+        
+        [arrayToSave addObject:object];
+    }
+    
+    [DefaultsHandler saveCampaignList:[NSArray arrayWithArray:arrayToSave]];
 }
 
 @end
