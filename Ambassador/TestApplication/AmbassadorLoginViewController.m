@@ -95,6 +95,7 @@
     // Tokens
     [DefaultsHandler setSDKToken:dictionary[@"company"][@"sdk_token"]];
     [DefaultsHandler setUniversalID:dictionary[@"company"][@"universal_id"]];
+    [DefaultsHandler setUniversalToken:dictionary[@"company"][@"universal_token"]];
     
     [self.delegate userSuccessfullyLoggedIn];
     [self dismissViewControllerAnimated:YES completion:nil];
