@@ -11,7 +11,7 @@
 #import "UIColor+AMBColorValues.h"
 #import "ColorPicker.h"
 
-@interface RAFCustomizer()
+@interface RAFCustomizer() <ColorPickerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIImageView * ivProductPhoto;
 @property (nonatomic, strong) IBOutlet UITextField * tfRafName;
@@ -26,6 +26,7 @@
 @property (nonatomic, strong) IBOutlet UIView * masterView;
 
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
+@property (nonatomic, strong) UIButton * selectedButton;
 
 @end
 
@@ -45,8 +46,10 @@
 
 - (IBAction)colorButtonTapped:(id)sender {
     UIButton *buttonTapped = (UIButton*)sender;
+    self.selectedButton = buttonTapped;
     
     ColorPicker *picker = [[ColorPicker alloc] initWithColor:[UIColor hexStringForColor:buttonTapped.backgroundColor]];
+    picker.delegate = self;
     [self presentViewController:picker animated:YES completion:nil];
 }
 
@@ -62,6 +65,13 @@
 
 - (void)cancelTapped {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - Color Picker Delegate
+
+- (void)colorPickerColorSaved:(UIColor *)color {
+    self.selectedButton.backgroundColor = color;
 }
 
 
