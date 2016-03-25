@@ -13,6 +13,7 @@
 #import "DefaultsHandler.h"
 #import "AMBUtilities.h"
 #import "CampaignObject.h"
+#import "CampaignListController.h"
 
 @interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate>
 
@@ -88,7 +89,7 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField == self.tfCampId) {
-        [self getCampaignList];
+        [self showCampaignList];
         return NO;
     }
     
@@ -198,6 +199,7 @@
         ambassadorURL = [NSURL URLWithString:@"https://dev-ambassador-api.herokuapp.com/campaigns/"];
     #endif
     
+    // Creates Authorization string
     NSString *authString = [NSString stringWithFormat:@"UniversalToken %@", [DefaultsHandler getUniversalToken]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:ambassadorURL];
@@ -211,7 +213,10 @@
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             NSLog(@"%@", results);
+            
+            // Save the campaign list to defaults and then show list
             [self saveCampaings:results];
+            [self showCampaignList];
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not Sign In" message:@"There was an error when signing in. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
             [alert show];
@@ -220,18 +225,33 @@
 }
 
 - (void)saveCampaings:(NSDictionary*)results {
+    // Get list of campaigns
     NSArray *campaignArray = results[@"results"];
+    
     NSMutableArray *arrayToSave = [[NSMutableArray alloc] init];
+    
+    // Goes through each campaign and creates a campaingObject from that which will be stored to defaults
     for (int i = 0; i < campaignArray.count; i++) {
         NSDictionary *campaign = campaignArray[i];
         CampaignObject *object = [[CampaignObject alloc] init];
         object.name = campaign[@"name"];
-        object.campID = campaign[@"uid"];
+        object.campID = [NSString stringWithFormat:@"%@", campaign[@"uid"]];
         
         [arrayToSave addObject:object];
     }
     
     [DefaultsHandler saveCampaignList:[NSArray arrayWithArray:arrayToSave]];
+}
+
+- (void)showCampaignList {
+    NSArray *campaigns = [DefaultsHandler getCampaignList];
+    
+    if (campaigns.count > 0) {
+        CampaignListController *listController = [[CampaignListController alloc] initWithCampaigns:campaigns];
+        [self presentViewController:listController animated:YES completion:nil];
+    } else {
+        [self getCampaignList];
+    }
 }
 
 @end

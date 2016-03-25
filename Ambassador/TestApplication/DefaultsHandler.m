@@ -84,7 +84,9 @@
 }
 
 + (NSArray*)getCampaignList {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"CAMPAIGN_ARRAY"];
+    NSData *encodedArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"CAMPAIGN_ARRAY"];
+    NSArray *returnArray = [NSKeyedUnarchiver unarchiveObjectWithData:encodedArray];
+    return returnArray;
 }
 
 
