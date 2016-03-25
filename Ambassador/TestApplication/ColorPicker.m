@@ -123,6 +123,7 @@
     self.ivColorPicker.userInteractionEnabled = YES;
     
     // TextField
+    self.tfHexCode.text = [UIColor hexStringForColor:self.selectedColor];
     [self.tfHexCode addTarget:self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
 }
 
