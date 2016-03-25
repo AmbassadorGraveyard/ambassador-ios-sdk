@@ -11,12 +11,14 @@
 #import "UIColor+AMBColorValues.h"
 #import "ColorPicker.h"
 
-@interface RAFCustomizer() <ColorPickerDelegate>
+@interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate>
 
+// IBOutlets
 @property (nonatomic, strong) IBOutlet UIImageView * ivProductPhoto;
 @property (nonatomic, strong) IBOutlet UITextField * tfRafName;
 @property (nonatomic, strong) IBOutlet UITextField * tfCampId;
 @property (nonatomic, strong) IBOutlet UIButton * btnHeaderColor;
+@property (nonatomic, strong) IBOutlet UIButton * btnHeaderTextColor;
 @property (nonatomic, strong) IBOutlet UIButton * btnTextColor1;
 @property (nonatomic, strong) IBOutlet UIButton * btnTextColor2;
 @property (nonatomic, strong) IBOutlet UIButton * btnButtonColor;
@@ -25,6 +27,7 @@
 @property (nonatomic, strong) IBOutlet UITableView * tblSocial;
 @property (nonatomic, strong) IBOutlet UIView * masterView;
 
+// Private properties
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
 @property (nonatomic, strong) UIButton * selectedButton;
 
@@ -57,6 +60,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
     if ([self.delegate respondsToSelector:@selector(RAFCustomizerSavedRAF:)]) {
+        [self overridePlistToSave];
         NSString *rafName = self.tfRafName.text;
         RAFItem *item = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict];
         [self.delegate RAFCustomizerSavedRAF:item];
@@ -65,6 +69,18 @@
 
 - (void)cancelTapped {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)doneClicked {
+    [self.masterView endEditing:YES];
+}
+
+
+#pragma mark - UITextField Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 
@@ -101,6 +117,22 @@
             button.layer.cornerRadius = button.frame.size.height/2;
         }
     }
+    
+    // Text Views
+    // Creates a toolbar with a 'Done' button in it for dismissing textviews
+    UIToolbar *keyboardDoneButtonView = [[UIToolbar alloc] init];
+    [keyboardDoneButtonView sizeToFit];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneClicked)];
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
+    
+    for (UITextView *textView  in [self.masterView subviews]) {
+        if ([textView isKindOfClass:[UITextView class]]) {
+            textView.layer.borderWidth = 0.5;
+            textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            textView.layer.cornerRadius = 4;
+            textView.inputAccessoryView = keyboardDoneButtonView;
+        }
+    }
 }
 
 - (void)setValuesWithPlistDict {
@@ -108,6 +140,7 @@
     
     // Colors
     self.btnHeaderColor.backgroundColor = [UIColor colorFromHexString:[self.plistDict valueForKey:@"NavBarColor"]];
+    self.btnHeaderTextColor.backgroundColor = [UIColor colorFromHexString:[self.plistDict valueForKey:@"NavBarTextColor"]];
     self.btnTextColor1.backgroundColor = [UIColor colorFromHexString:[self.plistDict valueForKey:@"RAFWelcomeTextColor"]];
     self.btnTextColor2.backgroundColor = [UIColor colorFromHexString:[self.plistDict valueForKey:@"RAFDescriptionTextColor"]];
     self.btnButtonColor.backgroundColor = [UIColor colorFromHexString:[self.plistDict valueForKey:@"AlertButtonBackgroundColor"]];
@@ -116,6 +149,32 @@
     self.tvText1.text = [self.plistDict valueForKey:@"RAFWelcomeTextMessage"];
     self.tvText2.text = [self.plistDict valueForKey:@"RAFDescriptionTextMessage"];
     self.tfRafName.text = self.rafItem.rafName;
+}
+
+
+#pragma mark - Helper Functions
+
+- (void)overridePlistToSave {
+    // Grabs all the color values for buttons and assigns them hex string values
+    NSString *headerColorString = [UIColor hexStringForColor:self.btnHeaderColor.backgroundColor];
+    NSString *headerTextColorString = [UIColor hexStringForColor:self.btnHeaderTextColor.backgroundColor];
+    NSString *textColorString1 = [UIColor hexStringForColor:self.btnTextColor1.backgroundColor];
+    NSString *textColorString2 = [UIColor hexStringForColor:self.btnTextColor2.backgroundColor];
+    NSString *buttonColorString = [UIColor hexStringForColor:self.btnButtonColor.backgroundColor];
+    
+    // Overrides color in the plist
+    [self.plistDict setValue:headerColorString forKey:@"NavBarColor"];
+    [self.plistDict setValue:headerTextColorString forKey:@"NavBarTextColor"];
+    [self.plistDict setValue:textColorString1 forKey:@"RAFWelcomeTextColor"];
+    [self.plistDict setValue:textColorString2 forKey:@"RAFDescriptionTextColor"];
+    [self.plistDict setValue:buttonColorString forKey:@"ContactSendButtonBackgroundColor"];
+    [self.plistDict setValue:buttonColorString forKey:@"AlertButtonBackgroundColor"];
+    [self.plistDict setValue:buttonColorString forKey:@"ContactAvatarBackgroundColor"];
+    [self.plistDict setValue:buttonColorString forKey:@"ContactTableCheckMarkColor"];
+    
+    // Overrides strings in plist
+    [self.plistDict setValue:self.tvText1.text forKey:@"RAFWelcomeTextMessage"];
+    [self.plistDict setValue:self.tvText2.text forKey:@"RAFDescriptionTextMessage"];
 }
 
 @end
