@@ -217,6 +217,7 @@
 		EF7D076C1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */; };
 		EF7D076E1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */; };
 		EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
+		EF8FD8A41CA5965F00C0ADB7 /* CampaignObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */; };
 		EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C41CA1839600F5711F /* ThemeHandler.m */; };
 		EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C71CA1906400F5711F /* RAFItem.m */; };
 		EF9D98D41CA31A5F00F5711F /* ValuesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */; };
@@ -558,6 +559,8 @@
 		EF7CA9D11BF3EAB7006EBD6A /* AMBContactTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactTests.m; sourceTree = "<group>"; };
 		EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBUtilitiesTests.m; sourceTree = "<group>"; };
 		EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSendCompletionTests.m; sourceTree = "<group>"; };
+		EF8FD8A21CA5965F00C0ADB7 /* CampaignObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CampaignObject.h; sourceTree = "<group>"; };
+		EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CampaignObject.m; sourceTree = "<group>"; };
 		EF9D98C31CA1839600F5711F /* ThemeHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeHandler.h; sourceTree = "<group>"; };
 		EF9D98C41CA1839600F5711F /* ThemeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeHandler.m; sourceTree = "<group>"; };
 		EF9D98C61CA1906400F5711F /* RAFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFItem.h; sourceTree = "<group>"; };
@@ -1129,6 +1132,8 @@
 				EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */,
 				EF9D98D21CA31A5F00F5711F /* ValuesHandler.h */,
 				EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */,
+				EF8FD8A21CA5965F00C0ADB7 /* CampaignObject.h */,
+				EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -1845,6 +1850,7 @@
 				EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */,
 				EF557A231C88E6BE00F66761 /* SettingsViewController.m in Sources */,
 				EF9D98DB1CA4487A00F5711F /* ColorPicker.m in Sources */,
+				EF8FD8A41CA5965F00C0ADB7 /* CampaignObject.m in Sources */,
 				EF557A1B1C88D39C00F66761 /* DefaultsHandler.m in Sources */,
 				EF1CC8041C9993EE00C2752B /* MyTabBarController.m in Sources */,
 				EF557A181C88B4D000F66761 /* AmbassadorLoginViewController.m in Sources */,
