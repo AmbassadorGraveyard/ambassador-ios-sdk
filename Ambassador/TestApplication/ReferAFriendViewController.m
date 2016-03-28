@@ -110,10 +110,10 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSString *campaignId = @"1026"; // TEMPORARY
     
     // Gets RAFItem at array and presents a raf using the plist name value
     RAFItem *item = self.rafArray[indexPath.row];
+    NSString *campaignId = item.campID;
     [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self.tabBarController withThemePlist:item.plistFullName];
 }
 
