@@ -19,6 +19,7 @@
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIImageView * ivProductPhoto;
+@property (nonatomic, strong) IBOutlet UIImageView * plusImage;
 @property (nonatomic, strong) IBOutlet UITextField * tfRafName;
 @property (nonatomic, strong) IBOutlet UITextField * tfCampId;
 @property (nonatomic, strong) IBOutlet UIButton * btnHeaderColor;
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) IBOutlet UIButton * btnTextColor1;
 @property (nonatomic, strong) IBOutlet UIButton * btnTextColor2;
 @property (nonatomic, strong) IBOutlet UIButton * btnButtonColor;
+@property (nonatomic, strong) IBOutlet UIButton * btnClearImage;
 @property (nonatomic, strong) IBOutlet UITextView * tvText1;
 @property (nonatomic, strong) IBOutlet UITextView * tvText2;
 @property (nonatomic, strong) IBOutlet UITableView * tblSocial;
@@ -64,6 +66,16 @@
     ColorPicker *picker = [[ColorPicker alloc] initWithColor:[UIColor hexStringForColor:buttonTapped.backgroundColor]];
     picker.delegate = self;
     [self presentViewController:picker animated:YES completion:nil];
+}
+
+- (IBAction)clearImage:(id)sender {
+    // If there is an image tied to the RAF, we remove it from local storage
+    if (self.rafItem.imageFilePath) { [ThemeHandler removeImageForTheme:self.rafItem]; }
+    
+    // Update the viewController for cleared image
+    self.selectedImage = nil;
+    [self setupUI];
+    [self.plistDict setValue:@"" forKey:@"RAFLogo"];
 }
 
 - (void)saveTapped {
@@ -121,6 +133,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     self.ivProductPhoto.image = info[@"UIImagePickerControllerOriginalImage"];
     self.selectedImage = self.ivProductPhoto.image;
+    self.btnClearImage.enabled = YES;
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -159,10 +172,12 @@
     self.ivProductPhoto.layer.cornerRadius = self.ivProductPhoto.frame.size.height/2;
     self.ivProductPhoto.userInteractionEnabled = YES;
     self.ivProductPhoto.image = self.selectedImage;
+    self.plusImage.hidden = (self.selectedImage) ? YES : NO;
+    self.btnClearImage.enabled = (self.selectedImage) ? YES : NO;
     
     // Buttons
     for (UIView *button in [self.masterView subviews]) {
-        if ([button isKindOfClass:[UIButton class]]) {
+        if ([button isKindOfClass:[UIButton class]] && button != self.btnClearImage) {
             button.layer.borderWidth = 0.6;
             button.layer.borderColor = [UIColor colorWithWhite:0.85 alpha:1].CGColor;
             button.layer.cornerRadius = button.frame.size.height/2;
