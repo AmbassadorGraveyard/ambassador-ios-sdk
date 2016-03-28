@@ -97,6 +97,7 @@
     [DefaultsHandler setUniversalID:@""];
     [DefaultsHandler setFullName:@"" lastName:@""];
     [DefaultsHandler setUserImage:@""];
+    [DefaultsHandler saveCampaignList:@[]];
 }
 
 @end

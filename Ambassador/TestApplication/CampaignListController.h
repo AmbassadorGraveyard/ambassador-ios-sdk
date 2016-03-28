@@ -7,8 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CampaignObject.h"
+
+@protocol CampaignListDelegate <NSObject>
+
+- (void)campaignListCampaignChosen:(CampaignObject*)campaignObject;
+
+@end
+
 
 @interface CampaignListController : UIViewController
+
+@property (nonatomic, weak) id<CampaignListDelegate> delegate;
 
 - (instancetype)initWithCampaigns:(NSArray*)campaigns;
 

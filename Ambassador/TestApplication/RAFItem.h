@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSString * plistFullName;
 @property (nonatomic, strong) NSDate * dateCreated;
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
+@property (nonatomic, strong) NSString * campID;
 
 - (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict;
 

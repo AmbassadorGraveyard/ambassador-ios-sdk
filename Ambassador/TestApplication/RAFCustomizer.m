@@ -15,7 +15,7 @@
 #import "CampaignObject.h"
 #import "CampaignListController.h"
 
-@interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate>
+@interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIImageView * ivProductPhoto;
@@ -34,6 +34,7 @@
 // Private properties
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
 @property (nonatomic, strong) UIButton * selectedButton;
+@property (nonatomic, strong) CampaignObject * selectedCampaignID;
 
 @end
 
@@ -67,6 +68,7 @@
         [self overridePlistToSave];
         NSString *rafName = self.tfRafName.text;
         RAFItem *item = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict];
+        item.campID = self.selectedCampaignID.campID;
         [self.delegate RAFCustomizerSavedRAF:item];
     }
 }
@@ -101,6 +103,14 @@
 
 - (void)colorPickerColorSaved:(UIColor *)color {
     self.selectedButton.backgroundColor = color;
+}
+
+
+#pragma mark - Campaign Picker Delegate
+
+- (void)campaignListCampaignChosen:(CampaignObject *)campaignObject {
+    self.selectedCampaignID = campaignObject;
+    self.tfCampId.text = campaignObject.name;
 }
 
 
@@ -248,6 +258,7 @@
     
     if (campaigns.count > 0) {
         CampaignListController *listController = [[CampaignListController alloc] initWithCampaigns:campaigns];
+        listController.delegate = self;
         [self presentViewController:listController animated:YES completion:nil];
     } else {
         [self getCampaignList];

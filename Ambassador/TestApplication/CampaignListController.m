@@ -7,9 +7,8 @@
 //
 
 #import "CampaignListController.h"
-#import "CampaignObject.h"
 
-@interface CampaignListController() <UITableViewDataSource, UITableViewDelegate>
+@interface CampaignListController() <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UITableView * tableView;
@@ -46,6 +45,7 @@ CGFloat tableHeaderHeight = 50;
     [self setupUI];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeViewController:)];
+    tap.delegate = self;
     [self.view addGestureRecognizer:tap];
 }
 
@@ -97,6 +97,27 @@ CGFloat tableHeaderHeight = 50;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 50;
+}
+
+
+#pragma mark - TableView Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    CampaignObject *selectedCampaign = (CampaignObject*)self.campaignArray[indexPath.row];
+    if ([self.delegate respondsToSelector:@selector(campaignListCampaignChosen:)]) { [self.delegate campaignListCampaignChosen:selectedCampaign]; }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - GestureRecognizer Delegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    // Checks to make sure that the touch is not inside the tableView for dismissal
+    if (CGRectContainsPoint(self.view.bounds, [touch locationInView:self.tableView])) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 

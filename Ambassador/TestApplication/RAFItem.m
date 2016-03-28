@@ -16,6 +16,8 @@
         self.rafName = [decoder decodeObjectForKey:@"rafName"];
         self.plistFullName = [decoder decodeObjectForKey:@"plistFullName"];
         self.dateCreated = [decoder decodeObjectForKey:@"dateCreated"];
+        self.plistDict = [decoder decodeObjectForKey:@"plistDict"];
+        self.campID = [decoder decodeObjectForKey:@"campID"];
     }
     
     return self;
@@ -26,6 +28,8 @@
     [encoder encodeObject:self.rafName forKey:@"rafName"];
     [encoder encodeObject:self.plistFullName forKey:@"plistFullName"];
     [encoder encodeObject:self.dateCreated forKey:@"dateCreated"];
+    [encoder encodeObject:self.plistDict forKey:@"plistDict"];
+    [encoder encodeObject:self.campID forKey:@"campID"];
 }
 
 - (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict {
