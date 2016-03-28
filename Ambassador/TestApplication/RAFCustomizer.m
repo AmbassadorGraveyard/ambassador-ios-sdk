@@ -71,14 +71,11 @@
         // If the RAFItem is nil we create a new one
         if (!self.rafItem) {
             self.rafItem = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict];
+            self.rafItem.campaign = self.selectedCampaignID;
         } else {
             // If there is already a RAF Item, we override its properties instead of creating a new one
             self.rafItem.rafName = rafName;
             self.rafItem.plistDict = self.plistDict;
-            self.rafItem.campID = self.selectedCampaignID.campID;
-            if (!self.rafItem.dateCreated) {
-                self.rafItem.dateCreated = [NSDate date];
-            }
         }
         
         [self.delegate RAFCustomizerSavedRAF:self.rafItem];
@@ -152,6 +149,9 @@
             button.layer.cornerRadius = button.frame.size.height/2;
         }
     }
+    
+    // Text Fields
+    self.tfCampId.text = self.rafItem.campaign.name;
     
     // Text Views
     // Creates a toolbar with a 'Done' button in it for dismissing textviews

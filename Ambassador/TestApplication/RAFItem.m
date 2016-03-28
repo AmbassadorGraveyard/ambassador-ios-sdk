@@ -17,7 +17,7 @@
         self.plistFullName = [decoder decodeObjectForKey:@"plistFullName"];
         self.dateCreated = [decoder decodeObjectForKey:@"dateCreated"];
         self.plistDict = [decoder decodeObjectForKey:@"plistDict"];
-        self.campID = [decoder decodeObjectForKey:@"campID"];
+        self.campaign = [decoder decodeObjectForKey:@"campaign"];
     }
     
     return self;
@@ -29,7 +29,7 @@
     [encoder encodeObject:self.plistFullName forKey:@"plistFullName"];
     [encoder encodeObject:self.dateCreated forKey:@"dateCreated"];
     [encoder encodeObject:self.plistDict forKey:@"plistDict"];
-    [encoder encodeObject:self.campID forKey:@"campID"];
+    [encoder encodeObject:self.campaign forKey:@"campaign"];
 }
 
 - (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict {

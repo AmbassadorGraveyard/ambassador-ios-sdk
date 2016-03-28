@@ -120,7 +120,7 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
     } else {
         // Gets RAFItem at array and presents a raf using the plist name value
         RAFItem *item = self.rafArray[indexPath.row];
-        NSString *campaignId = item.campID;
+        NSString *campaignId = item.campaign.campID;
         [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self.tabBarController withThemePlist:item.plistFullName];
     }
 }
