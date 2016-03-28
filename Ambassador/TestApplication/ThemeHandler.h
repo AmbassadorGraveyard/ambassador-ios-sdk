@@ -19,5 +19,6 @@
 + (NSMutableDictionary *)dictionaryFromPlist:(RAFItem*)item;
 + (NSMutableDictionary *)getGenericTheme;
 + (UIImage *)getImageForRAF:(RAFItem*)item;
++ (void)removeImageForTheme:(RAFItem*)theme;
 
 @end
