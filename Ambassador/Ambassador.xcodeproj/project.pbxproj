@@ -1184,9 +1184,9 @@
 		EF9D98DC1CA4881E00F5711F /* RAF Page */ = {
 			isa = PBXGroup;
 			children = (
-				EF9D98C91CA1AD4F00F5711F /* Custom Cells */,
 				EF5390D51C4469AF005F6944 /* ReferAFriendViewController.h */,
 				EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */,
+				EF9D98C91CA1AD4F00F5711F /* Custom Cells */,
 			);
 			name = "RAF Page";
 			sourceTree = "<group>";

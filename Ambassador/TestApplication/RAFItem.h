@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CampaignObject.h"
 
 @interface RAFItem : NSObject
 
@@ -14,7 +15,7 @@
 @property (nonatomic, strong) NSString * plistFullName;
 @property (nonatomic, strong) NSDate * dateCreated;
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
-@property (nonatomic, strong) NSString * campID;
+@property (nonatomic, strong) CampaignObject * campaign;
 
 - (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict;
 
