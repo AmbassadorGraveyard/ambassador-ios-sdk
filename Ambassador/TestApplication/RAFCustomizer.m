@@ -69,13 +69,9 @@
 }
 
 - (IBAction)clearImage:(id)sender {
-    // If there is an image tied to the RAF, we remove it from local storage
-    if (self.rafItem.imageFilePath) { [ThemeHandler removeImageForTheme:self.rafItem]; }
-    
     // Update the viewController for cleared image
     self.selectedImage = nil;
     [self setupUI];
-    [self.plistDict setValue:@"" forKey:@"RAFLogo"];
 }
 
 - (void)saveTapped {
@@ -222,7 +218,7 @@
     // RAF Item Values
     if (self.rafItem) {
         self.selectedCampaignID = self.rafItem.campaign;
-        self.selectedImage = [UIImage imageWithContentsOfFile:self.rafItem.imageFilePath];
+        self.selectedImage = [ThemeHandler getImageForRAF:self.rafItem];
     }
 }
 
@@ -259,6 +255,12 @@
         NSString *imagePlistValue = [imageString stringByAppendingString:@", 1"];
         [self.plistDict setValue:imagePlistValue forKey:@"RAFLogo"];
         [ThemeHandler saveImage:self.selectedImage forTheme:self.rafItem];
+        self.rafItem.imageFilePath = imageString;
+    } else {
+        // If there is an image tied to the RAF, we remove it from local storage
+        [ThemeHandler removeImageForTheme:self.rafItem];
+        self.rafItem.imageFilePath = nil;
+        [self.plistDict setValue:@"" forKey:@"RAFLogo"];
     }
     
     self.rafItem.plistDict = self.plistDict;
