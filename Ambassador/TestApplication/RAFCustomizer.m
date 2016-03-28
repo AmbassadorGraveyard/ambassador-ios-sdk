@@ -67,9 +67,21 @@
     if ([self.delegate respondsToSelector:@selector(RAFCustomizerSavedRAF:)]) {
         [self overridePlistToSave];
         NSString *rafName = self.tfRafName.text;
-        RAFItem *item = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict];
-        item.campID = self.selectedCampaignID.campID;
-        [self.delegate RAFCustomizerSavedRAF:item];
+        
+        // If the RAFItem is nil we create a new one
+        if (!self.rafItem) {
+            self.rafItem = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict];
+        } else {
+            // If there is already a RAF Item, we override its properties instead of creating a new one
+            self.rafItem.rafName = rafName;
+            self.rafItem.plistDict = self.plistDict;
+            self.rafItem.campID = self.selectedCampaignID.campID;
+            if (!self.rafItem.dateCreated) {
+                self.rafItem.dateCreated = [NSDate date];
+            }
+        }
+        
+        [self.delegate RAFCustomizerSavedRAF:self.rafItem];
     }
 }
 

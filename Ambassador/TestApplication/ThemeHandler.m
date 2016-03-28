@@ -26,10 +26,27 @@
     return plistDictionary;
 }
 
-+ (void)saveNewTheme:(RAFItem*)rafTheme {
++ (void)saveTheme:(RAFItem*)rafTheme {
     // Gets current array of RAFItems(themes) and add the new RAFitem
     NSMutableArray *currentThemeArray = [DefaultsHandler getThemeArray];
-    [currentThemeArray addObject:rafTheme];
+    
+    /* Run through theme array to see if we should
+    add a new RAF item or override existing RAF item
+    based on the date created */
+    RAFItem *matchingItem = nil;
+    for (RAFItem *item in currentThemeArray) {
+        if ([item.dateCreated isEqual:rafTheme.dateCreated]) {
+            matchingItem = item;
+        }
+    }
+    
+    // Perform override or new save
+    if (matchingItem) {
+        NSUInteger matchingIndex = [currentThemeArray indexOfObject:matchingItem];
+        [currentThemeArray replaceObjectAtIndex:matchingIndex withObject:rafTheme];
+    } else {
+        [currentThemeArray addObject:rafTheme];
+    }
     
     // Saves the updated Array of RAFItems to user defaults
     [DefaultsHandler setThemeArray:currentThemeArray];

@@ -69,6 +69,9 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
         RAFCustomizer *customizer = nav.viewControllers[0];
         customizer.rafItem = self.rafForCustomizer;
         customizer.delegate = self;
+        
+        // Resets the selected RAF to nil
+        self.rafForCustomizer = nil;
     }
 }
 
@@ -111,10 +114,15 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    // Gets RAFItem at array and presents a raf using the plist name value
-    RAFItem *item = self.rafArray[indexPath.row];
-    NSString *campaignId = item.campID;
-    [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self.tabBarController withThemePlist:item.plistFullName];
+    if (self.tableEditing) {
+        self.rafForCustomizer = self.rafArray[indexPath.row];
+        [self performSegueWithIdentifier:RAF_CUSTOMIZE_SEGUE sender:self];
+    } else {
+        // Gets RAFItem at array and presents a raf using the plist name value
+        RAFItem *item = self.rafArray[indexPath.row];
+        NSString *campaignId = item.campID;
+        [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self.tabBarController withThemePlist:item.plistFullName];
+    }
 }
 
 
@@ -200,7 +208,7 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 
 - (void)saveNewTheme:(RAFItem*)saveItem {
     // Saves a new plist item using the RAF item name and reloads table
-    [ThemeHandler saveNewTheme:saveItem];
+    [ThemeHandler saveTheme:saveItem];
     [self reloadThemesWithFade:YES];
 }
 
