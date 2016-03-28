@@ -219,6 +219,7 @@
 		EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF8FD8A41CA5965F00C0ADB7 /* CampaignObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */; };
 		EF8FD8A81CA59EEA00C0ADB7 /* CampaignListController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8A71CA59EEA00C0ADB7 /* CampaignListController.m */; };
+		EF8FD8AC1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8AB1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m */; };
 		EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C41CA1839600F5711F /* ThemeHandler.m */; };
 		EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C71CA1906400F5711F /* RAFItem.m */; };
 		EF9D98D41CA31A5F00F5711F /* ValuesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */; };
@@ -564,6 +565,8 @@
 		EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CampaignObject.m; sourceTree = "<group>"; };
 		EF8FD8A61CA59EEA00C0ADB7 /* CampaignListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CampaignListController.h; sourceTree = "<group>"; };
 		EF8FD8A71CA59EEA00C0ADB7 /* CampaignListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CampaignListController.m; sourceTree = "<group>"; };
+		EF8FD8AA1CA9C60400C0ADB7 /* SocialShareOptionsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialShareOptionsHandler.h; sourceTree = "<group>"; };
+		EF8FD8AB1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialShareOptionsHandler.m; sourceTree = "<group>"; };
 		EF9D98C31CA1839600F5711F /* ThemeHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeHandler.h; sourceTree = "<group>"; };
 		EF9D98C41CA1839600F5711F /* ThemeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeHandler.m; sourceTree = "<group>"; };
 		EF9D98C61CA1906400F5711F /* RAFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFItem.h; sourceTree = "<group>"; };
@@ -1163,6 +1166,15 @@
 			name = Campaigns;
 			sourceTree = "<group>";
 		};
+		EF8FD8A91CA9C5B400C0ADB7 /* Social Sharing Table */ = {
+			isa = PBXGroup;
+			children = (
+				EF8FD8AA1CA9C60400C0ADB7 /* SocialShareOptionsHandler.h */,
+				EF8FD8AB1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m */,
+			);
+			name = "Social Sharing Table";
+			sourceTree = "<group>";
+		};
 		EF9D98C91CA1AD4F00F5711F /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -1175,6 +1187,7 @@
 		EF9D98D51CA33C1800F5711F /* RAF Customizer */ = {
 			isa = PBXGroup;
 			children = (
+				EF8FD8A91CA9C5B400C0ADB7 /* Social Sharing Table */,
 				EF9D98D61CA341A700F5711F /* RAFCustomizer.h */,
 				EF9D98D71CA341A700F5711F /* RAFCustomizer.m */,
 			);
@@ -1859,6 +1872,7 @@
 				DB844D691BA76BDE003FD7A9 /* AppDelegate.m in Sources */,
 				EF1CC80E1C9B3C6300C2752B /* Validator.m in Sources */,
 				EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */,
+				EF8FD8AC1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m in Sources */,
 				DB844D661BA76BDE003FD7A9 /* main.m in Sources */,
 				EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */,
 				EF557A231C88E6BE00F66761 /* SettingsViewController.m in Sources */,
