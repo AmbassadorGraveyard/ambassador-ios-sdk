@@ -434,9 +434,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Opd-in-156">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Opd-in-156">
                                 <rect key="frame" x="150" y="100" width="300" height="400"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="cSZ-A7-mmU"/>
                                     <constraint firstAttribute="height" constant="400" id="z9D-MC-A4G"/>
@@ -446,14 +446,34 @@
                                     <outlet property="delegate" destination="vqV-dB-dB1" id="YOy-9S-rzf"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1S-2Y-gAk">
+                                <rect key="frame" x="160" y="110" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="7ZH-Jj-MNG"/>
+                                    <constraint firstAttribute="width" constant="30" id="Yrz-bD-wej"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="7" minY="7" maxX="7" maxY="7"/>
+                                <state key="normal" image="close">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeViewController:" destination="vqV-dB-dB1" eventType="touchUpInside" id="2O2-D9-4AQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.58551520270270274" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="Opd-in-156" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1ua-RB-1Mq" secondAttribute="leading" constant="20" id="HD7-Cy-GON"/>
                             <constraint firstItem="Opd-in-156" firstAttribute="centerY" secondItem="1ua-RB-1Mq" secondAttribute="centerY" id="HJn-ss-b2e"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Opd-in-156" secondAttribute="trailing" constant="20" id="J8l-kK-8y2"/>
                             <constraint firstItem="Opd-in-156" firstAttribute="centerX" secondItem="1ua-RB-1Mq" secondAttribute="centerX" id="RuQ-t4-I1h"/>
+                            <constraint firstItem="Opd-in-156" firstAttribute="leading" secondItem="z1S-2Y-gAk" secondAttribute="trailing" constant="-40" id="TMC-2l-kNG"/>
+                            <constraint firstItem="Opd-in-156" firstAttribute="top" secondItem="z1S-2Y-gAk" secondAttribute="bottom" constant="-40" id="k4B-X2-tzX"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnClose" destination="z1S-2Y-gAk" id="hVG-cw-6LV"/>
+                        <outlet property="tableHeight" destination="z9D-MC-A4G" id="aYX-3q-XBZ"/>
                         <outlet property="tableView" destination="Opd-in-156" id="h9A-0v-SJz"/>
                     </connections>
                 </viewController>
@@ -1752,6 +1772,7 @@
     <resources>
         <image name="addImage" width="42" height="42"/>
         <image name="ambassadorWordLogo" width="205" height="35"/>
+        <image name="close" width="44" height="43"/>
         <image name="colorWheel" width="365" height="365"/>
         <image name="converisonIconLg" width="42" height="36"/>
         <image name="conversionIconSm" width="36" height="28"/>
