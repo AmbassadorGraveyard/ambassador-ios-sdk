@@ -15,7 +15,7 @@
 #import "CampaignObject.h"
 #import "CampaignListController.h"
 
-@interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate>
+@interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIImageView * ivProductPhoto;
@@ -35,6 +35,7 @@
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
 @property (nonatomic, strong) UIButton * selectedButton;
 @property (nonatomic, strong) CampaignObject * selectedCampaignID;
+@property (nonatomic, strong) UIImage * selectedImage;
 
 @end
 
@@ -45,8 +46,12 @@
 #pragma mark - LifeCycle
 
 - (void)viewDidLoad {
-    [self setupUI];
     [self setValuesWithPlistDict];
+    [self setupUI];
+    
+    // Image View tap gesture
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openImagePicker)];
+    [self.ivProductPhoto addGestureRecognizer:tap];
 }
 
 
@@ -65,18 +70,21 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
     if ([self.delegate respondsToSelector:@selector(RAFCustomizerSavedRAF:)]) {
+        // Override the existing plist theme with new RAF Customizer values
         [self overridePlistToSave];
         NSString *rafName = self.tfRafName.text;
         
         // If the RAFItem is nil we create a new one
         if (!self.rafItem) {
             self.rafItem = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict];
-            self.rafItem.campaign = self.selectedCampaignID;
         } else {
             // If there is already a RAF Item, we override its properties instead of creating a new one
             self.rafItem.rafName = rafName;
-            self.rafItem.plistDict = self.plistDict;
         }
+        
+        // Override properties of the RAF Item
+        [self overridePlistIfImage:self.rafItem.plistFullName];
+        self.rafItem.campaign = self.selectedCampaignID;
         
         [self.delegate RAFCustomizerSavedRAF:self.rafItem];
     }
@@ -105,6 +113,15 @@
     }
     
     return YES;
+}
+
+
+#pragma mark - ImagePickerController Delegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    self.ivProductPhoto.image = info[@"UIImagePickerControllerOriginalImage"];
+    self.selectedImage = self.ivProductPhoto.image;
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -140,6 +157,8 @@
     
     // Image View
     self.ivProductPhoto.layer.cornerRadius = self.ivProductPhoto.frame.size.height/2;
+    self.ivProductPhoto.userInteractionEnabled = YES;
+    self.ivProductPhoto.image = self.selectedImage;
     
     // Buttons
     for (UIView *button in [self.masterView subviews]) {
@@ -184,6 +203,12 @@
     self.tvText1.text = [self.plistDict valueForKey:@"RAFWelcomeTextMessage"];
     self.tvText2.text = [self.plistDict valueForKey:@"RAFDescriptionTextMessage"];
     self.tfRafName.text = self.rafItem.rafName;
+    
+    // RAF Item Values
+    if (self.rafItem) {
+        self.selectedCampaignID = self.rafItem.campaign;
+        self.selectedImage = [UIImage imageWithContentsOfFile:self.rafItem.imageFilePath];
+    }
 }
 
 
@@ -210,6 +235,18 @@
     // Overrides strings in plist
     [self.plistDict setValue:self.tvText1.text forKey:@"RAFWelcomeTextMessage"];
     [self.plistDict setValue:self.tvText2.text forKey:@"RAFDescriptionTextMessage"];
+}
+
+- (void)overridePlistIfImage:(NSString *)rafPlist {
+    // Checks if the user selected an image an adds it to the plist if so
+    if (self.selectedImage) {
+        NSString *imageString = [rafPlist stringByAppendingString:@"Image"];
+        NSString *imagePlistValue = [imageString stringByAppendingString:@", 1"];
+        [self.plistDict setValue:imagePlistValue forKey:@"RAFLogo"];
+        [ThemeHandler saveImage:self.selectedImage forTheme:self.rafItem];
+    }
+    
+    self.rafItem.plistDict = self.plistDict;
 }
 
 - (void)getCampaignList {
@@ -275,6 +312,15 @@
     } else {
         [self getCampaignList];
     }
+}
+
+- (void)openImagePicker {
+    // Opens image picker for photos saved to album on device
+    UIImagePickerController * picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    picker.delegate = self;
+    
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 @end
