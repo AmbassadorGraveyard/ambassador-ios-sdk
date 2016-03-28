@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSDate * dateCreated;
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
 @property (nonatomic, strong) CampaignObject * campaign;
+@property (nonatomic, strong) NSString * imageFilePath;
 
 - (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict;
 

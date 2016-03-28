@@ -731,8 +731,8 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIj-i1-tJj">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qq0-Ch-UrQ">
-                                        <rect key="frame" x="0.0" y="-505" width="600" height="1495"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qq0-Ch-UrQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="1495"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload product photo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YJU-1e-Qi2">
                                                 <rect key="frame" x="10" y="110" width="580" height="18"/>
@@ -1021,7 +1021,7 @@
                                                     <action selector="colorButtonTapped:" destination="bha-dU-YIo" eventType="touchUpInside" id="1Pu-46-irU"/>
                                                 </connections>
                                             </button>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="E5o-r9-Axm">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="E5o-r9-Axm">
                                                 <rect key="frame" x="260" y="15" width="80" height="80"/>
                                                 <color key="backgroundColor" red="0.85866477272727271" green="0.85866477272727271" blue="0.85866477272727271" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>

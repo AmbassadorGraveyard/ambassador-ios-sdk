@@ -18,6 +18,7 @@
         self.dateCreated = [decoder decodeObjectForKey:@"dateCreated"];
         self.plistDict = [decoder decodeObjectForKey:@"plistDict"];
         self.campaign = [decoder decodeObjectForKey:@"campaign"];
+        self.imageFilePath = [decoder decodeObjectForKey:@"imageFilePath"];
     }
     
     return self;
@@ -30,6 +31,7 @@
     [encoder encodeObject:self.dateCreated forKey:@"dateCreated"];
     [encoder encodeObject:self.plistDict forKey:@"plistDict"];
     [encoder encodeObject:self.campaign forKey:@"campaign"];
+    [encoder encodeObject:self.imageFilePath forKey:@"imageFilePath"];
 }
 
 - (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict {
