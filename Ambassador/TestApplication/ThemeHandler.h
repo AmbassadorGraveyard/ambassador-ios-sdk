@@ -11,7 +11,7 @@
 
 @interface ThemeHandler : NSObject
 
-+ (void)saveNewTheme:(RAFItem*)rafTheme;
++ (void)saveTheme:(RAFItem*)rafTheme;
 + (void)deleteRafItem:(RAFItem*)rafItem;
 + (NSString *)getDocumentsPathWithName:(NSString*)themeName;
 + (NSMutableDictionary *)dictionaryFromPlist:(RAFItem*)item;
