@@ -59,8 +59,6 @@
     NSData *pngData = UIImagePNGRepresentation(image);
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", imageSavePath]];
     [pngData writeToFile:filePath atomically:NO];
-    
-    theme.imageFilePath = filePath;
 }
 
 + (void)writeToDocumentsPathWithThemeName:(NSString*)name dictionary:(NSMutableDictionary*)writeDict {

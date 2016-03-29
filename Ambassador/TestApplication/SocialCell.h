@@ -10,4 +10,6 @@
 
 @interface SocialCell : UITableViewCell
 
+- (void)setUpCellWithName:(NSString*)name isEnabled:(BOOL)enabled;
+
 @end

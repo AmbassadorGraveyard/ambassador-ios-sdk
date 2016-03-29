@@ -7,7 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface SocialShareOptionsHandler : NSObject
+@protocol SocialShareHandlerDelegate <NSObject>
+
+- (void)socialShareHandlerUpdated:(NSMutableArray*)socialArray;
+
+@end
+
+
+@interface SocialShareOptionsHandler : NSObject <UITableViewDataSource, UITableViewDelegate>
+
+// Public properties
+@property (nonatomic, weak) id<SocialShareHandlerDelegate> delegate;
+
+// Custom Initializer
+- (id)initWithArrayOrder:(NSMutableArray*)fullArray onArray:(NSMutableArray*)onArray;
 
 @end

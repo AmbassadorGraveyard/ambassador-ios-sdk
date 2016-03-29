@@ -14,8 +14,9 @@
 #import "AMBUtilities.h"
 #import "CampaignObject.h"
 #import "CampaignListController.h"
+#import "SocialShareOptionsHandler.h"
 
-@interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIImageView * ivProductPhoto;
@@ -32,12 +33,15 @@
 @property (nonatomic, strong) IBOutlet UITextView * tvText2;
 @property (nonatomic, strong) IBOutlet UITableView * tblSocial;
 @property (nonatomic, strong) IBOutlet UIView * masterView;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * socialTableHeight;
 
 // Private properties
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
 @property (nonatomic, strong) UIButton * selectedButton;
 @property (nonatomic, strong) CampaignObject * selectedCampaignID;
 @property (nonatomic, strong) UIImage * selectedImage;
+@property (nonatomic, strong) NSMutableArray * socialArray;
+@property (nonatomic, strong) SocialShareOptionsHandler * socialHandler;
 
 @end
 
@@ -149,6 +153,20 @@
 }
 
 
+#pragma mark - Social Share Handler Delegate
+
+/*
+ Delegate function that gets fired whenever
+ the social channel order is rearranged. The social
+ array gets updated based on the new order and 
+ gets saved once the user actually taps the 'Save' 
+ button.
+ */
+- (void)socialShareHandlerUpdated:(NSMutableArray *)socialArray {
+    self.socialArray = socialArray;
+}
+
+
 #pragma mark - UI Functions
 
 - (void)setupUI {
@@ -201,6 +219,7 @@
 }
 
 - (void)setValuesWithPlistDict {
+    // Checks if a new whether to setup from existing theme or Generic theme
     self.plistDict = (self.rafItem) ? [ThemeHandler dictionaryFromPlist:self.rafItem] : [ThemeHandler getGenericTheme];
     
     // Colors
@@ -220,6 +239,9 @@
         self.selectedCampaignID = self.rafItem.campaign;
         self.selectedImage = [ThemeHandler getImageForRAF:self.rafItem];
     }
+    
+    // Social Table
+    [self getSocialObjectsFromPlist];
 }
 
 
@@ -246,6 +268,9 @@
     // Overrides strings in plist
     [self.plistDict setValue:self.tvText1.text forKey:@"RAFWelcomeTextMessage"];
     [self.plistDict setValue:self.tvText2.text forKey:@"RAFDescriptionTextMessage"];
+    
+    // Overrides social table
+    [self.plistDict setValue:[self stringFromSocialChannels] forKey:@"Channels"];
 }
 
 - (void)overridePlistIfImage:(NSString *)rafPlist {
@@ -338,6 +363,71 @@
     picker.delegate = self;
     
     [self presentViewController:picker animated:YES completion:nil];
+}
+
+- (void)getSocialObjectsFromPlist {
+    // Gets string for social channel order from plist
+    NSString *channelString = self.plistDict[@"Channels"];
+    
+    // Creates an array based on enabled social channels
+    NSMutableArray *onArray = [[NSMutableArray alloc] initWithArray:[channelString componentsSeparatedByString:@","]];
+    self.socialArray = [NSMutableArray arrayWithArray:onArray];
+    
+    // Goes through each all channel strings from plist and removes spaces
+    for (int i = 0; i < self.socialArray.count; i++) {
+        NSString *socialString = self.socialArray[i];
+        socialString = [socialString stringByReplacingOccurrencesOfString:@" " withString:@""];
+        [self.socialArray replaceObjectAtIndex:i withObject:socialString];
+    }
+    
+    // Array of all channels which will not change unless we add new channels to the SDK
+    NSMutableArray *allChannelArray = [NSMutableArray arrayWithObjects:@"Facebook", @"Twitter", @"LinkedIn", @"SMS", @"Email", nil];
+    
+    /* 
+     Goes through the enabled channel array and adds
+     any channels that may be disabled, to the end of
+     the channel list for re-enabling/rearranging 
+     */
+    for (int i = 0; i < allChannelArray.count; i++) {
+        NSString *socialChannel = allChannelArray[i];
+        
+        if (![self.socialArray containsObject:socialChannel]) {
+            [self.socialArray addObject:socialChannel];
+        }
+    }
+    
+    [self setupSocialTableView:onArray];
+}
+
+- (void)setupSocialTableView:(NSMutableArray*)enabledChannels {
+    // Init our Social Handler class which is the datasource and delegate for the social tableview
+    if (!self.socialHandler) {
+        self.socialHandler = [[SocialShareOptionsHandler alloc] initWithArrayOrder:self.socialArray onArray:enabledChannels];
+        self.socialHandler.delegate = self;
+    }
+    
+    // Set values for social tableview
+    self.tblSocial.delegate = self.socialHandler;
+    self.tblSocial.dataSource = self.socialHandler;
+    self.tblSocial.editing = YES;
+    self.socialTableHeight.constant = 5 * 71 - 1;
+}
+
+/*
+ Goes through all channels in the social array
+ and creates a string  for the Channles value 
+ in the theme plist.
+ Ex: 'Facebook, Twitter, LinkedIn, SMS, Email'
+ */
+- (NSString *)stringFromSocialChannels {
+    NSMutableString *channelString = [[NSMutableString alloc] init];
+    
+    for (NSString *socialString in self.socialArray) {
+        NSString *appendString = (socialString != [self.socialArray lastObject]) ? [NSString stringWithFormat:@"%@,", socialString] : socialString;
+        [channelString appendString:appendString];
+    }
+    
+    return channelString;
 }
 
 @end
