@@ -16,7 +16,8 @@
 #import "CampaignListController.h"
 #import "SocialShareOptionsHandler.h"
 
-@interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate>
+@interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate,
+                            UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate, UIAlertViewDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIImageView * ivProductPhoto;
@@ -79,6 +80,10 @@
 }
 
 - (void)saveTapped {
+    if (![self validForm]) {
+        return;
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     
     if ([self.delegate respondsToSelector:@selector(RAFCustomizerSavedRAF:)]) {
@@ -103,7 +108,7 @@
 }
 
 - (void)cancelTapped {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self showCancelConfirmation];
 }
 
 - (void)doneClicked {
@@ -125,6 +130,16 @@
     }
     
     return YES;
+}
+
+
+#pragma mark - UIAlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // Checks to make sure user wants to cancel 
+    if (buttonIndex == 1) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 
@@ -434,6 +449,27 @@
     }
     
     return channelString;
+}
+
+- (BOOL)validForm {
+    if ([AMBUtilities stringIsEmpty:self.tfCampId.text]) {
+        UIAlertView *emptyIDAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Campaign field cannot be blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [emptyIDAlert show];
+        return NO;
+    }
+    
+    if ([AMBUtilities stringIsEmpty:self.tfRafName.text]) {
+        UIAlertView *emptyNameAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Integration Name field cannot be left blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [emptyNameAlert show];
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (void)showCancelConfirmation {
+    UIAlertView *cancelAlert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"By cancelling, all changes will be lost." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    [cancelAlert show];
 }
 
 @end
