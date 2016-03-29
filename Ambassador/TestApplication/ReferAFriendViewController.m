@@ -20,6 +20,7 @@
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UITableView * rafTable;
+@property (nonatomic, strong) IBOutlet UILabel * lblTapAdd;
 
 // Private properties
 @property (nonatomic, strong) NSArray * rafArray;
@@ -39,8 +40,7 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
-    [self addDefaultIfFirstLaunch];
-    self.rafArray = [DefaultsHandler getThemeArray];
+    [self reloadThemesWithFade:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -192,6 +192,7 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 
 - (void)reloadThemesWithFade:(BOOL)fade {
     self.rafArray = [DefaultsHandler getThemeArray];
+    self.lblTapAdd.hidden = (self.rafArray.count > 0) ? YES : NO;
     
     if (self.rafArray.count == 0) {
         [self setNavBarButtons];
@@ -222,43 +223,36 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
     NSData *imageAttachmentData =  UIImagePNGRepresentation(rafImage);
     
     // Creates a code snippet to add in email
-    NSString *bodyString = [NSString stringWithFormat:@"Ambassador RAF Code Snippet v%@\n\n%@", [ValuesHandler getVersionNumber], [self getCodeSnippet:rafItem.rafName]];
+    NSString *bodyString = [NSString stringWithFormat:@"Ambassador RAF Code Snippet v%@\n\n%@", [ValuesHandler getVersionNumber], [self getCodeSnippet:rafItem]];
     
     // Creates a mail compose message to share via email with snippet and plist attachment
     MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
     mailVc.mailComposeDelegate = self;
     [mailVc addAttachmentData:plistAttachmentData mimeType:@"application/plist" fileName:[NSString stringWithFormat:@"%@.plist", rafItem.rafName]];
-    [mailVc addAttachmentData:imageAttachmentData mimeType:@"image/png" fileName:[NSString stringWithFormat:@"%@.png", rafItem.rafName]];
+    
+    // Checks if RAF contains an image
+    if (imageAttachmentData) { [mailVc addAttachmentData:imageAttachmentData mimeType:@"image/png" fileName:[NSString stringWithFormat:@"%@.png", rafItem.rafName]]; }
+    
     [mailVc setSubject:@"Ambassador Theme Plist"];
     [mailVc setMessageBody:bodyString isHTML:NO];
     
     [self presentViewController:mailVc animated:YES completion:nil];
 }
 
-- (NSString*)getCodeSnippet:(NSString*)rafName {
-    // TODO: Get campaign id from user on RAF page present
-    NSString *campID = @"1026"; // Temp
+- (NSString*)getCodeSnippet:(RAFItem*)rafItem {
+    NSString *campID = rafItem.campaign.campID;
     
     // Creates Obj-c snippet
     NSString *objcHeaderString = @"Objective-C \n";
-    NSString *objcRAFSnippet = [NSString stringWithFormat:@"[AmbassadorSDK presentRAFForCampaign:@\"%@\" FromViewController:self withThemePlist:@\"%@\"];", campID, rafName];
+    NSString *objcRAFSnippet = [NSString stringWithFormat:@"[AmbassadorSDK presentRAFForCampaign:@\"%@\" FromViewController:self withThemePlist:@\"%@\"];", campID, rafItem.rafName];
     NSString *fullObjc = [NSString stringWithFormat:@"%@\n%@", objcHeaderString, objcRAFSnippet];
     
     // Creates Swift snippet
     NSString *swiftHeaderString = @"Swift \n";
-    NSString *swiftRAFSnippet = [NSString stringWithFormat:@"AmbassadorSDK.presentRAFForCampaign(\"%@\", fromViewController: self, withThemePlist: \"%@\")", campID, rafName];
+    NSString *swiftRAFSnippet = [NSString stringWithFormat:@"AmbassadorSDK.presentRAFForCampaign(\"%@\", fromViewController: self, withThemePlist: \"%@\")", campID, rafItem.rafName];
     NSString *fullSwift = [NSString stringWithFormat:@"%@\n%@", swiftHeaderString, swiftRAFSnippet];
     
     return [NSString stringWithFormat:@"%@\n\n\n%@", fullObjc, fullSwift];
-}
-
-- (void)addDefaultIfFirstLaunch {
-    // Adds a default RAF if one has not already been created
-    if (![DefaultsHandler hasAddedDefault]) {
-        RAFItem *defaultItem = [[RAFItem alloc] initWithName:@"Ambassador Default RAF" plistDict:[ThemeHandler getGenericTheme]];
-        [self saveNewTheme:defaultItem];
-        [DefaultsHandler setAddedDefaultRAFTrue];
-    }
 }
 
 @end
