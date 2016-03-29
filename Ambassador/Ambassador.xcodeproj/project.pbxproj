@@ -1174,10 +1174,18 @@
 			children = (
 				EF8FD8AA1CA9C60400C0ADB7 /* SocialShareOptionsHandler.h */,
 				EF8FD8AB1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m */,
+				EF8FD8B41CAAC77800C0ADB7 /* Custom Cells */,
+			);
+			name = "Social Sharing Table";
+			sourceTree = "<group>";
+		};
+		EF8FD8B41CAAC77800C0ADB7 /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
 				EF8FD8AD1CA9CA9900C0ADB7 /* SocialCell.h */,
 				EF8FD8AE1CA9CA9900C0ADB7 /* SocialCell.m */,
 			);
-			name = "Social Sharing Table";
+			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
 		EF9D98C91CA1AD4F00F5711F /* Custom Cells */ = {
@@ -1192,9 +1200,9 @@
 		EF9D98D51CA33C1800F5711F /* RAF Customizer */ = {
 			isa = PBXGroup;
 			children = (
-				EF8FD8A91CA9C5B400C0ADB7 /* Social Sharing Table */,
 				EF9D98D61CA341A700F5711F /* RAFCustomizer.h */,
 				EF9D98D71CA341A700F5711F /* RAFCustomizer.m */,
+				EF8FD8A91CA9C5B400C0ADB7 /* Social Sharing Table */,
 			);
 			name = "RAF Customizer";
 			sourceTree = "<group>";
