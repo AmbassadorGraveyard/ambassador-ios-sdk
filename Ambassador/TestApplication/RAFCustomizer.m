@@ -149,6 +149,7 @@
     self.ivProductPhoto.image = info[@"UIImagePickerControllerOriginalImage"];
     self.selectedImage = self.ivProductPhoto.image;
     self.btnClearImage.enabled = YES;
+    self.plusImage.hidden = YES;
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
