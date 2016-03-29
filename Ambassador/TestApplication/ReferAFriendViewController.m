@@ -214,10 +214,12 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 
 - (void)exportRAFTheme:(RAFItem*)rafItem {
     // Gets the path for the plist being exported
-    NSString *path = [ThemeHandler getDocumentsPathWithName:rafItem.plistFullName];
+    NSString *plistPath = [ThemeHandler getDocumentsPathWithName:rafItem.plistFullName];
+    UIImage *rafImage = [ThemeHandler getImageForRAF:rafItem];
     
     // Creates data to be sent as an attachment for the email
-    NSData *dataToAttach = [NSData dataWithContentsOfFile:path];
+    NSData *plistAttachmentData = [NSData dataWithContentsOfFile:plistPath];
+    NSData *imageAttachmentData =  UIImagePNGRepresentation(rafImage);
     
     // Creates a code snippet to add in email
     NSString *bodyString = [NSString stringWithFormat:@"Ambassador RAF Code Snippet v%@\n\n%@", [ValuesHandler getVersionNumber], [self getCodeSnippet:rafItem.rafName]];
@@ -225,7 +227,8 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
     // Creates a mail compose message to share via email with snippet and plist attachment
     MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
     mailVc.mailComposeDelegate = self;
-    [mailVc addAttachmentData:dataToAttach mimeType:@"application/plist" fileName:[NSString stringWithFormat:@"%@.plist", rafItem.rafName]];
+    [mailVc addAttachmentData:plistAttachmentData mimeType:@"application/plist" fileName:[NSString stringWithFormat:@"%@.plist", rafItem.rafName]];
+    [mailVc addAttachmentData:imageAttachmentData mimeType:@"image/png" fileName:[NSString stringWithFormat:@"%@.png", rafItem.rafName]];
     [mailVc setSubject:@"Ambassador Theme Plist"];
     [mailVc setMessageBody:bodyString isHTML:NO];
     
