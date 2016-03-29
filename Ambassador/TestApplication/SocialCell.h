@@ -8,8 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SocialCellDelegate <NSObject>
+
+- (void)socialChannel:(NSString*)channel enableStatusUpdated:(BOOL)enabled orderIndex:(NSInteger)index;
+
+@end
+
+
 @interface SocialCell : UITableViewCell
 
-- (void)setUpCellWithName:(NSString*)name isEnabled:(BOOL)enabled;
+// Public properties
+@property (nonatomic, weak) id<SocialCellDelegate> delegate;
+
+// Public functions
+- (void)setUpCellWithName:(NSString*)name isEnabled:(BOOL)enabled orderIndex:(NSInteger)index;
 
 @end

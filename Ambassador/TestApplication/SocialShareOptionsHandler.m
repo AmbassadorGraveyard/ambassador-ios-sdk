@@ -9,7 +9,7 @@
 #import "SocialShareOptionsHandler.h"
 #import "SocialCell.h"
 
-@interface SocialShareOptionsHandler()
+@interface SocialShareOptionsHandler() <SocialCellDelegate>
 
 // Private properties
 @property (nonatomic, strong) NSMutableArray * fullArray;
@@ -44,7 +44,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SocialCell *cell = [tableView dequeueReusableCellWithIdentifier:@"socialCell"];
-    [cell setUpCellWithName:self.fullArray[indexPath.row] isEnabled:YES];
+    
+    // Gets boolean to tell cell if channel is enabled or not
+    BOOL isEnabled = [self.onArray containsObject:self.fullArray[indexPath.row]];
+    
+    [cell setUpCellWithName:self.fullArray[indexPath.row] isEnabled:isEnabled orderIndex:indexPath.row];
+    cell.delegate = self;
     
     return cell;
 }
@@ -59,13 +64,22 @@
 
 // Handles what to do when rows are being re-ordered
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath{
+    // Updates the order of the full social array
     NSString *stringToMove = self.fullArray[sourceIndexPath.row];
     [self.fullArray removeObjectAtIndex:sourceIndexPath.row];
     [self.fullArray insertObject:stringToMove atIndex:destinationIndexPath.row];
     
+    // Creates a new array with correct order and enabled channels
+    NSMutableArray *newOrderArray = [[NSMutableArray alloc] init];
+    for (NSString *channel in self.fullArray) {
+        if ([self.onArray containsObject:channel]) {
+            [newOrderArray addObject:channel];
+        }
+    }
+    
     // Checks if delegate is implementing function and passes back new order of array
     if ([self.delegate respondsToSelector:@selector(socialShareHandlerUpdated:)]) {
-        [self.delegate socialShareHandlerUpdated:self.fullArray];
+        [self.delegate socialShareHandlerUpdated:newOrderArray];
     }
 }
 
@@ -76,6 +90,23 @@
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
+}
+
+
+#pragma mark - Social Cell Delegate
+
+- (void)socialChannel:(NSString *)channel enableStatusUpdated:(BOOL)enabled orderIndex:(NSInteger)index {
+    // Decides whether to add or remove to enabled channels based on switch
+    if (enabled) {
+        [self.onArray addObject:channel];
+    } else {
+        [self.onArray removeObject:channel];
+    }
+    
+    // Tells delegate to update social array if responds
+    if ([self.delegate respondsToSelector:@selector(socialChannel:enableStatusUpdated:orderIndex:)]) {
+        [self.delegate socialShareHandlerEnabledObjectsUpdated:self.onArray];
+    }
 }
 
 @end

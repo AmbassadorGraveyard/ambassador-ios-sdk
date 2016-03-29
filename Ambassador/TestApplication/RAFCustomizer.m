@@ -157,13 +157,18 @@
 
 /*
  Delegate function that gets fired whenever
- the social channel order is rearranged. The social
- array gets updated based on the new order and 
- gets saved once the user actually taps the 'Save' 
- button.
+ the social channel order is rearranged. 
  */
 - (void)socialShareHandlerUpdated:(NSMutableArray *)socialArray {
     self.socialArray = socialArray;
+}
+
+/* 
+ Delegate function that gets fired whenever
+ a social channel is enabled or disabled.
+ */
+- (void)socialShareHandlerEnabledObjectsUpdated:(NSMutableArray *)enabledArray {
+    self.socialArray = enabledArray;
 }
 
 
@@ -371,14 +376,15 @@
     
     // Creates an array based on enabled social channels
     NSMutableArray *onArray = [[NSMutableArray alloc] initWithArray:[channelString componentsSeparatedByString:@","]];
-    self.socialArray = [NSMutableArray arrayWithArray:onArray];
     
     // Goes through each all channel strings from plist and removes spaces
-    for (int i = 0; i < self.socialArray.count; i++) {
-        NSString *socialString = self.socialArray[i];
+    for (int i = 0; i < onArray.count; i++) {
+        NSString *socialString = onArray[i];
         socialString = [socialString stringByReplacingOccurrencesOfString:@" " withString:@""];
-        [self.socialArray replaceObjectAtIndex:i withObject:socialString];
+        [onArray replaceObjectAtIndex:i withObject:socialString];
     }
+    
+    self.socialArray = [NSMutableArray arrayWithArray:onArray];
     
     // Array of all channels which will not change unless we add new channels to the SDK
     NSMutableArray *allChannelArray = [NSMutableArray arrayWithObjects:@"Facebook", @"Twitter", @"LinkedIn", @"SMS", @"Email", nil];

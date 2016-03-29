@@ -11,7 +11,9 @@
 
 @protocol SocialShareHandlerDelegate <NSObject>
 
+// Delegate functions
 - (void)socialShareHandlerUpdated:(NSMutableArray*)socialArray;
+- (void)socialShareHandlerEnabledObjectsUpdated:(NSMutableArray*)enabledArray;
 
 @end
 
