@@ -104,7 +104,7 @@
     }
     
     // Tells delegate to update social array if responds
-    if ([self.delegate respondsToSelector:@selector(socialChannel:enableStatusUpdated:orderIndex:)]) {
+    if ([self.delegate respondsToSelector:@selector(socialShareHandlerEnabledObjectsUpdated:)]) {
         [self.delegate socialShareHandlerEnabledObjectsUpdated:self.onArray];
     }
 }

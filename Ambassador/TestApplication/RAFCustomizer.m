@@ -329,8 +329,12 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:authString forHTTPHeaderField:@"Authorization"];
     
+    [[AMBUtilities sharedInstance] showLoadingScreenForView:self.parentViewController.view];
+    
     // Makes network call
     [[[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        [[AMBUtilities sharedInstance] hideLoadingView];
+        
         NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
