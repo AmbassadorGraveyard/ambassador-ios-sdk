@@ -17,6 +17,7 @@ class ApplicationUITests: XCTestCase {
         app = XCUIApplication()
         app.launchArguments = ["isUITesting"]
         app.launch()
+        ambassadorLogin()
     }
     
     override func tearDown() {
@@ -27,34 +28,109 @@ class ApplicationUITests: XCTestCase {
 
 // UI Tests
 extension ApplicationUITests {
-    func testSignUpInstallConversion() {
-        app.tabBars.buttons["Sign Up"].tap()
+    func testIdentify() {
+        app.tabBars.buttons["Identify"].tap()
+
         
+        let submitButton = app.buttons["Submit"]
+        submitButton.tap()
+        
+        // Check to make sure we get an invalid email alert
+        XCTAssertTrue(app.alerts["Hold on!"].exists)
+        let okayButton = app.alerts["Hold on!"].collectionViews.buttons["Okay"]
+        okayButton.tap()
+        
+        // Type an invalid email
         let emailTextField = app.textFields["Email"]
         emailTextField.tap()
-        emailTextField.typeText("jake@getambassador.com")
-        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
+        emailTextField.typeText("test")
+        submitButton.tap()
         
-        let usernameTextField = app.textFields["Username"]
-        usernameTextField.tap()
-        usernameTextField.typeText("testuser")
-        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
+        // Check to make sure we get an invalid email alert
+        XCTAssertTrue(app.alerts["Hold on!"].exists)
+        okayButton.tap()
+    
+        // Type a valid email
+        emailTextField.tap()
+        emailTextField.typeText("@example.com")
+        submitButton.tap()
         
-        let passwordSecureTextField = app.secureTextFields["Password"]
-        passwordSecureTextField.tap()
-        passwordSecureTextField.typeText("testpassword")
-        XCTAssertEqual(app.keyboards.count, 1) // Checks to make sure keyboard is present
-        
-        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Sign Up"].tap()
-        XCTAssertEqual(app.keyboards.count, 0) // Checks to sure all textFields resigned firstResponder (that the keyboard is hidden)
+        // Check to make sure we get a succes message
+        XCTAssertTrue(app.alerts["Great!"].exists)
+        let okayButton2 = app.alerts["Great!"].collectionViews.buttons["Okay"]
+        okayButton2.tap()
     }
     
-    func testBuyConversion() {
-        app.tabBars.buttons["Buy Now"].tap()
-        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.buttons["Buy Now"].tap()
+    func testConversion() {
+        app.tabBars.buttons["Conversion"].tap()
         
-        let doneButton = app.alerts["Purchase successful"].collectionViews.buttons["Done"]
-        doneButton.tap()
-        XCTAssertFalse(doneButton.exists)
+        let elementsQuery = app.scrollViews.otherElements
+        let submitButton = elementsQuery.buttons["Submit"]
+        submitButton.tap()
+        
+        // Checks to make sure we get blank fields error
+        XCTAssertTrue(app.alerts["Hold on!"].exists)
+        let okayButton = app.alerts["Hold on!"].collectionViews.buttons["Okay"]
+        okayButton.tap()
+        
+        let referredEmailTextField = elementsQuery.textFields["Referred Email"]
+        referredEmailTextField.tap()
+        referredEmailTextField.typeText("test")
+        
+        let revenueAmtTextField = elementsQuery.textFields["Revenue Amt"]
+        revenueAmtTextField.tap()
+        revenueAmtTextField.tap()
+        revenueAmtTextField.typeText("1.50")
+        
+        let campaignIdTextField = elementsQuery.textFields["Campaign ID"]
+        campaignIdTextField.tap()
+        campaignIdTextField.tap()
+        campaignIdTextField.typeText("1026")
+        
+        app.toolbars.buttons["Done"].tap()
+        
+        elementsQuery.buttons["Submit"].tap()
+        
+        // Checks to make sure we get invalid email error
+        XCTAssertTrue(app.alerts["Hold on!"].exists)
+        app.alerts["Hold on!"].collectionViews.buttons["Okay"]
+        okayButton.tap()
+        
+        referredEmailTextField.tap()
+        referredEmailTextField.typeText("@example.com")
+        app.buttons["Done"].tap()
+        elementsQuery.buttons["Submit"].tap()
+        
+        // Checks to make sure that we got a success message
+        XCTAssertTrue(app.alerts["Great!"].exists)
+        app.alerts["Great!"].collectionViews.buttons["Okay"].tap()
+    }
+    
+    func testSettingsPage() {
+        app.tabBars.buttons["Settings"].tap()
+        
+        let element = app.otherElements.containingType(.NavigationBar, identifier:"Settings").childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element
+        element.childrenMatchingType(.Other).elementBoundByIndex(2).buttons["copyIcon"].tap()
+        element.childrenMatchingType(.Other).elementBoundByIndex(4).buttons["copyIcon"].tap()
+        
+        app.buttons["Logout"].tap()
     }
 }
+
+// Helper Functions
+extension ApplicationUITests {
+    func ambassadorLogin() {
+        if app.buttons["Sign In"].exists {
+            let usernameTextField = app.textFields["Username"]
+            usernameTextField.tap()
+            usernameTextField.typeText("jake+test@getambassador.com")
+            
+            let passwordSecureTextField = app.secureTextFields["Password"]
+            passwordSecureTextField.tap()
+            passwordSecureTextField.typeText("p3opl3first409")
+            app.buttons["Sign In"].tap()
+        }
+    }
+}
+
+

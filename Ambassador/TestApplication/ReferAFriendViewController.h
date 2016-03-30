@@ -6,8 +6,8 @@
 //  Copyright © 2016 Ambassador. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "IdentifyViewController.h"
 
-@interface ReferAFriendViewController : ViewController
+@interface ReferAFriendViewController : UIViewController
 
 @end
