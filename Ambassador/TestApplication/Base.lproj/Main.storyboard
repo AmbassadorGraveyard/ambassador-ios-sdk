@@ -520,25 +520,25 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ya-dF-Og2">
-                                                    <rect key="frame" x="-25" y="16" width="30" height="30"/>
+                                                    <rect key="frame" x="-40" y="11" width="40" height="40"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="Jsk-0D-jmP"/>
-                                                        <constraint firstAttribute="width" constant="30" id="iuW-Ue-1QI"/>
+                                                        <constraint firstAttribute="height" constant="40" id="Jsk-0D-jmP"/>
+                                                        <constraint firstAttribute="width" constant="40" id="iuW-Ue-1QI"/>
                                                     </constraints>
-                                                    <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                                    <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="9"/>
                                                     <state key="normal" image="removeIcon"/>
                                                     <connections>
                                                         <action selector="deleteTapped:" destination="smJ-zd-BOl" eventType="touchUpInside" id="J6S-v1-Ght"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="created on 01/07/2015 at 10:22pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8hC-Dv-COo">
-                                                    <rect key="frame" x="25" y="35" width="178" height="14"/>
+                                                    <rect key="frame" x="20" y="35" width="178" height="14"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                     <color key="textColor" red="0.6056068497474747" green="0.6056068497474747" blue="0.6056068497474747" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RAF Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NJ0-Ad-Q6d">
-                                                    <rect key="frame" x="25" y="15" width="75" height="18"/>
+                                                    <rect key="frame" x="20" y="15" width="75" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <color key="textColor" red="0.37407275887474756" green="0.37407275887474756" blue="0.37407275887474756" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -551,7 +551,7 @@
                                                 <constraint firstItem="6Ya-dF-Og2" firstAttribute="centerY" secondItem="HLW-t9-CG6" secondAttribute="centerY" id="VMY-a2-NZZ"/>
                                                 <constraint firstItem="NJ0-Ad-Q6d" firstAttribute="top" secondItem="HLW-t9-CG6" secondAttribute="top" constant="15" id="XFE-pG-tsV"/>
                                                 <constraint firstItem="zgs-Up-GdQ" firstAttribute="centerY" secondItem="HLW-t9-CG6" secondAttribute="centerY" id="XUg-7w-Coa"/>
-                                                <constraint firstItem="6Ya-dF-Og2" firstAttribute="leading" secondItem="HLW-t9-CG6" secondAttribute="leading" constant="-25" id="YjD-gR-m7a"/>
+                                                <constraint firstItem="6Ya-dF-Og2" firstAttribute="leading" secondItem="HLW-t9-CG6" secondAttribute="leading" constant="-40" id="YjD-gR-m7a"/>
                                                 <constraint firstAttribute="trailing" secondItem="zgs-Up-GdQ" secondAttribute="trailing" constant="20" id="YtA-di-Udv"/>
                                                 <constraint firstItem="8hC-Dv-COo" firstAttribute="top" secondItem="NJ0-Ad-Q6d" secondAttribute="bottom" constant="2" id="aRW-nO-UnS"/>
                                                 <constraint firstItem="NJ0-Ad-Q6d" firstAttribute="leading" secondItem="HLW-t9-CG6" secondAttribute="leading" constant="20" id="m07-Ku-8w3"/>
