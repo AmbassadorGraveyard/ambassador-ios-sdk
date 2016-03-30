@@ -125,6 +125,7 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField == self.tfCampId) {
+        [self.tfRafName resignFirstResponder];
         [self showCampaignList];
         return NO;
     }
