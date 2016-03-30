@@ -1546,17 +1546,23 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="igV-ac-RUJ">
+                                <rect key="frame" x="282" y="282" width="37" height="37"/>
+                                <color key="color" red="0.10980392160000001" green="0.1450980392" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="vuw-L7-FMi" secondAttribute="trailing" id="0YJ-td-qof"/>
                             <constraint firstItem="vuw-L7-FMi" firstAttribute="top" secondItem="FuP-Cq-96V" secondAttribute="top" id="2db-Px-Zgc"/>
                             <constraint firstItem="nA7-bH-M3Z" firstAttribute="top" secondItem="vuw-L7-FMi" secondAttribute="bottom" id="DNl-Zr-fem"/>
+                            <constraint firstItem="igV-ac-RUJ" firstAttribute="centerY" secondItem="FuP-Cq-96V" secondAttribute="centerY" id="KTZ-CX-bW2"/>
                             <constraint firstAttribute="trailing" secondItem="nA7-bH-M3Z" secondAttribute="trailing" id="Qbn-aU-6Yt"/>
                             <constraint firstItem="vuw-L7-FMi" firstAttribute="top" secondItem="cUf-11-UgF" secondAttribute="bottom" id="b9d-Cz-o64"/>
                             <constraint firstItem="vuw-L7-FMi" firstAttribute="leading" secondItem="FuP-Cq-96V" secondAttribute="leading" id="e3z-1g-DIB"/>
                             <constraint firstItem="vuw-L7-FMi" firstAttribute="top" secondItem="cUf-11-UgF" secondAttribute="bottom" id="eef-3f-say"/>
                             <constraint firstItem="nA7-bH-M3Z" firstAttribute="leading" secondItem="FuP-Cq-96V" secondAttribute="leading" id="miE-pw-CWI"/>
+                            <constraint firstItem="igV-ac-RUJ" firstAttribute="centerX" secondItem="FuP-Cq-96V" secondAttribute="centerX" id="rHT-Gq-LuO"/>
                             <constraint firstItem="v85-yt-8Zp" firstAttribute="top" secondItem="nA7-bH-M3Z" secondAttribute="bottom" id="rMW-b9-vus"/>
                         </constraints>
                         <variation key="default">
@@ -1568,6 +1574,7 @@
                     </view>
                     <connections>
                         <outlet property="headerView" destination="vuw-L7-FMi" id="XWs-qp-Je6"/>
+                        <outlet property="spinner" destination="igV-ac-RUJ" id="ht2-pZ-Zue"/>
                         <outlet property="webView" destination="nA7-bH-M3Z" id="Mng-Bm-Z8t"/>
                     </connections>
                 </viewController>
