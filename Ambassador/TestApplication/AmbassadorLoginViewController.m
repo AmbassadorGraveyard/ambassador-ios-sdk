@@ -31,10 +31,14 @@
 }
 
 
-#pragma mark - IBActions
+#pragma mark - Actions
 
 - (IBAction)performLogin:(id)sender {
     [self makeAmbassadorLoginRequest];
+}
+
+- (IBAction)dontHaveAnAccountTapped:(id)sender {
+    [self performSegueWithIdentifier:@"noAccountSegue" sender:self];
 }
 
 #pragma mark - UI Functions

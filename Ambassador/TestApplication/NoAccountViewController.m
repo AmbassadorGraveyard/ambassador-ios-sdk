@@ -10,28 +10,35 @@
 
 @interface NoAccountViewController ()
 
+// IBOutlets
+@property (nonatomic, strong) IBOutlet UIWebView * webView;
+@property (nonatomic, strong) IBOutlet UIView * headerView;
+
 @end
+
 
 @implementation NoAccountViewController
 
+
+#pragma mark - LifeCycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    // Loads up webview
+    NSURL *scheduleDemoURL = [NSURL URLWithString:@"http://www.getambassador.com/schedule-a-demo"];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:scheduleDemoURL]];
+    
+    // Sets colors
+    self.view.backgroundColor = self.headerView.backgroundColor;
+    self.webView.backgroundColor = self.headerView.backgroundColor;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-/*
-#pragma mark - Navigation
+#pragma mark - Actions
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)closePage:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
-*/
 
 @end

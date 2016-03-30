@@ -1087,9 +1087,9 @@
 		EF557A151C88B4AE00F66761 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				EF499DB21CAC4F8700D2EB01 /* Account Sign Up */,
 				EF557A161C88B4D000F66761 /* AmbassadorLoginViewController.h */,
 				EF557A171C88B4D000F66761 /* AmbassadorLoginViewController.m */,
+				EF499DB21CAC4F8700D2EB01 /* Account Sign Up */,
 			);
 			name = Login;
 			sourceTree = "<group>";
