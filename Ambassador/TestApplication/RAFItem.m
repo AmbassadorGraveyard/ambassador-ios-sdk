@@ -7,6 +7,7 @@
 //
 
 #import "RAFItem.h"
+#import "AMBValues.h"
 
 @implementation RAFItem
 
@@ -37,7 +38,7 @@
 - (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict {
     self = [super init];
     self.rafName = name;
-    self.plistFullName = [NSString stringWithFormat:@"AMBTESTAPP%@", name];
+    self.plistFullName = [NSString stringWithFormat:@"%@%@", TEST_APP_CONTSTANT, name];
     self.dateCreated = [NSDate date];
     self.plistDict = dict;
     

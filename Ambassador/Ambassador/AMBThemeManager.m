@@ -36,7 +36,7 @@ static NSDictionary * valuesDic;
     if (NSClassFromString(@"XCTest")) {
         bundle = [NSBundle bundleForClass:[self class]];
     // Makes sure that the plist is not a custom made theme from the Test Application -- we WONT use a bundle is that is the case
-    } else if (![plistName containsString:@"AMBTESTAPP"]) {
+    } else if (![plistName containsString:TEST_APP_CONTSTANT]) {
         // Checks to see if using GenericTheme
         bundle = ([plistName isEqualToString:@"GenericTheme"]) ? ambassadorBundle : [NSBundle mainBundle];
     }
@@ -223,7 +223,7 @@ static NSDictionary * valuesDic;
         then we grab the image from the documents folder.
         Else, we will grab from the parent's image 
         assets folder as usual. */
-        UIImage *returnImage = ([imageName containsString:@"AMBTESTAPP"]) ? [UIImage imageWithContentsOfFile:[self getImagePathWithName:imageName]] : [UIImage imageNamed:imageName];
+        UIImage *returnImage = ([imageName containsString:TEST_APP_CONTSTANT]) ? [UIImage imageWithContentsOfFile:[self getImagePathWithName:imageName]] : [UIImage imageNamed:imageName];
         [returnDict setValue:returnImage forKey:@"image"];
   
         if (imageDescArray.count > 1) {

@@ -460,7 +460,7 @@
 - (BOOL)validForm {
     // Checks for empty RAF Name
     if ([AMBUtilities stringIsEmpty:self.tfRafName.text]) {
-        UIAlertView *emptyNameAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Integration Name field cannot be left blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        UIAlertView *emptyNameAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Integration Name field cannot be blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [emptyNameAlert show];
         return NO;
     }

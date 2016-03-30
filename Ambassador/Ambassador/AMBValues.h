@@ -13,6 +13,8 @@
 
 @interface AMBValues : NSObject
 
+extern NSString * TEST_APP_CONTSTANT;
+
 + (UIImage*)imageFromBundleWithName:(NSString*)name type:(NSString*)type tintable:(BOOL)tintable;
 + (NSBundle*)AMBframeworkBundle;
 + (BOOL)isProduction;
