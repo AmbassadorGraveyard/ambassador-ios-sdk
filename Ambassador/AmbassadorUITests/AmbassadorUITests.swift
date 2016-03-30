@@ -156,9 +156,6 @@ extension AmbassadorUITests {
         // Pop back to ServiceSelector
         app.navigationBars.buttons["Back"].tap()
     }
-    
-    
-    
 }
 
 // Helper Functions
@@ -183,14 +180,33 @@ extension AmbassadorUITests {
             emailTextField.typeText("jake@getambassador.com")
             app.buttons["Continue"].tap()
         }
-
+    }
+    
+    func createNewRAF() {
+        app.navigationBars["MyTabBar"].buttons["Add"].tap()
+        
+        let elementsQuery = app.scrollViews.otherElements
+        elementsQuery.textFields["RAF Name"].tap()
+        elementsQuery.textFields["RAF Name"]
+        
+        app.typeText("Test")
+        app.buttons["Done"].tap()
+        elementsQuery.textFields["Campaign"].tap()
+        app.tables.staticTexts["Jake+Test"].tap()
+        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.tap()
+        app.navigationBars["RAF Customizer"].buttons["Save"].tap()
     }
     
     func presentRAF() {
         ambassadorLogin()
         
+        // Checks if there is already a RAF created
+        if app.tables.staticTexts["Test"].exists == false {
+            createNewRAF()
+        }
+        
         app.tabBars.buttons["Refer a Friend"].tap()
-        app.tables.staticTexts["Ambassador Default RAF"].tap()
+        app.tables.staticTexts["Test"].tap()
         
         handleEmailPrompt()
         

@@ -39,6 +39,15 @@
     [[NSUserDefaults standardUserDefaults] setValue:@"true" forKey:@"ADDED_DEFAULT"];
 }
 
++ (void)setUniversalToken:(NSString*)univToken {
+    [[NSUserDefaults standardUserDefaults] setValue:univToken forKey:@"UNIVERSAL_TOKEN"];
+}
+
++ (void)saveCampaignList:(NSArray*)campList {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:campList];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"CAMPAIGN_ARRAY"];
+}
+
 
 #pragma mark - Getters
 
@@ -70,6 +79,16 @@
     return ([defaultsString isEqualToString:@"true"]) ? YES : NO;
 }
 
++ (NSString*)getUniversalToken {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:@"UNIVERSAL_TOKEN"];
+}
+
++ (NSArray*)getCampaignList {
+    NSData *encodedArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"CAMPAIGN_ARRAY"];
+    NSArray *returnArray = [NSKeyedUnarchiver unarchiveObjectWithData:encodedArray];
+    return returnArray;
+}
+
 
 #pragma mark - Helper Functions
 
@@ -78,6 +97,7 @@
     [DefaultsHandler setUniversalID:@""];
     [DefaultsHandler setFullName:@"" lastName:@""];
     [DefaultsHandler setUserImage:@""];
+    [DefaultsHandler saveCampaignList:@[]];
 }
 
 @end

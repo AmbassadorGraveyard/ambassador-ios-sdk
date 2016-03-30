@@ -7,12 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "RAFItem.h"
 
 @interface ThemeHandler : NSObject
 
-+ (void)saveNewTheme:(RAFItem*)rafTheme;
++ (void)saveTheme:(RAFItem*)rafTheme;
++ (void)saveImage:(UIImage*)image forTheme:(RAFItem*)theme;
 + (void)deleteRafItem:(RAFItem*)rafItem;
-+ (NSString*)getDocumentsPathWithName:(NSString*)themeName;
++ (NSString *)getDocumentsPathWithName:(NSString*)themeName;
++ (NSMutableDictionary *)dictionaryFromPlist:(RAFItem*)item;
++ (NSMutableDictionary *)getGenericTheme;
++ (UIImage *)getImageForRAF:(RAFItem*)item;
++ (void)removeImageForTheme:(RAFItem*)theme;
++ (BOOL)duplicateRAFName:(NSString*)name;
 
 @end

@@ -36,7 +36,7 @@ static NSDictionary * valuesDic;
     if (NSClassFromString(@"XCTest")) {
         bundle = [NSBundle bundleForClass:[self class]];
     // Makes sure that the plist is not a custom made theme from the Test Application -- we WONT use a bundle is that is the case
-    } else if (![plistName containsString:@"AMBTESTAPP"]) {
+    } else if (![plistName containsString:TEST_APP_CONTSTANT]) {
         // Checks to see if using GenericTheme
         bundle = ([plistName isEqualToString:@"GenericTheme"]) ? ambassadorBundle : [NSBundle mainBundle];
     }
@@ -215,7 +215,16 @@ static NSDictionary * valuesDic;
         NSString *imageDescription = [valuesDic valueForKey:[self imageEnumStringValue:imageName]];
         NSArray *imageDescArray = [imageDescription componentsSeparatedByString:@","];
         
-        [returnDict setValue:[UIImage imageNamed:[imageDescArray objectAtIndex:0]] forKey:@"image"];
+        // Grabs image name from plist
+        NSString *imageName = [imageDescArray objectAtIndex:0];
+        
+        /* Checks if customized RAF from Test App.
+        If it is a custom RAF from the test app
+        then we grab the image from the documents folder.
+        Else, we will grab from the parent's image 
+        assets folder as usual. */
+        UIImage *returnImage = ([imageName containsString:TEST_APP_CONTSTANT]) ? [UIImage imageWithContentsOfFile:[self getImagePathWithName:imageName]] : [UIImage imageNamed:imageName];
+        [returnDict setValue:returnImage forKey:@"image"];
   
         if (imageDescArray.count > 1) {
             [returnDict setValue:[imageDescArray objectAtIndex:1] forKey:@"imageSlotNumber"];
@@ -298,6 +307,16 @@ static NSDictionary * valuesDic;
     
     // Creates and writes to a new or existing file path with the path name
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", themeName]];
+    return filePath;
+}
+
+- (NSString*)getImagePathWithName:(NSString*)imageName {
+    // Gets Documents folder directory
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    // Gets image from documents folder
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:imageName];
     return filePath;
 }
 
