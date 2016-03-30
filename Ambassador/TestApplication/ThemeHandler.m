@@ -71,6 +71,18 @@
     [writeDict writeToFile:filePath atomically:NO];
 }
 
++ (BOOL)duplicateRAFName:(NSString*)name {
+    NSMutableArray *currentThemeArray = [DefaultsHandler getThemeArray];
+    
+    for (RAFItem *item in currentThemeArray) {
+        if ([name isEqualToString:item.rafName]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 
 #pragma mark - Delete Functions
 
