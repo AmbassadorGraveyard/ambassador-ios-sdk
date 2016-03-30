@@ -34,4 +34,7 @@
 - (void)getLinkedInAccessTokenWithPopupValue:(NSString*)popupValue success:(void(^)(NSString *accessToken))success failure:(void(^)(NSString *error))failure;
 - (void)shareToLinkedInWithMessage:(NSString*)message success:(void(^)(NSString *successMessage))success failure:(void(^)(NSString *error))failure;
 
+// Welcome Screen Requests
+- (void)getReferrerInformationWithSuccess:(void(^)(NSDictionary *referrerInfo))success failure:(void(^)(NSString *error))failure;
+
 @end

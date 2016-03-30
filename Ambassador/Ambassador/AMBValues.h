@@ -33,6 +33,7 @@
 + (NSString*)getCompanyDetailsUrl;
 + (NSString*)getLinkedinClientValuesUrl:(NSString*)clientUID;
 + (NSString*)getLinkedinAccessTokenUrl:(NSString*)popupValue;
++ (NSString*)getReferrerInformationUrl;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;

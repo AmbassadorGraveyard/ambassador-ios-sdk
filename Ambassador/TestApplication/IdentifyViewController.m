@@ -32,9 +32,8 @@
 - (void)viewDidLoad {
     [self setUpTheme];
     
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressSubmit)];
-    [longPress setMinimumPressDuration:0.3];
-    [self.btnSubmit setGestureRecognizers:@[longPress]];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressLogin:)];
+    [self.btnSubmit addGestureRecognizer:longPress];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -50,15 +49,19 @@
     [self.tfEmail resignFirstResponder];
 }
 
-- (void)longPressSubmit {
-    AMBWelcomeScreenParameters *welcomeParams = [[AMBWelcomeScreenParameters alloc] init];
-    welcomeParams.detailMessage = @"You understand the value of referrals. Maybe you've even explored referral marketing software.";
-    welcomeParams.referralMessage = @"{{ name }} has referred you to Ambassador";
-    welcomeParams.accentColor = self.btnSubmit.backgroundColor;
-    welcomeParams.linkArray = @[@"Testimonials", @"Request Demo"];
-    welcomeParams.actionButtonTitle = @"CREATE AN ACCOUNT";
-    
-    [AmbassadorSDK presentWelcomeScreen:self withParameters:welcomeParams];
+- (void)longPressLogin:(UITapGestureRecognizer*)gesture {
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        AMBWelcomeScreenParameters *welcomeParams = [[AMBWelcomeScreenParameters alloc] init];
+        welcomeParams.detailMessage = @"You understand the value of referrals. Maybe you've even explored referral marketing software.";
+        welcomeParams.referralMessage = @"{{ name }} has referred you to Ambassador";
+        welcomeParams.accentColor = self.btnSubmit.backgroundColor;
+        welcomeParams.linkArray = @[@"Testimonials", @"Request Demo"];
+        welcomeParams.actionButtonTitle = @"CREATE AN ACCOUNT";
+
+        [AmbassadorSDK presentWelcomeScreen:welcomeParams ifAvailable:^(AMBWelcomeScreenViewController *welcomeScreenVC) {
+            [self presentViewController:welcomeScreenVC animated:YES completion:nil];
+        }];
+    }
 }
 
 

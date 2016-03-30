@@ -229,12 +229,24 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 #pragma mark - Welcome Screen
 
-+ (void)presentWelcomeScreen:(UIViewController*)viewController withParameters:(AMBWelcomeScreenParameters*)parameters {
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
-    AMBWelcomeScreenViewController *welcomeController = (AMBWelcomeScreenViewController*)[sb instantiateViewControllerWithIdentifier:@"WELCOME_SCREEN"];
-    welcomeController.parameters = parameters;
-    welcomeController.delegate = viewController;
-    [viewController presentViewController:welcomeController animated:YES completion:nil];
++ (void)presentWelcomeScreen:(AMBWelcomeScreenParameters*)parameters ifAvailable:(void(^)(AMBWelcomeScreenViewController *welcomeScreenVC))available {
+    if (![AMBUtilities stringIsEmpty:[AMBValues getMbsyCookieCode]]) {
+        [[AMBNetworkManager sharedInstance] getReferrerInformationWithSuccess:^(NSDictionary *referrerInfo) {
+            // Create new VC from storyboard
+            UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
+            AMBWelcomeScreenViewController *welcomeController = (AMBWelcomeScreenViewController*)[sb instantiateViewControllerWithIdentifier:@"WELCOME_SCREEN"];
+            
+            // Set image and name values from response
+            NSData *imageUrlData = [NSData dataWithContentsOfURL:[NSURL URLWithString:referrerInfo[@"avatar_url"]]];
+            welcomeController.referrerImage = [UIImage imageWithData:imageUrlData];
+            welcomeController.referrerName = referrerInfo[@"name"];
+            
+            welcomeController.parameters = parameters;
+            if (available) { available(welcomeController); }
+        } failure:^(NSString *error) {
+            DLog(@"Could not create the Welcome Screen - %@", error);
+        }];
+    }
 }
 
 @end
