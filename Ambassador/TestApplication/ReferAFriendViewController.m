@@ -13,21 +13,26 @@
 #import "ThemeHandler.h"
 #import "DefaultsHandler.h"
 #import "ValuesHandler.h"
+#import "RAFCustomizer.h"
 
-@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, MFMailComposeViewControllerDelegate>
+@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, MFMailComposeViewControllerDelegate, RAFCustomizerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UITableView * rafTable;
+@property (nonatomic, strong) IBOutlet UILabel * lblTapAdd;
 
 // Private properties
 @property (nonatomic, strong) NSArray * rafArray;
 @property (nonatomic) BOOL tableEditing;
+@property (nonatomic, strong) RAFItem * rafForCustomizer;
 
 @end
 
 
 @implementation ReferAFriendViewController
+
+NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 
 
 #pragma mark - LifeCycle
@@ -35,8 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
-    [self addDefaultIfFirstLaunch];
-    self.rafArray = [DefaultsHandler getThemeArray];
+    [self reloadThemesWithFade:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -47,16 +51,28 @@
 #pragma mark - Button Actions
 
 - (void)addNewRAF {
-    // TODO: Replace with presenting RAF customizer
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Theme" message:@"Type your theme name below." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
+    [self performSegueWithIdentifier:RAF_CUSTOMIZE_SEGUE sender:self];
 }
 
 - (void)editRAF {
     self.tableEditing = !self.tableEditing;
     [self setNavBarButtons];
     [self reloadThemesWithFade:NO];
+}
+
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:RAF_CUSTOMIZE_SEGUE]) {
+        UINavigationController *nav = (UINavigationController*)segue.destinationViewController;
+        RAFCustomizer *customizer = nav.viewControllers[0];
+        customizer.rafItem = self.rafForCustomizer;
+        customizer.delegate = self;
+        
+        // Resets the selected RAF to nil
+        self.rafForCustomizer = nil;
+    }
 }
 
 
@@ -97,11 +113,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSString *campaignId = @"1026"; // TEMPORARY
     
-    // Gets RAFItem at array and presents a raf using the plist name value
-    RAFItem *item = self.rafArray[indexPath.row];
-    [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self.tabBarController withThemePlist:item.plistFullName];
+    if (self.tableEditing) {
+        self.rafForCustomizer = self.rafArray[indexPath.row];
+        [self performSegueWithIdentifier:RAF_CUSTOMIZE_SEGUE sender:self];
+    } else {
+        // Gets RAFItem at array and presents a raf using the plist name value
+        RAFItem *item = self.rafArray[indexPath.row];
+        NSString *campaignId = item.campaign.campID;
+        [AmbassadorSDK presentRAFForCampaign:campaignId FromViewController:self.tabBarController withThemePlist:item.plistFullName];
+    }
 }
 
 
@@ -110,17 +131,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
-}
-
-
-#pragma mark - AlertView Delegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    // If user clicks save
-    if (buttonIndex == 1) {
-        NSString *themeName = [[alertView textFieldAtIndex:0] text];
-        [self saveNewTheme:themeName];
-    }
 }
 
 
@@ -136,6 +146,13 @@
     } else {
         NSLog(@"Message was not sent");
     }
+}
+
+
+#pragma mark - RAFCustomizer Delegate
+
+- (void)RAFCustomizerSavedRAF:(RAFItem *)rafItem {
+    [self saveNewTheme:rafItem];
 }
 
 
@@ -175,6 +192,7 @@
 
 - (void)reloadThemesWithFade:(BOOL)fade {
     self.rafArray = [DefaultsHandler getThemeArray];
+    self.lblTapAdd.hidden = (self.rafArray.count > 0) ? YES : NO;
     
     if (self.rafArray.count == 0) {
         [self setNavBarButtons];
@@ -189,62 +207,52 @@
     }
 }
 
-- (void)saveNewTheme:(NSString*)themeName {
-    // Creates a new RAF item which will be stored to defaults
-    RAFItem *item = [[RAFItem alloc] init];
-    item.rafName = themeName;
-    item.plistFullName = [NSString stringWithFormat:@"AMBTESTAPP%@", themeName];
-    item.dateCreated = [NSDate date];
-    
-    // Saves a new plist item using the RAF item name
-    [ThemeHandler saveNewTheme:item];
-    
+- (void)saveNewTheme:(RAFItem*)saveItem {
+    // Saves a new plist item using the RAF item name and reloads table
+    [ThemeHandler saveTheme:saveItem];
     [self reloadThemesWithFade:YES];
 }
 
 - (void)exportRAFTheme:(RAFItem*)rafItem {
     // Gets the path for the plist being exported
-    NSString *path = [ThemeHandler getDocumentsPathWithName:rafItem.plistFullName];
+    NSString *plistPath = [ThemeHandler getDocumentsPathWithName:rafItem.plistFullName];
+    UIImage *rafImage = [ThemeHandler getImageForRAF:rafItem];
     
     // Creates data to be sent as an attachment for the email
-    NSData *dataToAttach = [NSData dataWithContentsOfFile:path];
+    NSData *plistAttachmentData = [NSData dataWithContentsOfFile:plistPath];
+    NSData *imageAttachmentData =  UIImagePNGRepresentation(rafImage);
     
     // Creates a code snippet to add in email
-    NSString *bodyString = [NSString stringWithFormat:@"Ambassador RAF Code Snippet v%@\n\n%@", [ValuesHandler getVersionNumber], [self getCodeSnippet:rafItem.rafName]];
+    NSString *bodyString = [NSString stringWithFormat:@"Ambassador RAF Code Snippet v%@\n\n%@", [ValuesHandler getVersionNumber], [self getCodeSnippet:rafItem]];
     
     // Creates a mail compose message to share via email with snippet and plist attachment
     MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
     mailVc.mailComposeDelegate = self;
-    [mailVc addAttachmentData:dataToAttach mimeType:@"application/plist" fileName:[NSString stringWithFormat:@"%@.plist", rafItem.rafName]];
+    [mailVc addAttachmentData:plistAttachmentData mimeType:@"application/plist" fileName:[NSString stringWithFormat:@"%@.plist", rafItem.rafName]];
+    
+    // Checks if RAF contains an image
+    if (imageAttachmentData) { [mailVc addAttachmentData:imageAttachmentData mimeType:@"image/png" fileName:[NSString stringWithFormat:@"%@.png", rafItem.rafName]]; }
+    
     [mailVc setSubject:@"Ambassador Theme Plist"];
     [mailVc setMessageBody:bodyString isHTML:NO];
     
     [self presentViewController:mailVc animated:YES completion:nil];
 }
 
-- (NSString*)getCodeSnippet:(NSString*)rafName {
-    // TODO: Get campaign id from user on RAF page present
-    NSString *campID = @"1026"; // Temp
+- (NSString*)getCodeSnippet:(RAFItem*)rafItem {
+    NSString *campID = rafItem.campaign.campID;
     
     // Creates Obj-c snippet
     NSString *objcHeaderString = @"Objective-C \n";
-    NSString *objcRAFSnippet = [NSString stringWithFormat:@"[AmbassadorSDK presentRAFForCampaign:@\"%@\" FromViewController:self withThemePlist:@\"%@\"];", campID, rafName];
+    NSString *objcRAFSnippet = [NSString stringWithFormat:@"[AmbassadorSDK presentRAFForCampaign:@\"%@\" FromViewController:self withThemePlist:@\"%@\"];", campID, rafItem.rafName];
     NSString *fullObjc = [NSString stringWithFormat:@"%@\n%@", objcHeaderString, objcRAFSnippet];
     
     // Creates Swift snippet
     NSString *swiftHeaderString = @"Swift \n";
-    NSString *swiftRAFSnippet = [NSString stringWithFormat:@"AmbassadorSDK.presentRAFForCampaign(\"%@\", fromViewController: self, withThemePlist: \"%@\")", campID, rafName];
+    NSString *swiftRAFSnippet = [NSString stringWithFormat:@"AmbassadorSDK.presentRAFForCampaign(\"%@\", fromViewController: self, withThemePlist: \"%@\")", campID, rafItem.rafName];
     NSString *fullSwift = [NSString stringWithFormat:@"%@\n%@", swiftHeaderString, swiftRAFSnippet];
     
     return [NSString stringWithFormat:@"%@\n\n\n%@", fullObjc, fullSwift];
-}
-
-- (void)addDefaultIfFirstLaunch {
-    // Adds a default RAF if one has not already been created
-    if (![DefaultsHandler hasAddedDefault]) {
-        [self saveNewTheme:@"Ambassador Default RAF"];
-        [DefaultsHandler setAddedDefaultRAFTrue];
-    }
 }
 
 @end

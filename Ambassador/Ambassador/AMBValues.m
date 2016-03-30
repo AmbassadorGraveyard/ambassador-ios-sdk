@@ -13,6 +13,8 @@
 
 @implementation AMBValues
 
+NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
+
 
 #pragma mark - Images
 

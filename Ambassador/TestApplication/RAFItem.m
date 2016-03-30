@@ -7,6 +7,7 @@
 //
 
 #import "RAFItem.h"
+#import "AMBValues.h"
 
 @implementation RAFItem
 
@@ -16,6 +17,9 @@
         self.rafName = [decoder decodeObjectForKey:@"rafName"];
         self.plistFullName = [decoder decodeObjectForKey:@"plistFullName"];
         self.dateCreated = [decoder decodeObjectForKey:@"dateCreated"];
+        self.plistDict = [decoder decodeObjectForKey:@"plistDict"];
+        self.campaign = [decoder decodeObjectForKey:@"campaign"];
+        self.imageFilePath = [decoder decodeObjectForKey:@"imageFilePath"];
     }
     
     return self;
@@ -26,6 +30,19 @@
     [encoder encodeObject:self.rafName forKey:@"rafName"];
     [encoder encodeObject:self.plistFullName forKey:@"plistFullName"];
     [encoder encodeObject:self.dateCreated forKey:@"dateCreated"];
+    [encoder encodeObject:self.plistDict forKey:@"plistDict"];
+    [encoder encodeObject:self.campaign forKey:@"campaign"];
+    [encoder encodeObject:self.imageFilePath forKey:@"imageFilePath"];
+}
+
+- (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict {
+    self = [super init];
+    self.rafName = name;
+    self.plistFullName = [NSString stringWithFormat:@"%@%@", TEST_APP_CONTSTANT, name];
+    self.dateCreated = [NSDate date];
+    self.plistDict = dict;
+    
+    return self;
 }
 
 @end

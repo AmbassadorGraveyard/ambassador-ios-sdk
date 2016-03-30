@@ -16,5 +16,6 @@
 + (UIColor*)errorRed;
 + (UIColor*)cellSelectionGray;
 + (UIColor *)colorFromHexString:(NSString *)hexString;
++ (NSString *)hexStringForColor:(UIColor *)color;
 
 @end
