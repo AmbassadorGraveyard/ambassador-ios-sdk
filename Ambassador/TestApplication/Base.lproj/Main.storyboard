@@ -266,7 +266,7 @@
                             <constraint firstItem="Uq1-Pd-3p4" firstAttribute="leading" secondItem="Phr-Z8-49u" secondAttribute="leading" id="j1o-Mx-iPD"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Conversion" image="conversionIconSm" id="aTt-Wl-vji">
+                    <tabBarItem key="tabBarItem" tag="2" title="Conversion" image="conversionIconSm" id="aTt-Wl-vji">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-3"/>
                     </tabBarItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
@@ -1350,7 +1350,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Identify" image="identifyIconSm" id="Rt5-4m-ggU">
+                    <tabBarItem key="tabBarItem" tag="1" title="Identify" image="identifyIconSm" id="Rt5-4m-ggU">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-3"/>
                     </tabBarItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
@@ -1866,7 +1866,7 @@
                         </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="SpI-cQ-LOE">
+                    <tabBarItem key="tabBarItem" tag="3" title="Settings" image="settings" id="SpI-cQ-LOE">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-3"/>
                     </tabBarItem>
                     <connections>

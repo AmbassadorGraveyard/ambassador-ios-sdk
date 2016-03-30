@@ -1066,11 +1066,11 @@
 		EF557A131C88B49700F66761 /* RAF */ = {
 			isa = PBXGroup;
 			children = (
+				EF9D98C61CA1906400F5711F /* RAFItem.h */,
+				EF9D98C71CA1906400F5711F /* RAFItem.m */,
 				EF9D98DC1CA4881E00F5711F /* RAF Page */,
 				EF9D98DD1CA4883F00F5711F /* RAF Theme Handler */,
 				EF9D98D51CA33C1800F5711F /* RAF Customizer */,
-				EF9D98C61CA1906400F5711F /* RAFItem.h */,
-				EF9D98C71CA1906400F5711F /* RAFItem.m */,
 			);
 			name = RAF;
 			sourceTree = "<group>";

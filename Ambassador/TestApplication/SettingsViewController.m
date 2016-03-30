@@ -34,8 +34,12 @@
 
 #pragma mark - LifeCycle
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewDidLoad {
     [self setupUI];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self setUpdateItems];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -58,13 +62,7 @@
 #pragma mark - UI Functions
 
 - (void)setupUI {
-    // Nav Bar
-    self.tabBarController.title = @"Settings";
-    self.tabBarController.navigationItem.rightBarButtonItem = nil;
-    self.tabBarController.navigationItem.leftBarButtonItem = nil;
-    
     // Avatar
-    self.ivAvatar.image = [DefaultsHandler getUserImage];
     self.ivAvatar.layer.cornerRadius = self.ivAvatar.frame.size.height/2;
     
     // Label
@@ -77,6 +75,16 @@
     self.btnSignOut.imageView.tintColor = self.btnSignOut.titleLabel.textColor;
     self.btnSignOut.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.btnSignOut setImageEdgeInsets:UIEdgeInsetsMake(4, 4, 4, 4)];
+}
+
+- (void)setUpdateItems {
+    // Nav Bar
+    self.tabBarController.title = @"Settings";
+    self.tabBarController.navigationItem.rightBarButtonItem = nil;
+    self.tabBarController.navigationItem.leftBarButtonItem = nil;
+    
+    // Sets the image in case new user logged in
+    self.ivAvatar.image = [DefaultsHandler getUserImage];
 }
 
 - (void)showCopiedLabel {
