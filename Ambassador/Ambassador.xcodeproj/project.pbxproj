@@ -153,6 +153,7 @@
 		EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */; };
 		EF1CB0B41C3C7F6600F65031 /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = EF1CB0B31C3C7F6600F65031 /* avatar.png */; };
 		EF1CC7FB1C93127A00C2752B /* AMBSMSHandlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC7FA1C93127A00C2752B /* AMBSMSHandlerTests.m */; };
+		EF1CC8001C9860C300C2752B /* AMBWelcomeScreenViewController_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CC7FE1C9860C300C2752B /* AMBWelcomeScreenViewController_Internal.h */; };
 		EF1CC8041C9993EE00C2752B /* MyTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC8031C9993EE00C2752B /* MyTabBarController.m */; };
 		EF1CC8081C99E13800C2752B /* AMBInputAlert.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CC8061C99E13800C2752B /* AMBInputAlert.h */; };
 		EF1CC8091C99E13800C2752B /* AMBInputAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC8071C99E13800C2752B /* AMBInputAlert.m */; };
@@ -482,6 +483,7 @@
 		EF1CB0B01C3C2FF500F65031 /* AMBContactCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCard.m; sourceTree = "<group>"; };
 		EF1CB0B31C3C7F6600F65031 /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
 		EF1CC7FA1C93127A00C2752B /* AMBSMSHandlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSMSHandlerTests.m; sourceTree = "<group>"; };
+		EF1CC7FE1C9860C300C2752B /* AMBWelcomeScreenViewController_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenViewController_Internal.h; sourceTree = "<group>"; };
 		EF1CC8021C9993EE00C2752B /* MyTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTabBarController.h; sourceTree = "<group>"; };
 		EF1CC8031C9993EE00C2752B /* MyTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTabBarController.m; sourceTree = "<group>"; };
 		EF1CC8061C99E13800C2752B /* AMBInputAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBInputAlert.h; sourceTree = "<group>"; };
@@ -997,6 +999,7 @@
 			children = (
 				EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */,
 				EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */,
+				EF1CC7FE1C9860C300C2752B /* AMBWelcomeScreenViewController_Internal.h */,
 				EF557A071C86041A00F66761 /* Custom Cells */,
 				EF557A061C86040A00F66761 /* Parameters */,
 			);
@@ -1328,6 +1331,7 @@
 				DBA3FC081BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h in Headers */,
 				DBA3FC041BA8AA1D00672D82 /* AMBPTBlockEventListener.h in Headers */,
 				EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */,
+				EF1CC8001C9860C300C2752B /* AMBWelcomeScreenViewController_Internal.h in Headers */,
 				DB6A24711BD04E3900CE3230 /* AMBPusherManager.h in Headers */,
 				DBA3FC071BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.h in Headers */,
 				DBA3FC201BA8AA1D00672D82 /* AMBPTPusherMockConnection.h in Headers */,

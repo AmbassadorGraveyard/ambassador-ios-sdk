@@ -28,6 +28,7 @@
 /**Handles remote notifications that are sent from Ambassador**/
 + (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification;
 
-+ (void)presentWelcomeScreen:(UIViewController*)viewController withParameters:(AMBWelcomeScreenParameters*)parameters;
+/**Generates a Welcome Screen ViewController based on referrer's data, which can be handled by the caller*/
++ (void)presentWelcomeScreen:(AMBWelcomeScreenParameters*)parameters ifAvailable:(void(^)(AMBWelcomeScreenViewController *welcomeScreenVC))available;
 
 @end

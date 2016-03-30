@@ -7,6 +7,7 @@
 //
 
 #import "AMBWelcomeScreenViewController.h"
+#import "AMBWelcomeScreenViewController_Internal.h"
 #import "AMBLinkCell.h"
 
 @interface AMBWelcomeScreenViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, AMBLinkCellDelegate>
@@ -24,7 +25,6 @@
 
 @property (nonatomic, strong) NSArray * linkArray;
 @property (nonatomic, strong) UIColor * welcomeScreenAccent;
-@property (nonatomic, strong) NSString * referrerName;
 
 @end
 
@@ -38,9 +38,8 @@ NSInteger const CELL_HEIGHT = 25;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Temporary until we get use an actual network call
-    self.ivProfilePic.image = [UIImage imageNamed:@"coolGuy"];
-    self.referrerName = @"John Doe";
+    
+    self.ivProfilePic.image = self.referrerImage;
     
     [self setTheme];
     [self setupCollectionView];
@@ -114,14 +113,14 @@ NSInteger const CELL_HEIGHT = 25;
         self.buttonHeight.constant = 0;
         self.referralTextBottom.constant = 0;
     } else {
-        [self.btnAction setTitle:self.parameters.actionButtonTitle forState:UIControlStateNormal];
+        [self.btnAction setTitle:[self getCorrectString:self.parameters.actionButtonTitle] forState:UIControlStateNormal];
         self.btnAction.backgroundColor = self.welcomeScreenAccent;
     }
     
     // Labels
     self.lblReferred.text = [self getCorrectString:self.parameters.referralMessage];
-    self.lblDescription.text = self.parameters.detailMessage;
-    self.linkArray = self.parameters.linkArray;
+    self.lblDescription.text = [self getCorrectString:self.parameters.detailMessage];
+    self.linkArray = [self getUpdatedLinkArray];
 }
 
 - (void)setupCollectionView {
@@ -136,14 +135,37 @@ NSInteger const CELL_HEIGHT = 25;
 #pragma mark - Helper Functions
 
 - (NSString*)getCorrectString:(NSString*)string {
-    BOOL containsNameValue = [self customContainsString:string subString:@"{{ name }}"];
+    // Creates a mutable string based on the string passed from params
     NSMutableString *newString = [NSMutableString stringWithString:string];
-    
-    if (containsNameValue) {
-        [newString replaceOccurrencesOfString:@"{{ name }}" withString:self.referrerName options:0 range:NSMakeRange(0, [newString length])];
+
+    while ([self customContainsString:newString subString:@"{{ name }}"]) {
+        // Gets index of {{ name }}
+        NSRange range = [newString rangeOfString:@"{{ name }}"];
+
+        // Creates a mutable copy of the referrer name
+        NSMutableString *mutableReferrerName = [[NSMutableString alloc] initWithString:self.referrerName];
+        
+        // Checks if we are using the default name value - 'An ambassador of COMPANY' - and checks where is it in the message to see if we should capitalize An or not
+        if ([self usingReferrerDefaultValue] && [self nameIsMidSentence:newString charSpot:range.location]) {
+            NSRange replaceRange = [mutableReferrerName rangeOfString:@"An"];
+            [mutableReferrerName replaceOccurrencesOfString:@"An" withString:@"an" options:0 range:replaceRange];
+        }
+        
+        newString = (NSMutableString*)[newString stringByReplacingCharactersInRange:range withString:mutableReferrerName];
     }
     
     return newString;
+}
+
+- (NSArray*)getUpdatedLinkArray {
+    NSMutableArray *newLinkArray = [[NSMutableArray alloc] init];
+    
+    // Goes through each link and handles for {{ name }} in any them
+    for (NSString *link in self.parameters.linkArray) {
+        [newLinkArray addObject:[self getCorrectString:link]];
+    }
+    
+    return newLinkArray;
 }
 
 // This method will only need to be used until we stop supporting iOS 7
@@ -153,6 +175,30 @@ NSInteger const CELL_HEIGHT = 25;
     } else {
         return [string rangeOfString:subString].location != NSNotFound;
     }
+}
+
+- (BOOL)nameIsMidSentence:(NSString*)text charSpot:(NSUInteger)spot {
+    if (spot > 0) {
+        int indexCheck = 1;
+        
+        NSString *charString = [NSString stringWithFormat:@"%c", [text characterAtIndex:spot - indexCheck]];
+        
+        // Keeps searching for the character before {{ name }} until it finds one that is not a " " value
+        while ([charString isEqualToString:@" "]) {
+            indexCheck++;
+            charString = [NSString stringWithFormat:@"%c", [text characterAtIndex:spot - indexCheck]];
+        }
+        
+        // If the character is not equal to one of the values in sentenceEnderString, then we can assume its in the middle of a sentence
+        NSString *sentenceEnderString = @".?!";
+        return [sentenceEnderString containsString:charString] ? NO : YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)usingReferrerDefaultValue {
+    return [self customContainsString:self.referrerName subString:@"An ambassador of"] ? YES : NO;
 }
 
 @end

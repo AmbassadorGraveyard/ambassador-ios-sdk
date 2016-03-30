@@ -300,6 +300,31 @@
 }
 
 
+#pragma mark - Welcome Screen Requests
+
+- (void)getReferrerInformationWithSuccess:(void(^)(NSDictionary *referrerInfo))success failure:(void(^)(NSString *error))failure {
+    NSDictionary *payloadDict = @{@"short_code" : [AMBValues getMbsyCookieCode]};
+    NSMutableURLRequest *referrerRequest = [self createURLRequestWithURL:[AMBValues getReferrerInformationUrl] requestType:@"POST"];
+    referrerRequest.HTTPBody = [NSJSONSerialization dataWithJSONObject:payloadDict options:0 error:nil];
+    
+    [[self.urlSession dataTaskWithRequest:referrerRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        DLog(@"REFERRER INFO status code = %li", (long)statusCode);
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            NSDictionary *referrerInfo = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            DLog(@"Referrer Info SUCCESSFUL with response - %@", referrerInfo);
+            if (success) { success(referrerInfo); }
+        } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            DLog(@"Referrer Info FAILED with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+            if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+        } else {
+            DLog(@"Referrer Info Error - %@", error);
+            if (failure) { failure([error localizedFailureReason]); }
+        }
+    }] resume];
+}
+
+
 #pragma mark - Helper Functions
 
 - (NSURLSession*)createURLSession {

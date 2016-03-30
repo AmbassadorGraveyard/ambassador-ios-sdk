@@ -24,6 +24,8 @@
 - (BOOL)customContainsString:(NSString*)string subString:(NSString*)subString;
 - (IBAction)closeTapped:(id)sender;
 - (IBAction)actionButtonTapped:(id)sender;
+- (BOOL)nameIsMidSentence:(NSString*)text charSpot:(NSUInteger)spot;
+- (BOOL)usingReferrerDefaultValue;
 
 @end
 
@@ -209,6 +211,37 @@
     // THEN
     XCTAssertTrue(contains);
     XCTAssertFalse(doesntContain);
+}
+
+- (void)testNameIsMidSentence {
+    // GIVEN
+    NSString *fullString = @"Hello there. This is a test.";
+    NSString *stringCheckOne = @"there";
+    NSString *stringCheckTwo = @"This";
+    
+    NSRange rangeOne = [fullString rangeOfString:stringCheckOne];
+    NSRange rangeTwo = [fullString rangeOfString:stringCheckTwo];
+    
+    // WHEN
+    BOOL test1 = [self.welcomeVC nameIsMidSentence:fullString charSpot:rangeOne.location];
+    BOOL test2 = [self.welcomeVC nameIsMidSentence:fullString charSpot:rangeTwo.location];
+    
+    // THEN
+    XCTAssertTrue(test1);
+    XCTAssertFalse(test2);
+}
+
+- (void)testUsingReferrerDefaultValue {
+    // WHEN
+    self.welcomeVC.referrerName = @"Test Name";
+    BOOL test1 = [self.welcomeVC usingReferrerDefaultValue];
+    
+    self.welcomeVC.referrerName = @"An ambassador of Test company";
+    BOOL test2 = [self.welcomeVC usingReferrerDefaultValue];
+    
+    // THEN
+    XCTAssertFalse(test1);
+    XCTAssertTrue(test2);
 }
 
 @end
