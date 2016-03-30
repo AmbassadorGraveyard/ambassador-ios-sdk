@@ -20,5 +20,6 @@
 + (NSMutableDictionary *)getGenericTheme;
 + (UIImage *)getImageForRAF:(RAFItem*)item;
 + (void)removeImageForTheme:(RAFItem*)theme;
++ (BOOL)duplicateRAFName:(NSString*)name;
 
 @end

@@ -458,15 +458,26 @@
 }
 
 - (BOOL)validForm {
+    // Checks for empty RAF Name
+    if ([AMBUtilities stringIsEmpty:self.tfRafName.text]) {
+        UIAlertView *emptyNameAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Integration Name field cannot be left blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [emptyNameAlert show];
+        return NO;
+    }
+    
+    // Checks for Empty campaign ID
     if ([AMBUtilities stringIsEmpty:self.tfCampId.text]) {
         UIAlertView *emptyIDAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Campaign field cannot be blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [emptyIDAlert show];
         return NO;
     }
     
-    if ([AMBUtilities stringIsEmpty:self.tfRafName.text]) {
-        UIAlertView *emptyNameAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Integration Name field cannot be left blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [emptyNameAlert show];
+    // Checks for Duplicate RAF Name
+    NSString *nameWithoutSpaces = [self.tfRafName.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if ([ThemeHandler duplicateRAFName:nameWithoutSpaces]) {
+        NSString *errorString = [NSString stringWithFormat:@"Duplicate RAF names are not allowed: %@", self.tfRafName.text];
+        UIAlertView *duplicateAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:errorString delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [duplicateAlert show];
         return NO;
     }
     
