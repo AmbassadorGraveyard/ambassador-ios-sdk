@@ -272,7 +272,7 @@
 }
 
 + (AMBPusherChannelObject*)getPusherChannelObject {
-    return [[AMBPusherChannelObject alloc] initWithDictionary:[[AMBValues ambUserDefaults] valueForKey:@"pusher_channel_object"]];
+    return (![[[AMBValues ambUserDefaults] valueForKey:@"pusher_channel_object"] isEqual: @{}]) ? [[AMBPusherChannelObject alloc] initWithDictionary:[[AMBValues ambUserDefaults] valueForKey:@"pusher_channel_object"]] : nil;
 }
 
 + (AMBUserUrlNetworkObject*)getUserURLObject {

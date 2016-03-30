@@ -30,6 +30,15 @@
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"USER_IMAGE"];
 }
 
++ (void)setThemeArray:(NSMutableArray*)themeArray {
+    NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:themeArray];
+    [[NSUserDefaults standardUserDefaults] setObject:encodedObject forKey:@"THEME_ARRAY"];
+}
+
++ (void)setAddedDefaultRAFTrue {
+    [[NSUserDefaults standardUserDefaults] setValue:@"true" forKey:@"ADDED_DEFAULT"];
+}
+
 
 #pragma mark - Getters
 
@@ -48,6 +57,17 @@
 + (UIImage*)getUserImage {
     NSData *imageData = [[NSUserDefaults standardUserDefaults] objectForKey:@"USER_IMAGE"];
     return [UIImage imageWithData:imageData];
+}
+
++ (NSMutableArray*)getThemeArray {
+    NSData *encodedObject = [[NSUserDefaults standardUserDefaults] objectForKey:@"THEME_ARRAY"];
+    NSArray *returnArray = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+    return [[NSMutableArray alloc] initWithArray:returnArray];
+}
+
++ (BOOL)hasAddedDefault {
+    NSString *defaultsString = [[NSUserDefaults standardUserDefaults] valueForKey:@"ADDED_DEFAULT"];
+    return ([defaultsString isEqualToString:@"true"]) ? YES : NO;
 }
 
 
