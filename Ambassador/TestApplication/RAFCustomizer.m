@@ -472,9 +472,10 @@
         return NO;
     }
     
-    // Checks for Duplicate RAF Name
+    // Checks for Duplicate RAF Name if new RAF
     NSString *nameWithoutSpaces = [self.tfRafName.text stringByReplacingOccurrencesOfString:@" " withString:@""];
-    if ([ThemeHandler duplicateRAFName:nameWithoutSpaces]) {
+
+    if ([ThemeHandler duplicateRAFName:nameWithoutSpaces] && !self.rafItem) {
         NSString *errorString = [NSString stringWithFormat:@"Duplicate RAF names are not allowed: %@", self.tfRafName.text];
         UIAlertView *duplicateAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:errorString delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [duplicateAlert show];
