@@ -346,6 +346,7 @@
                                     </view>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="#FFFFFF" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e3L-Rm-zcp">
                                         <rect key="frame" x="190" y="275" width="80" height="30"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="hexTextField"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="u4v-k8-5nb"/>
                                         </constraints>
@@ -641,7 +642,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap '+' to add a new RAF" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dvb-bw-ZWO">
                                 <rect key="frame" x="193" y="323" width="215" height="24"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1945,12 +1946,12 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="DET-Db-kcw"/>
-                                                <exclude reference="hDR-hB-V1w"/>
                                                 <exclude reference="OeA-9I-0vw"/>
                                                 <exclude reference="38u-Tv-PgX"/>
                                                 <exclude reference="Bb4-5G-Yng"/>
                                                 <exclude reference="M0K-r3-7th"/>
+                                                <exclude reference="DET-Db-kcw"/>
+                                                <exclude reference="hDR-hB-V1w"/>
                                                 <exclude reference="QJE-1B-FeN"/>
                                                 <exclude reference="3De-gk-zAs"/>
                                                 <exclude reference="Cru-PL-qh8"/>
@@ -1959,9 +1960,6 @@
                                         </variation>
                                         <variation key="heightClass=compact">
                                             <mask key="constraints">
-                                                <exclude reference="DET-Db-kcw"/>
-                                                <exclude reference="X0z-Py-qbF"/>
-                                                <include reference="hDR-hB-V1w"/>
                                                 <include reference="OeA-9I-0vw"/>
                                                 <exclude reference="ZTf-KK-Lfs"/>
                                                 <exclude reference="38u-Tv-PgX"/>
@@ -1969,6 +1967,9 @@
                                                 <include reference="Bb4-5G-Yng"/>
                                                 <include reference="M0K-r3-7th"/>
                                                 <exclude reference="rmh-sb-sT1"/>
+                                                <exclude reference="DET-Db-kcw"/>
+                                                <exclude reference="X0z-Py-qbF"/>
+                                                <include reference="hDR-hB-V1w"/>
                                                 <include reference="QJE-1B-FeN"/>
                                                 <exclude reference="3De-gk-zAs"/>
                                                 <exclude reference="5Mu-nC-4M5"/>
