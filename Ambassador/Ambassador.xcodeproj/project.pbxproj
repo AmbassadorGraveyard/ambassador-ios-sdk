@@ -176,6 +176,7 @@
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF499DB51CAC4FB000D2EB01 /* NoAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF499DB41CAC4FB000D2EB01 /* NoAccountViewController.m */; };
+		EF499DB81CAD6C1D00D2EB01 /* LoadingScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = EF499DB71CAD6C1D00D2EB01 /* LoadingScreen.m */; };
 		EF50EFC01C5692E70077CC63 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */; };
 		EF50EFC21C56AE230077CC63 /* AMBConversionModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = EF50EFC11C56AE230077CC63 /* AMBConversionModel.xcdatamodel */; };
 		EF5356501BF109A400BC80C4 /* unitTestImage.png in Resources */ = {isa = PBXBuildFile; fileRef = EF53564F1BF109A400BC80C4 /* unitTestImage.png */; };
@@ -519,6 +520,8 @@
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF499DB31CAC4FB000D2EB01 /* NoAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoAccountViewController.h; sourceTree = "<group>"; };
 		EF499DB41CAC4FB000D2EB01 /* NoAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoAccountViewController.m; sourceTree = "<group>"; };
+		EF499DB61CAD6C1D00D2EB01 /* LoadingScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingScreen.h; sourceTree = "<group>"; };
+		EF499DB71CAD6C1D00D2EB01 /* LoadingScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingScreen.m; sourceTree = "<group>"; };
 		EF50EFBF1C5692E70077CC63 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GenericTheme.plist; sourceTree = "<group>"; };
 		EF50EFC11C56AE230077CC63 /* AMBConversionModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMBConversionModel.xcdatamodel; sourceTree = "<group>"; };
 		EF53564F1BF109A400BC80C4 /* unitTestImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unitTestImage.png; sourceTree = "<group>"; };
@@ -1142,6 +1145,8 @@
 				EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */,
 				EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */,
 				EF9D98DE1CA4886200F5711F /* Color Picker */,
+				EF499DB61CAD6C1D00D2EB01 /* LoadingScreen.h */,
+				EF499DB71CAD6C1D00D2EB01 /* LoadingScreen.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1901,6 +1906,7 @@
 				EF9D98D81CA341A700F5711F /* RAFCustomizer.m in Sources */,
 				EF783BBF1C9C7D6600079B65 /* LeftIndentedTextField.m in Sources */,
 				EF5390D11C445BF2005F6944 /* ConversionViewController.m in Sources */,
+				EF499DB81CAD6C1D00D2EB01 /* LoadingScreen.m in Sources */,
 				DB844D691BA76BDE003FD7A9 /* AppDelegate.m in Sources */,
 				EF1CC80E1C9B3C6300C2752B /* Validator.m in Sources */,
 				EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */,
