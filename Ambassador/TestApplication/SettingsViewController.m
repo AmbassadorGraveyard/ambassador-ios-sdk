@@ -69,6 +69,10 @@ NSInteger copiedWdt = 170;
 #pragma mark - UI Functions
 
 - (void)setupUI {
+    // Avatar
+    self.ivAvatar.layer.cornerRadius = self.ivAvatar.frame.size.height/2;
+    self.ivAvatar.image = [DefaultsHandler getUserImage];
+    
     // Button
     [self.btnSignOut setImage:[self.btnSignOut.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     self.btnSignOut.imageView.tintColor = self.btnSignOut.titleLabel.textColor;
