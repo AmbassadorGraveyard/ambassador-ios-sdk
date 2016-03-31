@@ -69,11 +69,6 @@ NSInteger copiedWdt = 170;
 #pragma mark - UI Functions
 
 - (void)setupUI {
-    // Label
-    self.lblFullName.text = [DefaultsHandler getFullName];
-    self.lblSDKToken.text = [DefaultsHandler getSDKToken];
-    self.lblUniversalID.text = [DefaultsHandler getUniversalID];
-    
     // Button
     [self.btnSignOut setImage:[self.btnSignOut.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     self.btnSignOut.imageView.tintColor = self.btnSignOut.titleLabel.textColor;
@@ -93,6 +88,11 @@ NSInteger copiedWdt = 170;
     
     // Copied label position
     self.lblCopied.frame = CGRectMake(self.view.frame.size.width/2 - copiedWdt/2, self.view.frame.size.height, copiedWdt, copiedHgt);
+    
+    // Label
+    self.lblFullName.text = [DefaultsHandler getFullName];
+    self.lblSDKToken.text = [DefaultsHandler getSDKToken];
+    self.lblUniversalID.text = [DefaultsHandler getUniversalID];
 }
 
 - (void)showCopiedLabel {
