@@ -42,7 +42,7 @@ NSInteger copiedWdt = 170;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self setUpdateItems];
+    [self setupUI];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -69,18 +69,6 @@ NSInteger copiedWdt = 170;
 #pragma mark - UI Functions
 
 - (void)setupUI {
-    // Avatar
-    self.ivAvatar.layer.cornerRadius = self.ivAvatar.frame.size.height/2;
-    self.ivAvatar.image = [DefaultsHandler getUserImage];
-    
-    // Button
-    [self.btnSignOut setImage:[self.btnSignOut.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    self.btnSignOut.imageView.tintColor = self.btnSignOut.titleLabel.textColor;
-    self.btnSignOut.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.btnSignOut setImageEdgeInsets:UIEdgeInsetsMake(4, 4, 4, 4)];
-}
-
-- (void)setUpdateItems {
     // Nav Bar
     self.tabBarController.title = @"Settings";
     self.tabBarController.navigationItem.rightBarButtonItem = nil;
@@ -97,6 +85,12 @@ NSInteger copiedWdt = 170;
     self.lblFullName.text = [DefaultsHandler getFullName];
     self.lblSDKToken.text = [DefaultsHandler getSDKToken];
     self.lblUniversalID.text = [DefaultsHandler getUniversalID];
+    
+    // Button
+    [self.btnSignOut setImage:[self.btnSignOut.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    self.btnSignOut.imageView.tintColor = self.btnSignOut.titleLabel.textColor;
+    self.btnSignOut.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.btnSignOut setImageEdgeInsets:UIEdgeInsetsMake(4, 4, 4, 4)];
 }
 
 - (void)showCopiedLabel {
