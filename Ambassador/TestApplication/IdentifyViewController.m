@@ -15,10 +15,13 @@
 
 @interface IdentifyViewController () <AMBWelcomeScreenDelegate>
 
+// IBOutlets
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
 @property (nonatomic, strong) IBOutlet UITextField * tfEmail;
 @property (nonatomic, strong) IBOutlet UIView * imageBGView;
+@property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
 
+// Private properties
 @property (nonatomic, strong) NSString * codeExportString;
 
 @end
@@ -31,14 +34,16 @@
 
 - (void)viewDidLoad {
     [self setUpTheme];
-    
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressLogin:)];
-    [self.btnSubmit addGestureRecognizer:longPress];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.tabBarController.title = @"Identify";
     [self addExportButton];
+    [self registerForKeyboardNotificaitons];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -47,21 +52,6 @@
 - (IBAction)submitTapped:(id)sender {
     [self identify];
     [self.tfEmail resignFirstResponder];
-}
-
-- (void)longPressLogin:(UITapGestureRecognizer*)gesture {
-    if (gesture.state == UIGestureRecognizerStateBegan) {
-        AMBWelcomeScreenParameters *welcomeParams = [[AMBWelcomeScreenParameters alloc] init];
-        welcomeParams.detailMessage = @"You understand the value of referrals. Maybe you've even explored referral marketing software.";
-        welcomeParams.referralMessage = @"{{ name }} has referred you to Ambassador";
-        welcomeParams.accentColor = self.btnSubmit.backgroundColor;
-        welcomeParams.linkArray = @[@"Testimonials", @"Request Demo"];
-        welcomeParams.actionButtonTitle = @"CREATE AN ACCOUNT";
-
-        [AmbassadorSDK presentWelcomeScreen:welcomeParams ifAvailable:^(AMBWelcomeScreenViewController *welcomeScreenVC) {
-            [self presentViewController:welcomeScreenVC animated:YES completion:nil];
-        }];
-    }
 }
 
 
@@ -83,6 +73,31 @@
 - (void)welcomeScreenLinkPressedAtIndex:(NSInteger)linkIndex {
     UIAlertView *linkAlert = [[UIAlertView alloc] initWithTitle:@"Link Tapped" message:[NSString stringWithFormat:@"You tapped a link at index %li", (long)linkIndex] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
     [linkAlert show];
+}
+
+
+#pragma mark - Keyboard Listener
+
+- (void)registerForKeyboardNotificaitons {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification*)notificaiton {
+    CGRect keyboardFrame = [notificaiton.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    CGFloat textfieldPosition = self.tfEmail.frame.origin.y + 10;
+    CGFloat difference = self.scrollView.frame.size.height - textfieldPosition;
+    
+    if (keyboardFrame.size.height > difference) {
+        CGFloat newY = keyboardFrame.size.height - difference;
+        [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)notification {
+    // Resets the scrollview to original position
+    [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 
