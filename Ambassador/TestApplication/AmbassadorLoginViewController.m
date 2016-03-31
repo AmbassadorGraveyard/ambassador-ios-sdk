@@ -18,6 +18,7 @@
 @property (nonatomic, strong) IBOutlet UITextField * tfPassword;
 @property (nonatomic, strong) IBOutlet UIButton * btnLogin;
 @property (nonatomic, strong) IBOutlet UIButton * btnNoAccount;
+@property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
 
 @end
 
@@ -29,6 +30,11 @@
 
 - (void)viewDidLoad {
     [self setupUI];
+    [self registerForKeyboardNotificaitons];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -71,6 +77,31 @@
     
     // Login button
     self.btnLogin.layer.cornerRadius = 4;
+}
+
+
+#pragma mark - Keyboard Listener
+
+- (void)registerForKeyboardNotificaitons {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification*)notificaiton {
+    CGRect keyboardFrame = [notificaiton.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    CGFloat textfieldPosition = self.loginMasterView.frame.origin.y + self.loginMasterView.frame.size.height + 10;
+    CGFloat difference = self.scrollView.frame.size.height - textfieldPosition;
+    
+    if (keyboardFrame.size.height > difference) {
+        CGFloat newY = keyboardFrame.size.height - difference;
+        [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)notification {
+    // Resets the scrollview to original position
+    [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 
