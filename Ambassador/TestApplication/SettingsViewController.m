@@ -47,13 +47,13 @@ NSInteger copiedWdt = 170;
 
 - (void)viewDidAppear:(BOOL)animated {
     if (!self.lblCopied) {
-        self.lblCopied = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 100, self.view.frame.size.height, copiedWdt, copiedHgt)];
+        self.lblCopied = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - copiedWdt/2, self.view.frame.size.height, copiedWdt, copiedHgt)];
         self.lblCopied.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
         self.lblCopied.text = @"Copied!";
         self.lblCopied.clipsToBounds = YES;
         self.lblCopied.textAlignment = NSTextAlignmentCenter;
         self.lblCopied.textColor = [UIColor whiteColor];
-        self.lblCopied.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.5];
+        self.lblCopied.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.7];
         self.lblCopied.layer.cornerRadius = copiedHgt/2;
         
         [self.view addSubview:self.lblCopied];
@@ -62,16 +62,13 @@ NSInteger copiedWdt = 170;
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     self.ivAvatar.layer.cornerRadius = self.ivAvatar.frame.size.height/2;
-    self.lblCopied.frame = CGRectMake(self.view.frame.size.width/2 - 100, self.view.frame.size.height, copiedWdt, copiedHgt);
+    self.lblCopied.frame = CGRectMake(self.view.frame.size.width/2 - copiedWdt/2, self.view.frame.size.height, copiedWdt, copiedHgt);
 }
 
 
 #pragma mark - UI Functions
 
 - (void)setupUI {
-    // Avatar
-    self.ivAvatar.layer.cornerRadius = self.ivAvatar.frame.size.height/2;
-    
     // Label
     self.lblFullName.text = [DefaultsHandler getFullName];
     self.lblSDKToken.text = [DefaultsHandler getSDKToken];
@@ -90,18 +87,24 @@ NSInteger copiedWdt = 170;
     self.tabBarController.navigationItem.rightBarButtonItem = nil;
     self.tabBarController.navigationItem.leftBarButtonItem = nil;
     
-    // Sets the image in case new user logged in
+    // Avatar
+    self.ivAvatar.layer.cornerRadius = self.ivAvatar.frame.size.height/2;
     self.ivAvatar.image = [DefaultsHandler getUserImage];
+    
+    // Copied label position
+    self.lblCopied.frame = CGRectMake(self.view.frame.size.width/2 - copiedWdt/2, self.view.frame.size.height, copiedWdt, copiedHgt);
 }
 
 - (void)showCopiedLabel {
     if (!self.lblCopiedShowing) {
-        [UIView animateWithDuration:0.2 animations:^{
-            self.lblCopied.frame = CGRectMake(self.view.frame.size.width/2 - 100, self.lblCopied.frame.origin.y - 110, copiedWdt, copiedHgt);
-            self.lblCopiedShowing = YES;
+        [UIView animateKeyframesWithDuration:0.3 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+            [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.3 animations:^{
+                self.lblCopied.frame = CGRectMake(self.view.frame.size.width/2 - copiedWdt/2, self.lblCopied.frame.origin.y - 80, copiedWdt, copiedHgt);
+                self.lblCopiedShowing = YES;
+            }];
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:0.3 delay:1.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                self.lblCopied.frame = CGRectMake(self.view.frame.size.width/2 - 100, self.view.frame.size.height, copiedWdt, copiedHgt);
+                self.lblCopied.frame = CGRectMake(self.view.frame.size.width/2 - copiedWdt/2, self.view.frame.size.height, copiedWdt, copiedHgt);
             } completion:^(BOOL finished) {
                 self.lblCopiedShowing = NO;
             }];
