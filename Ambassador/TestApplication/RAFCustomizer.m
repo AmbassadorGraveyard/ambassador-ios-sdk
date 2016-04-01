@@ -434,8 +434,15 @@
 - (void)setupSocialTableView:(NSMutableArray*)enabledChannels {
     // Init our Social Handler class which is the datasource and delegate for the social tableview
     if (!self.socialHandler) {
-        self.socialHandler = [[SocialShareOptionsHandler alloc] initWithArrayOrder:self.socialArray onArray:enabledChannels];
+        // Creates new array to pass since, self.socialArray will be getting altered
+        NSMutableArray *fullArray = [NSMutableArray arrayWithArray:self.socialArray];
+        
+        self.socialHandler = [[SocialShareOptionsHandler alloc] initWithArrayOrder:fullArray onArray:enabledChannels];
         self.socialHandler.delegate = self;
+        
+        // Resets array to only contain enabled channels
+        [self.socialArray removeAllObjects];
+        [self.socialArray addObjectsFromArray:enabledChannels];
     }
     
     // Set values for social tableview
