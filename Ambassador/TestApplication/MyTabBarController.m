@@ -42,4 +42,13 @@ NSString * loginSegue = @"ambassador_login_segue";
     }
 }
 
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+    // Grabs the index of viewController based on tag set in storyboards
+    NSInteger itemIndex = item.tag;
+    
+    // Grabs the viewController that will be presented and refreshes it
+    UIViewController *controller = self.viewControllers[itemIndex];
+    [controller viewWillAppear:YES];
+}
+
 @end

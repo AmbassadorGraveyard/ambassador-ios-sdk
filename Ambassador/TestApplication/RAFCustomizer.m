@@ -15,6 +15,7 @@
 #import "CampaignObject.h"
 #import "CampaignListController.h"
 #import "SocialShareOptionsHandler.h"
+#import "LoadingScreen.h"
 
 @interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate,
                             UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate, UIAlertViewDelegate>
@@ -59,6 +60,10 @@
     // Image View tap gesture
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openImagePicker)];
     [self.ivProductPhoto addGestureRecognizer:tap];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [LoadingScreen rotateLoadingScreenForView:self.parentViewController.view];
 }
 
 
@@ -330,11 +335,11 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:authString forHTTPHeaderField:@"Authorization"];
     
-    [[AMBUtilities sharedInstance] showLoadingScreenForView:self.parentViewController.view];
+    [LoadingScreen showLoadingScreenForView:self.parentViewController.view];
     
     // Makes network call
     [[[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        [[AMBUtilities sharedInstance] hideLoadingView];
+        [LoadingScreen hideLoadingScreenForView:self.parentViewController.view];
         
         NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {

@@ -134,8 +134,13 @@
     // Checks to see if the view being touched is the color picker image
     if ([touch view] == self.ivColorPicker) {
         CGPoint location = [touch locationInView:self.ivColorPicker];
-        self.selectedColor = [self colorOfPoint:location];
-        self.currentColorView.backgroundColor = self.selectedColor;
+        NSString *hexCode = [UIColor hexStringForColor:[self colorOfPoint:location]];
+        
+        // Makes sure that the touch point is still inside the color area
+        if (![[hexCode substringToIndex:2] isEqualToString:@"#0"]) {
+            self.selectedColor = [self colorOfPoint:location];
+            self.currentColorView.backgroundColor = self.selectedColor;
+        }
     }
 }
 

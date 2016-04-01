@@ -183,7 +183,7 @@ extension AmbassadorUITests {
     }
     
     func createNewRAF() {
-        app.navigationBars["MyTabBar"].buttons["Add"].tap()
+        app.navigationBars["Refer a Friend"].buttons["Add"].tap()
         
         let elementsQuery = app.scrollViews.otherElements
         elementsQuery.textFields["RAF Name"].tap()
