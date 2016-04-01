@@ -11,6 +11,7 @@
 
 @interface AMBIdentify : NSObject
 
+- (id)init;
 - (void)getIdentity;
 
 @end
