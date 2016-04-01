@@ -96,6 +96,7 @@
     [DefaultsHandler setSDKToken:@""];
     [DefaultsHandler setUniversalID:@""];
     [DefaultsHandler setFullName:@"" lastName:@""];
+    [DefaultsHandler setUniversalToken:@""];
     [DefaultsHandler setUserImage:@""];
     [DefaultsHandler saveCampaignList:@[]];
 }

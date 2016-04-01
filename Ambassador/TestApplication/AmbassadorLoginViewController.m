@@ -9,14 +9,16 @@
 #import "AmbassadorLoginViewController.h"
 #import "DefaultsHandler.h"
 #import <Ambassador/Ambassador.h>
+#import "LoadingScreen.h"
 
-@interface AmbassadorLoginViewController()
+@interface AmbassadorLoginViewController() <UITextFieldDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * loginMasterView;
 @property (nonatomic, strong) IBOutlet UITextField * tfUserName;
 @property (nonatomic, strong) IBOutlet UITextField * tfPassword;
 @property (nonatomic, strong) IBOutlet UIButton * btnLogin;
 @property (nonatomic, strong) IBOutlet UIButton * btnNoAccount;
+@property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
 
 @end
 
@@ -28,12 +30,22 @@
 
 - (void)viewDidLoad {
     [self setupUI];
+    [self registerForKeyboardNotificaitons];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [LoadingScreen rotateLoadingScreenForView:self.view];
 }
 
 
 #pragma mark - Actions
 
 - (IBAction)performLogin:(id)sender {
+    [self.view endEditing:YES];
     [self makeAmbassadorLoginRequest];
 }
 
@@ -41,14 +53,55 @@
     [self performSegueWithIdentifier:@"noAccountSegue" sender:self];
 }
 
+
+#pragma mark - TextField Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    // Handles return key for user name and password fields
+    if ([textField isEqual:self.tfUserName]) {
+        [self.tfUserName resignFirstResponder];
+        [self.tfPassword becomeFirstResponder];
+    } else if ([textField isEqual:self.tfPassword]) {
+        [self.tfPassword resignFirstResponder];
+    }
+    
+    return YES;
+}
+
+
 #pragma mark - UI Functions
 
 - (void)setupUI {
     // Login View
-    self.loginMasterView.layer.cornerRadius = 6;
+    self.loginMasterView.layer.cornerRadius = 4;
     
     // Login button
-    self.btnLogin.layer.cornerRadius = 6;
+    self.btnLogin.layer.cornerRadius = 4;
+}
+
+
+#pragma mark - Keyboard Listener
+
+- (void)registerForKeyboardNotificaitons {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification*)notificaiton {
+    CGRect keyboardFrame = [notificaiton.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    CGFloat textfieldPosition = self.loginMasterView.frame.origin.y + self.loginMasterView.frame.size.height + 10;
+    CGFloat difference = self.scrollView.frame.size.height - textfieldPosition;
+    
+    if (keyboardFrame.size.height > difference) {
+        CGFloat newY = keyboardFrame.size.height - difference;
+        [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)notification {
+    // Resets the scrollview to original position
+    [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 
@@ -63,6 +116,8 @@
     ambassadorURL = [NSURL URLWithString:@"https://dev-ambassador-api.herokuapp.com/v2-auth/"];
 #endif
     
+    [LoadingScreen showLoadingScreenForView:self.view];
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:ambassadorURL];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -72,6 +127,7 @@
     
     // Makes network call
     [[[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        [LoadingScreen hideLoadingScreenForView:self.view];
         NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
         if (!error && [self isValidStatusCode:statusCode]) {
             NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);

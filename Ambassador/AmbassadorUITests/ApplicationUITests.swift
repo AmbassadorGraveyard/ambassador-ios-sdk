@@ -109,11 +109,26 @@ extension ApplicationUITests {
     func testSettingsPage() {
         app.tabBars.buttons["Settings"].tap()
         
-        let element = app.otherElements.containingType(.NavigationBar, identifier:"Settings").childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element
-        element.childrenMatchingType(.Other).elementBoundByIndex(2).buttons["copyIcon"].tap()
-        element.childrenMatchingType(.Other).elementBoundByIndex(4).buttons["copyIcon"].tap()
+        let scrollViewsQuery = app.scrollViews
+        let jakeTestElementsQuery = scrollViewsQuery.otherElements.containingType(.StaticText, identifier:"Jake Test")
+        jakeTestElementsQuery.childrenMatchingType(.Other).elementBoundByIndex(1).buttons["copyIcon"].tap()
+        jakeTestElementsQuery.childrenMatchingType(.Other).elementBoundByIndex(3).buttons["copyIcon"].tap()
+        scrollViewsQuery.otherElements.buttons["Logout"].tap()
         
-        app.buttons["Logout"].tap()
+    }
+    
+    func testColorPicker() {
+        // Open color picker
+        app.navigationBars["Refer a Friend"].buttons["Edit"].tap()
+        app.tables.staticTexts["Test"].tap()
+        app.scrollViews.otherElements.containingType(.Button, identifier:"Clear Image").childrenMatchingType(.Button).elementBoundByIndex(1).tap()
+        
+        // Tap the color picker
+        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).elementBoundByIndex(1).childrenMatchingType(.Other).element.tap()
+        
+        // Check to see if hex color code matches the color tapped
+        let textField = app.textFields["hexTextField"]
+        XCTAssertEqual(textField.value as? String, "#7783FF")
     }
 }
 
