@@ -21,10 +21,25 @@
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
 @property (nonatomic, strong) SFSafariViewController * safariVC;
 @property (nonatomic, strong) NSTimer * identifyTimer;
+@property (nonatomic) NSInteger tryCount;
 
 @end
 
 @implementation AMBIdentify
+
+NSInteger const maxTryCount = 5;
+
+
+#pragma mark - LifeCycle
+
+- (id)init {
+    self = [super init];
+    self.tryCount = 0;
+    return self;
+}
+
+
+#pragma mark - Identify Functions
 
 - (void)getIdentity {
     if (![AMBValues isUITestRun]) {
@@ -37,8 +52,15 @@
 }
 
 - (void)performIdentifyForiOS9 {
+    // Checks if try count is at its max
+    if (self.tryCount >= maxTryCount) {
+        [self.identifyTimer invalidate];
+        return;
+    }
+    
+    self.tryCount++;
     self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AMBValues getUniversalID]]]];
-    DLog(@"Performing Identify with SAFARI VC for iOS 9");
+    DLog(@"Performing Identify with SAFARI VC for iOS 9 - Attempt %li", (long)self.tryCount);
     [self.safariVC.view setHidden:YES];
     self.safariVC.delegate = self;
     
