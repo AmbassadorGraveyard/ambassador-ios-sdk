@@ -39,6 +39,9 @@ extension AmbassadorUITests {
     func testCopyButton() {
         // Tap the copy button and make sure that the copied label is shown on the screen
         XCUIApplication().buttons["btnEdit"].tap()
+        
+        // Added half second wait to check for copied label
+        NSRunLoop.mainRunLoop().runUntilDate(NSDate().dateByAddingTimeInterval(0.5))
         XCTAssertTrue(app.staticTexts["Copied!"].exists)
     }
 
@@ -46,7 +49,7 @@ extension AmbassadorUITests {
         // Tap the facebook cell
         app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(0).tap()
         
-        NSRunLoop.mainRunLoop().runUntilDate(NSDate().dateByAddingTimeInterval(2))
+        NSRunLoop.mainRunLoop().runUntilDate(NSDate().dateByAddingTimeInterval(3))
         
         if app.alerts["No Facebook Account"].exists {
             let cancelButton = app.alerts["No Facebook Account"].collectionViews.buttons["Cancel"]
@@ -70,7 +73,7 @@ extension AmbassadorUITests {
         // Tap the twitter cell
         app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(1).tap()
         
-        NSRunLoop.mainRunLoop().runUntilDate(NSDate().dateByAddingTimeInterval(2))
+        NSRunLoop.mainRunLoop().runUntilDate(NSDate().dateByAddingTimeInterval(3))
         
         if app.alerts["No Twitter Accounts"].exists {
             app.alerts["No Twitter Accounts"].collectionViews.buttons["Cancel"].tap()
