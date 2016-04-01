@@ -12,10 +12,11 @@
 #import "AMBIdentify.h"
 #import "AMBValues.h"
 
-@interface AMBIdentify (Tests)
+@interface AMBIdentify (Tests) <SFSafariViewControllerDelegate>
 
 @property (nonatomic, strong) NSTimer * identifyTimer;
 @property (nonatomic, strong) SFSafariViewController * safariVC;
+@property (nonatomic) NSInteger tryCount;
 
 - (void)deviceInfoReceived;
 - (void)performIdentifyForiOS9;
@@ -42,6 +43,20 @@
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+}
+
+
+#pragma mark - LifeCycle Tests
+
+- (void)testInit {
+    // GIVEN
+    NSInteger expectedTry = 0;
+    
+    // WHEN
+    AMBIdentify *identify = [[AMBIdentify alloc] init];
+    
+    // THEN
+    XCTAssertEqual(expectedTry, identify.tryCount);
 }
 
 - (void)testGetIdentify {
@@ -71,19 +86,39 @@
 
 - (void)testDeviceInfoReceived {
     // GIVEN
-    self.identify.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:@"https://google.com"]];
-    id mockSafariVC = [OCMockObject partialMockForObject:self.identify.safariVC];
-    id mockView = [OCMockObject partialMockForObject:self.identify.safariVC.view];
-
-    [[[mockSafariVC expect] andDo:nil] removeFromParentViewController];
-    [[[mockView expect] andDo:nil] removeFromSuperview];
+    id mockTimer = [OCMockObject mockForClass:[NSTimer class]];
+    [[[mockTimer expect] andDo:nil] invalidate];
+    self.identify.identifyTimer = mockTimer;
     
     // WHEN
     [self.identify deviceInfoReceived];
     
     // THEN
-    [mockSafariVC verify];
-    [mockView verify];
+    [mockTimer verify];
+    [mockTimer stopMocking];
+}
+
+
+#pragma mark - SafariViewController Delegate
+
+- (void)testSFVCDidCompleteInitialLoad {
+    // GIVEN
+    id mockSFVC = [OCMockObject mockForClass:[SFSafariViewController class]];
+    [[[mockSFVC expect] andDo:nil] removeFromParentViewController];
+    
+    id mockSFView = [OCMockObject mockForClass:[UIView class]];
+    [[[mockSFView expect] andDo:nil] removeFromSuperview];
+    [[[mockSFVC expect] andReturn:mockSFView] view];
+    
+    // WHEN
+    [self.identify safariViewController:mockSFVC didCompleteInitialLoad:YES];
+    
+    // THEN
+    [mockSFVC verify];
+    [mockSFView verify];
+    
+    [mockSFVC stopMocking];
+    [mockSFView stopMocking];
 }
 
 @end
