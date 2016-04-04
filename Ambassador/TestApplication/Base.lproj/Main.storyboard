@@ -1192,6 +1192,9 @@
                                                 <exclude reference="m0Z-j6-P83"/>
                                             </mask>
                                         </variation>
+                                        <variation key="heightClass=compact" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="-444" width="600" height="1485"/>
+                                        </variation>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -1223,6 +1226,7 @@
                         <outlet property="ivProductPhoto" destination="E5o-r9-Axm" id="RpS-UV-qTU"/>
                         <outlet property="masterView" destination="qq0-Ch-UrQ" id="KGn-Oc-byP"/>
                         <outlet property="plusImage" destination="DWo-YR-pq8" id="Xcd-gj-ga3"/>
+                        <outlet property="scrollView" destination="GIj-i1-tJj" id="bDJ-ao-gZ2"/>
                         <outlet property="socialTableHeight" destination="P2q-tx-7lC" id="QII-uZ-s5B"/>
                         <outlet property="tblSocial" destination="nnB-Xm-RrA" id="8Xz-A1-8WD"/>
                         <outlet property="tfCampId" destination="QF3-Lx-1zR" id="avj-aC-4QW"/>

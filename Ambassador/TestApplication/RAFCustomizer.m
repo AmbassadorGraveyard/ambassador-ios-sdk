@@ -36,6 +36,7 @@
 @property (nonatomic, strong) IBOutlet UITableView * tblSocial;
 @property (nonatomic, strong) IBOutlet UIView * masterView;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * socialTableHeight;
+@property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
 
 // Private properties
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
@@ -44,11 +45,14 @@
 @property (nonatomic, strong) UIImage * selectedImage;
 @property (nonatomic, strong) NSMutableArray * socialArray;
 @property (nonatomic, strong) SocialShareOptionsHandler * socialHandler;
+@property (nonatomic, strong) UIView * selectedView;
 
 @end
 
 
 @implementation RAFCustomizer
+
+NSInteger currentScrollPoint;
 
 
 #pragma mark - LifeCycle
@@ -60,6 +64,14 @@
     // Image View tap gesture
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openImagePicker)];
     [self.ivProductPhoto addGestureRecognizer:tap];
+    
+    // Listens for when keyboard shows/hides
+    [self registerForKeyboardNotificaitons];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    // Stops listening for keyboard show and hide
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -133,8 +145,18 @@
         [self.tfRafName resignFirstResponder];
         [self showCampaignList];
         return NO;
+    } else {
+        self.selectedView = textField;
     }
     
+    return YES;
+}
+
+
+#pragma mark - UITextView Delegate
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    self.selectedView = textView;
     return YES;
 }
 
@@ -157,6 +179,34 @@
     self.btnClearImage.enabled = YES;
     self.plusImage.hidden = YES;
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - Keyboard Listener
+
+- (void)registerForKeyboardNotificaitons {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification*)notificaiton {
+    // Saves where the scrollview was currently at before scrolling
+    currentScrollPoint = self.scrollView.contentOffset.y;
+    
+    CGRect keyboardFrame = [notificaiton.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    CGFloat textfieldPosition = self.selectedView.frame.origin.y + self.selectedView.frame.size.height + 10;
+    CGFloat difference = self.scrollView.frame.size.height - textfieldPosition;
+    
+    if (keyboardFrame.size.height > difference) {
+        CGFloat newY = keyboardFrame.size.height - difference;
+        [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)notification {
+    // Resets the scrollview to original position
+    [self.scrollView setContentOffset:CGPointMake(0, currentScrollPoint) animated:YES];
 }
 
 
