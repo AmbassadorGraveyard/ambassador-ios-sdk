@@ -339,14 +339,14 @@ CGFloat currentOffset;
     parameters.mbsy_uid = ![self isEmpty:self.tfUID] ? self.tfUID.text : parameters.mbsy_uid;
     parameters.mbsy_custom1 = ![self isEmpty:self.tfCustom1] ? self.tfCustom1.text : parameters.mbsy_custom1;
     parameters.mbsy_custom2 = ![self isEmpty:self.tfCustom2] ? self.tfCustom2.text : parameters.mbsy_custom2;
-    parameters.mbsy_custom3 = ![self isEmpty:self.tfCustom3] ? self.tfCustom1.text : parameters.mbsy_custom3;
+    parameters.mbsy_custom3 = ![self isEmpty:self.tfCustom3] ? self.tfCustom3.text : parameters.mbsy_custom3;
     parameters.mbsy_auto_create = [NSNumber numberWithBool: self.swtAutoCreate.isOn];
     parameters.mbsy_deactivate_new_ambassador = [NSNumber numberWithBool: self.swtDeactivateNewAmbassador.isOn];
     parameters.mbsy_transaction_uid = ![self isEmpty:self.tfTransactionUID] ? self.tfTransactionUID.text : parameters.mbsy_transaction_uid;
     parameters.mbsy_event_data1 = ![self isEmpty:self.tfEventData1] ? self.tfEventData1.text : parameters.mbsy_event_data1;
     parameters.mbsy_event_data2 = ![self isEmpty:self.tfEventData2] ? self.tfEventData2.text : parameters.mbsy_event_data2;
     parameters.mbsy_event_data3 = ![self isEmpty:self.tfEventData3] ? self.tfEventData3.text : parameters.mbsy_event_data3;
-    parameters.mbsy_auto_create = [NSNumber numberWithBool:self.swtApproved.isOn];
+    parameters.mbsy_is_approved = [NSNumber numberWithBool:self.swtApproved.isOn];
     
     return parameters;
 }
