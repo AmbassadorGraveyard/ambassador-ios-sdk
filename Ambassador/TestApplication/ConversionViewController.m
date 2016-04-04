@@ -10,6 +10,7 @@
 #import <Ambassador/Ambassador.h>
 #import "Validator.h"
 #import "ValuesHandler.h"
+#import "AMBConversionParameter_Internal.h"
 
 @interface ConversionViewController () <UITextFieldDelegate>
 
@@ -155,16 +156,12 @@ CGFloat currentOffset;
     // Creates a formatter to get an NSNumber from a String
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     formatter.numberStyle = NSNumberFormatterDecimalStyle;
+//    
+//    NSNumber *campIDNumber = [formatter numberFromString:self.tfCampID.text];
+//    NSNumber *revAmt = [formatter numberFromString:self.tfRevAmt.text];
+//    BOOL shouldAutoApprove = [self.swtApproved isOn];
     
-    NSNumber *campIDNumber = [formatter numberFromString:self.tfCampID.text];
-    NSNumber *revAmt = [formatter numberFromString:self.tfRevAmt.text];
-    BOOL shouldAutoApprove = [self.swtApproved isOn];
-    
-    AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];
-    conversionParameters.mbsy_email = self.tfRefEmail.text;
-    conversionParameters.mbsy_campaign = campIDNumber;
-    conversionParameters.mbsy_revenue = revAmt;
-    conversionParameters.mbsy_is_approved = [NSNumber numberWithBool:shouldAutoApprove];
+    AMBConversionParameters *conversionParameters = [self conversionParameterFromValues];
     
     [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {
         if (error) {
@@ -200,16 +197,35 @@ CGFloat currentOffset;
 }
 
 - (NSString*)getObjcSnippet {
-    // Creates string from boolean
-    NSString *boolString = [self.swtApproved isOn] ? @"YES" : @"NO";
+    // Creates first part of snippet for setting params
+    NSMutableString *conversionParamString = [NSMutableString stringWithString:@"AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];\n\n// Set required properties\n"];
     
-    // Create a code snippet based on the info entered into the fields for the conversion
-    NSString *snippetLine1 = @"AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];";
-    NSString *snippetLine2 = [NSString stringWithFormat:@"conversionParameters.mbsy_email = @\"%@\";", self.tfRefEmail.text];
-    NSString *snippetLine3 = [NSString stringWithFormat:@"conversionParameters.mbsy_campaign = @%@;", self.tfCampID.text];
-    NSString *snippetLine4 = [NSString stringWithFormat:@"conversionParameters.mbsy_revenue = @%@;", self.tfRevAmt.text];
-    NSString *snippetLine5 = [NSString stringWithFormat:@"conversionParameters.mbsy_is_approved = @%@;", boolString];
+    // Creates an AMBConversionParameter object
+    AMBConversionParameters *params = [self conversionParameterFromValues];
+    NSDictionary *dict = [params propertyDictionary];
     
+    // Goes through each property in the conversionparam object
+    for (NSString *string in [params propertyArray]) {
+        // Creates the base setter string
+        NSString *setterString = [AMBConversionParameters isStringProperty:string] ? @"conversionParameters.%@ = @\"%@\"; \n" : @"conversionParameters.%@ = @%@; \n";
+        
+        NSString *boolString = nil;
+        
+        // Checks if property is a boolean and creates a string based on the boolean value
+        if ([AMBConversionParameters isBoolProperty:string]) {
+            BOOL boolValue = [[dict valueForKey:string] boolValue];
+            boolString = [self stringForBool:boolValue forSwift:NO];
+        }
+        
+        // Creates full propertyString and appends to to the full string
+        NSString *propString = boolString ? [NSString stringWithFormat:setterString, string, boolString] : [NSString stringWithFormat:setterString, string, [dict valueForKey:string]];
+        [conversionParamString appendString: propString];
+        
+        // If the property is 'revenue' then we add a new comment line to start optional properties
+        if ([string isEqualToString:@"mbsy_revenue"]) { [conversionParamString appendString:@"\n// Set optional properties\n"];}
+    }
+    
+    // Strings for implementation
     NSString *registerLine = @"[AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {";
     NSString *registerLine2 = @"    if (error) {";
     NSString *registerLine3 = @"        NSLog(@\"Error registering conversion - %@\", error);";
@@ -218,19 +234,12 @@ CGFloat currentOffset;
     NSString *registerLine6 = @"    }";
     NSString *registerLine7 = @"}];";
     
-    // Creates first part of snippet for setting params
-    NSArray *stringArray1 = @[snippetLine1, snippetLine2, snippetLine3, snippetLine4, snippetLine5];
-    NSMutableString *conversionParamString = [[NSMutableString alloc] init];
-    
-    for (NSString *string in stringArray1) {
-        [conversionParamString appendString:[NSString stringWithFormat:@"%@\n", string]];
-    }
-    
     // Creates second part of snippet for registering conversion
-    NSArray *stringArray2 = @[registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
+    NSArray *stringArray = @[registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
     NSMutableString *implementationString = [[NSMutableString alloc] init];
     
-    for (NSString *string in stringArray2) {
+    // Sets up full implementation string
+    for (NSString *string in stringArray) {
         [implementationString appendString:[NSString stringWithFormat:@"%@\n", string]];
     }
     
@@ -240,16 +249,35 @@ CGFloat currentOffset;
 }
 
 - (NSString*)getSwiftSnippet {
-    // Creates string from boolean
-    NSString *boolString = [self.swtApproved isOn] ? @"true" : @"false";
+    // Creates first part of snippet for setting params
+    NSMutableString *conversionParamString = [NSMutableString stringWithString:@"let conversionParameters = AMBConversionParameters()\n\n// Set required properties\n"];
     
-    // Create a code snippet based on the info entered into the fields for the conversion
-    NSString *snippetLine1 = @"let conversionParameters = AMBConversionParameters()";
-    NSString *snippetLine2 = [NSString stringWithFormat:@"conversionParameters.mbsy_email = \"%@\";", self.tfRefEmail.text];
-    NSString *snippetLine3 = [NSString stringWithFormat:@"conversionParameters.mbsy_campaign = %@;", self.tfCampID.text];
-    NSString *snippetLine4 = [NSString stringWithFormat:@"conversionParameters.mbsy_revenue = %@;", self.tfRevAmt.text];
-    NSString *snippetLine5 = [NSString stringWithFormat:@"conversionParameters.mbsy_is_approved = %@", boolString];
+    // Creates an AMBConversionParameter object
+    AMBConversionParameters *params = [self conversionParameterFromValues];
+    NSDictionary *dict = [params propertyDictionary];
     
+    // Goes through each property in the conversionparam object
+    for (NSString *string in [params propertyArray]) {
+        // Creates the base setter string
+        NSString *setterString = [AMBConversionParameters isStringProperty:string] ? @"conversionParameters.%@ = \"%@\" \n" : @"conversionParameters.%@ = %@ \n";
+        
+        NSString *boolString = nil;
+        
+        // Checks if property is a boolean and creates a string based on the boolean value
+        if ([AMBConversionParameters isBoolProperty:string]) {
+            BOOL boolValue = [[dict valueForKey:string] boolValue];
+            boolString = [self stringForBool:boolValue forSwift:YES];
+        }
+        
+        // Creates full propertyString and appends to to the full string
+        NSString *propString = boolString ? [NSString stringWithFormat:setterString, string, boolString] : [NSString stringWithFormat:setterString, string, [dict valueForKey:string]];
+        [conversionParamString appendString: propString];
+        
+        // If the property is 'revenue' then we add a new comment line to start optional properties
+        if ([string isEqualToString:@"mbsy_revenue"]) { [conversionParamString appendString:@"\n// Set optional properties\n"];}
+    }
+    
+    // Strings for implementation
     NSString *registerLine = @"AmbassadorSDK.registerConversion(conversionParameters, restrictToInstall: false) { (error) -> Void in";
     NSString *registerLine2 = @"    if ((error) != nil) {";
     NSString *registerLine3 = @"        print(\"Error \(error)\")";
@@ -257,14 +285,6 @@ CGFloat currentOffset;
     NSString *registerLine5 = @"        print(\"All conversion parameters are set properly\")";
     NSString *registerLine6 = @"    }";
     NSString *registerLine7 = @"}";
-
-    // Creates first part of snippet for setting params
-    NSArray *stringArray1 = @[snippetLine1, snippetLine2, snippetLine3, snippetLine4, snippetLine5];
-    NSMutableString *conversionParamString = [[NSMutableString alloc] init];
-    
-    for (NSString *string in stringArray1) {
-        [conversionParamString appendString:[NSString stringWithFormat:@"%@\n", string]];
-    }
     
     // Creates second part of snippet for registering conversion
     NSArray *stringArray2 = @[registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
@@ -295,6 +315,54 @@ CGFloat currentOffset;
     }
     
     return NO;
+}
+
+/* 
+ Creates an AMBConversionParameter object based
+ on the values set in the Conversion page.
+ If the value is left blank, the property is set
+ to the default value from the object's
+ instantiation */
+- (AMBConversionParameters*)conversionParameterFromValues {
+    AMBConversionParameters *parameters = [[AMBConversionParameters alloc] init];
+    
+    // Required Params
+    parameters.mbsy_email = self.tfRefEmail.text;
+    parameters.mbsy_campaign = [NSNumber numberWithInteger:[self.tfCampID.text integerValue]];
+    parameters.mbsy_revenue = [NSNumber numberWithFloat:[self.tfRevAmt.text floatValue]];
+    
+    // Optional Params
+    parameters.mbsy_add_to_group_id = ![self isEmpty:self.tfGroupID] ? self.tfGroupID.text : parameters.mbsy_add_to_group_id;
+    parameters.mbsy_first_name = ![self isEmpty:self.tfFirstName] ? self.tfFirstName.text : parameters.mbsy_first_name;
+    parameters.mbsy_last_name = ![self isEmpty:self.tfLastName] ? self.tfLastName.text : parameters.mbsy_last_name;
+    parameters.mbsy_email_new_ambassador = [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn];
+    parameters.mbsy_uid = ![self isEmpty:self.tfUID] ? self.tfUID.text : parameters.mbsy_uid;
+    parameters.mbsy_custom1 = ![self isEmpty:self.tfCustom1] ? self.tfCustom1.text : parameters.mbsy_custom1;
+    parameters.mbsy_custom2 = ![self isEmpty:self.tfCustom2] ? self.tfCustom2.text : parameters.mbsy_custom2;
+    parameters.mbsy_custom3 = ![self isEmpty:self.tfCustom3] ? self.tfCustom1.text : parameters.mbsy_custom3;
+    parameters.mbsy_auto_create = [NSNumber numberWithBool: self.swtAutoCreate.isOn];
+    parameters.mbsy_deactivate_new_ambassador = [NSNumber numberWithBool: self.swtDeactivateNewAmbassador.isOn];
+    parameters.mbsy_transaction_uid = ![self isEmpty:self.tfTransactionUID] ? self.tfTransactionUID.text : parameters.mbsy_transaction_uid;
+    parameters.mbsy_event_data1 = ![self isEmpty:self.tfEventData1] ? self.tfEventData1.text : parameters.mbsy_event_data1;
+    parameters.mbsy_event_data2 = ![self isEmpty:self.tfEventData2] ? self.tfEventData2.text : parameters.mbsy_event_data2;
+    parameters.mbsy_event_data3 = ![self isEmpty:self.tfEventData3] ? self.tfEventData3.text : parameters.mbsy_event_data3;
+    parameters.mbsy_auto_create = [NSNumber numberWithBool:self.swtApproved.isOn];
+    
+    return parameters;
+}
+
+- (BOOL)isEmpty:(UITextField*)textField {
+    NSString *stringWithoutSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    return [stringWithoutSpaces isEqualToString:@""];
+}
+
+// Gets a string value for boolean 
+- (NSString *)stringForBool:(BOOL)boolVal forSwift:(BOOL)isSwift {
+    if (isSwift) {
+        return boolVal ? @"true" : @"false";
+    } else {
+        return boolVal ? @"YES" : @"NO";
+    }
 }
 
 @end

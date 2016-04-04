@@ -13,7 +13,6 @@
 @interface AMBConversionParameters ()
 
 @property (nonatomic, strong) NSString * mbsy_short_code;
-@property (nonatomic, strong) NSArray * propertyArray;
 
 @end
 
@@ -145,10 +144,22 @@
     return NO;
 }
 
++ (BOOL)isBoolProperty:(NSString*)propertyName {
+    NSArray *boolPropertyArray = @[@"mbsy_email_new_ambassador", @"mbsy_auto_create", @"mbsy_deactivate_new_ambassador", @"mbsy_is_approved"];
+    
+    for (NSString *boolProperty in boolPropertyArray) {
+        if ([propertyName isEqualToString:boolProperty]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 - (void)setUpPropertyArray {
     // Sets an array of property names to easily loop through and check values
-    self.propertyArray = @[@"mbsy_campaign", @"mbsy_email", @"mbsy_first_name", @"mbsy_last_name", @"mbsy_email_new_ambassador", @"mbsy_uid", @"mbsy_custom1", @"mbsy_custom2", @"mbsy_custom3",
-                           @"mbsy_auto_create", @"mbsy_revenue", @"mbsy_deactivate_new_ambassador", @"mbsy_transaction_uid", @"mbsy_add_to_group_id", @"mbsy_event_data1", @"mbsy_event_data2",
+    self.propertyArray = @[@"mbsy_campaign", @"mbsy_email",  @"mbsy_revenue", @"mbsy_first_name", @"mbsy_last_name", @"mbsy_email_new_ambassador", @"mbsy_uid", @"mbsy_custom1", @"mbsy_custom2", @"mbsy_custom3",
+                           @"mbsy_auto_create", @"mbsy_deactivate_new_ambassador", @"mbsy_transaction_uid", @"mbsy_add_to_group_id", @"mbsy_event_data1", @"mbsy_event_data2",
                            @"mbsy_event_data3", @"mbsy_is_approved"];
 }
 
