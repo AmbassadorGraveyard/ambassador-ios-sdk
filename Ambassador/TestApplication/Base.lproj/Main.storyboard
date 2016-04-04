@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZnY-6U-Jmh">
-                                        <rect key="frame" x="0.0" y="-766" width="600" height="1267"/>
+                                        <rect key="frame" x="0.0" y="-570" width="600" height="1267"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rtd-Fa-1my">
                                                 <rect key="frame" x="20" y="108" width="560" height="36"/>
@@ -198,7 +198,7 @@
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Rj-2k-Xld" customClass="LeftIndentedTextField">
                                                 <rect key="frame" x="178" y="540" width="245" height="41"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="9YV-9x-emY" id="QqZ-Y9-gM4"/>
                                                 </connections>
@@ -206,7 +206,7 @@
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YPv-Lu-ddG" customClass="LeftIndentedTextField">
                                                 <rect key="frame" x="178" y="589" width="245" height="41"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="9YV-9x-emY" id="XFq-DI-tBv"/>
                                                 </connections>
@@ -230,7 +230,7 @@
                                                     <constraint firstAttribute="width" constant="245" id="XnF-wm-k71"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="9YV-9x-emY" id="NUa-Js-JJb"/>
                                                 </connections>
@@ -242,7 +242,7 @@
                                                     <constraint firstAttribute="height" constant="41" id="nME-fH-EHG"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="9YV-9x-emY" id="Uho-mo-9B2"/>
                                                 </connections>
@@ -254,7 +254,7 @@
                                                     <constraint firstAttribute="width" constant="245" id="tBa-hI-Zbr"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="9YV-9x-emY" id="aEK-o3-HE3"/>
                                                 </connections>
@@ -282,7 +282,7 @@
                                                     <constraint firstAttribute="width" constant="245" id="wNN-ta-OUf"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="9YV-9x-emY" id="D5P-Vg-Djs"/>
                                                 </connections>
@@ -296,7 +296,7 @@
                                                     <constraint firstAttribute="width" constant="245" id="rhg-xZ-FIC"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="9YV-9x-emY" id="Q17-lc-XJo"/>
                                                 </connections>
@@ -310,7 +310,7 @@
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="245" id="rAA-XO-tgy"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="9YV-9x-emY" id="X5N-aP-cdB"/>
                                                 </connections>
@@ -335,14 +335,14 @@
                                                     </mask>
                                                 </variation>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="WLR-vN-e7w">
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WLR-vN-e7w">
                                                 <rect key="frame" x="374" y="1037" width="51" height="31"/>
                                                 <variation key="heightClass=compact" misplaced="YES">
                                                     <rect key="frame" x="414" y="281" width="51" height="31"/>
                                                 </variation>
                                             </switch>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email new ambassador" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j2Z-o2-4Ax">
-                                                <rect key="frame" x="178" y="1045" width="128" height="15"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Is approved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j2Z-o2-4Ax">
+                                                <rect key="frame" x="178" y="1045" width="66" height="15"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="70" id="JdJ-ym-AAy"/>
                                                 </constraints>
@@ -367,14 +367,14 @@
                                                     <rect key="frame" x="414" y="281" width="51" height="31"/>
                                                 </variation>
                                             </switch>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oDG-yL-oy9">
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oDG-yL-oy9">
                                                 <rect key="frame" x="374" y="1160" width="51" height="31"/>
                                                 <variation key="heightClass=compact" misplaced="YES">
                                                     <rect key="frame" x="414" y="281" width="51" height="31"/>
                                                 </variation>
                                             </switch>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Is approved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeO-S9-gBy">
-                                                <rect key="frame" x="178" y="1168" width="66" height="15"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email new ambassador" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeO-S9-gBy">
+                                                <rect key="frame" x="178" y="1168" width="128" height="15"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="70" id="IrW-ud-GPd"/>
                                                 </constraints>
@@ -572,10 +572,10 @@
                         <outlet property="btnSubmit" destination="N39-bj-bIu" id="EL3-ct-CKw"/>
                         <outlet property="imgBGView" destination="8rv-yY-hoM" id="5x0-cX-G98"/>
                         <outlet property="scrollView" destination="Uq1-Pd-3p4" id="CXl-Ah-cDT"/>
-                        <outlet property="swtApproved" destination="3b4-zU-S5l" id="Ek5-te-mOi"/>
-                        <outlet property="swtAutoCreate" destination="S8U-9U-gMi" id="AEd-iN-Ww9"/>
-                        <outlet property="swtDeactivateNewAmbassador" destination="3b4-zU-S5l" id="cA1-SE-FGP"/>
-                        <outlet property="swtEmailNewAmbassador" destination="WLR-vN-e7w" id="loh-e4-sbw"/>
+                        <outlet property="swtApproved" destination="WLR-vN-e7w" id="LHz-45-tts"/>
+                        <outlet property="swtAutoCreate" destination="S8U-9U-gMi" id="76E-oE-JbS"/>
+                        <outlet property="swtDeactivateNewAmbassador" destination="3b4-zU-S5l" id="kZq-QG-eJt"/>
+                        <outlet property="swtEmailNewAmbassador" destination="oDG-yL-oy9" id="zEK-E1-zzS"/>
                         <outlet property="tfCampID" destination="exG-Sd-rrs" id="Dmv-p6-dlP"/>
                         <outlet property="tfCustom1" destination="nRH-aP-dY6" id="cEA-S4-6Sb"/>
                         <outlet property="tfCustom2" destination="52G-hd-VQT" id="ayv-Tt-o05"/>
