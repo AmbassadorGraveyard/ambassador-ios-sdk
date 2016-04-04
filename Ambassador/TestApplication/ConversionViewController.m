@@ -15,15 +15,34 @@
 
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
+@property (nonatomic, strong) IBOutlet UISwitch * swtApproved;
+@property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
 @property (nonatomic, strong) IBOutlet UITextField * tfRefEmail;
 @property (nonatomic, strong) IBOutlet UITextField * tfRevAmt;
 @property (nonatomic, strong) IBOutlet UITextField * tfCampID;
-@property (nonatomic, strong) IBOutlet UISwitch * swtApproved;
-@property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
+@property (nonatomic, strong) IBOutlet UITextField * tfReferrerEmail;
 
+// Optional Param fields
+@property (nonatomic, strong) IBOutlet UITextField * tfGroupID;
+@property (nonatomic, strong) IBOutlet UITextField * tfFirstName;
+@property (nonatomic, strong) IBOutlet UITextField * tfLastName;
+@property (nonatomic, strong) IBOutlet UITextField * tfUID;
+@property (nonatomic, strong) IBOutlet UITextField * tfCustom1;
+@property (nonatomic, strong) IBOutlet UITextField * tfCustom2;
+@property (nonatomic, strong) IBOutlet UITextField * tfCustom3;
+@property (nonatomic, strong) IBOutlet UITextField * tfTransactionUID;
+@property (nonatomic, strong) IBOutlet UITextField * tfEventData1;
+@property (nonatomic, strong) IBOutlet UITextField * tfEventData2;
+@property (nonatomic, strong) IBOutlet UITextField * tfEventData3;
+@property (nonatomic, strong) IBOutlet UISwitch * swtEmailNewAmbassador;
+@property (nonatomic, strong) IBOutlet UISwitch * swtAutoCreate;
+@property (nonatomic, strong) IBOutlet UISwitch * swtDeactivateNewAmbassador;
+
+// Private properties
 @property (nonatomic, strong) UITextField * selectedTextField;
 
 @end
+
 
 @implementation ConversionViewController
 
