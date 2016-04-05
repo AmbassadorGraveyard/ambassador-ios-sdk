@@ -76,7 +76,7 @@ CGFloat currentOffset;
 
 - (IBAction)submitTapped:(id)sender {
     [self.view endEditing:YES];
-    [self getShortCodeAndSubmit];
+    [self performConversionActionWithShortCode];
 }
 
 - (void)doneClicked:(id)sender {
@@ -162,7 +162,7 @@ CGFloat currentOffset;
     
     NSURL *ambassadorURL;
     #if AMBPRODUCTION
-        ambassadorURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.getambassador.com/%@",  urlString];
+        ambassadorURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.getambassador.com/%@",  urlString]];
     #else
         ambassadorURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/%@", urlString]];
     #endif
@@ -188,9 +188,9 @@ CGFloat currentOffset;
             if (returnDict[@"count"] > [NSNumber numberWithInteger:0]) {
                 // Grabs the shortcode from the response and makes a conversion call
                 NSString *shortCode = [self shortCodeFromDictionary:returnDict];
-                [self performConversionActionWithShortCode:shortCode];
+                [self registerConversionWithShortCode:shortCode];
             } else {
-                UIAlertView *failAlert = [[UIAlertView alloc] initWithTitle:@"Conversion Failed" message:@"An ambassador could not be found for the email and campaign provided" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+                UIAlertView *failAlert = [[UIAlertView alloc] initWithTitle:@"Conversion Failed" message:@"An ambassador could not be found for the email and campaign provided." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
                 [failAlert show];
             }
         } else {
@@ -200,10 +200,13 @@ CGFloat currentOffset;
     }] resume];
 }
 
-- (void)registerConversionWithShortCode:(NSString*)shortCode {    
+- (void)registerConversionWithShortCode:(NSString*)shortCode {
     // Gets the conversion object and saves the short code so that the conversion can be registered
     AMBConversionParameters *conversionParameters = [self conversionParameterFromValues];
     [AMBValues setMbsyCookieWithCode:shortCode];
+    
+    UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:@"You have successfully registered a conversion." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [successAlert show];
     
     [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {
         if (error) {
@@ -214,12 +217,9 @@ CGFloat currentOffset;
     }];
 }
 
-- (void)performConversionActionWithShortCode:(NSString*)shortCode {
+- (void)performConversionActionWithShortCode {
     if (![self invalidFields]) {
-        [self registerConversionWithShortCode:shortCode];
-        
-        UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:@"You have successfully registered a conversion." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [successAlert show];
+        [self getShortCodeAndSubmit];
     }
 }
 
@@ -342,8 +342,15 @@ CGFloat currentOffset;
 }
 
 - (BOOL)invalidFields {
+    if (![Validator isValidEmail:self.tfReferrerEmail.text]) {
+        UIAlertView *blankRefAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Referrer Email field must be a valid email." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [blankRefAlert show];
+        
+        return YES;
+    }
+    
     if ([Validator emptyString:self.tfRefEmail.text] || [Validator emptyString:self.tfRevAmt.text] || [Validator emptyString:self.tfCampID.text]) {
-        UIAlertView *blankAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"No fields can be left blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        UIAlertView *blankAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"Required fields cannot be left blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [blankAlert show];
         
         return YES;
