@@ -92,7 +92,7 @@ extension ApplicationUITests {
         // Type campaign ID text
         let campaignIdTextField = elementsQuery.textFields["Campaign ID (Required)"]
         campaignIdTextField.tap()
-        campaignIdTextField.typeText("1047")
+        campaignIdTextField.typeText("1048")
         app.toolbars.buttons["Done"].tap()
 
         elementsQuery.buttons["Submit"].tap()
