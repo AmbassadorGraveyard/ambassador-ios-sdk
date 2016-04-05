@@ -7,6 +7,7 @@
 //
 
 #import "LeftIndentedTextField.h"
+#import "UIColor+AMBColorValues.h"
 
 @implementation LeftIndentedTextField
 
@@ -14,6 +15,7 @@
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 20)];
     self.leftView = paddingView;
     self.leftViewMode = UITextFieldViewModeAlways;
+    self.tintColor = [UIColor colorFromHexString:@"3C97D3"];
 }
 
 @end

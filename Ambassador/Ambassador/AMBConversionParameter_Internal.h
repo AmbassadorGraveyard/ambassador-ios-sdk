@@ -12,10 +12,13 @@
 
 @interface AMBConversionParameters()
 
+@property (nonatomic, strong) NSArray * propertyArray;
+
 - (id)initWithEntity:(AMBConversionParametersEntity *)entity;
 - (NSError*)checkForError;
 - (NSString*)getShortCode;
 - (NSDictionary*)propertyDictionary;
 + (BOOL)isStringProperty:(NSString*)propertyName;
++ (BOOL)isBoolProperty:(NSString*)propertyName;
 
 @end
