@@ -74,29 +74,6 @@
                                                     <outlet property="delegate" destination="9YV-9x-emY" id="Hus-je-ZRb"/>
                                                 </connections>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Campaign ID (Required)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="exG-Sd-rrs" customClass="LeftIndentedTextField">
-                                                <rect key="frame" x="178" y="379" width="245" height="41"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="41" id="LAh-0L-1qu">
-                                                        <variation key="heightClass=compact" constant="41"/>
-                                                    </constraint>
-                                                    <constraint firstAttribute="width" constant="245" id="PYJ-Jb-fuY">
-                                                        <variation key="heightClass=compact" constant="115"/>
-                                                    </constraint>
-                                                </constraints>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
-                                                <variation key="heightClass=compact" misplaced="YES">
-                                                    <rect key="frame" x="138" y="228" width="325" height="41"/>
-                                                    <mask key="constraints">
-                                                        <exclude reference="PYJ-Jb-fuY"/>
-                                                    </mask>
-                                                </variation>
-                                                <connections>
-                                                    <outlet property="delegate" destination="9YV-9x-emY" id="g0S-1c-4Kg"/>
-                                                </connections>
-                                            </textField>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8rv-yY-hoM">
                                                 <rect key="frame" x="278" y="20" width="45" height="45"/>
                                                 <subviews>
@@ -167,7 +144,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Referrer Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2db-iC-L6h" customClass="LeftIndentedTextField">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Referrer Email (Required)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2db-iC-L6h" customClass="LeftIndentedTextField">
                                                 <rect key="frame" x="178" y="192" width="245" height="41"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
@@ -399,6 +376,29 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Campaign ID (Required)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="exG-Sd-rrs" customClass="LeftIndentedTextField">
+                                                <rect key="frame" x="178" y="379" width="245" height="41"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="41" id="LAh-0L-1qu">
+                                                        <variation key="heightClass=compact" constant="41"/>
+                                                    </constraint>
+                                                    <constraint firstAttribute="width" constant="245" id="PYJ-Jb-fuY">
+                                                        <variation key="heightClass=compact" constant="115"/>
+                                                    </constraint>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad"/>
+                                                <variation key="heightClass=compact" misplaced="YES">
+                                                    <rect key="frame" x="138" y="228" width="325" height="41"/>
+                                                    <mask key="constraints">
+                                                        <exclude reference="PYJ-Jb-fuY"/>
+                                                    </mask>
+                                                </variation>
+                                                <connections>
+                                                    <outlet property="delegate" destination="9YV-9x-emY" id="g0S-1c-4Kg"/>
+                                                </connections>
+                                            </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
