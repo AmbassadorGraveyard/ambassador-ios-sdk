@@ -194,7 +194,7 @@ CGFloat currentOffset;
                 [failAlert show];
             }
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Conversion Failed" message:@"There was an error registering the convesion.  Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Conversion Failed" message:@"There was an error registering the conversion.  Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
             [alert show];
         }
     }] resume];
