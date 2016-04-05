@@ -396,9 +396,14 @@ NSInteger currentScrollPoint;
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             NSLog(@"%@", results);
             
-            // Save the campaign list to defaults and then show list
-            [self saveCampaings:results];
-            [self showCampaignList];
+            if ([results[@"count"]  isEqual: @0]) {
+                UIAlertView *noCampAlert = [[UIAlertView alloc] initWithTitle:@"No Campaigns Found" message:@"You must set up at least 1 campaign." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+                [noCampAlert show];
+            } else {
+                // Save the campaign list to defaults and then show list
+                [self saveCampaings:results];
+                [self showCampaignList];
+            }
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable to load campaigns" message:@"Unable to load campaigns at this time. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
             [alert show];
