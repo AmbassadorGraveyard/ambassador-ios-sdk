@@ -73,22 +73,28 @@ extension ApplicationUITests {
         let okayButton = app.alerts["Hold on!"].collectionViews.buttons["Okay"]
         okayButton.tap()
         
-        let referredEmailTextField = elementsQuery.textFields["Referred Email"]
+        // Type referrer email text
+        let referrerTF = elementsQuery.textFields["Referrer Email (Required)"]
+        referrerTF.tap()
+        referrerTF.typeText("jake@getambassador.com")
+        
+        // Type referred email text
+        let referredEmailTextField = elementsQuery.textFields["Referred Email (Required)"]
         referredEmailTextField.tap()
         referredEmailTextField.typeText("test")
         
-        let revenueAmtTextField = elementsQuery.textFields["Revenue Amt"]
-        revenueAmtTextField.tap()
+        // Type revenue amount
+        let revenueAmtTextField = elementsQuery.textFields["Revenue Amt (Required)"]
         revenueAmtTextField.tap()
         revenueAmtTextField.typeText("1.50")
-        
-        let campaignIdTextField = elementsQuery.textFields["Campaign ID"]
-        campaignIdTextField.tap()
-        campaignIdTextField.tap()
-        campaignIdTextField.typeText("1026")
-        
         app.toolbars.buttons["Done"].tap()
         
+        // Type campaign ID text
+        let campaignIdTextField = elementsQuery.textFields["Campaign ID (Required)"]
+        campaignIdTextField.tap()
+        campaignIdTextField.typeText("1047")
+        app.toolbars.buttons["Done"].tap()
+
         elementsQuery.buttons["Submit"].tap()
         
         // Checks to make sure we get invalid email error
@@ -98,10 +104,16 @@ extension ApplicationUITests {
         
         referredEmailTextField.tap()
         referredEmailTextField.typeText("@example.com")
-        app.buttons["Done"].tap()
+        
+        app.buttons["Return"].tap()
+        
         elementsQuery.buttons["Submit"].tap()
         
         // Checks to make sure that we got a success message
+        let existsPredicate = NSPredicate(format: "exists == 1")
+        expectationForPredicate(existsPredicate, evaluatedWithObject: app.alerts["Great!"], handler: nil)
+        waitForExpectationsWithTimeout(3, handler: nil)
+        
         XCTAssertTrue(app.alerts["Great!"].exists)
         app.alerts["Great!"].collectionViews.buttons["Okay"].tap()
     }
@@ -114,7 +126,6 @@ extension ApplicationUITests {
         jakeTestElementsQuery.childrenMatchingType(.Other).elementBoundByIndex(1).buttons["copyIcon"].tap()
         jakeTestElementsQuery.childrenMatchingType(.Other).elementBoundByIndex(3).buttons["copyIcon"].tap()
         scrollViewsQuery.otherElements.buttons["Logout"].tap()
-        
     }
     
     func testColorPicker() {
