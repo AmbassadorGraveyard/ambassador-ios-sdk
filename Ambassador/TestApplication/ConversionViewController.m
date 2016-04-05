@@ -11,6 +11,10 @@
 #import "Validator.h"
 #import "ValuesHandler.h"
 #import "AMBConversionParameter_Internal.h"
+#import "LoadingScreen.h"
+#import "AMBUtilities.h"
+#import "DefaultsHandler.h"
+#import "AMBValues.h"
 
 @interface ConversionViewController () <UITextFieldDelegate>
 
@@ -72,7 +76,7 @@ CGFloat currentOffset;
 
 - (IBAction)submitTapped:(id)sender {
     [self.view endEditing:YES];
-    [self performConversionAction];
+    [self getShortCodeAndSubmit];
 }
 
 - (void)doneClicked:(id)sender {
@@ -152,16 +156,54 @@ CGFloat currentOffset;
 
 #pragma mark - Helper Functions
 
-- (void)registerConversion {
-    // Creates a formatter to get an NSNumber from a String
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    formatter.numberStyle = NSNumberFormatterDecimalStyle;
-//    
-//    NSNumber *campIDNumber = [formatter numberFromString:self.tfCampID.text];
-//    NSNumber *revAmt = [formatter numberFromString:self.tfRevAmt.text];
-//    BOOL shouldAutoApprove = [self.swtApproved isOn];
+- (void)getShortCodeAndSubmit {
+    // Sets up request
+    NSString *urlString = [NSString stringWithFormat:@"urls/?campaign_uid=%@&email=%@", self.tfCampID.text, self.tfReferrerEmail.text];
     
+    NSURL *ambassadorURL;
+    #if AMBPRODUCTION
+        ambassadorURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.getambassador.com/%@",  urlString];
+    #else
+        ambassadorURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/%@", urlString]];
+    #endif
+    
+    [LoadingScreen showLoadingScreenForView:self.view];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:ambassadorURL];
+    [request setHTTPMethod:@"GET"];
+    [request setValue:[NSString stringWithFormat:@"SDKToken %@", [DefaultsHandler getSDKToken]] forHTTPHeaderField:@"Authorization"];
+    
+    // Makes network call
+    [[[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        [LoadingScreen hideLoadingScreenForView:self.view];
+            
+        // Get the response code and handle accordingly
+        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
+        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
+            // Grabs the dictionary returned from the call
+            NSDictionary *returnDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            NSLog(@"%@", returnDict);
+            
+            // Checks if the count is greater than zero
+            if (returnDict[@"count"] > [NSNumber numberWithInteger:0]) {
+                // Grabs the shortcode from the response and makes a conversion call
+                NSString *shortCode = [self shortCodeFromDictionary:returnDict];
+                [self performConversionActionWithShortCode:shortCode];
+            } else {
+                UIAlertView *failAlert = [[UIAlertView alloc] initWithTitle:@"Conversion Failed" message:@"An ambassador could not be found for the email and campaign provided" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+                [failAlert show];
+            }
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Conversion Failed" message:@"There was an error registering the convesion.  Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+            [alert show];
+        }
+    }] resume];
+}
+
+- (void)registerConversionWithShortCode:(NSString*)shortCode {    
+    // Gets the conversion object and saves the short code so that the conversion can be registered
     AMBConversionParameters *conversionParameters = [self conversionParameterFromValues];
+    [AMBValues setMbsyCookieWithCode:shortCode];
     
     [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {
         if (error) {
@@ -172,9 +214,9 @@ CGFloat currentOffset;
     }];
 }
 
-- (void)performConversionAction {
+- (void)performConversionActionWithShortCode:(NSString*)shortCode {
     if (![self invalidFields]) {
-        [self registerConversion];
+        [self registerConversionWithShortCode:shortCode];
         
         UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:@"You have successfully registered a conversion." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [successAlert show];
@@ -363,6 +405,14 @@ CGFloat currentOffset;
     } else {
         return boolVal ? @"YES" : @"NO";
     }
+}
+                     
+- (NSString *)shortCodeFromDictionary: (NSDictionary *)dictionary {
+    // Goes through the dictionary and grabs the shortcode if there is one
+    NSArray *results = dictionary[@"results"];
+    NSDictionary *resultsDict = results[0];
+    
+    return resultsDict[@"short_code"];
 }
 
 @end
