@@ -16,6 +16,7 @@
 #import "CampaignListController.h"
 #import "SocialShareOptionsHandler.h"
 #import "LoadingScreen.h"
+#import "Validator.h"
 
 @interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate,
                             UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate, UIAlertViewDelegate>
@@ -37,6 +38,7 @@
 @property (nonatomic, strong) IBOutlet UIView * masterView;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * socialTableHeight;
 @property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
+@property (nonatomic, strong) IBOutlet UITextView * tvHeaderText;
 
 // Private properties
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
@@ -309,6 +311,7 @@ NSInteger currentScrollPoint;
     // Text Values
     self.tvText1.text = [self.plistDict valueForKey:@"RAFWelcomeTextMessage"];
     self.tvText2.text = [self.plistDict valueForKey:@"RAFDescriptionTextMessage"];
+    self.tvHeaderText.text = [self.plistDict valueForKey:@"NavBarTextMessage"];
     self.tfRafName.text = self.rafItem.rafName;
     
     // RAF Item Values
@@ -343,8 +346,13 @@ NSInteger currentScrollPoint;
     [self.plistDict setValue:buttonColorString forKey:@"ContactTableCheckMarkColor"];
     
     // Overrides strings in plist
-    [self.plistDict setValue:self.tvText1.text forKey:@"RAFWelcomeTextMessage"];
-    [self.plistDict setValue:self.tvText2.text forKey:@"RAFDescriptionTextMessage"];
+    NSString *headerText = ![Validator emptyString:self.tvHeaderText.text] ? self.tvHeaderText.text : @" ";
+    NSString *textValue1 = ![Validator emptyString:self.tvText1.text] ? self.tvText1.text : @" ";
+    NSString *textValue2 = ![Validator emptyString:self.tvText2.text] ? self.tvText2.text : @" ";
+    
+    [self.plistDict setValue:headerText forKey:@"NavBarTextMessage"];
+    [self.plistDict setValue:textValue1 forKey:@"RAFWelcomeTextMessage"];
+    [self.plistDict setValue:textValue2 forKey:@"RAFDescriptionTextMessage"];
     
     // Overrides social table
     [self.plistDict setValue:[self stringFromSocialChannels] forKey:@"Channels"];
