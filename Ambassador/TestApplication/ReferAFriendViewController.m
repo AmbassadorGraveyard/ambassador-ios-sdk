@@ -33,6 +33,7 @@
 @implementation ReferAFriendViewController
 
 NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
+RAFItem * itemToDelete = nil;
 
 
 #pragma mark - LifeCycle
@@ -149,6 +150,17 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 }
 
 
+#pragma mark - UIAlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // Checks to make sure 'Yes' was tapped
+    if (buttonIndex == 1) {
+        [ThemeHandler deleteRafItem:itemToDelete];
+        [self reloadThemesWithFade:YES];
+    }
+}
+
+
 #pragma mark - RAFCustomizer Delegate
 
 - (void)RAFCustomizerSavedRAF:(RAFItem *)rafItem {
@@ -159,8 +171,13 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 #pragma mark - RAFCell Delegate
 
 - (void)RAFCellDeleteTappedForRAFItem:(RAFItem *)rafItem {
-    [ThemeHandler deleteRafItem:rafItem];
-    [self reloadThemesWithFade:YES];
+    NSString *confirmationString = [NSString stringWithFormat:@"%@ will be permanently deleted.", rafItem.rafName];
+    
+    UIAlertView *deleteConfirmation = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:confirmationString delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    [deleteConfirmation show];
+    
+    // Gets rafItem to delete
+    itemToDelete = rafItem;
 }
 
 - (void)RAFCellExportTappedForRAFItem:(RAFItem *)rafItem {
@@ -179,9 +196,11 @@ NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 }
 
 - (void)setNavBarButtons {
+    // Decides whether or not to show '+' button based on editing state
     UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewRAF)];
-    self.tabBarController.navigationItem.rightBarButtonItem = btnAdd;
+    self.tabBarController.navigationItem.rightBarButtonItem = self.tableEditing ? nil : btnAdd;
     
+    // Changes button title based on editing state
     NSString *editTitle = (self.tableEditing && self.rafArray.count >= 1) ? @"Done" : @"Edit";
     UIBarButtonItem *btnEdit = [[UIBarButtonItem alloc] initWithTitle:editTitle style:UIBarButtonItemStylePlain target:self action:@selector(editRAF)];
     self.tabBarController.navigationItem.leftBarButtonItem = btnEdit;
