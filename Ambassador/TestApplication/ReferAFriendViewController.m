@@ -196,14 +196,14 @@ RAFItem * itemToDelete = nil;
 }
 
 - (void)setNavBarButtons {
-    // Decides whether or not to show '+' button based on editing state
-    UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewRAF)];
-    self.tabBarController.navigationItem.rightBarButtonItem = self.tableEditing ? nil : btnAdd;
-    
     // Changes button title based on editing state
     NSString *editTitle = (self.tableEditing && self.rafArray.count >= 1) ? @"Done" : @"Edit";
     UIBarButtonItem *btnEdit = [[UIBarButtonItem alloc] initWithTitle:editTitle style:UIBarButtonItemStylePlain target:self action:@selector(editRAF)];
     self.tabBarController.navigationItem.leftBarButtonItem = btnEdit;
+    
+    // Decides whether or not to show '+' button based on editing state
+    UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewRAF)];
+    self.tabBarController.navigationItem.rightBarButtonItem = [editTitle isEqualToString:@"Done"] ? nil : btnAdd;
     
     self.tabBarController.title = @"Refer a Friend";
 }
