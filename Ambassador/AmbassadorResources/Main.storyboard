@@ -1696,7 +1696,7 @@
         <!--View Controller-->
         <scene sceneID="fTS-jm-vO7">
             <objects>
-                <viewController storyboardIdentifier="NPS_MODAL_VIEW" id="Ksn-5Y-A07" customClass="AMBNPSViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NPS_MODAL_VIEW" modalTransitionStyle="crossDissolve" id="Ksn-5Y-A07" customClass="AMBNPSViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6Ld-pq-eOr"/>
                         <viewControllerLayoutGuide type="bottom" id="MlA-JC-ivH"/>
