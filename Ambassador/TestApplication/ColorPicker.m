@@ -48,6 +48,10 @@
     [self setupUI];
 }
 
+- (void)viewDidLayoutSubviews {
+    self.ivColorPicker.layer.cornerRadius = self.ivColorPicker.frame.size.height/2;
+}
+
 
 #pragma mark - IBActions
 

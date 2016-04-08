@@ -43,10 +43,6 @@ CGFloat tableHeaderHeight = 50;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupUI];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeViewController:)];
-    tap.delegate = self;
-    [self.view addGestureRecognizer:tap];
 }
 
 
@@ -106,18 +102,6 @@ CGFloat tableHeaderHeight = 50;
     CampaignObject *selectedCampaign = (CampaignObject*)self.campaignArray[indexPath.row];
     if ([self.delegate respondsToSelector:@selector(campaignListCampaignChosen:)]) { [self.delegate campaignListCampaignChosen:selectedCampaign]; }
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
-#pragma mark - GestureRecognizer Delegate
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    // Checks to make sure that the touch is not inside the tableView for dismissal
-    if (CGRectContainsPoint(self.view.bounds, [touch locationInView:self.tableView])) {
-        return NO;
-    }
-    
-    return YES;
 }
 
 

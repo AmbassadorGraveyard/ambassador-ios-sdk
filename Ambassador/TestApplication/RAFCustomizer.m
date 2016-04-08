@@ -16,6 +16,7 @@
 #import "CampaignListController.h"
 #import "SocialShareOptionsHandler.h"
 #import "LoadingScreen.h"
+#import "Validator.h"
 
 @interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate,
                             UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate, UIAlertViewDelegate>
@@ -36,6 +37,8 @@
 @property (nonatomic, strong) IBOutlet UITableView * tblSocial;
 @property (nonatomic, strong) IBOutlet UIView * masterView;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * socialTableHeight;
+@property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
+@property (nonatomic, strong) IBOutlet UITextView * tvHeaderText;
 
 // Private properties
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
@@ -44,11 +47,14 @@
 @property (nonatomic, strong) UIImage * selectedImage;
 @property (nonatomic, strong) NSMutableArray * socialArray;
 @property (nonatomic, strong) SocialShareOptionsHandler * socialHandler;
+@property (nonatomic, strong) UIView * selectedView;
 
 @end
 
 
 @implementation RAFCustomizer
+
+NSInteger currentScrollPoint;
 
 
 #pragma mark - LifeCycle
@@ -60,6 +66,14 @@
     // Image View tap gesture
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openImagePicker)];
     [self.ivProductPhoto addGestureRecognizer:tap];
+    
+    // Listens for when keyboard shows/hides
+    [self registerForKeyboardNotificaitons];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    // Stops listening for keyboard show and hide
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -133,8 +147,18 @@
         [self.tfRafName resignFirstResponder];
         [self showCampaignList];
         return NO;
+    } else {
+        self.selectedView = textField;
     }
     
+    return YES;
+}
+
+
+#pragma mark - UITextView Delegate
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    self.selectedView = textView;
     return YES;
 }
 
@@ -157,6 +181,34 @@
     self.btnClearImage.enabled = YES;
     self.plusImage.hidden = YES;
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - Keyboard Listener
+
+- (void)registerForKeyboardNotificaitons {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification*)notificaiton {
+    // Saves where the scrollview was currently at before scrolling
+    currentScrollPoint = self.scrollView.contentOffset.y;
+    
+    CGRect keyboardFrame = [notificaiton.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    CGFloat textfieldPosition = self.selectedView.frame.origin.y + self.selectedView.frame.size.height + 10;
+    CGFloat difference = self.scrollView.frame.size.height - textfieldPosition;
+    
+    if (keyboardFrame.size.height > difference) {
+        CGFloat newY = keyboardFrame.size.height - difference;
+        [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)notification {
+    // Resets the scrollview to original position
+    [self.scrollView setContentOffset:CGPointMake(0, currentScrollPoint) animated:YES];
 }
 
 
@@ -259,6 +311,7 @@
     // Text Values
     self.tvText1.text = [self.plistDict valueForKey:@"RAFWelcomeTextMessage"];
     self.tvText2.text = [self.plistDict valueForKey:@"RAFDescriptionTextMessage"];
+    self.tvHeaderText.text = [self.plistDict valueForKey:@"NavBarTextMessage"];
     self.tfRafName.text = self.rafItem.rafName;
     
     // RAF Item Values
@@ -293,8 +346,13 @@
     [self.plistDict setValue:buttonColorString forKey:@"ContactTableCheckMarkColor"];
     
     // Overrides strings in plist
-    [self.plistDict setValue:self.tvText1.text forKey:@"RAFWelcomeTextMessage"];
-    [self.plistDict setValue:self.tvText2.text forKey:@"RAFDescriptionTextMessage"];
+    NSString *headerText = ![Validator emptyString:self.tvHeaderText.text] ? self.tvHeaderText.text : @" ";
+    NSString *textValue1 = ![Validator emptyString:self.tvText1.text] ? self.tvText1.text : @" ";
+    NSString *textValue2 = ![Validator emptyString:self.tvText2.text] ? self.tvText2.text : @" ";
+    
+    [self.plistDict setValue:headerText forKey:@"NavBarTextMessage"];
+    [self.plistDict setValue:textValue1 forKey:@"RAFWelcomeTextMessage"];
+    [self.plistDict setValue:textValue2 forKey:@"RAFDescriptionTextMessage"];
     
     // Overrides social table
     [self.plistDict setValue:[self stringFromSocialChannels] forKey:@"Channels"];
@@ -346,9 +404,14 @@
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             NSLog(@"%@", results);
             
-            // Save the campaign list to defaults and then show list
-            [self saveCampaings:results];
-            [self showCampaignList];
+            if ([results[@"count"]  isEqual: @0]) {
+                UIAlertView *noCampAlert = [[UIAlertView alloc] initWithTitle:@"No Campaigns Found" message:@"You must set up at least 1 campaign." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+                [noCampAlert show];
+            } else {
+                // Save the campaign list to defaults and then show list
+                [self saveCampaings:results];
+                [self showCampaignList];
+            }
         } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable to load campaigns" message:@"Unable to load campaigns at this time. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
             [alert show];
@@ -434,8 +497,15 @@
 - (void)setupSocialTableView:(NSMutableArray*)enabledChannels {
     // Init our Social Handler class which is the datasource and delegate for the social tableview
     if (!self.socialHandler) {
-        self.socialHandler = [[SocialShareOptionsHandler alloc] initWithArrayOrder:self.socialArray onArray:enabledChannels];
+        // Creates new array to pass since, self.socialArray will be getting altered
+        NSMutableArray *fullArray = [NSMutableArray arrayWithArray:self.socialArray];
+        
+        self.socialHandler = [[SocialShareOptionsHandler alloc] initWithArrayOrder:fullArray onArray:enabledChannels];
         self.socialHandler.delegate = self;
+        
+        // Resets array to only contain enabled channels
+        [self.socialArray removeAllObjects];
+        [self.socialArray addObjectsFromArray:enabledChannels];
     }
     
     // Set values for social tableview
