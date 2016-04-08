@@ -15,7 +15,7 @@
 #import "AMBInputAlert.h"
 #import "AMBNPSViewController.h"
 
-@interface AmbassadorSDK () <AMBInputAlertDelegate>
+@interface AmbassadorSDK () <AMBInputAlertDelegate, UIAlertViewDelegate>
 
 + (AmbassadorSDK*)sharedInstance;
 - (void)subscribeToPusherWithCompletion:(void(^)())completion;
@@ -29,5 +29,6 @@
 @property (nonatomic, weak) NSString * tempCampID;
 @property (nonatomic, weak) NSString * tempPlistName;
 @property (nonatomic, weak) UIViewController * tempPresentController;
+@property (nonatomic, weak) NSDictionary * notificationData;
 
 @end

@@ -223,21 +223,26 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 + (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification {
     DLog(@"AmbassadorNotification Received - %@", notification);
+    [AmbassadorSDK sharedInstance].notificationData = notification;
     
     // Checks if the app is already open and shows an alert if so
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Survey" message:@"Would you like to fill out a survey?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Survey" message:@"Would you like to fill out a survey?" delegate:[AmbassadorSDK sharedInstance] cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
         [alertView show];
         
     // If the user taps on the app then we skip the alertView
     } else {
-        // Grabs the top-most viewController
-        UIViewController *topViewController = [AMBUtilities getTopViewController];
-        
-        // Creates an NPS survey ViewController and has the top-most VC present it
-        AMBNPSViewController *nspViewController = [[AMBNPSViewController alloc] initWithPayload:notification];
-        [topViewController presentViewController:nspViewController animated:YES completion:nil];
+        [[AmbassadorSDK sharedInstance] presentNPSSurvey];
     }
+}
+
+- (void)presentNPSSurvey {
+    // Grabs the top-most viewController
+    UIViewController *topViewController = [AMBUtilities getTopViewController];
+    
+    // Creates an NPS survey ViewController and has the top-most VC present it
+    AMBNPSViewController *nspViewController = [[AMBNPSViewController alloc] initWithPayload: self.notificationData];
+    [topViewController presentViewController:nspViewController animated:YES completion:nil];
 }
 
 
@@ -259,6 +264,20 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
             if (available) { available(welcomeController); }
         } failure:^(NSString *error) {
             DLog(@"Could not create the Welcome Screen - %@", error);
+        }];
+    }
+}
+
+
+#pragma mark - UIAlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // Checks if the 'Yes' was tapped
+    if (buttonIndex == 1) {
+        // Grabs the alertView on top and presents the Survey after the alertView is dismissed
+        UIViewController *topView = [AMBUtilities getTopViewController];
+        [topView dismissViewControllerAnimated:YES completion:^{
+            [self presentNPSSurvey];
         }];
     }
 }
