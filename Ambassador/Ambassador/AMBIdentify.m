@@ -72,7 +72,7 @@ NSInteger const maxTryCount = 5;
     DLog(@"Performing Identify with SAFARI VC for iOS 9 - Attempt %li", (long)self.tryCount);
     
     // Gets the top viewController and adds the safari VC to it if not already added
-    UIViewController *topVC = [self getTopViewController];
+    UIViewController *topVC = [AMBUtilities getTopViewController];
     if (![self.safariVC.view isDescendantOfView:topVC.view]) {
         [topVC.view addSubview:self.safariVC.view];
         [topVC addChildViewController:self.safariVC];
@@ -90,20 +90,6 @@ NSInteger const maxTryCount = 5;
     // Removes the safari VC after inital load
     [controller.view removeFromSuperview];
     [controller removeFromParentViewController];
-}
-
-
-#pragma mark - Helper Functions
-
-- (UIViewController*)getTopViewController {
-    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    
-    // Checks if a modal VC is being presented
-    while (topController.presentedViewController) {
-        topController = topController.presentedViewController;
-    }
-    
-    return topController;
 }
 
 @end
