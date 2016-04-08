@@ -10,4 +10,6 @@
 
 @interface AMBNPSViewController : UIViewController
 
+- (id)initWithPayload:(NSDictionary*)payloadDict;
+
 @end
