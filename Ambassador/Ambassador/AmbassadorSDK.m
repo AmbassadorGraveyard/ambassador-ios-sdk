@@ -224,12 +224,20 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 + (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification {
     DLog(@"AmbassadorNotification Received - %@", notification);
     
-    // Grabs the top-most viewController
-    UIViewController *topViewController = [AMBUtilities getTopViewController];
-    
-    // Creates an NPS survey ViewController and has the top-most VC present it
-    AMBNPSViewController *nspViewController = [[AMBNPSViewController alloc] initWithPayload:notification];
-    [topViewController presentViewController:nspViewController animated:YES completion:nil];
+    // Checks if the app is already open and shows an alert if so
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Survey" message:@"Would you like to fill out a survey?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        [alertView show];
+        
+    // If the user taps on the app then we skip the alertView
+    } else {
+        // Grabs the top-most viewController
+        UIViewController *topViewController = [AMBUtilities getTopViewController];
+        
+        // Creates an NPS survey ViewController and has the top-most VC present it
+        AMBNPSViewController *nspViewController = [[AMBNPSViewController alloc] initWithPayload:notification];
+        [topViewController presentViewController:nspViewController animated:YES completion:nil];
+    }
 }
 
 
