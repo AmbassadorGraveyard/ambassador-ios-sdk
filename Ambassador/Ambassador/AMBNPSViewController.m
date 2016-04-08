@@ -23,10 +23,10 @@
 - (id)initWithPayload:(NSDictionary*)payloadDict {
     // Link up storyboard with the viewController
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
-    self = [sb instantiateViewControllerWithIdentifier:@"NPS_MODAL_VIEW"];
+    self = (AMBNPSViewController*)[sb instantiateViewControllerWithIdentifier:@"NPS_MODAL_VIEW"];
     
     // Grab the payload dictionary
-    self.payloadDict = payloadDict;
+    self.payloadDict = [NSDictionary dictionaryWithDictionary: payloadDict];
     
     return self;
 }
@@ -36,9 +36,11 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+#pragma mark - Actions
+
+- (IBAction)closeSurvey:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
