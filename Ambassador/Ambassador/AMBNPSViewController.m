@@ -10,6 +10,9 @@
 
 @interface AMBNPSViewController ()
 
+// IBOutlets
+@property (nonatomic, strong) IBOutlet UIButton * btnClose;
+
 // Private vars
 @property (nonatomic, strong) NSDictionary * payloadDict;
 
@@ -33,7 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self setupUI];
 }
 
 
@@ -41,6 +44,16 @@
 
 - (IBAction)closeSurvey:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - UI Functions
+
+- (void)setupUI {
+    // Buttons
+    UIImage *templateImage = [self.btnClose.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.btnClose setImage:templateImage forState:UIControlStateNormal];
+    self.btnClose.tintColor = [UIColor whiteColor];
 }
 
 @end
