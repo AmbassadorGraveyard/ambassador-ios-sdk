@@ -25,9 +25,9 @@
     [self setUpAppearance];
 
     // Registers app for notifications
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound|UIUserNotificationTypeAlert|UIUserNotificationTypeBadge) categories:nil];
-    [application registerForRemoteNotifications];
-    [application registerUserNotificationSettings:settings];
+//    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound|UIUserNotificationTypeAlert|UIUserNotificationTypeBadge) categories:nil];
+//    [application registerForRemoteNotifications];
+//    [application registerUserNotificationSettings:settings];
 
     return YES;
 }

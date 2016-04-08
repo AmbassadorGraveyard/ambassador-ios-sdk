@@ -9,8 +9,9 @@
 #import "MyTabBarController.h"
 #import "DefaultsHandler.h"
 #import <Ambassador/Ambassador.h>
+#import "AmbassadorLoginViewController.h"
 
-@interface MyTabBarController()
+@interface MyTabBarController() <AmbassadorLoginDelegate>
 
 @property (nonatomic) BOOL hasPerformedRunWithKeys;
 
@@ -28,16 +29,13 @@ NSString * loginSegue = @"ambassador_login_segue";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    if (![self hasPerformedRunWithKeys]) {
-        [self checkForLogin];
-    }
+    [self checkForLogin];
 }
 
 - (void)checkForLogin {
     if ([[DefaultsHandler getSDKToken] isEqualToString:@""] || [[DefaultsHandler getUniversalID] isEqualToString:@""]) {
         [self performSegueWithIdentifier:loginSegue sender:self];
     } else {
-        self.hasPerformedRunWithKeys = YES;
         [AmbassadorSDK runWithUniversalToken:[DefaultsHandler getSDKToken] universalID:[DefaultsHandler getUniversalID]];
     }
 }
@@ -49,6 +47,13 @@ NSString * loginSegue = @"ambassador_login_segue";
     // Grabs the viewController that will be presented and refreshes it
     UIViewController *controller = self.viewControllers[itemIndex];
     [controller viewWillAppear:YES];
+}
+
+
+#pragma mark - Ambassador Login Delegate
+
+- (void)userSuccessfullyLoggedIn {
+    [self checkForLogin];
 }
 
 @end
