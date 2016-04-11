@@ -230,6 +230,9 @@
 		EF9D98D81CA341A700F5711F /* RAFCustomizer.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98D71CA341A700F5711F /* RAFCustomizer.m */; };
 		EF9D98DB1CA4487A00F5711F /* ColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98DA1CA4487900F5711F /* ColorPicker.m */; };
 		EF9DA74D1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */; };
+		EFB3C7E71CB70E9400EF9533 /* AMBNPSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EFB3C7E51CB70E9400EF9533 /* AMBNPSViewController.h */; };
+		EFB3C7E81CB70E9400EF9533 /* AMBNPSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB3C7E61CB70E9400EF9533 /* AMBNPSViewController.m */; };
+		EFB3C7EA1CB82A7200EF9533 /* AMBNPSViewControllerUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFB3C7E91CB82A7200EF9533 /* AMBNPSViewControllerUnitTests.m */; };
 		EFBF8E031C69004800F2B5F9 /* AMBContactSelectorUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */; };
 		EFBF8E051C69006400F2B5F9 /* AMBContactCellUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */; };
 		EFBF8E071C69007800F2B5F9 /* AMBSelectedCellUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFBF8E061C69007800F2B5F9 /* AMBSelectedCellUnitTests.m */; };
@@ -593,6 +596,9 @@
 		EF9D98D91CA4487900F5711F /* ColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPicker.h; sourceTree = "<group>"; };
 		EF9D98DA1CA4487900F5711F /* ColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPicker.m; sourceTree = "<group>"; };
 		EF9DA74C1C56DB0D00E238C0 /* AMBServiceSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBServiceSelectorUnitTests.m; sourceTree = "<group>"; };
+		EFB3C7E51CB70E9400EF9533 /* AMBNPSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNPSViewController.h; sourceTree = "<group>"; };
+		EFB3C7E61CB70E9400EF9533 /* AMBNPSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNPSViewController.m; sourceTree = "<group>"; };
+		EFB3C7E91CB82A7200EF9533 /* AMBNPSViewControllerUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNPSViewControllerUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E021C69004800F2B5F9 /* AMBContactSelectorUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactSelectorUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E041C69006400F2B5F9 /* AMBContactCellUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactCellUnitTests.m; sourceTree = "<group>"; };
 		EFBF8E061C69007800F2B5F9 /* AMBSelectedCellUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSelectedCellUnitTests.m; sourceTree = "<group>"; };
@@ -749,6 +755,7 @@
 				DB6A24831BD1842800CE3230 /* AmbassadorSDK_Internal.h */,
 				EFDFA0D11BE157D2002FA3ED /* Ambassador-Prefix.pch */,
 				EFE7D7851C21B2B600D7F92C /* Service Selector (RAF) */,
+				EFB3C7E41CB70E6900EF9533 /* NPS */,
 				EFE7D7871C21B4DB00D7F92C /* Contacts */,
 				EFE7D7861C21B49C00D7F92C /* Conversions */,
 				EFE7D7881C21B6DF00D7F92C /* Networking */,
@@ -772,6 +779,7 @@
 		DB844D361BA75BB8003FD7A9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EFB3C7E91CB82A7200EF9533 /* AMBNPSViewControllerUnitTests.m */,
 				EF1CC80A1C9A028800C2752B /* AMBInputAlertTests.m */,
 				EF1CC7FA1C93127A00C2752B /* AMBSMSHandlerTests.m */,
 				EF557A0F1C88AE0600F66761 /* AMBWelcomeScreenParametersTests.m */,
@@ -1256,6 +1264,15 @@
 			name = "Color Picker";
 			sourceTree = "<group>";
 		};
+		EFB3C7E41CB70E6900EF9533 /* NPS */ = {
+			isa = PBXGroup;
+			children = (
+				EFB3C7E51CB70E9400EF9533 /* AMBNPSViewController.h */,
+				EFB3C7E61CB70E9400EF9533 /* AMBNPSViewController.m */,
+			);
+			name = NPS;
+			sourceTree = "<group>";
+		};
 		EFE7D7851C21B2B600D7F92C /* Service Selector (RAF) */ = {
 			isa = PBXGroup;
 			children = (
@@ -1433,6 +1450,7 @@
 				DBA3FBBB1BA8A24F00672D82 /* AMBShareServiceCell.h in Headers */,
 				EF3079161C6E205800403F56 /* AMBPusherChannelObject.h in Headers */,
 				DBA3FC081BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h in Headers */,
+				EFB3C7E71CB70E9400EF9533 /* AMBNPSViewController.h in Headers */,
 				DBA3FC041BA8AA1D00672D82 /* AMBPTBlockEventListener.h in Headers */,
 				EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */,
 				EF1CC8001C9860C300C2752B /* AMBWelcomeScreenViewController_Internal.h in Headers */,
@@ -1637,7 +1655,7 @@
 								enabled = 0;
 							};
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -1785,6 +1803,7 @@
 			files = (
 				DBA3FC0E1BA8AA1D00672D82 /* AMBPTPusher.m in Sources */,
 				DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */,
+				EFB3C7E81CB70E9400EF9533 /* AMBNPSViewController.m in Sources */,
 				EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */,
 				EF33DCFD1C739D6A009689CA /* RavenConfig.m in Sources */,
 				DBA3FB7E1BA8A23C00672D82 /* AMBContactSelector.m in Sources */,
@@ -1867,6 +1886,7 @@
 				EFC037231C582A100062202A /* AMBLinkedInShareTests.m in Sources */,
 				EF1399AC1C6551AB0005054D /* AMBContactLoaderUnitTests.m in Sources */,
 				EF6BDC771C63FD75004CCDF8 /* AMBCoreDataManagerTests.m in Sources */,
+				EFB3C7EA1CB82A7200EF9533 /* AMBNPSViewControllerUnitTests.m in Sources */,
 				DB6A24761BD125FF00CE3230 /* AMBTests.m in Sources */,
 				EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */,
 				EF7D076C1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m in Sources */,

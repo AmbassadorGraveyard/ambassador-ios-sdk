@@ -205,5 +205,16 @@
 + (BOOL)stringIsEmpty:(NSString*)string {
     return [string isEqualToString:@""] ? YES : NO;
 }
+
++ (UIViewController*)getTopViewController {
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    // Checks if a modal VC is being presented
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    
+    return topController;
+}
     
 @end

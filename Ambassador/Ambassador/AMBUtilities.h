@@ -56,6 +56,7 @@
 + (BOOL)isSuccessfulStatusCode:(NSInteger)statusCode;
 + (NSDictionary*)dictionaryFromQueryString:(NSString*)queryString;
 + (BOOL)stringIsEmpty:(NSString*)string;
++ (UIViewController*)getTopViewController;
 
 @end
 
