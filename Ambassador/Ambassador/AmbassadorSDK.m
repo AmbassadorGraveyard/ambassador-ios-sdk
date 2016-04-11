@@ -222,8 +222,18 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 }
 
 + (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification {
-    // TODO: Add functionality when surveys are implemented into app
     DLog(@"AmbassadorNotification Received - %@", notification);
+    [AmbassadorSDK sharedInstance].notificationData = notification;
+    [[AmbassadorSDK sharedInstance] presentNPSSurvey];
+}
+
+- (void)presentNPSSurvey {
+    // Grabs the top-most viewController
+    UIViewController *topViewController = [AMBUtilities getTopViewController];
+    
+    // Creates an NPS survey ViewController and has the top-most VC present it
+    AMBNPSViewController *nspViewController = [[AMBNPSViewController alloc] initWithPayload: self.notificationData];
+    [topViewController presentViewController:nspViewController animated:YES completion:nil];
 }
 
 
