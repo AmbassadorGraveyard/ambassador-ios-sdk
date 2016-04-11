@@ -69,8 +69,11 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    [AmbassadorSDK handleAmbassadorRemoteNotification:userInfo];
-    NSLog(@"Info received from notification - %@", userInfo);
+    // Check to make sure the notification is intended for Ambassador.  THIS IF STATEMENT SHOULD BE IN OUR DOCS ****
+    if (userInfo[@"ambassador_sdk"] && [userInfo[@"ambassador_sdk"] boolValue]) {
+        [AmbassadorSDK handleAmbassadorRemoteNotification:userInfo];
+        NSLog(@"Info received from notification - %@", userInfo);
+    }
 }
 
 
