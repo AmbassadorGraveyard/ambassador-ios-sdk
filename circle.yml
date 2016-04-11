@@ -14,7 +14,7 @@ test:
       -sdk iphonesimulator
        -destination 'platform=iOS Simulator,OS=9.2,name=iPhone 6'
        -configuration Debug
-       -scheme Demo App
+       -scheme DemoApp
        VALID_ARCHS=x86_64
        clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
       xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml

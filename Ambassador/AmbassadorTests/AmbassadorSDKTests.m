@@ -16,9 +16,11 @@
 #import <OCMock/OCMock.h>
 #import "AMBServiceSelector.h"
 #import "AMBNetworkManager.h"
+#import "AMBUtilities.h"
+#import "AMBNPSViewController.h"
 
 // Testing category made to reveal private methods only in tests
-@interface AmbassadorSDK (Tests)
+@interface AmbassadorSDK (Tests) <UIAlertViewDelegate>
 
 @property (nonatomic, strong) AMBConversion *conversion;
 @property (nonatomic, strong) AMBPusherManager *pusherManager;
@@ -29,6 +31,7 @@
 - (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion;
 - (void)checkConversionQueue;
 - (void)sendAPNDeviceToken;
+- (void)presentNPSSurvey;
 
 @end
 
@@ -260,6 +263,54 @@ NSString * const universalToken = @"***REMOVED***";
     [mockNetworkMgr stopMocking];
 }
 
+- (void)testHandleAmbassadorRemoteNotification {
+    // GIVEN
+    NSDictionary *mockNotificationDictionary = @{@"TestKey" : @"TestValue"};
+    
+    id mockApplication = [OCMockObject mockForClass:[UIApplication class]];
+    [[[mockApplication expect] andReturn:mockApplication] sharedApplication];
+    [[[mockApplication expect] andReturnValue:OCMOCK_VALUE(UIApplicationStateInactive)] applicationState];
+    
+    id mockAmbassadorSDK = [OCMockObject partialMockForObject:self.ambassadorSDK];
+    [[[mockAmbassadorSDK expect] andDo: nil] presentNPSSurvey];
+    
+    // WHEN
+    [AmbassadorSDK handleAmbassadorRemoteNotification:mockNotificationDictionary];
+    
+    // THEN
+    XCTAssertEqual(mockNotificationDictionary, self.ambassadorSDK.notificationData);
+    [mockApplication verify];
+    [mockAmbassadorSDK verify];
+    
+    [mockApplication stopMocking];
+    [mockAmbassadorSDK stopMocking];
+}
+
+- (void)testPresentNPSSurvey {
+    // GIVEN
+    id mockNPSVC = [OCMockObject mockForClass:[AMBNPSViewController class]];
+    [[[mockNPSVC expect] andReturn:mockNPSVC] alloc];
+    mockNPSVC = [[[mockNPSVC expect] andDo:nil] initWithPayload:[OCMArg any]];
+    
+    id mockTopView = [OCMockObject mockForClass:[UIViewController class]];
+    [[[mockTopView expect] andDo:nil] presentViewController:mockNPSVC animated:YES completion:nil];
+    
+    id mockUtilites = [OCMockObject mockForClass:[AMBUtilities class]];
+    [[[mockUtilites expect] andReturn: mockTopView] getTopViewController];
+    
+    // WHEN
+    [self.ambassadorSDK presentNPSSurvey];
+    
+    // THEN
+    [mockNPSVC verify];
+    [mockTopView verify];
+    [mockUtilites verify];
+    
+    [mockNPSVC stopMocking];
+    [mockTopView stopMocking];
+    [mockUtilites stopMocking];
+}
+
 - (void)testPresentWelcomeScreen {
     // GIVEN
     [AMBValues setMbsyCookieWithCode:@"fakeCode"];
@@ -291,6 +342,26 @@ NSString * const universalToken = @"***REMOVED***";
     [mockSB verify];
     [mockNtwkMng verify];
     [mockNtwkMng stopMocking];
+}
+
+
+#pragma mark - UIAlertView Delegate Tests
+
+- (void)testAlertViewClickedButton {
+    // GIVEN
+    id mockAlertView = [OCMockObject mockForClass:[UIAlertView class]];
+    
+    id mockTimer = [OCMockObject mockForClass:[NSTimer class]];
+    [[[mockTimer expect] andReturn:mockTimer] scheduledTimerWithTimeInterval:0.6 target:self.ambassadorSDK selector:@selector(presentNPSSurvey) userInfo:nil repeats:NO];
+    
+    // WHEN
+    [self.ambassadorSDK alertView:mockAlertView clickedButtonAtIndex:1];
+    
+    // THEN
+    [mockTimer verify];
+    
+    [mockTimer stopMocking];
+    [mockAlertView stopMocking];
 }
 
 @end
