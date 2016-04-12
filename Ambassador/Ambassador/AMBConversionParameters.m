@@ -7,7 +7,6 @@
 //
 
 #import "AMBConversionParameters.h"
-#import "AMBConstants.h"
 #import "AMBConversionParameter_Internal.h"
 
 @interface AMBConversionParameters ()
@@ -113,7 +112,7 @@
                                    NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"One of the required ConversionParameter properties was not set", nil),
                                    NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Ensure that 'mbsy_revenue', 'mbsy_email', and 'mbsy_campaign' properties are being set. (The other properties are optional", nil)};
         
-        error = [NSError errorWithDomain:@"AmbassadorSDKErrorDomain" code:ECPPROP userInfo:userInfo];
+        error = [NSError errorWithDomain:@"AmbassadorSDKErrorDomain" code:0 userInfo:userInfo];
     }
     
     return error;

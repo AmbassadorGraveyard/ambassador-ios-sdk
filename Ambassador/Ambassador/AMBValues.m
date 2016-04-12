@@ -10,6 +10,7 @@
 #import "AMBPusherChannelObject.h"
 #import "AMBUtilities.h"
 #import "AmbassadorSDK_Internal.h"
+#import "AMBSecrets.h"
 
 @implementation AMBValues
 
@@ -132,7 +133,7 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 }
 
 + (NSString*)getSentryDSNValue {
-    return @"https://***REMOVED***@app.getsentry.com/67182";
+    return [NSString stringWithFormat:@"https://%@@app.getsentry.com/67182", [AMBSecrets secretForKey:AMB_SENTRY_KEY]];
 }
 
 + (NSString*)getCompanyDetailsUrl {
