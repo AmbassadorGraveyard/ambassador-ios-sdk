@@ -9,6 +9,7 @@ checkout:
     - git submodule update
 test:
   override:
+    - bash secrets.sh
     - set -o pipefail &&
      xcodebuild -project Ambassador.xcodeproj
       -sdk iphonesimulator
