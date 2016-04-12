@@ -223,8 +223,19 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 + (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification {
     DLog(@"AmbassadorNotification Received - %@", notification);
+    
+    // Grab the notification to use elsewhere in AmbassadorSDK
     [AmbassadorSDK sharedInstance].notificationData = notification;
-    [[AmbassadorSDK sharedInstance] presentNPSSurvey];
+    
+    // Checks if the app is already open and shows an alert if so
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Can you help us out by taking a quick survey?" delegate:[AmbassadorSDK sharedInstance] cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+        [alertView show];
+        
+    // If the user taps on the app when in the background then we skip the alertView
+    } else {
+        [[AmbassadorSDK sharedInstance] presentNPSSurvey];
+    }
 }
 
 - (void)presentNPSSurvey {
@@ -256,6 +267,16 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
         } failure:^(NSString *error) {
             DLog(@"Could not create the Welcome Screen - %@", error);
         }];
+    }
+}
+
+
+#pragma mark - UIAlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        // Once the alertView is dismissed is when we want to present the survey
+        [self presentNPSSurvey];
     }
 }
 

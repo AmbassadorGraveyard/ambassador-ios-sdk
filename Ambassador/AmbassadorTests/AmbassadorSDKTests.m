@@ -16,9 +16,11 @@
 #import <OCMock/OCMock.h>
 #import "AMBServiceSelector.h"
 #import "AMBNetworkManager.h"
+#import "AMBUtilities.h"
+#import "AMBNPSViewController.h"
 
 // Testing category made to reveal private methods only in tests
-@interface AmbassadorSDK (Tests)
+@interface AmbassadorSDK (Tests) <UIAlertViewDelegate>
 
 @property (nonatomic, strong) AMBConversion *conversion;
 @property (nonatomic, strong) AMBPusherManager *pusherManager;
@@ -29,6 +31,7 @@
 - (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion;
 - (void)checkConversionQueue;
 - (void)sendAPNDeviceToken;
+- (void)presentNPSSurvey;
 
 @end
 
@@ -42,8 +45,8 @@
 
 @implementation AmbassadorSDKTests
 
-NSString * const universalID = @"***REMOVED***";
-NSString * const universalToken = @"***REMOVED***";
+NSString * const universalID = @"abfd1c89-4379-44e2-8361-ee7b87332e32";
+NSString * const universalToken = @"9de5757f801ca60916599fa3f3c92131b0e63c6a";
 
 - (void)setUp {
     [super setUp];
@@ -121,7 +124,7 @@ NSString * const universalToken = @"***REMOVED***";
 
 - (void)testLocalRunWithKeys {
     // GIVEN
-    NSString *completeSDKToken = @"SDKToken ***REMOVED***";
+    NSString *completeSDKToken = @"SDKToken 9de5757f801ca60916599fa3f3c92131b0e63c6a";
     
     // WHEN
     [self.ambassadorSDK localRunWithuniversalToken:universalToken universalID:universalID];
@@ -260,6 +263,54 @@ NSString * const universalToken = @"***REMOVED***";
     [mockNetworkMgr stopMocking];
 }
 
+- (void)testHandleAmbassadorRemoteNotification {
+    // GIVEN
+    NSDictionary *mockNotificationDictionary = @{@"TestKey" : @"TestValue"};
+    
+    id mockApplication = [OCMockObject mockForClass:[UIApplication class]];
+    [[[mockApplication expect] andReturn:mockApplication] sharedApplication];
+    [[[mockApplication expect] andReturnValue:OCMOCK_VALUE(UIApplicationStateInactive)] applicationState];
+    
+    id mockAmbassadorSDK = [OCMockObject partialMockForObject:self.ambassadorSDK];
+    [[[mockAmbassadorSDK expect] andDo: nil] presentNPSSurvey];
+    
+    // WHEN
+    [AmbassadorSDK handleAmbassadorRemoteNotification:mockNotificationDictionary];
+    
+    // THEN
+    XCTAssertEqual(mockNotificationDictionary, self.ambassadorSDK.notificationData);
+    [mockApplication verify];
+    [mockAmbassadorSDK verify];
+    
+    [mockApplication stopMocking];
+    [mockAmbassadorSDK stopMocking];
+}
+
+- (void)testPresentNPSSurvey {
+    // GIVEN
+    id mockNPSVC = [OCMockObject mockForClass:[AMBNPSViewController class]];
+    [[[mockNPSVC expect] andReturn:mockNPSVC] alloc];
+    mockNPSVC = [[[mockNPSVC expect] andDo:nil] initWithPayload:[OCMArg any]];
+    
+    id mockTopView = [OCMockObject mockForClass:[UIViewController class]];
+    [[[mockTopView expect] andDo:nil] presentViewController:mockNPSVC animated:YES completion:nil];
+    
+    id mockUtilites = [OCMockObject mockForClass:[AMBUtilities class]];
+    [[[mockUtilites expect] andReturn: mockTopView] getTopViewController];
+    
+    // WHEN
+    [self.ambassadorSDK presentNPSSurvey];
+    
+    // THEN
+    [mockNPSVC verify];
+    [mockTopView verify];
+    [mockUtilites verify];
+    
+    [mockNPSVC stopMocking];
+    [mockTopView stopMocking];
+    [mockUtilites stopMocking];
+}
+
 - (void)testPresentWelcomeScreen {
     // GIVEN
     [AMBValues setMbsyCookieWithCode:@"fakeCode"];
@@ -291,6 +342,26 @@ NSString * const universalToken = @"***REMOVED***";
     [mockSB verify];
     [mockNtwkMng verify];
     [mockNtwkMng stopMocking];
+}
+
+
+#pragma mark - UIAlertView Delegate Tests
+
+- (void)testAlertViewClickedButton {
+    // GIVEN
+    id mockAlertView = [OCMockObject mockForClass:[UIAlertView class]];
+    
+    id mockAmabssadorSDK = [OCMockObject partialMockForObject:self.ambassadorSDK];
+    [[[mockAmabssadorSDK expect] andDo:nil] presentNPSSurvey];
+    
+    // WHEN
+    [self.ambassadorSDK alertView:mockAlertView didDismissWithButtonIndex:1];
+    
+    // THEN
+    [mockAmabssadorSDK verify];
+    
+    [mockAmabssadorSDK stopMocking];
+    [mockAlertView stopMocking];
 }
 
 @end

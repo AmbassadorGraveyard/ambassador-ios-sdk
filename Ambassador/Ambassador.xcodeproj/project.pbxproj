@@ -372,7 +372,7 @@
 		DB844D521BA7622D003FD7A9 /* Ambassador.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Ambassador.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB844D551BA7622D003FD7A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB844D5B1BA767FA003FD7A9 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
-		DB844D611BA76BDE003FD7A9 /* TestApplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestApplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB844D611BA76BDE003FD7A9 /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB844D641BA76BDE003FD7A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB844D651BA76BDE003FD7A9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DB844D671BA76BDE003FD7A9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -745,7 +745,7 @@
 				DB844D261BA75BB8003FD7A9 /* libAmbassador.a */,
 				DB844D311BA75BB8003FD7A9 /* AmbassadorTests.xctest */,
 				DB844D521BA7622D003FD7A9 /* Ambassador.bundle */,
-				DB844D611BA76BDE003FD7A9 /* TestApplication.app */,
+				DB844D611BA76BDE003FD7A9 /* DemoApp.app */,
 				DB844D791BA76BDE003FD7A9 /* TestApplicationTests.xctest */,
 				EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */,
 			);
@@ -1588,9 +1588,9 @@
 			productReference = DB844D521BA7622D003FD7A9 /* Ambassador.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
-		DB844D601BA76BDE003FD7A9 /* TestApplication */ = {
+		DB844D601BA76BDE003FD7A9 /* DemoApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DB844D811BA76BDE003FD7A9 /* Build configuration list for PBXNativeTarget "TestApplication" */;
+			buildConfigurationList = DB844D811BA76BDE003FD7A9 /* Build configuration list for PBXNativeTarget "DemoApp" */;
 			buildPhases = (
 				DB844D5D1BA76BDE003FD7A9 /* Sources */,
 				DB844D5E1BA76BDE003FD7A9 /* Frameworks */,
@@ -1602,9 +1602,9 @@
 				EF33DCEF1C73949A009689CA /* PBXTargetDependency */,
 				DB844D8B1BA76C76003FD7A9 /* PBXTargetDependency */,
 			);
-			name = TestApplication;
+			name = DemoApp;
 			productName = TestApplication;
-			productReference = DB844D611BA76BDE003FD7A9 /* TestApplication.app */;
+			productReference = DB844D611BA76BDE003FD7A9 /* DemoApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		DB844D781BA76BDE003FD7A9 /* TestApplicationTests */ = {
@@ -1704,7 +1704,7 @@
 				DB844D301BA75BB8003FD7A9 /* AmbassadorTests */,
 				DB844D471BA75F9F003FD7A9 /* Framework */,
 				DB844D511BA7622D003FD7A9 /* AmbassadorResources */,
-				DB844D601BA76BDE003FD7A9 /* TestApplication */,
+				DB844D601BA76BDE003FD7A9 /* DemoApp */,
 				DB844D781BA76BDE003FD7A9 /* TestApplicationTests */,
 				EF64CFA21BE2A47D0072014B /* AmbassadorUITests */,
 			);
@@ -2000,7 +2000,7 @@
 		};
 		DB844D7B1BA76BDE003FD7A9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DB844D601BA76BDE003FD7A9 /* TestApplication */;
+			target = DB844D601BA76BDE003FD7A9 /* DemoApp */;
 			targetProxy = DB844D7A1BA76BDE003FD7A9 /* PBXContainerItemProxy */;
 		};
 		DB844D8B1BA76C76003FD7A9 /* PBXTargetDependency */ = {
@@ -2015,7 +2015,7 @@
 		};
 		EF64CFA91BE2A47D0072014B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = DB844D601BA76BDE003FD7A9 /* TestApplication */;
+			target = DB844D601BA76BDE003FD7A9 /* DemoApp */;
 			targetProxy = EF64CFA81BE2A47D0072014B /* PBXContainerItemProxy */;
 		};
 		EF90FAFE1BF1069700716427 /* PBXTargetDependency */ = {
@@ -2414,8 +2414,9 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.AmbassadorUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TEST_TARGET_NAME = TestApplication;
+				TEST_TARGET_NAME = DemoApp;
 				USES_XCTRUNNER = YES;
 			};
 			name = Debug;
@@ -2429,7 +2430,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.AmbassadorUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = TestApplication;
+				PROVISIONING_PROFILE = "";
+				TEST_TARGET_NAME = DemoApp;
 				USES_XCTRUNNER = YES;
 			};
 			name = Release;
@@ -2482,7 +2484,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DB844D811BA76BDE003FD7A9 /* Build configuration list for PBXNativeTarget "TestApplication" */ = {
+		DB844D811BA76BDE003FD7A9 /* Build configuration list for PBXNativeTarget "DemoApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DB844D821BA76BDE003FD7A9 /* Debug */,
