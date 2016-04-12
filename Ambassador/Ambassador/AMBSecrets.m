@@ -21,8 +21,9 @@
 + (NSString *)secretForKey:(AMBSecretKeys)key {
     NSDictionary *secretsDict = [AMBSecrets secretsDictionary];
     NSString *dictKey = [AMBSecrets stringForKey:key];
+    NSString *returnString = secretsDict[dictKey] != nil ? secretsDict[dictKey] : @"Unavailable";
     
-    return secretsDict[dictKey];
+    return returnString;
 }
 
 // Function used to grab a string value for enum
