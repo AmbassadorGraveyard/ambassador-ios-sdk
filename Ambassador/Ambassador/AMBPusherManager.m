@@ -11,6 +11,7 @@
 #import "AMBNetworkObject.h"
 #import "AMBUtilities.h"
 #import "AmbassadorSDK_Internal.h"
+#import "AMBSecrets.h"
 
 @interface AMBPusherManager () <AMBPTPusherDelegate>
 
@@ -33,9 +34,9 @@
 
 + (NSString *)pusherKey {
 #if AMBPRODUCTION
-    return @"***REMOVED***";
+    return [AMBSecrets secretForKey:AMB_PUSHER_PROD_KEY];
 #else
-    return @"***REMOVED***";
+    return [AMBSecrets secretForKey:AMB_PUSHER_DEV_KEY];
 #endif
 }
 
