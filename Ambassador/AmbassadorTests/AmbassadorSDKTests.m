@@ -351,16 +351,16 @@ NSString * const universalToken = @"9de5757f801ca60916599fa3f3c92131b0e63c6a";
     // GIVEN
     id mockAlertView = [OCMockObject mockForClass:[UIAlertView class]];
     
-    id mockTimer = [OCMockObject mockForClass:[NSTimer class]];
-    [[[mockTimer expect] andReturn:mockTimer] scheduledTimerWithTimeInterval:0.6 target:self.ambassadorSDK selector:@selector(presentNPSSurvey) userInfo:nil repeats:NO];
+    id mockAmabssadorSDK = [OCMockObject partialMockForObject:self.ambassadorSDK];
+    [[[mockAmabssadorSDK expect] andDo:nil] presentNPSSurvey];
     
     // WHEN
-    [self.ambassadorSDK alertView:mockAlertView clickedButtonAtIndex:1];
+    [self.ambassadorSDK alertView:mockAlertView didDismissWithButtonIndex:1];
     
     // THEN
-    [mockTimer verify];
+    [mockAmabssadorSDK verify];
     
-    [mockTimer stopMocking];
+    [mockAmabssadorSDK stopMocking];
     [mockAlertView stopMocking];
 }
 
