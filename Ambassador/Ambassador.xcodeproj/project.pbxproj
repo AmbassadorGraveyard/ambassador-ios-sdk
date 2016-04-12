@@ -220,6 +220,8 @@
 		EF7D076C1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */; };
 		EF7D076E1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */; };
 		EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
+		EF896FD61CBD3D63003E270D /* AMBSecrets.h in Headers */ = {isa = PBXBuildFile; fileRef = EF896FD41CBD3D63003E270D /* AMBSecrets.h */; };
+		EF896FD71CBD3D63003E270D /* AMBSecrets.m in Sources */ = {isa = PBXBuildFile; fileRef = EF896FD51CBD3D63003E270D /* AMBSecrets.m */; };
 		EF8FD8A41CA5965F00C0ADB7 /* CampaignObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */; };
 		EF8FD8A81CA59EEA00C0ADB7 /* CampaignListController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8A71CA59EEA00C0ADB7 /* CampaignListController.m */; };
 		EF8FD8AC1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8AB1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m */; };
@@ -573,6 +575,9 @@
 		EF7CA9D11BF3EAB7006EBD6A /* AMBContactTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactTests.m; sourceTree = "<group>"; };
 		EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBUtilitiesTests.m; sourceTree = "<group>"; };
 		EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSendCompletionTests.m; sourceTree = "<group>"; };
+		EF896FD41CBD3D63003E270D /* AMBSecrets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBSecrets.h; sourceTree = "<group>"; };
+		EF896FD51CBD3D63003E270D /* AMBSecrets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSecrets.m; sourceTree = "<group>"; };
+		EF896FD81CBD3E1B003E270D /* AmbassadorSecrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorSecrets.plist; sourceTree = "<group>"; };
 		EF8FD8A21CA5965F00C0ADB7 /* CampaignObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CampaignObject.h; sourceTree = "<group>"; };
 		EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CampaignObject.m; sourceTree = "<group>"; };
 		EF8FD8A61CA59EEA00C0ADB7 /* CampaignListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CampaignListController.h; sourceTree = "<group>"; };
@@ -761,6 +766,7 @@
 				EFE7D7881C21B6DF00D7F92C /* Networking */,
 				EFE7D7891C21B74D00D7F92C /* Misc */,
 				EF5579F71C84F63400F66761 /* Welcome Screen */,
+				EF896FD31CBD3D47003E270D /* Secrets */,
 				EFE7D78A1C21B7EA00D7F92C /* Libraries */,
 			);
 			path = Ambassador;
@@ -1187,6 +1193,15 @@
 			name = "Conversion Parameters";
 			sourceTree = "<group>";
 		};
+		EF896FD31CBD3D47003E270D /* Secrets */ = {
+			isa = PBXGroup;
+			children = (
+				EF896FD41CBD3D63003E270D /* AMBSecrets.h */,
+				EF896FD51CBD3D63003E270D /* AMBSecrets.m */,
+			);
+			name = Secrets;
+			sourceTree = "<group>";
+		};
 		EF8FD8A51CA59EB600C0ADB7 /* Campaigns */ = {
 			isa = PBXGroup;
 			children = (
@@ -1438,6 +1453,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF896FD61CBD3D63003E270D /* AMBSecrets.h in Headers */,
 				DBA3FC161BA8AA1D00672D82 /* AMBPTPusherConnection.h in Headers */,
 				DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */,
 				EF33DCFB1C739D6A009689CA /* RavenClient_Private.h in Headers */,
@@ -1831,6 +1847,7 @@
 				EFE7D79D1C21CB2D00D7F92C /* AMBCoreDataManager.m in Sources */,
 				DBA3FB721BA8A23C00672D82 /* AmbassadorSDK.m in Sources */,
 				DBA3FC0A1BA8AA1D00672D82 /* AMBPTBlockEventListener.m in Sources */,
+				EF896FD71CBD3D63003E270D /* AMBSecrets.m in Sources */,
 				EF5579FB1C84F65500F66761 /* AMBWelcomeScreenViewController.m in Sources */,
 				DBA3FC151BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m in Sources */,
 				DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */,
