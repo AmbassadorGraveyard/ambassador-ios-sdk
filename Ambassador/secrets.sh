@@ -12,4 +12,4 @@ echo "    <key>SENTRY_KEY</key>" >> AmbassadorSecrets.plist
 echo "    <string>$SENTRY_KEY</string>" >> AmbassadorSecrets.plist
 echo "</dict>" >> AmbassadorSecrets.plist
 echo "</plist>" >> AmbassadorSecrets.plist
-mv /AmbassadorSecrets.plist /Ambassador/AmbassadorSecrets.plist
+mv /AmbassadorSecrets.plist /Ambassador/
