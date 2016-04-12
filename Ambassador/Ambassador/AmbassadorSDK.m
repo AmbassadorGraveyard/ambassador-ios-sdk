@@ -273,11 +273,10 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 #pragma mark - UIAlertView Delegate
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    // Checks if the 'Yes' was tapped
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        // Rather than calling 'presentNPSSurvey' directly, it waits half a second to confirm that the alertView is completely gone
-        [NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(presentNPSSurvey) userInfo:nil repeats:NO];
+        // Once the alertView is dismissed is when we want to present the survey
+        [self presentNPSSurvey];
     }
 }
 
