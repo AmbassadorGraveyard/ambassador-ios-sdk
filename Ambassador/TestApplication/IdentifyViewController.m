@@ -7,13 +7,14 @@
 //
 
 #import "IdentifyViewController.h"
+#import <MessageUI/MessageUI.h>
 #import <Ambassador/Ambassador.h>
 #import "DefaultsHandler.h"
 #import "AmbassadorLoginViewController.h"
 #import "Validator.h"
 #import "ValuesHandler.h"
 
-@interface IdentifyViewController () <AMBWelcomeScreenDelegate>
+@interface IdentifyViewController () <AMBWelcomeScreenDelegate, MFMailComposeViewControllerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -168,6 +169,27 @@
     }
     
     [self showValidationError:@"exporting"];
+}
+
+// Creates an Objective-C App Delegate file
+- (NSData *)getObjectiveFile:(NSString *)email {
+    NSString *runWithKeysString = [NSString stringWithFormat:@"    [AmbassadorSDK runWithUniversalToken:\"%@\" universalID:\"%@\"]; \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    NSString *identifyString = [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithEmail:@\"%@\"]; \n\n", email];
+    
+    NSMutableString *objectiveCString = [[NSMutableString alloc] init];
+    [objectiveCString appendString: @"#import \"AppDelegate.h\" \n"];
+    [objectiveCString appendString: @"#import <Ambassador/Ambassador.h> \n\n"];
+    [objectiveCString appendString: @"@interface AppDelegate () \n\n"];
+    [objectiveCString appendString: @"@end \n\n"];
+    [objectiveCString appendString: @"@implementation AppDelegate \n\n"];
+    [objectiveCString appendString: @"- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions { \n"];
+    [objectiveCString appendString: runWithKeysString];
+    [objectiveCString appendString:identifyString];
+    [objectiveCString appendString:@"    return YES; \n"];
+    [objectiveCString appendString:@"} \n\n"];
+    [objectiveCString appendString: @"@end"];
+    
+    return [objectiveCString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (void)showValidationError:(NSString*)action {
