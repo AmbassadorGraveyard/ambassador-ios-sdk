@@ -10,10 +10,9 @@
 #import <OCMock/OCMock.h>
 #import "AMBNetworkManager.h"
 #import "AMBNetworkObject.h"
-#import "AMBTests.h"
 #import "AMBValues.h"
 
-@interface AMBNetworkObjectTests : AMBTests
+@interface AMBNetworkObjectTests : XCTestCase
 
 @end
 

@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "AMBPusherManager.h"
-#import "AMBTests.h"
 #import "AMBPTPusher.h"
 #import "AMBValues.h"
 

@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "AMBTests.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBIdentify.h"
 #import "AMBValues.h"
@@ -36,7 +35,7 @@
 @end
 
 
-@interface AmbassadorSDKTests : AMBTests
+@interface AmbassadorSDKTests : XCTestCase
 
 @property (nonatomic, strong) AmbassadorSDK *ambassadorSDK;
 
@@ -45,8 +44,8 @@
 
 @implementation AmbassadorSDKTests
 
-NSString * const universalID = @"abfd1c89-4379-44e2-8361-ee7b87332e32";
-NSString * const universalToken = @"9de5757f801ca60916599fa3f3c92131b0e63c6a";
+NSString * const universalID = @"test";
+NSString * const universalToken = @"test";
 
 - (void)setUp {
     [super setUp];
@@ -124,7 +123,7 @@ NSString * const universalToken = @"9de5757f801ca60916599fa3f3c92131b0e63c6a";
 
 - (void)testLocalRunWithKeys {
     // GIVEN
-    NSString *completeSDKToken = @"SDKToken 9de5757f801ca60916599fa3f3c92131b0e63c6a";
+    NSString *completeSDKToken = @"SDKToken test";
     
     // WHEN
     [self.ambassadorSDK localRunWithuniversalToken:universalToken universalID:universalID];
