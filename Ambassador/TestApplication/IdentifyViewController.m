@@ -172,12 +172,12 @@
     if ([Validator isValidEmail:email]) {
         // Create a code snippet based on the info entered into the identify field
         NSString *titleString = [NSString stringWithFormat:@"Ambassador Identify Code Snippet v%@", [ValuesHandler getVersionNumber]];
-        NSString *swiftCodeSnippet = [NSString stringWithFormat:@"AmbassadorSDK.identifyWithEmail(\"%@\")", email];
         
         // Creates a mail compose message to share via email with snippet and plist attachment
         MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
         mailVc.mailComposeDelegate = self;
         [mailVc addAttachmentData: [self getObjectiveFile: email] mimeType:@"application/txt" fileName:@"AppDelegate.m"];
+        [mailVc addAttachmentData: [self getSwiftFile:email] mimeType:@"application/txt" fileName:@"AppDelegate.swift"];
         [mailVc setSubject:titleString];
         [self presentViewController:mailVc animated:YES completion:nil];
         
@@ -189,9 +189,11 @@
 
 // Creates an Objective-C App Delegate file
 - (NSData *)getObjectiveFile:(NSString *)email {
+    // Gets dynamic strings from user's tokens and email input
     NSString *runWithKeysString = [NSString stringWithFormat:@"    [AmbassadorSDK runWithUniversalToken:\"%@\" universalID:\"%@\"]; \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
     NSString *identifyString = [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithEmail:@\"%@\"]; \n\n", email];
     
+    // Builds Objective-C implementation file
     NSMutableString *objectiveCString = [[NSMutableString alloc] init];
     [objectiveCString appendString: @"#import \"AppDelegate.h\" \n"];
     [objectiveCString appendString: @"#import <Ambassador/Ambassador.h> \n\n"];
@@ -206,6 +208,27 @@
     [objectiveCString appendString: @"@end"];
     
     return [objectiveCString dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSData *)getSwiftFile:(NSString *)email {
+    // Gets dynamic strings from user's tokens and email input
+    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithUniversalToken(\"%@\", universalID: \"%@\") \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithEmail(\"%@\") \n\n", email];
+    
+    // Builds Swift file
+    NSMutableString *swiftString = [[NSMutableString alloc] init];
+    [swiftString appendString:@"import UIKit \n\n"];
+    [swiftString appendString:@"@UIApplicationMain"];
+    [swiftString appendString:@"class AppDelegate: UIResponder, UIApplicationDelegate { \n\n"];
+    [swiftString appendString:@"    var window: UIWindow? \n\n\n"];
+    [swiftString appendString:@"    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool { \n"];
+    [swiftString appendString:runWithKeysString];
+    [swiftString appendString:identifyString];
+    [swiftString appendString:@"        return true \n"];
+    [swiftString appendString:@"    } \n"];
+    [swiftString appendString:@"}"];
+    
+    return [swiftString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (void)showValidationError:(NSString*)action {
