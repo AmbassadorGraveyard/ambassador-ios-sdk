@@ -64,6 +64,25 @@
 }
 
 
+#pragma mark - MFMailComposeViewController Delegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    
+    switch (result) {
+        case MFMailComposeResultSent:
+            NSLog(@"Message sent successfully!");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Message failed to send");
+            break;
+        default:
+            NSLog(@"Message was not sent");
+            break;
+    }
+}
+
+
 #pragma mark - WelcomeScreen Delegate
 
 - (void)welcomeScreenActionButtonPressed:(UIButton *)actionButton {
@@ -153,17 +172,14 @@
     if ([Validator isValidEmail:email]) {
         // Create a code snippet based on the info entered into the identify field
         NSString *titleString = [NSString stringWithFormat:@"Ambassador Identify Code Snippet v%@", [ValuesHandler getVersionNumber]];
-        NSString *objcCodeSnippet = [NSString stringWithFormat:@"[AmbassadorSDK identifyWithEmail:@\"%@\"];", email];
         NSString *swiftCodeSnippet = [NSString stringWithFormat:@"AmbassadorSDK.identifyWithEmail(\"%@\")", email];
-        NSString *fullCodeSnippet = [NSString stringWithFormat:@"Objective-C\n\n%@\n\n\nSwift\n\n%@", objcCodeSnippet, swiftCodeSnippet];
         
-        NSString *shareString = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n%@", titleString, fullCodeSnippet]];
-        
-        // Package up snippet to share
-        NSArray * shareItems = @[shareString];
-        UIActivityViewController * avc = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];
-        [avc setValue:@"Ambassador Identify Code Snippet" forKey:@"subject"];
-        [self presentViewController:avc animated:YES completion:nil];
+        // Creates a mail compose message to share via email with snippet and plist attachment
+        MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
+        mailVc.mailComposeDelegate = self;
+        [mailVc addAttachmentData: [self getObjectiveFile: email] mimeType:@"application/txt" fileName:@"AppDelegate.m"];
+        [mailVc setSubject:titleString];
+        [self presentViewController:mailVc animated:YES completion:nil];
         
         return;
     }
