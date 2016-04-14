@@ -99,6 +99,25 @@ CGFloat currentOffset;
 }
 
 
+#pragma mark - MFMailComposeViewController Delegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    
+    switch (result) {
+        case MFMailComposeResultSent:
+            NSLog(@"Message sent successfully!");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Message failed to send");
+            break;
+        default:
+            NSLog(@"Message was not sent");
+            break;
+    }
+}
+
+
 #pragma mark - Keyboard Listeners
 
 - (void)registerForKeyboardNotificaitons {
