@@ -170,15 +170,14 @@
     NSString *email = self.tfEmail.text;
     
     if ([Validator isValidEmail:email]) {
-        // Create a code snippet based on the info entered into the identify field
-        NSString *titleString = [NSString stringWithFormat:@"Ambassador Identify Code Snippet v%@", [ValuesHandler getVersionNumber]];
-        
         // Creates a mail compose message to share via email with snippet and plist attachment
         MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
         mailVc.mailComposeDelegate = self;
+        [mailVc addAttachmentData:[self getReadmeFile] mimeType:@"application/txt" fileName:@"README.md"];
         [mailVc addAttachmentData: [self getObjectiveFile: email] mimeType:@"application/txt" fileName:@"AppDelegate.m"];
         [mailVc addAttachmentData: [self getSwiftFile:email] mimeType:@"application/txt" fileName:@"AppDelegate.swift"];
-        [mailVc setSubject:titleString];
+        [mailVc addAttachmentData:[self getJavaFile:email] mimeType:@"application/txt" fileName:@"MyApplication.java"];
+        [mailVc setSubject:@"Ambassador Identify Code"];
         [self presentViewController:mailVc animated:YES completion:nil];
         
         return;
@@ -254,6 +253,26 @@
     [javaString appendString:@"}"];
     
     return [javaString dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+// Create README file
+- (NSData *)getReadmeFile {
+    // Create versionStrings
+    NSString *iosVersionString = [NSString stringWithFormat:@"iOS AmbassadorSDK v%@ \n", [ValuesHandler iosVersionNumber]];
+    NSString *androidVersionString = [NSString stringWithFormat:@"Android AmbassadorSDK v%@ \n", [ValuesHandler androidVersionNumber]];
+    
+    // Builds README file
+    NSMutableString *readmeSting = [[NSMutableString alloc] init];
+    [readmeSting appendString:iosVersionString];
+    [readmeSting appendString:@"Take a look at the iOS docs for an in-depth explanation on adding and integrating the SDK: \n"];
+    [readmeSting appendString:@"https://docs.getambassador.com/v2.0.0/page/ios-sdk \n"];
+    [readmeSting appendString:@"Checkout the AppDelegate.m or AppDelegate.swift files for examples of this identify request. \n\n"];
+    [readmeSting appendString:androidVersionString];
+    [readmeSting appendString:@"Take a look at the android docs for an in-depth explanation on adding and integrating the SDK: \n"];
+    [readmeSting appendString:@"https://docs.getambassador.com/v2.0.0/page/android-sdk \n"];
+    [readmeSting appendString:@"Checkout the MyApplication.java file for an example of this identify request."];
+    
+    return [readmeSting dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (void)showValidationError:(NSString*)action {
