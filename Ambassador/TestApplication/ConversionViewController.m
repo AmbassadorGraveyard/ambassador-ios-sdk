@@ -15,6 +15,7 @@
 #import "AMBUtilities.h"
 #import "DefaultsHandler.h"
 #import "AMBValues.h"
+#import "FileWriter.h"
 
 @interface ConversionViewController () <UITextFieldDelegate>
 
@@ -238,7 +239,7 @@ CGFloat currentOffset;
     }
 }
 
-- (NSString*)getObjcSnippet {
+- (NSData *)getObjcFile {
     // Creates first part of snippet for setting params
     NSMutableString *conversionParamString = [NSMutableString stringWithString:@"AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];\n\n// Set required properties\n"];
     
@@ -250,7 +251,6 @@ CGFloat currentOffset;
     for (NSString *string in [params propertyArray]) {
         // Creates the base setter string
         NSString *setterString = [AMBConversionParameters isStringProperty:string] ? @"conversionParameters.%@ = @\"%@\"; \n" : @"conversionParameters.%@ = @%@; \n";
-        
         NSString *boolString = nil;
         
         // Checks if property is a boolean and creates a string based on the boolean value
@@ -267,27 +267,19 @@ CGFloat currentOffset;
         if ([string isEqualToString:@"mbsy_revenue"]) { [conversionParamString appendString:@"\n// Set optional properties\n"];}
     }
     
-    // Strings for implementation
-    NSString *registerLine = @"[AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {";
-    NSString *registerLine2 = @"    if (error) {";
-    NSString *registerLine3 = @"        NSLog(@\"Error registering conversion - %@\", error);";
-    NSString *registerLine4 = @"    } else {";
-    NSString *registerLine5 = @"        NSLog(@\"Conversion registered successfully!\");";
-    NSString *registerLine6 = @"    }";
-    NSString *registerLine7 = @"}];";
+    // Builds implementation string
+    NSMutableString *implementationString = [[NSMutableString alloc] initWithString:@"[AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {"];
+    [implementationString appendString:@"    if (error) {"];
+    [implementationString appendString:@"        NSLog(@\"Error registering conversion - %@\", error);"];
+    [implementationString appendString:@"    } else {"];
+    [implementationString appendString:@"        NSLog(@\"Conversion registered successfully!\");"];
+    [implementationString appendString:@"    }"];
+    [implementationString appendString:@"}];"];
     
-    // Creates second part of snippet for registering conversion
-    NSArray *stringArray = @[registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
-    NSMutableString *implementationString = [[NSMutableString alloc] init];
+    NSString *objcConversion = [NSString stringWithFormat:@"%@\n%@ \n\n", conversionParamString, implementationString];
+    NSString *objcSnippet = [FileWriter objcAppDelegateFileWithInsert:objcConversion];
     
-    // Sets up full implementation string
-    for (NSString *string in stringArray) {
-        [implementationString appendString:[NSString stringWithFormat:@"%@\n", string]];
-    }
-    
-    NSString *objcSnippet = [NSString stringWithFormat:@"%@\n%@", conversionParamString, implementationString];
-    
-    return objcSnippet;
+    return [objcSnippet dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (NSString*)getSwiftSnippet {
