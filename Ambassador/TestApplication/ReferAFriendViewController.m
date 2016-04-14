@@ -14,6 +14,7 @@
 #import "DefaultsHandler.h"
 #import "ValuesHandler.h"
 #import "RAFCustomizer.h"
+#import "FileWriter.h"
 
 @interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, MFMailComposeViewControllerDelegate, RAFCustomizerDelegate>
 
@@ -243,19 +244,24 @@ RAFItem * itemToDelete = nil;
     NSData *plistAttachmentData = [NSData dataWithContentsOfFile:plistPath];
     NSData *imageAttachmentData =  UIImagePNGRepresentation(rafImage);
     
-    // Creates a code snippet to add in email
-    NSString *bodyString = [NSString stringWithFormat:@"Ambassador RAF Code Snippet v%@\n\n%@", [ValuesHandler iosVersionNumber], [self getCodeSnippet:rafItem]];
-    
-    // Creates a mail compose message to share via email with snippet and plist attachment
+    // Creates a mail compose message to share via email with snippet and file attachments
     MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
     mailVc.mailComposeDelegate = self;
+    [mailVc addAttachmentData:[self getReadme] mimeType:@"application/txt" fileName:@"README.md"];
     [mailVc addAttachmentData:plistAttachmentData mimeType:@"application/plist" fileName:[NSString stringWithFormat:@"%@.plist", rafItem.rafName]];
+    [mailVc addAttachmentData:[self getObjcFile:rafItem] mimeType:@"application/txt" fileName:@"ViewControllerTest.m"];
+    [mailVc addAttachmentData:[self getSwiftFile:rafItem] mimeType:@"application/txt" fileName:@"ViewControllerTest.swift"];
+    
+    if (rafItem.xmlFileData) {
+        [mailVc addAttachmentData:rafItem.xmlFileData mimeType:@"application/txt" fileName:@"ambassador-raf.xml"];
+    }
+    
+    [mailVc addAttachmentData:[self getJavaFile:rafItem] mimeType:@"application/txt" fileName:@"MyActivity.java"];
     
     // Checks if RAF contains an image
     if (imageAttachmentData) { [mailVc addAttachmentData:imageAttachmentData mimeType:@"image/png" fileName:[NSString stringWithFormat:@"%@.png", rafItem.rafName]]; }
     
-    [mailVc setSubject:@"Ambassador Theme Plist"];
-    [mailVc setMessageBody:bodyString isHTML:NO];
+    [mailVc setSubject:@"Ambassador RAF Theme"];
     
     [self presentViewController:mailVc animated:YES completion:nil];
 }
@@ -274,6 +280,32 @@ RAFItem * itemToDelete = nil;
     NSString *fullSwift = [NSString stringWithFormat:@"%@\n%@", swiftHeaderString, swiftRAFSnippet];
     
     return [NSString stringWithFormat:@"%@\n\n\n%@", fullObjc, fullSwift];
+}
+
+- (NSData *)getObjcFile:(RAFItem *)rafItem {
+    NSString *objcLine = [NSString stringWithFormat:@"    [AmbassadorSDK presentRAFForCampaign:@\"%@\" FromViewController:self withThemePlist:@\"%@\"];\n", rafItem.campaign.campID, rafItem.rafName];
+    NSString *objcFile = [FileWriter objcViewControllerWithInsert:objcLine];
+    
+    return [objcFile dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSData *)getSwiftFile:(RAFItem *)rafItem {
+    NSString *swiftLine = [NSString stringWithFormat:@"        AmbassadorSDK.presentRAFForCampaign(\"%@\", fromViewController: self, withThemePlist: \"%@\")\n", rafItem.campaign.campID, rafItem.rafName];
+    NSString *swiftFile = [FileWriter swiftViewControllerWithInsert:swiftLine];
+    
+    return [swiftFile dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSData *)getJavaFile:(RAFItem *)rafItem {
+    NSString *javaLine = [NSString stringWithFormat:@"        AmbassadorSDK.presentRAF(this, \"%@\", \"%@\");\n", rafItem.campaign.campID, [NSString stringWithFormat:@"%@.xml", rafItem.rafName]];
+    NSString *javaFile = [FileWriter javaActivityWithInsert:javaLine];
+    
+    return [javaFile dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSData *)getReadme {
+    NSString *readmeLine = [FileWriter readmeForRAF];
+    return [readmeLine dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 @end
