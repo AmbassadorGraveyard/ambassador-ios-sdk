@@ -16,8 +16,9 @@
 #import "DefaultsHandler.h"
 #import "AMBValues.h"
 #import "FileWriter.h"
+#import <MessageUI/MessageUI.h>
 
-@interface ConversionViewController () <UITextFieldDelegate>
+@interface ConversionViewController () <UITextFieldDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -226,16 +227,15 @@ CGFloat currentOffset;
 
 - (void)exportConversionCode {
     if (![self invalidFields]) {
-        NSString *titleString = [NSString stringWithFormat:@"Ambassador Conversion Code Snippet v%@", [ValuesHandler iosVersionNumber]];
-        NSString *fullCodeSnippet = [NSString stringWithFormat:@"Objective-C\n\n%@\n\n\nSwift\n\n%@", [self getObjcSnippet], [self getSwiftSnippet]];
-        
-        NSString *shareString = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n%@", titleString, fullCodeSnippet]];
-        
-        // Package up snippet to share
-        NSArray * shareItems = @[shareString];
-        UIActivityViewController * avc = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];
-        [avc setValue:@"Ambassador Conversion Code Snippet" forKey:@"subject"];
-        [self presentViewController:avc animated:YES completion:nil];
+        // Create an email with attachments
+        MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
+        mailVc.mailComposeDelegate = self;
+        [mailVc addAttachmentData:[self getReadme] mimeType:@"application/txt" fileName:@"README.md"];
+        [mailVc addAttachmentData:[self getObjcFile] mimeType:@"application/txt" fileName:@"AppDelegate.m"];
+        [mailVc addAttachmentData:[self getSwiftFile] mimeType:@"application/txt" fileName:@"AppDelegate.swift"];
+        [mailVc addAttachmentData:[self getJavaFile] mimeType:@"application/txt" fileName:@"MyApplication.java"];
+        [mailVc setSubject:@"Ambassador Conversion Code"];
+        [self presentViewController:mailVc animated:YES completion:nil];
     }
 }
 
@@ -325,6 +325,44 @@ CGFloat currentOffset;
     NSString *swiftSnippet = [FileWriter swiftAppDelegateFileWithInsert:swiftConversion];
     
     return [swiftSnippet dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSData *)getJavaFile {
+    // Creats conversion parameter object from values
+    AMBConversionParameters *params = [self conversionParameterFromValues];
+    
+    // Build java conversion string
+    NSMutableString *conversionString = [[NSMutableString alloc] initWithString:@"        ConversionParameters conversionParameters = new ConversionParameters.Builder()\n"];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setEmail(\"%@\")\n", params.mbsy_email]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setRevenue(%@f)\n", params.mbsy_revenue]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setCampaign(%@)\n", params.mbsy_campaign]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setAddToGroupId(\"%@\")\n", params.mbsy_add_to_group_id]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setFirstName(\"%@\")\n", params.mbsy_first_name]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setLastName(\"%@\")\n", params.mbsy_last_name]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setUID(\"%@\")\n", params.mbsy_uid]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setCustom1(\"%@\")\n", params.mbsy_custom1]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setCustom2(\"%@\")\n", params.mbsy_custom2]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setCustom3(\"%@\")\n", params.mbsy_custom3]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setTransactionUID(\"%@\")\n", params.mbsy_transaction_uid]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setEventData1(\"%@\")\n", params.mbsy_event_data1]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setEventData2(\"%@\")\n", params.mbsy_event_data2]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setEventData3(\"%@\")\n", params.mbsy_event_data3]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setIsApproved(%@)\n", params.mbsy_is_approved]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setAutoCreate(%@)\n", params.mbsy_auto_create]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setDeactivateNewAmbassador(%@)\n", params.mbsy_deactivate_new_ambassador]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setEmailNewAmbassador(%@)\n", params.mbsy_email_new_ambassador]];
+    [conversionString appendString:@"            .build();\n"];
+    [conversionString appendString:@"        AmbassadorSDK.registerConversion(conversionParameters, false);\n"];
+    
+    // Creates java file
+    NSString *javaFileString = [FileWriter javaMyApplicationFileWithInsert:conversionString];
+    
+    return [javaFileString dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSData *)getReadme {
+    NSString *readmeString = [FileWriter readMeForRequest:@"conversion"];
+    return [readmeString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (BOOL)invalidFields {
