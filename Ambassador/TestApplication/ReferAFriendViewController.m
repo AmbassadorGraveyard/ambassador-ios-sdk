@@ -244,7 +244,7 @@ RAFItem * itemToDelete = nil;
     NSData *imageAttachmentData =  UIImagePNGRepresentation(rafImage);
     
     // Creates a code snippet to add in email
-    NSString *bodyString = [NSString stringWithFormat:@"Ambassador RAF Code Snippet v%@\n\n%@", [ValuesHandler getVersionNumber], [self getCodeSnippet:rafItem]];
+    NSString *bodyString = [NSString stringWithFormat:@"Ambassador RAF Code Snippet v%@\n\n%@", [ValuesHandler iosVersionNumber], [self getCodeSnippet:rafItem]];
     
     // Creates a mail compose message to share via email with snippet and plist attachment
     MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];

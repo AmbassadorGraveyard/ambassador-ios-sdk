@@ -10,6 +10,7 @@
 
 @interface ValuesHandler : NSObject
 
-+ (NSString*)getVersionNumber;
++ (NSString *)iosVersionNumber;
++ (NSString *)androidVersionNumber;
 
 @end

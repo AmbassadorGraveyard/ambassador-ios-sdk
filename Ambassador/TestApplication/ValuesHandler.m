@@ -10,14 +10,12 @@
 
 @implementation ValuesHandler
 
-+ (NSString*)getVersionNumber {
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *majorVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    
-    // If the version number has extra characters appended for the App Store, it removes them when showing SDK version
-    if ([majorVersion length] > 5) { majorVersion = [majorVersion substringToIndex:5]; }
-    
-    return majorVersion;
++ (NSString *)iosVersionNumber {
+    return @"1.0.3";
+}
+
++ (NSString *)androidVersionNumber {
+    return @"1.1.4";
 }
 
 @end

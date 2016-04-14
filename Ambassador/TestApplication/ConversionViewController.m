@@ -225,7 +225,7 @@ CGFloat currentOffset;
 
 - (void)exportConversionCode {
     if (![self invalidFields]) {
-        NSString *titleString = [NSString stringWithFormat:@"Ambassador Conversion Code Snippet v%@", [ValuesHandler getVersionNumber]];
+        NSString *titleString = [NSString stringWithFormat:@"Ambassador Conversion Code Snippet v%@", [ValuesHandler iosVersionNumber]];
         NSString *fullCodeSnippet = [NSString stringWithFormat:@"Objective-C\n\n%@\n\n\nSwift\n\n%@", [self getObjcSnippet], [self getSwiftSnippet]];
         
         NSString *shareString = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n%@", titleString, fullCodeSnippet]];
