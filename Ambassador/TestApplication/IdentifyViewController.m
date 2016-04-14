@@ -210,6 +210,7 @@
     return [objectiveCString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
+// Creates a Swift App Delegate file
 - (NSData *)getSwiftFile:(NSString *)email {
     // Gets dynamic strings from user's tokens and email input
     NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithUniversalToken(\"%@\", universalID: \"%@\") \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
@@ -229,6 +230,30 @@
     [swiftString appendString:@"}"];
     
     return [swiftString dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+// Creates an example Java file
+- (NSData *)getJavaFile:(NSString *)email {
+    // Gets dynamic strings from user's tokens and email input
+    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithKeys(this, \"SDKToken %@\", \"%@\"); \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identify(\"%@\"); \n", email];
+    
+    // Builds Java file
+    NSMutableString *javaString = [[NSMutableString alloc] init];
+    [javaString appendString:@"package com.example.example; \n\n"];
+    [javaString appendString:@"import android.app.Application; \n"];
+    [javaString appendString:@"import com.ambassador.ambassadorsdk.ConversionParameters; \n"];
+    [javaString appendString:@"import com.ambassador.ambassadorsdk.AmbassadorSDK; \n\n"];
+    [javaString appendString:@"public class MyApplication extends Application { \n\n"];
+    [javaString appendString:@"    @Override \n"];
+    [javaString appendString:@"    public void onCreate() { \n"];
+    [javaString appendString:@"        super.onCreate(); \n"];
+    [javaString appendString:runWithKeysString];
+    [javaString appendString:identifyString];
+    [javaString appendString:@"    } \n"];
+    [javaString appendString:@"}"];
+    
+    return [javaString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (void)showValidationError:(NSString*)action {
