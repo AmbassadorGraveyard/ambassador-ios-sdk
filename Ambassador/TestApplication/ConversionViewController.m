@@ -241,7 +241,7 @@ CGFloat currentOffset;
 
 - (NSData *)getObjcFile {
     // Creates first part of snippet for setting params
-    NSMutableString *conversionParamString = [NSMutableString stringWithString:@"AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];\n\n// Set required properties\n"];
+    NSMutableString *conversionParamString = [NSMutableString stringWithString:@"\n    AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];\n\n    // Set required properties\n"];
     
     // Creates an AMBConversionParameter object
     AMBConversionParameters *params = [self conversionParameterFromValues];
@@ -250,7 +250,7 @@ CGFloat currentOffset;
     // Goes through each property in the conversionparam object
     for (NSString *string in [params propertyArray]) {
         // Creates the base setter string
-        NSString *setterString = [AMBConversionParameters isStringProperty:string] ? @"conversionParameters.%@ = @\"%@\"; \n" : @"conversionParameters.%@ = @%@; \n";
+        NSString *setterString = [AMBConversionParameters isStringProperty:string] ? @"    conversionParameters.%@ = @\"%@\"; \n" : @"    conversionParameters.%@ = @%@; \n";
         NSString *boolString = nil;
         
         // Checks if property is a boolean and creates a string based on the boolean value
@@ -264,27 +264,28 @@ CGFloat currentOffset;
         [conversionParamString appendString: propString];
         
         // If the property is 'revenue' then we add a new comment line to start optional properties
-        if ([string isEqualToString:@"mbsy_revenue"]) { [conversionParamString appendString:@"\n// Set optional properties\n"];}
+        if ([string isEqualToString:@"mbsy_revenue"]) { [conversionParamString appendString:@"\n    // Set optional properties\n"];}
     }
     
     // Builds implementation string
-    NSMutableString *implementationString = [[NSMutableString alloc] initWithString:@"[AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {"];
-    [implementationString appendString:@"    if (error) {"];
-    [implementationString appendString:@"        NSLog(@\"Error registering conversion - %@\", error);"];
-    [implementationString appendString:@"    } else {"];
-    [implementationString appendString:@"        NSLog(@\"Conversion registered successfully!\");"];
-    [implementationString appendString:@"    }"];
-    [implementationString appendString:@"}];"];
+    NSMutableString *implementationString = [[NSMutableString alloc] initWithString:@"    [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) { \n"];
+    [implementationString appendString:@"        if (error) { \n"];
+    [implementationString appendString:@"            NSLog(@\"Error registering conversion - %@\", error); \n"];
+    [implementationString appendString:@"        } else { \n"];
+    [implementationString appendString:@"            NSLog(@\"Conversion registered successfully!\"); \n"];
+    [implementationString appendString:@"        } \n"];
+    [implementationString appendString:@"    }];"];
     
+    // Creats app delegate file
     NSString *objcConversion = [NSString stringWithFormat:@"%@\n%@ \n\n", conversionParamString, implementationString];
     NSString *objcSnippet = [FileWriter objcAppDelegateFileWithInsert:objcConversion];
     
     return [objcSnippet dataUsingEncoding:NSUTF8StringEncoding];
 }
 
-- (NSString*)getSwiftSnippet {
+- (NSData *)getSwiftFile {
     // Creates first part of snippet for setting params
-    NSMutableString *conversionParamString = [NSMutableString stringWithString:@"let conversionParameters = AMBConversionParameters()\n\n// Set required properties\n"];
+    NSMutableString *conversionParamString = [NSMutableString stringWithString:@"\n        let conversionParameters = AMBConversionParameters()\n\n        // Set required properties\n"];
     
     // Creates an AMBConversionParameter object
     AMBConversionParameters *params = [self conversionParameterFromValues];
@@ -293,7 +294,7 @@ CGFloat currentOffset;
     // Goes through each property in the conversionparam object
     for (NSString *string in [params propertyArray]) {
         // Creates the base setter string
-        NSString *setterString = [AMBConversionParameters isStringProperty:string] ? @"conversionParameters.%@ = \"%@\" \n" : @"conversionParameters.%@ = %@ \n";
+        NSString *setterString = [AMBConversionParameters isStringProperty:string] ? @"        conversionParameters.%@ = \"%@\" \n" : @"        conversionParameters.%@ = %@ \n";
         
         NSString *boolString = nil;
         
@@ -308,29 +309,22 @@ CGFloat currentOffset;
         [conversionParamString appendString: propString];
         
         // If the property is 'revenue' then we add a new comment line to start optional properties
-        if ([string isEqualToString:@"mbsy_revenue"]) { [conversionParamString appendString:@"\n// Set optional properties\n"];}
+        if ([string isEqualToString:@"mbsy_revenue"]) { [conversionParamString appendString:@"\n        // Set optional properties\n"];}
     }
+
+    NSMutableString *implementationString = [[NSMutableString alloc] initWithString:@"        AmbassadorSDK.registerConversion(conversionParameters, restrictToInstall: false) { (error) -> Void in \n"];
+    [implementationString appendString:@"            if ((error) != nil) { \n"];
+    [implementationString appendString:@"                print(\"Error \(error)\") \n"];
+    [implementationString appendString:@"            } else { \n"];
+    [implementationString appendString:@"                print(\"All conversion parameters are set properly\") \n"];
+    [implementationString appendString:@"            } \n"];
+    [implementationString appendString:@"        }"];
     
-    // Strings for implementation
-    NSString *registerLine = @"AmbassadorSDK.registerConversion(conversionParameters, restrictToInstall: false) { (error) -> Void in";
-    NSString *registerLine2 = @"    if ((error) != nil) {";
-    NSString *registerLine3 = @"        print(\"Error \(error)\")";
-    NSString *registerLine4 = @"    } else {";
-    NSString *registerLine5 = @"        print(\"All conversion parameters are set properly\")";
-    NSString *registerLine6 = @"    }";
-    NSString *registerLine7 = @"}";
+    // Creates swift app delegate file
+    NSString *swiftConversion = [NSString stringWithFormat:@"%@\n%@ \n\n", conversionParamString, implementationString];
+    NSString *swiftSnippet = [FileWriter swiftAppDelegateFileWithInsert:swiftConversion];
     
-    // Creates second part of snippet for registering conversion
-    NSArray *stringArray2 = @[registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
-    NSMutableString *implementationString = [[NSMutableString alloc] init];
-    
-    for (NSString *string in stringArray2) {
-        [implementationString appendString:[NSString stringWithFormat:@"%@\n", string]];
-    }
-    
-    NSString *swiftSnippet = [NSString stringWithFormat:@"%@\n%@", conversionParamString, implementationString];
-    
-    return swiftSnippet;
+    return [swiftSnippet dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (BOOL)invalidFields {
