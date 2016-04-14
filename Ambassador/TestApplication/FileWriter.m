@@ -95,4 +95,79 @@
     return readmeSting;
 }
 
++ (NSString *)objcViewControllerWithInsert:(NSString *)insert {
+    // Gets dynamic strings from user's tokens and email input
+    NSString *runWithKeysString = [NSString stringWithFormat:@"    [AmbassadorSDK runWithUniversalToken:\"%@\" universalID:\"%@\"]; \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    
+    // Builds Objective-C ViewController
+    NSMutableString *objcString = [[NSMutableString alloc] initWithString:@"#import \"ViewControllerTest.h\"\n"];
+    [objcString appendString:@"#import <Ambassador/Ambassador.h>\n\n"];
+    [objcString appendString:@"@interface ViewControllerTest ()\n\n"];
+    [objcString appendString:@"@end\n\n"];
+    [objcString appendString:@"@implementation ViewControllerTest\n\n"];
+    [objcString appendString:@"- (void)viewDidAppear:(BOOL)animated {\n"];
+    [objcString appendString:runWithKeysString];
+    [objcString appendString:insert];
+    [objcString appendString:@"}\n\n"];
+    [objcString appendString:@"@end"];
+    
+    return objcString;
+}
+
++ (NSString *)swiftViewControllerWithInsert:(NSString *)insert {
+    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithUniversalToken(\"%@\", universalID: \"%@\") \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    
+    NSMutableString *swiftString = [[NSMutableString alloc] initWithString:@"import UIKit\n\n"];
+    [swiftString appendString:@"class ViewController: UIViewController {\n\n"];
+    [swiftString appendString:    @"override func viewDidAppear(animated: Bool) {\n"];
+    [swiftString appendString:runWithKeysString];
+    [swiftString appendString:insert];
+    [swiftString appendString:@"    }\n\n"];
+    [swiftString appendString:@"}"];
+    
+    return swiftString;
+}
+
++ (NSString *)javaActivityWithInsert:(NSString *)insert {
+    // Gets dynamic strings from user's tokens and email input
+    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithKeys(this, \"SDKToken %@\", \"%@\"); \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    
+    // Build java string
+    NSMutableString *javaString = [[NSMutableString alloc] initWithString:@"package com.example.example;\n\n"];
+    [javaString appendString:@"import android.app.Activity;\n"];
+    [javaString appendString:@"import android.os.Bundle;\n"];
+    [javaString appendString:@"import com.ambassador.ambassadorsdk.AmbassadorSDK;\n\n"];
+    [javaString appendString:@"public class MyActivity extends Activity {\n\n"];
+    [javaString appendString:@"    @Override\n"];
+    [javaString appendString:@"    public void onCreate(Bundle savedInstanceState) {\n"];
+    [javaString appendString:@"        super.onCreate(savedInstanceState);\n"];
+    [javaString appendString:runWithKeysString];
+    [javaString appendString:insert];
+    [javaString appendString:@"    }\n\n"];
+    [javaString appendString:@"}"];
+    
+    return javaString;
+}
+
++ (NSString *)readmeForRAF {
+    // Create versionStrings
+    NSString *iosVersionString = [NSString stringWithFormat:@"iOS AmbassadorSDK v%@ \n", [ValuesHandler iosVersionNumber]];
+    NSString *androidVersionString = [NSString stringWithFormat:@"Android AmbassadorSDK v%@ \n", [ValuesHandler androidVersionNumber]];
+    
+    // Builds README file
+    NSMutableString *readmeSting = [[NSMutableString alloc] init];
+    [readmeSting appendString:iosVersionString];
+    [readmeSting appendString:@"Take a look at the iOS docs for an in-depth explanation on adding and integrating the SDK: \n"];
+    [readmeSting appendString:@"https://docs.getambassador.com/v2.0.0/page/ios-sdk \n"];
+    [readmeSting appendString:@"Check out the ViewControllerTest.m or ViewControllerTest.swift files for examples of this integration."];
+    [readmeSting appendString:@"Add the image to your app's image assets folder and add the .plist file to your project.\n\n"];
+    [readmeSting appendString:androidVersionString];
+    [readmeSting appendString:@"Take a look at the android docs for an in-depth explanation on adding and integrating the SDK: \n"];
+    [readmeSting appendString:@"https://docs.getambassador.com/v2.0.0/page/android-sdk \n"];
+    [readmeSting appendString:@"Check out the MyActivity.java file for an example of this integration."];
+    [readmeSting appendString:@"Place the image and ambassador-raf.xml files into the root of your application's assets folder."];
+    
+    return readmeSting;
+}
+
 @end

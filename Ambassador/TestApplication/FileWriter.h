@@ -14,5 +14,9 @@
 + (NSString *)swiftAppDelegateFileWithInsert:(NSString *)insert;
 + (NSString *)javaMyApplicationFileWithInsert:(NSString *)insert;
 + (NSString *)readMeForRequest:(NSString *)requestName;
++ (NSString *)objcViewControllerWithInsert:(NSString *)insert;
++ (NSString *)swiftViewControllerWithInsert:(NSString *)insert;
++ (NSString *)javaActivityWithInsert:(NSString *)insert;
++ (NSString *)readmeForRAF;
 
 @end
