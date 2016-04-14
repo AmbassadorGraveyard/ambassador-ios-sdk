@@ -20,6 +20,7 @@
         self.plistDict = [decoder decodeObjectForKey:@"plistDict"];
         self.campaign = [decoder decodeObjectForKey:@"campaign"];
         self.imageFilePath = [decoder decodeObjectForKey:@"imageFilePath"];
+        self.xmlFileData = [decoder decodeObjectForKey:@"xmlFileData"];
     }
     
     return self;
@@ -33,14 +34,16 @@
     [encoder encodeObject:self.plistDict forKey:@"plistDict"];
     [encoder encodeObject:self.campaign forKey:@"campaign"];
     [encoder encodeObject:self.imageFilePath forKey:@"imageFilePath"];
+    [encoder encodeObject:self.xmlFileData forKey:@"xmlFileData"];
 }
 
-- (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict {
+- (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict xmlFileData:(NSData *)xmlData {
     self = [super init];
     self.rafName = name;
     self.plistFullName = [NSString stringWithFormat:@"%@%@", TEST_APP_CONTSTANT, name];
     self.dateCreated = [NSDate date];
     self.plistDict = dict;
+    self.xmlFileData = xmlData;
     
     return self;
 }
