@@ -13,6 +13,7 @@
 #import "AmbassadorLoginViewController.h"
 #import "Validator.h"
 #import "ValuesHandler.h"
+#import "FileWriter.h"
 
 @interface IdentifyViewController () <AMBWelcomeScreenDelegate, MFMailComposeViewControllerDelegate>
 
@@ -189,44 +190,18 @@
 // Creates an Objective-C App Delegate file
 - (NSData *)getObjectiveFile:(NSString *)email {
     // Gets dynamic strings from user's tokens and email input
-    NSString *runWithKeysString = [NSString stringWithFormat:@"    [AmbassadorSDK runWithUniversalToken:\"%@\" universalID:\"%@\"]; \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
     NSString *identifyString = [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithEmail:@\"%@\"]; \n\n", email];
-    
-    // Builds Objective-C implementation file
-    NSMutableString *objectiveCString = [[NSMutableString alloc] init];
-    [objectiveCString appendString: @"#import \"AppDelegate.h\" \n"];
-    [objectiveCString appendString: @"#import <Ambassador/Ambassador.h> \n\n"];
-    [objectiveCString appendString: @"@interface AppDelegate () \n\n"];
-    [objectiveCString appendString: @"@end \n\n"];
-    [objectiveCString appendString: @"@implementation AppDelegate \n\n"];
-    [objectiveCString appendString: @"- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions { \n"];
-    [objectiveCString appendString: runWithKeysString];
-    [objectiveCString appendString:identifyString];
-    [objectiveCString appendString:@"    return YES; \n"];
-    [objectiveCString appendString:@"} \n\n"];
-    [objectiveCString appendString: @"@end"];
-    
+    NSString *objectiveCString = [FileWriter objcAppDelegateFileWithInsert:identifyString];
+ 
     return [objectiveCString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 // Creates a Swift App Delegate file
 - (NSData *)getSwiftFile:(NSString *)email {
     // Gets dynamic strings from user's tokens and email input
-    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithUniversalToken(\"%@\", universalID: \"%@\") \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
     NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithEmail(\"%@\") \n\n", email];
-    
-    // Builds Swift file
-    NSMutableString *swiftString = [[NSMutableString alloc] init];
-    [swiftString appendString:@"import UIKit \n\n"];
-    [swiftString appendString:@"@UIApplicationMain"];
-    [swiftString appendString:@"class AppDelegate: UIResponder, UIApplicationDelegate { \n\n"];
-    [swiftString appendString:@"    var window: UIWindow? \n\n\n"];
-    [swiftString appendString:@"    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool { \n"];
-    [swiftString appendString:runWithKeysString];
-    [swiftString appendString:identifyString];
-    [swiftString appendString:@"        return true \n"];
-    [swiftString appendString:@"    } \n"];
-    [swiftString appendString:@"}"];
+    NSString *swiftString = [FileWriter swiftAppDelegateFileWithInsert:identifyString];
+
     
     return [swiftString dataUsingEncoding:NSUTF8StringEncoding];
 }
@@ -234,45 +209,16 @@
 // Creates an example Java file
 - (NSData *)getJavaFile:(NSString *)email {
     // Gets dynamic strings from user's tokens and email input
-    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithKeys(this, \"SDKToken %@\", \"%@\"); \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
     NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identify(\"%@\"); \n", email];
-    
-    // Builds Java file
-    NSMutableString *javaString = [[NSMutableString alloc] init];
-    [javaString appendString:@"package com.example.example; \n\n"];
-    [javaString appendString:@"import android.app.Application; \n"];
-    [javaString appendString:@"import com.ambassador.ambassadorsdk.ConversionParameters; \n"];
-    [javaString appendString:@"import com.ambassador.ambassadorsdk.AmbassadorSDK; \n\n"];
-    [javaString appendString:@"public class MyApplication extends Application { \n\n"];
-    [javaString appendString:@"    @Override \n"];
-    [javaString appendString:@"    public void onCreate() { \n"];
-    [javaString appendString:@"        super.onCreate(); \n"];
-    [javaString appendString:runWithKeysString];
-    [javaString appendString:identifyString];
-    [javaString appendString:@"    } \n"];
-    [javaString appendString:@"}"];
+    NSString *javaString = [FileWriter javaMyApplicationFileWithInsert:identifyString];
     
     return [javaString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 // Create README file
 - (NSData *)getReadmeFile {
-    // Create versionStrings
-    NSString *iosVersionString = [NSString stringWithFormat:@"iOS AmbassadorSDK v%@ \n", [ValuesHandler iosVersionNumber]];
-    NSString *androidVersionString = [NSString stringWithFormat:@"Android AmbassadorSDK v%@ \n", [ValuesHandler androidVersionNumber]];
-    
-    // Builds README file
-    NSMutableString *readmeSting = [[NSMutableString alloc] init];
-    [readmeSting appendString:iosVersionString];
-    [readmeSting appendString:@"Take a look at the iOS docs for an in-depth explanation on adding and integrating the SDK: \n"];
-    [readmeSting appendString:@"https://docs.getambassador.com/v2.0.0/page/ios-sdk \n"];
-    [readmeSting appendString:@"Checkout the AppDelegate.m or AppDelegate.swift files for examples of this identify request. \n\n"];
-    [readmeSting appendString:androidVersionString];
-    [readmeSting appendString:@"Take a look at the android docs for an in-depth explanation on adding and integrating the SDK: \n"];
-    [readmeSting appendString:@"https://docs.getambassador.com/v2.0.0/page/android-sdk \n"];
-    [readmeSting appendString:@"Checkout the MyApplication.java file for an example of this identify request."];
-    
-    return [readmeSting dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *readmeFileString = [FileWriter readMeForRequest:@"identify"];
+    return [readmeFileString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (void)showValidationError:(NSString*)action {
