@@ -297,7 +297,7 @@ RAFItem * itemToDelete = nil;
 }
 
 - (NSData *)getJavaFile:(RAFItem *)rafItem {
-    NSString *javaLine = [NSString stringWithFormat:@"        AmbassadorSDK.presentRAF(this, \"%@\", \"%@\");\n", rafItem.campaign.campID, [NSString stringWithFormat:@"%@.xml", rafItem.rafName]];
+    NSString *javaLine = [NSString stringWithFormat:@"        AmbassadorSDK.presentRAF(this, \"%@\", \"ambassador-raf.xml\");\n", rafItem.campaign.campID];
     NSString *javaFile = [FileWriter javaActivityWithInsert:javaLine];
     
     return [javaFile dataUsingEncoding:NSUTF8StringEncoding];

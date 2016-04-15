@@ -159,12 +159,12 @@
     [readmeSting appendString:iosVersionString];
     [readmeSting appendString:@"Take a look at the iOS docs for an in-depth explanation on adding and integrating the SDK: \n"];
     [readmeSting appendString:@"https://docs.getambassador.com/v2.0.0/page/ios-sdk \n"];
-    [readmeSting appendString:@"Check out the ViewControllerTest.m or ViewControllerTest.swift files for examples of this integration."];
+    [readmeSting appendString:@"Check out the ViewControllerTest.m or ViewControllerTest.swift files for examples of this integration.\n"];
     [readmeSting appendString:@"Add the image to your app's image assets folder and add the .plist file to your project.\n\n"];
     [readmeSting appendString:androidVersionString];
     [readmeSting appendString:@"Take a look at the android docs for an in-depth explanation on adding and integrating the SDK: \n"];
     [readmeSting appendString:@"https://docs.getambassador.com/v2.0.0/page/android-sdk \n"];
-    [readmeSting appendString:@"Check out the MyActivity.java file for an example of this integration."];
+    [readmeSting appendString:@"Check out the MyActivity.java file for an example of this integration.\n"];
     [readmeSting appendString:@"Place the image and ambassador-raf.xml files into the root of your application's assets folder."];
     
     return readmeSting;
