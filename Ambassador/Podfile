@@ -1,3 +1,7 @@
-target 'Ambassador' do
-  pod 'objective-zip', '~> 1.0'
+target 'DemoApp' do
+
+pod 'objective-zip', '~> 1.0'
+
 end
+
+workspace 'Ambassador'
