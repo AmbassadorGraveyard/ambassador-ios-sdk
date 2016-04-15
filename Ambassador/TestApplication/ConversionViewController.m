@@ -333,7 +333,7 @@ CGFloat currentOffset;
 
     NSMutableString *implementationString = [[NSMutableString alloc] initWithString:@"        AmbassadorSDK.registerConversion(conversionParameters, restrictToInstall: false) { (error) -> Void in \n"];
     [implementationString appendString:@"            if ((error) != nil) { \n"];
-    [implementationString appendString:@"                print(\"Error \(error)\") \n"];
+    [implementationString appendString:@"                print(\"Error \\(error)\") \n"];
     [implementationString appendString:@"            } else { \n"];
     [implementationString appendString:@"                print(\"All conversion parameters are set properly\") \n"];
     [implementationString appendString:@"            } \n"];
