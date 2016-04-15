@@ -205,7 +205,6 @@
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
-		EF6A5BDB1CBD4FE600458480 /* AmbassadorSecrets.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */; };
 		EF6A5C601CBFEBD300458480 /* FileWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = EF6A5C5E1CBFEBD300458480 /* FileWriter.h */; };
 		EF6A5C611CBFEBD300458480 /* FileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5C5F1CBFEBD300458480 /* FileWriter.m */; };
 		EF6BDC771C63FD75004CCDF8 /* AMBCoreDataManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */; };
@@ -1934,7 +1933,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF6A5BDB1CBD4FE600458480 /* AmbassadorSecrets.plist in Sources */,
 				EF8FD8AF1CA9CA9900C0ADB7 /* SocialCell.m in Sources */,
 				EF783C0B1CA07AB900079B65 /* AmbassadorShoes.plist in Sources */,
 				EF783C0C1CA07AB900079B65 /* AmbassadorTheme.plist in Sources */,
@@ -2331,7 +2329,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTestApplication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
