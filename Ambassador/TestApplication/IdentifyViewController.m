@@ -14,6 +14,7 @@
 #import "Validator.h"
 #import "ValuesHandler.h"
 #import "FileWriter.h"
+#import <ZipZap/ZipZap.h>
 
 @interface IdentifyViewController () <AMBWelcomeScreenDelegate, MFMailComposeViewControllerDelegate>
 
@@ -174,10 +175,16 @@
         // Creates a mail compose message to share via email with snippet and plist attachment
         MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
         mailVc.mailComposeDelegate = self;
-        [mailVc addAttachmentData:[self getReadmeFile] mimeType:@"application/txt" fileName:@"README.md"];
-        [mailVc addAttachmentData: [self getObjectiveFile: email] mimeType:@"application/txt" fileName:@"AppDelegate.m"];
-        [mailVc addAttachmentData: [self getSwiftFile:email] mimeType:@"application/txt" fileName:@"AppDelegate.swift"];
-        [mailVc addAttachmentData:[self getJavaFile:email] mimeType:@"application/txt" fileName:@"MyApplication.java"];
+        
+        // Creates a new directiry in the documents folder
+        NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"/ambassador-identify"];
+        
+        // Creates a new zip file containing all different files
+        ZZArchive* newArchive = [[ZZArchive alloc] initWithURL:[NSURL fileURLWithPath:filePath] options:@{ZZOpenOptionsCreateIfMissingKey : @YES} error:nil];
+        [newArchive updateEntries:@[[self getObjectiveFile:email], [self getSwiftFile:email], [self getJavaFile:email]] error:nil];
+        
+        // Adds the zip as an attachment to the email composer
+        [mailVc addAttachmentData:[NSData dataWithContentsOfFile:filePath] mimeType:@"application/zip" fileName:@"ambassador-identify.zip"];
         [mailVc setSubject:@"Ambassador Identify Code"];
         [self presentViewController:mailVc animated:YES completion:nil];
         
@@ -188,31 +195,42 @@
 }
 
 // Creates an Objective-C App Delegate file
-- (NSData *)getObjectiveFile:(NSString *)email {
+- (ZZArchiveEntry *)getObjectiveFile:(NSString *)email {
     // Gets dynamic strings from user's tokens and email input
     NSString *identifyString = [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithEmail:@\"%@\"]; \n\n", email];
     NSString *objectiveCString = [FileWriter objcAppDelegateFileWithInsert:identifyString];
  
-    return [objectiveCString dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *objcEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.m" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [objectiveCString dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return objcEntry;
 }
 
 // Creates a Swift App Delegate file
-- (NSData *)getSwiftFile:(NSString *)email {
+- (ZZArchiveEntry *)getSwiftFile:(NSString *)email {
     // Gets dynamic strings from user's tokens and email input
     NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithEmail(\"%@\") \n\n", email];
     NSString *swiftString = [FileWriter swiftAppDelegateFileWithInsert:identifyString];
 
+    ZZArchiveEntry *swiftEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.swift" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [swiftString dataUsingEncoding:NSUTF8StringEncoding];
+    }];
     
-    return [swiftString dataUsingEncoding:NSUTF8StringEncoding];
+    return swiftEntry;
 }
 
 // Creates an example Java file
-- (NSData *)getJavaFile:(NSString *)email {
+- (ZZArchiveEntry *)getJavaFile:(NSString *)email {
     // Gets dynamic strings from user's tokens and email input
     NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identify(\"%@\"); \n", email];
     NSString *javaString = [FileWriter javaMyApplicationFileWithInsert:identifyString];
     
-    return [javaString dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *javaEntry = [ZZArchiveEntry archiveEntryWithFileName:@"MyApplication.java" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [javaString dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return javaEntry;
 }
 
 // Create README file
