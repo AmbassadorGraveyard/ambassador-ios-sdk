@@ -14,7 +14,7 @@ test:
   override:
     - bash secrets.sh
     - set -o pipefail &&
-     xcodebuild -project Ambassador.xcodeproj
+     xcodebuild -workspace Ambassador.xcworkspace
       -sdk iphonesimulator
        -destination 'platform=iOS Simulator,OS=9.2,name=iPhone 6'
        -configuration Debug
@@ -26,7 +26,7 @@ test:
     - bundle exec slather coverage Ambassador.xcodeproj
 
     - set -o pipefail &&
-     xcodebuild -project Ambassador.xcodeproj
+     xcodebuild -workpace Ambassador.xcworkspace
       -sdk iphonesimulator
        -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
        -scheme AmbassadorUITests
