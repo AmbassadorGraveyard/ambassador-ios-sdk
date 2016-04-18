@@ -8,6 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SlidingView : UIView
+@class SlidingView;
+
+@protocol SlidingViewDatasource <NSObject>
+
+- (NSInteger)slidingViewCollapsedHeight:(SlidingView *)slidingView;
+- (NSInteger)slidingViewExpandedHeight:(SlidingView *)slidingView;
+- (UIView *)slidingViewTrigger:(SlidingView *)slidingView;
 
 @end
+
+
+@interface SlidingView : UIView
+
+@property (nonatomic, weak) id<SlidingViewDatasource> datasource;
+
+@end
+

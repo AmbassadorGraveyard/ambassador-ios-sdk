@@ -8,14 +8,35 @@
 
 #import "SlidingView.h"
 
+@interface SlidingView()
+
+@property (nonatomic) NSInteger collapsedHeight;
+@property (nonatomic) NSInteger expandedHeight;
+@property (nonatomic) BOOL isExpanded;
+
+@end
+
+
 @implementation SlidingView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+#pragma mark - LifeCycle
+
+- (void)awakeFromNib {
+    if (self.datasource) {
+        self.collapsedHeight = [self.datasource slidingViewCollapsedHeight:self];
+        self.expandedHeight = [self.datasource slidingViewExpandedHeight:self];
+    }
 }
-*/
+
+
+#pragma mark - Expand/Collapse
+
+- (void)expand {
+    
+}
+
+- (void)collapse {
+    
+}
 
 @end
