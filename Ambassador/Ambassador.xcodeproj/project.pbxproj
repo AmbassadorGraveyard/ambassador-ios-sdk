@@ -148,6 +148,8 @@
 		EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF07452B1C52C8FA009AF919 /* libOCMock.a */; };
 		EF1399AC1C6551AB0005054D /* AMBContactLoaderUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */; };
 		EF1A4F271CC56DF7008EE886 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1A4F261CC56DF7008EE886 /* libzipzap.a */; };
+		EF1A4F2C1CC58DE8008EE886 /* SlidingView.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F2A1CC58DE8008EE886 /* SlidingView.h */; };
+		EF1A4F2D1CC58DE8008EE886 /* SlidingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F2B1CC58DE8008EE886 /* SlidingView.m */; };
 		EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */; };
 		EF1C82A21C6285B00033A364 /* AMBNamePromptUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */; };
 		EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */; };
@@ -488,6 +490,8 @@
 		EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactLoaderUnitTests.m; sourceTree = "<group>"; };
 		EF1A4F241CC51663008EE886 /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "Pods/../build/Debug-iphoneos/libzipzap.a"; sourceTree = "<group>"; };
 		EF1A4F261CC56DF7008EE886 /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "../../../../Library/Developer/Xcode/DerivedData/Ambassador-fyowizzyypljqlfqhcjipifufznh/Build/Products/Debug-iphoneos/libzipzap.a"; sourceTree = "<group>"; };
+		EF1A4F2A1CC58DE8008EE886 /* SlidingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidingView.h; sourceTree = "<group>"; };
+		EF1A4F2B1CC58DE8008EE886 /* SlidingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlidingView.m; sourceTree = "<group>"; };
 		EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdenityUnitTests.m; sourceTree = "<group>"; };
 		EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNamePromptUnitTests.m; sourceTree = "<group>"; };
 		EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContactCard.h; sourceTree = "<group>"; };
@@ -1159,6 +1163,8 @@
 				EF9D98DE1CA4886200F5711F /* Color Picker */,
 				EF499DB61CAD6C1D00D2EB01 /* LoadingScreen.h */,
 				EF499DB71CAD6C1D00D2EB01 /* LoadingScreen.m */,
+				EF1A4F2A1CC58DE8008EE886 /* SlidingView.h */,
+				EF1A4F2B1CC58DE8008EE886 /* SlidingView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1497,6 +1503,7 @@
 				EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */,
 				DBA3FC251BA8AA1D00672D82 /* AMBPusher.h in Headers */,
 				DBA3FC0B1BA8AA1D00672D82 /* AMBPTEventListener.h in Headers */,
+				EF1A4F2C1CC58DE8008EE886 /* SlidingView.h in Headers */,
 				DBA3FB7F1BA8A23C00672D82 /* AMBConversion.h in Headers */,
 				EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */,
 				EF557A041C86038F00F66761 /* AMBWelcomeScreenParameters.h in Headers */,
@@ -1879,6 +1886,7 @@
 				DBA3FC0A1BA8AA1D00672D82 /* AMBPTBlockEventListener.m in Sources */,
 				EF896FD71CBD3D63003E270D /* AMBSecrets.m in Sources */,
 				EF5579FB1C84F65500F66761 /* AMBWelcomeScreenViewController.m in Sources */,
+				EF1A4F2D1CC58DE8008EE886 /* SlidingView.m in Sources */,
 				DBA3FC151BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m in Sources */,
 				DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */,
 				DBA3FB801BA8A23C00672D82 /* AMBConversion.m in Sources */,
