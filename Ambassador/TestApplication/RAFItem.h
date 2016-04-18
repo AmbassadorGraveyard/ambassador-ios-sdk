@@ -18,7 +18,8 @@
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
 @property (nonatomic, strong) CampaignObject * campaign;
 @property (nonatomic, strong) NSString * imageFilePath;
+- (void)generateXMLFromPlist:(NSMutableDictionary *)plist;
 
-- (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict xmlFileData:(NSData *)xmlData;
+- (instancetype)initWithName:(NSString*)name plistDict:(NSMutableDictionary*)dict;
 
 @end
