@@ -7,6 +7,9 @@ checkout:
   post:
     - git submodule sync
     - git submodule update
+dependencies:
+  pre:
+    - pod install
 test:
   override:
     - bash secrets.sh
