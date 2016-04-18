@@ -1,7 +1,6 @@
 target 'DemoApp' do
 
-pod 'objective-zip', '~> 1.0'
-
+pod 'zipzap'
 end
 
 workspace 'Ambassador'
