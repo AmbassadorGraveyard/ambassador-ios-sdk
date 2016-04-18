@@ -147,7 +147,7 @@
 		EF07452A1C52C8E1009AF919 /* OCMock in Resources */ = {isa = PBXBuildFile; fileRef = EF0745291C52C8E1009AF919 /* OCMock */; };
 		EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF07452B1C52C8FA009AF919 /* libOCMock.a */; };
 		EF1399AC1C6551AB0005054D /* AMBContactLoaderUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */; };
-		EF1A4F251CC51664008EE886 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1A4F241CC51663008EE886 /* libzipzap.a */; };
+		EF1A4F271CC56DF7008EE886 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1A4F261CC56DF7008EE886 /* libzipzap.a */; };
 		EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */; };
 		EF1C82A21C6285B00033A364 /* AMBNamePromptUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */; };
 		EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */; };
@@ -487,6 +487,7 @@
 		EF07452B1C52C8FA009AF919 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
 		EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactLoaderUnitTests.m; sourceTree = "<group>"; };
 		EF1A4F241CC51663008EE886 /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "Pods/../build/Debug-iphoneos/libzipzap.a"; sourceTree = "<group>"; };
+		EF1A4F261CC56DF7008EE886 /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "../../../../Library/Developer/Xcode/DerivedData/Ambassador-fyowizzyypljqlfqhcjipifufznh/Build/Products/Debug-iphoneos/libzipzap.a"; sourceTree = "<group>"; };
 		EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdenityUnitTests.m; sourceTree = "<group>"; };
 		EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNamePromptUnitTests.m; sourceTree = "<group>"; };
 		EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContactCard.h; sourceTree = "<group>"; };
@@ -657,7 +658,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF1A4F251CC51664008EE886 /* libzipzap.a in Frameworks */,
+				EF1A4F271CC56DF7008EE886 /* libzipzap.a in Frameworks */,
 				39895D3DFF3918E34BF190F1 /* libPods-DemoApp.a in Frameworks */,
 				EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */,
 				DB844D891BA76C1E003FD7A9 /* libAmbassador.a in Frameworks */,
@@ -684,6 +685,7 @@
 		0D24CFB05292A555B6506D41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EF1A4F261CC56DF7008EE886 /* libzipzap.a */,
 				EF1A4F241CC51663008EE886 /* libzipzap.a */,
 				EF28DF421CC1804F0070994F /* libobjective-zip.a */,
 				EF9D98D01CA1F19500F5711F /* libobjective-zip.a */,
