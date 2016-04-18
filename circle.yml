@@ -26,7 +26,7 @@ test:
     - bundle exec slather coverage Ambassador.xcodeproj
 
     - set -o pipefail &&
-     xcodebuild -workpace Ambassador.xcworkspace
+     xcodebuild -workspace Ambassador.xcworkspace
       -sdk iphonesimulator
        -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
        -scheme AmbassadorUITests
