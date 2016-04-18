@@ -10,6 +10,17 @@
 	<string>46</string>
 	<key>objects</key>
 	<dict>
+		<key>019A263A09D08EB9EA423993A4978E0C</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>name</key>
+			<string>zipzap</string>
+			<key>target</key>
+			<string>BE12527AFB8EF983FE363A0EEBF2EC74</string>
+			<key>targetProxy</key>
+			<string>102FC1812DCDA0945DDE21774373C398</string>
+		</dict>
 		<key>01B4E39AC5B1EE1263901B34EDD9AB06</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -270,6 +281,19 @@
 			<string>684E4606B05E621F1D8EFF666F6EAA68</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>102FC1812DCDA0945DDE21774373C398</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>D41D8CD98F00B204E9800998ECF8427E</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>BE12527AFB8EF983FE363A0EEBF2EC74</string>
+			<key>remoteInfo</key>
+			<string>zipzap</string>
 		</dict>
 		<key>11DF48BEE57A21D932738082CC0A89D1</key>
 		<dict>
@@ -605,19 +629,6 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>3BDEE7A3EC3D433FE907A03CDA52A8C9</key>
-		<dict>
-			<key>containerPortal</key>
-			<string>D41D8CD98F00B204E9800998ECF8427E</string>
-			<key>isa</key>
-			<string>PBXContainerItemProxy</string>
-			<key>proxyType</key>
-			<string>1</string>
-			<key>remoteGlobalIDString</key>
-			<string>BE12527AFB8EF983FE363A0EEBF2EC74</string>
-			<key>remoteInfo</key>
-			<string>zipzap</string>
-		</dict>
 		<key>3CD5B72248C3786C0E60E7B08D816FD2</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -630,17 +641,6 @@
 			<string>ZipZap/ZZAESDecryptInputStream.mm</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
-		</dict>
-		<key>3F1AFA18019F6C4ECFA6E6395D3137AA</key>
-		<dict>
-			<key>isa</key>
-			<string>PBXTargetDependency</string>
-			<key>name</key>
-			<string>zipzap</string>
-			<key>target</key>
-			<string>BE12527AFB8EF983FE363A0EEBF2EC74</string>
-			<key>targetProxy</key>
-			<string>3BDEE7A3EC3D433FE907A03CDA52A8C9</string>
 		</dict>
 		<key>3FB6129DB30E216432C108E5DE41B439</key>
 		<dict>
@@ -1251,7 +1251,7 @@
 			<array/>
 			<key>dependencies</key>
 			<array>
-				<string>3F1AFA18019F6C4ECFA6E6395D3137AA</string>
+				<string>019A263A09D08EB9EA423993A4978E0C</string>
 			</array>
 			<key>isa</key>
 			<string>PBXNativeTarget</string>
