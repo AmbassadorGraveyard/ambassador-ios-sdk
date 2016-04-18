@@ -15,6 +15,7 @@
 #import "ValuesHandler.h"
 #import "RAFCustomizer.h"
 #import "FileWriter.h"
+#import <ZipZap/ZipZap.h>
 
 @interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, MFMailComposeViewControllerDelegate, RAFCustomizerDelegate>
 
@@ -236,71 +237,96 @@ RAFItem * itemToDelete = nil;
 }
 
 - (void)exportRAFTheme:(RAFItem*)rafItem {
-    // Gets the path for the plist being exported
-    NSString *plistPath = [ThemeHandler getDocumentsPathWithName:rafItem.plistFullName];
-    UIImage *rafImage = [ThemeHandler getImageForRAF:rafItem];
+    // Creates a new directiry in the documents folder
+    NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-raf"];
     
-    // Creates data to be sent as an attachment for the email
-    NSData *plistAttachmentData = [NSData dataWithContentsOfFile:plistPath];
-    NSData *imageAttachmentData =  UIImagePNGRepresentation(rafImage);
+    // Creates an array of files for the zip file
+    NSMutableArray *entriesArray = [[NSMutableArray alloc] initWithObjects:[self getObjcFile:rafItem], [self getSwiftFile:rafItem], [self getPlist:rafItem],
+                                                                    [self getJavaFile:rafItem], [self getJavaXMLFile:rafItem], nil];
+    
+    // Checks if there is an image tied to the RAF, and includes it if so
+    if ([self getThemeImage:rafItem]) { [entriesArray addObject:[self getThemeImage:rafItem]]; }
+    
+    // Creates a new zip file containing all different files
+    ZZArchive* newArchive = [[ZZArchive alloc] initWithURL:[NSURL fileURLWithPath:filePath] options:@{ZZOpenOptionsCreateIfMissingKey : @YES} error:nil];
+    [newArchive updateEntries:entriesArray error:nil];
     
     // Creates a mail compose message to share via email with snippet and file attachments
     MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
     mailVc.mailComposeDelegate = self;
-    [mailVc addAttachmentData:[self getReadme] mimeType:@"application/txt" fileName:@"README.md"];
-    [mailVc addAttachmentData:plistAttachmentData mimeType:@"application/plist" fileName:[NSString stringWithFormat:@"%@.plist", rafItem.rafName]];
-    [mailVc addAttachmentData:[self getObjcFile:rafItem] mimeType:@"application/txt" fileName:@"ViewControllerTest.m"];
-    [mailVc addAttachmentData:[self getSwiftFile:rafItem] mimeType:@"application/txt" fileName:@"ViewControllerTest.swift"];
-    
-    if (rafItem.xmlFileData) {
-        [mailVc addAttachmentData:rafItem.xmlFileData mimeType:@"application/txt" fileName:@"ambassador-raf.xml"];
-    }
-    
-    [mailVc addAttachmentData:[self getJavaFile:rafItem] mimeType:@"application/txt" fileName:@"MyActivity.java"];
-    
-    // Checks if RAF contains an image
-    if (imageAttachmentData) { [mailVc addAttachmentData:imageAttachmentData mimeType:@"image/png" fileName:[NSString stringWithFormat:@"%@.png", rafItem.rafName]]; }
-    
+    [mailVc addAttachmentData:[NSData dataWithContentsOfFile:filePath] mimeType:@"application/zip" fileName:@"ambassador-raf.zip"];
     [mailVc setSubject:@"Ambassador RAF Theme"];
     
     [self presentViewController:mailVc animated:YES completion:nil];
 }
 
-- (NSString*)getCodeSnippet:(RAFItem*)rafItem {
-    NSString *campID = rafItem.campaign.campID;
-    
-    // Creates Obj-c snippet
-    NSString *objcHeaderString = @"Objective-C \n";
-    NSString *objcRAFSnippet = [NSString stringWithFormat:@"[AmbassadorSDK presentRAFForCampaign:@\"%@\" FromViewController:self withThemePlist:@\"%@\"];", campID, rafItem.rafName];
-    NSString *fullObjc = [NSString stringWithFormat:@"%@\n%@", objcHeaderString, objcRAFSnippet];
-    
-    // Creates Swift snippet
-    NSString *swiftHeaderString = @"Swift \n";
-    NSString *swiftRAFSnippet = [NSString stringWithFormat:@"AmbassadorSDK.presentRAFForCampaign(\"%@\", fromViewController: self, withThemePlist: \"%@\")", campID, rafItem.rafName];
-    NSString *fullSwift = [NSString stringWithFormat:@"%@\n%@", swiftHeaderString, swiftRAFSnippet];
-    
-    return [NSString stringWithFormat:@"%@\n\n\n%@", fullObjc, fullSwift];
-}
-
-- (NSData *)getObjcFile:(RAFItem *)rafItem {
+- (ZZArchiveEntry *)getObjcFile:(RAFItem *)rafItem {
     NSString *objcLine = [NSString stringWithFormat:@"    [AmbassadorSDK presentRAFForCampaign:@\"%@\" FromViewController:self withThemePlist:@\"%@\"];\n", rafItem.campaign.campID, rafItem.rafName];
     NSString *objcFile = [FileWriter objcViewControllerWithInsert:objcLine];
     
-    return [objcFile dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *objcEntry = [ZZArchiveEntry archiveEntryWithFileName:@"ViewControllerTest.m" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [objcFile dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return objcEntry;
 }
 
-- (NSData *)getSwiftFile:(RAFItem *)rafItem {
+- (ZZArchiveEntry *)getSwiftFile:(RAFItem *)rafItem {
     NSString *swiftLine = [NSString stringWithFormat:@"        AmbassadorSDK.presentRAFForCampaign(\"%@\", fromViewController: self, withThemePlist: \"%@\")\n", rafItem.campaign.campID, rafItem.rafName];
     NSString *swiftFile = [FileWriter swiftViewControllerWithInsert:swiftLine];
     
-    return [swiftFile dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *swiftEntry = [ZZArchiveEntry archiveEntryWithFileName:@"ViewControllerTest.swift" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [swiftFile dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return swiftEntry;
 }
 
-- (NSData *)getJavaFile:(RAFItem *)rafItem {
+- (ZZArchiveEntry *)getPlist:(RAFItem *)rafItem {
+    NSString *plistPath = [ThemeHandler getDocumentsPathWithName:rafItem.plistFullName];
+    NSString *plistName = [NSString stringWithFormat:@"%@.plist", rafItem.rafName];
+    
+    ZZArchiveEntry *plistEntry = [ZZArchiveEntry archiveEntryWithFileName:plistName compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [NSData dataWithContentsOfFile:plistPath];
+    }];
+    
+    return plistEntry;
+}
+
+- (ZZArchiveEntry *)getJavaFile:(RAFItem *)rafItem {
     NSString *javaLine = [NSString stringWithFormat:@"        AmbassadorSDK.presentRAF(this, \"%@\", \"ambassador-raf.xml\");\n", rafItem.campaign.campID];
     NSString *javaFile = [FileWriter javaActivityWithInsert:javaLine];
     
-    return [javaFile dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *javaEntry = [ZZArchiveEntry archiveEntryWithFileName:@"MyApplication.java" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [javaFile dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return javaEntry;
+}
+
+- (ZZArchiveEntry *)getJavaXMLFile:(RAFItem *)rafItem {
+    // If the RAF was created before android export was included, we need to generate the xml here
+    if (!rafItem.xmlFileData) { [rafItem generateXMLFromPlist:rafItem.plistDict]; }
+    
+    ZZArchiveEntry *xmlEntry = [ZZArchiveEntry archiveEntryWithFileName:@"ambassador-raf.xml" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return rafItem.xmlFileData;
+    }];
+    
+    return xmlEntry;
+}
+
+- (ZZArchiveEntry *)getThemeImage:(RAFItem *)rafItem {
+    UIImage *rafImage = [ThemeHandler getImageForRAF:rafItem];
+    NSData *imageAttachmentData =  UIImagePNGRepresentation(rafImage);
+    NSString *imageName = [NSString stringWithFormat:@"%@.png", rafItem.imageFilePath];
+    
+    if (!imageAttachmentData) { return nil; }
+    
+    ZZArchiveEntry *imageEntry = [ZZArchiveEntry archiveEntryWithFileName:imageName compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return imageAttachmentData;
+    }];
+    
+    return imageEntry;
 }
 
 - (NSData *)getReadme {
