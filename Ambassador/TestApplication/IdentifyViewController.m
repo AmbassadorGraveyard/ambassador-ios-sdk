@@ -177,7 +177,7 @@
         mailVc.mailComposeDelegate = self;
         
         // Creates a new directiry in the documents folder
-        NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"/ambassador-identify"];
+        NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-identify"];
         
         // Creates a new zip file containing all different files
         ZZArchive* newArchive = [[ZZArchive alloc] initWithURL:[NSURL fileURLWithPath:filePath] options:@{ZZOpenOptionsCreateIfMissingKey : @YES} error:nil];

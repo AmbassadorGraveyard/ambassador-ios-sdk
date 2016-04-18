@@ -17,6 +17,7 @@
 #import "AMBValues.h"
 #import "FileWriter.h"
 #import <MessageUI/MessageUI.h>
+#import <ZipZap/ZipZap.h>
 
 @interface ConversionViewController () <UITextFieldDelegate, MFMailComposeViewControllerDelegate>
 
@@ -246,19 +247,23 @@ CGFloat currentOffset;
 
 - (void)exportConversionCode {
     if (![self invalidFields]) {
+        // Creates a new directiry in the documents folder
+        NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-conversion"];
+        
+        // Creates a new zip file containing all different files
+        ZZArchive* newArchive = [[ZZArchive alloc] initWithURL:[NSURL fileURLWithPath:filePath] options:@{ZZOpenOptionsCreateIfMissingKey : @YES} error:nil];
+        [newArchive updateEntries:@[[self getObjcFile], [self getSwiftFile], [self getJavaFile]] error:nil];
+        
         // Create an email with attachments
         MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
         mailVc.mailComposeDelegate = self;
-        [mailVc addAttachmentData:[self getReadme] mimeType:@"application/txt" fileName:@"README.md"];
-        [mailVc addAttachmentData:[self getObjcFile] mimeType:@"application/txt" fileName:@"AppDelegate.m"];
-        [mailVc addAttachmentData:[self getSwiftFile] mimeType:@"application/txt" fileName:@"AppDelegate.swift"];
-        [mailVc addAttachmentData:[self getJavaFile] mimeType:@"application/txt" fileName:@"MyApplication.java"];
+        [mailVc addAttachmentData:[NSData dataWithContentsOfFile:filePath] mimeType:@"application/zip" fileName:@"ambassador-conversion.zip"];
         [mailVc setSubject:@"Ambassador Conversion Code"];
         [self presentViewController:mailVc animated:YES completion:nil];
     }
 }
 
-- (NSData *)getObjcFile {
+- (ZZArchiveEntry *)getObjcFile {
     // Creates first part of snippet for setting params
     NSMutableString *conversionParamString = [NSMutableString stringWithString:@"\n    AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];\n\n    // Set required properties\n"];
     
@@ -299,10 +304,14 @@ CGFloat currentOffset;
     NSString *objcConversion = [NSString stringWithFormat:@"%@\n%@ \n\n", conversionParamString, implementationString];
     NSString *objcSnippet = [FileWriter objcAppDelegateFileWithInsert:objcConversion];
     
-    return [objcSnippet dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *objcEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.m" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [objcSnippet dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return objcEntry;
 }
 
-- (NSData *)getSwiftFile {
+- (ZZArchiveEntry *)getSwiftFile {
     // Creates first part of snippet for setting params
     NSMutableString *conversionParamString = [NSMutableString stringWithString:@"\n        let conversionParameters = AMBConversionParameters()\n\n        // Set required properties\n"];
     
@@ -343,10 +352,14 @@ CGFloat currentOffset;
     NSString *swiftConversion = [NSString stringWithFormat:@"%@\n%@ \n\n", conversionParamString, implementationString];
     NSString *swiftSnippet = [FileWriter swiftAppDelegateFileWithInsert:swiftConversion];
     
-    return [swiftSnippet dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *swiftEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.swift" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [swiftSnippet dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return swiftEntry;
 }
 
-- (NSData *)getJavaFile {
+- (ZZArchiveEntry *)getJavaFile {
     // Creats conversion parameter object from values
     AMBConversionParameters *params = [self conversionParameterFromValues];
     
@@ -376,7 +389,11 @@ CGFloat currentOffset;
     // Creates java file
     NSString *javaFileString = [FileWriter javaMyApplicationFileWithInsert:conversionString];
     
-    return [javaFileString dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *javaEntry = [ZZArchiveEntry archiveEntryWithFileName:@"MyApplication.java" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [javaFileString dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return javaEntry;
 }
 
 - (NSData *)getReadme {
