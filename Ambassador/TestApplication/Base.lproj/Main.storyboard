@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZnY-6U-Jmh">
-                                        <rect key="frame" x="0.0" y="-390" width="600" height="1266"/>
+                                        <rect key="frame" x="0.0" y="-768" width="600" height="1266"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrm-Ng-BE0" customClass="SlidingView">
                                                 <rect key="frame" x="0.0" y="152" width="600" height="83"/>
@@ -283,7 +283,7 @@
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFg-wr-j0O" customClass="SlidingView">
                                                 <rect key="frame" x="0.0" y="245" width="600" height="538"/>
                                                 <subviews>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Referred Email (Required)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nwG-dy-OQQ" customClass="LeftIndentedTextField">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Referred Email *" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nwG-dy-OQQ" customClass="LeftIndentedTextField">
                                                         <rect key="frame" x="178" y="41" width="245" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="41" id="tGf-Ea-fcD">
@@ -396,7 +396,7 @@
                                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add to groups" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vrR-jL-OQo">
+                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add to groups" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vrR-jL-OQo" customClass="LeftIndentedTextField">
                                                                 <rect key="frame" x="0.0" y="41" width="245" height="41"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="245" id="BvA-OZ-qZA"/>
@@ -405,7 +405,7 @@
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
-                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Send welcome email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bje-ZA-wW2">
+                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Send welcome email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bje-ZA-wW2" customClass="LeftIndentedTextField">
                                                                 <rect key="frame" x="0.0" y="92" width="245" height="41"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="245" id="TeO-eA-wEh"/>
