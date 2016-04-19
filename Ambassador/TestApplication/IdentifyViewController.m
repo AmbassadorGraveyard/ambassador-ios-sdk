@@ -15,6 +15,7 @@
 #import "ValuesHandler.h"
 #import "FileWriter.h"
 #import <ZipZap/ZipZap.h>
+#import "UIActivityViewController+ZipShare.h"
 
 @interface IdentifyViewController () <AMBWelcomeScreenDelegate, MFMailComposeViewControllerDelegate>
 
@@ -177,16 +178,17 @@
         mailVc.mailComposeDelegate = self;
         
         // Creates a new directiry in the documents folder
-        NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-identify"];
+        NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-identify.zip"];
         
         // Creates a new zip file containing all different files
         ZZArchive* newArchive = [[ZZArchive alloc] initWithURL:[NSURL fileURLWithPath:filePath] options:@{ZZOpenOptionsCreateIfMissingKey : @YES} error:nil];
         [newArchive updateEntries:@[[self getObjectiveFile:email], [self getSwiftFile:email], [self getJavaFile:email]] error:nil];
         
-        // Adds the zip as an attachment to the email composer
-        [mailVc addAttachmentData:[NSData dataWithContentsOfFile:filePath] mimeType:@"application/zip" fileName:@"ambassador-identify.zip"];
-        [mailVc setSubject:@"Ambassador Identify Code"];
-        [self presentViewController:mailVc animated:YES completion:nil];
+        // Creates a url that returns an actual file
+        NSURL *fileurl = [NSURL fileURLWithPath:filePath];
+        
+        // Shows a share sheet with the zip file attached
+        [UIActivityViewController shareZip:fileurl withMessage:@"Temporary Idenity message -- Will be README" subject:@"Ambassador Identify Code" forPresenter:self];
         
         return;
     }
