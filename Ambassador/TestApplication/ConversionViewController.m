@@ -19,8 +19,9 @@
 #import <ZipZap/ZipZap.h>
 #import "UIActivityViewController+ZipShare.h"
 #import "SlidingView.h"
+#import "CampaignListController.h"
 
-@interface ConversionViewController () <UITextFieldDelegate, SlidingViewDatasource>
+@interface ConversionViewController () <UITextFieldDelegate, SlidingViewDatasource, CampaignListDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -54,6 +55,7 @@
 
 // Private properties
 @property (nonatomic, strong) UITextField * selectedTextField;
+@property (nonatomic, strong) CampaignObject * selectedCampaign;
 
 @end
 
@@ -98,6 +100,16 @@ CGFloat currentOffset;
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     self.selectedTextField = textField;
+    
+    if ([textField isEqual:self.tfCampID]) {
+        // Show Campaign list VC
+        CampaignListController *campaignList = [[CampaignListController alloc] init];
+        campaignList.delegate = self;
+        [self presentViewController:campaignList animated:YES completion:nil];
+        
+        return NO;
+    }
+    
     return YES;
 }
 
@@ -152,6 +164,14 @@ CGFloat currentOffset;
 }
 
 
+#pragma mark - Campaign List Delegate
+
+- (void)campaignListCampaignChosen:(CampaignObject *)campaignObject {
+    self.selectedCampaign = campaignObject;
+    self.tfCampID.text = campaignObject.name;
+}
+
+
 #pragma mark - UI Functions
 
 - (void)setUpTheme {
@@ -168,7 +188,7 @@ CGFloat currentOffset;
     
     UIToolbar *keyboardDoneButtonView = [[UIToolbar alloc] init];
     [keyboardDoneButtonView sizeToFit];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneClicked:)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneClicked:)];
     [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
     self.tfCampID.inputAccessoryView = keyboardDoneButtonView;
     self.tfRevAmt.inputAccessoryView = keyboardDoneButtonView;
@@ -441,7 +461,7 @@ CGFloat currentOffset;
     
     // Required Params
     parameters.mbsy_email = self.tfRefEmail.text;
-    parameters.mbsy_campaign = [NSNumber numberWithInteger:[self.tfCampID.text integerValue]];
+    parameters.mbsy_campaign = [NSNumber numberWithInteger:[self.selectedCampaign.campID integerValue]];
     parameters.mbsy_revenue = [NSNumber numberWithFloat:[self.tfRevAmt.text floatValue]];
     
     // Optional Params

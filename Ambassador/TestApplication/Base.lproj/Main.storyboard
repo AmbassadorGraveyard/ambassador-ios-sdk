@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZnY-6U-Jmh">
-                                        <rect key="frame" x="0.0" y="-768" width="600" height="1266"/>
+                                        <rect key="frame" x="-1" y="-676" width="600" height="1266"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrm-Ng-BE0" customClass="SlidingView">
                                                 <rect key="frame" x="0.0" y="152" width="600" height="83"/>
@@ -148,28 +148,10 @@
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yd9-EI-b7S" customClass="SlidingView">
                                                 <rect key="frame" x="0.0" y="793" width="600" height="388"/>
                                                 <subviews>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Campaign *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zfm-y9-S6X">
-                                                        <rect key="frame" x="178" y="46" width="245" height="41"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="41" id="FNs-wc-5LT"/>
-                                                            <constraint firstAttribute="width" constant="245" id="ZCL-aJ-5Em"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                    </textField>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Revenue Amount *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rvd-6P-JzP">
-                                                        <rect key="frame" x="178" y="97" width="245" height="41"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="41" id="JWt-Ux-VG3"/>
-                                                            <constraint firstAttribute="width" constant="245" id="lmQ-zM-7SX"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                    </textField>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q2L-KR-6t4">
                                                         <rect key="frame" x="374" y="148" width="51" height="31"/>
                                                     </switch>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Transaction UID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1nM-gq-R9L">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Transaction UID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1nM-gq-R9L" customClass="LeftIndentedTextField">
                                                         <rect key="frame" x="178" y="189" width="245" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="245" id="eXl-84-5tg"/>
@@ -177,8 +159,11 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="9YV-9x-emY" id="sbA-pk-Nev"/>
+                                                        </connections>
                                                     </textField>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Data 1" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ba5-Tk-qjL">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Data 1" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ba5-Tk-qjL" customClass="LeftIndentedTextField">
                                                         <rect key="frame" x="178" y="240" width="245" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="41" id="7Rp-Ta-TGL"/>
@@ -186,8 +171,11 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="9YV-9x-emY" id="aS9-Yx-IW8"/>
+                                                        </connections>
                                                     </textField>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Data 2" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CWK-5j-flk">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Data 2" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CWK-5j-flk" customClass="LeftIndentedTextField">
                                                         <rect key="frame" x="178" y="291" width="245" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="41" id="e1a-L7-jxh"/>
@@ -195,14 +183,17 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="9YV-9x-emY" id="mk9-bX-BdI"/>
+                                                        </connections>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Approve Commission" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMY-cs-Ndu">
                                                         <rect key="frame" x="178" y="156" width="119" height="15"/>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="textColor" red="0.5725961538461537" green="0.5725961538461537" blue="0.5725961538461537" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Data 3" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5e2-rI-UGJ">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Event Data 3" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5e2-rI-UGJ" customClass="LeftIndentedTextField">
                                                         <rect key="frame" x="178" y="342" width="245" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="245" id="Jfd-0X-ped"/>
@@ -210,6 +201,9 @@
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="9YV-9x-emY" id="axk-8J-EdE"/>
+                                                        </connections>
                                                     </textField>
                                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CUo-PT-Cfi">
                                                         <rect key="frame" x="0.0" y="0.0" width="600" height="35"/>
@@ -237,6 +231,30 @@
                                                             <constraint firstAttribute="height" constant="35" id="l3l-Ku-ULD"/>
                                                         </constraints>
                                                     </view>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Campaign *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zfm-y9-S6X" customClass="LeftIndentedTextField">
+                                                        <rect key="frame" x="178" y="48" width="245" height="41"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="41" id="FNs-wc-5LT"/>
+                                                            <constraint firstAttribute="width" constant="245" id="ZCL-aJ-5Em"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="9YV-9x-emY" id="ird-cJ-Gcd"/>
+                                                        </connections>
+                                                    </textField>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Revenue Amount *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rvd-6P-JzP" customClass="LeftIndentedTextField">
+                                                        <rect key="frame" x="178" y="99" width="245" height="41"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="41" id="JWt-Ux-VG3"/>
+                                                            <constraint firstAttribute="width" constant="245" id="lmQ-zM-7SX"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="9YV-9x-emY" id="wS3-F7-7tL"/>
+                                                        </connections>
+                                                    </textField>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -393,7 +411,7 @@
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enroll as Ambassador" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fpm-kK-Ef8">
                                                                 <rect key="frame" x="0.0" y="8" width="121" height="15"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
-                                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                <color key="textColor" red="0.57259615379999995" green="0.57259615379999995" blue="0.57259615379999995" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add to groups" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vrR-jL-OQo" customClass="LeftIndentedTextField">
@@ -592,13 +610,19 @@
                         <outlet property="svAmbassador" destination="qrm-Ng-BE0" id="nGs-yq-L4R"/>
                         <outlet property="svCommission" destination="yd9-EI-b7S" id="wqi-gS-eOY"/>
                         <outlet property="svCustomer" destination="jFg-wr-j0O" id="PHT-8d-U6V"/>
+                        <outlet property="tfCampID" destination="zfm-y9-S6X" id="Uak-6y-lIx"/>
                         <outlet property="tfCustom1" destination="nRH-aP-dY6" id="cEA-S4-6Sb"/>
                         <outlet property="tfCustom2" destination="52G-hd-VQT" id="ayv-Tt-o05"/>
                         <outlet property="tfCustom3" destination="PRw-wk-1Ey" id="Lrp-Hf-SjE"/>
+                        <outlet property="tfEventData1" destination="ba5-Tk-qjL" id="57h-0k-LAJ"/>
+                        <outlet property="tfEventData2" destination="CWK-5j-flk" id="O5r-1t-E8x"/>
+                        <outlet property="tfEventData3" destination="5e2-rI-UGJ" id="OLe-mW-tuX"/>
                         <outlet property="tfFirstName" destination="0Rj-2k-Xld" id="4jv-ea-eEU"/>
                         <outlet property="tfLastName" destination="YPv-Lu-ddG" id="IgH-aI-azN"/>
                         <outlet property="tfRefEmail" destination="nwG-dy-OQQ" id="dme-6k-fe0"/>
                         <outlet property="tfReferrerEmail" destination="2db-iC-L6h" id="4tj-FH-dQa"/>
+                        <outlet property="tfRevAmt" destination="Rvd-6P-JzP" id="KLa-in-Fq6"/>
+                        <outlet property="tfTransactionUID" destination="1nM-gq-R9L" id="ivl-Qg-d5H"/>
                         <outlet property="tfUID" destination="sEg-Qs-bAH" id="Lhw-Xh-KVq"/>
                     </connections>
                 </viewController>

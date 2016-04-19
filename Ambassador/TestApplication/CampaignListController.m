@@ -172,8 +172,10 @@ CGFloat tableHeaderHeight = 50;
             return;
         }
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable to load campaigns" message:@"Unable to load campaigns at this time. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [alert show];
+        [self dismissViewControllerAnimated:YES completion:^{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable to load campaigns" message:@"Unable to load campaigns at this time. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+            [alert show];
+        }];
     }] resume];
 }
 
