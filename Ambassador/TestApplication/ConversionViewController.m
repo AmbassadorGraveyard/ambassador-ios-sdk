@@ -16,11 +16,11 @@
 #import "DefaultsHandler.h"
 #import "AMBValues.h"
 #import "FileWriter.h"
-#import <MessageUI/MessageUI.h>
 #import <ZipZap/ZipZap.h>
+#import "UIActivityViewController+ZipShare.h"
 #import "SlidingView.h"
 
-@interface ConversionViewController () <UITextFieldDelegate, MFMailComposeViewControllerDelegate, SlidingViewDatasource>
+@interface ConversionViewController () <UITextFieldDelegate, SlidingViewDatasource>
 
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -104,25 +104,6 @@ CGFloat currentOffset;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
-}
-
-
-#pragma mark - MFMailComposeViewController Delegate
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    
-    switch (result) {
-        case MFMailComposeResultSent:
-            NSLog(@"Message sent successfully!");
-            break;
-        case MFMailComposeResultFailed:
-            NSLog(@"Message failed to send");
-            break;
-        default:
-            NSLog(@"Message was not sent");
-            break;
-    }
 }
 
 
@@ -272,18 +253,17 @@ CGFloat currentOffset;
 - (void)exportConversionCode {
     if (![self invalidFields]) {
         // Creates a new directiry in the documents folder
-        NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-conversion"];
+        NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-conversion.zip"];
         
         // Creates a new zip file containing all different files
         ZZArchive* newArchive = [[ZZArchive alloc] initWithURL:[NSURL fileURLWithPath:filePath] options:@{ZZOpenOptionsCreateIfMissingKey : @YES} error:nil];
         [newArchive updateEntries:@[[self getObjcFile], [self getSwiftFile], [self getJavaFile]] error:nil];
         
-        // Create an email with attachments
-        MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
-        mailVc.mailComposeDelegate = self;
-        [mailVc addAttachmentData:[NSData dataWithContentsOfFile:filePath] mimeType:@"application/zip" fileName:@"ambassador-conversion.zip"];
-        [mailVc setSubject:@"Ambassador Conversion Code"];
-        [self presentViewController:mailVc animated:YES completion:nil];
+        // Grabs the file using a url to the file path
+        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+        
+        // ActivityViewController category function that shares a zip
+        [UIActivityViewController shareZip:fileURL withMessage:@"Temporary Conversion message -- Will be README" subject:@"Ambassador Conversion Code" forPresenter:self];
     }
 }
 

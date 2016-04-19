@@ -9,15 +9,15 @@
 #import "ReferAFriendViewController.h"
 #import "RAFCell.h"
 #import <Ambassador/Ambassador.h>
-#import <MessageUI/MessageUI.h>
 #import "ThemeHandler.h"
 #import "DefaultsHandler.h"
 #import "ValuesHandler.h"
 #import "RAFCustomizer.h"
 #import "FileWriter.h"
 #import <ZipZap/ZipZap.h>
+#import "UIActivityViewController+ZipShare.h"
 
-@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, MFMailComposeViewControllerDelegate, RAFCustomizerDelegate>
+@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, RAFCustomizerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
@@ -137,21 +137,6 @@ RAFItem * itemToDelete = nil;
 }
 
 
-#pragma mark - MFMailComposeVc Delegate
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    
-    if (result == MFMailComposeResultSent) {
-        NSLog(@"Message sent successfully!");
-    } else if (result == MFMailComposeResultFailed) {
-        NSLog(@"Message failed to send");
-    } else {
-        NSLog(@"Message was not sent");
-    }
-}
-
-
 #pragma mark - UIAlertView Delegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -238,11 +223,11 @@ RAFItem * itemToDelete = nil;
 
 - (void)exportRAFTheme:(RAFItem*)rafItem {
     // Creates a new directiry in the documents folder
-    NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-raf"];
+    NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-raf.zip"];
     
     // Creates an array of files for the zip file
     NSMutableArray *entriesArray = [[NSMutableArray alloc] initWithObjects:[self getObjcFile:rafItem], [self getSwiftFile:rafItem], [self getPlist:rafItem],
-                                                                    [self getJavaFile:rafItem], [self getJavaXMLFile:rafItem], nil];
+                                    [self getJavaFile:rafItem], [self getJavaXMLFile:rafItem], nil];
     
     // Checks if there is an image tied to the RAF, and includes it if so
     if ([self getThemeImage:rafItem]) { [entriesArray addObject:[self getThemeImage:rafItem]]; }
@@ -251,13 +236,11 @@ RAFItem * itemToDelete = nil;
     ZZArchive* newArchive = [[ZZArchive alloc] initWithURL:[NSURL fileURLWithPath:filePath] options:@{ZZOpenOptionsCreateIfMissingKey : @YES} error:nil];
     [newArchive updateEntries:entriesArray error:nil];
     
-    // Creates a mail compose message to share via email with snippet and file attachments
-    MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
-    mailVc.mailComposeDelegate = self;
-    [mailVc addAttachmentData:[NSData dataWithContentsOfFile:filePath] mimeType:@"application/zip" fileName:@"ambassador-raf.zip"];
-    [mailVc setSubject:@"Ambassador RAF Theme"];
-    
-    [self presentViewController:mailVc animated:YES completion:nil];
+    // Creates a file based on the path using a url
+    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+
+    // Shares using a uiactivityviewcontroller that allows a zip file
+    [UIActivityViewController shareZip:fileURL withMessage:@"Temporary RAF message -- Will be README" subject:@"Ambassador RAF Theme" forPresenter:self];
 }
 
 - (ZZArchiveEntry *)getObjcFile:(RAFItem *)rafItem {
