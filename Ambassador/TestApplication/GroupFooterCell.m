@@ -16,12 +16,14 @@
 
 // Private properties
 @property (nonatomic, strong) NSArray * selectedGroups;
-@property (nonatomic, strong) UIViewController * parentViewController;
 
 @end
 
 
 @implementation GroupFooterCell
+
+
+#pragma mark - IBActions
 
 - (IBAction)saveTapped:(id)sender {
     [self.delegate groupFooterSaveButtonTappedWithGroups:self.selectedGroups];

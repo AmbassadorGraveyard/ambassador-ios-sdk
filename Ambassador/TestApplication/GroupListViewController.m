@@ -10,11 +10,13 @@
 #import "LoadingScreen.h"
 #import "DefaultsHandler.h"
 #import "GroupObject.h"
+#import "GroupFooterCell.h"
 
-@interface GroupListViewController() <UITableViewDelegate, UITableViewDataSource>
+@interface GroupListViewController() <UITableViewDelegate, UITableViewDataSource, GroupFooterCellDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UITableView * tableView;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * tableHeight;
 
 // Private properties
 @property (nonatomic, strong) NSArray * groupArray;
@@ -41,6 +43,7 @@ CGFloat groupTableHeaderHeight = 50;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self showGroupList];
+    [self setupUI];
 }
 
 
@@ -89,6 +92,28 @@ CGFloat groupTableHeaderHeight = 50;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return groupTableCellHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return groupTableHeaderHeight;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    GroupFooterCell *footerCell = [tableView dequeueReusableCellWithIdentifier:@"groupFooterCell"];
+    footerCell.delegate = self;
+    footerCell.parentViewController = self;
+    
+    return footerCell;
+}
+
+
+#pragma mark - UI Functions
+
+- (void)setupUI {
+    // TableView
+    self.tableHeight.constant = (self.groupArray.count > 6) ? 300 : (groupTableCellHeight * self.groupArray.count) + (groupTableHeaderHeight * 2);
+    self.tableView.layer.cornerRadius = 6;
+    self.tableView.hidden = self.groupArray.count == 0;
 }
 
 
@@ -159,6 +184,7 @@ CGFloat groupTableHeaderHeight = 50;
     
     self.groupArray = [NSArray arrayWithArray:arrayToSave];
     [self.tableView reloadData];
+    [self setupUI];
     [LoadingScreen hideLoadingScreenForView:self.view];
 }
 

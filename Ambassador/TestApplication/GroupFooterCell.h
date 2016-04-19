@@ -17,6 +17,7 @@
 
 @interface GroupFooterCell : UITableViewCell
 
+@property (nonatomic, strong) UIViewController * parentViewController;
 @property (nonatomic, weak) id<GroupFooterCellDelegate> delegate;
 
 @end
