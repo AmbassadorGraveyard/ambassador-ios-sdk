@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hMM-aa-EfG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hMM-aa-EfG">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -829,7 +829,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="61"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="smJ-zd-BOl" id="HLW-t9-CG6">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="60.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zgs-Up-GdQ">
@@ -927,13 +927,6 @@
                                     <constraint firstItem="MJE-Ej-QAf" firstAttribute="top" secondItem="CkR-uC-RMk" secondAttribute="top" constant="7" id="tZ0-70-wke"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="wGK-Ox-9L5">
-                                <rect key="frame" x="20" y="108" width="560" height="54"/>
-                                <string key="text">Use this tool to encourage your ambassadors to refer.  Create and preview your own custom Refer a Friend views below.  When you're done, tap share to send your configuration to your app developer.</string>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                                <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Refer a Friend" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbU-cL-oj1">
                                 <rect key="frame" x="20" y="78" width="560" height="21"/>
                                 <constraints>
@@ -964,6 +957,13 @@
                                 <rect key="frame" x="193" y="323" width="215" height="24"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="wGK-Ox-9L5">
+                                <rect key="frame" x="20" y="108" width="560" height="54"/>
+                                <string key="text">Use this tool to encourage your ambassadors to refer.  Create and preview your own custom refer-a-friend views below.  When you're done, tap share to send your configuration to your app developer.</string>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1051,7 +1051,7 @@
             </objects>
             <point key="canvasLocation" x="-871" y="1875"/>
         </scene>
-        <!--RAF Customizer-->
+        <!--Edit Refer-a-friend View-->
         <scene sceneID="U4o-vR-0IC">
             <objects>
                 <viewController id="bha-dU-YIo" customClass="RAFCustomizer" sceneMemberID="viewController">
@@ -1289,7 +1289,7 @@
                                                         <rect key="frame" x="0.0" y="28" width="600" height="71"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DFB-RC-Duz" id="C4Y-Hd-YU2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="600" height="71"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="600" height="70.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Facebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QGR-VC-bgC">
@@ -1522,8 +1522,8 @@
                                             <mask key="constraints">
                                                 <exclude reference="6jD-6i-NeH"/>
                                                 <exclude reference="NEh-aC-3Eb"/>
-                                                <exclude reference="m0Z-j6-P83"/>
                                                 <exclude reference="Lll-gI-aWI"/>
+                                                <exclude reference="m0Z-j6-P83"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=compact" misplaced="YES">
@@ -1549,7 +1549,7 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="RAF Customizer" id="Nv9-cQ-7Kz"/>
+                    <navigationItem key="navigationItem" title="Edit Refer-a-friend View" id="Nv9-cQ-7Kz"/>
                     <connections>
                         <outlet property="btnButtonColor" destination="0xe-Wp-NI2" id="vqy-0J-Yzd"/>
                         <outlet property="btnClearImage" destination="hMM-jU-iDE" id="dHn-75-oH3"/>

@@ -112,7 +112,7 @@ NSInteger currentScrollPoint;
         
         // If the RAFItem is nil we create a new one
         if (!self.rafItem) {
-            self.rafItem = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict];
+            self.rafItem = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict xmlFileData:[self getJavaXMLFile]];
         } else {
             // If there is already a RAF Item, we override its properties instead of creating a new one
             self.rafItem.rafName = rafName;
@@ -121,6 +121,7 @@ NSInteger currentScrollPoint;
         // Override properties of the RAF Item
         [self overridePlistIfImage:self.rafItem.plistFullName];
         self.rafItem.campaign = self.selectedCampaignID;
+        self.rafItem.xmlFileData = [self getJavaXMLFile];
         
         [self.delegate RAFCustomizerSavedRAF:self.rafItem];
     }
@@ -356,6 +357,76 @@ NSInteger currentScrollPoint;
     
     // Overrides social table
     [self.plistDict setValue:[self stringFromSocialChannels] forKey:@"Channels"];
+}
+
+
+- (NSData *)getJavaXMLFile {
+    // Grabs all the color values for buttons and assigns them hex string values
+    NSString *headerColorString = [UIColor hexStringForColor:self.btnHeaderColor.backgroundColor];
+    NSString *headerTextColorString = [UIColor hexStringForColor:self.btnHeaderTextColor.backgroundColor];
+    NSString *textColorString1 = [UIColor hexStringForColor:self.btnTextColor1.backgroundColor];
+    NSString *textColorString2 = [UIColor hexStringForColor:self.btnTextColor2.backgroundColor];
+    NSString *buttonColorString = [UIColor hexStringForColor:self.btnButtonColor.backgroundColor];
+    
+    // Overrides strings in plist
+    NSString *headerText = ![Validator emptyString:self.tvHeaderText.text] ? self.tvHeaderText.text : @" ";
+    NSString *textValue1 = ![Validator emptyString:self.tvText1.text] ? self.tvText1.text : @" ";
+    NSString *textValue2 = ![Validator emptyString:self.tvText2.text] ? self.tvText2.text : @" ";
+    NSString *imageValue = self.selectedImage ? [NSString stringWithFormat:@"%@.png", self.rafItem.rafName] : @"";
+    
+    // Goes through social array and creates xml for android
+    NSMutableString *androidSocialArrayString = [[NSMutableString alloc] init];
+    for (NSString *channel in self.socialArray) {
+        NSString *uppercaseString = [channel uppercaseString];
+        [androidSocialArrayString appendString:[NSString stringWithFormat:@"        <item>%@</item>\n", uppercaseString]];
+    }
+    
+    NSMutableString *xmlFileString = [[NSMutableString alloc] initWithString:@"<resources>\n"];
+    [xmlFileString appendString:@"    <string name=\"RAFdefaultShareMessage\">Check out this company!</string>\n"];
+    [xmlFileString appendString:[NSString stringWithFormat:@"    <string name=\"RAFtitleText\">%@</string>\n", textValue1]];
+    [xmlFileString appendString:[NSString stringWithFormat:@"    <string name=\"RAFtoolbarTitle\">%@</string>\n", headerText]];
+    [xmlFileString appendString:@"    <string name=\"RAFLogoPosition\">1</string>\n"];
+    [xmlFileString appendString:[NSString stringWithFormat:@"    <string name=\"RAFLogo\">%@</string>\n", imageValue]];
+    [xmlFileString appendString:[NSString stringWithFormat:@"    <string name=\"RAFdescriptionText\">%@</string>\n", textValue2]];
+    [xmlFileString appendString:@"    <color name=\"homeBackground\">#FFFFFF</color>\n"];
+    [xmlFileString appendString:[NSString stringWithFormat:@"    <color name=\"homeWelcomeTitle\">%@</color>\n", textColorString1]];
+    [xmlFileString appendString:@"    <dimen name=\"homeWelcomeTitle\">22sp</dimen>\n"];
+    [xmlFileString appendString:@"    <string name=\"homeWelcomeTitle\">sans-serif</string>\n"];
+    [xmlFileString appendString:[NSString stringWithFormat:@"    <color name=\"homeWelcomeDesc\">%@</color>\n", textColorString2]];
+    [xmlFileString appendString:@"    <dimen name=\"homeWelcomeDesc\">18sp</dimen>\n"];
+    [xmlFileString appendString:@"    <string name=\"homeWelcomeDesc\">sans-serif</string>\n"];
+    [xmlFileString appendString:[NSString stringWithFormat:@"    <color name=\"homeToolBar\">%@</color>\n", headerColorString]];
+    [xmlFileString appendString:[NSString stringWithFormat:@"    <color name=\"homeToolBarText\">%@</color>\n", headerTextColorString]];
+    [xmlFileString appendString:@"    <string name=\"homeToolBarText\">sans-serif</string>\n"];
+    [xmlFileString appendString:@"    <color name=\"homeToolBarArrow\">#FFFFFF</color>\n"];
+    [xmlFileString appendString:@"    <color name=\"homeShareTextBar\">#EBEBEB</color>\n"];
+    [xmlFileString appendString:@"    <color name=\"homeShareText\">#B3B3B3</color>\n"];
+    [xmlFileString appendString:@"    <dimen name=\"homeShareText\">12sp</dimen>\n"];
+    [xmlFileString appendString:@"    <string name=\"homeShareText\">sans-serif</string>\n"];
+    [xmlFileString appendString:@"    <string name=\"socialGridText\">sans-serif</string>\n"];
+    [xmlFileString appendString:@"    <dimen name=\"socialOptionCornerRadius\">0dp</dimen>\n"];
+    [xmlFileString appendString:@"    <array name=\"channels\">\n"];
+    [xmlFileString appendString:androidSocialArrayString];
+    [xmlFileString appendString:@"    </array>\n"];
+    [xmlFileString appendString:@"    <color name=\"contactsListViewBackground\">#FFFFFF</color>\n"];
+    [xmlFileString appendString:@"    <dimen name=\"contactsListName\">15sp</dimen>\n"];
+    [xmlFileString appendString:@"    <string name=\"contactsListName\">sans-serif</string>\n"];
+    [xmlFileString appendString:@"    <dimen name=\"contactsListValue\">12sp</dimen>\n"];
+    [xmlFileString appendString:@"    <string name=\"contactsListValue\">sans-serif</string>\n"];
+    [xmlFileString appendString:@"    <color name=\"contactsSendBackground\">#FFFFFF</color>\n"];
+    [xmlFileString appendString:@"    <string name=\"contactSendMessageText\">sans-serif</string>\n"];
+    [xmlFileString appendString:@"    <color name=\"contactsToolBar\">#3C97D3</color>\n"];
+    [xmlFileString appendString:@"    <color name=\"contactsToolBarText\">#FFFFFF</color>\n"];
+    [xmlFileString appendString:@"    <color name=\"contactsToolBarArrow\">#FFFFFF</color>\n"];
+    [xmlFileString appendString:[NSString stringWithFormat:@"    <color name=\"contactsSendButton\">%@</color>\n", buttonColorString]];
+    [xmlFileString appendString:@"    <color name=\"contactsSendButtonText\">#FFFFFF</color>\n"];
+    [xmlFileString appendString:@"    <color name=\"contactsDoneButtonText\">#3C97D3</color>\n"];
+    [xmlFileString appendString:@"    <color name=\"contactsSearchBar\">#000000</color>\n"];
+    [xmlFileString appendString:@"    <color name=\"contactsSearchIcon\">#FFFFFF</color>\n"];
+    [xmlFileString appendString:[NSString stringWithFormat:@"    <color name=\"contactNoPhotoAvailableBackground\">%@</color>\n", buttonColorString]];
+    [xmlFileString appendString:[NSString stringWithFormat:@"</resources>"]];
+    
+    return [xmlFileString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (void)overridePlistIfImage:(NSString *)rafPlist {

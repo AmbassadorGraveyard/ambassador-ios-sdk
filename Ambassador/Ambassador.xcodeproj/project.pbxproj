@@ -161,11 +161,12 @@
 		EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */; };
 		EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */; };
 		EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */; };
+		EF28DF291CC132FE0070994F /* FileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5C5F1CBFEBD300458480 /* FileWriter.m */; };
+		EF28DF2B1CC142250070994F /* AmbassadorSecrets.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */; };
 		EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */; };
 		EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */; };
 		EF3079161C6E205800403F56 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */; };
 		EF3079171C6E205800403F56 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3079151C6E205800403F56 /* AMBPusherChannelObject.m */; };
-		EF3079191C6E3B5300403F56 /* CustomBrandTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */; };
 		EF33DCF81C739D6A009689CA /* Raven.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF21C739D6A009689CA /* Raven.h */; };
 		EF33DCF91C739D6A009689CA /* RavenClient.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF31C739D6A009689CA /* RavenClient.h */; };
 		EF33DCFA1C739D6A009689CA /* RavenClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCF41C739D6A009689CA /* RavenClient.m */; };
@@ -184,10 +185,7 @@
 		EF5390D71C4469AF005F6944 /* ReferAFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D61C4469AF005F6944 /* ReferAFriendViewController.m */; };
 		EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D91C4565D9005F6944 /* RAFCell.m */; };
 		EF5390DC1C458FFD005F6944 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390DB1C458FFD005F6944 /* GenericTheme.plist */; };
-		EF5390DE1C459433005F6944 /* AmbassadorShoes.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */; };
-		EF5390E01C45A644005F6944 /* AmbassadorTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */; };
 		EF5390E21C46CFE5005F6944 /* ApplicationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5390E11C46CFE5005F6944 /* ApplicationUITests.swift */; };
-		EF5390E41C46E93C005F6944 /* AmbassadorShirt.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */; };
 		EF5579FA1C84F65500F66761 /* AMBWelcomeScreenViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */; };
 		EF5579FB1C84F65500F66761 /* AMBWelcomeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */; };
 		EF557A001C85E34600F66761 /* AMBLinkCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5579FE1C85E34600F66761 /* AMBLinkCell.h */; };
@@ -205,13 +203,9 @@
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
-		EF6A5BDB1CBD4FE600458480 /* AmbassadorSecrets.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */; };
+		EF6A5C601CBFEBD300458480 /* FileWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = EF6A5C5E1CBFEBD300458480 /* FileWriter.h */; };
 		EF6BDC771C63FD75004CCDF8 /* AMBCoreDataManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */; };
 		EF783BBF1C9C7D6600079B65 /* LeftIndentedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */; };
-		EF783C0B1CA07AB900079B65 /* AmbassadorShoes.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */; };
-		EF783C0C1CA07AB900079B65 /* AmbassadorTheme.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */; };
-		EF783C0D1CA07AB900079B65 /* AmbassadorShirt.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */; };
-		EF783C0E1CA07AB900079B65 /* CustomBrandTheme.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */; };
 		EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF7BA1CA1BDEB17E00788160 /* AMBBulkShareHelper.h */; };
 		EF7BA1CD1BDEB17E00788160 /* AMBBulkShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7BA1CB1BDEB17E00788160 /* AMBBulkShareHelper.m */; };
 		EF7CA9CE1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7CA9CD1BF38CB6006EBD6A /* AMBPusherChannelObjectTests.m */; };
@@ -511,7 +505,6 @@
 		EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBOptionsTests.m; sourceTree = "<group>"; };
 		EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPusherChannelObject.h; sourceTree = "<group>"; };
 		EF3079151C6E205800403F56 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPusherChannelObject.m; sourceTree = "<group>"; };
-		EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CustomBrandTheme.plist; path = ../AmbassadorResources/CustomBrandTheme.plist; sourceTree = "<group>"; };
 		EF33DCF11C739D6A009689CA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF33DCF21C739D6A009689CA /* Raven.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raven.h; sourceTree = "<group>"; };
 		EF33DCF31C739D6A009689CA /* RavenClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient.h; sourceTree = "<group>"; };
@@ -536,10 +529,7 @@
 		EF5390D81C4565D9005F6944 /* RAFCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFCell.h; sourceTree = "<group>"; };
 		EF5390D91C4565D9005F6944 /* RAFCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RAFCell.m; sourceTree = "<group>"; };
 		EF5390DB1C458FFD005F6944 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GenericTheme.plist; sourceTree = "<group>"; };
-		EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AmbassadorShoes.plist; path = ../AmbassadorResources/AmbassadorShoes.plist; sourceTree = "<group>"; };
-		EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AmbassadorTheme.plist; path = ../AmbassadorResources/AmbassadorTheme.plist; sourceTree = "<group>"; };
 		EF5390E11C46CFE5005F6944 /* ApplicationUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationUITests.swift; sourceTree = "<group>"; };
-		EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AmbassadorShirt.plist; path = ../AmbassadorResources/AmbassadorShirt.plist; sourceTree = "<group>"; };
 		EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBWelcomeScreenViewController.h; sourceTree = "<group>"; };
 		EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBWelcomeScreenViewController.m; sourceTree = "<group>"; };
 		EF5579FE1C85E34600F66761 /* AMBLinkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBLinkCell.h; sourceTree = "<group>"; };
@@ -564,6 +554,8 @@
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF64CFAD1BE2AACE0072014B /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorSecrets.plist; sourceTree = "<group>"; };
+		EF6A5C5E1CBFEBD300458480 /* FileWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileWriter.h; sourceTree = "<group>"; };
+		EF6A5C5F1CBFEBD300458480 /* FileWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileWriter.m; sourceTree = "<group>"; };
 		EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBCoreDataManagerTests.m; sourceTree = "<group>"; };
 		EF783BBD1C9C7D6600079B65 /* LeftIndentedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftIndentedTextField.h; sourceTree = "<group>"; };
 		EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftIndentedTextField.m; sourceTree = "<group>"; };
@@ -1150,10 +1142,6 @@
 				DB844D6D1BA76BDE003FD7A9 /* Main.storyboard */,
 				DB844D721BA76BDE003FD7A9 /* LaunchScreen.xib */,
 				DB844D701BA76BDE003FD7A9 /* Images.xcassets */,
-				EF5390DD1C459433005F6944 /* AmbassadorShoes.plist */,
-				EF5390DF1C45A643005F6944 /* AmbassadorTheme.plist */,
-				EF5390E31C46E93C005F6944 /* AmbassadorShirt.plist */,
-				EF3079181C6E3B5300403F56 /* CustomBrandTheme.plist */,
 				EF9D98DE1CA4886200F5711F /* Color Picker */,
 				EF499DB61CAD6C1D00D2EB01 /* LoadingScreen.h */,
 				EF499DB71CAD6C1D00D2EB01 /* LoadingScreen.m */,
@@ -1173,6 +1161,8 @@
 				EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */,
 				EF9D98D21CA31A5F00F5711F /* ValuesHandler.h */,
 				EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */,
+				EF6A5C5E1CBFEBD300458480 /* FileWriter.h */,
+				EF6A5C5F1CBFEBD300458480 /* FileWriter.m */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -1465,6 +1455,7 @@
 				DBA3FC081BA8AA1D00672D82 /* AMBPTTargetActionEventListener.h in Headers */,
 				EFB3C7E71CB70E9400EF9533 /* AMBNPSViewController.h in Headers */,
 				DBA3FC041BA8AA1D00672D82 /* AMBPTBlockEventListener.h in Headers */,
+				EF6A5C601CBFEBD300458480 /* FileWriter.h in Headers */,
 				EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */,
 				EF1CC8001C9860C300C2752B /* AMBWelcomeScreenViewController_Internal.h in Headers */,
 				DB6A24711BD04E3900CE3230 /* AMBPusherManager.h in Headers */,
@@ -1722,11 +1713,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF5390DE1C459433005F6944 /* AmbassadorShoes.plist in Resources */,
 				EFE7D7AE1C21D0CF00D7F92C /* AMBConversionModel.xcdatamodeld in Resources */,
 				DBEB6FFB1BA9B2D8005EE0D0 /* pencil.png in Resources */,
 				DBEB6FFA1BA9B2D8005EE0D0 /* linkedin.png in Resources */,
-				EF5390E01C45A644005F6944 /* AmbassadorTheme.plist in Resources */,
 				DBEB6FF51BA9B2D8005EE0D0 /* close.png in Resources */,
 				DBEB6FFE1BA9B2D8005EE0D0 /* sms.png in Resources */,
 				DBEB6FFF1BA9B2D8005EE0D0 /* successIcon.png in Resources */,
@@ -1738,12 +1727,10 @@
 				DBEB6FFC1BA9B2D8005EE0D0 /* plus.png in Resources */,
 				EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */,
 				DBEB70001BA9B2D8005EE0D0 /* twitter.png in Resources */,
-				EF5390E41C46E93C005F6944 /* AmbassadorShirt.plist in Resources */,
 				DBEB6FE21BA9AD04005EE0D0 /* Main.storyboard in Resources */,
 				EF5390DC1C458FFD005F6944 /* GenericTheme.plist in Resources */,
 				EF1CB0B41C3C7F6600F65031 /* avatar.png in Resources */,
 				DBEB6FF41BA9B2D8005EE0D0 /* clipboard.png in Resources */,
-				EF3079191C6E3B5300403F56 /* CustomBrandTheme.plist in Resources */,
 				DBEB6FF31BA9B2D8005EE0D0 /* check.png in Resources */,
 				DBEB6FF21BA9B2D8005EE0D0 /* blank.png in Resources */,
 				DBEB6FF61BA9B2D8005EE0D0 /* email.png in Resources */,
@@ -1926,13 +1913,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF6A5BDB1CBD4FE600458480 /* AmbassadorSecrets.plist in Sources */,
+				EF28DF2B1CC142250070994F /* AmbassadorSecrets.plist in Sources */,
+				EF28DF291CC132FE0070994F /* FileWriter.m in Sources */,
 				EF8FD8AF1CA9CA9900C0ADB7 /* SocialCell.m in Sources */,
-				EF783C0B1CA07AB900079B65 /* AmbassadorShoes.plist in Sources */,
-				EF783C0C1CA07AB900079B65 /* AmbassadorTheme.plist in Sources */,
 				EF499DB51CAC4FB000D2EB01 /* NoAccountViewController.m in Sources */,
-				EF783C0D1CA07AB900079B65 /* AmbassadorShirt.plist in Sources */,
-				EF783C0E1CA07AB900079B65 /* CustomBrandTheme.plist in Sources */,
 				EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */,
 				EF9D98D41CA31A5F00F5711F /* ValuesHandler.m in Sources */,
 				DB844D6C1BA76BDE003FD7A9 /* IdentifyViewController.m in Sources */,
@@ -2323,7 +2307,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTestApplication;
 				PRODUCT_NAME = "$(TARGET_NAME)";

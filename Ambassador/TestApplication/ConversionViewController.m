@@ -15,8 +15,10 @@
 #import "AMBUtilities.h"
 #import "DefaultsHandler.h"
 #import "AMBValues.h"
+#import "FileWriter.h"
+#import <MessageUI/MessageUI.h>
 
-@interface ConversionViewController () <UITextFieldDelegate>
+@interface ConversionViewController () <UITextFieldDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -94,6 +96,25 @@ CGFloat currentOffset;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+
+#pragma mark - MFMailComposeViewController Delegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    
+    switch (result) {
+        case MFMailComposeResultSent:
+            NSLog(@"Message sent successfully!");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Message failed to send");
+            break;
+        default:
+            NSLog(@"Message was not sent");
+            break;
+    }
 }
 
 
@@ -225,22 +246,21 @@ CGFloat currentOffset;
 
 - (void)exportConversionCode {
     if (![self invalidFields]) {
-        NSString *titleString = [NSString stringWithFormat:@"Ambassador Conversion Code Snippet v%@", [ValuesHandler getVersionNumber]];
-        NSString *fullCodeSnippet = [NSString stringWithFormat:@"Objective-C\n\n%@\n\n\nSwift\n\n%@", [self getObjcSnippet], [self getSwiftSnippet]];
-        
-        NSString *shareString = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n%@", titleString, fullCodeSnippet]];
-        
-        // Package up snippet to share
-        NSArray * shareItems = @[shareString];
-        UIActivityViewController * avc = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];
-        [avc setValue:@"Ambassador Conversion Code Snippet" forKey:@"subject"];
-        [self presentViewController:avc animated:YES completion:nil];
+        // Create an email with attachments
+        MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
+        mailVc.mailComposeDelegate = self;
+        [mailVc addAttachmentData:[self getReadme] mimeType:@"application/txt" fileName:@"README.md"];
+        [mailVc addAttachmentData:[self getObjcFile] mimeType:@"application/txt" fileName:@"AppDelegate.m"];
+        [mailVc addAttachmentData:[self getSwiftFile] mimeType:@"application/txt" fileName:@"AppDelegate.swift"];
+        [mailVc addAttachmentData:[self getJavaFile] mimeType:@"application/txt" fileName:@"MyApplication.java"];
+        [mailVc setSubject:@"Ambassador Conversion Code"];
+        [self presentViewController:mailVc animated:YES completion:nil];
     }
 }
 
-- (NSString*)getObjcSnippet {
+- (NSData *)getObjcFile {
     // Creates first part of snippet for setting params
-    NSMutableString *conversionParamString = [NSMutableString stringWithString:@"AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];\n\n// Set required properties\n"];
+    NSMutableString *conversionParamString = [NSMutableString stringWithString:@"\n    AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];\n\n    // Set required properties\n"];
     
     // Creates an AMBConversionParameter object
     AMBConversionParameters *params = [self conversionParameterFromValues];
@@ -249,8 +269,7 @@ CGFloat currentOffset;
     // Goes through each property in the conversionparam object
     for (NSString *string in [params propertyArray]) {
         // Creates the base setter string
-        NSString *setterString = [AMBConversionParameters isStringProperty:string] ? @"conversionParameters.%@ = @\"%@\"; \n" : @"conversionParameters.%@ = @%@; \n";
-        
+        NSString *setterString = [AMBConversionParameters isStringProperty:string] ? @"    conversionParameters.%@ = @\"%@\"; \n" : @"    conversionParameters.%@ = @%@; \n";
         NSString *boolString = nil;
         
         // Checks if property is a boolean and creates a string based on the boolean value
@@ -264,35 +283,28 @@ CGFloat currentOffset;
         [conversionParamString appendString: propString];
         
         // If the property is 'revenue' then we add a new comment line to start optional properties
-        if ([string isEqualToString:@"mbsy_revenue"]) { [conversionParamString appendString:@"\n// Set optional properties\n"];}
+        if ([string isEqualToString:@"mbsy_revenue"]) { [conversionParamString appendString:@"\n    // Set optional properties\n"];}
     }
     
-    // Strings for implementation
-    NSString *registerLine = @"[AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {";
-    NSString *registerLine2 = @"    if (error) {";
-    NSString *registerLine3 = @"        NSLog(@\"Error registering conversion - %@\", error);";
-    NSString *registerLine4 = @"    } else {";
-    NSString *registerLine5 = @"        NSLog(@\"Conversion registered successfully!\");";
-    NSString *registerLine6 = @"    }";
-    NSString *registerLine7 = @"}];";
+    // Builds implementation string
+    NSMutableString *implementationString = [[NSMutableString alloc] initWithString:@"    [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) { \n"];
+    [implementationString appendString:@"        if (error) { \n"];
+    [implementationString appendString:@"            NSLog(@\"Error registering conversion - %@\", error); \n"];
+    [implementationString appendString:@"        } else { \n"];
+    [implementationString appendString:@"            NSLog(@\"Conversion registered successfully!\"); \n"];
+    [implementationString appendString:@"        } \n"];
+    [implementationString appendString:@"    }];"];
     
-    // Creates second part of snippet for registering conversion
-    NSArray *stringArray = @[registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
-    NSMutableString *implementationString = [[NSMutableString alloc] init];
+    // Creats app delegate file
+    NSString *objcConversion = [NSString stringWithFormat:@"%@\n%@ \n\n", conversionParamString, implementationString];
+    NSString *objcSnippet = [FileWriter objcAppDelegateFileWithInsert:objcConversion];
     
-    // Sets up full implementation string
-    for (NSString *string in stringArray) {
-        [implementationString appendString:[NSString stringWithFormat:@"%@\n", string]];
-    }
-    
-    NSString *objcSnippet = [NSString stringWithFormat:@"%@\n%@", conversionParamString, implementationString];
-    
-    return objcSnippet;
+    return [objcSnippet dataUsingEncoding:NSUTF8StringEncoding];
 }
 
-- (NSString*)getSwiftSnippet {
+- (NSData *)getSwiftFile {
     // Creates first part of snippet for setting params
-    NSMutableString *conversionParamString = [NSMutableString stringWithString:@"let conversionParameters = AMBConversionParameters()\n\n// Set required properties\n"];
+    NSMutableString *conversionParamString = [NSMutableString stringWithString:@"\n        let conversionParameters = AMBConversionParameters()\n\n        // Set required properties\n"];
     
     // Creates an AMBConversionParameter object
     AMBConversionParameters *params = [self conversionParameterFromValues];
@@ -301,7 +313,7 @@ CGFloat currentOffset;
     // Goes through each property in the conversionparam object
     for (NSString *string in [params propertyArray]) {
         // Creates the base setter string
-        NSString *setterString = [AMBConversionParameters isStringProperty:string] ? @"conversionParameters.%@ = \"%@\" \n" : @"conversionParameters.%@ = %@ \n";
+        NSString *setterString = [AMBConversionParameters isStringProperty:string] ? @"        conversionParameters.%@ = \"%@\" \n" : @"        conversionParameters.%@ = %@ \n";
         
         NSString *boolString = nil;
         
@@ -316,29 +328,60 @@ CGFloat currentOffset;
         [conversionParamString appendString: propString];
         
         // If the property is 'revenue' then we add a new comment line to start optional properties
-        if ([string isEqualToString:@"mbsy_revenue"]) { [conversionParamString appendString:@"\n// Set optional properties\n"];}
+        if ([string isEqualToString:@"mbsy_revenue"]) { [conversionParamString appendString:@"\n        // Set optional properties\n"];}
     }
+
+    NSMutableString *implementationString = [[NSMutableString alloc] initWithString:@"        AmbassadorSDK.registerConversion(conversionParameters, restrictToInstall: false) { (error) -> Void in \n"];
+    [implementationString appendString:@"            if ((error) != nil) { \n"];
+    [implementationString appendString:@"                print(\"Error \\(error)\") \n"];
+    [implementationString appendString:@"            } else { \n"];
+    [implementationString appendString:@"                print(\"All conversion parameters are set properly\") \n"];
+    [implementationString appendString:@"            } \n"];
+    [implementationString appendString:@"        }"];
     
-    // Strings for implementation
-    NSString *registerLine = @"AmbassadorSDK.registerConversion(conversionParameters, restrictToInstall: false) { (error) -> Void in";
-    NSString *registerLine2 = @"    if ((error) != nil) {";
-    NSString *registerLine3 = @"        print(\"Error \(error)\")";
-    NSString *registerLine4 = @"    } else {";
-    NSString *registerLine5 = @"        print(\"All conversion parameters are set properly\")";
-    NSString *registerLine6 = @"    }";
-    NSString *registerLine7 = @"}";
+    // Creates swift app delegate file
+    NSString *swiftConversion = [NSString stringWithFormat:@"%@\n%@ \n\n", conversionParamString, implementationString];
+    NSString *swiftSnippet = [FileWriter swiftAppDelegateFileWithInsert:swiftConversion];
     
-    // Creates second part of snippet for registering conversion
-    NSArray *stringArray2 = @[registerLine, registerLine2, registerLine3, registerLine4, registerLine5, registerLine6, registerLine7];
-    NSMutableString *implementationString = [[NSMutableString alloc] init];
+    return [swiftSnippet dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSData *)getJavaFile {
+    // Creats conversion parameter object from values
+    AMBConversionParameters *params = [self conversionParameterFromValues];
     
-    for (NSString *string in stringArray2) {
-        [implementationString appendString:[NSString stringWithFormat:@"%@\n", string]];
-    }
+    // Build java conversion string
+    NSMutableString *conversionString = [[NSMutableString alloc] initWithString:@"        ConversionParameters conversionParameters = new ConversionParameters.Builder()\n"];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setEmail(\"%@\")\n", params.mbsy_email]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setRevenue(%@f)\n", params.mbsy_revenue]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setCampaign(%@)\n", params.mbsy_campaign]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setAddToGroupId(\"%@\")\n", params.mbsy_add_to_group_id]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setFirstName(\"%@\")\n", params.mbsy_first_name]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setLastName(\"%@\")\n", params.mbsy_last_name]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setUID(\"%@\")\n", params.mbsy_uid]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setCustom1(\"%@\")\n", params.mbsy_custom1]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setCustom2(\"%@\")\n", params.mbsy_custom2]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setCustom3(\"%@\")\n", params.mbsy_custom3]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setTransactionUID(\"%@\")\n", params.mbsy_transaction_uid]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setEventData1(\"%@\")\n", params.mbsy_event_data1]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setEventData2(\"%@\")\n", params.mbsy_event_data2]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setEventData3(\"%@\")\n", params.mbsy_event_data3]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setIsApproved(%@)\n", params.mbsy_is_approved]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setAutoCreate(%@)\n", params.mbsy_auto_create]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setDeactivateNewAmbassador(%@)\n", params.mbsy_deactivate_new_ambassador]];
+    [conversionString appendString:[NSString stringWithFormat:@"            .setEmailNewAmbassador(%@)\n", params.mbsy_email_new_ambassador]];
+    [conversionString appendString:@"            .build();\n"];
+    [conversionString appendString:@"        AmbassadorSDK.registerConversion(conversionParameters, false);\n"];
     
-    NSString *swiftSnippet = [NSString stringWithFormat:@"%@\n%@", conversionParamString, implementationString];
+    // Creates java file
+    NSString *javaFileString = [FileWriter javaMyApplicationFileWithInsert:conversionString];
     
-    return swiftSnippet;
+    return [javaFileString dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSData *)getReadme {
+    NSString *readmeString = [FileWriter readMeForRequest:@"conversion"];
+    return [readmeString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (BOOL)invalidFields {

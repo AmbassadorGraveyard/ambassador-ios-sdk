@@ -7,13 +7,15 @@
 //
 
 #import "IdentifyViewController.h"
+#import <MessageUI/MessageUI.h>
 #import <Ambassador/Ambassador.h>
 #import "DefaultsHandler.h"
 #import "AmbassadorLoginViewController.h"
 #import "Validator.h"
 #import "ValuesHandler.h"
+#import "FileWriter.h"
 
-@interface IdentifyViewController () <AMBWelcomeScreenDelegate>
+@interface IdentifyViewController () <AMBWelcomeScreenDelegate, MFMailComposeViewControllerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -60,6 +62,25 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+
+#pragma mark - MFMailComposeViewController Delegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    
+    switch (result) {
+        case MFMailComposeResultSent:
+            NSLog(@"Message sent successfully!");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Message failed to send");
+            break;
+        default:
+            NSLog(@"Message was not sent");
+            break;
+    }
 }
 
 
@@ -150,24 +171,54 @@
     NSString *email = self.tfEmail.text;
     
     if ([Validator isValidEmail:email]) {
-        // Create a code snippet based on the info entered into the identify field
-        NSString *titleString = [NSString stringWithFormat:@"Ambassador Identify Code Snippet v%@", [ValuesHandler getVersionNumber]];
-        NSString *objcCodeSnippet = [NSString stringWithFormat:@"[AmbassadorSDK identifyWithEmail:@\"%@\"];", email];
-        NSString *swiftCodeSnippet = [NSString stringWithFormat:@"AmbassadorSDK.identifyWithEmail(\"%@\")", email];
-        NSString *fullCodeSnippet = [NSString stringWithFormat:@"Objective-C\n\n%@\n\n\nSwift\n\n%@", objcCodeSnippet, swiftCodeSnippet];
-        
-        NSString *shareString = [[NSString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n%@", titleString, fullCodeSnippet]];
-        
-        // Package up snippet to share
-        NSArray * shareItems = @[shareString];
-        UIActivityViewController * avc = [[UIActivityViewController alloc] initWithActivityItems:shareItems applicationActivities:nil];
-        [avc setValue:@"Ambassador Identify Code Snippet" forKey:@"subject"];
-        [self presentViewController:avc animated:YES completion:nil];
+        // Creates a mail compose message to share via email with snippet and plist attachment
+        MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
+        mailVc.mailComposeDelegate = self;
+        [mailVc addAttachmentData:[self getReadmeFile] mimeType:@"application/txt" fileName:@"README.md"];
+        [mailVc addAttachmentData: [self getObjectiveFile: email] mimeType:@"application/txt" fileName:@"AppDelegate.m"];
+        [mailVc addAttachmentData: [self getSwiftFile:email] mimeType:@"application/txt" fileName:@"AppDelegate.swift"];
+        [mailVc addAttachmentData:[self getJavaFile:email] mimeType:@"application/txt" fileName:@"MyApplication.java"];
+        [mailVc setSubject:@"Ambassador Identify Code"];
+        [self presentViewController:mailVc animated:YES completion:nil];
         
         return;
     }
     
     [self showValidationError:@"exporting"];
+}
+
+// Creates an Objective-C App Delegate file
+- (NSData *)getObjectiveFile:(NSString *)email {
+    // Gets dynamic strings from user's tokens and email input
+    NSString *identifyString = [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithEmail:@\"%@\"]; \n\n", email];
+    NSString *objectiveCString = [FileWriter objcAppDelegateFileWithInsert:identifyString];
+ 
+    return [objectiveCString dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+// Creates a Swift App Delegate file
+- (NSData *)getSwiftFile:(NSString *)email {
+    // Gets dynamic strings from user's tokens and email input
+    NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithEmail(\"%@\") \n\n", email];
+    NSString *swiftString = [FileWriter swiftAppDelegateFileWithInsert:identifyString];
+
+    
+    return [swiftString dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+// Creates an example Java file
+- (NSData *)getJavaFile:(NSString *)email {
+    // Gets dynamic strings from user's tokens and email input
+    NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identify(\"%@\"); \n", email];
+    NSString *javaString = [FileWriter javaMyApplicationFileWithInsert:identifyString];
+    
+    return [javaString dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+// Create README file
+- (NSData *)getReadmeFile {
+    NSString *readmeFileString = [FileWriter readMeForRequest:@"identify"];
+    return [readmeFileString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (void)showValidationError:(NSString*)action {

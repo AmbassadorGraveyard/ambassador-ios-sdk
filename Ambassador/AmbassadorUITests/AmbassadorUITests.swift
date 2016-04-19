@@ -197,7 +197,7 @@ extension AmbassadorUITests {
         elementsQuery.textFields["Campaign"].tap()
         app.tables.staticTexts["Jake+Test"].tap()
         app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.tap()
-        app.navigationBars["RAF Customizer"].buttons["Save"].tap()
+        app.navigationBars["Edit Refer-a-friend View"].buttons["Save"].tap()
     }
     
     func presentRAF() {
