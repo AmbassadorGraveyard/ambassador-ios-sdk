@@ -16,11 +16,10 @@
 #import "DefaultsHandler.h"
 #import "AMBValues.h"
 #import "FileWriter.h"
-#import <MessageUI/MessageUI.h>
 #import <ZipZap/ZipZap.h>
 #import "UIActivityViewController+ZipShare.h"
 
-@interface ConversionViewController () <UITextFieldDelegate, MFMailComposeViewControllerDelegate>
+@interface ConversionViewController () <UITextFieldDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -98,25 +97,6 @@ CGFloat currentOffset;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
-}
-
-
-#pragma mark - MFMailComposeViewController Delegate
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    
-    switch (result) {
-        case MFMailComposeResultSent:
-            NSLog(@"Message sent successfully!");
-            break;
-        case MFMailComposeResultFailed:
-            NSLog(@"Message failed to send");
-            break;
-        default:
-            NSLog(@"Message was not sent");
-            break;
-    }
 }
 
 

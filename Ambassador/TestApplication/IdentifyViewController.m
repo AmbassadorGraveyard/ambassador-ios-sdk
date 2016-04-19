@@ -7,7 +7,6 @@
 //
 
 #import "IdentifyViewController.h"
-#import <MessageUI/MessageUI.h>
 #import <Ambassador/Ambassador.h>
 #import "DefaultsHandler.h"
 #import "AmbassadorLoginViewController.h"
@@ -17,7 +16,7 @@
 #import <ZipZap/ZipZap.h>
 #import "UIActivityViewController+ZipShare.h"
 
-@interface IdentifyViewController () <AMBWelcomeScreenDelegate, MFMailComposeViewControllerDelegate>
+@interface IdentifyViewController () <AMBWelcomeScreenDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -64,25 +63,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
-}
-
-
-#pragma mark - MFMailComposeViewController Delegate
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    
-    switch (result) {
-        case MFMailComposeResultSent:
-            NSLog(@"Message sent successfully!");
-            break;
-        case MFMailComposeResultFailed:
-            NSLog(@"Message failed to send");
-            break;
-        default:
-            NSLog(@"Message was not sent");
-            break;
-    }
 }
 
 
@@ -172,11 +152,7 @@
     [self.tfEmail resignFirstResponder];
     NSString *email = self.tfEmail.text;
     
-    if ([Validator isValidEmail:email]) {
-        // Creates a mail compose message to share via email with snippet and plist attachment
-        MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
-        mailVc.mailComposeDelegate = self;
-        
+    if ([Validator isValidEmail:email]) {        
         // Creates a new directiry in the documents folder
         NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-identify.zip"];
         

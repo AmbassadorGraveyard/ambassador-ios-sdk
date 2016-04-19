@@ -9,7 +9,6 @@
 #import "ReferAFriendViewController.h"
 #import "RAFCell.h"
 #import <Ambassador/Ambassador.h>
-#import <MessageUI/MessageUI.h>
 #import "ThemeHandler.h"
 #import "DefaultsHandler.h"
 #import "ValuesHandler.h"
@@ -18,7 +17,7 @@
 #import <ZipZap/ZipZap.h>
 #import "UIActivityViewController+ZipShare.h"
 
-@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, MFMailComposeViewControllerDelegate, RAFCustomizerDelegate>
+@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, RAFCustomizerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
@@ -135,21 +134,6 @@ RAFItem * itemToDelete = nil;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
-}
-
-
-#pragma mark - MFMailComposeVc Delegate
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    
-    if (result == MFMailComposeResultSent) {
-        NSLog(@"Message sent successfully!");
-    } else if (result == MFMailComposeResultFailed) {
-        NSLog(@"Message failed to send");
-    } else {
-        NSLog(@"Message was not sent");
-    }
 }
 
 
