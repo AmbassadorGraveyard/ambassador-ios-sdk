@@ -6,3 +6,4 @@ ignore:
   - Ambassador/Raven/*
   - TestApplication/*
   - Ambassador/AMBContactCard.m
+  - Pods/*
