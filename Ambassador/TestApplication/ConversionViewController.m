@@ -18,8 +18,9 @@
 #import "FileWriter.h"
 #import <MessageUI/MessageUI.h>
 #import <ZipZap/ZipZap.h>
+#import "SlidingView.h"
 
-@interface ConversionViewController () <UITextFieldDelegate, MFMailComposeViewControllerDelegate>
+@interface ConversionViewController () <UITextFieldDelegate, MFMailComposeViewControllerDelegate, SlidingViewDatasource>
 
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -46,6 +47,11 @@
 @property (nonatomic, strong) IBOutlet UISwitch * swtAutoCreate;
 @property (nonatomic, strong) IBOutlet UISwitch * swtDeactivateNewAmbassador;
 
+@property (nonatomic, strong) IBOutlet UIView * masterView;
+@property (nonatomic, strong) IBOutlet SlidingView * svAmbassador;
+@property (nonatomic, strong) IBOutlet SlidingView * svCustomer;
+@property (nonatomic, strong) IBOutlet SlidingView * svCommission;
+
 // Private properties
 @property (nonatomic, strong) UITextField * selectedTextField;
 
@@ -61,6 +67,7 @@ CGFloat currentOffset;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpTheme];
+    [self setupSlidingViews];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -144,6 +151,23 @@ CGFloat currentOffset;
 - (void)keyboardWillBeHidden:(NSNotification*)notification {
     // Resets the scrollview to original position
     [self.scrollView setContentOffset:CGPointMake(0, currentOffset) animated:YES];
+}
+
+
+#pragma mark - Sliding View Datasource
+
+- (NSInteger)slidingViewExpandedHeight:(SlidingView *)slidingView {
+    if (slidingView == self.svAmbassador) {
+        return 85;
+    } else if (slidingView == self.svCustomer) {
+        return 542;
+    } else {
+        return 388;
+    }
+}
+
+- (NSInteger)slidingViewCollapsedHeight:(SlidingView *)slidingView {
+    return 35;
 }
 
 
@@ -480,6 +504,15 @@ CGFloat currentOffset;
     NSDictionary *resultsDict = results[0];
     
     return resultsDict[@"short_code"];
+}
+
+- (void)setupSlidingViews {
+    for (SlidingView *view in [self.masterView subviews]) {
+        if ([view isKindOfClass:[SlidingView class]]) {
+            view.datasource = self;
+            [view setup];
+        }
+    }
 }
 
 @end
