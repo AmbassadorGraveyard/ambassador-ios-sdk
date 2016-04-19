@@ -156,6 +156,8 @@
 		EF1A4F3A1CC6C5AC008EE886 /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F381CC6C5AC008EE886 /* GroupListViewController.m */; };
 		EF1A4F3D1CC6CD07008EE886 /* GroupObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F3B1CC6CD07008EE886 /* GroupObject.h */; };
 		EF1A4F3E1CC6CD07008EE886 /* GroupObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */; };
+		EF1A4F411CC6D8B8008EE886 /* GroupFooterCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F3F1CC6D8B8008EE886 /* GroupFooterCell.h */; };
+		EF1A4F421CC6D8B8008EE886 /* GroupFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F401CC6D8B8008EE886 /* GroupFooterCell.m */; };
 		EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */; };
 		EF1C82A21C6285B00033A364 /* AMBNamePromptUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */; };
 		EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */; };
@@ -504,6 +506,8 @@
 		EF1A4F381CC6C5AC008EE886 /* GroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupListViewController.m; sourceTree = "<group>"; };
 		EF1A4F3B1CC6CD07008EE886 /* GroupObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupObject.h; sourceTree = "<group>"; };
 		EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupObject.m; sourceTree = "<group>"; };
+		EF1A4F3F1CC6D8B8008EE886 /* GroupFooterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupFooterCell.h; sourceTree = "<group>"; };
+		EF1A4F401CC6D8B8008EE886 /* GroupFooterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupFooterCell.m; sourceTree = "<group>"; };
 		EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdenityUnitTests.m; sourceTree = "<group>"; };
 		EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNamePromptUnitTests.m; sourceTree = "<group>"; };
 		EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContactCard.h; sourceTree = "<group>"; };
@@ -1013,6 +1017,8 @@
 				EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */,
 				EF1A4F371CC6C5AC008EE886 /* GroupListViewController.h */,
 				EF1A4F381CC6C5AC008EE886 /* GroupListViewController.m */,
+				EF1A4F3F1CC6D8B8008EE886 /* GroupFooterCell.h */,
+				EF1A4F401CC6D8B8008EE886 /* GroupFooterCell.m */,
 			);
 			name = Groups;
 			sourceTree = "<group>";
@@ -1552,6 +1558,7 @@
 				EF1CC8081C99E13800C2752B /* AMBInputAlert.h in Headers */,
 				DBA3FBB11BA8A24F00672D82 /* AMBSelectedCell.h in Headers */,
 				DBA3FBBF1BA8A24F00672D82 /* AMBUtilities.h in Headers */,
+				EF1A4F411CC6D8B8008EE886 /* GroupFooterCell.h in Headers */,
 				DBA3FC2F1BA8AA5600672D82 /* NSData+SRB64Additions.h in Headers */,
 				DBA3FBB51BA8A24F00672D82 /* AMBServiceSelector.h in Headers */,
 				DBA3FB7D1BA8A23C00672D82 /* AMBContactSelector.h in Headers */,
@@ -1911,6 +1918,7 @@
 				EF1A4F351CC67802008EE886 /* UIActivityViewController+ZipShare.m in Sources */,
 				DB6A24681BD01D8A00CE3230 /* AMBNetworkObject.m in Sources */,
 				DBA3FB781BA8A23C00672D82 /* AMBContact.m in Sources */,
+				EF1A4F421CC6D8B8008EE886 /* GroupFooterCell.m in Sources */,
 				DBA3FB821BA8A23C00672D82 /* AMBConversionParameters.m in Sources */,
 				EFE7D79D1C21CB2D00D7F92C /* AMBCoreDataManager.m in Sources */,
 				DBA3FB721BA8A23C00672D82 /* AmbassadorSDK.m in Sources */,
