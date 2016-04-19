@@ -14,7 +14,6 @@
 
 - (NSInteger)slidingViewCollapsedHeight:(SlidingView *)slidingView;
 - (NSInteger)slidingViewExpandedHeight:(SlidingView *)slidingView;
-- (UIView *)slidingViewTrigger:(SlidingView *)slidingView;
 
 @end
 

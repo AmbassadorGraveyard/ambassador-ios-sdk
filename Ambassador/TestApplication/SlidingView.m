@@ -10,6 +10,11 @@
 
 @interface SlidingView()
 
+// IBOutlets
+@property (nonatomic, strong) IBOutlet UIView * targetView;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint * viewHeight;
+
+// Private properties
 @property (nonatomic) NSInteger collapsedHeight;
 @property (nonatomic) NSInteger expandedHeight;
 @property (nonatomic) BOOL isExpanded;
@@ -22,6 +27,9 @@
 #pragma mark - LifeCycle
 
 - (void)awakeFromNib {
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(slide)];
+    [self.targetView addGestureRecognizer:tapGesture];
+    
     if (self.datasource) {
         self.collapsedHeight = [self.datasource slidingViewCollapsedHeight:self];
         self.expandedHeight = [self.datasource slidingViewExpandedHeight:self];
@@ -31,12 +39,26 @@
 
 #pragma mark - Expand/Collapse
 
-- (void)expand {
+- (void)slide {
+    if (self.isExpanded) {
+        [self collapse];
+    } else {
+        [self expand];
+    }
     
+    [UIView animateWithDuration:0.4 animations:^{
+        [self layoutIfNeeded];
+    }];
+}
+
+- (void)expand {
+    self.viewHeight.constant = self.expandedHeight;
+    self.isExpanded = YES;
 }
 
 - (void)collapse {
-    
+    self.viewHeight.constant = self.expandedHeight;
+    self.isExpanded = NO;
 }
 
 @end
