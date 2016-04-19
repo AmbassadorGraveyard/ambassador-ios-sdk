@@ -79,14 +79,20 @@ CGFloat tableHeaderHeight = 50;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"campaignCell"];
     
     // Grabs the campaign object
     CampaignObject *object = self.campaignArray[indexPath.row];
     
     // Sets up cell label
     cell.textLabel.text = object.name;
-    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:15];
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+
+    // Sets up detail text label
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"ID: %@", object.campID];
+    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
+    cell.detailTextLabel.textColor = [UIColor darkGrayColor];
+    
     cell.backgroundColor = [UIColor whiteColor];
     
     return cell;
