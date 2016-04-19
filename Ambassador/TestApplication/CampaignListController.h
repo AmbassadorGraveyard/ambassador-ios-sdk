@@ -20,6 +20,4 @@
 
 @property (nonatomic, weak) id<CampaignListDelegate> delegate;
 
-- (instancetype)initWithCampaigns:(NSArray*)campaigns;
-
 @end
