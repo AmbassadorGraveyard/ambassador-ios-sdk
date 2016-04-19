@@ -158,9 +158,9 @@ CGFloat currentOffset;
 
 - (NSInteger)slidingViewExpandedHeight:(SlidingView *)slidingView {
     if (slidingView == self.svAmbassador) {
-        return 85;
+        return 83;
     } else if (slidingView == self.svCustomer) {
-        return 542;
+        return 538;
     } else {
         return 388;
     }

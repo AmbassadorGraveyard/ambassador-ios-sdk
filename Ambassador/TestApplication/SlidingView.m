@@ -13,6 +13,7 @@
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIView * targetView;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * viewHeight;
+@property (nonatomic, strong) IBOutlet UIImageView * ivIndicator;
 
 // Private properties
 @property (nonatomic) NSInteger collapsedHeight;
@@ -31,6 +32,9 @@
     [self.targetView addGestureRecognizer:tapGesture];
     
     self.isExpanded = YES;
+    [self rotateIndicator];
+    
+    self.ivIndicator.image = [self.ivIndicator.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
     if (self.datasource) {
         self.collapsedHeight = [self.datasource slidingViewCollapsedHeight:self];
@@ -50,6 +54,7 @@
     
     [UIView animateWithDuration:0.4 animations:^{
         [self.superview layoutIfNeeded];
+        [self rotateIndicator];
     }];
 }
 
@@ -61,6 +66,11 @@
 - (void)collapse {
     self.viewHeight.constant = self.collapsedHeight;
     self.isExpanded = NO;
+}
+
+- (void)rotateIndicator {
+    CGFloat rotateDegrees = self.isExpanded ? M_PI_2 : 0;
+    self.ivIndicator.transform = CGAffineTransformMakeRotation(rotateDegrees);
 }
 
 @end
