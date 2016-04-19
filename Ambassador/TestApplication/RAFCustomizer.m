@@ -146,7 +146,12 @@ NSInteger currentScrollPoint;
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField == self.tfCampId) {
         [self.tfRafName resignFirstResponder];
-        [self showCampaignList];
+        
+        // Show campaign list
+        CampaignListController *campController = [[CampaignListController alloc] init];
+        campController.delegate = self;
+        [self presentViewController:campController animated:YES completion:nil];
+        
         return NO;
     } else {
         self.selectedView = textField;
@@ -375,80 +380,6 @@ NSInteger currentScrollPoint;
     }
     
     self.rafItem.plistDict = self.plistDict;
-}
-
-- (void)getCampaignList {
-    // Sets up request
-    NSURL *ambassadorURL;
-    #if AMBPRODUCTION
-        ambassadorURL = [NSURL URLWithString:@"https://api.getambassador.com/campaigns/"];
-    #else
-        ambassadorURL = [NSURL URLWithString:@"https://dev-ambassador-api.herokuapp.com/campaigns/"];
-    #endif
-    
-    // Creates Authorization string
-    NSString *authString = [NSString stringWithFormat:@"UniversalToken %@", [DefaultsHandler getUniversalToken]];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:ambassadorURL];
-    [request setHTTPMethod:@"GET"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:authString forHTTPHeaderField:@"Authorization"];
-    
-    [LoadingScreen showLoadingScreenForView:self.parentViewController.view];
-    
-    // Makes network call
-    [[[NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        [LoadingScreen hideLoadingScreenForView:self.parentViewController.view];
-        
-        NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
-        if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            NSLog(@"%@", results);
-            
-            if ([results[@"count"]  isEqual: @0]) {
-                UIAlertView *noCampAlert = [[UIAlertView alloc] initWithTitle:@"No Campaigns Found" message:@"You must set up at least 1 campaign." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-                [noCampAlert show];
-            } else {
-                // Save the campaign list to defaults and then show list
-                [self saveCampaings:results];
-                [self showCampaignList];
-            }
-        } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable to load campaigns" message:@"Unable to load campaigns at this time. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-            [alert show];
-        }
-    }] resume];
-}
-
-- (void)saveCampaings:(NSDictionary*)results {
-    // Get list of campaigns
-    NSArray *campaignArray = results[@"results"];
-    
-    NSMutableArray *arrayToSave = [[NSMutableArray alloc] init];
-    
-    // Goes through each campaign and creates a campaingObject from that which will be stored to defaults
-    for (int i = 0; i < campaignArray.count; i++) {
-        NSDictionary *campaign = campaignArray[i];
-        CampaignObject *object = [[CampaignObject alloc] init];
-        object.name = campaign[@"name"];
-        object.campID = [NSString stringWithFormat:@"%@", campaign[@"uid"]];
-        
-        [arrayToSave addObject:object];
-    }
-    
-    [DefaultsHandler saveCampaignList:[NSArray arrayWithArray:arrayToSave]];
-}
-
-- (void)showCampaignList {
-    NSArray *campaigns = [DefaultsHandler getCampaignList];
-    
-    if (campaigns.count > 0) {
-        CampaignListController *listController = [[CampaignListController alloc] initWithCampaigns:campaigns];
-        listController.delegate = self;
-        [self presentViewController:listController animated:YES completion:nil];
-    } else {
-        [self getCampaignList];
-    }
 }
 
 - (void)openImagePicker {
