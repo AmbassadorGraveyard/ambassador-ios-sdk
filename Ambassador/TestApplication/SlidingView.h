@@ -22,5 +22,7 @@
 
 @property (nonatomic, weak) id<SlidingViewDatasource> datasource;
 
+- (void)setup;
+
 @end
 

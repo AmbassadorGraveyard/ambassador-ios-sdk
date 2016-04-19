@@ -26,9 +26,11 @@
 
 #pragma mark - LifeCycle
 
-- (void)awakeFromNib {
+- (void)setup {
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(slide)];
     [self.targetView addGestureRecognizer:tapGesture];
+    
+    self.isExpanded = YES;
     
     if (self.datasource) {
         self.collapsedHeight = [self.datasource slidingViewCollapsedHeight:self];
@@ -47,7 +49,7 @@
     }
     
     [UIView animateWithDuration:0.4 animations:^{
-        [self layoutIfNeeded];
+        [self.superview layoutIfNeeded];
     }];
 }
 
@@ -57,7 +59,7 @@
 }
 
 - (void)collapse {
-    self.viewHeight.constant = self.expandedHeight;
+    self.viewHeight.constant = self.collapsedHeight;
     self.isExpanded = NO;
 }
 
