@@ -7,15 +7,16 @@
 //
 
 #import "IdentifyViewController.h"
-#import <MessageUI/MessageUI.h>
 #import <Ambassador/Ambassador.h>
 #import "DefaultsHandler.h"
 #import "AmbassadorLoginViewController.h"
 #import "Validator.h"
 #import "ValuesHandler.h"
 #import "FileWriter.h"
+#import <ZipZap/ZipZap.h>
+#import "UIActivityViewController+ZipShare.h"
 
-@interface IdentifyViewController () <AMBWelcomeScreenDelegate, MFMailComposeViewControllerDelegate>
+@interface IdentifyViewController () <AMBWelcomeScreenDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -62,25 +63,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
-}
-
-
-#pragma mark - MFMailComposeViewController Delegate
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    
-    switch (result) {
-        case MFMailComposeResultSent:
-            NSLog(@"Message sent successfully!");
-            break;
-        case MFMailComposeResultFailed:
-            NSLog(@"Message failed to send");
-            break;
-        default:
-            NSLog(@"Message was not sent");
-            break;
-    }
 }
 
 
@@ -170,16 +152,19 @@
     [self.tfEmail resignFirstResponder];
     NSString *email = self.tfEmail.text;
     
-    if ([Validator isValidEmail:email]) {
-        // Creates a mail compose message to share via email with snippet and plist attachment
-        MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
-        mailVc.mailComposeDelegate = self;
-        [mailVc addAttachmentData:[self getReadmeFile] mimeType:@"application/txt" fileName:@"README.md"];
-        [mailVc addAttachmentData: [self getObjectiveFile: email] mimeType:@"application/txt" fileName:@"AppDelegate.m"];
-        [mailVc addAttachmentData: [self getSwiftFile:email] mimeType:@"application/txt" fileName:@"AppDelegate.swift"];
-        [mailVc addAttachmentData:[self getJavaFile:email] mimeType:@"application/txt" fileName:@"MyApplication.java"];
-        [mailVc setSubject:@"Ambassador Identify Code"];
-        [self presentViewController:mailVc animated:YES completion:nil];
+    if ([Validator isValidEmail:email]) {        
+        // Creates a new directiry in the documents folder
+        NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-identify.zip"];
+        
+        // Creates a new zip file containing all different files
+        ZZArchive* newArchive = [[ZZArchive alloc] initWithURL:[NSURL fileURLWithPath:filePath] options:@{ZZOpenOptionsCreateIfMissingKey : @YES} error:nil];
+        [newArchive updateEntries:@[[self getObjectiveFile:email], [self getSwiftFile:email], [self getJavaFile:email]] error:nil];
+        
+        // Creates a url that returns an actual file
+        NSURL *fileurl = [NSURL fileURLWithPath:filePath];
+        
+        // Shows a share sheet with the zip file attached
+        [UIActivityViewController shareZip:fileurl withMessage:@"Temporary Idenity message -- Will be README" subject:@"Ambassador Identify Code" forPresenter:self];
         
         return;
     }
@@ -188,31 +173,42 @@
 }
 
 // Creates an Objective-C App Delegate file
-- (NSData *)getObjectiveFile:(NSString *)email {
+- (ZZArchiveEntry *)getObjectiveFile:(NSString *)email {
     // Gets dynamic strings from user's tokens and email input
     NSString *identifyString = [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithEmail:@\"%@\"]; \n\n", email];
     NSString *objectiveCString = [FileWriter objcAppDelegateFileWithInsert:identifyString];
  
-    return [objectiveCString dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *objcEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.m" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [objectiveCString dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return objcEntry;
 }
 
 // Creates a Swift App Delegate file
-- (NSData *)getSwiftFile:(NSString *)email {
+- (ZZArchiveEntry *)getSwiftFile:(NSString *)email {
     // Gets dynamic strings from user's tokens and email input
     NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithEmail(\"%@\") \n\n", email];
     NSString *swiftString = [FileWriter swiftAppDelegateFileWithInsert:identifyString];
 
+    ZZArchiveEntry *swiftEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.swift" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [swiftString dataUsingEncoding:NSUTF8StringEncoding];
+    }];
     
-    return [swiftString dataUsingEncoding:NSUTF8StringEncoding];
+    return swiftEntry;
 }
 
 // Creates an example Java file
-- (NSData *)getJavaFile:(NSString *)email {
+- (ZZArchiveEntry *)getJavaFile:(NSString *)email {
     // Gets dynamic strings from user's tokens and email input
     NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identify(\"%@\"); \n", email];
     NSString *javaString = [FileWriter javaMyApplicationFileWithInsert:identifyString];
     
-    return [javaString dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *javaEntry = [ZZArchiveEntry archiveEntryWithFileName:@"MyApplication.java" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [javaString dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return javaEntry;
 }
 
 // Create README file

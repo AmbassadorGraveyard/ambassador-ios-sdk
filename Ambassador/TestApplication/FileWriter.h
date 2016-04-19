@@ -18,5 +18,6 @@
 + (NSString *)swiftViewControllerWithInsert:(NSString *)insert;
 + (NSString *)javaActivityWithInsert:(NSString *)insert;
 + (NSString *)readmeForRAF;
++ (NSString *)documentsPath;
 
 @end

@@ -56,9 +56,9 @@
     NSString *documentsDirectory = [paths objectAtIndex:0];
     
     // Creates and writes to a new or existing file path with the path name
-    NSData *pngData = UIImagePNGRepresentation(image);
+    NSData *jpgData = UIImageJPEGRepresentation(image, 1.0);
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", imageSavePath]];
-    [pngData writeToFile:filePath atomically:NO];
+    [jpgData writeToFile:filePath atomically:NO];
 }
 
 + (void)writeToDocumentsPathWithThemeName:(NSString*)name dictionary:(NSMutableDictionary*)writeDict {

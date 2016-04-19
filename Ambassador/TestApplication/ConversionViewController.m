@@ -16,9 +16,10 @@
 #import "DefaultsHandler.h"
 #import "AMBValues.h"
 #import "FileWriter.h"
-#import <MessageUI/MessageUI.h>
+#import <ZipZap/ZipZap.h>
+#import "UIActivityViewController+ZipShare.h"
 
-@interface ConversionViewController () <UITextFieldDelegate, MFMailComposeViewControllerDelegate>
+@interface ConversionViewController () <UITextFieldDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -96,25 +97,6 @@ CGFloat currentOffset;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
-}
-
-
-#pragma mark - MFMailComposeViewController Delegate
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-    [controller dismissViewControllerAnimated:YES completion:nil];
-    
-    switch (result) {
-        case MFMailComposeResultSent:
-            NSLog(@"Message sent successfully!");
-            break;
-        case MFMailComposeResultFailed:
-            NSLog(@"Message failed to send");
-            break;
-        default:
-            NSLog(@"Message was not sent");
-            break;
-    }
 }
 
 
@@ -246,19 +228,22 @@ CGFloat currentOffset;
 
 - (void)exportConversionCode {
     if (![self invalidFields]) {
-        // Create an email with attachments
-        MFMailComposeViewController *mailVc = [[MFMailComposeViewController alloc] init];
-        mailVc.mailComposeDelegate = self;
-        [mailVc addAttachmentData:[self getReadme] mimeType:@"application/txt" fileName:@"README.md"];
-        [mailVc addAttachmentData:[self getObjcFile] mimeType:@"application/txt" fileName:@"AppDelegate.m"];
-        [mailVc addAttachmentData:[self getSwiftFile] mimeType:@"application/txt" fileName:@"AppDelegate.swift"];
-        [mailVc addAttachmentData:[self getJavaFile] mimeType:@"application/txt" fileName:@"MyApplication.java"];
-        [mailVc setSubject:@"Ambassador Conversion Code"];
-        [self presentViewController:mailVc animated:YES completion:nil];
+        // Creates a new directiry in the documents folder
+        NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-conversion.zip"];
+        
+        // Creates a new zip file containing all different files
+        ZZArchive* newArchive = [[ZZArchive alloc] initWithURL:[NSURL fileURLWithPath:filePath] options:@{ZZOpenOptionsCreateIfMissingKey : @YES} error:nil];
+        [newArchive updateEntries:@[[self getObjcFile], [self getSwiftFile], [self getJavaFile]] error:nil];
+        
+        // Grabs the file using a url to the file path
+        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+        
+        // ActivityViewController category function that shares a zip
+        [UIActivityViewController shareZip:fileURL withMessage:@"Temporary Conversion message -- Will be README" subject:@"Ambassador Conversion Code" forPresenter:self];
     }
 }
 
-- (NSData *)getObjcFile {
+- (ZZArchiveEntry *)getObjcFile {
     // Creates first part of snippet for setting params
     NSMutableString *conversionParamString = [NSMutableString stringWithString:@"\n    AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];\n\n    // Set required properties\n"];
     
@@ -299,10 +284,14 @@ CGFloat currentOffset;
     NSString *objcConversion = [NSString stringWithFormat:@"%@\n%@ \n\n", conversionParamString, implementationString];
     NSString *objcSnippet = [FileWriter objcAppDelegateFileWithInsert:objcConversion];
     
-    return [objcSnippet dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *objcEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.m" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [objcSnippet dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return objcEntry;
 }
 
-- (NSData *)getSwiftFile {
+- (ZZArchiveEntry *)getSwiftFile {
     // Creates first part of snippet for setting params
     NSMutableString *conversionParamString = [NSMutableString stringWithString:@"\n        let conversionParameters = AMBConversionParameters()\n\n        // Set required properties\n"];
     
@@ -343,10 +332,14 @@ CGFloat currentOffset;
     NSString *swiftConversion = [NSString stringWithFormat:@"%@\n%@ \n\n", conversionParamString, implementationString];
     NSString *swiftSnippet = [FileWriter swiftAppDelegateFileWithInsert:swiftConversion];
     
-    return [swiftSnippet dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *swiftEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.swift" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [swiftSnippet dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return swiftEntry;
 }
 
-- (NSData *)getJavaFile {
+- (ZZArchiveEntry *)getJavaFile {
     // Creats conversion parameter object from values
     AMBConversionParameters *params = [self conversionParameterFromValues];
     
@@ -376,7 +369,11 @@ CGFloat currentOffset;
     // Creates java file
     NSString *javaFileString = [FileWriter javaMyApplicationFileWithInsert:conversionString];
     
-    return [javaFileString dataUsingEncoding:NSUTF8StringEncoding];
+    ZZArchiveEntry *javaEntry = [ZZArchiveEntry archiveEntryWithFileName:@"MyApplication.java" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [javaFileString dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return javaEntry;
 }
 
 - (NSData *)getReadme {

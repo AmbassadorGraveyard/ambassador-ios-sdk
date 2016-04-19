@@ -1,0 +1,6 @@
+target 'DemoApp' do
+
+pod 'zipzap'
+end
+
+workspace 'Ambassador'

@@ -23,6 +23,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		39895D3DFF3918E34BF190F1 /* libPods-DemoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C49757526ECDA9D677C5F2C /* libPods-DemoApp.a */; };
 		DB6A245F1BD00F3F00CE3230 /* AMBNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */; };
 		DB6A24601BD00F3F00CE3230 /* AMBNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */; };
 		DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24611BD017A700CE3230 /* AMBErrors.h */; };
@@ -146,6 +147,9 @@
 		EF07452A1C52C8E1009AF919 /* OCMock in Resources */ = {isa = PBXBuildFile; fileRef = EF0745291C52C8E1009AF919 /* OCMock */; };
 		EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF07452B1C52C8FA009AF919 /* libOCMock.a */; };
 		EF1399AC1C6551AB0005054D /* AMBContactLoaderUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */; };
+		EF1A4F271CC56DF7008EE886 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1A4F261CC56DF7008EE886 /* libzipzap.a */; };
+		EF1A4F341CC67802008EE886 /* UIActivityViewController+ZipShare.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F321CC67802008EE886 /* UIActivityViewController+ZipShare.h */; };
+		EF1A4F351CC67802008EE886 /* UIActivityViewController+ZipShare.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F331CC67802008EE886 /* UIActivityViewController+ZipShare.m */; };
 		EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */; };
 		EF1C82A21C6285B00033A364 /* AMBNamePromptUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */; };
 		EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */; };
@@ -336,6 +340,8 @@
 
 /* Begin PBXFileReference section */
 		0079A83364A4D337331258FB /* libPods-Ambassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ambassador.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C49757526ECDA9D677C5F2C /* libPods-DemoApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4304F0FD25CED9DD5F227F5A /* Pods-DemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		6A47EBEA1D60C44F384D7022 /* Pods-Ambassador.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ambassador.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ambassador/Pods-Ambassador.release.xcconfig"; sourceTree = "<group>"; };
 		6C128C3383D1721F1F87EF25 /* libPods-TestApplication.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TestApplication.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FB986901906A3DD3E86D546 /* Pods-TestApplication.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApplication.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestApplication/Pods-TestApplication.release.xcconfig"; sourceTree = "<group>"; };
@@ -482,6 +488,10 @@
 		EF0745291C52C8E1009AF919 /* OCMock */ = {isa = PBXFileReference; lastKnownFileType = folder; path = OCMock; sourceTree = "<group>"; };
 		EF07452B1C52C8FA009AF919 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
 		EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactLoaderUnitTests.m; sourceTree = "<group>"; };
+		EF1A4F241CC51663008EE886 /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "Pods/../build/Debug-iphoneos/libzipzap.a"; sourceTree = "<group>"; };
+		EF1A4F261CC56DF7008EE886 /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "../../../../Library/Developer/Xcode/DerivedData/Ambassador-fyowizzyypljqlfqhcjipifufznh/Build/Products/Debug-iphoneos/libzipzap.a"; sourceTree = "<group>"; };
+		EF1A4F321CC67802008EE886 /* UIActivityViewController+ZipShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+ZipShare.h"; sourceTree = "<group>"; };
+		EF1A4F331CC67802008EE886 /* UIActivityViewController+ZipShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+ZipShare.m"; sourceTree = "<group>"; };
 		EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdenityUnitTests.m; sourceTree = "<group>"; };
 		EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNamePromptUnitTests.m; sourceTree = "<group>"; };
 		EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContactCard.h; sourceTree = "<group>"; };
@@ -501,6 +511,7 @@
 		EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManagerUnitTests.m; sourceTree = "<group>"; };
 		EF24D1E21BECFA7A00561476 /* iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = iOS; path = ../../../../Desktop/iOS; sourceTree = "<group>"; };
 		EF24D1E41BECFAC000561476 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = ../../../../Desktop/iOS/libOCMock.a; sourceTree = "<group>"; };
+		EF28DF421CC1804F0070994F /* libobjective-zip.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libobjective-zip.a"; path = "../../../../Library/Developer/Xcode/DerivedData/Ambassador-fyowizzyypljqlfqhcjipifufznh/Build/Products/Debug-iphonesimulator/libobjective-zip.a"; sourceTree = "<group>"; };
 		EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBConversionsTests.m; sourceTree = "<group>"; };
 		EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBOptionsTests.m; sourceTree = "<group>"; };
 		EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPusherChannelObject.h; sourceTree = "<group>"; };
@@ -651,6 +662,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF1A4F271CC56DF7008EE886 /* libzipzap.a in Frameworks */,
+				39895D3DFF3918E34BF190F1 /* libPods-DemoApp.a in Frameworks */,
 				EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */,
 				DB844D891BA76C1E003FD7A9 /* libAmbassador.a in Frameworks */,
 			);
@@ -676,6 +689,9 @@
 		0D24CFB05292A555B6506D41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EF1A4F261CC56DF7008EE886 /* libzipzap.a */,
+				EF1A4F241CC51663008EE886 /* libzipzap.a */,
+				EF28DF421CC1804F0070994F /* libobjective-zip.a */,
 				EF9D98D01CA1F19500F5711F /* libobjective-zip.a */,
 				EF9D98CE1CA1F10B00F5711F /* libobjective-zip.a */,
 				EF9D98CC1CA1F09F00F5711F /* libobjective-zip.a */,
@@ -698,6 +714,7 @@
 				0079A83364A4D337331258FB /* libPods-Ambassador.a */,
 				D4D2ED3AB7E35941B5B43CCE /* libPods.a */,
 				6C128C3383D1721F1F87EF25 /* libPods-TestApplication.a */,
+				3C49757526ECDA9D677C5F2C /* libPods-DemoApp.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -709,6 +726,7 @@
 				6A47EBEA1D60C44F384D7022 /* Pods-Ambassador.release.xcconfig */,
 				FE9134FEDC8C6784B298583E /* Pods-TestApplication.debug.xcconfig */,
 				6FB986901906A3DD3E86D546 /* Pods-TestApplication.release.xcconfig */,
+				4304F0FD25CED9DD5F227F5A /* Pods-DemoApp.debug.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1163,6 +1181,8 @@
 				EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */,
 				EF6A5C5E1CBFEBD300458480 /* FileWriter.h */,
 				EF6A5C5F1CBFEBD300458480 /* FileWriter.m */,
+				EF1A4F321CC67802008EE886 /* UIActivityViewController+ZipShare.h */,
+				EF1A4F331CC67802008EE886 /* UIActivityViewController+ZipShare.m */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -1449,6 +1469,7 @@
 				EFE7D7951C21C19B00D7F92C /* AMBCoreDataDelegate.h in Headers */,
 				DBA3FC051BA8AA1D00672D82 /* AMBPTJSON.h in Headers */,
 				DBA3FC131BA8AA1D00672D82 /* AMBPTPusherChannel.h in Headers */,
+				EF1A4F341CC67802008EE886 /* UIActivityViewController+ZipShare.h in Headers */,
 				DB6A245F1BD00F3F00CE3230 /* AMBNetworkManager.h in Headers */,
 				DBA3FBBB1BA8A24F00672D82 /* AMBShareServiceCell.h in Headers */,
 				EF3079161C6E205800403F56 /* AMBPusherChannelObject.h in Headers */,
@@ -1578,9 +1599,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DB844D811BA76BDE003FD7A9 /* Build configuration list for PBXNativeTarget "DemoApp" */;
 			buildPhases = (
+				93D959191E7FE69DFA7022ED /* Check Pods Manifest.lock */,
 				DB844D5D1BA76BDE003FD7A9 /* Sources */,
 				DB844D5E1BA76BDE003FD7A9 /* Frameworks */,
 				DB844D5F1BA76BDE003FD7A9 /* Resources */,
+				38DC99D89825390B53BB5102 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1766,6 +1789,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		38DC99D89825390B53BB5102 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		93D959191E7FE69DFA7022ED /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		DB844D421BA75E54003FD7A9 /* Prepare Framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1825,6 +1878,7 @@
 				EF557A051C86038F00F66761 /* AMBWelcomeScreenParameters.m in Sources */,
 				DBB8BD0B1BAC6B6D00B87896 /* AMBPTPusher+Testing.m in Sources */,
 				DBA3FC241BA8AA1D00672D82 /* AMBPTURLRequestOperation.m in Sources */,
+				EF1A4F351CC67802008EE886 /* UIActivityViewController+ZipShare.m in Sources */,
 				DB6A24681BD01D8A00CE3230 /* AMBNetworkObject.m in Sources */,
 				DBA3FB781BA8A23C00672D82 /* AMBContact.m in Sources */,
 				DBA3FB821BA8A23C00672D82 /* AMBConversionParameters.m in Sources */,
@@ -2122,7 +2176,6 @@
 		};
 		DB844D3B1BA75BB8003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 75B51AA7CD49D1C0E04EC243 /* Pods-Ambassador.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -2290,7 +2343,7 @@
 		};
 		DB844D821BA76BDE003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FE9134FEDC8C6784B298583E /* Pods-TestApplication.debug.xcconfig */;
+			baseConfigurationReference = 4304F0FD25CED9DD5F227F5A /* Pods-DemoApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2307,8 +2360,8 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = "";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTestApplication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2332,7 +2385,8 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 					"$(SDKROOT)/usr/lib/system",
 				);
-				OTHER_CFLAGS = "";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTestApplication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
