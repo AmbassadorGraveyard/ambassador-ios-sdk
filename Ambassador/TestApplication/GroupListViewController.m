@@ -11,15 +11,17 @@
 #import "DefaultsHandler.h"
 #import "GroupObject.h"
 #import "GroupFooterCell.h"
+#import "GroupCell.h"
 
 @interface GroupListViewController() <UITableViewDelegate, UITableViewDataSource, GroupFooterCellDelegate>
 
 // IBOutlets
-@property (nonatomic, strong) IBOutlet UITableView * tableView;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint * tableHeight;
+@property (nonatomic, weak) IBOutlet UITableView * tableView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint * tableHeight;
 
 // Private properties
 @property (nonatomic, strong) NSArray * groupArray;
+@property (nonatomic, strong) NSMutableArray * selectedGroupArray;
 
 @end
 
@@ -44,6 +46,7 @@ CGFloat groupTableHeaderHeight = 50;
     [super viewDidLoad];
     [self showGroupList];
     [self setupUI];
+    self.selectedGroupArray = [[NSMutableArray alloc] init];
 }
 
 
@@ -54,7 +57,7 @@ CGFloat groupTableHeaderHeight = 50;
     
     // Sets up header cell UI
     headerCell.textLabel.textAlignment = NSTextAlignmentCenter;
-    headerCell.textLabel.text = @"Campaigns";
+    headerCell.textLabel.text = @"Groups";
     headerCell.textLabel.textColor = [UIColor whiteColor];
     headerCell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20];
     headerCell.backgroundColor = [UIColor colorWithRed:0.23 green:0.59 blue:0.83 alpha:1];
@@ -71,21 +74,14 @@ CGFloat groupTableHeaderHeight = 50;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"groupCell"];
+    GroupCell *cell = [tableView dequeueReusableCellWithIdentifier:@"groupCell"];
     
-    // Grabs the campaign object
+    // Grabs the group object
     GroupObject *object = self.groupArray[indexPath.row];
+    BOOL isSelected = [self.selectedGroupArray containsObject:object];
     
-    // Sets up cell label
-    cell.textLabel.text = object.groupName;
-    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
-    
-    // Sets up detail text label
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"ID: %@", object.groupID];
-    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
-    cell.detailTextLabel.textColor = [UIColor darkGrayColor];
-    
-    cell.backgroundColor = [UIColor whiteColor];
+    // Set up group cell
+    [cell setUpCellWithGroup:object checkmarkVisible:isSelected];
     
     return cell;
 }
@@ -99,6 +95,7 @@ CGFloat groupTableHeaderHeight = 50;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    // Sets up footer cell with 'Save' and 'Cancel' buttons and actions
     GroupFooterCell *footerCell = [tableView dequeueReusableCellWithIdentifier:@"groupFooterCell"];
     footerCell.delegate = self;
     footerCell.parentViewController = self;
@@ -107,11 +104,41 @@ CGFloat groupTableHeaderHeight = 50;
 }
 
 
+#pragma mark - TableView Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Unselects default row tap
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    // Grabs the object and cell at the selected index
+    GroupObject *groupTapped = self.groupArray[indexPath.row];
+    GroupCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    // Add or removed object to/from selectedGroupArray and fade in/out checkmark
+    if ([self.selectedGroupArray containsObject:groupTapped]) {
+        [self.selectedGroupArray removeObject:groupTapped];
+        [cell fadeCheckmarkVisible:NO];
+    } else {
+        [self.selectedGroupArray addObject:groupTapped];
+        [cell fadeCheckmarkVisible:YES];
+    }
+}
+
+
+#pragma mark - Group Cell Delegate
+
+- (void)groupFooterSaveButtonTappedWithGroups:(NSArray *)groups {
+    // Tell parent controller that groups have been selected
+    [self.delegate groupListSelectedGroups:groups];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 #pragma mark - UI Functions
 
 - (void)setupUI {
     // TableView
-    self.tableHeight.constant = (self.groupArray.count > 6) ? 300 : (groupTableCellHeight * self.groupArray.count) + (groupTableHeaderHeight * 2);
+    self.tableHeight.constant = (self.groupArray.count > 6) ? 400 : (groupTableCellHeight * self.groupArray.count) + (groupTableHeaderHeight * 2);
     self.tableView.layer.cornerRadius = 6;
     self.tableView.hidden = self.groupArray.count == 0;
 }
@@ -172,16 +199,18 @@ CGFloat groupTableHeaderHeight = 50;
     NSArray *groupArray = results[@"results"];
     NSMutableArray *arrayToSave = [[NSMutableArray alloc] init];
     
+    // Goes through all of the response objects and gets the values we need
     for (int i = 0; i < groupArray.count; i++) {
         NSDictionary *group = groupArray[i];
         NSString *name = group[@"group_name"];
-        NSString *groupID = group[@"group_id"];
+        NSString *groupID = [NSString stringWithFormat:@"%@", group[@"group_id"]];
         NSString *UID = group[@"uid"];
         
         GroupObject *object = [[GroupObject alloc] initWithName:name ID:groupID UID:UID];
         [arrayToSave addObject:object];
     }
     
+    // Sets array and reloads table
     self.groupArray = [NSArray arrayWithArray:arrayToSave];
     [self.tableView reloadData];
     [self setupUI];

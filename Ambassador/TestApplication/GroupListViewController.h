@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol GroupListDelegate <NSObject>
+
+- (void)groupListSelectedGroups:(NSArray *)groups;
+
+@end
+
+
 @interface GroupListViewController : UIViewController
+
+@property (nonatomic, weak) id<GroupListDelegate> delegate;
 
 @end
