@@ -153,11 +153,8 @@
 		EF1A4F341CC67802008EE886 /* UIActivityViewController+ZipShare.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F321CC67802008EE886 /* UIActivityViewController+ZipShare.h */; };
 		EF1A4F351CC67802008EE886 /* UIActivityViewController+ZipShare.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F331CC67802008EE886 /* UIActivityViewController+ZipShare.m */; };
 		EF1A4F391CC6C5AC008EE886 /* GroupListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F371CC6C5AC008EE886 /* GroupListViewController.h */; };
-		EF1A4F3A1CC6C5AC008EE886 /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F381CC6C5AC008EE886 /* GroupListViewController.m */; };
 		EF1A4F3D1CC6CD07008EE886 /* GroupObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F3B1CC6CD07008EE886 /* GroupObject.h */; };
-		EF1A4F3E1CC6CD07008EE886 /* GroupObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */; };
 		EF1A4F411CC6D8B8008EE886 /* GroupFooterCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F3F1CC6D8B8008EE886 /* GroupFooterCell.h */; };
-		EF1A4F421CC6D8B8008EE886 /* GroupFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F401CC6D8B8008EE886 /* GroupFooterCell.m */; };
 		EF1A4F461CC7B9F7008EE886 /* GroupCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F441CC7B9F7008EE886 /* GroupCell.h */; };
 		EF1A4F471CC7B9F7008EE886 /* GroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F451CC7B9F7008EE886 /* GroupCell.m */; };
 		EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */; };
@@ -1921,7 +1918,6 @@
 				DBA3FC211BA8AA1D00672D82 /* AMBPTPusherMockConnection.m in Sources */,
 				EFE7D7991C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld in Sources */,
 				DBA3FBB41BA8A24F00672D82 /* AMBSendCompletionModal.m in Sources */,
-				EF1A4F3E1CC6CD07008EE886 /* GroupObject.m in Sources */,
 				DBA3FC141BA8AA1D00672D82 /* AMBPTPusherChannel.m in Sources */,
 				DBA3FB7A1BA8A23C00672D82 /* AMBContactCell.m in Sources */,
 				EFDFA0D01BE154B8002FA3ED /* UIColor+AMBColorValues.m in Sources */,
@@ -1933,7 +1929,6 @@
 				EF1A4F351CC67802008EE886 /* UIActivityViewController+ZipShare.m in Sources */,
 				DB6A24681BD01D8A00CE3230 /* AMBNetworkObject.m in Sources */,
 				DBA3FB781BA8A23C00672D82 /* AMBContact.m in Sources */,
-				EF1A4F421CC6D8B8008EE886 /* GroupFooterCell.m in Sources */,
 				DBA3FB821BA8A23C00672D82 /* AMBConversionParameters.m in Sources */,
 				EFE7D79D1C21CB2D00D7F92C /* AMBCoreDataManager.m in Sources */,
 				DBA3FB721BA8A23C00672D82 /* AmbassadorSDK.m in Sources */,
@@ -1943,7 +1938,6 @@
 				EF1A4F2D1CC58DE8008EE886 /* SlidingView.m in Sources */,
 				DBA3FC151BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m in Sources */,
 				DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */,
-				EF1A4F3A1CC6C5AC008EE886 /* GroupListViewController.m in Sources */,
 				DBA3FB801BA8A23C00672D82 /* AMBConversion.m in Sources */,
 				DBA3FB8F1BA8A23C00672D82 /* AMBIdentify.m in Sources */,
 				EF5B00891C91C22A002BD361 /* AMBSMSHandler.m in Sources */,
