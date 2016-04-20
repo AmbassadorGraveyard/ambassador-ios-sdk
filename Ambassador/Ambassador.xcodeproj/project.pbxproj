@@ -156,7 +156,6 @@
 		EF1A4F3D1CC6CD07008EE886 /* GroupObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F3B1CC6CD07008EE886 /* GroupObject.h */; };
 		EF1A4F411CC6D8B8008EE886 /* GroupFooterCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F3F1CC6D8B8008EE886 /* GroupFooterCell.h */; };
 		EF1A4F461CC7B9F7008EE886 /* GroupCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F441CC7B9F7008EE886 /* GroupCell.h */; };
-		EF1A4F471CC7B9F7008EE886 /* GroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F451CC7B9F7008EE886 /* GroupCell.m */; };
 		EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */; };
 		EF1C82A21C6285B00033A364 /* AMBNamePromptUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */; };
 		EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */; };
@@ -172,6 +171,10 @@
 		EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */; };
 		EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */; };
 		EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */; };
+		EF280DA81CC8272E00326FD6 /* GroupFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F401CC6D8B8008EE886 /* GroupFooterCell.m */; };
+		EF280DA91CC8272E00326FD6 /* GroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F451CC7B9F7008EE886 /* GroupCell.m */; };
+		EF280DAA1CC8272E00326FD6 /* GroupObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */; };
+		EF280DAB1CC8272E00326FD6 /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F381CC6C5AC008EE886 /* GroupListViewController.m */; };
 		EF28DF291CC132FE0070994F /* FileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5C5F1CBFEBD300458480 /* FileWriter.m */; };
 		EF28DF2B1CC142250070994F /* AmbassadorSecrets.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */; };
 		EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */; };
@@ -1950,7 +1953,6 @@
 				EF7BA1CD1BDEB17E00788160 /* AMBBulkShareHelper.m in Sources */,
 				EFE7D7B61C2202C900D7F92C /* AMBConversionParametersEntity.m in Sources */,
 				EF557A011C85E34600F66761 /* AMBLinkCell.m in Sources */,
-				EF1A4F471CC7B9F7008EE886 /* GroupCell.m in Sources */,
 				EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */,
 				DBA3FC0C1BA8AA1D00672D82 /* AMBPTJSON.m in Sources */,
 				DBA3FC2D1BA8AA5600672D82 /* base64.c in Sources */,
@@ -2017,6 +2019,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF280DA81CC8272E00326FD6 /* GroupFooterCell.m in Sources */,
+				EF280DA91CC8272E00326FD6 /* GroupCell.m in Sources */,
+				EF280DAA1CC8272E00326FD6 /* GroupObject.m in Sources */,
+				EF280DAB1CC8272E00326FD6 /* GroupListViewController.m in Sources */,
 				EF28DF2B1CC142250070994F /* AmbassadorSecrets.plist in Sources */,
 				EF28DF291CC132FE0070994F /* FileWriter.m in Sources */,
 				EF8FD8AF1CA9CA9900C0ADB7 /* SocialCell.m in Sources */,

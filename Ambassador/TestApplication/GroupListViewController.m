@@ -12,6 +12,7 @@
 #import "GroupObject.h"
 #import "GroupFooterCell.h"
 #import "GroupCell.h"
+#import "AMBUtilities.h"
 
 @interface GroupListViewController() <UITableViewDelegate, UITableViewDataSource, GroupFooterCellDelegate>
 
