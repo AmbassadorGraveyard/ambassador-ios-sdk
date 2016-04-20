@@ -166,7 +166,7 @@ CGFloat tableHeaderHeight = 50;
                 }];
             } else {
                 // Save the campaign list to defaults and then show list
-                [self saveCampaings:results];
+                [self saveCampaigns:results];
             }
             
             return;
