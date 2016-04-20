@@ -127,9 +127,9 @@ CGFloat groupTableHeaderHeight = 50;
 
 #pragma mark - Group Cell Delegate
 
-- (void)groupFooterSaveButtonTappedWithGroups:(NSArray *)groups {
+- (void)groupFooterSaveButtonTapped {
     // Tell parent controller that groups have been selected
-    [self.delegate groupListSelectedGroups:groups];
+    [self.delegate groupListSelectedGroups:self.selectedGroupArray];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

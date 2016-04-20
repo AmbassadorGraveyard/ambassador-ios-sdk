@@ -10,7 +10,7 @@
 
 @protocol GroupFooterCellDelegate <NSObject>
 
-- (void)groupFooterSaveButtonTappedWithGroups:(NSArray *)groups;
+- (void)groupFooterSaveButtonTapped;
 
 @end
 

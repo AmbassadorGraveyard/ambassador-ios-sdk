@@ -14,9 +14,6 @@
 @property (nonatomic, strong) IBOutlet UIButton * btnCancel;
 @property (nonatomic, strong) IBOutlet UIButton * btnSave;
 
-// Private properties
-@property (nonatomic, strong) NSArray * selectedGroups;
-
 @end
 
 
@@ -26,7 +23,7 @@
 #pragma mark - IBActions
 
 - (IBAction)saveTapped:(id)sender {
-    [self.delegate groupFooterSaveButtonTappedWithGroups:self.selectedGroups];
+    [self.delegate groupFooterSaveButtonTapped];
 }
 
 - (IBAction)cancelTapped:(id)sender {
