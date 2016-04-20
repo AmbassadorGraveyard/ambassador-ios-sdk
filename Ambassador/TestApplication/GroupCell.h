@@ -12,5 +12,6 @@
 @interface GroupCell : UITableViewCell
 
 - (void)setUpCellWithGroup:(GroupObject *)group checkmarkVisible:(BOOL)visible;
+- (void)fadeCheckmarkVisible:(BOOL)visible;
 
 @end

@@ -21,8 +21,14 @@
 
 - (void)setUpCellWithGroup:(GroupObject *)group checkmarkVisible:(BOOL)visible {
     self.lblName.text = group.groupName;
-    self.lblId.text = group.groupID;
-    self.ivCheckmark.hidden = !visible;
+    self.lblId.text = [NSString stringWithFormat:@"ID: %@", group.groupID];
+    self.ivCheckmark.alpha = visible;
+}
+
+- (void)fadeCheckmarkVisible:(BOOL)visible {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.ivCheckmark.alpha = visible;
+    }];
 }
 
 @end
