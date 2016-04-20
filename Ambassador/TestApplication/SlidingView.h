@@ -10,6 +10,7 @@
 
 @class SlidingView;
 
+// Datasource
 @protocol SlidingViewDatasource <NSObject>
 
 - (NSInteger)slidingViewCollapsedHeight:(SlidingView *)slidingView;
@@ -17,12 +18,23 @@
 
 @end
 
+// Delegate
+@protocol SlidingViewDelegate <NSObject>
 
+@optional
+- (void)slidingViewExpanded:(SlidingView *)slidingView;
+- (void)slidingViewCollapsed:(SlidingView *)slidingView;
+
+@end
+
+// Class
 @interface SlidingView : UIView
 
 @property (nonatomic, weak) id<SlidingViewDatasource> datasource;
+@property (nonatomic, weak) id<SlidingViewDelegate> delegate;
 
 - (void)setup;
+- (void)setNewExpandedHeight:(NSInteger)newHeight;
 
 @end
 
