@@ -74,25 +74,28 @@ extension ApplicationUITests {
         okayButton.tap()
         
         // Type referrer email text
-        let referrerTF = elementsQuery.textFields["Referrer Email (Required)"]
+        let referrerTF = elementsQuery.textFields["Email *"]
         referrerTF.tap()
         referrerTF.typeText("jake@getambassador.com")
         
         // Type referred email text
-        let referredEmailTextField = elementsQuery.textFields["Referred Email (Required)"]
+        let referredEmailTextField = elementsQuery.textFields["Referred Email *"]
         referredEmailTextField.tap()
         referredEmailTextField.typeText("test")
+        app.buttons["Return"].tap()
         
-        // Type revenue amount
-        let revenueAmtTextField = elementsQuery.textFields["Revenue Amt (Required)"]
-        revenueAmtTextField.tap()
-        revenueAmtTextField.typeText("1.50")
-        app.toolbars.buttons["Done"].tap()
         
         // Type campaign ID text
-        let campaignIdTextField = elementsQuery.textFields["Campaign ID (Required)"]
-        campaignIdTextField.tap()
-        campaignIdTextField.typeText("1048")
+        app.swipeUp()
+        let scrollViewsQuery = app.scrollViews
+        scrollViewsQuery.otherElements.textFields["Campaign *"].tap()
+        
+        app.tables.staticTexts["Jake+Test"].tap()
+        
+        // Type revenue amount
+        let revenueAmtTextField = elementsQuery.textFields["Revenue Amount *"]
+        revenueAmtTextField.tap()
+        revenueAmtTextField.typeText("1.50")
         app.toolbars.buttons["Done"].tap()
 
         elementsQuery.buttons["Submit"].tap()
@@ -104,9 +107,10 @@ extension ApplicationUITests {
         
         referredEmailTextField.tap()
         referredEmailTextField.typeText("@example.com")
-        
         app.buttons["Return"].tap()
-        
+
+        // Scroll down to submit button
+        app.swipeUp()
         elementsQuery.buttons["Submit"].tap()
         
         // Checks to make sure that we got a success message

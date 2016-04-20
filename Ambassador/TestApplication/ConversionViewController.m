@@ -116,7 +116,9 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
         // Show Campaign list VC
         CampaignListController *campaignList = [[CampaignListController alloc] init];
         campaignList.delegate = self;
-        [self presentViewController:campaignList animated:YES completion:nil];
+        
+        // Reason for presentin with tabBarController.parentController is so that the list covers the navBAR-- SAME BELOW
+        [self.tabBarController.parentViewController presentViewController:campaignList animated:YES completion:nil];
         
         return NO;
     }
@@ -124,7 +126,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     if ([textField isEqual:self.tfGroupID]) {
         GroupListViewController *groupList = [[GroupListViewController alloc] initWithSelectedArray:[self arrayFromGroupsField]];
         groupList.delegate = self;
-        [self presentViewController:groupList animated:YES completion:nil];
+        [self.tabBarController.parentViewController presentViewController:groupList animated:YES completion:nil];
         
         return NO;
     }
@@ -261,7 +263,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 
 - (void)getShortCodeAndSubmit {
     // Sets up request
-    NSString *urlString = [NSString stringWithFormat:@"urls/?campaign_uid=%@&email=%@", self.tfCampID.text, self.tfReferrerEmail.text];
+    NSString *urlString = [NSString stringWithFormat:@"urls/?campaign_uid=%@&email=%@", self.selectedCampaign.campID, self.tfReferrerEmail.text];
     
     NSURL *ambassadorURL;
     #if AMBPRODUCTION
