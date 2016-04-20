@@ -16,7 +16,7 @@ test:
     - set -o pipefail &&
      xcodebuild -workspace Ambassador.xcworkspace
       -sdk iphonesimulator
-       -destination 'platform=iOS Simulator,OS=9.2,name=iPhone 6'
+       -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
        -configuration Debug
        -scheme DemoApp
        VALID_ARCHS=x86_64
