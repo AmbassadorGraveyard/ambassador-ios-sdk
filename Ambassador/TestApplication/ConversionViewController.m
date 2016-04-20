@@ -23,7 +23,7 @@
 #import "GroupListViewController.h"
 #import "GroupObject.h"
 
-@interface ConversionViewController () <UITextFieldDelegate, SlidingViewDatasource, CampaignListDelegate, GroupListDelegate>
+@interface ConversionViewController () <UITextFieldDelegate, SlidingViewDatasource, SlidingViewDelegate, CampaignListDelegate, GroupListDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -54,6 +54,7 @@
 @property (nonatomic, strong) IBOutlet SlidingView * svAmbassador;
 @property (nonatomic, strong) IBOutlet SlidingView * svCustomer;
 @property (nonatomic, strong) IBOutlet SlidingView * svCommission;
+@property (nonatomic, weak) IBOutlet SlidingView * svEnroll;
 
 // Private properties
 @property (nonatomic, strong) UITextField * selectedTextField;
@@ -65,6 +66,14 @@
 @implementation ConversionViewController
 
 CGFloat currentOffset;
+
+// Sliding view heights
+NSInteger AMBASSADOR_SLIDING_HEIGHT = 83;
+NSInteger CUSTOMER_ORIGINAL_SLIDING_HEIGHT = 435;
+NSInteger CUSTOMER_NEW_SLIDING_HEIGHT = 538;
+NSInteger COMMISION_SLIDING_HEIGHT = 388;
+NSInteger ENROLL_SLIDING_HEIGHT = 123;
+
 
 #pragma mark - LifeCycle
 
@@ -161,16 +170,37 @@ CGFloat currentOffset;
 
 - (NSInteger)slidingViewExpandedHeight:(SlidingView *)slidingView {
     if (slidingView == self.svAmbassador) {
-        return 83;
+        return AMBASSADOR_SLIDING_HEIGHT;
     } else if (slidingView == self.svCustomer) {
-        return 538;
+        return CUSTOMER_ORIGINAL_SLIDING_HEIGHT;
+    } else if (slidingView == self.svCommission) {
+        return COMMISION_SLIDING_HEIGHT;
     } else {
-        return 388;
+        return ENROLL_SLIDING_HEIGHT;
     }
 }
 
 - (NSInteger)slidingViewCollapsedHeight:(SlidingView *)slidingView {
+    if (slidingView == self.svEnroll) {
+        return 32;
+    }
+    
     return 35;
+}
+
+
+#pragma mark - Sliding View Delegate
+
+- (void)slidingViewExpanded:(SlidingView *)slidingView {
+    if (slidingView == self.svEnroll) {
+        [self.svCustomer setNewExpandedHeight:CUSTOMER_NEW_SLIDING_HEIGHT];
+    }
+}
+
+- (void)slidingViewCollapsed:(SlidingView *)slidingView {
+    if (slidingView == self.svEnroll) {
+        [self.svCustomer setNewExpandedHeight:CUSTOMER_ORIGINAL_SLIDING_HEIGHT];
+    }
 }
 
 
@@ -537,6 +567,10 @@ CGFloat currentOffset;
             [view setup];
         }
     }
+    
+    self.svEnroll.datasource = self;
+    self.svEnroll.delegate = self;
+    [self.svEnroll setup];
 }
 
 - (NSArray *)arrayFromGroupsField {
