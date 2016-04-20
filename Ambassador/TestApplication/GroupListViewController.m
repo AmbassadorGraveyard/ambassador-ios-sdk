@@ -34,10 +34,16 @@ CGFloat groupTableHeaderHeight = 50;
 
 #pragma mark - LifeCycle
 
-- (instancetype)init {
+- (instancetype)initWithSelectedArray:(NSArray *)array {
     // Gets viewController from storyboard to present
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     self = [sb instantiateViewControllerWithIdentifier:@"groupList"];
+    
+    if (array) {
+        self.selectedGroupArray = [NSMutableArray arrayWithArray:array];
+    } else {
+        self.selectedGroupArray = [[NSMutableArray alloc] init];
+    }
     
     return self;
 }
@@ -46,7 +52,6 @@ CGFloat groupTableHeaderHeight = 50;
     [super viewDidLoad];
     [self showGroupList];
     [self setupUI];
-    self.selectedGroupArray = [[NSMutableArray alloc] init];
 }
 
 
@@ -78,7 +83,7 @@ CGFloat groupTableHeaderHeight = 50;
     
     // Grabs the group object
     GroupObject *object = self.groupArray[indexPath.row];
-    BOOL isSelected = [self.selectedGroupArray containsObject:object];
+    BOOL isSelected = [self.selectedGroupArray containsObject:object.groupID];
     
     // Set up group cell
     [cell setUpCellWithGroup:object checkmarkVisible:isSelected];
@@ -115,11 +120,11 @@ CGFloat groupTableHeaderHeight = 50;
     GroupCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
     // Add or removed object to/from selectedGroupArray and fade in/out checkmark
-    if ([self.selectedGroupArray containsObject:groupTapped]) {
-        [self.selectedGroupArray removeObject:groupTapped];
+    if ([self.selectedGroupArray containsObject:groupTapped.groupID]) {
+        [self.selectedGroupArray removeObject:groupTapped.groupID];
         [cell fadeCheckmarkVisible:NO];
     } else {
-        [self.selectedGroupArray addObject:groupTapped];
+        [self.selectedGroupArray addObject:groupTapped.groupID];
         [cell fadeCheckmarkVisible:YES];
     }
 }

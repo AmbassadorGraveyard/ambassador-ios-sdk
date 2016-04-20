@@ -19,4 +19,6 @@
 
 @property (nonatomic, weak) id<GroupListDelegate> delegate;
 
+- (instancetype)initWithSelectedArray:(NSArray *)array;
+
 @end
