@@ -158,6 +158,8 @@
 		EF1A4F3E1CC6CD07008EE886 /* GroupObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */; };
 		EF1A4F411CC6D8B8008EE886 /* GroupFooterCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F3F1CC6D8B8008EE886 /* GroupFooterCell.h */; };
 		EF1A4F421CC6D8B8008EE886 /* GroupFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F401CC6D8B8008EE886 /* GroupFooterCell.m */; };
+		EF1A4F461CC7B9F7008EE886 /* GroupCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F441CC7B9F7008EE886 /* GroupCell.h */; };
+		EF1A4F471CC7B9F7008EE886 /* GroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F451CC7B9F7008EE886 /* GroupCell.m */; };
 		EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */; };
 		EF1C82A21C6285B00033A364 /* AMBNamePromptUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */; };
 		EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */; };
@@ -508,6 +510,8 @@
 		EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupObject.m; sourceTree = "<group>"; };
 		EF1A4F3F1CC6D8B8008EE886 /* GroupFooterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupFooterCell.h; sourceTree = "<group>"; };
 		EF1A4F401CC6D8B8008EE886 /* GroupFooterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupFooterCell.m; sourceTree = "<group>"; };
+		EF1A4F441CC7B9F7008EE886 /* GroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupCell.h; sourceTree = "<group>"; };
+		EF1A4F451CC7B9F7008EE886 /* GroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupCell.m; sourceTree = "<group>"; };
 		EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdenityUnitTests.m; sourceTree = "<group>"; };
 		EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNamePromptUnitTests.m; sourceTree = "<group>"; };
 		EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContactCard.h; sourceTree = "<group>"; };
@@ -1013,14 +1017,24 @@
 		EF1A4F361CC6C597008EE886 /* Groups */ = {
 			isa = PBXGroup;
 			children = (
+				EF1A4F431CC7B9C2008EE886 /* Custom Cells */,
 				EF1A4F3B1CC6CD07008EE886 /* GroupObject.h */,
 				EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */,
 				EF1A4F371CC6C5AC008EE886 /* GroupListViewController.h */,
 				EF1A4F381CC6C5AC008EE886 /* GroupListViewController.m */,
-				EF1A4F3F1CC6D8B8008EE886 /* GroupFooterCell.h */,
-				EF1A4F401CC6D8B8008EE886 /* GroupFooterCell.m */,
 			);
 			name = Groups;
+			sourceTree = "<group>";
+		};
+		EF1A4F431CC7B9C2008EE886 /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EF1A4F3F1CC6D8B8008EE886 /* GroupFooterCell.h */,
+				EF1A4F401CC6D8B8008EE886 /* GroupFooterCell.m */,
+				EF1A4F441CC7B9F7008EE886 /* GroupCell.h */,
+				EF1A4F451CC7B9F7008EE886 /* GroupCell.m */,
+			);
+			name = "Custom Cells";
 			sourceTree = "<group>";
 		};
 		EF1CC8051C99E11000C2752B /* Custom Input */ = {
@@ -1540,6 +1554,7 @@
 				DBA3FC0B1BA8AA1D00672D82 /* AMBPTEventListener.h in Headers */,
 				EF1A4F2C1CC58DE8008EE886 /* SlidingView.h in Headers */,
 				DBA3FB7F1BA8A23C00672D82 /* AMBConversion.h in Headers */,
+				EF1A4F461CC7B9F7008EE886 /* GroupCell.h in Headers */,
 				EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */,
 				EF557A041C86038F00F66761 /* AMBWelcomeScreenParameters.h in Headers */,
 				DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */,
@@ -1941,6 +1956,7 @@
 				EF7BA1CD1BDEB17E00788160 /* AMBBulkShareHelper.m in Sources */,
 				EFE7D7B61C2202C900D7F92C /* AMBConversionParametersEntity.m in Sources */,
 				EF557A011C85E34600F66761 /* AMBLinkCell.m in Sources */,
+				EF1A4F471CC7B9F7008EE886 /* GroupCell.m in Sources */,
 				EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */,
 				DBA3FC0C1BA8AA1D00672D82 /* AMBPTJSON.m in Sources */,
 				DBA3FC2D1BA8AA5600672D82 /* base64.c in Sources */,

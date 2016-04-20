@@ -871,11 +871,49 @@
                                     <constraint firstAttribute="height" constant="400" id="osx-c0-4Ea"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="groupFooterCell" rowHeight="50" id="1e1-cS-bVf" customClass="GroupFooterCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Bec-UN-Kxf">
                                         <rect key="frame" x="0.0" y="28" width="300" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bec-UN-Kxf" id="Vy7-cI-1mc">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="49.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rqT-db-VxL">
+                                                    <rect key="frame" x="15" y="8" width="39" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZg-m3-DI2">
+                                                    <rect key="frame" x="15" y="28" width="33" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                                    <color key="textColor" red="0.38197115384615377" green="0.38197115384615377" blue="0.38197115384615377" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="check" translatesAutoresizingMaskIntoConstraints="NO" id="7Dm-2u-gVk">
+                                                    <rect key="frame" x="272" y="15" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="Ae4-Dh-1Dp"/>
+                                                        <constraint firstAttribute="width" constant="20" id="DPq-fs-jPU"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="rqT-db-VxL" firstAttribute="leading" secondItem="Vy7-cI-1mc" secondAttribute="leading" constant="15" id="8ov-gY-Ngh"/>
+                                                <constraint firstItem="7Dm-2u-gVk" firstAttribute="centerY" secondItem="Vy7-cI-1mc" secondAttribute="centerY" id="Ap2-qP-nHV"/>
+                                                <constraint firstAttribute="trailing" secondItem="7Dm-2u-gVk" secondAttribute="trailing" constant="15" id="BS6-iT-lZz"/>
+                                                <constraint firstItem="pZg-m3-DI2" firstAttribute="leading" secondItem="Vy7-cI-1mc" secondAttribute="leading" constant="15" id="Wkf-Av-YAO"/>
+                                                <constraint firstItem="rqT-db-VxL" firstAttribute="centerY" secondItem="Vy7-cI-1mc" secondAttribute="centerY" constant="-7" id="dF9-25-Q6r"/>
+                                                <constraint firstItem="pZg-m3-DI2" firstAttribute="centerY" secondItem="Vy7-cI-1mc" secondAttribute="centerY" constant="10" id="eQO-S2-zeI"/>
+                                                <constraint firstItem="7Dm-2u-gVk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rqT-db-VxL" secondAttribute="trailing" constant="20" id="qSh-DD-XX6"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="groupFooterCell" rowHeight="50" id="1e1-cS-bVf" customClass="GroupFooterCell">
+                                        <rect key="frame" x="0.0" y="78" width="300" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1e1-cS-bVf" id="GNV-Nc-e3x">
-                                            <rect key="frame" x="0.0" y="0.0" width="300" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ih-Ch-TXJ">
@@ -895,7 +933,7 @@
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4sZ-YL-j2D">
                                                     <rect key="frame" x="0.0" y="0.0" width="300" height="1"/>
-                                                    <color key="backgroundColor" red="0.14117647059999999" green="0.64705882349999999" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="OsK-Jd-cE1"/>
                                                     </constraints>
@@ -2538,6 +2576,7 @@
         <image name="addImage" width="42" height="42"/>
         <image name="ambassadorLogo" width="98" height="98"/>
         <image name="ambassadorWordLogo" width="205" height="35"/>
+        <image name="check" width="61" height="55"/>
         <image name="close" width="44" height="43"/>
         <image name="colorWheel" width="244" height="244"/>
         <image name="converisonIconLg" width="42" height="36"/>
