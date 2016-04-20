@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZnY-6U-Jmh">
-                                        <rect key="frame" x="0.0" y="-679" width="600" height="1183"/>
+                                        <rect key="frame" x="0.0" y="-238" width="600" height="1183"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrm-Ng-BE0" customClass="SlidingView">
                                                 <rect key="frame" x="0.0" y="176" width="600" height="83"/>
@@ -58,6 +58,9 @@
                                                     </view>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2db-iC-L6h" customClass="LeftIndentedTextField">
                                                         <rect key="frame" x="178" y="41" width="245" height="41"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="referrerEmail">
+                                                            <accessibilityTraits key="traits" searchField="YES"/>
+                                                        </accessibility>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="245" id="Hrk-Cy-wmg"/>
                                                             <constraint firstAttribute="height" constant="41" id="hCO-Wu-OvH"/>
@@ -301,8 +304,11 @@
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFg-wr-j0O" customClass="SlidingView">
                                                 <rect key="frame" x="0.0" y="269" width="600" height="435"/>
                                                 <subviews>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Referred Email *" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nwG-dy-OQQ" customClass="LeftIndentedTextField">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email *" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nwG-dy-OQQ" customClass="LeftIndentedTextField">
                                                         <rect key="frame" x="178" y="41" width="245" height="41"/>
+                                                        <accessibility key="accessibilityConfiguration" identifier="referredEmail">
+                                                            <accessibilityTraits key="traits" searchField="YES"/>
+                                                        </accessibility>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="41" id="tGf-Ea-fcD">
                                                                 <variation key="heightClass=compact" constant="41"/>
@@ -366,7 +372,7 @@
                                                             <outlet property="delegate" destination="9YV-9x-emY" id="4aZ-Xd-gDf"/>
                                                         </connections>
                                                     </textField>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Custom 1" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nRH-aP-dY6" customClass="LeftIndentedTextField">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Custom Label 1" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nRH-aP-dY6" customClass="LeftIndentedTextField">
                                                         <rect key="frame" x="178" y="287" width="245" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="41" id="Gxr-XR-YOi"/>
@@ -378,7 +384,7 @@
                                                             <outlet property="delegate" destination="9YV-9x-emY" id="NUa-Js-JJb"/>
                                                         </connections>
                                                     </textField>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Custom 2" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="52G-hd-VQT" customClass="LeftIndentedTextField">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Custom Label 2" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="52G-hd-VQT" customClass="LeftIndentedTextField">
                                                         <rect key="frame" x="178" y="338" width="245" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="245" id="JbN-nA-afB"/>
@@ -390,7 +396,7 @@
                                                             <outlet property="delegate" destination="9YV-9x-emY" id="Uho-mo-9B2"/>
                                                         </connections>
                                                     </textField>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Custom 3" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PRw-wk-1Ey" customClass="LeftIndentedTextField">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Custom Label 3" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PRw-wk-1Ey" customClass="LeftIndentedTextField">
                                                         <rect key="frame" x="178" y="389" width="245" height="41"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="41" id="PTR-Eg-HHC"/>

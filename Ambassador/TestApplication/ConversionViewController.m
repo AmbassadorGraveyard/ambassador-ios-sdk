@@ -523,10 +523,10 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     parameters.mbsy_revenue = [NSNumber numberWithFloat:[self.tfRevAmt.text floatValue]];
     
     // Optional Params
-    parameters.mbsy_add_to_group_id = ![self isEmpty:self.tfGroupID] ? self.tfGroupID.text : parameters.mbsy_add_to_group_id;
+    parameters.mbsy_add_to_group_id = ![self isEmpty:self.tfGroupID] && self.swtAutoCreate.isOn ? self.tfGroupID.text : parameters.mbsy_add_to_group_id;
     parameters.mbsy_first_name = ![self isEmpty:self.tfFirstName] ? self.tfFirstName.text : parameters.mbsy_first_name;
     parameters.mbsy_last_name = ![self isEmpty:self.tfLastName] ? self.tfLastName.text : parameters.mbsy_last_name;
-    parameters.mbsy_email_new_ambassador = [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn];
+    parameters.mbsy_email_new_ambassador = self.swtAutoCreate.isOn ? [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn] : [NSNumber numberWithBool:NO];
     parameters.mbsy_uid = ![self isEmpty:self.tfUID] ? self.tfUID.text : parameters.mbsy_uid;
     parameters.mbsy_custom1 = ![self isEmpty:self.tfCustom1] ? self.tfCustom1.text : parameters.mbsy_custom1;
     parameters.mbsy_custom2 = ![self isEmpty:self.tfCustom2] ? self.tfCustom2.text : parameters.mbsy_custom2;
