@@ -20,8 +20,10 @@
 #import "UIActivityViewController+ZipShare.h"
 #import "SlidingView.h"
 #import "CampaignListController.h"
+#import "GroupListViewController.h"
+#import "GroupObject.h"
 
-@interface ConversionViewController () <UITextFieldDelegate, SlidingViewDatasource, CampaignListDelegate>
+@interface ConversionViewController () <UITextFieldDelegate, SlidingViewDatasource, CampaignListDelegate, GroupListDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -110,6 +112,14 @@ CGFloat currentOffset;
         return NO;
     }
     
+    if ([textField isEqual:self.tfGroupID]) {
+        GroupListViewController *groupList = [[GroupListViewController alloc] initWithSelectedArray:[self arrayFromGroupsField]];
+        groupList.delegate = self;
+        [self presentViewController:groupList animated:YES completion:nil];
+        
+        return NO;
+    }
+    
     return YES;
 }
 
@@ -169,6 +179,20 @@ CGFloat currentOffset;
 - (void)campaignListCampaignChosen:(CampaignObject *)campaignObject {
     self.selectedCampaign = campaignObject;
     self.tfCampID.text = campaignObject.name;
+}
+
+
+#pragma mark - Group List Delegate
+
+- (void)groupListSelectedGroups:(NSArray *)groups {
+    NSMutableString *idArrayString = [[NSMutableString alloc] init];
+    
+    for (NSString *idString in groups) {
+        NSString *currentId = [idString isEqual:[groups lastObject]] ? idString : [NSString stringWithFormat:@"%@, ", idString];
+        [idArrayString appendString:currentId];
+    }
+    
+    self.tfGroupID.text = idArrayString;
 }
 
 
@@ -513,6 +537,15 @@ CGFloat currentOffset;
             [view setup];
         }
     }
+}
+
+- (NSArray *)arrayFromGroupsField {
+    if (![AMBUtilities stringIsEmpty:self.tfGroupID.text]) {
+        NSArray *groupArray = [self.tfGroupID.text componentsSeparatedByString:@", "];
+        return groupArray;
+    }
+    
+    return nil;
 }
 
 @end
