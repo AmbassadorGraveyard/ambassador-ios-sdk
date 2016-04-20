@@ -179,7 +179,7 @@ CGFloat tableHeaderHeight = 50;
     }] resume];
 }
 
-- (void)saveCampaings:(NSDictionary*)results {
+- (void)saveCampaigns:(NSDictionary*)results {
     // Get list of campaigns
     NSArray *campaignArray = results[@"results"];
     NSMutableArray *arrayToSave = [[NSMutableArray alloc] init];
