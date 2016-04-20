@@ -22,10 +22,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZnY-6U-Jmh">
-                                        <rect key="frame" x="0.0" y="-346" width="600" height="1262"/>
+                                        <rect key="frame" x="0.0" y="-679" width="600" height="1183"/>
                                         <subviews>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrm-Ng-BE0" customClass="SlidingView">
-                                                <rect key="frame" x="0.0" y="152" width="600" height="83"/>
+                                                <rect key="frame" x="0.0" y="176" width="600" height="83"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MdT-4m-boz">
                                                         <rect key="frame" x="0.0" y="0.0" width="600" height="35"/>
@@ -123,7 +123,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N39-bj-bIu">
-                                                <rect key="frame" x="178" y="1098" width="245" height="41"/>
+                                                <rect key="frame" x="178" y="1122" width="245" height="41"/>
                                                 <color key="backgroundColor" red="0.23529411759999999" green="0.59215686270000001" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="245" id="2jy-cC-1a9">
@@ -146,7 +146,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yd9-EI-b7S" customClass="SlidingView">
-                                                <rect key="frame" x="0.0" y="690" width="600" height="388"/>
+                                                <rect key="frame" x="0.0" y="714" width="600" height="388"/>
                                                 <subviews>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q2L-KR-6t4">
                                                         <rect key="frame" x="374" y="148" width="51" height="31"/>
@@ -250,7 +250,7 @@
                                                             <constraint firstAttribute="width" constant="245" id="lmQ-zM-7SX"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="9YV-9x-emY" id="wS3-F7-7tL"/>
                                                         </connections>
@@ -299,7 +299,7 @@
                                                 </connections>
                                             </view>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jFg-wr-j0O" customClass="SlidingView">
-                                                <rect key="frame" x="0.0" y="245" width="600" height="435"/>
+                                                <rect key="frame" x="0.0" y="269" width="600" height="435"/>
                                                 <subviews>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Referred Email *" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nwG-dy-OQQ" customClass="LeftIndentedTextField">
                                                         <rect key="frame" x="178" y="41" width="245" height="41"/>
@@ -426,7 +426,7 @@
                                                                     <outlet property="delegate" destination="9YV-9x-emY" id="q89-jh-Gg6"/>
                                                                 </connections>
                                                             </textField>
-                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UCh-0U-lzB">
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="UCh-0U-lzB">
                                                                 <rect key="frame" x="194" y="92" width="51" height="31"/>
                                                             </switch>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Welcome Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehN-VN-hJq">
@@ -530,16 +530,25 @@
                                                     <outlet property="viewHeight" destination="IU3-M7-ICi" id="WQw-2R-zRp"/>
                                                 </connections>
                                             </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* Required Fields" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HEU-Hp-ebL">
+                                                <rect key="frame" x="249" y="152" width="103" height="16"/>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstItem="HEU-Hp-ebL" firstAttribute="centerX" secondItem="ZnY-6U-Jmh" secondAttribute="centerX" id="1Ef-br-fwm"/>
                                             <constraint firstItem="Rtd-Fa-1my" firstAttribute="leading" secondItem="ZnY-6U-Jmh" secondAttribute="leading" constant="20" id="434-Yu-kzU"/>
                                             <constraint firstItem="BBz-2b-yfu" firstAttribute="centerX" secondItem="ZnY-6U-Jmh" secondAttribute="centerX" id="5fX-uK-HOO"/>
                                             <constraint firstItem="BBz-2b-yfu" firstAttribute="top" secondItem="ZnY-6U-Jmh" secondAttribute="top" constant="27" id="81G-sy-wwe"/>
+                                            <constraint firstItem="HEU-Hp-ebL" firstAttribute="top" secondItem="Rtd-Fa-1my" secondAttribute="bottom" constant="8" id="8Tp-G4-8Ru"/>
                                             <constraint firstItem="Rtd-Fa-1my" firstAttribute="centerX" secondItem="BBz-2b-yfu" secondAttribute="centerX" id="8hh-en-p2o"/>
                                             <constraint firstItem="jFg-wr-j0O" firstAttribute="top" secondItem="qrm-Ng-BE0" secondAttribute="bottom" constant="10" id="AbA-jS-e9o"/>
-                                            <constraint firstItem="qrm-Ng-BE0" firstAttribute="top" secondItem="Rtd-Fa-1my" secondAttribute="bottom" constant="8" id="AeK-fD-JJt"/>
+                                            <constraint firstItem="qrm-Ng-BE0" firstAttribute="top" secondItem="Rtd-Fa-1my" secondAttribute="bottom" constant="15" id="AeK-fD-JJt"/>
                                             <constraint firstItem="BBz-2b-yfu" firstAttribute="centerX" secondItem="8rv-yY-hoM" secondAttribute="centerX" id="FVB-WE-hUM"/>
+                                            <constraint firstItem="qrm-Ng-BE0" firstAttribute="top" secondItem="HEU-Hp-ebL" secondAttribute="bottom" constant="8" id="GGE-Kg-5UI"/>
                                             <constraint firstAttribute="trailing" secondItem="qrm-Ng-BE0" secondAttribute="trailing" id="L9K-lP-zkW"/>
                                             <constraint firstItem="BBz-2b-yfu" firstAttribute="leading" secondItem="8rv-yY-hoM" secondAttribute="trailing" constant="10" id="QWs-GA-3RN"/>
                                             <constraint firstItem="Rtd-Fa-1my" firstAttribute="top" secondItem="8rv-yY-hoM" secondAttribute="bottom" constant="2" id="Qoe-vu-X33">
@@ -568,6 +577,7 @@
                                             <mask key="constraints">
                                                 <exclude reference="8hh-en-p2o"/>
                                                 <exclude reference="Qoe-vu-X33"/>
+                                                <exclude reference="AeK-fD-JJt"/>
                                                 <exclude reference="5fX-uK-HOO"/>
                                                 <exclude reference="81G-sy-wwe"/>
                                                 <exclude reference="FVB-WE-hUM"/>
@@ -626,6 +636,9 @@
                         <outlet property="svCommission" destination="yd9-EI-b7S" id="wqi-gS-eOY"/>
                         <outlet property="svCustomer" destination="jFg-wr-j0O" id="PHT-8d-U6V"/>
                         <outlet property="svEnroll" destination="6jf-va-Nb0" id="IqD-uE-eyO"/>
+                        <outlet property="swtApproved" destination="Q2L-KR-6t4" id="S1w-Yz-HbV"/>
+                        <outlet property="swtAutoCreate" destination="zdJ-XO-Hn5" id="wIO-u4-pSh"/>
+                        <outlet property="swtEmailNewAmbassador" destination="UCh-0U-lzB" id="o3f-if-RSJ"/>
                         <outlet property="tfCampID" destination="zfm-y9-S6X" id="Uak-6y-lIx"/>
                         <outlet property="tfCustom1" destination="nRH-aP-dY6" id="cEA-S4-6Sb"/>
                         <outlet property="tfCustom2" destination="52G-hd-VQT" id="ayv-Tt-o05"/>

@@ -149,13 +149,15 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     // Saves where the scrollview was currently at before scrolling
     currentOffset = self.scrollView.contentOffset.y;
     
+    // Grabs the keyboard's dimensions
     CGRect keyboardFrame = [notificaiton.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
-    CGFloat textfieldPosition = self.selectedTextField.frame.origin.y + 10;
+    CGFloat textfieldPosition = self.selectedTextField.frame.origin.y + self.selectedTextField.superview.frame.origin.y;
     CGFloat difference = self.scrollView.frame.size.height - textfieldPosition;
+    CGFloat newY = keyboardFrame.size.height - difference;
     
-    if (keyboardFrame.size.height > difference) {
-        CGFloat newY = keyboardFrame.size.height - difference;
+    // Makes sure the textfield is not above the keyboard already
+    if (newY > 0 && newY > currentOffset) {
         [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
     }
 }
@@ -240,11 +242,11 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     self.tfRefEmail.tintColor = self.btnSubmit.backgroundColor;
     self.tfRevAmt.tintColor = self.btnSubmit.backgroundColor;
     
+    // Adds done button to keyboard
     UIToolbar *keyboardDoneButtonView = [[UIToolbar alloc] init];
     [keyboardDoneButtonView sizeToFit];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneClicked:)];
     [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
-    self.tfCampID.inputAccessoryView = keyboardDoneButtonView;
     self.tfRevAmt.inputAccessoryView = keyboardDoneButtonView;
 }
 
@@ -319,13 +321,13 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 }
 
 - (void)performConversionActionWithShortCode {
-    if (![self invalidFields]) {
+    if (![self invalidFields:YES]) {
         [self getShortCodeAndSubmit];
     }
 }
 
 - (void)exportConversionCode {
-    if (![self invalidFields]) {
+    if (![self invalidFields:NO]) {
         // Creates a new directiry in the documents folder
         NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-conversion.zip"];
         
@@ -479,8 +481,8 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     return [readmeString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
-- (BOOL)invalidFields {
-    if (![Validator isValidEmail:self.tfReferrerEmail.text]) {
+- (BOOL)invalidFields:(BOOL)checkReferrer {
+    if (![Validator isValidEmail:self.tfReferrerEmail.text] && checkReferrer) {
         UIAlertView *blankRefAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Referrer Email field must be a valid email." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [blankRefAlert show];
         
@@ -528,7 +530,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     parameters.mbsy_custom2 = ![self isEmpty:self.tfCustom2] ? self.tfCustom2.text : parameters.mbsy_custom2;
     parameters.mbsy_custom3 = ![self isEmpty:self.tfCustom3] ? self.tfCustom3.text : parameters.mbsy_custom3;
     parameters.mbsy_auto_create = [NSNumber numberWithBool: self.swtAutoCreate.isOn];
-    parameters.mbsy_deactivate_new_ambassador = [NSNumber numberWithBool: self.swtDeactivateNewAmbassador.isOn];
+    parameters.mbsy_deactivate_new_ambassador = [NSNumber numberWithBool: NO];
     parameters.mbsy_transaction_uid = ![self isEmpty:self.tfTransactionUID] ? self.tfTransactionUID.text : parameters.mbsy_transaction_uid;
     parameters.mbsy_event_data1 = ![self isEmpty:self.tfEventData1] ? self.tfEventData1.text : parameters.mbsy_event_data1;
     parameters.mbsy_event_data2 = ![self isEmpty:self.tfEventData2] ? self.tfEventData2.text : parameters.mbsy_event_data2;
