@@ -18,8 +18,12 @@
 #import "FileWriter.h"
 #import <ZipZap/ZipZap.h>
 #import "UIActivityViewController+ZipShare.h"
+#import "SlidingView.h"
+#import "CampaignListController.h"
+#import "GroupListViewController.h"
+#import "GroupObject.h"
 
-@interface ConversionViewController () <UITextFieldDelegate>
+@interface ConversionViewController () <UITextFieldDelegate, SlidingViewDatasource, SlidingViewDelegate, CampaignListDelegate, GroupListDelegate>
 
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
 @property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
@@ -46,8 +50,15 @@
 @property (nonatomic, strong) IBOutlet UISwitch * swtAutoCreate;
 @property (nonatomic, strong) IBOutlet UISwitch * swtDeactivateNewAmbassador;
 
+@property (nonatomic, strong) IBOutlet UIView * masterView;
+@property (nonatomic, strong) IBOutlet SlidingView * svAmbassador;
+@property (nonatomic, strong) IBOutlet SlidingView * svCustomer;
+@property (nonatomic, strong) IBOutlet SlidingView * svCommission;
+@property (nonatomic, weak) IBOutlet SlidingView * svEnroll;
+
 // Private properties
 @property (nonatomic, strong) UITextField * selectedTextField;
+@property (nonatomic, strong) CampaignObject * selectedCampaign;
 
 @end
 
@@ -56,11 +67,20 @@
 
 CGFloat currentOffset;
 
+// Sliding view heights
+NSInteger AMBASSADOR_SLIDING_HEIGHT = 83;
+NSInteger CUSTOMER_ORIGINAL_SLIDING_HEIGHT = 435;
+NSInteger CUSTOMER_NEW_SLIDING_HEIGHT = 538;
+NSInteger COMMISION_SLIDING_HEIGHT = 388;
+NSInteger ENROLL_SLIDING_HEIGHT = 123;
+
+
 #pragma mark - LifeCycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUpTheme];
+    [self setupSlidingViews];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -91,6 +111,26 @@ CGFloat currentOffset;
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     self.selectedTextField = textField;
+    
+    if ([textField isEqual:self.tfCampID]) {
+        // Show Campaign list VC
+        CampaignListController *campaignList = [[CampaignListController alloc] init];
+        campaignList.delegate = self;
+        
+        // Reason for presentin with tabBarController.parentController is so that the list covers the navBAR-- SAME BELOW
+        [self.tabBarController.parentViewController presentViewController:campaignList animated:YES completion:nil];
+        
+        return NO;
+    }
+    
+    if ([textField isEqual:self.tfGroupID]) {
+        GroupListViewController *groupList = [[GroupListViewController alloc] initWithSelectedArray:[self arrayFromGroupsField]];
+        groupList.delegate = self;
+        [self.tabBarController.parentViewController presentViewController:groupList animated:YES completion:nil];
+        
+        return NO;
+    }
+    
     return YES;
 }
 
@@ -111,13 +151,15 @@ CGFloat currentOffset;
     // Saves where the scrollview was currently at before scrolling
     currentOffset = self.scrollView.contentOffset.y;
     
+    // Grabs the keyboard's dimensions
     CGRect keyboardFrame = [notificaiton.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
-    CGFloat textfieldPosition = self.selectedTextField.frame.origin.y + 10;
+    CGFloat textfieldPosition = self.selectedTextField.frame.origin.y + self.selectedTextField.superview.frame.origin.y;
     CGFloat difference = self.scrollView.frame.size.height - textfieldPosition;
+    CGFloat newY = keyboardFrame.size.height - difference;
     
-    if (keyboardFrame.size.height > difference) {
-        CGFloat newY = keyboardFrame.size.height - difference;
+    // Makes sure the textfield is not above the keyboard already
+    if (newY > 0 && newY > currentOffset) {
         [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
     }
 }
@@ -125,6 +167,66 @@ CGFloat currentOffset;
 - (void)keyboardWillBeHidden:(NSNotification*)notification {
     // Resets the scrollview to original position
     [self.scrollView setContentOffset:CGPointMake(0, currentOffset) animated:YES];
+}
+
+
+#pragma mark - Sliding View Datasource
+
+- (NSInteger)slidingViewExpandedHeight:(SlidingView *)slidingView {
+    if (slidingView == self.svAmbassador) {
+        return AMBASSADOR_SLIDING_HEIGHT;
+    } else if (slidingView == self.svCustomer) {
+        return CUSTOMER_ORIGINAL_SLIDING_HEIGHT;
+    } else if (slidingView == self.svCommission) {
+        return COMMISION_SLIDING_HEIGHT;
+    } else {
+        return ENROLL_SLIDING_HEIGHT;
+    }
+}
+
+- (NSInteger)slidingViewCollapsedHeight:(SlidingView *)slidingView {
+    if (slidingView == self.svEnroll) {
+        return 32;
+    }
+    
+    return 35;
+}
+
+
+#pragma mark - Sliding View Delegate
+
+- (void)slidingViewExpanded:(SlidingView *)slidingView {
+    if (slidingView == self.svEnroll) {
+        [self.svCustomer setNewExpandedHeight:CUSTOMER_NEW_SLIDING_HEIGHT];
+    }
+}
+
+- (void)slidingViewCollapsed:(SlidingView *)slidingView {
+    if (slidingView == self.svEnroll) {
+        [self.svCustomer setNewExpandedHeight:CUSTOMER_ORIGINAL_SLIDING_HEIGHT];
+    }
+}
+
+
+#pragma mark - Campaign List Delegate
+
+- (void)campaignListCampaignChosen:(CampaignObject *)campaignObject {
+    self.selectedCampaign = campaignObject;
+    self.tfCampID.text = campaignObject.name;
+}
+
+
+#pragma mark - Group List Delegate
+
+- (void)groupListSelectedGroups:(NSArray *)groups {
+    NSMutableString *idArrayString = [[NSMutableString alloc] init];
+    
+    for (NSString *idString in groups) {
+        NSString *currentId = [idString isEqual:[groups lastObject]] ? idString : [NSString stringWithFormat:@"%@, ", idString];
+        [idArrayString appendString:currentId];
+    }
+    
+    self.tfGroupID.text = idArrayString;
 }
 
 
@@ -142,11 +244,11 @@ CGFloat currentOffset;
     self.tfRefEmail.tintColor = self.btnSubmit.backgroundColor;
     self.tfRevAmt.tintColor = self.btnSubmit.backgroundColor;
     
+    // Adds done button to keyboard
     UIToolbar *keyboardDoneButtonView = [[UIToolbar alloc] init];
     [keyboardDoneButtonView sizeToFit];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneClicked:)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneClicked:)];
     [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
-    self.tfCampID.inputAccessoryView = keyboardDoneButtonView;
     self.tfRevAmt.inputAccessoryView = keyboardDoneButtonView;
 }
 
@@ -161,7 +263,7 @@ CGFloat currentOffset;
 
 - (void)getShortCodeAndSubmit {
     // Sets up request
-    NSString *urlString = [NSString stringWithFormat:@"urls/?campaign_uid=%@&email=%@", self.tfCampID.text, self.tfReferrerEmail.text];
+    NSString *urlString = [NSString stringWithFormat:@"urls/?campaign_uid=%@&email=%@", self.selectedCampaign.campID, self.tfReferrerEmail.text];
     
     NSURL *ambassadorURL;
     #if AMBPRODUCTION
@@ -221,13 +323,13 @@ CGFloat currentOffset;
 }
 
 - (void)performConversionActionWithShortCode {
-    if (![self invalidFields]) {
+    if (![self invalidFields:YES]) {
         [self getShortCodeAndSubmit];
     }
 }
 
 - (void)exportConversionCode {
-    if (![self invalidFields]) {
+    if (![self invalidFields:NO]) {
         // Creates a new directiry in the documents folder
         NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-conversion.zip"];
         
@@ -381,8 +483,8 @@ CGFloat currentOffset;
     return [readmeString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
-- (BOOL)invalidFields {
-    if (![Validator isValidEmail:self.tfReferrerEmail.text]) {
+- (BOOL)invalidFields:(BOOL)checkReferrer {
+    if (![Validator isValidEmail:self.tfReferrerEmail.text] && checkReferrer) {
         UIAlertView *blankRefAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Referrer Email field must be a valid email." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [blankRefAlert show];
         
@@ -417,20 +519,20 @@ CGFloat currentOffset;
     
     // Required Params
     parameters.mbsy_email = self.tfRefEmail.text;
-    parameters.mbsy_campaign = [NSNumber numberWithInteger:[self.tfCampID.text integerValue]];
+    parameters.mbsy_campaign = [NSNumber numberWithInteger:[self.selectedCampaign.campID integerValue]];
     parameters.mbsy_revenue = [NSNumber numberWithFloat:[self.tfRevAmt.text floatValue]];
     
     // Optional Params
-    parameters.mbsy_add_to_group_id = ![self isEmpty:self.tfGroupID] ? self.tfGroupID.text : parameters.mbsy_add_to_group_id;
+    parameters.mbsy_add_to_group_id = ![self isEmpty:self.tfGroupID] && self.swtAutoCreate.isOn ? self.tfGroupID.text : parameters.mbsy_add_to_group_id;
     parameters.mbsy_first_name = ![self isEmpty:self.tfFirstName] ? self.tfFirstName.text : parameters.mbsy_first_name;
     parameters.mbsy_last_name = ![self isEmpty:self.tfLastName] ? self.tfLastName.text : parameters.mbsy_last_name;
-    parameters.mbsy_email_new_ambassador = [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn];
+    parameters.mbsy_email_new_ambassador = self.swtAutoCreate.isOn ? [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn] : [NSNumber numberWithBool:NO];
     parameters.mbsy_uid = ![self isEmpty:self.tfUID] ? self.tfUID.text : parameters.mbsy_uid;
     parameters.mbsy_custom1 = ![self isEmpty:self.tfCustom1] ? self.tfCustom1.text : parameters.mbsy_custom1;
     parameters.mbsy_custom2 = ![self isEmpty:self.tfCustom2] ? self.tfCustom2.text : parameters.mbsy_custom2;
     parameters.mbsy_custom3 = ![self isEmpty:self.tfCustom3] ? self.tfCustom3.text : parameters.mbsy_custom3;
     parameters.mbsy_auto_create = [NSNumber numberWithBool: self.swtAutoCreate.isOn];
-    parameters.mbsy_deactivate_new_ambassador = [NSNumber numberWithBool: self.swtDeactivateNewAmbassador.isOn];
+    parameters.mbsy_deactivate_new_ambassador = [NSNumber numberWithBool: NO];
     parameters.mbsy_transaction_uid = ![self isEmpty:self.tfTransactionUID] ? self.tfTransactionUID.text : parameters.mbsy_transaction_uid;
     parameters.mbsy_event_data1 = ![self isEmpty:self.tfEventData1] ? self.tfEventData1.text : parameters.mbsy_event_data1;
     parameters.mbsy_event_data2 = ![self isEmpty:self.tfEventData2] ? self.tfEventData2.text : parameters.mbsy_event_data2;
@@ -460,6 +562,28 @@ CGFloat currentOffset;
     NSDictionary *resultsDict = results[0];
     
     return resultsDict[@"short_code"];
+}
+
+- (void)setupSlidingViews {
+    for (SlidingView *view in [self.masterView subviews]) {
+        if ([view isKindOfClass:[SlidingView class]]) {
+            view.datasource = self;
+            [view setup];
+        }
+    }
+    
+    self.svEnroll.datasource = self;
+    self.svEnroll.delegate = self;
+    [self.svEnroll setup];
+}
+
+- (NSArray *)arrayFromGroupsField {
+    if (![AMBUtilities stringIsEmpty:self.tfGroupID.text]) {
+        NSArray *groupArray = [self.tfGroupID.text componentsSeparatedByString:@", "];
+        return groupArray;
+    }
+    
+    return nil;
 }
 
 @end

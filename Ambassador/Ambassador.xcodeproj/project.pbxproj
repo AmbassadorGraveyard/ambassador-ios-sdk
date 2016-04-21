@@ -148,8 +148,14 @@
 		EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF07452B1C52C8FA009AF919 /* libOCMock.a */; };
 		EF1399AC1C6551AB0005054D /* AMBContactLoaderUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */; };
 		EF1A4F271CC56DF7008EE886 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1A4F261CC56DF7008EE886 /* libzipzap.a */; };
+		EF1A4F2C1CC58DE8008EE886 /* SlidingView.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F2A1CC58DE8008EE886 /* SlidingView.h */; };
+		EF1A4F2D1CC58DE8008EE886 /* SlidingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F2B1CC58DE8008EE886 /* SlidingView.m */; };
 		EF1A4F341CC67802008EE886 /* UIActivityViewController+ZipShare.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F321CC67802008EE886 /* UIActivityViewController+ZipShare.h */; };
 		EF1A4F351CC67802008EE886 /* UIActivityViewController+ZipShare.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F331CC67802008EE886 /* UIActivityViewController+ZipShare.m */; };
+		EF1A4F391CC6C5AC008EE886 /* GroupListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F371CC6C5AC008EE886 /* GroupListViewController.h */; };
+		EF1A4F3D1CC6CD07008EE886 /* GroupObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F3B1CC6CD07008EE886 /* GroupObject.h */; };
+		EF1A4F411CC6D8B8008EE886 /* GroupFooterCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F3F1CC6D8B8008EE886 /* GroupFooterCell.h */; };
+		EF1A4F461CC7B9F7008EE886 /* GroupCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F441CC7B9F7008EE886 /* GroupCell.h */; };
 		EF1C82A01C625A930033A364 /* AMBIdenityUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */; };
 		EF1C82A21C6285B00033A364 /* AMBNamePromptUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */; };
 		EF1CB0B11C3C2FF500F65031 /* AMBContactCard.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */; };
@@ -165,6 +171,10 @@
 		EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */; };
 		EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */; };
 		EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */; };
+		EF280DA81CC8272E00326FD6 /* GroupFooterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F401CC6D8B8008EE886 /* GroupFooterCell.m */; };
+		EF280DA91CC8272E00326FD6 /* GroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F451CC7B9F7008EE886 /* GroupCell.m */; };
+		EF280DAA1CC8272E00326FD6 /* GroupObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */; };
+		EF280DAB1CC8272E00326FD6 /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F381CC6C5AC008EE886 /* GroupListViewController.m */; };
 		EF28DF291CC132FE0070994F /* FileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5C5F1CBFEBD300458480 /* FileWriter.m */; };
 		EF28DF2B1CC142250070994F /* AmbassadorSecrets.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */; };
 		EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */; };
@@ -490,8 +500,18 @@
 		EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBContactLoaderUnitTests.m; sourceTree = "<group>"; };
 		EF1A4F241CC51663008EE886 /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "Pods/../build/Debug-iphoneos/libzipzap.a"; sourceTree = "<group>"; };
 		EF1A4F261CC56DF7008EE886 /* libzipzap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzipzap.a; path = "../../../../Library/Developer/Xcode/DerivedData/Ambassador-fyowizzyypljqlfqhcjipifufznh/Build/Products/Debug-iphoneos/libzipzap.a"; sourceTree = "<group>"; };
+		EF1A4F2A1CC58DE8008EE886 /* SlidingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlidingView.h; sourceTree = "<group>"; };
+		EF1A4F2B1CC58DE8008EE886 /* SlidingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlidingView.m; sourceTree = "<group>"; };
 		EF1A4F321CC67802008EE886 /* UIActivityViewController+ZipShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+ZipShare.h"; sourceTree = "<group>"; };
 		EF1A4F331CC67802008EE886 /* UIActivityViewController+ZipShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+ZipShare.m"; sourceTree = "<group>"; };
+		EF1A4F371CC6C5AC008EE886 /* GroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupListViewController.h; sourceTree = "<group>"; };
+		EF1A4F381CC6C5AC008EE886 /* GroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupListViewController.m; sourceTree = "<group>"; };
+		EF1A4F3B1CC6CD07008EE886 /* GroupObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupObject.h; sourceTree = "<group>"; };
+		EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupObject.m; sourceTree = "<group>"; };
+		EF1A4F3F1CC6D8B8008EE886 /* GroupFooterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupFooterCell.h; sourceTree = "<group>"; };
+		EF1A4F401CC6D8B8008EE886 /* GroupFooterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupFooterCell.m; sourceTree = "<group>"; };
+		EF1A4F441CC7B9F7008EE886 /* GroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupCell.h; sourceTree = "<group>"; };
+		EF1A4F451CC7B9F7008EE886 /* GroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupCell.m; sourceTree = "<group>"; };
 		EF1C829F1C625A930033A364 /* AMBIdenityUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBIdenityUnitTests.m; sourceTree = "<group>"; };
 		EF1C82A11C6285B00033A364 /* AMBNamePromptUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNamePromptUnitTests.m; sourceTree = "<group>"; };
 		EF1CB0AF1C3C2FF500F65031 /* AMBContactCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBContactCard.h; sourceTree = "<group>"; };
@@ -994,6 +1014,29 @@
 			name = "Custom Alert";
 			sourceTree = "<group>";
 		};
+		EF1A4F361CC6C597008EE886 /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				EF1A4F431CC7B9C2008EE886 /* Custom Cells */,
+				EF1A4F3B1CC6CD07008EE886 /* GroupObject.h */,
+				EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */,
+				EF1A4F371CC6C5AC008EE886 /* GroupListViewController.h */,
+				EF1A4F381CC6C5AC008EE886 /* GroupListViewController.m */,
+			);
+			name = Groups;
+			sourceTree = "<group>";
+		};
+		EF1A4F431CC7B9C2008EE886 /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EF1A4F3F1CC6D8B8008EE886 /* GroupFooterCell.h */,
+				EF1A4F401CC6D8B8008EE886 /* GroupFooterCell.m */,
+				EF1A4F441CC7B9F7008EE886 /* GroupCell.h */,
+				EF1A4F451CC7B9F7008EE886 /* GroupCell.m */,
+			);
+			name = "Custom Cells";
+			sourceTree = "<group>";
+		};
 		EF1CC8051C99E11000C2752B /* Custom Input */ = {
 			isa = PBXGroup;
 			children = (
@@ -1163,6 +1206,8 @@
 				EF9D98DE1CA4886200F5711F /* Color Picker */,
 				EF499DB61CAD6C1D00D2EB01 /* LoadingScreen.h */,
 				EF499DB71CAD6C1D00D2EB01 /* LoadingScreen.m */,
+				EF1A4F2A1CC58DE8008EE886 /* SlidingView.h */,
+				EF1A4F2B1CC58DE8008EE886 /* SlidingView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1170,6 +1215,7 @@
 		EF783C0A1CA077FE00079B65 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				EF1A4F361CC6C597008EE886 /* Groups */,
 				EF8FD8A51CA59EB600C0ADB7 /* Campaigns */,
 				EF557A191C88D39C00F66761 /* DefaultsHandler.h */,
 				EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */,
@@ -1467,9 +1513,11 @@
 				EF33DCFC1C739D6A009689CA /* RavenConfig.h in Headers */,
 				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
 				EFE7D7951C21C19B00D7F92C /* AMBCoreDataDelegate.h in Headers */,
+				EF1A4F3D1CC6CD07008EE886 /* GroupObject.h in Headers */,
 				DBA3FC051BA8AA1D00672D82 /* AMBPTJSON.h in Headers */,
 				DBA3FC131BA8AA1D00672D82 /* AMBPTPusherChannel.h in Headers */,
 				EF1A4F341CC67802008EE886 /* UIActivityViewController+ZipShare.h in Headers */,
+				EF1A4F391CC6C5AC008EE886 /* GroupListViewController.h in Headers */,
 				DB6A245F1BD00F3F00CE3230 /* AMBNetworkManager.h in Headers */,
 				DBA3FBBB1BA8A24F00672D82 /* AMBShareServiceCell.h in Headers */,
 				EF3079161C6E205800403F56 /* AMBPusherChannelObject.h in Headers */,
@@ -1504,7 +1552,9 @@
 				EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */,
 				DBA3FC251BA8AA1D00672D82 /* AMBPusher.h in Headers */,
 				DBA3FC0B1BA8AA1D00672D82 /* AMBPTEventListener.h in Headers */,
+				EF1A4F2C1CC58DE8008EE886 /* SlidingView.h in Headers */,
 				DBA3FB7F1BA8A23C00672D82 /* AMBConversion.h in Headers */,
+				EF1A4F461CC7B9F7008EE886 /* GroupCell.h in Headers */,
 				EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */,
 				EF557A041C86038F00F66761 /* AMBWelcomeScreenParameters.h in Headers */,
 				DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */,
@@ -1523,6 +1573,7 @@
 				EF1CC8081C99E13800C2752B /* AMBInputAlert.h in Headers */,
 				DBA3FBB11BA8A24F00672D82 /* AMBSelectedCell.h in Headers */,
 				DBA3FBBF1BA8A24F00672D82 /* AMBUtilities.h in Headers */,
+				EF1A4F411CC6D8B8008EE886 /* GroupFooterCell.h in Headers */,
 				DBA3FC2F1BA8AA5600672D82 /* NSData+SRB64Additions.h in Headers */,
 				DBA3FBB51BA8A24F00672D82 /* AMBServiceSelector.h in Headers */,
 				DBA3FB7D1BA8A23C00672D82 /* AMBContactSelector.h in Headers */,
@@ -1887,6 +1938,7 @@
 				DBA3FC0A1BA8AA1D00672D82 /* AMBPTBlockEventListener.m in Sources */,
 				EF896FD71CBD3D63003E270D /* AMBSecrets.m in Sources */,
 				EF5579FB1C84F65500F66761 /* AMBWelcomeScreenViewController.m in Sources */,
+				EF1A4F2D1CC58DE8008EE886 /* SlidingView.m in Sources */,
 				DBA3FC151BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m in Sources */,
 				DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */,
 				DBA3FB801BA8A23C00672D82 /* AMBConversion.m in Sources */,
@@ -1967,6 +2019,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF280DA81CC8272E00326FD6 /* GroupFooterCell.m in Sources */,
+				EF280DA91CC8272E00326FD6 /* GroupCell.m in Sources */,
+				EF280DAA1CC8272E00326FD6 /* GroupObject.m in Sources */,
+				EF280DAB1CC8272E00326FD6 /* GroupListViewController.m in Sources */,
 				EF28DF2B1CC142250070994F /* AmbassadorSecrets.plist in Sources */,
 				EF28DF291CC132FE0070994F /* FileWriter.m in Sources */,
 				EF8FD8AF1CA9CA9900C0ADB7 /* SocialCell.m in Sources */,
