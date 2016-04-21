@@ -91,6 +91,7 @@ typedef enum socialShareTypes {
 - (NSMutableDictionary*)imageForKey:(AmbassadorImages)imageName;
 - (NSNumber*)sizeForKey:(AmbassadorSizes)sizeName;
 - (NSArray*)customSocialGridArray;
+- (UIStatusBarStyle)statusBarTheme;
 + (SocialShareTypes)enumValueForSocialString:(NSString*)string;
 
 @end

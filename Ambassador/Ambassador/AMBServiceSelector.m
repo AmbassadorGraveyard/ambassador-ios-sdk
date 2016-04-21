@@ -42,6 +42,7 @@
 @property (nonatomic, strong) AMBUserUrlNetworkObject *urlNetworkObj;
 @property (nonatomic, strong) UILabel * lblCopied;
 @property (nonatomic, strong) NSTimer * copiedAnimationTimer;
+@property (nonatomic) UIStatusBarStyle originalStatusBarTheme;
 
 @end
 
@@ -60,6 +61,7 @@ int contactServiceType;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLoadingView) name:@"PusherReceived" object:nil]; // Subscribe to the notification that gets sent out when we get our pusher payload back
     self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
+    self.originalStatusBarTheme = [[UIApplication sharedApplication] statusBarStyle];
 
     [self setUpTheme];
     [self setUpCloseButton];
@@ -108,6 +110,9 @@ int contactServiceType;
 
 - (void)closeButtonPressed:(UIButton *)button {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    
+    // If the Info.plist value 'ViewController-based status bar is YES, we need to manually set the theme back to the original theme
+    [[UIApplication sharedApplication] setStatusBarStyle: self.originalStatusBarTheme];
 }
 
 
@@ -276,8 +281,8 @@ int contactServiceType;
     self.btnCopy.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldBackgroundColor];
     self.shortURLBackground.layer.cornerRadius = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldCornerRadius] floatValue];
     
-    // Checks to see if the nav bar color is "light" or "dark" and sets the status bar text color accordingly
-    if ([AMBUtilities colorIsDark:[[AMBThemeManager sharedInstance] colorForKey:NavBarColor]]) { self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent; }
+    // Status bar
+    [self setStatusBarTheme];
 }
 
 - (void)applyImage {
@@ -310,6 +315,15 @@ int contactServiceType;
         default:
             break;
     }
+}
+
+- (void)setStatusBarTheme {
+    // If the Info.plist value 'ViewController-based status bar is NO -- this works
+    [[UIApplication sharedApplication] setStatusBarStyle: [[AMBThemeManager sharedInstance] statusBarTheme]];
+    
+    // If the Info.plist value 'ViewController-based status bar is YES -- this works
+    UIBarStyle barStyle = [[AMBThemeManager sharedInstance] statusBarTheme] == UIStatusBarStyleLightContent ? UIBarStyleBlack : UIBarStyleDefault;
+    self.navigationController.navigationBar.barStyle = barStyle;
 }
 
 - (void)setUpCloseButton {

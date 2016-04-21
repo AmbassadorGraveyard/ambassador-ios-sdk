@@ -16,6 +16,7 @@
 #import "CampaignListController.h"
 #import "SocialShareOptionsHandler.h"
 #import "LoadingScreen.h"
+#import "AMBThemeManager.h"
 #import "Validator.h"
 
 @interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate,
@@ -39,6 +40,8 @@
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint * socialTableHeight;
 @property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
 @property (nonatomic, strong) IBOutlet UITextView * tvHeaderText;
+@property (nonatomic, weak) IBOutlet UISwitch * swtStatusBar;
+@property (nonatomic, weak) IBOutlet UILabel * lblStatusBarTheme;
 
 // Private properties
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
@@ -290,7 +293,7 @@ NSInteger currentScrollPoint;
     // Creates a toolbar with a 'Done' button in it for dismissing textviews
     UIToolbar *keyboardDoneButtonView = [[UIToolbar alloc] init];
     [keyboardDoneButtonView sizeToFit];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(doneClicked)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneClicked)];
     [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
     
     for (UITextView *textView  in [self.masterView subviews]) {
@@ -301,6 +304,9 @@ NSInteger currentScrollPoint;
             textView.inputAccessoryView = keyboardDoneButtonView;
         }
     }
+    
+    // Switch
+    [self.swtStatusBar addTarget:self action:@selector(updateStatusBarTheme) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)setValuesWithPlistDict {
@@ -328,6 +334,10 @@ NSInteger currentScrollPoint;
     
     // Social Table
     [self getSocialObjectsFromPlist];
+    
+    // Theme Switch
+    self.swtStatusBar.on = [[AMBThemeManager sharedInstance] statusBarTheme] == UIStatusBarStyleLightContent ? NO : YES;
+    [self updateStatusBarTheme];
 }
 
 
@@ -362,6 +372,9 @@ NSInteger currentScrollPoint;
     
     // Overrides social table
     [self.plistDict setValue:[self stringFromSocialChannels] forKey:@"Channels"];
+    
+    // Overrides status bar theme
+    [self.plistDict setValue:[NSNumber numberWithBool:self.swtStatusBar.isOn] forKey:@"UseDarkStatusBarTheme"];
 }
 
 - (void)overridePlistIfImage:(NSString *)rafPlist {
@@ -495,6 +508,11 @@ NSInteger currentScrollPoint;
 - (void)showCancelConfirmation {
     UIAlertView *cancelAlert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"By cancelling, all changes will be lost." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
     [cancelAlert show];
+}
+
+- (void)updateStatusBarTheme {
+    // Updates text based on theme"`
+    self.lblStatusBarTheme.text = self.swtStatusBar.isOn ? @"Dark" : @"Light";
 }
 
 @end
