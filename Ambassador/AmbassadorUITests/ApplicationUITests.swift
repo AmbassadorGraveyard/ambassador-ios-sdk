@@ -74,12 +74,12 @@ extension ApplicationUITests {
         okayButton.tap()
         
         // Type referrer email text
-        let referrerTF = elementsQuery.elementMatchingType(XCUIElementType.TextField, identifier: "referrerEmail")
+        let referrerTF = app.scrollViews.otherElements.searchFields["referrerEmail"]
         referrerTF.tap()
         referrerTF.typeText("jake@getambassador.com")
         
         // Type referred email text
-        let referredEmailTextField = elementsQuery.elementMatchingType(XCUIElementType.TextField, identifier: "referredEmail")
+        let referredEmailTextField = app.scrollViews.otherElements.searchFields["referredEmail"]
         referredEmailTextField.tap()
         referredEmailTextField.typeText("test")
         app.buttons["Return"].tap()

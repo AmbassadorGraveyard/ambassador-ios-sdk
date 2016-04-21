@@ -58,7 +58,7 @@
                                                     </view>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email *" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2db-iC-L6h" customClass="LeftIndentedTextField">
                                                         <rect key="frame" x="178" y="41" width="245" height="41"/>
-                                                        <accessibility key="accessibilityConfiguration" identifier="referrerEmail">
+                                                        <accessibility key="accessibilityConfiguration" identifier="referrerEmail" label="referrerEmail">
                                                             <accessibilityTraits key="traits" searchField="YES"/>
                                                         </accessibility>
                                                         <constraints>
