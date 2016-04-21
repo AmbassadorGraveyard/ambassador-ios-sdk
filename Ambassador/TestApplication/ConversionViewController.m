@@ -341,7 +341,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
         NSURL *fileURL = [NSURL fileURLWithPath:filePath];
         
         // ActivityViewController category function that shares a zip
-        [UIActivityViewController shareZip:fileURL withMessage:@"Temporary Conversion message -- Will be README" subject:@"Ambassador Conversion Code" forPresenter:self];
+        [UIActivityViewController shareZip:fileURL withMessage:[FileWriter readMeForRequest:@"conversion"] subject:@"Ambassador Conversion Code" forPresenter:self];
     }
 }
 
@@ -476,11 +476,6 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     }];
     
     return javaEntry;
-}
-
-- (NSData *)getReadme {
-    NSString *readmeString = [FileWriter readMeForRequest:@"conversion"];
-    return [readmeString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (BOOL)invalidFields:(BOOL)checkReferrer {
