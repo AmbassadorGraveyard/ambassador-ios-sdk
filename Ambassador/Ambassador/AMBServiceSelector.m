@@ -276,8 +276,8 @@ int contactServiceType;
     self.btnCopy.backgroundColor = [[AMBThemeManager sharedInstance] colorForKey:ShareFieldBackgroundColor];
     self.shortURLBackground.layer.cornerRadius = [[[AMBThemeManager sharedInstance] sizeForKey:ShareFieldCornerRadius] floatValue];
     
-    // Checks to see if the nav bar color is "light" or "dark" and sets the status bar text color accordingly
-    if ([AMBUtilities colorIsDark:[[AMBThemeManager sharedInstance] colorForKey:NavBarColor]]) { self.navigationController.navigationBar.barStyle = UIStatusBarStyleLightContent; }
+    // Sets status bar theme from boolean in plist
+    [[UIApplication sharedApplication] setStatusBarStyle: [[AMBThemeManager sharedInstance] statusBarTheme]];
 }
 
 - (void)applyImage {
