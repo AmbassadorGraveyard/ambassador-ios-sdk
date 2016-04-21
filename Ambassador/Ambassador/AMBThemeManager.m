@@ -294,6 +294,19 @@ static NSDictionary * valuesDic;
 }
 
 
+#pragma mark - Status Bar
+
+- (UIStatusBarStyle)statusBarTheme {
+    // Key for boolean
+    NSString *key = @"UseDarkStatusBarTheme";
+    
+    // Get Bool value from plist
+    BOOL useDarkTheme = [self keyExists:key] ? [[valuesDic valueForKey:key] boolValue] : YES;
+    
+    return useDarkTheme ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
+}
+
+
 #pragma mark - Helper Functions
 
 - (BOOL)keyExists:(NSString*)keyName {
