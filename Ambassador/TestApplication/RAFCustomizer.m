@@ -457,7 +457,7 @@ NSInteger currentScrollPoint;
     NSMutableString *channelString = [[NSMutableString alloc] init];
     
     for (NSString *socialString in self.socialArray) {
-        NSString *appendString = (socialString != [self.socialArray lastObject]) ? [NSString stringWithFormat:@"%@,", socialString] : socialString;
+        NSString *appendString = (socialString != [self.socialArray lastObject]) ? [NSString stringWithFormat:@"%@, ", socialString] : socialString;
         [channelString appendString:appendString];
     }
     

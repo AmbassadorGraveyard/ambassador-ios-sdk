@@ -69,17 +69,9 @@
     [self.fullArray removeObjectAtIndex:sourceIndexPath.row];
     [self.fullArray insertObject:stringToMove atIndex:destinationIndexPath.row];
     
-    // Creates a new array with correct order and enabled channels
-    NSMutableArray *newOrderArray = [[NSMutableArray alloc] init];
-    for (NSString *channel in self.fullArray) {
-        if ([self.onArray containsObject:channel]) {
-            [newOrderArray addObject:channel];
-        }
-    }
-    
     // Checks if delegate is implementing function and passes back new order of array
     if ([self.delegate respondsToSelector:@selector(socialShareHandlerUpdated:)]) {
-        [self.delegate socialShareHandlerUpdated:newOrderArray];
+        [self.delegate socialShareHandlerUpdated:[self orderedArray]];
     }
 }
 
@@ -105,8 +97,20 @@
     
     // Tells delegate to update social array if responds
     if ([self.delegate respondsToSelector:@selector(socialShareHandlerEnabledObjectsUpdated:)]) {
-        [self.delegate socialShareHandlerEnabledObjectsUpdated:self.onArray];
+        [self.delegate socialShareHandlerEnabledObjectsUpdated:[self orderedArray]];
     }
+}
+
+- (NSMutableArray *)orderedArray {
+    // Grabs the correct order of the 'on' array
+    NSMutableArray *newOrderArray = [[NSMutableArray alloc] init];
+    for (NSString *channel in self.fullArray) {
+        if ([self.onArray containsObject:channel]) {
+            [newOrderArray addObject:channel];
+        }
+    }
+    
+    return newOrderArray;
 }
 
 @end
