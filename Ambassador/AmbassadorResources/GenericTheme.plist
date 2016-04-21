@@ -13,7 +13,7 @@
 	<key>NavBarTextFont</key>
 	<string>Helvetica, 20</string>
 	<key>UseDarkStatusBarTheme</key>
-	<false/>
+	<true/>
 	<key>RAF PAGE ------------------------</key>
 	<string></string>
 	<key>RAFBackgroundColor</key>
