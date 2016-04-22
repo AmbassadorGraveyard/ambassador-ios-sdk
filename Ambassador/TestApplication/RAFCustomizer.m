@@ -197,7 +197,6 @@ NSInteger currentScrollPoint;
 
 - (void)registerForKeyboardNotificaitons {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)keyboardWillShow:(NSNotification*)notificaiton {
@@ -213,11 +212,6 @@ NSInteger currentScrollPoint;
         CGFloat newY = keyboardFrame.size.height - difference;
         [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
     }
-}
-
-- (void)keyboardWillBeHidden:(NSNotification*)notification {
-    // Resets the scrollview to original position
-    [self.scrollView setContentOffset:CGPointMake(0, currentScrollPoint) animated:YES];
 }
 
 
