@@ -186,7 +186,7 @@ RAFItem * itemToDelete = nil;
     // Changes button title based on editing state
     NSString *editTitle = (self.tableEditing && self.rafArray.count >= 1) ? @"Done" : @"Edit";
     UIBarButtonItem *btnEdit = [[UIBarButtonItem alloc] initWithTitle:editTitle style:UIBarButtonItemStylePlain target:self action:@selector(editRAF)];
-    self.tabBarController.navigationItem.leftBarButtonItem = btnEdit;
+    self.tabBarController.navigationItem.leftBarButtonItem = self.rafArray.count == 0 ? nil : btnEdit;
     
     // Decides whether or not to show '+' button based on editing state
     UIBarButtonItem *btnAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewRAF)];
