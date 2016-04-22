@@ -164,7 +164,7 @@
         NSURL *fileurl = [NSURL fileURLWithPath:filePath];
         
         // Shows a share sheet with the zip file attached
-        [UIActivityViewController shareZip:fileurl withMessage:@"Temporary Idenity message -- Will be README" subject:@"Ambassador Identify Code" forPresenter:self];
+        [UIActivityViewController shareZip:fileurl withMessage:[FileWriter readMeForRequest:@"identify"] subject:@"Ambassador Identify Code" forPresenter:self];
         
         return;
     }
@@ -209,12 +209,6 @@
     }];
     
     return javaEntry;
-}
-
-// Create README file
-- (NSData *)getReadmeFile {
-    NSString *readmeFileString = [FileWriter readMeForRequest:@"identify"];
-    return [readmeFileString dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 - (void)showValidationError:(NSString*)action {

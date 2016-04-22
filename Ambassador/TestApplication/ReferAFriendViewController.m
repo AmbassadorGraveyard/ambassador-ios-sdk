@@ -240,7 +240,7 @@ RAFItem * itemToDelete = nil;
     NSURL *fileURL = [NSURL fileURLWithPath:filePath];
 
     // Shares using a uiactivityviewcontroller that allows a zip file
-    [UIActivityViewController shareZip:fileURL withMessage:@"Temporary RAF message -- Will be README" subject:@"Ambassador RAF Theme" forPresenter:self];
+    [UIActivityViewController shareZip:fileURL withMessage:[FileWriter readmeForRAF] subject:@"Ambassador RAF Theme" forPresenter:self];
 }
 
 - (ZZArchiveEntry *)getObjcFile:(RAFItem *)rafItem {
@@ -310,11 +310,6 @@ RAFItem * itemToDelete = nil;
     }];
     
     return imageEntry;
-}
-
-- (NSData *)getReadme {
-    NSString *readmeLine = [FileWriter readmeForRAF];
-    return [readmeLine dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 @end
