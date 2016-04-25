@@ -83,8 +83,8 @@
     NSString *iosFileName = isRAF ? @"ViewControllerTest.m or ViewControllerTest.swift as well as the .plist" : @"AppDelegate.m or AppDelegate.swift";
     NSString *androidFileName = isRAF ? @"MyActivity.java and ambassador-raf.xml files" : @"MyApplication.java file";
     NSString *greetingString = [NSString stringWithFormat:@"Hey! Here are the instructions you should need to set up the %@ with the Ambassador SDK. I’ve included both Android and iOS.\n\n", requestName];
-    NSString *iosVersionString = [NSString stringWithFormat:@"For the iOS Ambassador SDK version %@, take a look here https://docs.getambassador.com/v2.0.0/page/ios-sdk for an in-depth explanation on adding and integrating the SDK.\n\n", [ValuesHandler iosVersionNumber]];
-    NSString *androidVersionString = [NSString stringWithFormat:@"For the Android Ambassador SDK version %@, take a look here https://docs.getambassador.com/v2.0.0/page/android-sdk for an in-depth explanation on adding and integrating the SDK.\n\n", [ValuesHandler androidVersionNumber]];
+    NSString *iosVersionString = [NSString stringWithFormat:@"For an in-depth explanation on adding and integrating the Ambassador iOS SDK (v%@) go here -> https://docs.getambassador.com/v2.0.0/page/ios-sdk\n\n", [ValuesHandler iosVersionNumber]];
+    NSString *androidVersionString = [NSString stringWithFormat:@"For an in-depth explanation on adding and integrating the Ambassador Android SDK (v%@) go here -> https://docs.getambassador.com/v2.0.0/page/android-sdk\n\n", [ValuesHandler androidVersionNumber]];
     NSString *iosRequestTypeString = [NSString stringWithFormat:@"For the %@ check out the %@ files for an example.\n\n\n", requestName, iosFileName];
     NSString *androidRequestTypeString = [NSString stringWithFormat:@"For the %@ check out the %@ for an example.\n\n\n", requestName, androidFileName];
     
