@@ -344,7 +344,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
         NSURL *fileURL = [NSURL fileURLWithPath:filePath];
         
         // ActivityViewController category function that shares a zip
-        [UIActivityViewController shareZip:fileURL withMessage:[FileWriter readMeForRequest:@"conversion"] subject:@"Ambassador Conversion Implementation" forPresenter:self];
+        [UIActivityViewController shareZip:fileURL withMessage:[FileWriter readMeForRequest:ReadmeTypeConversion] subject:@"Ambassador Conversion Implementation" forPresenter:self];
     }
 }
 

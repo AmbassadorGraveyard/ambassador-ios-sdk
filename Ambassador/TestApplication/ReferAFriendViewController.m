@@ -240,7 +240,7 @@ RAFItem * itemToDelete = nil;
     NSURL *fileURL = [NSURL fileURLWithPath:filePath];
 
     // Shares using a uiactivityviewcontroller that allows a zip file
-    [UIActivityViewController shareZip:fileURL withMessage:[FileWriter readmeForRAF] subject:@"Ambassador RAF Integration Implementation" forPresenter:self];
+    [UIActivityViewController shareZip:fileURL withMessage:[FileWriter readMeForRequest:ReadmeTypeRAF] subject:@"Ambassador RAF Integration Implementation" forPresenter:self];
 }
 
 - (ZZArchiveEntry *)getObjcFile:(RAFItem *)rafItem {
