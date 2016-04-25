@@ -75,17 +75,18 @@
 }
 
 + (NSString *)readMeForRequest:(READMETypes)readmeType {
+    // Decides which values to use based on the readmeType
     NSString *requestName = [FileWriter stringFromReadmeType:readmeType];
     BOOL isRAF = readmeType == ReadmeTypeRAF;
     
-    // Create versionStrings
+    // Creates formatted strings
     NSString *iosFileName = isRAF ? @"ViewControllerTest.m or ViewControllerTest.swift as well as the .plist" : @"AppDelegate.m or AppDelegate.swift";
-    NSString *androidFileName = isRAF ? @"MyActivity.java and ambassador-raf.xml" : @"MyApplication.java";
+    NSString *androidFileName = isRAF ? @"MyActivity.java and ambassador-raf.xml files" : @"MyApplication.java file";
     NSString *greetingString = [NSString stringWithFormat:@"Hey! Here are the instructions you should need to set up the %@ with the Ambassador SDK. I’ve included both Android and iOS.\n\n", requestName];
     NSString *iosVersionString = [NSString stringWithFormat:@"For the iOS Ambassador SDK version %@, take a look here https://docs.getambassador.com/v2.0.0/page/ios-sdk for an in-depth explanation on adding and integrating the SDK.\n\n", [ValuesHandler iosVersionNumber]];
     NSString *androidVersionString = [NSString stringWithFormat:@"For the Android Ambassador SDK version %@, take a look here https://docs.getambassador.com/v2.0.0/page/android-sdk for an in-depth explanation on adding and integrating the SDK.\n\n", [ValuesHandler androidVersionNumber]];
-    NSString *iosRequestTypeString = [NSString stringWithFormat:@"For the %@ check out the %@ files for examples.\n\n\n", requestName, iosFileName];
-    NSString *androidRequestTypeString = [NSString stringWithFormat:@"For the %@ check out the %@ files for an example.\n\n\n", requestName, androidFileName];
+    NSString *iosRequestTypeString = [NSString stringWithFormat:@"For the %@ check out the %@ files for an example.\n\n\n", requestName, iosFileName];
+    NSString *androidRequestTypeString = [NSString stringWithFormat:@"For the %@ check out the %@ for an example.\n\n\n", requestName, androidFileName];
     
     // Builds README file
     NSMutableString *readmeSting = [[NSMutableString alloc] init];
@@ -151,27 +152,6 @@
     [javaString appendString:@"}"];
     
     return javaString;
-}
-
-+ (NSString *)readmeForRAF {
-    // Create versionStrings
-    NSString *iosVersionString = [NSString stringWithFormat:@"iOS AmbassadorSDK v%@ \n", [ValuesHandler iosVersionNumber]];
-    NSString *androidVersionString = [NSString stringWithFormat:@"Android AmbassadorSDK v%@ \n", [ValuesHandler androidVersionNumber]];
-    
-    // Builds README file
-    NSMutableString *readmeSting = [[NSMutableString alloc] init];
-    [readmeSting appendString:iosVersionString];
-    [readmeSting appendString:@"Take a look at the iOS docs for an in-depth explanation on adding and integrating the SDK: \n"];
-    [readmeSting appendString:@"https://docs.getambassador.com/v2.0.0/page/ios-sdk \n"];
-    [readmeSting appendString:@"Check out the ViewControllerTest.m or ViewControllerTest.swift files for examples of this integration.\n"];
-    [readmeSting appendString:@"Add the image to your app's image assets folder and add the .plist file to your project.\n\n"];
-    [readmeSting appendString:androidVersionString];
-    [readmeSting appendString:@"Take a look at the android docs for an in-depth explanation on adding and integrating the SDK: \n"];
-    [readmeSting appendString:@"https://docs.getambassador.com/v2.0.0/page/android-sdk \n"];
-    [readmeSting appendString:@"Check out the MyActivity.java file for an example of this integration.\n"];
-    [readmeSting appendString:@"Place the image and ambassador-raf.xml files into the root of your application's assets folder."];
-    
-    return readmeSting;
 }
 
 + (NSString *)documentsPath {
