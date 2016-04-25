@@ -164,7 +164,7 @@
         NSURL *fileurl = [NSURL fileURLWithPath:filePath];
         
         // Shows a share sheet with the zip file attached
-        [UIActivityViewController shareZip:fileurl withMessage:[FileWriter readMeForRequest:ReadmeTypeIdentify] subject:@"Ambassador Identify Implementation" forPresenter:self];
+        [UIActivityViewController shareZip:fileurl withMessage:[FileWriter readMeForRequest:ReadmeTypeIdentify containsImage:nil] subject:@"Ambassador Identify Implementation" forPresenter:self];
         
         return;
     }
