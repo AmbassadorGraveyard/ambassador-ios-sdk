@@ -19,7 +19,7 @@ typedef enum readMeType {
 + (NSString *)objcAppDelegateFileWithInsert:(NSString *)insert;
 + (NSString *)swiftAppDelegateFileWithInsert:(NSString *)insert;
 + (NSString *)javaMyApplicationFileWithInsert:(NSString *)insert;
-+ (NSString *)readMeForRequest:(READMETypes)readmeType;
++ (NSString *)readMeForRequest:(READMETypes)readmeType containsImage:(NSString*)imageName;
 + (NSString *)objcViewControllerWithInsert:(NSString *)insert;
 + (NSString *)swiftViewControllerWithInsert:(NSString *)insert;
 + (NSString *)javaActivityWithInsert:(NSString *)insert;

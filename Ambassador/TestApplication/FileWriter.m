@@ -74,30 +74,34 @@
     return javaString;
 }
 
-+ (NSString *)readMeForRequest:(READMETypes)readmeType {
++ (NSString *)readMeForRequest:(READMETypes)readmeType containsImage:(NSString*)imageName {
     // Decides which values to use based on the readmeType
     NSString *requestName = [FileWriter stringFromReadmeType:readmeType];
     BOOL isRAF = readmeType == ReadmeTypeRAF;
     
-    // Creates formatted strings
-    NSString *iosFileName = isRAF ? @"ViewControllerTest.m or ViewControllerTest.swift as well as the .plist" : @"AppDelegate.m or AppDelegate.swift";
+    NSString *iosFileName = isRAF ? @"ViewControllerTest.m or ViewControllerTest.swift and the .plist" : @"AppDelegate.m or AppDelegate.swift";
     NSString *androidFileName = isRAF ? @"MyActivity.java and ambassador-raf.xml files" : @"MyApplication.java file";
-    NSString *greetingString = [NSString stringWithFormat:@"Hey! Here are the instructions you should need to set up the %@ with the Ambassador SDK. I’ve included both Android and iOS.\n\n", requestName];
-    NSString *iosVersionString = [NSString stringWithFormat:@"For an in-depth explanation on adding and integrating the Ambassador iOS SDK (v%@) go here -> https://docs.getambassador.com/v2.0.0/page/ios-sdk\n\n", [ValuesHandler iosVersionNumber]];
-    NSString *androidVersionString = [NSString stringWithFormat:@"For an in-depth explanation on adding and integrating the Ambassador Android SDK (v%@) go here -> https://docs.getambassador.com/v2.0.0/page/android-sdk\n\n", [ValuesHandler androidVersionNumber]];
-    NSString *iosRequestTypeString = [NSString stringWithFormat:@"For the %@ check out the %@ files for an example.\n\n\n", requestName, iosFileName];
-    NSString *androidRequestTypeString = [NSString stringWithFormat:@"For the %@ check out the %@ for an example.\n\n\n", requestName, androidFileName];
+    NSString *androidEndChar = imageName != nil && ![imageName isEqualToString:@""] ? @"," : @".";
+    
+    // Creates formatted strings
+    NSString *greetingString = [NSString stringWithFormat:@"Hey! I've attached examples showing how to %@ in our mobile app with the Ambassador SDK.\n\n", requestName];
+    NSString *iosVersionString = [NSString stringWithFormat:@"iOS (v%@): %@,\n", [ValuesHandler iosVersionNumber], iosFileName];
+    NSString *androidVersionString = [NSString stringWithFormat:@"Android (v%@): %@%@\n", [ValuesHandler androidVersionNumber], androidFileName, androidEndChar];
+    NSString *imageString = imageName != nil && ![imageName isEqualToString:@""] ? [NSString stringWithFormat:@"and %@, a custom image used in the theme configuration. \n\n", imageName] : @"\n";
     
     // Builds README file
-    NSMutableString *readmeSting = [[NSMutableString alloc] init];
-    [readmeSting appendString:greetingString];
-    [readmeSting appendString:iosVersionString];
-    [readmeSting appendString:iosRequestTypeString];
-    [readmeSting appendString:androidVersionString];
-    [readmeSting appendString:androidRequestTypeString];
-    [readmeSting appendString:@"Let me know if you have any questions!"];
+    NSMutableString *readmeString = [[NSMutableString alloc] init];
+    [readmeString appendString:greetingString];
+    [readmeString appendString: @"The attachment includes examples for\n"];
+    [readmeString appendString:iosVersionString];
+    [readmeString appendString:androidVersionString];
+    [readmeString appendString:imageString];
+    [readmeString appendString:@"For in-depth explanations on adding and integrating the SDKs check out the following\n"];
+    [readmeString appendString:@"iOS -> https://docs.getambassador.com/v2.0.0/page/ios-sdk\n"];
+    [readmeString appendString:@"Android -> https://docs.getambassador.com/v2.0.0/page/android-sdk\n\n"];
+    [readmeString appendString:@"Let me know if you have any questions!\n\n\n\n\n"]; // 5 new lines so that the last line doesn't show up in gmail as a signature
     
-    return readmeSting;
+    return readmeString;
 }
 
 + (NSString *)objcViewControllerWithInsert:(NSString *)insert {
@@ -163,9 +167,9 @@
 
 + (NSString *)stringFromReadmeType:(READMETypes)type {
     switch (type) {
-        case ReadmeTypeIdentify: return @"Identify method";
-        case ReadmeTypeConversion: return @"Conversion method";
-        case ReadmeTypeRAF: return @"Refer-a-friend Integration";
+        case ReadmeTypeIdentify: return @"identify users";
+        case ReadmeTypeConversion: return @"set up a conversion";
+        case ReadmeTypeRAF: return @"set up a refer-a-friend view";
         default: break;
     }
 }
