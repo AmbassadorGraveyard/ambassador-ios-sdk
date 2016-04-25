@@ -23,7 +23,6 @@ typedef enum readMeType {
 + (NSString *)objcViewControllerWithInsert:(NSString *)insert;
 + (NSString *)swiftViewControllerWithInsert:(NSString *)insert;
 + (NSString *)javaActivityWithInsert:(NSString *)insert;
-+ (NSString *)readmeForRAF;
 + (NSString *)documentsPath;
 
 @end
