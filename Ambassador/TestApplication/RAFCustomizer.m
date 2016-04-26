@@ -42,6 +42,7 @@
 @property (nonatomic, strong) IBOutlet UITextView * tvHeaderText;
 @property (nonatomic, weak) IBOutlet UISwitch * swtStatusBar;
 @property (nonatomic, weak) IBOutlet UILabel * lblStatusBarTheme;
+@property (nonatomic, weak) IBOutlet UITextView * tvShareMessage;
 
 // Private properties
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
@@ -318,6 +319,7 @@ NSInteger currentScrollPoint;
     self.tvText1.text = [self.plistDict valueForKey:@"RAFWelcomeTextMessage"];
     self.tvText2.text = [self.plistDict valueForKey:@"RAFDescriptionTextMessage"];
     self.tvHeaderText.text = [self.plistDict valueForKey:@"NavBarTextMessage"];
+    self.tvShareMessage.text = [self.plistDict valueForKey:@"DefaultShareMessage"];
     self.tfRafName.text = self.rafItem.rafName;
     
     // RAF Item Values
@@ -359,10 +361,12 @@ NSInteger currentScrollPoint;
     NSString *headerText = ![Validator emptyString:self.tvHeaderText.text] ? self.tvHeaderText.text : @" ";
     NSString *textValue1 = ![Validator emptyString:self.tvText1.text] ? self.tvText1.text : @" ";
     NSString *textValue2 = ![Validator emptyString:self.tvText2.text] ? self.tvText2.text : @" ";
+    NSString *shareTextMessage = ![Validator emptyString:self.tvShareMessage.text] ? self.tvShareMessage.text : @" ";
     
     [self.plistDict setValue:headerText forKey:@"NavBarTextMessage"];
     [self.plistDict setValue:textValue1 forKey:@"RAFWelcomeTextMessage"];
     [self.plistDict setValue:textValue2 forKey:@"RAFDescriptionTextMessage"];
+    [self.plistDict setValue:shareTextMessage forKey:@"DefaultShareMessage"];
     
     // Overrides social table
     [self.plistDict setValue:[self stringFromSocialChannels] forKey:@"Channels"];
