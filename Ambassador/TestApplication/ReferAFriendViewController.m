@@ -233,11 +233,12 @@ NSInteger shareCellIndex;
 }
 
 - (void)exportRAFTheme:(RAFItem*)rafItem {
-    // Creates a file based on the path using a url
+    // Creates a file based on the path using a url. Data is created for nil checker
     NSURL *fileURL = [ThemeHandler getZipForRAF:rafItem] ? [ThemeHandler getZipForRAF:rafItem] : nil;
+    NSData *testData = [NSData dataWithContentsOfURL:fileURL];
     
     // If there is no fileURL from a previous RAF, we create one now
-    if (!fileURL) {
+    if (!testData) {
         [ThemeHandler packageZipForRAF:rafItem];
         fileURL = [ThemeHandler getZipForRAF:rafItem];
     }
