@@ -13,7 +13,7 @@
 
 @implementation ThemeHandler
 
-NSString * rafZipConstant = @"ambassador-raf.zip";
+NSString * rafZipConstant = @"RAF.zip";
 
 
 #pragma mark - Save Functions
@@ -51,6 +51,7 @@ NSString * rafZipConstant = @"ambassador-raf.zip";
      to grab them from the Documents folder. The
      Documents folder is the recommended area for writing to files*/
     [ThemeHandler writeToDocumentsPathWithThemeName:rafTheme.plistFullName dictionary:dictionary];
+    [ThemeHandler packageZipForRAF:rafTheme];
 }
 
 + (void)saveImage:(UIImage*)image forTheme:(RAFItem*)theme {
@@ -62,7 +63,7 @@ NSString * rafZipConstant = @"ambassador-raf.zip";
     // Creates and writes to a new or existing file path with the path name
     NSData *jpgData = UIImageJPEGRepresentation(image, 1.0);
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", imageSavePath]];
-    [jpgData writeToFile:filePath atomically:NO];
+    [jpgData writeToFile:filePath atomically:YES];
 }
 
 + (void)writeToDocumentsPathWithThemeName:(NSString*)name dictionary:(NSMutableDictionary*)writeDict {
@@ -72,7 +73,7 @@ NSString * rafZipConstant = @"ambassador-raf.zip";
     
     // Creates and writes to a new or existing file path with the path name
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", name]];
-    [writeDict writeToFile:filePath atomically:NO];
+    [writeDict writeToFile:filePath atomically:YES];
 }
 
 + (BOOL)duplicateRAFName:(NSString*)name {
@@ -89,8 +90,8 @@ NSString * rafZipConstant = @"ambassador-raf.zip";
 
 + (void)packageZipForRAF:(RAFItem *)raf {
     // Creates a new directiry in the documents folder
-    NSString *saveFolder = [[FileWriter documentsPath] stringByAppendingPathComponent:raf.plistFullName];
-    NSString *filePath = [saveFolder stringByAppendingPathComponent:rafZipConstant];
+    NSString *stringWithoutSpaces = [raf.rafName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:[stringWithoutSpaces stringByAppendingString:rafZipConstant]];
     
     // Creates an array of files for the zip file
     NSMutableArray *entriesArray = [[NSMutableArray alloc] initWithObjects:[self getObjcFile:raf], [self getSwiftFile:raf], [self getPlist:raf],
@@ -203,9 +204,9 @@ NSString * rafZipConstant = @"ambassador-raf.zip";
 }
 
 + (NSURL *)getZipForRAF:(RAFItem *)raf {
-    NSString *retrieveFolder = [[FileWriter documentsPath] stringByAppendingPathComponent:raf.plistFullName];
-    NSString *filePath = [retrieveFolder stringByAppendingPathComponent:rafZipConstant];
-    
+    // Gets the directory where the zip is stored
+    NSString *stringWithoutSpaces = [raf.rafName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:[stringWithoutSpaces stringByAppendingString:rafZipConstant]];
     
     // Creates a file based on the path using a url
     NSURL *fileURL = [NSURL fileURLWithPath:filePath];

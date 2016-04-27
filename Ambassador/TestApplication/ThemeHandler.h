@@ -21,5 +21,7 @@
 + (UIImage *)getImageForRAF:(RAFItem*)item;
 + (void)removeImageForTheme:(RAFItem*)theme;
 + (BOOL)duplicateRAFName:(NSString*)name;
++ (void)packageZipForRAF:(RAFItem *)raf;
++ (NSURL *)getZipForRAF:(RAFItem *)raf;
 
 @end
