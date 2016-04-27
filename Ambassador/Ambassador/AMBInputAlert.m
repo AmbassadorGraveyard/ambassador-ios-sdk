@@ -50,7 +50,7 @@
 
 - (void)viewDidLoad {
     [self setUpUI];
-    [self registerForKeyboardNotificaitons];
+    [self registerForKeyboardNotifications];
 }
 
 
@@ -85,12 +85,12 @@
 
 #pragma mark - Keyboard Delegate
 
-- (void)registerForKeyboardNotificaitons {
+- (void)registerForKeyboardNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)keyboardWillShow:(NSNotification*)notificaiton {
+- (void)keyboardWillShow:(NSNotification*)notification {
     [UIView animateWithDuration:0.3 animations:^{
         self.masterViewCenterY.constant = -70;
         [self.view layoutIfNeeded];
