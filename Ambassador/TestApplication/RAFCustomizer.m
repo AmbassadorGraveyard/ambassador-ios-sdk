@@ -99,7 +99,6 @@ NSInteger currentScrollPoint;
 - (IBAction)clearImage:(id)sender {
     // Update the viewController for cleared image
     self.selectedImage = nil;
-    [ThemeHandler removeImageForTheme:self.rafItem];
     [self setupUI];
 }
 
@@ -108,7 +107,8 @@ NSInteger currentScrollPoint;
         return;
     }
     
-    [self dismissViewControllerAnimated:YES completion:^{
+    // Sets the spinner and then starts the saving process
+    [self showSpinnerWithCompletion:^{
         if ([self.delegate respondsToSelector:@selector(RAFCustomizerSavedRAF:)]) {
             // Override the existing plist theme with new RAF Customizer values
             [self overridePlistToSave];
@@ -128,9 +128,9 @@ NSInteger currentScrollPoint;
             [self.rafItem generateXMLFromPlist:self.plistDict];
             [self.delegate RAFCustomizerSavedRAF:self.rafItem];
         }
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
     }];
-    
-    
 }
 
 - (void)cancelTapped {
@@ -190,10 +190,12 @@ NSInteger currentScrollPoint;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     self.ivProductPhoto.image = info[@"UIImagePickerControllerOriginalImage"];
     self.selectedImage = self.ivProductPhoto.image;
+    
+    
+    
     self.btnClearImage.enabled = YES;
     self.plusImage.hidden = YES;
     [picker dismissViewControllerAnimated:YES completion:nil];
-    [ThemeHandler saveImage:self.selectedImage forTheme:self.rafItem];
 }
 
 
@@ -385,8 +387,10 @@ NSInteger currentScrollPoint;
         NSString *imagePlistValue = [imageString stringByAppendingString:@", 1"];
         [self.plistDict setValue:imagePlistValue forKey:@"RAFLogo"];
         self.rafItem.imageFilePath = imageString;
+        [ThemeHandler saveImage:self.selectedImage forTheme:self.rafItem];
     } else {
         // If there is an image tied to the RAF, we remove it from local storage
+        [ThemeHandler removeImageForTheme:self.rafItem];
         self.rafItem.imageFilePath = nil;
         [self.plistDict setValue:@"" forKey:@"RAFLogo"];
     }
@@ -512,6 +516,19 @@ NSInteger currentScrollPoint;
 - (void)updateStatusBarTheme {
     // Updates text based on theme"`
     self.lblStatusBarTheme.text = self.swtStatusBar.isOn ? @"Dark" : @"Light";
+}
+
+- (void)showSpinnerWithCompletion:(void(^)())completion {
+    // Replaces the 'Save' button with a spinner
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    [spinner startAnimating];
+    
+    // Puts delay on the initial save so that the spinner has time to start
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.4 * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        completion();
+    });
 }
 
 @end
