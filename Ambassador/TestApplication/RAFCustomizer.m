@@ -99,6 +99,7 @@ NSInteger currentScrollPoint;
 - (IBAction)clearImage:(id)sender {
     // Update the viewController for cleared image
     self.selectedImage = nil;
+    [ThemeHandler removeImageForTheme:self.rafItem];
     [self setupUI];
 }
 
@@ -107,28 +108,29 @@ NSInteger currentScrollPoint;
         return;
     }
     
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    if ([self.delegate respondsToSelector:@selector(RAFCustomizerSavedRAF:)]) {
-        // Override the existing plist theme with new RAF Customizer values
-        [self overridePlistToSave];
-        NSString *rafName = self.tfRafName.text;
-        
-        // If the RAFItem is nil we create a new one
-        if (!self.rafItem) {
-            self.rafItem = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict];
-        } else {
-            // If there is already a RAF Item, we override its properties instead of creating a new one
-            self.rafItem.rafName = rafName;
+    [self dismissViewControllerAnimated:YES completion:^{
+        if ([self.delegate respondsToSelector:@selector(RAFCustomizerSavedRAF:)]) {
+            // Override the existing plist theme with new RAF Customizer values
+            [self overridePlistToSave];
+            NSString *rafName = self.tfRafName.text;
+            
+            // If the RAFItem is nil we create a new one
+            if (!self.rafItem) {
+                self.rafItem = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict];
+            } else {
+                // If there is already a RAF Item, we override its properties instead of creating a new one
+                self.rafItem.rafName = rafName;
+            }
+            
+            // Override properties of the RAF Item
+            [self overridePlistIfImage:self.rafItem.plistFullName];
+            self.rafItem.campaign = self.selectedCampaignID;
+            [self.rafItem generateXMLFromPlist:self.plistDict];
+            [self.delegate RAFCustomizerSavedRAF:self.rafItem];
         }
-        
-        // Override properties of the RAF Item
-        [self overridePlistIfImage:self.rafItem.plistFullName];
-        self.rafItem.campaign = self.selectedCampaignID;
-        [self.rafItem generateXMLFromPlist:self.plistDict];
-        
-        [self.delegate RAFCustomizerSavedRAF:self.rafItem];
-    }
+    }];
+    
+    
 }
 
 - (void)cancelTapped {
@@ -191,6 +193,7 @@ NSInteger currentScrollPoint;
     self.btnClearImage.enabled = YES;
     self.plusImage.hidden = YES;
     [picker dismissViewControllerAnimated:YES completion:nil];
+    [ThemeHandler saveImage:self.selectedImage forTheme:self.rafItem];
 }
 
 
@@ -381,11 +384,9 @@ NSInteger currentScrollPoint;
         NSString *imageString = [rafPlist stringByAppendingString:@"Image"];
         NSString *imagePlistValue = [imageString stringByAppendingString:@", 1"];
         [self.plistDict setValue:imagePlistValue forKey:@"RAFLogo"];
-        [ThemeHandler saveImage:self.selectedImage forTheme:self.rafItem];
         self.rafItem.imageFilePath = imageString;
     } else {
         // If there is an image tied to the RAF, we remove it from local storage
-        [ThemeHandler removeImageForTheme:self.rafItem];
         self.rafItem.imageFilePath = nil;
         [self.plistDict setValue:@"" forKey:@"RAFLogo"];
     }
