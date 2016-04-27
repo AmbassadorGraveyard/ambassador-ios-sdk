@@ -51,7 +51,6 @@ NSString * rafZipConstant = @"RAF.zip";
      to grab them from the Documents folder. The
      Documents folder is the recommended area for writing to files*/
     [ThemeHandler writeToDocumentsPathWithThemeName:rafTheme.plistFullName dictionary:dictionary];
-    [ThemeHandler packageZipForRAF:rafTheme];
 }
 
 + (void)saveImage:(UIImage*)image forTheme:(RAFItem*)theme {
@@ -63,7 +62,7 @@ NSString * rafZipConstant = @"RAF.zip";
     // Creates and writes to a new or existing file path with the path name
     NSData *jpgData = UIImageJPEGRepresentation(image, 1.0);
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", imageSavePath]];
-    [jpgData writeToFile:filePath atomically:YES];
+    [jpgData writeToFile:filePath atomically:NO];
 }
 
 + (void)writeToDocumentsPathWithThemeName:(NSString*)name dictionary:(NSMutableDictionary*)writeDict {
