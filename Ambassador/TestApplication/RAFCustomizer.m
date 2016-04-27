@@ -60,6 +60,7 @@
 @implementation RAFCustomizer
 
 NSInteger currentScrollPoint;
+NSString * originalName;
 
 
 #pragma mark - LifeCycle
@@ -74,6 +75,11 @@ NSInteger currentScrollPoint;
     
     // Listens for when keyboard shows/hides
     [self registerForKeyboardNotificaitons];
+    
+    // Saves original name for duplicate check
+    if (self.rafItem) {
+        originalName = self.rafItem.rafName;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -501,7 +507,7 @@ NSInteger currentScrollPoint;
     // Checks for Duplicate RAF Name if new RAF
     NSString *nameWithoutSpaces = [self.tfRafName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
-    if ([ThemeHandler duplicateRAFName:nameWithoutSpaces]) {
+    if ([ThemeHandler duplicateRAFName:nameWithoutSpaces] && ![nameWithoutSpaces isEqualToString:originalName]) {
         NSString *errorString = [NSString stringWithFormat:@"Duplicate RAF names are not allowed: %@", self.tfRafName.text];
         UIAlertView *duplicateAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:errorString delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [duplicateAlert show];
