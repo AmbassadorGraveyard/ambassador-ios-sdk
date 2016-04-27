@@ -60,9 +60,9 @@ NSString * rafZipConstant = @"RAF.zip";
     NSString *documentsDirectory = [paths objectAtIndex:0];
     
     // Creates and writes to a new or existing file path with the path name
-    NSData *jpgData = UIImageJPEGRepresentation(image, 1.0);
+    NSData *jpgData = UIImageJPEGRepresentation(image, 0.5);
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", imageSavePath]];
-    [jpgData writeToFile:filePath atomically:NO];
+    [jpgData writeToFile:filePath atomically:YES];
 }
 
 + (void)writeToDocumentsPathWithThemeName:(NSString*)name dictionary:(NSMutableDictionary*)writeDict {
@@ -129,13 +129,15 @@ NSString * rafZipConstant = @"RAF.zip";
     // Remove the plist from Documents and image if exists
     [ThemeHandler removeFileFromPathWithThemeName:rafItem.plistFullName];
     [ThemeHandler removeImageForTheme:rafItem];
+    [ThemeHandler removeZipForRAF:rafItem];
 }
 
 + (void)removeImageForTheme:(RAFItem*)theme {
     if (theme.imageFilePath) {
+        NSString *imagePath = [[FileWriter documentsPath] stringByAppendingPathComponent:theme.imageFilePath];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSError *fileMngError;
-        BOOL removed = [fileManager removeItemAtPath:theme.imageFilePath error:&fileMngError];
+        BOOL removed = [fileManager removeItemAtPath:imagePath error:&fileMngError];
         
         if (removed) {
             NSLog(@"Image removed successfully!");
@@ -162,6 +164,23 @@ NSString * rafZipConstant = @"RAF.zip";
         NSLog(@"File removed successfully!");
     } else {
         NSLog(@"Failed to removed file - %@", fileMngError);
+    }
+}
+
++ (void)removeZipForRAF:(RAFItem *)item {
+    // Gets the directory where the zip is stored
+    NSString *stringWithoutSpaces = [item.rafName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:[stringWithoutSpaces stringByAppendingString:rafZipConstant]];
+    
+    // File manager attempts to delete Zip for RAF
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *fileMngError;
+    BOOL removed = [fileManager removeItemAtPath:filePath error:&fileMngError];
+    
+    if (removed) {
+        NSLog(@"Zip removed successfully!");
+    } else {
+        NSLog(@"Failed to removed zip - %@", fileMngError);
     }
 }
 
