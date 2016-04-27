@@ -203,9 +203,10 @@ RAFItem * itemToDelete = nil;
     self.lblTapAdd.hidden = (self.rafArray.count > 0) ? YES : NO;
     
     if (self.rafArray.count == 0) {
-        [self setNavBarButtons];
         self.tableEditing = NO;
     }
+    
+    [self setNavBarButtons];
     
     // Only perform fade if deleting or adding
     if (fade) {
@@ -219,98 +220,24 @@ RAFItem * itemToDelete = nil;
     // Saves a new plist item using the RAF item name and reloads table
     [ThemeHandler saveTheme:saveItem];
     [self reloadThemesWithFade:YES];
+    
+    // Packages zip up after the reload
+    [ThemeHandler packageZipForRAF:saveItem];
 }
 
 - (void)exportRAFTheme:(RAFItem*)rafItem {
-    // Creates a new directiry in the documents folder
-    NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:@"ambassador-raf.zip"];
-    
-    // Creates an array of files for the zip file
-    NSMutableArray *entriesArray = [[NSMutableArray alloc] initWithObjects:[self getObjcFile:rafItem], [self getSwiftFile:rafItem], [self getPlist:rafItem],
-                                    [self getJavaFile:rafItem], [self getJavaXMLFile:rafItem], nil];
-    
-    // Checks if there is an image tied to the RAF, and includes it if so
-    if ([self getThemeImage:rafItem]) { [entriesArray addObject:[self getThemeImage:rafItem]]; }
-    
-    // Creates a new zip file containing all different files
-    ZZArchive* newArchive = [[ZZArchive alloc] initWithURL:[NSURL fileURLWithPath:filePath] options:@{ZZOpenOptionsCreateIfMissingKey : @YES} error:nil];
-    [newArchive updateEntries:entriesArray error:nil];
-    
     // Creates a file based on the path using a url
-    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    NSURL *fileURL = [ThemeHandler getZipForRAF:rafItem] ? [ThemeHandler getZipForRAF:rafItem] : nil;
+    
+    // If there is no fileURL from a previous RAF, we create one now
+    if (!fileURL) {
+        [ThemeHandler packageZipForRAF:rafItem];
+        fileURL = [ThemeHandler getZipForRAF:rafItem];
+    }
 
     // Shares using a uiactivityviewcontroller that allows a zip file
     NSString *imageName =  rafItem.imageFilePath != nil && ![rafItem.imageFilePath isEqualToString:@""] ? [NSString stringWithFormat:@"%@.png", rafItem.imageFilePath] : nil;
     [UIActivityViewController shareZip:fileURL withMessage:[FileWriter readMeForRequest:ReadmeTypeRAF containsImage:imageName] subject:@"Ambassador RAF Integration Implementation" forPresenter:self];
-}
-
-- (ZZArchiveEntry *)getObjcFile:(RAFItem *)rafItem {
-    NSString *objcLine = [NSString stringWithFormat:@"    [AmbassadorSDK presentRAFForCampaign:@\"%@\" FromViewController:self withThemePlist:@\"%@\"];\n", rafItem.campaign.campID, rafItem.rafName];
-    NSString *objcFile = [FileWriter objcViewControllerWithInsert:objcLine];
-    
-    ZZArchiveEntry *objcEntry = [ZZArchiveEntry archiveEntryWithFileName:@"ViewControllerTest.m" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
-        return [objcFile dataUsingEncoding:NSUTF8StringEncoding];
-    }];
-    
-    return objcEntry;
-}
-
-- (ZZArchiveEntry *)getSwiftFile:(RAFItem *)rafItem {
-    NSString *swiftLine = [NSString stringWithFormat:@"        AmbassadorSDK.presentRAFForCampaign(\"%@\", fromViewController: self, withThemePlist: \"%@\")\n", rafItem.campaign.campID, rafItem.rafName];
-    NSString *swiftFile = [FileWriter swiftViewControllerWithInsert:swiftLine];
-    
-    ZZArchiveEntry *swiftEntry = [ZZArchiveEntry archiveEntryWithFileName:@"ViewControllerTest.swift" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
-        return [swiftFile dataUsingEncoding:NSUTF8StringEncoding];
-    }];
-    
-    return swiftEntry;
-}
-
-- (ZZArchiveEntry *)getPlist:(RAFItem *)rafItem {
-    NSString *plistPath = [ThemeHandler getDocumentsPathWithName:rafItem.plistFullName];
-    NSString *plistName = [NSString stringWithFormat:@"%@.plist", rafItem.rafName];
-    
-    ZZArchiveEntry *plistEntry = [ZZArchiveEntry archiveEntryWithFileName:plistName compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
-        return [NSData dataWithContentsOfFile:plistPath];
-    }];
-    
-    return plistEntry;
-}
-
-- (ZZArchiveEntry *)getJavaFile:(RAFItem *)rafItem {
-    NSString *javaLine = [NSString stringWithFormat:@"        AmbassadorSDK.presentRAF(this, \"%@\", \"ambassador-raf.xml\");\n", rafItem.campaign.campID];
-    NSString *javaFile = [FileWriter javaActivityWithInsert:javaLine];
-    
-    ZZArchiveEntry *javaEntry = [ZZArchiveEntry archiveEntryWithFileName:@"MyApplication.java" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
-        return [javaFile dataUsingEncoding:NSUTF8StringEncoding];
-    }];
-    
-    return javaEntry;
-}
-
-- (ZZArchiveEntry *)getJavaXMLFile:(RAFItem *)rafItem {
-    // If the RAF was created before android export was included, we need to generate the xml here
-    if (!rafItem.xmlFileData) { [rafItem generateXMLFromPlist:rafItem.plistDict]; }
-    
-    ZZArchiveEntry *xmlEntry = [ZZArchiveEntry archiveEntryWithFileName:@"ambassador-raf.xml" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
-        return rafItem.xmlFileData;
-    }];
-    
-    return xmlEntry;
-}
-
-- (ZZArchiveEntry *)getThemeImage:(RAFItem *)rafItem {
-    UIImage *rafImage = [ThemeHandler getImageForRAF:rafItem];
-    NSData *imageAttachmentData =  UIImagePNGRepresentation(rafImage);
-    NSString *imageName = [NSString stringWithFormat:@"%@.png", rafItem.imageFilePath];
-    
-    if (!imageAttachmentData) { return nil; }
-    
-    ZZArchiveEntry *imageEntry = [ZZArchiveEntry archiveEntryWithFileName:imageName compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
-        return imageAttachmentData;
-    }];
-    
-    return imageEntry;
 }
 
 @end
