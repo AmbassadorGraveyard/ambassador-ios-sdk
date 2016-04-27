@@ -217,6 +217,8 @@
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
+		EF67F0FA1CD1547400F52546 /* AmbassadorHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF67F0F81CD1547400F52546 /* AmbassadorHelper.h */; };
+		EF67F0FB1CD1547400F52546 /* AmbassadorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EF67F0F91CD1547400F52546 /* AmbassadorHelper.m */; };
 		EF6A5C601CBFEBD300458480 /* FileWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = EF6A5C5E1CBFEBD300458480 /* FileWriter.h */; };
 		EF6BDC771C63FD75004CCDF8 /* AMBCoreDataManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */; };
 		EF783BBF1C9C7D6600079B65 /* LeftIndentedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = EF783BBE1C9C7D6600079B65 /* LeftIndentedTextField.m */; };
@@ -585,6 +587,8 @@
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF64CFAD1BE2AACE0072014B /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
+		EF67F0F81CD1547400F52546 /* AmbassadorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmbassadorHelper.h; sourceTree = "<group>"; };
+		EF67F0F91CD1547400F52546 /* AmbassadorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorHelper.m; sourceTree = "<group>"; };
 		EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorSecrets.plist; sourceTree = "<group>"; };
 		EF6A5C5E1CBFEBD300458480 /* FileWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileWriter.h; sourceTree = "<group>"; };
 		EF6A5C5F1CBFEBD300458480 /* FileWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileWriter.m; sourceTree = "<group>"; };
@@ -1231,6 +1235,8 @@
 				EF6A5C5F1CBFEBD300458480 /* FileWriter.m */,
 				EF1A4F321CC67802008EE886 /* UIActivityViewController+ZipShare.h */,
 				EF1A4F331CC67802008EE886 /* UIActivityViewController+ZipShare.m */,
+				EF67F0F81CD1547400F52546 /* AmbassadorHelper.h */,
+				EF67F0F91CD1547400F52546 /* AmbassadorHelper.m */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -1553,6 +1559,7 @@
 				EF5579FA1C84F65500F66761 /* AMBWelcomeScreenViewController.h in Headers */,
 				EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */,
 				DBA3FC251BA8AA1D00672D82 /* AMBPusher.h in Headers */,
+				EF67F0FA1CD1547400F52546 /* AmbassadorHelper.h in Headers */,
 				DBA3FC0B1BA8AA1D00672D82 /* AMBPTEventListener.h in Headers */,
 				EF1A4F2C1CC58DE8008EE886 /* SlidingView.h in Headers */,
 				DBA3FB7F1BA8A23C00672D82 /* AMBConversion.h in Headers */,
@@ -1964,6 +1971,7 @@
 				DBA3FBB21BA8A24F00672D82 /* AMBSelectedCell.m in Sources */,
 				DBA3FC171BA8AA1D00672D82 /* AMBPTPusherConnection.m in Sources */,
 				EF1CC8091C99E13800C2752B /* AMBInputAlert.m in Sources */,
+				EF67F0FB1CD1547400F52546 /* AmbassadorHelper.m in Sources */,
 				DBA3FC1D1BA8AA1D00672D82 /* AMBPTPusherEventDispatcher.m in Sources */,
 				DBA3FC321BA8AA5600672D82 /* AMBSRWebSocket.m in Sources */,
 				EFDFA0CB1BE148A5002FA3ED /* AMBValues.m in Sources */,
