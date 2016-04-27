@@ -11,5 +11,6 @@
 @interface UIActivityViewController (ZipShare)
 
 + (void)shareZip:(NSURL *)zip withMessage:(NSString *)message subject:(NSString *)subject forPresenter:(UIViewController *)presenter;
++ (void)shareZip:(NSURL *)zip withMessage:(NSString *)message subject:(NSString *)subject forPresenter:(UIViewController *)presenter withCompletion:(UIActivityViewControllerCompletionHandler)completion;
 
 @end
