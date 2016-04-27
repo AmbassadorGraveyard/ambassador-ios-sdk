@@ -18,6 +18,7 @@
 #import "LoadingScreen.h"
 #import "AMBThemeManager.h"
 #import "Validator.h"
+#import "AmbassadorHelper.h"
 
 @interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate,
                             UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate, UIAlertViewDelegate>
@@ -112,7 +113,9 @@ NSInteger currentScrollPoint;
         if ([self.delegate respondsToSelector:@selector(RAFCustomizerSavedRAF:)]) {
             // Override the existing plist theme with new RAF Customizer values
             [self overridePlistToSave];
-            NSString *rafName = self.tfRafName.text;
+            
+            // Removes spaces from beginning and end up name
+            NSString *rafName = [self.tfRafName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             
             // If the RAFItem is nil we create a new one
             if (!self.rafItem) {
@@ -496,9 +499,9 @@ NSInteger currentScrollPoint;
     }
     
     // Checks for Duplicate RAF Name if new RAF
-    NSString *nameWithoutSpaces = [self.tfRafName.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *nameWithoutSpaces = [self.tfRafName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
-    if ([ThemeHandler duplicateRAFName:nameWithoutSpaces] && !self.rafItem) {
+    if ([ThemeHandler duplicateRAFName:nameWithoutSpaces]) {
         NSString *errorString = [NSString stringWithFormat:@"Duplicate RAF names are not allowed: %@", self.tfRafName.text];
         UIAlertView *duplicateAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:errorString delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [duplicateAlert show];
@@ -525,10 +528,9 @@ NSInteger currentScrollPoint;
     [spinner startAnimating];
     
     // Puts delay on the initial save so that the spinner has time to start
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.4 * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    [AmbassadorHelper setDelay:0.4 finished:^{
         completion();
-    });
+    }];
 }
 
 @end

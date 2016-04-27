@@ -16,6 +16,7 @@
 #import "FileWriter.h"
 #import <ZipZap/ZipZap.h>
 #import "UIActivityViewController+ZipShare.h"
+#import "AmbassadorHelper.h"
 
 @interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, RAFCustomizerDelegate>
 
@@ -175,7 +176,10 @@ NSInteger shareCellIndex;
     RAFCell *cell = [self.rafTable cellForRowAtIndexPath:indexPath];
     [cell showSpinnerForExport];
     
-    [self exportRAFTheme:rafItem];
+    // Once the spinner is showing, we export the RAF
+    [AmbassadorHelper setDelay:0.2 finished:^{
+        [self exportRAFTheme:rafItem];
+    }];
 }
 
 
