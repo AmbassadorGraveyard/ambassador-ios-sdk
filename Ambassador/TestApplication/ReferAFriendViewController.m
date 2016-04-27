@@ -36,6 +36,7 @@
 
 NSString * RAF_CUSTOMIZE_SEGUE = @"RAF_CUSTOMIZE_SEGUE";
 RAFItem * itemToDelete = nil;
+NSInteger shareCellIndex;
 
 
 #pragma mark - LifeCycle
@@ -158,8 +159,8 @@ RAFItem * itemToDelete = nil;
 #pragma mark - RAFCell Delegate
 
 - (void)RAFCellDeleteTappedForRAFItem:(RAFItem *)rafItem {
+    // Shows confirmation alert
     NSString *confirmationString = [NSString stringWithFormat:@"%@ will be permanently deleted.", rafItem.rafName];
-    
     UIAlertView *deleteConfirmation = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:confirmationString delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
     [deleteConfirmation show];
     
@@ -168,6 +169,12 @@ RAFItem * itemToDelete = nil;
 }
 
 - (void)RAFCellExportTappedForRAFItem:(RAFItem *)rafItem {
+    // Get the cell that is being exported from and shows a spinner
+    shareCellIndex = [self.rafArray indexOfObject:rafItem];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:shareCellIndex inSection:0];
+    RAFCell *cell = [self.rafTable cellForRowAtIndexPath:indexPath];
+    [cell showSpinnerForExport];
+    
     [self exportRAFTheme:rafItem];
 }
 
@@ -237,7 +244,12 @@ RAFItem * itemToDelete = nil;
 
     // Shares using a uiactivityviewcontroller that allows a zip file
     NSString *imageName =  rafItem.imageFilePath != nil && ![rafItem.imageFilePath isEqualToString:@""] ? [NSString stringWithFormat:@"%@.png", rafItem.imageFilePath] : nil;
-    [UIActivityViewController shareZip:fileURL withMessage:[FileWriter readMeForRequest:ReadmeTypeRAF containsImage:imageName] subject:@"Ambassador RAF Integration Implementation" forPresenter:self];
+    [UIActivityViewController shareZip:fileURL withMessage:[FileWriter readMeForRequest:ReadmeTypeRAF containsImage:imageName] subject:@"Ambassador RAF Integration Implementation" forPresenter:self withCompletion:^(NSString * _Nullable activityType, BOOL completed) {
+        // Once the share activity has been dismissed, we stop showing the spinner
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:shareCellIndex inSection:0];
+        RAFCell *cell = [self.rafTable cellForRowAtIndexPath:indexPath];
+        [cell stopSpinner];
+    }];
 }
 
 @end
