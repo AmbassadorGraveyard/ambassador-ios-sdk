@@ -110,26 +110,35 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 #pragma mark - TextField Delegate
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-    self.selectedTextField = textField;
-    
+    // If campaign textField gains focus
     if ([textField isEqual:self.tfCampID]) {
+        [self.selectedTextField resignFirstResponder];
+        
         // Show Campaign list VC
         CampaignListController *campaignList = [[CampaignListController alloc] init];
         campaignList.delegate = self;
         
-        // Reason for presentin with tabBarController.parentController is so that the list covers the navBAR-- SAME BELOW
+        // Reason for presentin with tabBarController.parentController is so that the list covers the navBAR
         [self.tabBarController.parentViewController presentViewController:campaignList animated:YES completion:nil];
         
         return NO;
     }
     
+    // If Add to groups textField gains focus
     if ([textField isEqual:self.tfGroupID]) {
+        [self.selectedTextField resignFirstResponder];
+        
+        // Show group list viewController
         GroupListViewController *groupList = [[GroupListViewController alloc] initWithSelectedArray:[self arrayFromGroupsField]];
         groupList.delegate = self;
+        
+        // Reason for presentin with tabBarController.parentController is so that the list covers the navBAR
         [self.tabBarController.parentViewController presentViewController:groupList animated:YES completion:nil];
         
         return NO;
     }
+    
+    self.selectedTextField = textField;
     
     return YES;
 }
@@ -144,7 +153,6 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 
 - (void)registerForKeyboardNotificaitons {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)keyboardWillShow:(NSNotification*)notificaiton {
@@ -162,11 +170,6 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     if (newY > 0 && newY > currentOffset) {
         [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
     }
-}
-
-- (void)keyboardWillBeHidden:(NSNotification*)notification {
-    // Resets the scrollview to original position
-    [self.scrollView setContentOffset:CGPointMake(0, currentOffset) animated:YES];
 }
 
 
@@ -341,7 +344,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
         NSURL *fileURL = [NSURL fileURLWithPath:filePath];
         
         // ActivityViewController category function that shares a zip
-        [UIActivityViewController shareZip:fileURL withMessage:[FileWriter readMeForRequest:@"conversion"] subject:@"Ambassador Conversion Code" forPresenter:self];
+        [UIActivityViewController shareZip:fileURL withMessage:[FileWriter readMeForRequest:ReadmeTypeConversion containsImage:nil] subject:@"Ambassador Conversion Implementation" forPresenter:self];
     }
 }
 

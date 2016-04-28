@@ -8,16 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum readMeType {
+    ReadmeTypeIdentify,
+    ReadmeTypeConversion,
+    ReadmeTypeRAF
+} READMETypes;
+
 @interface FileWriter : NSObject
 
 + (NSString *)objcAppDelegateFileWithInsert:(NSString *)insert;
 + (NSString *)swiftAppDelegateFileWithInsert:(NSString *)insert;
 + (NSString *)javaMyApplicationFileWithInsert:(NSString *)insert;
-+ (NSString *)readMeForRequest:(NSString *)requestName;
++ (NSString *)readMeForRequest:(READMETypes)readmeType containsImage:(NSString*)imageName;
 + (NSString *)objcViewControllerWithInsert:(NSString *)insert;
 + (NSString *)swiftViewControllerWithInsert:(NSString *)insert;
 + (NSString *)javaActivityWithInsert:(NSString *)insert;
-+ (NSString *)readmeForRAF;
 + (NSString *)documentsPath;
 
 @end

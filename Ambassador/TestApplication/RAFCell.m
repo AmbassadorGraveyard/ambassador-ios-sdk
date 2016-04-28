@@ -92,4 +92,28 @@
     } completion:nil];
 }
 
+- (void)showSpinnerForExport {
+    // Hide export button
+    self.btnExport.hidden = YES;
+    
+    // Add spinner where button was and start animating
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = self.btnExport.center;
+    
+    [self addSubview:spinner];
+    [spinner startAnimating];
+}
+
+- (void)stopSpinner {
+    // Removes the spinner activity
+    for (UIActivityIndicatorView *spinner in self.subviews) {
+        if ([spinner isKindOfClass:[UIActivityIndicatorView class]]) {
+            [spinner removeFromSuperview];
+        }
+    }
+    
+    // Shows button again
+    self.btnExport.hidden = NO;
+}
+
 @end

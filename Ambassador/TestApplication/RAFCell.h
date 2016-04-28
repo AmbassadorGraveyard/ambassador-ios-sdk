@@ -23,5 +23,7 @@
 @property (nonatomic, weak) id<RAFCellDelegate> delegate;
 
 - (void)setUpCellWithRaf:(RAFItem*)rafItem;
+- (void)showSpinnerForExport;
+- (void)stopSpinner;
 
 @end

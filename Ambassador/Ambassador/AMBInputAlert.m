@@ -12,13 +12,16 @@
 
 @interface AMBInputAlert() <UITextFieldDelegate>
 
+// IBOutlets
 @property (nonatomic, strong) IBOutlet UIView * masterView;
 @property (nonatomic, strong) IBOutlet UILabel * lblTitle;
 @property (nonatomic, strong) IBOutlet UILabel * lblMessage;
 @property (nonatomic, strong) IBOutlet UITextField * tfInput;
 @property (nonatomic, strong) IBOutlet UIButton * btnAction;
 @property (nonatomic, strong) IBOutlet UIView * emailUnderline;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint * masterViewCenterY;
 
+// Private properties
 @property (nonatomic, strong) NSString * titleText;
 @property (nonatomic, strong) NSString * messageText;
 @property (nonatomic, strong) NSString * actionButtonTitle;
@@ -47,6 +50,7 @@
 
 - (void)viewDidLoad {
     [self setUpUI];
+    [self registerForKeyboardNotifications];
 }
 
 
@@ -76,6 +80,29 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+
+#pragma mark - Keyboard Delegate
+
+- (void)registerForKeyboardNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification*)notification {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.masterViewCenterY.constant = -70;
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)notification {
+    // Resets the scrollview to original position
+    [UIView animateWithDuration:0.3 animations:^{
+        self.masterViewCenterY.constant = -50;
+        [self.view layoutIfNeeded];
+    }];
 }
 
 

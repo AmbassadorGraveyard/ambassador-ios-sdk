@@ -18,6 +18,7 @@
 #import "LoadingScreen.h"
 #import "AMBThemeManager.h"
 #import "Validator.h"
+#import "AmbassadorHelper.h"
 
 @interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate,
                             UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate, UIAlertViewDelegate>
@@ -42,6 +43,7 @@
 @property (nonatomic, strong) IBOutlet UITextView * tvHeaderText;
 @property (nonatomic, weak) IBOutlet UISwitch * swtStatusBar;
 @property (nonatomic, weak) IBOutlet UILabel * lblStatusBarTheme;
+@property (nonatomic, weak) IBOutlet UITextView * tvShareMessage;
 
 // Private properties
 @property (nonatomic, strong) NSMutableDictionary * plistDict;
@@ -58,6 +60,7 @@
 @implementation RAFCustomizer
 
 NSInteger currentScrollPoint;
+NSString * originalName;
 
 
 #pragma mark - LifeCycle
@@ -72,6 +75,11 @@ NSInteger currentScrollPoint;
     
     // Listens for when keyboard shows/hides
     [self registerForKeyboardNotificaitons];
+    
+    // Saves original name for duplicate check
+    if (self.rafItem) {
+        originalName = self.rafItem.rafName;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -106,28 +114,32 @@ NSInteger currentScrollPoint;
         return;
     }
     
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    if ([self.delegate respondsToSelector:@selector(RAFCustomizerSavedRAF:)]) {
-        // Override the existing plist theme with new RAF Customizer values
-        [self overridePlistToSave];
-        NSString *rafName = self.tfRafName.text;
-        
-        // If the RAFItem is nil we create a new one
-        if (!self.rafItem) {
-            self.rafItem = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict];
-        } else {
-            // If there is already a RAF Item, we override its properties instead of creating a new one
-            self.rafItem.rafName = rafName;
+    // Sets the spinner and then starts the saving process
+    [self showSpinnerWithCompletion:^{
+        if ([self.delegate respondsToSelector:@selector(RAFCustomizerSavedRAF:)]) {
+            // Override the existing plist theme with new RAF Customizer values
+            [self overridePlistToSave];
+            
+            // Removes spaces from beginning and end up name
+            NSString *rafName = [self.tfRafName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            
+            // If the RAFItem is nil we create a new one
+            if (!self.rafItem) {
+                self.rafItem = [[RAFItem alloc] initWithName:rafName plistDict:self.plistDict];
+            } else {
+                // If there is already a RAF Item, we override its properties instead of creating a new one
+                self.rafItem.rafName = rafName;
+            }
+            
+            // Override properties of the RAF Item
+            [self overridePlistIfImage:self.rafItem.plistFullName];
+            self.rafItem.campaign = self.selectedCampaignID;
+            [self.rafItem generateXMLFromPlist:self.plistDict];
+            [self.delegate RAFCustomizerSavedRAF:self.rafItem];
         }
         
-        // Override properties of the RAF Item
-        [self overridePlistIfImage:self.rafItem.plistFullName];
-        self.rafItem.campaign = self.selectedCampaignID;
-        [self.rafItem generateXMLFromPlist:self.plistDict];
-        
-        [self.delegate RAFCustomizerSavedRAF:self.rafItem];
-    }
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
 }
 
 - (void)cancelTapped {
@@ -187,6 +199,9 @@ NSInteger currentScrollPoint;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     self.ivProductPhoto.image = info[@"UIImagePickerControllerOriginalImage"];
     self.selectedImage = self.ivProductPhoto.image;
+    
+    
+    
     self.btnClearImage.enabled = YES;
     self.plusImage.hidden = YES;
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -197,7 +212,6 @@ NSInteger currentScrollPoint;
 
 - (void)registerForKeyboardNotificaitons {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)keyboardWillShow:(NSNotification*)notificaiton {
@@ -213,11 +227,6 @@ NSInteger currentScrollPoint;
         CGFloat newY = keyboardFrame.size.height - difference;
         [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
     }
-}
-
-- (void)keyboardWillBeHidden:(NSNotification*)notification {
-    // Resets the scrollview to original position
-    [self.scrollView setContentOffset:CGPointMake(0, currentScrollPoint) animated:YES];
 }
 
 
@@ -324,6 +333,7 @@ NSInteger currentScrollPoint;
     self.tvText1.text = [self.plistDict valueForKey:@"RAFWelcomeTextMessage"];
     self.tvText2.text = [self.plistDict valueForKey:@"RAFDescriptionTextMessage"];
     self.tvHeaderText.text = [self.plistDict valueForKey:@"NavBarTextMessage"];
+    self.tvShareMessage.text = [self.plistDict valueForKey:@"DefaultShareMessage"];
     self.tfRafName.text = self.rafItem.rafName;
     
     // RAF Item Values
@@ -365,10 +375,12 @@ NSInteger currentScrollPoint;
     NSString *headerText = ![Validator emptyString:self.tvHeaderText.text] ? self.tvHeaderText.text : @" ";
     NSString *textValue1 = ![Validator emptyString:self.tvText1.text] ? self.tvText1.text : @" ";
     NSString *textValue2 = ![Validator emptyString:self.tvText2.text] ? self.tvText2.text : @" ";
+    NSString *shareTextMessage = ![Validator emptyString:self.tvShareMessage.text] ? self.tvShareMessage.text : @" ";
     
     [self.plistDict setValue:headerText forKey:@"NavBarTextMessage"];
     [self.plistDict setValue:textValue1 forKey:@"RAFWelcomeTextMessage"];
     [self.plistDict setValue:textValue2 forKey:@"RAFDescriptionTextMessage"];
+    [self.plistDict setValue:shareTextMessage forKey:@"DefaultShareMessage"];
     
     // Overrides social table
     [self.plistDict setValue:[self stringFromSocialChannels] forKey:@"Channels"];
@@ -383,8 +395,8 @@ NSInteger currentScrollPoint;
         NSString *imageString = [rafPlist stringByAppendingString:@"Image"];
         NSString *imagePlistValue = [imageString stringByAppendingString:@", 1"];
         [self.plistDict setValue:imagePlistValue forKey:@"RAFLogo"];
-        [ThemeHandler saveImage:self.selectedImage forTheme:self.rafItem];
         self.rafItem.imageFilePath = imageString;
+        [ThemeHandler saveImage:self.selectedImage forTheme:self.rafItem];
     } else {
         // If there is an image tied to the RAF, we remove it from local storage
         [ThemeHandler removeImageForTheme:self.rafItem];
@@ -493,9 +505,9 @@ NSInteger currentScrollPoint;
     }
     
     // Checks for Duplicate RAF Name if new RAF
-    NSString *nameWithoutSpaces = [self.tfRafName.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *nameWithoutSpaces = [self.tfRafName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
-    if ([ThemeHandler duplicateRAFName:nameWithoutSpaces] && !self.rafItem) {
+    if ([ThemeHandler duplicateRAFName:nameWithoutSpaces] && ![nameWithoutSpaces isEqualToString:originalName]) {
         NSString *errorString = [NSString stringWithFormat:@"Duplicate RAF names are not allowed: %@", self.tfRafName.text];
         UIAlertView *duplicateAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:errorString delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [duplicateAlert show];
@@ -513,6 +525,18 @@ NSInteger currentScrollPoint;
 - (void)updateStatusBarTheme {
     // Updates text based on theme"`
     self.lblStatusBarTheme.text = self.swtStatusBar.isOn ? @"Dark" : @"Light";
+}
+
+- (void)showSpinnerWithCompletion:(void(^)())completion {
+    // Replaces the 'Save' button with a spinner
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    [spinner startAnimating];
+    
+    // Puts delay on the initial save so that the spinner has time to start
+    [AmbassadorHelper setDelay:0.4 finished:^{
+        completion();
+    }];
 }
 
 @end

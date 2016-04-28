@@ -8,8 +8,12 @@
 
 #import "ThemeHandler.h"
 #import "DefaultsHandler.h"
+#import <zipzap/ZipZap.h>
+#import "FileWriter.h"
 
 @implementation ThemeHandler
+
+NSString * rafZipConstant = @"RAF.zip";
 
 
 #pragma mark - Save Functions
@@ -56,9 +60,9 @@
     NSString *documentsDirectory = [paths objectAtIndex:0];
     
     // Creates and writes to a new or existing file path with the path name
-    NSData *jpgData = UIImageJPEGRepresentation(image, 1.0);
+    NSData *jpgData = UIImageJPEGRepresentation(image, 0.5);
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", imageSavePath]];
-    [jpgData writeToFile:filePath atomically:NO];
+    [jpgData writeToFile:filePath atomically:YES];
 }
 
 + (void)writeToDocumentsPathWithThemeName:(NSString*)name dictionary:(NSMutableDictionary*)writeDict {
@@ -68,7 +72,7 @@
     
     // Creates and writes to a new or existing file path with the path name
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", name]];
-    [writeDict writeToFile:filePath atomically:NO];
+    [writeDict writeToFile:filePath atomically:YES];
 }
 
 + (BOOL)duplicateRAFName:(NSString*)name {
@@ -83,6 +87,22 @@
     return NO;
 }
 
++ (void)packageZipForRAF:(RAFItem *)raf {
+    // Creates a new directiry in the documents folder
+    NSString *stringWithoutSpaces = [raf.rafName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:[stringWithoutSpaces stringByAppendingString:rafZipConstant]];
+    
+    // Creates an array of files for the zip file
+    NSMutableArray *entriesArray = [[NSMutableArray alloc] initWithObjects:[self getObjcFile:raf], [self getSwiftFile:raf], [self getPlist:raf],
+                                    [self getJavaFile:raf], [self getJavaXMLFile:raf], nil];
+    
+    // Checks if there is an image tied to the RAF, and includes it if so
+    if ([self getThemeImage:raf]) { [entriesArray addObject:[self getThemeImage:raf]]; }
+    
+    // Creates a new zip file containing all different files
+    ZZArchive* newArchive = [[ZZArchive alloc] initWithURL:[NSURL fileURLWithPath:filePath] options:@{ZZOpenOptionsCreateIfMissingKey : @YES} error:nil];
+    [newArchive updateEntries:entriesArray error:nil];
+}
 
 #pragma mark - Delete Functions
 
@@ -109,13 +129,15 @@
     // Remove the plist from Documents and image if exists
     [ThemeHandler removeFileFromPathWithThemeName:rafItem.plistFullName];
     [ThemeHandler removeImageForTheme:rafItem];
+    [ThemeHandler removeZipForRAF:rafItem];
 }
 
 + (void)removeImageForTheme:(RAFItem*)theme {
     if (theme.imageFilePath) {
+        NSString *imagePath = [[FileWriter documentsPath] stringByAppendingPathComponent:theme.imageFilePath];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSError *fileMngError;
-        BOOL removed = [fileManager removeItemAtPath:theme.imageFilePath error:&fileMngError];
+        BOOL removed = [fileManager removeItemAtPath:imagePath error:&fileMngError];
         
         if (removed) {
             NSLog(@"Image removed successfully!");
@@ -142,6 +164,23 @@
         NSLog(@"File removed successfully!");
     } else {
         NSLog(@"Failed to removed file - %@", fileMngError);
+    }
+}
+
++ (void)removeZipForRAF:(RAFItem *)item {
+    // Gets the directory where the zip is stored
+    NSString *stringWithoutSpaces = [item.rafName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:[stringWithoutSpaces stringByAppendingString:rafZipConstant]];
+    
+    // File manager attempts to delete Zip for RAF
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *fileMngError;
+    BOOL removed = [fileManager removeItemAtPath:filePath error:&fileMngError];
+    
+    if (removed) {
+        NSLog(@"Zip removed successfully!");
+    } else {
+        NSLog(@"Failed to removed zip - %@", fileMngError);
     }
 }
 
@@ -180,6 +219,88 @@
     // Creates and writes to a new or existing file path with the path name
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:item.imageFilePath];
     return [UIImage imageWithContentsOfFile:filePath];
+}
+
++ (NSURL *)getZipForRAF:(RAFItem *)raf {
+    // Gets the directory where the zip is stored
+    NSString *stringWithoutSpaces = [raf.rafName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSString *filePath = [[FileWriter documentsPath] stringByAppendingPathComponent:[stringWithoutSpaces stringByAppendingString:rafZipConstant]];
+    
+    // Creates a file based on the path using a url
+    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    return fileURL != nil ? fileURL : nil;
+}
+
+
+#pragma mark - Zip File Functions
+
++ (ZZArchiveEntry *)getObjcFile:(RAFItem *)rafItem {
+    NSString *objcLine = [NSString stringWithFormat:@"    [AmbassadorSDK presentRAFForCampaign:@\"%@\" FromViewController:self withThemePlist:@\"%@\"];\n", rafItem.campaign.campID, rafItem.rafName];
+    NSString *objcFile = [FileWriter objcViewControllerWithInsert:objcLine];
+    
+    ZZArchiveEntry *objcEntry = [ZZArchiveEntry archiveEntryWithFileName:@"ViewControllerTest.m" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [objcFile dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return objcEntry;
+}
+
++ (ZZArchiveEntry *)getSwiftFile:(RAFItem *)rafItem {
+    NSString *swiftLine = [NSString stringWithFormat:@"        AmbassadorSDK.presentRAFForCampaign(\"%@\", fromViewController: self, withThemePlist: \"%@\")\n", rafItem.campaign.campID, rafItem.rafName];
+    NSString *swiftFile = [FileWriter swiftViewControllerWithInsert:swiftLine];
+    
+    ZZArchiveEntry *swiftEntry = [ZZArchiveEntry archiveEntryWithFileName:@"ViewControllerTest.swift" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [swiftFile dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return swiftEntry;
+}
+
++ (ZZArchiveEntry *)getPlist:(RAFItem *)rafItem {
+    NSString *plistPath = [ThemeHandler getDocumentsPathWithName:rafItem.plistFullName];
+    NSString *plistName = [NSString stringWithFormat:@"%@.plist", rafItem.rafName];
+    
+    ZZArchiveEntry *plistEntry = [ZZArchiveEntry archiveEntryWithFileName:plistName compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [NSData dataWithContentsOfFile:plistPath];
+    }];
+    
+    return plistEntry;
+}
+
++ (ZZArchiveEntry *)getJavaFile:(RAFItem *)rafItem {
+    NSString *javaLine = [NSString stringWithFormat:@"        AmbassadorSDK.presentRAF(this, \"%@\", \"ambassador-raf.xml\");\n", rafItem.campaign.campID];
+    NSString *javaFile = [FileWriter javaActivityWithInsert:javaLine];
+    
+    ZZArchiveEntry *javaEntry = [ZZArchiveEntry archiveEntryWithFileName:@"MyApplication.java" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return [javaFile dataUsingEncoding:NSUTF8StringEncoding];
+    }];
+    
+    return javaEntry;
+}
+
++ (ZZArchiveEntry *)getJavaXMLFile:(RAFItem *)rafItem {
+    // If the RAF was created before android export was included, we need to generate the xml here
+    if (!rafItem.xmlFileData) { [rafItem generateXMLFromPlist:rafItem.plistDict]; }
+    
+    ZZArchiveEntry *xmlEntry = [ZZArchiveEntry archiveEntryWithFileName:@"ambassador-raf.xml" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return rafItem.xmlFileData;
+    }];
+    
+    return xmlEntry;
+}
+
++ (ZZArchiveEntry *)getThemeImage:(RAFItem *)rafItem {
+    UIImage *rafImage = [ThemeHandler getImageForRAF:rafItem];
+    NSData *imageAttachmentData =  UIImagePNGRepresentation(rafImage);
+    NSString *imageName = [NSString stringWithFormat:@"%@.png", rafItem.imageFilePath];
+    
+    if (!imageAttachmentData) { return nil; }
+    
+    ZZArchiveEntry *imageEntry = [ZZArchiveEntry archiveEntryWithFileName:imageName compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
+        return imageAttachmentData;
+    }];
+    
+    return imageEntry;
 }
 
 @end
