@@ -15,6 +15,7 @@
 #import "AMBPusherChannelObject.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBUtilities.h"
+#import <MessageUI/MessageUI.h>
 
 @interface AMBIdentify () <SFSafariViewControllerDelegate>
 
@@ -54,6 +55,11 @@ NSInteger const maxTryCount = 5;
 }
 
 - (void)performIdentifyForiOS9 {
+    // Presenting on an iMessage modal view causes issues
+    if ([[AMBUtilities getTopViewController] isKindOfClass:[MFMessageComposeViewController class]]) {
+        return;
+    }
+    
     // Checks if try count is at its max
     if (self.tryCount >= maxTryCount) {
         [self.identifyTimer invalidate];
