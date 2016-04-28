@@ -26,7 +26,7 @@
 @property (nonatomic, strong) IBOutlet UIView * containerView;
 @property (nonatomic, strong) NSMutableSet *selected;
 @property (nonatomic, strong) IBOutlet UITextField *searchBar;
-@property (nonatomic) BOOL isEditing;
+@property (nonatomic) BOOL messageEditing;
 @property (nonatomic) BOOL activeSearch;
 @property (nonatomic, strong) IBOutlet UITableView *contactsTable;
 @property (nonatomic, strong) NSMutableArray *filteredData;
@@ -173,7 +173,7 @@
 
 - (void)testEditMessageTappedEditing {
     // GIVEN
-    self.contactSelector.isEditing = NO;
+    self.contactSelector.messageEditing = NO;
     id mockUtils = [OCMockObject partialMockForObject:[AMBUtilities sharedInstance]];
     [[[mockUtils expect] andDo:nil] addFadeToView:[OCMArg any]];
     
@@ -186,7 +186,7 @@
 
 - (void)testEditMessageTappedNotEditing {
     // GIVEN
-    self.contactSelector.isEditing = YES;
+    self.contactSelector.messageEditing = YES;
     id mockUtils = [OCMockObject partialMockForObject:[AMBUtilities sharedInstance]];
     [[[mockUtils expect] andDo:nil] removeFadeFromView];
     
@@ -296,7 +296,7 @@
 
 - (void)testViewShouldBeginEditing {
     // GIVEN
-    self.contactSelector.isEditing = NO;
+    self.contactSelector.messageEditing = NO;
     [[[self.mockSelector expect] andDo:nil] editMessageButtonTapped:nil];
     
     id mockTextView = [OCMockObject mockForClass:[UITextView class]];
