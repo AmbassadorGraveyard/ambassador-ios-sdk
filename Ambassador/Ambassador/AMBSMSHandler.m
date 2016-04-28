@@ -66,9 +66,6 @@
     [smsController setRecipients:self.contactArray];
     [smsController setBody:self.messageString];
     
-    // Removes keyboard notifications contactSelector is not still reacting to the keyboard showing and hiding
-    [[NSNotificationCenter defaultCenter] removeObserver:self.parentController];
-    
     [self.parentController presentViewController:smsController animated:YES completion:nil];
 }
 

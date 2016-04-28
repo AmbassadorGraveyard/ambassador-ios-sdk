@@ -53,7 +53,7 @@
 @property (nonatomic, strong) AMBContact * selectedContact;
 @property (nonatomic, strong) AMBSMSHandler *smsHandler;
 @property (nonatomic) BOOL activeSearch;
-@property (nonatomic) BOOL isEditing;
+@property (nonatomic) BOOL messageEditing;
 
 @end
 
@@ -98,6 +98,7 @@ BOOL keyboardShowing = NO;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [[NSUserDefaults standardUserDefaults] setValue:@(YES) forKey:@"_UIConstraintBasedLayoutLogUnsatisfiable"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -123,8 +124,8 @@ BOOL keyboardShowing = NO;
 }
 
 - (IBAction)editMessageButtonTapped:(id)sender {
-    if (!self.isEditing) {
-        self.isEditing = YES;
+    if (!self.messageEditing) {
+        self.messageEditing = YES;
         [[AMBUtilities sharedInstance] addFadeToView:self.containerView];
         [self.containerView bringSubviewToFront:self.composeMessageView];
         [self.composeMessageTextView becomeFirstResponder];
@@ -137,7 +138,7 @@ BOOL keyboardShowing = NO;
         self.composeMessageTextView.textColor = [UIColor lightGrayColor];
         [self.btnEditMessage setImage:[AMBValues imageFromBundleWithName:@"pencil" type:@"png" tintable:YES] forState:UIControlStateNormal];
         [self.btnEditMessage setTitle:@"" forState:UIControlStateNormal];
-        self.isEditing = NO;
+        self.messageEditing = NO;
     }
 }
 
@@ -246,7 +247,7 @@ BOOL keyboardShowing = NO;
 #pragma mark - UITextView Delegate
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-    if (!self.isEditing) { [self editMessageButtonTapped:nil]; }
+    if (!self.messageEditing) { [self editMessageButtonTapped:nil]; }
     return YES;
 }
 
@@ -273,7 +274,7 @@ BOOL keyboardShowing = NO;
     keyboardShowing = YES;
     CGRect keyboardFrame = [sender.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
-    if (self.isEditing) {
+    if (self.messageEditing) {
         self.bottomViewBottomConstraint.constant = keyboardFrame.size.height;
         self.composeBoxHeight.constant = self.composeMessageView.frame.size.height - self.sendButton.frame.size.height;
         self.sendButtonHeight.constant = 0;
@@ -290,7 +291,7 @@ BOOL keyboardShowing = NO;
         return;
     }
     
-    if (self.isEditing) {
+    if (self.messageEditing) {
         self.bottomViewBottomConstraint.constant = 0;
         self.composeBoxHeight.constant = self.composeMessageView.frame.size.height + originalSendButtonHeight;
         self.sendButtonHeight.constant = originalSendButtonHeight;
