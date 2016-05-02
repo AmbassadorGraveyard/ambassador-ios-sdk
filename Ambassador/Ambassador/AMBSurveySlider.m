@@ -160,6 +160,7 @@ CGFloat linePosition = 0;
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self snapToNearestLine:nil];
+    [self.delegate AMBSurveySlider:self valueSelected:self.lblScoreNum.text];
 }
 
 - (void)moveWithTouch:(UITouch*)touch {

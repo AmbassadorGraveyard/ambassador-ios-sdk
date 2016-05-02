@@ -8,7 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+@class AMBSurveySlider;
+
+// Class protocol
+@protocol AMBSurveySliderDelegate <NSObject>
+
+- (void)AMBSurveySlider:(AMBSurveySlider *)surveySlider valueSelected:(NSString *)value;
+
+@end
+
+
+// Class interface
 @interface AMBSurveySlider : UIView
+
+@property (nonatomic, weak) id<AMBSurveySliderDelegate> delegate;
 
 - (void)setUpSliderWithHighNum:(NSInteger)highNum lowNum:(NSInteger)lowNum;
 
