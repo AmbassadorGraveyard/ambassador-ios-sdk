@@ -28,6 +28,9 @@
 
 CGFloat linePosition = 0;
 
+
+#pragma mark - Set up functionality
+
 // Function to tell the high num of the sliderView
 - (void)setUpSliderWithHighNum:(NSInteger)highNum lowNum:(NSInteger)lowNum {
     self.highNum = highNum;
@@ -36,6 +39,9 @@ CGFloat linePosition = 0;
     self.lblBottomNum.text = [NSString stringWithFormat:@"%li", (long)lowNum];
     self.backgroundColor = self.superview.backgroundColor;
 }
+
+
+// Drawing functionality
 
 - (void)drawRect:(CGRect)rect {
     if (!self.layerArray) {
@@ -149,6 +155,9 @@ CGFloat linePosition = 0;
     self.lblScoreNum.text = @"5";
 }
 
+
+#pragma mark - Touch Delegate
+
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
      UITouch *touch = [touches anyObject];
     [self moveWithTouch:touch];
@@ -179,6 +188,9 @@ CGFloat linePosition = 0;
         
     }
 }
+
+
+#pragma mark - Helper Functions
 
 // Get the veritical spacing of each line based on the top num in the survey
 - (CGFloat)linePostition {
