@@ -74,23 +74,35 @@
 
 - (void)setupUI {
     // View
-    self.view.backgroundColor = self.mainBackgroundColor;
+    self.view.backgroundColor = [self npsMainBackgroundColor];
     
     // Close button
     UIImage *templateImage = [self.btnClose.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [self.btnClose setImage:templateImage forState:UIControlStateNormal];
-    self.btnClose.tintColor = self.contentColor;
+    self.btnClose.tintColor = [self npsContentColor];
     
     // Submit button
-    self.btnSubmit.backgroundColor = self.buttonColor;
+    self.btnSubmit.backgroundColor = [self npsButtonColor];
     self.btnSubmit.layer.cornerRadius = 4;
     
     // Slider View
     self.slider.contentColor = self.contentColor;
     
     // Labels
-    self.lblDetailMessage.textColor = self.contentColor;
-    self.lblWelcomeMessage.textColor = self.contentColor;
+    self.lblDetailMessage.textColor = [self npsContentColor];
+    self.lblWelcomeMessage.textColor = [self npsContentColor];
+}
+
+- (UIColor *)npsMainBackgroundColor {
+    return self.mainBackgroundColor ? self.mainBackgroundColor : self.view.backgroundColor;
+}
+
+- (UIColor *)npsContentColor {
+    return self.contentColor ? self.contentColor : [UIColor whiteColor];
+}
+
+- (UIColor *)npsButtonColor {
+    return self.buttonColor ? self.buttonColor : self.btnSubmit.backgroundColor;
 }
 
 @end
