@@ -222,6 +222,18 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 }
 
 + (void)presentNPSSurveyWithNotification:(NSDictionary*)notification {
+    [[AmbassadorSDK sharedInstance] localPresentNPSSurveyWithNotification:notification action:^{
+        [[AmbassadorSDK sharedInstance] presentNPSSurvey];
+    }];
+}
+
++ (void)presentNPSSurveyWithNotification:(NSDictionary *)notification backgroundColor:(UIColor *)backgroundColor contentColor:(UIColor *)contentColor buttonColor:(UIColor *)buttonColor {
+    [[AmbassadorSDK sharedInstance] localPresentNPSSurveyWithNotification:notification action:^{
+        [[AmbassadorSDK sharedInstance] presentThemedNPSSurveyWithBackgroundColor:backgroundColor contentColor:contentColor buttonColor:buttonColor];
+    }];
+}
+
+- (void)localPresentNPSSurveyWithNotification:(NSDictionary *)notification action:(void(^)())action {
     DLog(@"AmbassadorNotification Received - %@", notification);
     
     // Grab the notification to use elsewhere in AmbassadorSDK
@@ -232,19 +244,27 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Can you help us out by taking a quick survey?" delegate:[AmbassadorSDK sharedInstance] cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
         [alertView show];
         
-    // If the user taps on the app when in the background then we skip the alertView
+        // If the user taps on the app when in the background then we skip the alertView
     } else {
-        [[AmbassadorSDK sharedInstance] presentNPSSurvey];
+        // If an action is passed in, the action is performed
+        if (action) { action(); }
     }
 }
 
 - (void)presentNPSSurvey {
+    [[AmbassadorSDK sharedInstance] presentThemedNPSSurveyWithBackgroundColor:nil contentColor:nil buttonColor:nil];
+}
+
+- (void)presentThemedNPSSurveyWithBackgroundColor:(UIColor *)backgroundColor contentColor:(UIColor *)contentColor buttonColor:(UIColor *)buttonColor {
     // Grabs the top-most viewController
     UIViewController *topViewController = [AMBUtilities getTopViewController];
     
     // Creates an NPS survey ViewController and has the top-most VC present it
-    AMBNPSViewController *nspViewController = [[AMBNPSViewController alloc] initWithPayload: self.notificationData];
-    [topViewController presentViewController:nspViewController animated:YES completion:nil];
+    AMBNPSViewController *npsViewController = [[AMBNPSViewController alloc] initWithPayload: self.notificationData];
+    npsViewController.mainBackgroundColor = backgroundColor;
+    npsViewController.contentColor = contentColor;
+    npsViewController.buttonColor = buttonColor;
+    [topViewController presentViewController:npsViewController animated:YES completion:nil];
 }
 
 
