@@ -35,15 +35,18 @@ CGFloat linePosition = 0;
     self.lblTopNum.text = [NSString stringWithFormat:@"%li", (long)highNum];
     self.lblBottomNum.text = [NSString stringWithFormat:@"%li", (long)lowNum];
     self.backgroundColor = self.superview.backgroundColor;
-    self.layerArray = [[NSMutableArray alloc] init];
 }
 
 - (void)drawRect:(CGRect)rect {
-    [self drawSurveyGrid];
-    [self drawSliderArrow];
+    if (!self.layerArray) {
+        [self drawSurveyGrid];
+        [self drawSliderArrow];
+    }
 }
 
 - (void)drawSurveyGrid {
+    self.layerArray = [[NSMutableArray alloc] init];
+    
     // Grabs the beginning and end point of each horizontal line
     CGFloat beginning = self.frame.size.width/2 - 25;
     CGFloat mid = self.frame.size.width/2 - 4;
@@ -105,7 +108,7 @@ CGFloat linePosition = 0;
     CGFloat sizeNum = 70;
     
     // Init sliderArrow view
-    self.sliderArrow = [[UIView alloc] initWithFrame: CGRectMake(self.frame.size.width/2 - (sizeNum * 1.5), self.frame.size.height/2 - (sizeNum/2), sizeNum, sizeNum)];
+    self.sliderArrow = [[UIView alloc] initWithFrame: CGRectMake(self.frame.size.width/2 - (sizeNum * 1.53), self.frame.size.height/2 - (sizeNum/2), sizeNum, sizeNum)];
     [self addSubview:self.sliderArrow];
     
     // Create a circle with border
@@ -118,7 +121,7 @@ CGFloat linePosition = 0;
     
     // Get points for triangle drawing
     CGFloat circleCenter = circle.frame.size.height/2;
-    CGFloat arrowHeightDifference = 25;
+    CGFloat arrowHeightDifference = 23;
     
     // Create full path for triangle
     UIBezierPath *trianglePath = [UIBezierPath bezierPath];
@@ -152,11 +155,11 @@ CGFloat linePosition = 0;
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
-    [self moveWithTouch:touch];
+    [self snapToNearestLine:touch];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self snapToNearestLine];
+    [self snapToNearestLine:nil];
 }
 
 - (void)moveWithTouch:(UITouch*)touch {
@@ -194,13 +197,13 @@ CGFloat linePosition = 0;
     return NO;
 }
 
-- (void)snapToNearestLine {
+- (void)snapToNearestLine:(UITouch *)touch {
     // Gets the y value of the closest horizontal line
-    NSInteger closestLayerY = [[self closestLayer].name intValue];
+    NSInteger closestLayerY = touch ? [[self closestLayerWithTouch:touch].name intValue] : [[self closestLayer].name intValue];
 
     // Animate the slider to the nearest line
-    [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
-        [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.2 animations:^{
+    [UIView animateKeyframesWithDuration:0.4 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.4 animations:^{
             self.sliderArrow.center = CGPointMake(self.sliderArrow.center.x, closestLayerY);
             [self updateScoreLabel];
         }];
@@ -232,7 +235,35 @@ CGFloat linePosition = 0;
     }
     
     return layer;
+}
 
+- (CAShapeLayer *)closestLayerWithTouch:(UITouch *)touch {
+    CGPoint location = [touch locationInView:self];
+    
+    // Set the smallestDifference to 1000 because its so high it will have to change
+    CGFloat smallestDifference = 1000;
+    
+    CAShapeLayer *layer = nil;
+    
+    // Goes through each line drawn in the grid
+    for (CAShapeLayer *currentLayer in self.layer.sublayers) {
+        // We only want to check horizontal lines which have been named with their Y
+        if (![currentLayer.name isEqualToString:@""]) {
+            // Grab the Y value based on name
+            CGFloat y = [currentLayer.name floatValue];
+            
+            // Get the differnce between the slider y and line y
+            CGFloat currentDifference = location.y - y;
+            
+            // If the distance between is smaller than the currently smallest, we reset it to the new smallest
+            if (fabs(currentDifference) < smallestDifference) {
+                smallestDifference = currentDifference;
+                layer = currentLayer;
+            }
+        }
+    }
+    
+    return layer;
 }
 
 - (void)updateScoreLabel {
