@@ -37,7 +37,7 @@ CGFloat linePosition = 0;
     self.lowNum = lowNum;
     self.lblTopNum.text = [NSString stringWithFormat:@"%li", (long)highNum];
     self.lblBottomNum.text = [NSString stringWithFormat:@"%li", (long)lowNum];
-    self.backgroundColor = self.superview.backgroundColor;
+    [self setupUI];
 }
 
 
@@ -120,7 +120,7 @@ CGFloat linePosition = 0;
     // Create a circle with border
     UIView * circle = [[UIView alloc] initWithFrame: CGRectMake(0, 0, sizeNum, sizeNum)];
     circle.backgroundColor = self.backgroundColor;
-    circle.layer.borderColor = [UIColor whiteColor].CGColor;
+    circle.layer.borderColor = [self arrowColor].CGColor;
     circle.layer.borderWidth = 4;
     circle.layer.cornerRadius = sizeNum/2;
     [self.sliderArrow addSubview:circle];
@@ -139,8 +139,8 @@ CGFloat linePosition = 0;
     // Creates a triangle shape based on the path
     CAShapeLayer *shape = [CAShapeLayer layer];
     shape.path = trianglePath.CGPath;
-    shape.strokeColor = [UIColor whiteColor].CGColor;
-    shape.fillColor = [UIColor whiteColor].CGColor;
+    shape.strokeColor = [self arrowColor].CGColor;
+    shape.fillColor = [self arrowColor].CGColor;
 
     // Insert the triangle layer below the circle layer
     [self.sliderArrow.layer insertSublayer:shape below:circle.layer];
@@ -148,7 +148,7 @@ CGFloat linePosition = 0;
     // Sets up the current score number label
     self.lblScoreNum = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sizeNum, sizeNum)];
     self.lblScoreNum.textAlignment = NSTextAlignmentCenter;
-    self.lblScoreNum.textColor = [UIColor whiteColor];
+    self.lblScoreNum.textColor = [self arrowColor];
     self.lblScoreNum.font = [UIFont systemFontOfSize:36];
     [self.sliderArrow addSubview:self.lblScoreNum];
     self.lblScoreNum.text = @"5";
@@ -188,6 +188,17 @@ CGFloat linePosition = 0;
     }
 }
 
+
+#pragma mark - UI Functions
+
+- (void)setupUI {
+    // View
+    self.backgroundColor = self.superview.backgroundColor;
+    
+    // Labels
+    self.lblTopNum.textColor = [self arrowColor];
+    self.lblBottomNum.textColor = [self arrowColor];
+}
 
 #pragma mark - Helper Functions
 
@@ -285,8 +296,12 @@ CGFloat linePosition = 0;
     self.lblScoreNum.text = [NSString stringWithFormat:@"%li", (long)[self.layerArray indexOfObject:layer]];
 }
 
-- (UIColor *)gridColor {
-    return [UIColor colorWithWhite:0.8 alpha:0.4];
+- (UIColor*)gridColor {
+    return self.contentColor ? self.contentColor : [UIColor colorWithWhite:0.8 alpha:0.4];
+}
+
+- (UIColor*)arrowColor {
+    return self.contentColor ? self.contentColor : [UIColor whiteColor];
 }
 
 @end

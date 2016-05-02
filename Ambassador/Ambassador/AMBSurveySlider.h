@@ -22,6 +22,7 @@
 @interface AMBSurveySlider : UIView
 
 @property (nonatomic, weak) id<AMBSurveySliderDelegate> delegate;
+@property (nonatomic, strong) UIColor * contentColor;
 
 - (void)setUpSliderWithHighNum:(NSInteger)highNum lowNum:(NSInteger)lowNum;
 
