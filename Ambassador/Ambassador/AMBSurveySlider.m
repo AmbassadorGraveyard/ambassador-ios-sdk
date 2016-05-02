@@ -63,6 +63,7 @@ CGFloat linePosition = 0;
         shapeLayer.strokeColor = [[UIColor lightGrayColor] CGColor];
         shapeLayer.lineWidth = 0.7;
         shapeLayer.fillColor = [[UIColor clearColor] CGColor];
+        [shapeLayer setName:[NSString stringWithFormat:@"%f", newY]];
         
         // Add the layer to the grid
         [self.layer addSublayer:shapeLayer];
@@ -149,6 +150,10 @@ CGFloat linePosition = 0;
     [self moveWithTouch:touch];
 }
 
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self snapToNearestLine];
+}
+
 - (void)moveWithTouch:(UITouch*)touch {
     CGPoint location = [touch locationInView:self];
     BOOL pointerInBounds = location.y >= 0 && location.y <= self.frame.size.height;
@@ -182,5 +187,33 @@ CGFloat linePosition = 0;
     return NO;
 }
 
+- (void)snapToNearestLine {
+    // Set the smallestDifference to 1000 because its so high it will have to change
+    CGFloat smallestDifference = 1000;
+    
+    // Goes through each line drawn in the grid
+    for (CALayer *currentLayer in self.layer.sublayers) {
+        // We only want to check horizontal lines which have been named with their Y
+        if (![currentLayer.name isEqualToString:@""]) {
+            // Grab the Y value based on name
+            CGFloat y = [currentLayer.name floatValue];
+            
+            // Get the differnce between the slider y and line y
+            CGFloat currentDifference = self.sliderArrow.center.y - y;
+            
+            // If the distance between is smaller than the currently smallest, we reset it to the new smallest
+            if (fabs(currentDifference) < smallestDifference) {
+                smallestDifference = currentDifference;
+            }
+        }
+    }
+    
+    // Animate the slider to the nearest line
+    [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.2 animations:^{
+            self.sliderArrow.center = CGPointMake(self.sliderArrow.center.x, self.sliderArrow.center.y - smallestDifference);
+        }];
+    } completion:nil];
+}
 
 @end
