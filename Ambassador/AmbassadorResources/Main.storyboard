@@ -1801,6 +1801,8 @@
                     <connections>
                         <outlet property="btnClose" destination="XHY-3Q-wde" id="aie-bV-k5F"/>
                         <outlet property="btnSubmit" destination="OVO-9K-cfU" id="dOv-4S-7hF"/>
+                        <outlet property="lblDetailMessage" destination="DUE-e1-NoP" id="lS4-s6-FvD"/>
+                        <outlet property="lblWelcomeMessage" destination="Qp4-vw-0Eg" id="v2z-0C-0RZ"/>
                         <outlet property="slider" destination="uNX-hx-grj" id="kL8-6x-dKP"/>
                     </connections>
                 </viewController>
