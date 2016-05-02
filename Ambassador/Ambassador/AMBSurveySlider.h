@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AMBSurveySlider : NSObject
+@interface AMBSurveySlider : UIView
+
+- (void)setUpSliderWithHighNum:(NSInteger)highNum lowNum:(NSInteger)lowNum;
 
 @end
