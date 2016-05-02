@@ -42,7 +42,6 @@ CGFloat linePosition = 0;
 
 
 // Drawing functionality
-
 - (void)drawRect:(CGRect)rect {
     if (!self.layerArray) {
         linePosition = 0;
