@@ -19,6 +19,7 @@
 @property (nonatomic) NSInteger lowNum;
 @property (nonatomic, strong) UIView * sliderArrow;
 @property (nonatomic, strong) UILabel * lblScoreNum;
+@property (nonatomic, strong) NSMutableArray * layerArray;
 
 @end
 
@@ -34,6 +35,7 @@ CGFloat linePosition = 0;
     self.lblTopNum.text = [NSString stringWithFormat:@"%li", (long)highNum];
     self.lblBottomNum.text = [NSString stringWithFormat:@"%li", (long)lowNum];
     self.backgroundColor = self.superview.backgroundColor;
+    self.layerArray = [[NSMutableArray alloc] init];
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -67,6 +69,9 @@ CGFloat linePosition = 0;
         
         // Add the layer to the grid
         [self.layer addSublayer:shapeLayer];
+        
+        // Insert layer in array so that the index reflets the number
+        [self.layerArray insertObject:shapeLayer atIndex:0];
 
         // Resets path for horizontal line, right of the center
         [path moveToPoint:CGPointMake(newMid, newY)];
@@ -163,8 +168,10 @@ CGFloat linePosition = 0;
         [UIView animateKeyframesWithDuration:0.3 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
             [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.2 animations:^{
                 self.sliderArrow.center = CGPointMake(self.sliderArrow.center.x, location.y);
+                [self updateScoreLabel];
             }];
         } completion:nil];
+        
     }
 }
 
@@ -188,11 +195,26 @@ CGFloat linePosition = 0;
 }
 
 - (void)snapToNearestLine {
+    // Gets the y value of the closest horizontal line
+    NSInteger closestLayerY = [[self closestLayer].name intValue];
+
+    // Animate the slider to the nearest line
+    [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.2 animations:^{
+            self.sliderArrow.center = CGPointMake(self.sliderArrow.center.x, closestLayerY);
+            [self updateScoreLabel];
+        }];
+    } completion:nil];
+}
+
+- (CAShapeLayer *)closestLayer {
     // Set the smallestDifference to 1000 because its so high it will have to change
     CGFloat smallestDifference = 1000;
     
+    CAShapeLayer *layer = nil;
+    
     // Goes through each line drawn in the grid
-    for (CALayer *currentLayer in self.layer.sublayers) {
+    for (CAShapeLayer *currentLayer in self.layer.sublayers) {
         // We only want to check horizontal lines which have been named with their Y
         if (![currentLayer.name isEqualToString:@""]) {
             // Grab the Y value based on name
@@ -204,16 +226,19 @@ CGFloat linePosition = 0;
             // If the distance between is smaller than the currently smallest, we reset it to the new smallest
             if (fabs(currentDifference) < smallestDifference) {
                 smallestDifference = currentDifference;
+                layer = currentLayer;
             }
         }
     }
     
-    // Animate the slider to the nearest line
-    [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
-        [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.2 animations:^{
-            self.sliderArrow.center = CGPointMake(self.sliderArrow.center.x, self.sliderArrow.center.y - smallestDifference);
-        }];
-    } completion:nil];
+    return layer;
+
+}
+
+- (void)updateScoreLabel {
+    // Updates the score label based on the position of the arrow
+    CAShapeLayer *layer = [self closestLayer];
+    self.lblScoreNum.text = [NSString stringWithFormat:@"%li", (long)[self.layerArray indexOfObject:layer]];
 }
 
 @end
