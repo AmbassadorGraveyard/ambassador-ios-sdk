@@ -14,6 +14,8 @@
 // IBOutlets
 @property (nonatomic, weak) IBOutlet UIButton * btnClose;
 @property (nonatomic, weak) IBOutlet UIButton * btnSubmit;
+@property (nonatomic, weak) IBOutlet UILabel * lblWelcomeMessage;
+@property (nonatomic, weak) IBOutlet UILabel * lblDetailMessage;
 @property (nonatomic, weak) IBOutlet AMBSurveySlider * slider;
 
 // Private vars
@@ -71,13 +73,24 @@
 #pragma mark - UI Functions
 
 - (void)setupUI {
+    // View
+    self.view.backgroundColor = self.mainBackgroundColor;
+    
     // Close button
     UIImage *templateImage = [self.btnClose.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [self.btnClose setImage:templateImage forState:UIControlStateNormal];
-    self.btnClose.tintColor = [UIColor whiteColor];
+    self.btnClose.tintColor = self.contentColor;
     
     // Submit button
+    self.btnSubmit.backgroundColor = self.buttonColor;
     self.btnSubmit.layer.cornerRadius = 4;
+    
+    // Slider View
+    self.slider.contentColor = self.contentColor;
+    
+    // Labels
+    self.lblDetailMessage.textColor = self.contentColor;
+    self.lblWelcomeMessage.textColor = self.contentColor;
 }
 
 @end

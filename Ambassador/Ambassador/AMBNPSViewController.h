@@ -10,6 +10,10 @@
 
 @interface AMBNPSViewController : UIViewController
 
+@property (nonatomic, strong) UIColor * mainBackgroundColor;
+@property (nonatomic, strong) UIColor * contentColor;
+@property (nonatomic, strong) UIColor * buttonColor;
+
 - (id)initWithPayload:(NSDictionary*)payloadDict;
 
 @end
