@@ -221,7 +221,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     }
 }
 
-+ (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification {
++ (void)presentNPSSurveyWithNotification:(NSDictionary*)notification {
     DLog(@"AmbassadorNotification Received - %@", notification);
     
     // Grab the notification to use elsewhere in AmbassadorSDK

@@ -26,7 +26,7 @@
 + (void)registerDeviceToken:(NSString*)deviceToken;
 
 /**Handles remote notifications that are sent from Ambassador**/
-+ (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification;
++ (void)presentNPSSurveyWithNotification:(NSDictionary*)notification;
 
 /**Generates a Welcome Screen ViewController based on referrer's data, which can be handled by the caller*/
 + (void)presentWelcomeScreen:(AMBWelcomeScreenParameters*)parameters ifAvailable:(void(^)(AMBWelcomeScreenViewController *welcomeScreenVC))available;
