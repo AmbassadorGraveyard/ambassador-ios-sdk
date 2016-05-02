@@ -29,6 +29,11 @@
 @property (nonatomic, weak) NSString * tempCampID;
 @property (nonatomic, weak) NSString * tempPlistName;
 @property (nonatomic, weak) UIViewController * tempPresentController;
+
+// Temp vars used to call presentNPS with arguments passed if through alertView
 @property (nonatomic, weak) NSDictionary * notificationData;
+@property (nonatomic, weak) UIColor * npsBackgroundColor;
+@property (nonatomic, weak) UIColor * npsContentColor;
+@property (nonatomic, weak) UIColor * npsButtonColor;
 
 @end

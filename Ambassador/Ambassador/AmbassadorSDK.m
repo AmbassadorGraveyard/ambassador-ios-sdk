@@ -228,6 +228,10 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 }
 
 + (void)presentNPSSurveyWithNotification:(NSDictionary *)notification backgroundColor:(UIColor *)backgroundColor contentColor:(UIColor *)contentColor buttonColor:(UIColor *)buttonColor {
+    [AmbassadorSDK sharedInstance].npsBackgroundColor = backgroundColor;
+    [AmbassadorSDK sharedInstance].npsContentColor = contentColor;
+    [AmbassadorSDK sharedInstance].npsButtonColor = buttonColor;
+    
     [[AmbassadorSDK sharedInstance] localPresentNPSSurveyWithNotification:notification action:^{
         [[AmbassadorSDK sharedInstance] presentThemedNPSSurveyWithBackgroundColor:backgroundColor contentColor:contentColor buttonColor:buttonColor];
     }];
@@ -295,8 +299,18 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        // Once the alertView is dismissed is when we want to present the survey
-        [self presentNPSSurvey];
+        // If there are temp colors set, we present the themed NPS controller
+        if ([AmbassadorSDK sharedInstance].npsBackgroundColor || [AmbassadorSDK sharedInstance].npsContentColor || [AmbassadorSDK sharedInstance].npsButtonColor) {
+            [[AmbassadorSDK sharedInstance] presentThemedNPSSurveyWithBackgroundColor:[AmbassadorSDK sharedInstance].npsBackgroundColor contentColor:[AmbassadorSDK sharedInstance].npsContentColor buttonColor:[AmbassadorSDK sharedInstance].npsButtonColor];
+            
+            // Sets the temp colors to nil
+            [AmbassadorSDK sharedInstance].npsBackgroundColor = nil;
+            [AmbassadorSDK sharedInstance].npsContentColor = nil;
+            [AmbassadorSDK sharedInstance].npsButtonColor = nil;
+        } else {
+            // Once the alertView is dismissed is when we want to present the survey
+            [self presentNPSSurvey];
+        }
     }
 }
 
