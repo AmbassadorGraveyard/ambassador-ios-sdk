@@ -18,6 +18,7 @@
 @property (nonatomic) NSInteger highNum;
 @property (nonatomic) NSInteger lowNum;
 @property (nonatomic, strong) UIView * sliderArrow;
+@property (nonatomic, strong) UILabel * lblScoreNum;
 
 @end
 
@@ -128,6 +129,14 @@ CGFloat linePosition = 0;
 
     // Insert the triangle layer below the circle layer
     [self.sliderArrow.layer insertSublayer:shape below:circle.layer];
+    
+    // Sets up the current score number label
+    self.lblScoreNum = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sizeNum, sizeNum)];
+    self.lblScoreNum.textAlignment = NSTextAlignmentCenter;
+    self.lblScoreNum.textColor = [UIColor whiteColor];
+    self.lblScoreNum.font = [UIFont systemFontOfSize:36];
+    [self.sliderArrow addSubview:self.lblScoreNum];
+    self.lblScoreNum.text = @"5";
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
