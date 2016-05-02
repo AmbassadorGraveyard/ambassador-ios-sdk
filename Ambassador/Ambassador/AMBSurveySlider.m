@@ -39,6 +39,7 @@ CGFloat linePosition = 0;
 
 - (void)drawRect:(CGRect)rect {
     if (!self.layerArray) {
+        linePosition = 0;
         [self drawSurveyGrid];
         [self drawSliderArrow];
     }
@@ -65,7 +66,7 @@ CGFloat linePosition = 0;
         // Creates a shape based on the path
         CAShapeLayer *shapeLayer = [CAShapeLayer layer];
         shapeLayer.path = [path CGPath];
-        shapeLayer.strokeColor = [[UIColor lightGrayColor] CGColor];
+        shapeLayer.strokeColor = [[self gridColor] CGColor];
         shapeLayer.lineWidth = 0.7;
         shapeLayer.fillColor = [[UIColor clearColor] CGColor];
         [shapeLayer setName:[NSString stringWithFormat:@"%f", newY]];
@@ -98,7 +99,7 @@ CGFloat linePosition = 0;
     // Creates a 'shape' for the path and add the layer for the view
     CAShapeLayer *shapeLayer = [CAShapeLayer layer];
     shapeLayer.path = [path CGPath];
-    shapeLayer.strokeColor = [[UIColor lightGrayColor] CGColor];
+    shapeLayer.strokeColor = [[self gridColor] CGColor];
     shapeLayer.lineWidth = 1.0;
     shapeLayer.fillColor = [[UIColor clearColor] CGColor];
     [self.layer addSublayer:shapeLayer];
@@ -271,6 +272,10 @@ CGFloat linePosition = 0;
     // Updates the score label based on the position of the arrow
     CAShapeLayer *layer = [self closestLayer];
     self.lblScoreNum.text = [NSString stringWithFormat:@"%li", (long)[self.layerArray indexOfObject:layer]];
+}
+
+- (UIColor *)gridColor {
+    return [UIColor colorWithWhite:0.8 alpha:0.4];
 }
 
 @end
