@@ -274,7 +274,7 @@ NSString * const universalToken = @"test";
     [[[mockAmbassadorSDK expect] andDo: nil] presentNPSSurvey];
     
     // WHEN
-    [AmbassadorSDK handleAmbassadorRemoteNotification:mockNotificationDictionary];
+    [AmbassadorSDK presentNPSSurveyWithNotification:mockNotificationDictionary];
     
     // THEN
     XCTAssertEqual(mockNotificationDictionary, self.ambassadorSDK.notificationData);
