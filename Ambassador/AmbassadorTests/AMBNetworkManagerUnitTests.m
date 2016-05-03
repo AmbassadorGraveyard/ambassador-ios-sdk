@@ -181,7 +181,7 @@
     // WHEN
     [self.networkManager getPusherSessionWithSuccess:^(NSDictionary *response) {
         [successExpectation fulfill];
-    } failure:nil];
+    } noSDKAccess:nil failure:nil];
     
     // THEN
     [self waitForExpectationsWithTimeout:2.0 handler:^(NSError * _Nullable error) {
