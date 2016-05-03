@@ -15,6 +15,7 @@
 // Error Logs
 + (void)errorLogCannotSendConversion:(NSInteger)statusCode errorData:(NSData*)data;
 + (void)errorLogNoMatchingCampaignIdError:(NSString*)campaignId;
++ (void)errorNoSDKAccess;
 
 // NSErrors
 + (NSError*)restrictedConversionError;
