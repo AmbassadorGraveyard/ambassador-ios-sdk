@@ -1300,7 +1300,7 @@
         <!--Navigation Controller-->
         <scene sceneID="nSU-hs-L7S">
             <objects>
-                <navigationController storyboardIdentifier="RAFNAV" automaticallyAdjustsScrollViewInsets="NO" id="h1V-x8-bgO" sceneMemberID="viewController">
+                <navigationController restorationIdentifier="RAFNAVID" storyboardIdentifier="RAFNAV" automaticallyAdjustsScrollViewInsets="NO" id="h1V-x8-bgO" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="ECY-j5-f1i">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
