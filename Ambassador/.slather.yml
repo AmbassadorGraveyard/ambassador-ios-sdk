@@ -7,3 +7,4 @@ ignore:
   - TestApplication/*
   - Ambassador/AMBContactCard.m
   - Pods/*
+  - Ambassador/AMBSurveySlider.m

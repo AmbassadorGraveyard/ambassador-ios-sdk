@@ -221,7 +221,23 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     }
 }
 
-+ (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification {
++ (void)presentNPSSurveyWithNotification:(NSDictionary*)notification {
+    [[AmbassadorSDK sharedInstance] localPresentNPSSurveyWithNotification:notification action:^{
+        [[AmbassadorSDK sharedInstance] presentNPSSurvey];
+    }];
+}
+
++ (void)presentNPSSurveyWithNotification:(NSDictionary *)notification backgroundColor:(UIColor *)backgroundColor contentColor:(UIColor *)contentColor buttonColor:(UIColor *)buttonColor {
+    [AmbassadorSDK sharedInstance].npsBackgroundColor = backgroundColor;
+    [AmbassadorSDK sharedInstance].npsContentColor = contentColor;
+    [AmbassadorSDK sharedInstance].npsButtonColor = buttonColor;
+    
+    [[AmbassadorSDK sharedInstance] localPresentNPSSurveyWithNotification:notification action:^{
+        [[AmbassadorSDK sharedInstance] presentThemedNPSSurveyWithBackgroundColor:backgroundColor contentColor:contentColor buttonColor:buttonColor];
+    }];
+}
+
+- (void)localPresentNPSSurveyWithNotification:(NSDictionary *)notification action:(void(^)())action {
     DLog(@"AmbassadorNotification Received - %@", notification);
     
     // Grab the notification to use elsewhere in AmbassadorSDK
@@ -232,19 +248,27 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Can you help us out by taking a quick survey?" delegate:[AmbassadorSDK sharedInstance] cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
         [alertView show];
         
-    // If the user taps on the app when in the background then we skip the alertView
+        // If the user taps on the app when in the background then we skip the alertView
     } else {
-        [[AmbassadorSDK sharedInstance] presentNPSSurvey];
+        // If an action is passed in, the action is performed
+        if (action) { action(); }
     }
 }
 
 - (void)presentNPSSurvey {
+    [[AmbassadorSDK sharedInstance] presentThemedNPSSurveyWithBackgroundColor:nil contentColor:nil buttonColor:nil];
+}
+
+- (void)presentThemedNPSSurveyWithBackgroundColor:(UIColor *)backgroundColor contentColor:(UIColor *)contentColor buttonColor:(UIColor *)buttonColor {
     // Grabs the top-most viewController
     UIViewController *topViewController = [AMBUtilities getTopViewController];
     
     // Creates an NPS survey ViewController and has the top-most VC present it
-    AMBNPSViewController *nspViewController = [[AMBNPSViewController alloc] initWithPayload: self.notificationData];
-    [topViewController presentViewController:nspViewController animated:YES completion:nil];
+    AMBNPSViewController *npsViewController = [[AMBNPSViewController alloc] initWithPayload: self.notificationData];
+    npsViewController.mainBackgroundColor = backgroundColor;
+    npsViewController.contentColor = contentColor;
+    npsViewController.buttonColor = buttonColor;
+    [topViewController presentViewController:npsViewController animated:YES completion:nil];
 }
 
 
@@ -275,8 +299,18 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
-        // Once the alertView is dismissed is when we want to present the survey
-        [self presentNPSSurvey];
+        // If there are temp colors set, we present the themed NPS controller
+        if ([AmbassadorSDK sharedInstance].npsBackgroundColor || [AmbassadorSDK sharedInstance].npsContentColor || [AmbassadorSDK sharedInstance].npsButtonColor) {
+            [[AmbassadorSDK sharedInstance] presentThemedNPSSurveyWithBackgroundColor:[AmbassadorSDK sharedInstance].npsBackgroundColor contentColor:[AmbassadorSDK sharedInstance].npsContentColor buttonColor:[AmbassadorSDK sharedInstance].npsButtonColor];
+            
+            // Sets the temp colors to nil
+            [AmbassadorSDK sharedInstance].npsBackgroundColor = nil;
+            [AmbassadorSDK sharedInstance].npsContentColor = nil;
+            [AmbassadorSDK sharedInstance].npsButtonColor = nil;
+        } else {
+            // Once the alertView is dismissed is when we want to present the survey
+            [self presentNPSSurvey];
+        }
     }
 }
 

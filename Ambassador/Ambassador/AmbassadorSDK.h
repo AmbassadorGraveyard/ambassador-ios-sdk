@@ -26,7 +26,10 @@
 + (void)registerDeviceToken:(NSString*)deviceToken;
 
 /**Handles remote notifications that are sent from Ambassador**/
-+ (void)handleAmbassadorRemoteNotification:(NSDictionary*)notification;
++ (void)presentNPSSurveyWithNotification:(NSDictionary*)notification;
+
+/**Presents NPS Survey from notification with a custom theme*/
++ (void)presentNPSSurveyWithNotification:(NSDictionary *)notification backgroundColor:(UIColor *)backgroundColor contentColor:(UIColor *)contentColor buttonColor:(UIColor *)buttonColor;
 
 /**Generates a Welcome Screen ViewController based on referrer's data, which can be handled by the caller*/
 + (void)presentWelcomeScreen:(AMBWelcomeScreenParameters*)parameters ifAvailable:(void(^)(AMBWelcomeScreenViewController *welcomeScreenVC))available;

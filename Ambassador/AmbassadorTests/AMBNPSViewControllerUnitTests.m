@@ -9,15 +9,25 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "AMBNPSViewController.h"
+#import "AMBSurveySlider.h"
 
 // Category to access private vars/functions
-@interface AMBNPSViewController (Test)
+@interface AMBNPSViewController (Test) <AMBSurveySliderDelegate>
 
 @property (nonatomic, strong) NSDictionary * payloadDict;
-@property (nonatomic, strong) IBOutlet UIButton * btnClose;
+@property (nonatomic, weak) IBOutlet UIButton * btnClose;
+@property (nonatomic, weak) IBOutlet UIButton * btnSubmit;
+@property (nonatomic, weak) IBOutlet UILabel * lblWelcomeMessage;
+@property (nonatomic, weak) IBOutlet UILabel * lblDetailMessage;
+@property (nonatomic, weak) IBOutlet AMBSurveySlider * slider;
+@property (nonatomic, strong) NSString * selectedValue;
 
 - (void)setupUI;
 - (IBAction)closeSurvey:(id)sender;
+- (IBAction)submitTapped:(id)sender;
+- (UIColor *)npsMainBackgroundColor;
+- (UIColor *)npsContentColor;
+- (UIColor *)npsButtonColor;
 
 @end
 
@@ -94,30 +104,88 @@
     [self.mockNPSVC verify];
 }
 
+- (void)testSubmitTapped {
+    // GIVEN
+    [[[self.mockNPSVC expect] andDo:nil] dismissViewControllerAnimated:YES completion:nil];
+    
+    // WHEN
+    [self.mockNPSVC submitTapped:nil];
+    
+    // THEN
+    [self.mockNPSVC verify];
+}
+
+
+#pragma mark - AMBSurveySlider Delegate
+
+- (void)testSurveySliderValueSelected {
+    // GIVEN
+    NSString *testValue = @"TESTVALUE";
+    self.npsViewController.slider.delegate = self.npsViewController;
+    
+    // WHEN
+    [self.npsViewController AMBSurveySlider:self.npsViewController.slider valueSelected:testValue];
+    
+    // THEN
+    XCTAssertEqualObjects(testValue, self.npsViewController.selectedValue);
+}
+
 
 #pragma mark - UI Function Tests
 
-- (void)testSetupUI {
+- (void)testNPSMainBackgroundColor {
     // GIVEN
-    id mockImage = [OCMockObject mockForClass:[UIImage class]];
-    [[[mockImage expect] andDo:nil] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    
-    id mockImageView = [OCMockObject mockForClass:[UIImageView class]];
-    [[[mockImageView expect] andReturn:mockImage] image];
-    
-    id mockButton = [OCMockObject mockForClass:[UIButton class]];
-    [[[mockButton expect] andDo:nil] setImage:[OCMArg any] forState:UIControlStateNormal];
-    [[[mockButton expect] andDo:nil] setTintColor:[UIColor whiteColor]];
-    [[[mockButton expect] andReturn:mockImageView] imageView];
-    
-    self.npsViewController.btnClose = mockButton;
+    UIColor *yellow = [UIColor yellowColor];
+    UIColor *green = [UIColor greenColor];
     
     // WHEN
-    [self.npsViewController setupUI];
+    self.npsViewController.view.backgroundColor = green;
+    UIColor *color1 = [self.npsViewController npsMainBackgroundColor];
+    
+    self.npsViewController.mainBackgroundColor = yellow;
+    UIColor *color2 = [self.npsViewController npsMainBackgroundColor];
     
     // THEN
-    [mockButton verify];
-    [mockButton stopMocking];
+    XCTAssertEqualObjects(green, color1);
+    XCTAssertEqualObjects(yellow, color2);
+}
+
+- (void)testNPSContentColor {
+    // GIVEN
+    UIColor *white = [UIColor whiteColor];
+    UIColor *black = [UIColor blackColor];
+    
+    // WHEN
+    UIColor *color1 = [self.npsViewController npsContentColor];
+    
+    self.npsViewController.contentColor = black;
+    UIColor *color2 = [self.npsViewController npsContentColor];
+    
+    // THEN
+    XCTAssertEqualObjects(white, color1);
+    XCTAssertEqualObjects(black, color2);
+}
+
+- (void)testNPSButtonColor {
+    // GIVEN
+    UIColor *red = [UIColor redColor];
+    UIColor *blue = [UIColor blueColor];
+    
+    id mockSubmitButton = [OCMockObject mockForClass:[UIButton class]];
+    [[[mockSubmitButton expect] andReturn:red] backgroundColor];
+    [[[mockSubmitButton expect] andDo:nil] setBackgroundColor:red];
+    self.npsViewController.btnSubmit = mockSubmitButton;
+    
+    // WHEN
+    self.npsViewController.btnSubmit.backgroundColor = red;
+    UIColor *color1 = [self.npsViewController npsButtonColor];
+    
+    self.npsViewController.buttonColor = blue;
+    UIColor *color2 = [self.npsViewController npsButtonColor];
+    
+    // THEN
+    XCTAssertEqualObjects(red, color1);
+    XCTAssertEqualObjects(blue, color2);
 }
 
 @end

@@ -168,6 +168,8 @@
 		EF1CC8091C99E13800C2752B /* AMBInputAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC8071C99E13800C2752B /* AMBInputAlert.m */; };
 		EF1CC80B1C9A028800C2752B /* AMBInputAlertTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC80A1C9A028800C2752B /* AMBInputAlertTests.m */; };
 		EF1CC80E1C9B3C6300C2752B /* Validator.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1CC80D1C9B3C6300C2752B /* Validator.m */; };
+		EF210D0B1CD3B0FE00455DFA /* AMBSurveySlider.h in Headers */ = {isa = PBXBuildFile; fileRef = EF210D091CD3B0FE00455DFA /* AMBSurveySlider.h */; };
+		EF210D0C1CD3B0FE00455DFA /* AMBSurveySlider.m in Sources */ = {isa = PBXBuildFile; fileRef = EF210D0A1CD3B0FE00455DFA /* AMBSurveySlider.m */; };
 		EF24D1DD1BEC0DA200561476 /* AMBValuesUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */; };
 		EF24D1DF1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */; };
 		EF24D1E11BECF70A00561476 /* AMBThemeManagerUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */; };
@@ -529,6 +531,8 @@
 		EF1CC80A1C9A028800C2752B /* AMBInputAlertTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBInputAlertTests.m; sourceTree = "<group>"; };
 		EF1CC80C1C9B3C6300C2752B /* Validator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Validator.h; sourceTree = "<group>"; };
 		EF1CC80D1C9B3C6300C2752B /* Validator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Validator.m; sourceTree = "<group>"; };
+		EF210D091CD3B0FE00455DFA /* AMBSurveySlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBSurveySlider.h; sourceTree = "<group>"; };
+		EF210D0A1CD3B0FE00455DFA /* AMBSurveySlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSurveySlider.m; sourceTree = "<group>"; };
 		EF24D1DC1BEC0DA200561476 /* AMBValuesUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBValuesUnitTests.m; sourceTree = "<group>"; };
 		EF24D1DE1BEC13CC00561476 /* AMBBulkShareHelperUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBBulkShareHelperUnitTests.m; sourceTree = "<group>"; };
 		EF24D1E01BECF70A00561476 /* AMBThemeManagerUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManagerUnitTests.m; sourceTree = "<group>"; };
@@ -1345,6 +1349,8 @@
 			children = (
 				EFB3C7E51CB70E9400EF9533 /* AMBNPSViewController.h */,
 				EFB3C7E61CB70E9400EF9533 /* AMBNPSViewController.m */,
+				EF210D091CD3B0FE00455DFA /* AMBSurveySlider.h */,
+				EF210D0A1CD3B0FE00455DFA /* AMBSurveySlider.m */,
 			);
 			name = NPS;
 			sourceTree = "<group>";
@@ -1522,6 +1528,7 @@
 				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
 				EFE7D7951C21C19B00D7F92C /* AMBCoreDataDelegate.h in Headers */,
 				EF1A4F3D1CC6CD07008EE886 /* GroupObject.h in Headers */,
+				EF210D0B1CD3B0FE00455DFA /* AMBSurveySlider.h in Headers */,
 				DBA3FC051BA8AA1D00672D82 /* AMBPTJSON.h in Headers */,
 				DBA3FC131BA8AA1D00672D82 /* AMBPTPusherChannel.h in Headers */,
 				EF1A4F341CC67802008EE886 /* UIActivityViewController+ZipShare.h in Headers */,
@@ -1951,6 +1958,7 @@
 				DBA3FC151BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m in Sources */,
 				DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */,
 				DBA3FB801BA8A23C00672D82 /* AMBConversion.m in Sources */,
+				EF210D0C1CD3B0FE00455DFA /* AMBSurveySlider.m in Sources */,
 				DBA3FB8F1BA8A23C00672D82 /* AMBIdentify.m in Sources */,
 				EF5B00891C91C22A002BD361 /* AMBSMSHandler.m in Sources */,
 				DBA3FC011BA8AA1D00672D82 /* NSString+Hashing.m in Sources */,
