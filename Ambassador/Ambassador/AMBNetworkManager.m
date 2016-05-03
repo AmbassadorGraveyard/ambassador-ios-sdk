@@ -177,7 +177,7 @@
     }] resume];
 }
 
-- (void)getPusherSessionWithSuccess:(void(^)(NSDictionary *response))success failure:(void(^)(NSString *error))failure {
+- (void)getPusherSessionWithSuccess:(void(^)(NSDictionary *response))success noSDKAccess:(void(^)())noSDKAccess failure:(void(^)(NSString *error))failure {
     NSMutableURLRequest *pusherRequest = [self createURLRequestWithURL:[AMBValues getPusherSessionUrl] requestType:@"POST"];
     [[self.urlSession dataTaskWithRequest:pusherRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
@@ -185,6 +185,9 @@
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Pusher Session SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
+        } else if (!error && statusCode == 401) {
+            DLog(@"NO access to SDK");
+            if (noSDKAccess) { noSDKAccess(); }
         } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Pusher Session FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
