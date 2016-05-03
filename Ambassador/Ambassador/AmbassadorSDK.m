@@ -202,6 +202,9 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
             if (completion) { completion(); }
         }];
     } noSDKAccess:^{
+        // Prints sdk access error to user
+        [AMBErrors errorNoSDKAccess];
+        
         // Gets the top most view controller to see if it's the RAF
         UIViewController *controller = [AMBUtilities getTopViewController];
         
