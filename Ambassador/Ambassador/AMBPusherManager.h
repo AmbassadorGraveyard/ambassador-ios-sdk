@@ -17,6 +17,7 @@
 - (void)subscribeToChannel:(NSString *)channel completion:(void(^)(AMBPTPusherChannel *pusherChannel, NSError *error))completion;
 - (void)resubscribeToExistingChannelWithCompletion:(void(^)(AMBPTPusherChannel *, NSError *))completion;
 - (void)bindToChannelEvent:(NSString*)eventName;
+- (void)closeSocket;
 
 @end
 

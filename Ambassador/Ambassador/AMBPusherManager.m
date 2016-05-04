@@ -19,6 +19,7 @@
 @property (nonatomic, strong) AMBPTPusherPrivateChannel *channel;
 @property (nonatomic, copy) void (^completion)(AMBPTPusherChannel *pusherChannel, NSError *error);
 @property (nonatomic, strong) NSString *universalToken;
+@property (nonatomic) BOOL campaignListRecieved;
 
 @end
 
@@ -77,9 +78,11 @@
         NSMutableDictionary *json = (NSMutableDictionary *)event.data[@"body"];
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
         if (event.data[@"url"]) {
+            // Attempts to close socket
+            [self receivedIdentifyAction];
             [user fillWithUrl:event.data[@"url"] completion:^(NSString *error) {
                 if (!error) {
-                    [AmbassadorSDK sharedInstance].user = user;
+                    [AMBValues setUserCampaignList:user];
                     [AMBValues setUserFirstNameWithString:user.first_name];
                     [AMBValues setUserLastNameWithString:user.last_name];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
@@ -91,14 +94,30 @@
             [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
             [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
         } else {
+            // Attempts to close socket
+            [self receivedIdentifyAction];
             [user fillWithDictionary:json completion:^{
-                [AmbassadorSDK sharedInstance].user = user;
+                // Set the user object with campaign list in defaults
+                [AMBValues setUserCampaignList:user];
                 [AMBValues setUserFirstNameWithString:user.first_name];
                 [AMBValues setUserLastNameWithString:user.last_name];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
             }];
         }
     }];
+}
+
+- (void)receivedIdentifyAction {
+    self.campaignListRecieved = YES;
+    [self closeSocket];
+}
+
+- (void)closeSocket {
+    // Checks to make sure we have finished the backend identify request and safariVC fingerprinting before closing the channel
+    if (self.campaignListRecieved && [AmbassadorSDK sharedInstance].identify.identifyProcessComplete) {
+        DLog(@"Pusher client disconnected");
+        [self.client disconnect];
+    }
 }
 
 
