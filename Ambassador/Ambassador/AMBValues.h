@@ -50,7 +50,7 @@ extern NSString * TEST_APP_CONTSTANT;
 + (void)setUserEmail:(NSString*)email;
 + (void)setPusherChannelObject:(NSDictionary*)pusherChannel;
 + (void)setUserURLObject:(NSDictionary*)urlObject;
-+ (void)setUserCampaignList:(NSDictionary *)userObject;
++ (void)setUserCampaignList:(AMBUserNetworkObject *)userObject;
 + (void)setAPNDeviceToken:(NSString*)deviceToken;
 + (void)setLinkedInClientID:(NSString*)clientID;
 + (void)setLinkedInClientSecret:(NSString*)clientSecret;
