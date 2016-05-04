@@ -114,9 +114,6 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     
     // Subscribes to Pusher with a brand new channel since the old one is likely disconnected/terminated
     [self subscribeToPusherWithSuccess:^{
-        // Once subscribed to our channel, we bind to the identify event
-        [self.pusherManager bindToChannelEvent:@"identify_action"];
-        
         // Perfom identify request to get and save campaigns to local storage
         [[AMBNetworkManager sharedInstance] sendIdentifyForCampaign:nil shouldEnroll:NO success:^(NSString *response) {
             DLog(@"SEND IDENTIFY Response - %@", response);
@@ -205,7 +202,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 - (void)subscribeToPusherWithSuccess:(void(^)())success {
     // If the pusherManager is nil, we create a new one with the sharedInstance
     if (!self.pusherManager) { self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken]; }
-    
+
     [[AMBNetworkManager sharedInstance] getPusherSessionWithSuccess:^(NSDictionary *response) {
         // Save the pusherChannel info from the backend to defautls
         [AMBValues setPusherChannelObject:response];
@@ -213,6 +210,10 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
         // Subscribe to the pusher channel that we got from the backend
         [self.pusherManager subscribeToChannel:[AMBValues getPusherChannelObject].channelName completion:^(AMBPTPusherChannel *pusherChannel, NSError *error) {
             if (!error) {
+                // Once subscribed to our channel, we bind to the identify event
+                [self.pusherManager bindToChannelEvent:@"identify_action"];
+                
+                // Triggers completion block
                 if (success) { success(); }
             } else {
                 DLog(@"Error binding to pusher channel - %@", error);
