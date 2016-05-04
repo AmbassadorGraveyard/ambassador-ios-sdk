@@ -63,6 +63,7 @@ NSInteger const maxTryCount = 5;
     // Checks if try count is at its max
     if (self.tryCount >= maxTryCount) {
         [self.identifyTimer invalidate];
+        [self identifyComplete];
         return;
     }
     
@@ -87,6 +88,13 @@ NSInteger const maxTryCount = 5;
 
 - (void)deviceInfoReceived {
     [self.identifyTimer invalidate];
+    [self identifyComplete];
+}
+
+// Called when either the identify response is returned or the max try count is reached
+- (void)identifyComplete {
+    self.identifyProcessComplete = YES;
+    [[AmbassadorSDK sharedInstance].pusherManager closeSocket];
 }
 
 

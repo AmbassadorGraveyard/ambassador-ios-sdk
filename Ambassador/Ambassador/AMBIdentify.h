@@ -11,6 +11,8 @@
 
 @interface AMBIdentify : NSObject
 
+@property (nonatomic) BOOL identifyProcessComplete;
+
 - (id)init;
 - (void)getIdentity;
 
