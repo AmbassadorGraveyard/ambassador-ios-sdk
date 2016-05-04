@@ -48,7 +48,12 @@ NSInteger const maxTryCount = 5;
     if (![AMBValues isUITestRun]) {
         if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
             [self performIdentifyForiOS9];
-            self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
+            
+            // Checks to make sure the timer is not already running before instantiating a new one
+            if (!self.identifyTimer.isValid) {
+                self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
+            }
+            
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceInfoReceived) name:@"deviceInfoReceived" object:nil];
         }
     }
@@ -104,6 +109,7 @@ NSInteger const maxTryCount = 5;
     // Removes the safari VC after inital load
     [controller.view removeFromSuperview];
     [controller removeFromParentViewController];
+    DLog(@"SFVC REMOVED!");
 }
 
 @end

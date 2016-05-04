@@ -51,13 +51,18 @@
         self.client = [AMBPTPusher pusherWithKey:[AMBPusherManager pusherKey] delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:[AMBValues getPusherAuthUrl]];
         self.connectionState = PTPusherConnectionDisconnected;
-        [self.client connect];
     }
+    
     return self;
 }
 
 - (void)subscribeToChannel:(NSString *)channel completion:(void(^)(AMBPTPusherChannel *pusherChannel, NSError *error))completion {
     self.completion = completion;
+    
+    // Connect/Reconnect the client which should be disconnected from previously
+    [self.client connect];
+    
+    // Subscribe to our new channel
     self.channel = [self.client subscribeToPrivateChannelNamed:channel];
 }
 
@@ -117,6 +122,12 @@
     if (self.campaignListRecieved && [AmbassadorSDK sharedInstance].identify.identifyProcessComplete) {
         DLog(@"Pusher client disconnected");
         [self.client disconnect];
+        
+        // If there is an existing channel, we need to unsubscribe in order to avoid duplicate event actions
+        if (self.channel) { [self.channel unsubscribe]; }
+        
+        // Sets our pusher channel objec to nil to avoid unauthorized re-use 
+        [AMBValues setPusherChannelObject:nil];
     }
 }
 
