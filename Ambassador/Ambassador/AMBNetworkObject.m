@@ -61,6 +61,31 @@
 
 @implementation AMBUserUrlNetworkObject
 
+// Decodes the object if saved to defaults
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if ((self = [super init])) {
+        self.campaign_uid = [aDecoder decodeObjectForKey:@"campaign_uid"];
+        self.short_code = [aDecoder decodeObjectForKey:@"short_code"];
+        self.subject = [aDecoder decodeObjectForKey:@"subject"];
+        self.url = [aDecoder decodeObjectForKey:@"url"];
+        self.has_access = [aDecoder decodeObjectForKey:@"has_access"];
+        self.is_active = [aDecoder decodeObjectForKey:@"is_active"];
+    }
+    
+    return self;
+}
+
+// Encodes the object for saving to defaults
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.campaign_uid forKey:@"campaign_uid"];
+    [encoder encodeObject:self.short_code forKey:@"short_code"];
+    [encoder encodeObject:self.subject forKey:@"subject"];
+    [encoder encodeObject:self.url forKey:@"url"];
+    [encoder encodeBool:self.has_access forKey:@"has_access"];
+    [encoder encodeBool:self.is_active forKey:@"is_active"];
+}
+
+// Initializer from dictionary object
 - (instancetype)initWithDictionary:(NSDictionary *)dict {
     self.campaign_uid = (NSNumber *)dict[@"campaign_uid"];
     self.short_code = (NSString *)dict[@"short_code"];
