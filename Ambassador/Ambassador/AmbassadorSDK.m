@@ -8,7 +8,6 @@
 
 #import "AmbassadorSDK.h"
 #import "AmbassadorSDK_Internal.h"
-#import "AMBIdentify.h"
 #import "AMBConversion.h"
 #import "AMBConversionParameters.h"
 #import "AMBServiceSelector.h"
@@ -19,7 +18,6 @@
 
 @interface AmbassadorSDK ()
 
-@property (nonatomic, strong) AMBIdentify *identify;
 @property (nonatomic, strong) NSTimer *conversionTimer;
 @property (nonatomic, strong) AMBConversion *conversion;
 
@@ -108,10 +106,26 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 }
 
 - (void)localIdentifyWithEmail:(NSString*)email {
+    // Saves email to defaults
     [AMBValues setUserEmail:email];
+    
+    // Clears out the previous campaign list to avoid unauthorized access to RAF
+    [AMBValues setUserCampaignList:nil];
+    
+    // Subscribes to Pusher with a brand new channel since the old one is likely disconnected/terminated
     [self subscribeToPusherWithSuccess:^{
+        // Once subscribed to our channel, we bind to the identify event
         [self.pusherManager bindToChannelEvent:@"identify_action"];
-        [self.identify getIdentity];
+        
+        // Perfom identify request to get and save campaigns to local storage
+        [[AMBNetworkManager sharedInstance] sendIdentifyForCampaign:nil shouldEnroll:NO success:^(NSString *response) {
+            DLog(@"SEND IDENTIFY Response - %@", response);
+        } failure:^(NSString *error) {
+            DLog(@"SEND IDENTIFY Response - %@", error);
+        }];
+        
+        // If not already performed, we perform the safariVC identify to get shortCode and device FP
+        if (!self.identify.identifyProcessComplete) { [self.identify getIdentity]; }
     }];
 }
 
@@ -189,10 +203,14 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 #pragma mark - Pusher
 
 - (void)subscribeToPusherWithSuccess:(void(^)())success {
+    // If the pusherManager is nil, we create a new one with the sharedInstance
     if (!self.pusherManager) { self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken]; }
     
     [[AMBNetworkManager sharedInstance] getPusherSessionWithSuccess:^(NSDictionary *response) {
+        // Save the pusherChannel info from the backend to defautls
         [AMBValues setPusherChannelObject:response];
+        
+        // Subscribe to the pusher channel that we got from the backend
         [self.pusherManager subscribeToChannel:[AMBValues getPusherChannelObject].channelName completion:^(AMBPTPusherChannel *pusherChannel, NSError *error) {
             if (!error) {
                 if (success) { success(); }
@@ -200,6 +218,8 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
                 DLog(@"Error binding to pusher channel - %@", error);
             }
         }];
+    
+    // If the account doesn't have SDK Access
     } noSDKAccess:^{
         // Prints sdk access error to user
         [AMBErrors errorNoSDKAccess];
@@ -211,6 +231,8 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
         if ([controller.restorationIdentifier isEqualToString:@"RAFNAVID"]) {
             [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You currently don't have access to the SDK. If you have any questions please contact support." withUniqueID:nil forViewController:controller shouldDismissVCImmediately:YES];
         }
+        
+    // If some other error happens when attempting to subscribe to pusher
     } failure:^(NSString *error) {
         DLog(@"Unable to get PUSHER SESSION");
     }];
