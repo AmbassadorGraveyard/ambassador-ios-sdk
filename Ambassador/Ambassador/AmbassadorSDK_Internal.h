@@ -18,7 +18,7 @@
 @interface AmbassadorSDK () <AMBInputAlertDelegate, UIAlertViewDelegate>
 
 + (AmbassadorSDK*)sharedInstance;
-- (void)subscribeToPusherWithCompletion:(void(^)())completion;
+- (void)subscribeToPusherWithSuccess:(void(^)())success;
 
 @property (nonatomic, strong) AMBPusherManager *pusherManager;
 @property (nonatomic, strong) AMBUserNetworkObject *user;

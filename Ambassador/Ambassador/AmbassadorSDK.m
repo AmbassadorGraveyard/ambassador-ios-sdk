@@ -109,8 +109,10 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 - (void)localIdentifyWithEmail:(NSString*)email {
     [AMBValues setUserEmail:email];
-    [self sendAPNDeviceToken];
-    [self subscribeToPusherWithCompletion:nil];
+    [self subscribeToPusherWithSuccess:^{
+        [self.pusherManager bindToChannelEvent:@"identify_action"];
+        [self.identify getIdentity];
+    }];
 }
 
 
@@ -186,20 +188,17 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 #pragma mark - Pusher
 
-- (void)subscribeToPusherWithCompletion:(void(^)())completion {
+- (void)subscribeToPusherWithSuccess:(void(^)())success {
     if (!self.pusherManager) { self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken]; }
     
     [[AMBNetworkManager sharedInstance] getPusherSessionWithSuccess:^(NSDictionary *response) {
         [AMBValues setPusherChannelObject:response];
         [self.pusherManager subscribeToChannel:[AMBValues getPusherChannelObject].channelName completion:^(AMBPTPusherChannel *pusherChannel, NSError *error) {
             if (!error) {
-                [self.pusherManager bindToChannelEvent:@"identify_action"];
-                [self.identify getIdentity];
+                if (success) { success(); }
             } else {
                 DLog(@"Error binding to pusher channel - %@", error);
             }
-
-            if (completion) { completion(); }
         }];
     } noSDKAccess:^{
         // Prints sdk access error to user
