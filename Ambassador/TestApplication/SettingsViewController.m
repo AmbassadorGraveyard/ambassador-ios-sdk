@@ -10,6 +10,7 @@
 #import "SettingsViewController.h"
 #import "DefaultsHandler.h"
 #import "MyTabBarController.h"
+#import "AMBValues.h"
 
 @interface SettingsViewController()
 
@@ -118,6 +119,9 @@ NSInteger copiedWdt = 170;
     [self.tabBarController setSelectedIndex:0];
     MyTabBarController *controller = (MyTabBarController*)self.tabBarController;
     [controller checkForLogin];
+    
+    // Clears Pusher channel on logout
+    [AMBValues setPusherChannelObject:nil];
 }
 
 - (IBAction)copyTokenToClipboard:(id)sender {

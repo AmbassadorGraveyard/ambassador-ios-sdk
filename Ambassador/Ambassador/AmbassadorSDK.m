@@ -198,9 +198,20 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
             } else {
                 DLog(@"Error binding to pusher channel - %@", error);
             }
-            
+
             if (completion) { completion(); }
         }];
+    } noSDKAccess:^{
+        // Prints sdk access error to user
+        [AMBErrors errorNoSDKAccess];
+        
+        // Gets the top most view controller to see if it's the RAF
+        UIViewController *controller = [AMBUtilities getTopViewController];
+        
+        // Checks the restoration id set in storyboards for the RAF nav -- If it's the RAF a message is presented
+        if ([controller.restorationIdentifier isEqualToString:@"RAFNAVID"]) {
+            [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"You currently don't have access to the SDK. If you have any questions please contact support." withUniqueID:nil forViewController:controller shouldDismissVCImmediately:YES];
+        }
     } failure:^(NSString *error) {
         DLog(@"Unable to get PUSHER SESSION");
     }];

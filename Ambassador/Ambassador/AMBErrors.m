@@ -21,6 +21,10 @@
     NSLog(@"[Ambassador] Error loading RAF - There were no Campaign IDs found matching '%@'.  Please make sure that the correct Campaign ID is being passed when presenting a RAF widget", campaignId);
 }
 
++ (void)errorNoSDKAccess {
+    NSLog(@"[Ambassador] You currently don't have access to the SDK. If you have any questions please contact support.");
+}
+
 
 #pragma mark - NSErrors
 
