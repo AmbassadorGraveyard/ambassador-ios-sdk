@@ -226,7 +226,7 @@ NSString * const universalToken = @"test";
     // GIVEN
     [AMBValues setUniversalTokenWithToken:[NSString stringWithFormat:@"SDKToken %@", universalToken]];
     [AMBValues setUniversalIDWithID:universalID];
-    self.ambassadorSDK.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:[AMBValues getUniversalToken]];
+    self.ambassadorSDK.pusherManager = [[AMBPusherManager alloc] initWithAuthorization:[AMBValues getUniversalToken]];
     
     id pusherMgrMock = [OCMockObject partialMockForObject:self.ambassadorSDK.pusherManager];
     
