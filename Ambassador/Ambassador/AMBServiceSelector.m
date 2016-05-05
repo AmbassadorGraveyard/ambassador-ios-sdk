@@ -43,6 +43,7 @@
 @property (nonatomic, strong) UILabel * lblCopied;
 @property (nonatomic, strong) NSTimer * copiedAnimationTimer;
 @property (nonatomic) UIStatusBarStyle originalStatusBarTheme;
+@property (nonatomic) BOOL attemptedAutoEnroll;
 
 @end
 
@@ -59,13 +60,13 @@ int contactServiceType;
     [super viewDidLoad];
     [[AMBUtilities sharedInstance] showLoadingScreenForView:self.view];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLoadingView) name:@"PusherReceived" object:nil]; // Subscribe to the notification that gets sent out when we get our pusher payload back
-    self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
+    [self performIdentityCheck];
+    
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     self.originalStatusBarTheme = [[UIApplication sharedApplication] statusBarStyle];
-
     [self setUpTheme];
     [self setUpCloseButton];
-    [self performIdentify];
+    
     self.services = [[AMBThemeManager sharedInstance] customSocialGridArray];
 }
 
@@ -392,54 +393,57 @@ int contactServiceType;
     [AMBErrors errorNetworkTimeoutForVC:self];
 }
 
+- (void)performIdentityCheck {
+    // Checks to see if we have the user campaign list saved and attempts to load immediately
+    if ([AMBValues getUserCampaignList]) {
+        [self removeLoadingView];
+    
+    // Checks to make sure an identify process is NOT currently happening and attempts to auto-enroll user
+    } else if ([AmbassadorSDK sharedInstance].pusherManager.connectionState != PTPusherConnectionConnected) {
+        [self attemptAutoEnroll];
+    
+    // Here we can assume that an identify process is currently happening, so we just wait for it to finish
+    } else {
+        self.waitViewTimer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(alertForNetworkTimeout) userInfo:nil repeats:NO];
+    }
+}
+
 - (void)removeLoadingView {
     NSNumber *campaignID = [NSNumber numberWithInt:self.campaignID.intValue];
-    self.urlNetworkObj = [[AmbassadorSDK sharedInstance].user urlObjForCampaignID:campaignID];
+    
+    // Gets the current campaign info from the list based on the campID
+    AMBUserNetworkObject *user = [AMBValues getUserCampaignList];
+    self.urlNetworkObj = [user urlObjForCampaignID:campaignID];
+    
+    // Stores the specific campaign info to defaults
     [AMBValues setUserURLObject:[self.urlNetworkObj toDictionary]];
     
-    if (!self.urlNetworkObj) { // This means that there was no matching campaign ID that was returned
+    // If the current campaign is nil and there is no pusher connection, we attempt to auto-enroll
+    if (!self.urlNetworkObj && !self.attemptedAutoEnroll) {
+        [self attemptAutoEnroll];
+        return;
+    }
+    
+    // This means that there was no matching campaigns based on the ID
+    if (!self.urlNetworkObj && self.attemptedAutoEnroll) {
         [self.waitViewTimer invalidate];
         [AMBErrors errorAlertNoMatchingCampaignIdsForVC:self];
         [AMBErrors errorLogNoMatchingCampaignIdError:self.campaignID];
         return;
     }
     
+    // If it makes it past the checks, we finish loading the RAF
     [[AMBUtilities sharedInstance] hideLoadingView];
     self.lblURL.text = self.urlNetworkObj.url;
     if (self.waitViewTimer) { [self.waitViewTimer invalidate]; }
 }
 
-- (void)performIdentify {
-    AMBPusherChannelObject *channelObject = [AMBValues getPusherChannelObject];
+- (void)attemptAutoEnroll {
+    DLog(@"[RAF] Attempting to auto enroll");
+    self.attemptedAutoEnroll = YES;
     
-    // Checks if we are subscribed to a pusher channel and makes sure that the channel is not expired
-    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState == PTPusherConnectionConnected) {
-        // If we're SUBSCRIBED and NOT expired, then we will call the Identify
-        [self sendIdentify];
-        return;
-    }
-    
-    // Checks if we are subscribed, good with expiration, BUT Pusher got disconnected
-    if (channelObject && !channelObject.isExpired && [AmbassadorSDK sharedInstance].pusherManager.connectionState != PTPusherConnectionConnected) {
-        // If pusher socket is NOT OPEN, then we attempt to RESUBSCRIBE to the existing channel
-        DLog(@"Attempting to resubscribe to previous Pusher channel");
-        [[AmbassadorSDK sharedInstance].pusherManager resubscribeToExistingChannelWithCompletion:^(AMBPTPusherChannel *channelName, NSError *error) {
-            if (error) {
-                DLog(@"Error resubscribing to channel - %@", error); // If there is an error trying to resubscribe, we will recall the whole identify process
-                [[AmbassadorSDK sharedInstance] subscribeToPusherWithCompletion:^{
-                    [self sendIdentify];
-                }];
-            } else {
-                [self sendIdentify];
-            }
-        }];
-        
-        return;
-    }
-    
-    // If we're NOT SUBSCRIBED or EXPIRED then we will do the whole pusher process over again (get channel name, connect to pusher, subscribe, identify)
-    DLog(@"The Pusher channel seems to be null or expired, restarting whole identify process");
-    [[AmbassadorSDK sharedInstance] subscribeToPusherWithCompletion:^{
+    // Setup pusher connection and identify using shouldEnroll boolean with the designated campaign ID
+    [[AmbassadorSDK sharedInstance] subscribeToPusherWithSuccess:^{
         [self sendIdentify];
     }];
 }
