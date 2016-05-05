@@ -38,6 +38,7 @@
 @interface AmbassadorSDKTests : XCTestCase
 
 @property (nonatomic, strong) AmbassadorSDK *ambassadorSDK;
+@property (nonatomic) id mockAmbassadorSDK;
 
 @end
 
@@ -53,10 +54,12 @@ NSString * const universalToken = @"test";
         self.ambassadorSDK = [AmbassadorSDK sharedInstance];
         self.ambassadorSDK.conversion = [[AMBConversion alloc] init];
     }
+    
+    self.mockAmbassadorSDK = [OCMockObject partialMockForObject:self.ambassadorSDK];
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [self.mockAmbassadorSDK stopMocking];
     [super tearDown];
 }
 
@@ -139,6 +142,14 @@ NSString * const universalToken = @"test";
 - (void)testLocalIdentify {
     // GIVEN
     NSString *mockEmail = @"email@email.com";
+    [[[self.mockAmbassadorSDK expect] andDo:^(NSInvocation *invocation) {
+        void (^success)() = nil;
+        [invocation getArgument:&success atIndex:2];
+        success();
+    }] subscribeToPusherWithSuccess:[OCMArg invokeBlock]];
+    
+    id mockNtwMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
+    [[[mockNtwMgr expect] andDo:nil] sendIdentifyForCampaign:[OCMArg isNil] shouldEnroll:NO success:[OCMArg isNotNil] failure:[OCMArg isNotNil]];
     
     // WHEN
     [self.ambassadorSDK localIdentifyWithEmail:mockEmail];
@@ -146,6 +157,10 @@ NSString * const universalToken = @"test";
     
     // THEN
     XCTAssertEqualObjects(mockEmail, savedEmail);
+    [self.mockAmbassadorSDK verify];
+    [mockNtwMgr verify];
+    
+    [mockNtwMgr stopMocking];
 }
 
 - (void)testLocalRegisterConversionNoRestriction {
@@ -225,8 +240,7 @@ NSString * const universalToken = @"test";
     // WHEN
     [[pusherMgrMock expect] subscribeToChannel:[OCMArg any] completion:[OCMArg any]];
     
-    [self.ambassadorSDK subscribeToPusherWithCompletion:^{
-        
+    [self.ambassadorSDK subscribeToPusherWithSuccess:^{
         [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * _Nullable error) {
             [pusherMgrMock verify];
         }];
