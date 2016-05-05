@@ -26,13 +26,6 @@
 
 @implementation AMBPusherManager
 
-+ (instancetype)sharedInstanceWithAuthorization:(NSString *)auth {
-    static AMBPusherManager* _sharedInsance = nil;
-    static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{ _sharedInsance = [[AMBPusherManager alloc] initWithAuthorization:auth]; });
-    return _sharedInsance;
-}
-
 + (NSString *)pusherKey {
 #if AMBPRODUCTION
     return [AMBSecrets secretForKey:AMB_PUSHER_PROD_KEY];
@@ -40,7 +33,6 @@
     return [AMBSecrets secretForKey:AMB_PUSHER_DEV_KEY];
 #endif
 }
-
 
 
 #pragma mark - Initialization
