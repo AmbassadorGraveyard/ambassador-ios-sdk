@@ -68,60 +68,53 @@ NSString * const universalToken = @"test";
 }
 
 - (void)testClassRunWithKeys {
-    // GIVEN
-    id ambassadorSDKMock = [OCMockObject partialMockForObject:self.ambassadorSDK];
-    
     // WHEN
-    [[ambassadorSDKMock expect] localRunWithuniversalToken:universalToken universalID:universalID];
+    [[self.mockAmbassadorSDK expect] localRunWithuniversalToken:universalToken universalID:universalID];
     [AmbassadorSDK runWithUniversalToken:universalToken universalID:universalID];
     
     // THEN
-    [ambassadorSDKMock verify];
+    [self.mockAmbassadorSDK verify];
 }
 
 - (void)testClassIdentify {
     // GIVEN
-    id ambassadorSDKMock = [OCMockObject partialMockForObject:self.ambassadorSDK];
     NSString *fakeEmail = @"ambassadorTest@example.com";
     
     // WHEN
-    [[ambassadorSDKMock expect] localIdentifyWithEmail:fakeEmail];
+    [[self.mockAmbassadorSDK expect] localIdentifyWithEmail:fakeEmail];
     [AmbassadorSDK identifyWithEmail:fakeEmail];
     
     // THEN
-    [ambassadorSDKMock verify];
+    [self.mockAmbassadorSDK verify];
 }
 
 - (void)testClassRegisterConversion {
     // GIVEN
-    id ambassadorSDKMock = [OCMockObject partialMockForObject:self.ambassadorSDK];
-    
     AMBConversionParameters *conversionParameters = [[AMBConversionParameters alloc] init];
     conversionParameters.mbsy_email = @"test@test.com";
     conversionParameters.mbsy_revenue = @1;
     conversionParameters.mbsy_campaign = @260;
     
     // WHEN
-    [[ambassadorSDKMock expect] localRegisterConversion:conversionParameters restrictToInstall:NO completion:nil];
+    [[self.mockAmbassadorSDK expect] localRegisterConversion:conversionParameters restrictToInstall:NO completion:nil];
     [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:nil];
     
     // THEN
-    [ambassadorSDKMock verify];
+    [self.mockAmbassadorSDK verify];
 }
 
 - (void)testClassPresentRAF {
     // GIVEN
-    id ambassadorSDKMock = [OCMockObject partialMockForObject:self.ambassadorSDK];
     NSString *campID = @"200";
     NSString *plistName = @"GenericTheme";
     UIViewController *mockVC = [[UIViewController alloc] init];
     
     // WHEN
-    [[ambassadorSDKMock expect] presentRAFForCampaign:campID FromViewController:mockVC withThemePlist:plistName];
+    [[self.mockAmbassadorSDK expect] presentRAFForCampaign:campID FromViewController:mockVC withThemePlist:plistName];
     [AmbassadorSDK presentRAFForCampaign:campID FromViewController:mockVC withThemePlist:plistName];
     
     // THEN
-    [ambassadorSDKMock verify];
+    [self.mockAmbassadorSDK verify];
 }
 
 - (void)testLocalRunWithKeys {
@@ -234,7 +227,7 @@ NSString * const universalToken = @"test";
     [AMBValues setUniversalTokenWithToken:[NSString stringWithFormat:@"SDKToken %@", universalToken]];
     [AMBValues setUniversalIDWithID:universalID];
     self.ambassadorSDK.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:[AMBValues getUniversalToken]];
-
+    
     id pusherMgrMock = [OCMockObject partialMockForObject:self.ambassadorSDK.pusherManager];
     
     // WHEN
@@ -245,6 +238,9 @@ NSString * const universalToken = @"test";
             [pusherMgrMock verify];
         }];
     }];
+    
+    // THEN
+    [pusherMgrMock stopMocking];
 }
 
 - (void)testClassRegisterDeviceToken {
@@ -283,9 +279,8 @@ NSString * const universalToken = @"test";
     id mockApplication = [OCMockObject mockForClass:[UIApplication class]];
     [[[mockApplication expect] andReturn:mockApplication] sharedApplication];
     [[[mockApplication expect] andReturnValue:OCMOCK_VALUE(UIApplicationStateInactive)] applicationState];
-    
-    id mockAmbassadorSDK = [OCMockObject partialMockForObject:self.ambassadorSDK];
-    [[[mockAmbassadorSDK expect] andDo: nil] presentNPSSurvey];
+
+    [[[self.mockAmbassadorSDK expect] andDo: nil] presentNPSSurvey];
     
     // WHEN
     [AmbassadorSDK presentNPSSurveyWithNotification:mockNotificationDictionary];
@@ -293,10 +288,10 @@ NSString * const universalToken = @"test";
     // THEN
     XCTAssertEqual(mockNotificationDictionary, self.ambassadorSDK.notificationData);
     [mockApplication verify];
-    [mockAmbassadorSDK verify];
+    [self.mockAmbassadorSDK verify];
     
     [mockApplication stopMocking];
-    [mockAmbassadorSDK stopMocking];
+    [self.mockAmbassadorSDK stopMocking];
 }
 
 - (void)testPresentNPSSurvey {
@@ -364,16 +359,14 @@ NSString * const universalToken = @"test";
     // GIVEN
     id mockAlertView = [OCMockObject mockForClass:[UIAlertView class]];
     
-    id mockAmabssadorSDK = [OCMockObject partialMockForObject:self.ambassadorSDK];
-    [[[mockAmabssadorSDK expect] andDo:nil] presentNPSSurvey];
+    [[[self.mockAmbassadorSDK expect] andDo:nil] presentNPSSurvey];
     
     // WHEN
     [self.ambassadorSDK alertView:mockAlertView didDismissWithButtonIndex:1];
     
     // THEN
-    [mockAmabssadorSDK verify];
+    [self.mockAmbassadorSDK verify];
     
-    [mockAmabssadorSDK stopMocking];
     [mockAlertView stopMocking];
 }
 
