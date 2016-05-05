@@ -109,6 +109,9 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     // Saves email to defaults
     [AMBValues setUserEmail:email];
     
+    // Sends the APN token to the backend
+    [self sendAPNDeviceToken];
+    
     // Clears out the previous campaign list to avoid unauthorized access to RAF
     [AMBValues setUserCampaignList:nil];
     
@@ -200,8 +203,8 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 #pragma mark - Pusher
 
 - (void)subscribeToPusherWithSuccess:(void(^)())success {
-    // If the pusherManager is nil, we create a new one with the sharedInstance
-    if (!self.pusherManager) { self.pusherManager = [AMBPusherManager sharedInstanceWithAuthorization:self.universalToken]; }
+    // We need to recreate the pusher manager here, because it may be running on bad tokens from a previous attempt
+    self.pusherManager = [[AMBPusherManager alloc] initWithAuthorization:[AMBValues getUniversalToken]];
 
     [[AMBNetworkManager sharedInstance] getPusherSessionWithSuccess:^(NSDictionary *response) {
         // Save the pusherChannel info from the backend to defautls
