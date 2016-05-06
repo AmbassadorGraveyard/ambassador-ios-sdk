@@ -19,18 +19,12 @@
 @property (nonatomic, strong) AMBPTPusherPrivateChannel *channel;
 @property (nonatomic, copy) void (^completion)(AMBPTPusherChannel *pusherChannel, NSError *error);
 @property (nonatomic, strong) NSString *universalToken;
+@property (nonatomic) BOOL campaignListRecieved;
 
 @end
 
 
 @implementation AMBPusherManager
-
-+ (instancetype)sharedInstanceWithAuthorization:(NSString *)auth {
-    static AMBPusherManager* _sharedInsance = nil;
-    static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{ _sharedInsance = [[AMBPusherManager alloc] initWithAuthorization:auth]; });
-    return _sharedInsance;
-}
 
 + (NSString *)pusherKey {
 #if AMBPRODUCTION
@@ -41,7 +35,6 @@
 }
 
 
-
 #pragma mark - Initialization
 
 - (instancetype)initWithAuthorization:(NSString *)auth {
@@ -50,13 +43,18 @@
         self.client = [AMBPTPusher pusherWithKey:[AMBPusherManager pusherKey] delegate:self encrypted:YES];
         self.client.authorizationURL = [NSURL URLWithString:[AMBValues getPusherAuthUrl]];
         self.connectionState = PTPusherConnectionDisconnected;
-        [self.client connect];
     }
+    
     return self;
 }
 
 - (void)subscribeToChannel:(NSString *)channel completion:(void(^)(AMBPTPusherChannel *pusherChannel, NSError *error))completion {
     self.completion = completion;
+    
+    // Connect/Reconnect the client which should be disconnected from previously
+    [self.client connect];
+    
+    // Subscribe to our new channel
     self.channel = [self.client subscribeToPrivateChannelNamed:channel];
 }
 
@@ -77,9 +75,11 @@
         NSMutableDictionary *json = (NSMutableDictionary *)event.data[@"body"];
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
         if (event.data[@"url"]) {
+            // Attempts to close socket
+            [self receivedIdentifyAction];
             [user fillWithUrl:event.data[@"url"] completion:^(NSString *error) {
                 if (!error) {
-                    [AmbassadorSDK sharedInstance].user = user;
+                    [AMBValues setUserCampaignList:user];
                     [AMBValues setUserFirstNameWithString:user.first_name];
                     [AMBValues setUserLastNameWithString:user.last_name];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
@@ -91,14 +91,36 @@
             [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
             [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
         } else {
+            // Attempts to close socket
+            [self receivedIdentifyAction];
             [user fillWithDictionary:json completion:^{
-                [AmbassadorSDK sharedInstance].user = user;
+                // Set the user object with campaign list in defaults
+                [AMBValues setUserCampaignList:user];
                 [AMBValues setUserFirstNameWithString:user.first_name];
                 [AMBValues setUserLastNameWithString:user.last_name];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
             }];
         }
     }];
+}
+
+- (void)receivedIdentifyAction {
+    self.campaignListRecieved = YES;
+    [self closeSocket];
+}
+
+- (void)closeSocket {
+    // Checks to make sure we have finished the backend identify request and safariVC fingerprinting before closing the channel
+    if (self.campaignListRecieved && [AmbassadorSDK sharedInstance].identify.identifyProcessComplete) {
+        DLog(@"Pusher client disconnected");
+        [self.client disconnect];
+        
+        // If there is an existing channel, we need to unsubscribe in order to avoid duplicate event actions
+        if (self.channel) { [self.channel unsubscribe]; }
+        
+        // Sets our pusher channel objec to nil to avoid unauthorized re-use 
+        [AMBValues setPusherChannelObject:nil];
+    }
 }
 
 

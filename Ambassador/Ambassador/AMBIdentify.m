@@ -48,7 +48,12 @@ NSInteger const maxTryCount = 5;
     if (![AMBValues isUITestRun]) {
         if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
             [self performIdentifyForiOS9];
-            self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
+            
+            // Checks to make sure the timer is not already running before instantiating a new one
+            if (!self.identifyTimer.isValid) {
+                self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(performIdentifyForiOS9) userInfo:nil repeats:YES];
+            }
+            
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceInfoReceived) name:@"deviceInfoReceived" object:nil];
         }
     }
@@ -63,6 +68,7 @@ NSInteger const maxTryCount = 5;
     // Checks if try count is at its max
     if (self.tryCount >= maxTryCount) {
         [self.identifyTimer invalidate];
+        [self identifyComplete];
         return;
     }
     
@@ -87,6 +93,13 @@ NSInteger const maxTryCount = 5;
 
 - (void)deviceInfoReceived {
     [self.identifyTimer invalidate];
+    [self identifyComplete];
+}
+
+// Called when either the identify response is returned or the max try count is reached
+- (void)identifyComplete {
+    self.identifyProcessComplete = YES;
+    [[AmbassadorSDK sharedInstance].pusherManager closeSocket];
 }
 
 
@@ -96,6 +109,7 @@ NSInteger const maxTryCount = 5;
     // Removes the safari VC after inital load
     [controller.view removeFromSuperview];
     [controller removeFromParentViewController];
+    DLog(@"SFVC REMOVED!");
 }
 
 @end

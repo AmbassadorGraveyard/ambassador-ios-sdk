@@ -76,6 +76,7 @@
     id mockPusher = [OCMockObject mockForClass:[AMBPTPusher class]];
     self.pusherMgr.client = mockPusher;
     [[[mockPusher expect] andDo:nil] subscribeToPrivateChannelNamed:channelName];
+    [[[mockPusher expect] andDo:nil] connect];
     
     // WHEN
     [self.pusherMgr subscribeToChannel:channelName completion:nil];

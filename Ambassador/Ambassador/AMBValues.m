@@ -213,6 +213,12 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     [[AMBValues ambUserDefaults] setObject:urlObject forKey:@"user_url_object"];
 }
 
++ (void)setUserCampaignList:(AMBUserNetworkObject *)userObject {
+    // Encodes object to data in order to save to defaults
+    NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:userObject];
+    [[AMBValues ambUserDefaults] setObject:encodedObject forKey:@"amb_user_object"];
+}
+
 + (void)setAPNDeviceToken:(NSString*)deviceToken {
     [[AMBValues ambUserDefaults] setObject:deviceToken forKey:@"apn_device_token"];
 }
@@ -280,6 +286,14 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 
 + (AMBUserUrlNetworkObject*)getUserURLObject {
     return [[AMBUserUrlNetworkObject alloc] initWithDictionary:[[AMBValues ambUserDefaults] valueForKey:@"user_url_object"]];
+}
+
++ (AMBUserNetworkObject *)getUserCampaignList {
+    // Grabs data from defaults and creates object from it
+    NSData *encodedObject = [[AMBValues ambUserDefaults] valueForKey:@"amb_user_object"];
+    AMBUserNetworkObject *returnUser = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+    
+    return returnUser;
 }
 
 + (NSString*)getAPNDeviceToken {
