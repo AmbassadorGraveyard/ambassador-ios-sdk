@@ -67,6 +67,7 @@
 
 @interface AMBIdentifyNetworkObject : AMBNetworkObject
 
+@property (nonatomic, strong) NSString * userID;
 @property (strong, nonatomic) NSString *campaign_id;
 @property BOOL enroll;
 @property (strong, nonatomic) NSString *source;

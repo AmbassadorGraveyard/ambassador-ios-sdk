@@ -182,6 +182,9 @@
 // Decodes the object if saved to defaults
 - (id)initWithCoder:(NSCoder *)decoder {
     if ((self = [super init])) {
+        self.campaign_id = [decoder decodeObjectForKey:@"campaign_id"];
+        self.source = [decoder decodeObjectForKey:@"source"];
+        self.enroll = [decoder decodeBoolForKey:@"enroll"];
         self.email = [decoder decodeObjectForKey:@"email"];
         self.first_name = [decoder decodeObjectForKey:@"first_name"];
         self.last_name = [decoder decodeObjectForKey:@"last_name"];
@@ -203,6 +206,9 @@
 
 // Encodes the object for saving to defaults
 - (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.campaign_id forKey:@"campaign_id"];
+    [encoder encodeObject:self.source forKey:@"source"];
+    [encoder encodeBool:self.enroll forKey:@"enroll"];
     [encoder encodeObject:self.email forKey:@"email"];
     [encoder encodeObject:self.first_name forKey:@"first_name"];
     [encoder encodeObject:self.last_name forKey:@"last_name"];
@@ -227,6 +233,37 @@
     self.source = @"";
     
     return self;
+}
+
+- (instancetype)initWithUserID:(NSString *)userID traits:(NSDictionary *)traits {
+    // Initializes identify object and sets values
+    if (self = [super init]) {
+        self.userID = userID;
+        self.enroll = NO;
+        self.campaign_id = @"";
+        self.source = @"";
+        [self formatTraits:traits];
+    }
+    
+    return self;
+}
+
+- (void)formatTraits:(NSDictionary *)traits {
+    NSString *blankString = @"";
+    
+    // Sets values of identify object if the matching trait is set in the dictionary
+    self.email = traits[@"email"] ? traits[@"email"] : blankString;
+    self.first_name = traits[@"firstName"] ? traits[@"firstName"] : blankString;
+    self.last_name = traits[@"lastName"] ? traits[@"lastName"] : blankString;
+    self.custom1 = traits[@"customLabel1"] ? traits[@"customLabel1"] : blankString;
+    self.custom2 = traits[@"customLabel2"] ? traits[@"customLabel2"] : blankString;
+    self.custom3 = traits[@"customLabel3"] ? traits[@"customLabel3"] : blankString;
+    self.company = traits[@"company"] ? traits[@"company"] : blankString;
+    self.street = traits[@"address"][@"street"] ? traits[@"address"][@"street"] : blankString;
+    self.city = traits[@"address"][@"city"] ? traits[@"address"][@"city"] : blankString;
+    self.state = traits[@"address"][@"state"] ? traits[@"address"][@"state"] : blankString;
+    self.zip = traits[@"address"][@"postalCode"] ? traits[@"address"][@"postalCode"] : blankString;
+    self.country = traits[@"address"][@"country"] ? traits[@"address"][@"country"] : blankString;
 }
 
 @end
