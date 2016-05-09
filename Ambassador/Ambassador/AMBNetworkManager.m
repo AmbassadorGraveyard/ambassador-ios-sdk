@@ -35,6 +35,8 @@
     identifyObject.enroll = enroll;
     identifyObject.fp = [AMBValues getDeviceFingerPrint];
     
+    NSLog(@"Identify object - %@", [identifyObject toDictionary]);
+    
     NSMutableURLRequest *identifyRequest = [self createURLRequestWithURL:[AMBValues getSendIdentifyUrl] requestType:@"POST"];
     [identifyRequest setValue:[AMBValues getPusherChannelObject].sessionId forHTTPHeaderField:@"X-Mbsy-Client-Session-ID"];
     [identifyRequest setValue:[AMBValues getPusherChannelObject].requestId forHTTPHeaderField:@"X-Mbsy-Client-Request-ID"];

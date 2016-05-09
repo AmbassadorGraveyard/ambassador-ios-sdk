@@ -283,18 +283,7 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 }
 
 + (NSString*)getUserEmail {
-    // If the deprecated version of identify is used 'identifyWithEmail
-    if ([[AMBValues ambUserDefaults] valueForKey:@"user_email"]) {
-        return [[AMBValues ambUserDefaults] valueForKey:@"user_email"];
-    
-    // If the new version of identify is used 'identifyWithUserID
-    } else if ([AMBValues getUserIdentifyObject].email) {
-        return [AMBValues getUserIdentifyObject].email;
-        
-    // If identify has not yet been called
-    } else {
-        return nil;
-    }
+    return [AMBValues getUserIdentifyObject].email;
 }
 
 + (AMBPusherChannelObject*)getPusherChannelObject {
