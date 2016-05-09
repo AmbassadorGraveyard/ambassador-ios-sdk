@@ -30,8 +30,7 @@
 #pragma mark - Network Calls 
 
 - (void)sendIdentifyForCampaign:(NSString*)campaign shouldEnroll:(BOOL)enroll success:(void(^)(NSString *response))success failure:(void(^)(NSString *error))failure {
-    AMBIdentifyNetworkObject *identifyObject = [[AMBIdentifyNetworkObject alloc] init];
-    identifyObject.email = [AMBValues getUserEmail];
+    AMBIdentifyNetworkObject *identifyObject = [AMBValues getUserIdentifyObject];
     identifyObject.campaign_id = campaign;
     identifyObject.enroll = enroll;
     identifyObject.fp = [AMBValues getDeviceFingerPrint];
