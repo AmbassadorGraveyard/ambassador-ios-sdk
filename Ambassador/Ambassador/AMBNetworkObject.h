@@ -67,11 +67,28 @@
 
 @interface AMBIdentifyNetworkObject : AMBNetworkObject
 
-@property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *campaign_id;
 @property BOOL enroll;
 @property (strong, nonatomic) NSString *source;
 @property (strong, nonatomic) NSDictionary *fp;
+
+// Traits
+@property (strong, nonatomic) NSString *email;
+@property (nonatomic, strong) NSString * first_name;
+@property (nonatomic, strong) NSString * last_name;
+@property (nonatomic, strong) NSString * custom1;
+@property (nonatomic, strong) NSString * custom2;
+@property (nonatomic, strong) NSString * custom3;
+@property (nonatomic, strong) NSString * phone;
+@property (nonatomic, strong) NSString * company;
+@property (nonatomic, strong) NSString * street;
+@property (nonatomic, strong) NSString * city;
+@property (nonatomic, strong) NSString * state;
+@property (nonatomic, strong) NSString * zip;
+@property (nonatomic, strong) NSString * country;
+@property (nonatomic, strong) NSString * remote_customer_id;
+
+- (instancetype)initWithUserID:(NSString *)userID traits:(NSDictionary *)traits;
 
 @end
 

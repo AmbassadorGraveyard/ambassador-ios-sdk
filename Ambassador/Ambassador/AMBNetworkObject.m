@@ -179,6 +179,46 @@
 
 @implementation AMBIdentifyNetworkObject
 
+// Decodes the object if saved to defaults
+- (id)initWithCoder:(NSCoder *)decoder {
+    if ((self = [super init])) {
+        self.email = [decoder decodeObjectForKey:@"email"];
+        self.first_name = [decoder decodeObjectForKey:@"first_name"];
+        self.last_name = [decoder decodeObjectForKey:@"last_name"];
+        self.custom1 = [decoder decodeObjectForKey:@"custom1"];
+        self.custom2 = [decoder decodeObjectForKey:@"custom2"];
+        self.custom3 = [decoder decodeObjectForKey:@"custom3"];
+        self.phone = [decoder decodeObjectForKey:@"phone"];
+        self.company = [decoder decodeObjectForKey:@"company"];
+        self.street = [decoder decodeObjectForKey:@"street"];
+        self.city = [decoder decodeObjectForKey:@"city"];
+        self.state = [decoder decodeObjectForKey:@"state"];
+        self.zip = [decoder decodeObjectForKey:@"zip"];
+        self.country = [decoder decodeObjectForKey:@"country"];
+        self.remote_customer_id = [decoder decodeObjectForKey:@"remote_customer_id"];
+    }
+    
+    return self;
+}
+
+// Encodes the object for saving to defaults
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.email forKey:@"email"];
+    [encoder encodeObject:self.first_name forKey:@"first_name"];
+    [encoder encodeObject:self.last_name forKey:@"last_name"];
+    [encoder encodeObject:self.custom1 forKey:@"custom1"];
+    [encoder encodeObject:self.custom2 forKey:@"custom2"];
+    [encoder encodeObject:self.custom3 forKey:@"custom3"];
+    [encoder encodeObject:self.phone forKey:@"phone"];
+    [encoder encodeObject:self.company forKey:@"company"];
+    [encoder encodeObject:self.street forKey:@"street"];
+    [encoder encodeObject:self.city forKey:@"city"];
+    [encoder encodeObject:self.state forKey:@"state"];
+    [encoder encodeObject:self.zip forKey:@"zip"];
+    [encoder encodeObject:self.country forKey:@"country"];
+    [encoder encodeObject:self.remote_customer_id forKey:@"remote_customer_id"];
+}
+
 - (instancetype)init {
     self = [super init];
     self.email = @"";
