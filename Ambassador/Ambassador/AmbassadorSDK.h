@@ -14,7 +14,17 @@
 + (void)runWithUniversalToken:(NSString *)UniversalToken universalID:(NSString *)universalID;
 
 /**Identifies a user and associates it with the given email*/
-+ (void)identifyWithEmail:(NSString *)email;
++ (void)identifyWithEmail:(NSString *)email __attribute__((deprecated("Use method 'identifyWithUserID: traits:' instead")));
+
+/** 
+ Identifies a user based a unique userID and a dictionary of traits.
+ 
+ Recommended to put on a login screen or after the initial call to run Ambassador if you have the user's info stored.
+ 
+ @param userID A unique ID tied to the user being identified
+ @param traits Extra values tied to the user. Ex: Email, first name, last name
+*/
++ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits;
 
 /**Registers a conversion with Ambassador using the properties set in 'conversionParameters'*/
 + (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion;
