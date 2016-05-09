@@ -54,6 +54,7 @@ extern NSString * TEST_APP_CONTSTANT;
 + (void)setAPNDeviceToken:(NSString*)deviceToken;
 + (void)setLinkedInClientID:(NSString*)clientID;
 + (void)setLinkedInClientSecret:(NSString*)clientSecret;
++ (void)setUserIdentifyObject:(AMBIdentifyNetworkObject *)identifyObject;
 + (void)resetHasInstalled; // Should only be used for TESTING
 
 // Default getters
@@ -73,5 +74,6 @@ extern NSString * TEST_APP_CONTSTANT;
 + (NSString*)getAPNDeviceToken;
 + (NSString*)getLinkedInClientID;
 + (NSString*)getLinkedInClientSecret;
++ (AMBIdentifyNetworkObject *)getUserIdentifyObject;
 
 @end
