@@ -216,20 +216,6 @@ NSString * const universalToken = @"test";
     [mockVC verify];
 }
 
-- (void)testCheckConversionQueue {
-    // GIVEN
-    [AMBValues setMbsyCookieWithCode:@""];
-    [AMBValues setDeviceFingerPrintWithDictionary:@{}];
-    id conversionMock = [OCMockObject partialMockForObject:self.ambassadorSDK.conversion];
-    
-    // WHEN
-    [[conversionMock expect] sendConversions];
-    [self.ambassadorSDK checkConversionQueue];
-    
-    // THEN
-    [conversionMock verify];
-}
-
 - (void)testSubscribeToPusher {
     // GIVEN
     [AMBValues setUniversalTokenWithToken:[NSString stringWithFormat:@"SDKToken %@", universalToken]];

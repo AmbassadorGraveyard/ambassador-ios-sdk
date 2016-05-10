@@ -11,6 +11,7 @@
 #import "AMBPusherManager.h"
 #import "AMBPTPusher.h"
 #import "AMBValues.h"
+#import "AmbassadorSDK_Internal.h"
 
 @interface AMBPusherManager (Test) <AMBPTPusherDelegate>
 
@@ -18,10 +19,13 @@
 @property (nonatomic, strong) AMBPTPusher *client;
 @property (nonatomic, copy) void (^completion)(AMBPTPusherChannel *pusherChannel, NSError *error);
 @property (nonatomic, strong) AMBPTPusherPrivateChannel *channel;
+@property (nonatomic) BOOL campaignListRecieved;
 
 - (instancetype)initWithAuthorization:(NSString *)auth;
 - (NSMutableURLRequest *)modifyPusherAuthRequest:(NSMutableURLRequest *)request authorization:(NSString *)auth;
 - (void)throwComletion:(AMBPTPusherChannel *)channel error:(NSError *)error;
+- (void)closeSocket;
+- (void)receivedIdentifyAction;
 
 @end
 
@@ -260,6 +264,53 @@
     
     // THEN
     XCTAssertEqual(expectedState, self.pusherMgr.connectionState);
+}
+
+- (void)testReceivedIdentifyAction {
+    // GIVEN
+    [[[self.mockPusherMgr expect] andDo:nil] closeSocket];
+    
+    // WHEN
+    [self.pusherMgr receivedIdentifyAction];
+    
+    // THEN
+    XCTAssertTrue(self.pusherMgr.campaignListRecieved);
+    [self.mockPusherMgr verify];
+}
+
+- (void)testCloseSocket {
+    // GIVEN
+    self.pusherMgr.campaignListRecieved = YES;
+    [AmbassadorSDK sharedInstance].identify.identifyProcessComplete = YES;
+    
+    id mockClient = [OCMockObject mockForClass:[AMBPTPusher class]];
+    [[[mockClient expect] andDo:nil] disconnect];
+    self.pusherMgr.client = mockClient;
+    
+    id mockChannel = [OCMockObject mockForClass:[AMBPTPusherPrivateChannel class]];
+    [[[mockChannel expect] andDo:nil] unsubscribe];
+    self.pusherMgr.channel = mockChannel;
+    
+    id mockValues = [OCMockObject mockForClass:[AMBValues class]];
+    [[[mockValues expect] andDo:nil] setPusherChannelObject:nil];
+    
+    id mockConversionClass = [OCMockObject mockForClass:[AMBConversion class]];
+    [[[mockConversionClass expect] andDo:nil] sendConversions];
+    [AmbassadorSDK sharedInstance].conversion = mockConversionClass;
+    
+    // WHEN
+    [self.pusherMgr closeSocket];
+    
+    // THEN
+    [mockClient verify];
+    [mockChannel verify];
+    [mockValues verify];
+    [mockConversionClass verify];
+    
+    [mockClient stopMocking];
+    [mockChannel stopMocking];
+    [mockValues stopMocking];
+    [mockConversionClass stopMocking];
 }
 
 @end
