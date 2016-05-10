@@ -238,7 +238,7 @@
 - (instancetype)initWithUserID:(NSString *)userID traits:(NSDictionary *)traits {
     // Initializes identify object and sets values
     if (self = [super init]) {
-        self.userID = userID;
+        self.remote_customer_id = userID;
         self.enroll = NO;
         self.campaign_id = @"";
         self.source = @"";
@@ -264,6 +264,7 @@
     self.state = traits[@"address"][@"state"] ? traits[@"address"][@"state"] : blankString;
     self.zip = traits[@"address"][@"postalCode"] ? traits[@"address"][@"postalCode"] : blankString;
     self.country = traits[@"address"][@"country"] ? traits[@"address"][@"country"] : blankString;
+    self.phone = traits[@"phone"] ? traits[@"phone"] : blankString;
 }
 
 @end
