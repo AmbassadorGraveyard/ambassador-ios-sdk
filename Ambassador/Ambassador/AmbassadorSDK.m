@@ -168,7 +168,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     if (!themePlist || [themePlist isEqualToString:@""]) { themePlist = @"GenericTheme"; }
     
     // Checks to see if we have the user email
-    if (![AMBValues getUserEmail] || [AMBUtilities stringIsEmpty:[AMBValues getUserEmail]]) {
+    if (![AMBValues getUserIdentifyObject]) {
         // If we do NOT have it, we present an email prompt
         [[AmbassadorSDK sharedInstance] presentEmailPrompt:viewController campID:ID themePlist:themePlist];
     } else {
