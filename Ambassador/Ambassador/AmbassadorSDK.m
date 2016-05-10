@@ -99,13 +99,19 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 #pragma mark - Identify
 
-+ (void)identifyWithEmail:(NSString *)email {
-    [[AmbassadorSDK sharedInstance] localIdentifyWithEmail:email];
++ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits {
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits];
 }
 
-- (void)localIdentifyWithEmail:(NSString*)email {
-    // Saves email to defaults
-    [AMBValues setUserEmail:email];
++ (void)identifyWithEmail:(NSString *)email {
+    // Uses new idenity logic when deprecated identify method is called
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:email traits:@{@"email" : email}];
+}
+
+- (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits {
+    // Creates an identify object and saves it to user defaults
+    AMBIdentifyNetworkObject *identifyObject = [[AMBIdentifyNetworkObject alloc] initWithUserID:userID traits:traits];
+    [AMBValues setUserIdentifyObject:identifyObject];
     
     // Sends the APN token to the backend
     [self sendAPNDeviceToken];
@@ -156,7 +162,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     if (!themePlist || [themePlist isEqualToString:@""]) { themePlist = @"GenericTheme"; }
     
     // Checks to see if we have the user email
-    if (![AMBValues getUserEmail] || [AMBUtilities stringIsEmpty:[AMBValues getUserEmail]]) {
+    if (![AMBValues getUserIdentifyObject]) {
         // If we do NOT have it, we present an email prompt
         [[AmbassadorSDK sharedInstance] presentEmailPrompt:viewController campID:ID themePlist:themePlist];
     } else {
@@ -189,7 +195,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 // AMBInputAlert Delegate
 - (void)AMBInputAlertActionButtonTapped:(NSString *)inputValue {
-    [self localIdentifyWithEmail:inputValue];
+    [self localIdentifyWithUserID:inputValue traits:@{@"email" : inputValue}];
     [self presentRAFForCampaign:self.tempCampID FromViewController:self.tempPresentController withThemePlist:self.tempPlistName];
 }
 

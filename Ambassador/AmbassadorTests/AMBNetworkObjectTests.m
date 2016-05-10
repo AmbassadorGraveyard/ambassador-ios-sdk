@@ -242,9 +242,12 @@
     // GIVEN
     NSString *apnDeviceToken = @"54dsf65s433c24x35cva8s984";
     NSString *email = @"test@example.com";
-    [AMBValues setUserEmail:email];
+    NSDictionary *traits = @{@"email" : email};
+
+    AMBIdentifyNetworkObject *identifyObject = [[AMBIdentifyNetworkObject alloc]  initWithUserID:@"1" traits:traits];
     
     // WHEN
+    [AMBValues setUserIdentifyObject:identifyObject];
     AMBUpdateAPNTokenObject *updateAPNTokenObject = [[AMBUpdateAPNTokenObject alloc] initWithAPNDeviceToken:apnDeviceToken];
     
     // THEN
