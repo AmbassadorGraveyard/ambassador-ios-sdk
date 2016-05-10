@@ -15,6 +15,7 @@
 #import "AMBInputAlert.h"
 #import "AMBNPSViewController.h"
 #import "AMBIdentify.h"
+#import "AMBConversion.h"
 
 @interface AmbassadorSDK () <AMBInputAlertDelegate, UIAlertViewDelegate>
 
@@ -26,6 +27,7 @@
 @property (nonatomic, strong) AMBUserNetworkObject *user;
 @property (nonatomic, strong) NSString *universalToken;
 @property (nonatomic, strong) NSString *universalID;
+@property (nonatomic, strong) AMBConversion *conversion;
 
 // Used to call present RAF is email prompt presented
 @property (nonatomic, weak) NSString * tempCampID;

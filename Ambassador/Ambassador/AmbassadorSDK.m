@@ -16,13 +16,6 @@
 #import "AMBErrors.h"
 #import "RavenClient.h"
 
-@interface AmbassadorSDK ()
-
-@property (nonatomic, strong) NSTimer *conversionTimer;
-@property (nonatomic, strong) AMBConversion *conversion;
-
-@end
-
 
 @implementation AmbassadorSDK
 
