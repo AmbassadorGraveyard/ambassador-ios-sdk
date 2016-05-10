@@ -121,6 +121,10 @@ NSString * const universalToken = @"test";
     // GIVEN
     NSString *completeSDKToken = @"SDKToken test";
     
+    id mockConversion = [OCMockObject mockForClass:[AMBConversion class]];
+    [[[mockConversion expect] andDo:nil] sendConversions];
+    self.ambassadorSDK.conversion = mockConversion;
+    
     // WHEN
     [self.ambassadorSDK localRunWithuniversalToken:universalToken universalID:universalID];
     
@@ -130,6 +134,10 @@ NSString * const universalToken = @"test";
     // THEN
     XCTAssertEqualObjects(completeSDKToken, savedTokenValue);
     XCTAssertEqualObjects(universalID, savedUnivIDValue);
+    XCTAssertNotNil(self.ambassadorSDK.conversion);
+    
+    [mockConversion verify];
+    [mockConversion stopMocking];
 }
 
 - (void)testLocalIdentify {
