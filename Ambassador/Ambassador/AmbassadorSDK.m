@@ -80,9 +80,14 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     [AMBValues setUniversalIDWithID:universalID];
     [AMBValues setUniversalTokenWithToken:universalToken];
     [AMBValues setPusherChannelObject:@{}];
-    if (!self.conversionTimer.isValid) { self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES]; }
-    self.conversion = [[AMBConversion alloc] init];
+    
+    // Init our AMBConversion object if not already
+    if (!self.conversion) { self.conversion = [[AMBConversion alloc] init]; }
+    
+    // Checks for any unsent conversions from the last session and sends them off if able
+    [self.conversion sendConversions];
 
+    // Sets up Sentry Crash Analytics
     [self setUpCrashAnalytics];
 }
 
@@ -149,10 +154,6 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     }
     
     if (!restrictToInstall) { [self.conversion registerConversionWithParameters:conversionParameters completion:completion]; }
-}
-
-- (void)checkConversionQueue {
-    [self.conversion sendConversions];
 }
 
 
