@@ -25,7 +25,7 @@
 @property (nonatomic, strong) AMBPusherManager *pusherManager;
 
 - (void)localRunWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID;
-- (void)localIdentifyWithEmail:(NSString*)email;
+- (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits;
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist;
 - (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion;
 - (void)checkConversionQueue;
@@ -78,11 +78,12 @@ NSString * const universalToken = @"test";
 
 - (void)testClassIdentify {
     // GIVEN
-    NSString *fakeEmail = @"ambassadorTest@example.com";
+    NSDictionary *traits = @{@"email": @"ambassadorTest@example.com"};
+    NSString *uniqueID = @"1234567890";
+    [[self.mockAmbassadorSDK expect] localIdentifyWithUserID:uniqueID traits:traits];
     
     // WHEN
-    [[self.mockAmbassadorSDK expect] localIdentifyWithEmail:fakeEmail];
-    [AmbassadorSDK identifyWithEmail:fakeEmail];
+    [AmbassadorSDK identifyWithUserID:uniqueID traits:traits];
     
     // THEN
     [self.mockAmbassadorSDK verify];
@@ -109,8 +110,9 @@ NSString * const universalToken = @"test";
     NSString *plistName = @"GenericTheme";
     UIViewController *mockVC = [[UIViewController alloc] init];
     
-    // WHEN
     [[self.mockAmbassadorSDK expect] presentRAFForCampaign:campID FromViewController:mockVC withThemePlist:plistName];
+    
+    // WHEN
     [AmbassadorSDK presentRAFForCampaign:campID FromViewController:mockVC withThemePlist:plistName];
     
     // THEN
@@ -135,6 +137,9 @@ NSString * const universalToken = @"test";
 - (void)testLocalIdentify {
     // GIVEN
     NSString *mockEmail = @"email@email.com";
+    NSDictionary *mockTraits = @{@"email" : mockEmail};
+    NSString *mockUserID = @"123456789";
+    
     [[[self.mockAmbassadorSDK expect] andDo:^(NSInvocation *invocation) {
         void (^success)() = nil;
         [invocation getArgument:&success atIndex:2];
@@ -145,7 +150,7 @@ NSString * const universalToken = @"test";
     [[[mockNtwMgr expect] andDo:nil] sendIdentifyForCampaign:[OCMArg isNil] shouldEnroll:NO success:[OCMArg isNotNil] failure:[OCMArg isNotNil]];
     
     // WHEN
-    [self.ambassadorSDK localIdentifyWithEmail:mockEmail];
+    [self.ambassadorSDK localIdentifyWithUserID:mockUserID traits:mockTraits];
     NSString *savedEmail = [AMBValues getUserEmail];
     
     // THEN
