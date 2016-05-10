@@ -135,7 +135,8 @@
     NSString *email = self.tfEmail.text;
     
     if ([Validator isValidEmail:email]) {
-        [AmbassadorSDK identifyWithEmail:self.tfEmail.text];
+        NSDictionary *infoDict = @{@"email" : self.tfEmail.text};
+        [AmbassadorSDK identifyWithUserID:@"0" traits:infoDict];
         
         NSString *confirmationMessage = [NSString stringWithFormat:@"You have succesfully identified as %@! You can now track conversion events and create commissions!", email];
         UIAlertView *confirmationAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:confirmationMessage delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
