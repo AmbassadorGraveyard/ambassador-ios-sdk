@@ -290,9 +290,13 @@
 - (void)testSetAndGetUserEmail {
     // GIVEN
     NSString *expectedEmail = @"user@example.com";
+    NSDictionary *mockTraits = @{@"email" : expectedEmail};
+    NSString *mockID = @"123456789";
+    
+    AMBIdentifyNetworkObject *identifyObject = [[AMBIdentifyNetworkObject alloc] initWithUserID:mockID traits:mockTraits];
     
     // WHEN
-    [AMBValues setUserEmail:expectedEmail];
+    [AMBValues setUserIdentifyObject:identifyObject];
     NSString *savedEmail = [AMBValues getUserEmail];
     
     // THEN
@@ -369,6 +373,22 @@
     
     // THEN
     XCTAssertEqualObjects(clientSecret, expectedString);
+}
+
+- (void)testSetAndGetIdentifyObject {
+    // GIVEN
+    NSString *userId = @"123456789";
+    NSString *email = @"test@example.com";
+    
+    AMBIdentifyNetworkObject *identifyObject = [[AMBIdentifyNetworkObject alloc] initWithUserID:userId traits:@{@"email" : email}];
+    
+    // WHEN
+    [AMBValues setUserIdentifyObject:identifyObject];
+    AMBIdentifyNetworkObject *expectedObject = [AMBValues getUserIdentifyObject];
+    
+    // THEN
+    XCTAssertEqualObjects(userId, expectedObject.remote_customer_id);
+    XCTAssertEqualObjects(email, expectedObject.email);
 }
 
 @end
