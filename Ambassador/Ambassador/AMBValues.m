@@ -231,6 +231,12 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     [[AMBValues ambUserDefaults] setObject:clientSecret forKey:@"linkedin_client_secret"];
 }
 
++ (void)setUserIdentifyObject:(AMBIdentifyNetworkObject *)identifyObject {
+    // Encodes object to data in order to save to defaults
+    NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:identifyObject];
+    [[AMBValues ambUserDefaults] setObject:encodedObject forKey:@"user_identify_object"];
+}
+
 
 // Should only be used for TESTING
 + (void)resetHasInstalled {
@@ -277,7 +283,7 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 }
 
 + (NSString*)getUserEmail {
-    return [[AMBValues ambUserDefaults] valueForKey:@"user_email"];
+    return [AMBValues getUserIdentifyObject].email;
 }
 
 + (AMBPusherChannelObject*)getPusherChannelObject {
@@ -306,6 +312,14 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 
 + (NSString*)getLinkedInClientSecret {
     return [[AMBValues ambUserDefaults] valueForKey:@"linkedin_client_secret"];
+}
+
++ (AMBIdentifyNetworkObject *)getUserIdentifyObject {
+    // Grabs the encoded identify object's data from user defaults
+    NSData *encodedObject = [[AMBValues ambUserDefaults] valueForKey:@"user_identify_object"];
+    AMBIdentifyNetworkObject *identifyObject = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+    
+    return identifyObject;
 }
 
 @end
