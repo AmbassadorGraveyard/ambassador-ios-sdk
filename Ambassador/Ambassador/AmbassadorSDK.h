@@ -8,6 +8,14 @@
 #import "AMBConversionParameters.h"
 #import "AMBWelcomeScreenViewController.h"
 
+// Enum for Conversion status types
+typedef enum conversionStatus {
+    ConversionSuccessful,
+    ConversionPending,
+    ConversionError
+} ConversionStatus;
+
+
 @interface AmbassadorSDK : NSObject
 
 /**
@@ -58,10 +66,10 @@
  
  @param conversionParameters The object used to set all of the values for a specific conversion.
  @param restrictToInstall Boolean value that decides where the conversion should only be allowed to get called once.
- @param completion Block that tells the user when the conversion is done attempting to send.
+ @param completion Block that tells the user when the conversion is done attempting to send.  Block passes back the conversion, the conversionStatus, and an error if one occurs.
  
  */
-+ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion;
++ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion;
 
 
 /**

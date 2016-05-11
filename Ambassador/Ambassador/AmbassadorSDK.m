@@ -136,23 +136,30 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 #pragma mark - Conversions
 
-+ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion {
-    [[AmbassadorSDK sharedInstance] localRegisterConversion:conversionParameters restrictToInstall:restrictToInstall completion:completion];
++ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion {
+    [[AmbassadorSDK sharedInstance] localRegisterConversion:conversionParameters restrictToInstall:restrictToInstall completion:^(ConversionStatus conversionStatus, NSError *error) {
+        // Send the conversion params, status, and error if the user is using the completion block
+        if (completion) { completion(conversionParameters, conversionStatus, error); }
+    }];
 }
 
-- (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion {
-    if (restrictToInstall && ![AMBValues getHasInstalledBoolean]) {
-        [self.conversion registerConversionWithParameters:conversionParameters completion:completion];
-        [AMBValues setHasInstalled];
-        return;
-    }
-    
+- (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(ConversionStatus conversionStatus, NSError *error))completion {
+    // If the conversion is restricted and the boolean has already to set to installed, then we return with an error
     if (restrictToInstall && [AMBValues getHasInstalledBoolean]) {
-        completion([AMBErrors restrictedConversionError]);
+        completion(ConversionError, [AMBErrors restrictedConversionError]);
         return;
     }
     
-    if (!restrictToInstall) { [self.conversion registerConversionWithParameters:conversionParameters completion:completion]; }
+    // We attempt to send off the conversion and return the corresponding conversion status
+    [self.conversion registerConversionWithParameters:conversionParameters success:^(AMBConversionParameters *conversion) {
+        // If the conversion is set to restricted
+        if (restrictToInstall) { [AMBValues setHasInstalled]; }
+        if (completion) { completion(ConversionSuccessful, nil); }
+    } pending:^(AMBConversionParameters *conversion) {
+        if (completion) { completion(ConversionPending, nil); }
+    } error:^(NSError *error, AMBConversionParameters *conversion) {
+        if (completion) { completion(ConversionError, error); }
+    }];
 }
 
 
