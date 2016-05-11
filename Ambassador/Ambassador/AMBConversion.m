@@ -56,6 +56,31 @@
     } 
 }
 
+- (void)sendConversion:(AMBConversionParameters *)parameters identifyInfo:(NSDictionary *)identifyInfo success:(void(^)())success failure:(void(^)())failure {
+    // Creates a mutable dictionary rom the parameter object's property dictionary
+    NSMutableDictionary *fieldsDictionary = [[parameters propertyDictionary] mutableCopy];
+    [fieldsDictionary setValue:[AMBValues getMbsyCookieCode] forKey:@"mbsy_short_code"];
+    
+    // Creates the payload to send in the POST body
+    NSDictionary *payloadDict = [self payloadForConversionCallWithFP:identifyInfo mbsyFields:fieldsDictionary];
+    
+    // Make network call to send off our conversion
+    [[AMBNetworkManager sharedInstance] sendRegisteredConversion:payloadDict success:^(NSDictionary *response) {
+        DLog(@"Conversion Send Response - %@", response);
+        
+        // Call the success block if there is one
+        if (success) { success(); }
+    } failure:^(NSInteger statusCode, NSData *data) {
+        DLog(@"Conversion Send Error - %li %@", (long)statusCode, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+        
+        // Saves AMBConversionParameter object to the database without the mbsy_short_code value, because it is manually added on later
+        [AMBCoreDataManager saveNewObjectToCoreDataWithEntityName:@"AMBConversionParametersEntity" valuesToSave:[parameters propertyDictionary]];
+        
+        // Call the failure block if there is one
+        if (failure) { failure(); }
+    }];
+}
+
 
 #pragma mark - Helper Functions
 
