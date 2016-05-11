@@ -295,7 +295,7 @@
     [[[mockValues expect] andDo:nil] setPusherChannelObject:nil];
     
     id mockConversionClass = [OCMockObject mockForClass:[AMBConversion class]];
-    [[[mockConversionClass expect] andDo:nil] sendConversions];
+    [[[mockConversionClass expect] andDo:nil] retryUnsentConversions];
     [AmbassadorSDK sharedInstance].conversion = mockConversionClass;
     
     // WHEN

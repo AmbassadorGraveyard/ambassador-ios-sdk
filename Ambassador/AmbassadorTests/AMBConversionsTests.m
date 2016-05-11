@@ -69,7 +69,7 @@
     [mockParams verify];
 }
 
-- (void)testSendConversions {
+- (void)testRetryUnsentConversions {
     // GIVEN
     [AMBValues setDeviceFingerPrintWithDictionary:@{}];
     [AMBValues setMbsyCookieWithCode:@"tEsT"];
@@ -110,7 +110,7 @@
     }] sendRegisteredConversion:[OCMArg any] success:[OCMArg invokeBlock] failure:[OCMArg any]];
     
     // WHEN
-    [self.conversion sendConversions];
+    [self.conversion retryUnsentConversions];
     
     // THEN
     [mockEntity verify];

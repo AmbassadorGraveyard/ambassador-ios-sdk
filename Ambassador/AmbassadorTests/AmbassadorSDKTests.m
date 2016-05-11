@@ -124,7 +124,7 @@ NSString * const universalToken = @"test";
     NSString *completeSDKToken = @"SDKToken test";
     
     id mockConversion = [OCMockObject mockForClass:[AMBConversion class]];
-    [[[mockConversion expect] andDo:nil] sendConversions];
+    [[[mockConversion expect] andDo:nil] retryUnsentConversions];
     self.ambassadorSDK.conversion = mockConversion;
     
     // WHEN
