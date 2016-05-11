@@ -12,6 +12,6 @@
 @interface AMBConversion : NSObject <NSURLSessionDelegate>
 
 - (void)registerConversionWithParameters:(AMBConversionParameters *)parameters completion:(void (^)(NSError *error))completion;
-- (void)sendConversions;
+- (void)retryUnsentConversions;
 
 @end

@@ -31,26 +31,33 @@
     }
 }
 
-- (void)sendConversions {
-    NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint]; // If no device fingerprint is available, an empty dictionary will be returned
+- (void)retryUnsentConversions {
+    // If no device fingerprint is available, an empty dictionary will be returned
+    NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint];
 
     // Checks to make sure we have either a short code OR device fingerprint before moving on
     if ([[AMBValues getMbsyCookieCode] isEqualToString:@""] && [userDefaultsIdentify isEqual:@{}]) {
         return;
     }
     
+    // Grabs all of the conversion objects stored in the coredata DB
     NSArray *storedConversionArray = [AMBCoreDataManager getAllEntitiesFromCoreDataWithEntityName:@"AMBConversionParametersEntity"];
     
+    // Make sure that there are conversions that need to sent off
     if ([storedConversionArray count] > 0) {
+        
+        // Loop through all unsent conversions to send
         for (AMBConversionParametersEntity *entity in storedConversionArray) {
-            AMBConversionParameters *parameters = [[AMBConversionParameters alloc] initWithEntity:entity];
-            NSMutableDictionary *fieldsDictionary = [NSMutableDictionary dictionaryWithDictionary:[parameters propertyDictionary]];
-            [fieldsDictionary setValue:[AMBValues getMbsyCookieCode] forKey:@"mbsy_short_code"];
             
-            [[AMBNetworkManager sharedInstance] sendRegisteredConversion:[self payloadForConversionCallWithFP:userDefaultsIdentify mbsyFields:fieldsDictionary] success:^(NSDictionary *response) {
+            // Creates a parameter object from the coredata entity and sends it off
+            AMBConversionParameters *parameters = [[AMBConversionParameters alloc] initWithEntity:entity];
+            [self sendConversion:parameters identifyInfo:userDefaultsIdentify success:^{
+                DLog(@"Conversion retry success - %@", parameters);
+                
+                // Deletes the coredata object after successful send
                 [AMBCoreDataManager deleteCoreDataObject:entity];
-            } failure:^(NSInteger statusCode, NSData *data) {
-                [AMBErrors errorLogCannotSendConversion:statusCode errorData:data];
+            } failure:^{
+                DLog(@"Conversion retry failed - %@", parameters);
             }];
         }
     } 
@@ -71,7 +78,7 @@
         // Call the success block if there is one
         if (success) { success(); }
     } failure:^(NSInteger statusCode, NSData *data) {
-        DLog(@"Conversion Send Error - %li %@", (long)statusCode, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+        [AMBErrors errorLogCannotSendConversion:statusCode errorData:data];
         
         // Saves AMBConversionParameter object to the database without the mbsy_short_code value, because it is manually added on later
         [AMBCoreDataManager saveNewObjectToCoreDataWithEntityName:@"AMBConversionParametersEntity" valuesToSave:[parameters propertyDictionary]];
