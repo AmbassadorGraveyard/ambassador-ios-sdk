@@ -10,9 +10,9 @@
 
 // Enum for Conversion status types
 typedef enum conversionStatus {
-    ConversionSuccessful,
-    ConversionPending,
-    ConversionError
+    ConversionSuccessful, // Conversion was successful sent to Ambassador.
+    ConversionPending, // Conversion has been savedto database, but not yet sent to Ambassasdor. The main reason for this is because no referrer was yet found.
+    ConversionError // Conversion parameter object contains an error(s).  Will not attempt to send to Ambassador until fixed.
 } ConversionStatus;
 
 
