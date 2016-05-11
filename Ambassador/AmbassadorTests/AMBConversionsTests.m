@@ -50,6 +50,9 @@
 
 - (void)testRegisterConversion {
     // GIVEN
+    [AMBValues setMbsyCookieWithCode:@"test"];
+    [AMBValues setDeviceFingerPrintWithDictionary:@{@"testkey" : @"testvalue"}];
+    
     AMBConversionParameters *parameters = [[AMBConversionParameters alloc] init];
     parameters.mbsy_campaign = @123456;
     parameters.mbsy_email = @"test@test.com";
