@@ -316,11 +316,21 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:@"You have successfully registered a conversion." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
     [successAlert show];
     
-    [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(NSError *error) {
-        if (error) {
-            NSLog(@"Error registering conversion - %@", error);
-        } else {
-            NSLog(@"Conversion registered successfully!");
+    [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {
+        NSLog(@"Conversion Object - %@", conversion);
+        
+        switch (conversionStatus) {
+            case ConversionSuccessful:
+                NSLog(@"Success!");
+                break;
+            case ConversionPending:
+                NSLog(@"Pending!");
+                break;
+            case ConversionError:
+                NSLog(@"Error :(");
+                break;
+            default:
+                break;
         }
     }];
 }
