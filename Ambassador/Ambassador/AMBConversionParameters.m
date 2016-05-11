@@ -162,4 +162,27 @@
                            @"mbsy_event_data3", @"mbsy_is_approved"];
 }
 
+
+#pragma mark - Custom Setters
+
+/*
+ These custom setters are to insure that boolean values get 
+ converted into ints.
+ */
+- (void)setMbsy_is_approved:(NSNumber *)mbsy_is_approved {
+    _mbsy_is_approved = [NSNumber numberWithInt:[mbsy_is_approved intValue]];
+}
+
+- (void)setMbsy_email_new_ambassador:(NSNumber *)mbsy_email_new_ambassador {
+    _mbsy_email_new_ambassador = [NSNumber numberWithInt:[mbsy_email_new_ambassador intValue]];
+}
+
+- (void)setMbsy_auto_create:(NSNumber *)mbsy_auto_create {
+    _mbsy_auto_create = [NSNumber numberWithInt:[mbsy_auto_create intValue]];;
+}
+
+- (void)setMbsy_deactivate_new_ambassador:(NSNumber *)mbsy_deactivate_new_ambassador {
+    _mbsy_deactivate_new_ambassador = [NSNumber numberWithInt:[_mbsy_auto_create intValue]];
+}
+
 @end
