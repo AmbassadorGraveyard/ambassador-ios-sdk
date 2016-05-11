@@ -78,7 +78,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     if (!self.conversion) { self.conversion = [[AMBConversion alloc] init]; }
     
     // Checks for any unsent conversions from the last session and sends them off if able
-    [self.conversion sendConversions];
+    [self.conversion retryUnsentConversions];
 
     // Sets up Sentry Crash Analytics
     [self setUpCrashAnalytics];
