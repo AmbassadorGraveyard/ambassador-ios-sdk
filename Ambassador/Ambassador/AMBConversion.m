@@ -19,24 +19,36 @@
 
 #pragma mark - API Functions
 
-- (void)registerConversionWithParameters:(AMBConversionParameters *)parameters completion:(void (^)(NSError *error))completion {
-    NSError *error = [parameters checkForError];
+- (void)registerConversionWithParameters:(AMBConversionParameters *)parameters success:(void(^)(AMBConversionParameters *conversion))success pending:(void(^)(AMBConversionParameters *conversion))pending error:(void(^)(NSError *error, AMBConversionParameters *conversion))error {
+    // Checks to see if there is an error with the ConversionParameters object's properties
+    NSError *conversionError = [parameters checkForError];
     
-    if (!error) { [AMBCoreDataManager saveNewObjectToCoreDataWithEntityName:@"AMBConversionParametersEntity" valuesToSave:[parameters propertyDictionary]]; }
-    
-    if (completion) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(error);
-        });
+    // If there is an error with the object we return the error
+    if (conversionError) {
+        if (error) { error(conversionError, parameters); }
+        return;
     }
+    
+    // If the conversion is unable to send because no fp or short_code we return 'pending'
+    if (![self canSendConversion]) {
+        // Save the conversion to the database for later sending
+        [AMBCoreDataManager saveNewObjectToCoreDataWithEntityName:@"AMBConversionParametersEntity" valuesToSave:[parameters propertyDictionary]];
+        if (pending) { pending(parameters); }
+        return;
+    }
+    
+    // If there is no error with the object and we have the fp/short_code, we send it
+    [self sendConversion:parameters success:^{
+        if (success) { success(parameters); }
+    } failure:^{
+        // If the call fails at this point, we can assume it's a network issue and will save it for later
+        if (pending) { pending(parameters); }
+    }];
 }
 
 - (void)retryUnsentConversions {
-    // If no device fingerprint is available, an empty dictionary will be returned
-    NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint];
-
-    // Checks to make sure we have either a short code OR device fingerprint before moving on
-    if ([[AMBValues getMbsyCookieCode] isEqualToString:@""] && [userDefaultsIdentify isEqual:@{}]) {
+    // Checks to see if we have fp/short_code
+    if (![self canSendConversion]) {
         return;
     }
     
@@ -48,10 +60,9 @@
         
         // Loop through all unsent conversions to send
         for (AMBConversionParametersEntity *entity in storedConversionArray) {
-            
             // Creates a parameter object from the coredata entity and sends it off
             AMBConversionParameters *parameters = [[AMBConversionParameters alloc] initWithEntity:entity];
-            [self sendConversion:parameters identifyInfo:userDefaultsIdentify success:^{
+            [self sendConversion:parameters success:^{
                 DLog(@"Conversion retry success - %@", parameters);
                 
                 // Deletes the coredata object after successful send
@@ -63,7 +74,10 @@
     } 
 }
 
-- (void)sendConversion:(AMBConversionParameters *)parameters identifyInfo:(NSDictionary *)identifyInfo success:(void(^)())success failure:(void(^)())failure {
+- (void)sendConversion:(AMBConversionParameters *)parameters success:(void(^)())success failure:(void(^)())failure {
+    // Gets the device fingerprint
+    NSDictionary *identifyInfo = [AMBValues getDeviceFingerPrint];
+    
     // Creates a mutable dictionary rom the parameter object's property dictionary
     NSMutableDictionary *fieldsDictionary = [[parameters propertyDictionary] mutableCopy];
     [fieldsDictionary setValue:[AMBValues getMbsyCookieCode] forKey:@"mbsy_short_code"];
@@ -73,7 +87,7 @@
     
     // Make network call to send off our conversion
     [[AMBNetworkManager sharedInstance] sendRegisteredConversion:payloadDict success:^(NSDictionary *response) {
-        DLog(@"Conversion Send Response - %@", response);
+        DLog(@"Conversion Send Success - %@", response);
         
         // Call the success block if there is one
         if (success) { success(); }
@@ -100,6 +114,18 @@
     NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
     
     return @{@"fp" : fingerPrintDict, @"fields" : mbsyFields };
+}
+
+- (BOOL)canSendConversion {
+    // If no device fingerprint is available, an empty dictionary will be returned
+    NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint];
+    
+    // Checks to make sure we have either a short code OR device fingerprint before moving on
+    if ([AMBUtilities stringIsEmpty:[AMBValues getMbsyCookieCode]] && [userDefaultsIdentify isEqual:@{}]) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end
