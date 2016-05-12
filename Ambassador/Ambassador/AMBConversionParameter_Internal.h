@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSArray * propertyArray;
 
 - (id)initWithEntity:(AMBConversionParametersEntity *)entity;
+- (instancetype)initWithProperties:(NSDictionary *)properties;
 - (NSError*)checkForError;
 - (NSString*)getShortCode;
 - (NSDictionary*)propertyDictionary;
