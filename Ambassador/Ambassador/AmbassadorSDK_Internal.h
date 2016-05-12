@@ -16,6 +16,7 @@
 #import "AMBNPSViewController.h"
 #import "AMBIdentify.h"
 #import "AMBConversion.h"
+#import "AMBConversionParameter_Internal.h"
 
 @interface AmbassadorSDK () <AMBInputAlertDelegate, UIAlertViewDelegate>
 

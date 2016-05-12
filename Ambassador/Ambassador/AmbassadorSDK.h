@@ -62,6 +62,18 @@ typedef enum conversionStatus {
 
 /**
  
+ */
++ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options;
+
+
+/**
+ 
+ */
++ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion;
+
+
+/**
+ 
  Registers a conversion with Ambassador.
  
  @param conversionParameters The object used to set all of the values for a specific conversion.

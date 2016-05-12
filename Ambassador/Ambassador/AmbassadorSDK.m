@@ -134,6 +134,39 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 }
 
 
+#pragma mark - Track
+
++ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options {
+    // Checks to make sure that the 'conversion' option is true
+    if ([options[@"conversion"] boolValue] == TRUE) {
+        // Creates a conversion parameters object based on the properties dictionary
+        AMBConversionParameters *parameters = [[AMBConversionParameters alloc] initWithProperties:properties];
+        
+        // Checks if the conversion should only happen once based on option
+        BOOL restricted = [options[@"restrictedToInstall"] boolValue];
+        
+        // Registers the conversion to Ambassador
+        [[AmbassadorSDK sharedInstance] localRegisterConversion:parameters restrictToInstall:restricted completion:nil];
+    }
+}
+
++ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion {
+    // Checks to make sure that the 'conversion' option is true
+    if ([options[@"conversion"] boolValue] == TRUE) {
+        // Creates a conversion parameters object based on the properties dictionary
+        AMBConversionParameters *parameters = [[AMBConversionParameters alloc] initWithProperties:properties];
+        
+        // Checks if the conversion should only happen once based on option
+        BOOL restricted = [options[@"restrictedToInstall"] boolValue];
+        
+        // Registers the conversion to Ambassador and returns the conversion status in the completion block
+        [[AmbassadorSDK sharedInstance] localRegisterConversion:parameters restrictToInstall:restricted completion:^(ConversionStatus conversionStatus, NSError *error) {
+            if (completion) { completion(parameters, conversionStatus, error); }
+        }];
+    }
+}
+
+
 #pragma mark - Conversions
 
 + (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion {
