@@ -27,7 +27,7 @@
 - (void)localRunWithuniversalToken:(NSString *)universalToken universalID:(NSString *)universalID;
 - (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits;
 - (void)presentRAFForCampaign:(NSString *)ID FromViewController:(UIViewController *)viewController withThemePlist:(NSString*)themePlist;
-- (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion;
+- (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(ConversionStatus conversionStatus, NSError *error))completion;
 - (void)checkConversionQueue;
 - (void)sendAPNDeviceToken;
 - (void)presentNPSSurvey;
@@ -97,7 +97,7 @@ NSString * const universalToken = @"test";
     conversionParameters.mbsy_campaign = @260;
     
     // WHEN
-    [[self.mockAmbassadorSDK expect] localRegisterConversion:conversionParameters restrictToInstall:NO completion:nil];
+    [[self.mockAmbassadorSDK expect] localRegisterConversion:conversionParameters restrictToInstall:NO completion:[OCMArg isNotNil]];
     [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:nil];
     
     // THEN
@@ -123,6 +123,10 @@ NSString * const universalToken = @"test";
     // GIVEN
     NSString *completeSDKToken = @"SDKToken test";
     
+    id mockConversion = [OCMockObject mockForClass:[AMBConversion class]];
+    [[[mockConversion expect] andDo:nil] retryUnsentConversions];
+    self.ambassadorSDK.conversion = mockConversion;
+    
     // WHEN
     [self.ambassadorSDK localRunWithuniversalToken:universalToken universalID:universalID];
     
@@ -132,6 +136,10 @@ NSString * const universalToken = @"test";
     // THEN
     XCTAssertEqualObjects(completeSDKToken, savedTokenValue);
     XCTAssertEqualObjects(universalID, savedUnivIDValue);
+    XCTAssertNotNil(self.ambassadorSDK.conversion);
+    
+    [mockConversion verify];
+    [mockConversion stopMocking];
 }
 
 - (void)testLocalIdentify {
@@ -171,8 +179,9 @@ NSString * const universalToken = @"test";
     mockParams.mbsy_campaign = @260;
     id mockConversion = [OCMockObject partialMockForObject:self.ambassadorSDK.conversion];
     
+    [[[mockConversion expect] andDo:nil] registerConversionWithParameters:mockParams success:[OCMArg any] pending:[OCMArg any] error:[OCMArg any]];
+    
     // WHEN
-    [[mockConversion expect] registerConversionWithParameters:mockParams completion:[OCMArg any]];
     [self.ambassadorSDK localRegisterConversion:mockParams restrictToInstall:NO completion:nil];
     
     // THEN
@@ -211,20 +220,6 @@ NSString * const universalToken = @"test";
     
     // THEN
     [mockVC verify];
-}
-
-- (void)testCheckConversionQueue {
-    // GIVEN
-    [AMBValues setMbsyCookieWithCode:@""];
-    [AMBValues setDeviceFingerPrintWithDictionary:@{}];
-    id conversionMock = [OCMockObject partialMockForObject:self.ambassadorSDK.conversion];
-    
-    // WHEN
-    [[conversionMock expect] sendConversions];
-    [self.ambassadorSDK checkConversionQueue];
-    
-    // THEN
-    [conversionMock verify];
 }
 
 - (void)testSubscribeToPusher {

@@ -17,6 +17,7 @@
 
 @interface AMBConversion (Test)
 
+- (void)sendConversion:(AMBConversionParameters *)parameters success:(void(^)())success failure:(void(^)())failure;
 - (NSDictionary*)payloadForConversionCallWithFP:(NSDictionary*)deviceFingerprint mbsyFields:(NSMutableDictionary*)mbsyFields;
 
 @end
@@ -49,6 +50,9 @@
 
 - (void)testRegisterConversion {
     // GIVEN
+    [AMBValues setMbsyCookieWithCode:@"test"];
+    [AMBValues setDeviceFingerPrintWithDictionary:@{@"testkey" : @"testvalue"}];
+    
     AMBConversionParameters *parameters = [[AMBConversionParameters alloc] init];
     parameters.mbsy_campaign = @123456;
     parameters.mbsy_email = @"test@test.com";
@@ -57,18 +61,52 @@
     id mockParams = [OCMockObject partialMockForObject:parameters];
     [[mockParams expect] checkForError];
     
-    id mockCoreManager = [OCMockObject mockForClass:[AMBCoreDataManager class]];
-    [[[mockCoreManager expect] andDo:nil] saveNewObjectToCoreDataWithEntityName:@"AMBConversionParametersEntity" valuesToSave:[parameters propertyDictionary]];
+    [[[self.mockConversion expect] andDo:nil] sendConversion:parameters success:[OCMArg isNotNil] failure:[OCMArg isNotNil]];
     
     // WHEN
-    [self.conversion registerConversionWithParameters:parameters completion:nil];
+    [self.conversion registerConversionWithParameters:parameters success:^(AMBConversionParameters *conversion) {
+        NSLog(@"Test result SUCCESS");
+    } pending:^(AMBConversionParameters *conversion) {
+        NSLog(@"Test result PENDING");
+    } error:^(NSError *error, AMBConversionParameters *conversion) {
+        NSLog(@"Test result ERROR");
+    }];
     
     // THEN
-    [mockCoreManager verify];
+    [self.mockConversion verify];
     [mockParams verify];
 }
 
-- (void)testSendConversions {
+- (void)testConversionParamError {
+    // GIVEN
+    AMBConversionParameters *parameters = [[AMBConversionParameters alloc] init];
+    parameters.mbsy_campaign = @123456;
+    parameters.mbsy_revenue = @1;
+    parameters.mbsy_email = @"";
+    
+    id mockError = [OCMockObject mockForClass:[NSError class]];
+    
+    id mockParams = [OCMockObject partialMockForObject:parameters];
+    [[[mockParams expect] andReturn:mockError] checkForError];
+    
+    __block BOOL containsError = NO;
+    
+    // WHEN
+    [self.conversion registerConversionWithParameters:parameters success:^(AMBConversionParameters *conversion) {
+        NSLog(@"Test result SUCCESS");
+    } pending:^(AMBConversionParameters *conversion) {
+        NSLog(@"Test result PENDING");
+    } error:^(NSError *error, AMBConversionParameters *conversion) {
+        NSLog(@"Test result ERROR");
+        containsError = YES;
+    }];
+    
+    // THEN
+    XCTAssertTrue(containsError);
+    [mockParams verify];
+}
+
+- (void)testRetryUnsentConversions {
     // GIVEN
     [AMBValues setDeviceFingerPrintWithDictionary:@{}];
     [AMBValues setMbsyCookieWithCode:@"tEsT"];
@@ -109,13 +147,46 @@
     }] sendRegisteredConversion:[OCMArg any] success:[OCMArg invokeBlock] failure:[OCMArg any]];
     
     // WHEN
-    [self.conversion sendConversions];
+    [self.conversion retryUnsentConversions];
     
     // THEN
     [mockEntity verify];
     [mockNetworkMgr verify];
     [mockCoreManager verify];
     [mockNetworkMgr stopMocking];
+}
+
+- (void)testSendConversion {
+    // GIVEN
+    AMBConversionParameters *mockParams = [[AMBConversionParameters alloc] init];
+    mockParams.mbsy_email = @"test@example.com";
+    mockParams.mbsy_revenue = @1;
+    mockParams.mbsy_campaign = @100;
+    
+    [AMBValues setMbsyCookieWithCode:@"test"];
+    
+    id mockPayloadDict = [OCMockObject mockForClass:[NSDictionary class]];
+    [[[mockPayloadDict expect] andDo:nil] count];
+    
+    [[[self.mockConversion expect] andReturn:mockPayloadDict] payloadForConversionCallWithFP:[OCMArg isKindOfClass:[NSDictionary class]] mbsyFields:[OCMArg isKindOfClass:[NSMutableDictionary class]]];
+    
+    id mockNtwMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
+    [[[mockNtwMgr expect] andDo:nil] sendRegisteredConversion:mockPayloadDict success:[OCMArg any] failure:[OCMArg invokeBlock]];
+    
+    id mockCoreDataMgr = [OCMockObject mockForClass:[AMBCoreDataManager class]];
+    [[[mockCoreDataMgr expect] andDo:nil] saveNewObjectToCoreDataWithEntityName:@"AMBConversionParametersEntity" valuesToSave:[mockParams propertyDictionary]];
+    
+    // WHEN
+    [self.conversion sendConversion:mockParams success:nil failure:^{
+        NSLog(@"Failure hit intentionally");
+    }];
+    
+    // THEN
+    [mockNtwMgr verify];
+    [mockCoreDataMgr verify];
+    
+    [mockNtwMgr stopMocking];
+    
 }
 
 - (void)testPayloadForConversion {

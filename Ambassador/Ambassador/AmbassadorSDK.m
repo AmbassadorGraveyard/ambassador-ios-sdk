@@ -16,13 +16,6 @@
 #import "AMBErrors.h"
 #import "RavenClient.h"
 
-@interface AmbassadorSDK ()
-
-@property (nonatomic, strong) NSTimer *conversionTimer;
-@property (nonatomic, strong) AMBConversion *conversion;
-
-@end
-
 
 @implementation AmbassadorSDK
 
@@ -80,9 +73,14 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     [AMBValues setUniversalIDWithID:universalID];
     [AMBValues setUniversalTokenWithToken:universalToken];
     [AMBValues setPusherChannelObject:@{}];
-    if (!self.conversionTimer.isValid) { self.conversionTimer = [NSTimer scheduledTimerWithTimeInterval:15 target:self selector:@selector(checkConversionQueue) userInfo:nil repeats:YES]; }
-    self.conversion = [[AMBConversion alloc] init];
+    
+    // Init our AMBConversion object if not already
+    if (!self.conversion) { self.conversion = [[AMBConversion alloc] init]; }
+    
+    // Checks for any unsent conversions from the last session and sends them off if able
+    [self.conversion retryUnsentConversions];
 
+    // Sets up Sentry Crash Analytics
     [self setUpCrashAnalytics];
 }
 
@@ -138,27 +136,30 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 #pragma mark - Conversions
 
-+ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion {
-    [[AmbassadorSDK sharedInstance] localRegisterConversion:conversionParameters restrictToInstall:restrictToInstall completion:completion];
++ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion {
+    [[AmbassadorSDK sharedInstance] localRegisterConversion:conversionParameters restrictToInstall:restrictToInstall completion:^(ConversionStatus conversionStatus, NSError *error) {
+        // Send the conversion params, status, and error if the user is using the completion block
+        if (completion) { completion(conversionParameters, conversionStatus, error); }
+    }];
 }
 
-- (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(NSError *error))completion {
-    if (restrictToInstall && ![AMBValues getHasInstalledBoolean]) {
-        [self.conversion registerConversionWithParameters:conversionParameters completion:completion];
-        [AMBValues setHasInstalled];
-        return;
-    }
-    
+- (void)localRegisterConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(ConversionStatus conversionStatus, NSError *error))completion {
+    // If the conversion is restricted and the boolean has already to set to installed, then we return with an error
     if (restrictToInstall && [AMBValues getHasInstalledBoolean]) {
-        completion([AMBErrors restrictedConversionError]);
+        completion(ConversionError, [AMBErrors restrictedConversionError]);
         return;
     }
     
-    if (!restrictToInstall) { [self.conversion registerConversionWithParameters:conversionParameters completion:completion]; }
-}
-
-- (void)checkConversionQueue {
-    [self.conversion sendConversions];
+    // We attempt to send off the conversion and return the corresponding conversion status
+    [self.conversion registerConversionWithParameters:conversionParameters success:^(AMBConversionParameters *conversion) {
+        // If the conversion is set to restricted
+        if (restrictToInstall) { [AMBValues setHasInstalled]; }
+        if (completion) { completion(ConversionSuccessful, nil); }
+    } pending:^(AMBConversionParameters *conversion) {
+        if (completion) { completion(ConversionPending, nil); }
+    } error:^(NSError *error, AMBConversionParameters *conversion) {
+        if (completion) { completion(ConversionError, error); }
+    }];
 }
 
 

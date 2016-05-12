@@ -120,6 +120,9 @@
         
         // Sets our pusher channel objec to nil to avoid unauthorized re-use 
         [AMBValues setPusherChannelObject:nil];
+        
+        // Attempts to send unsent conversions now that we would have the shortCode/fingerprint if referred
+        [[AmbassadorSDK sharedInstance].conversion retryUnsentConversions];
     }
 }
 
