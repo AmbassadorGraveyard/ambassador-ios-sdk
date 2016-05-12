@@ -185,4 +185,9 @@
     _mbsy_deactivate_new_ambassador = [NSNumber numberWithInt:[_mbsy_auto_create intValue]];
 }
 
+- (void)setMbsy_revenue:(NSNumber *)mbsy_revenue {
+    NSString *decimalString = [NSString stringWithFormat:@"%.02f", [mbsy_revenue floatValue]];
+    _mbsy_revenue = [NSNumber numberWithFloat:[decimalString floatValue]];
+}
+
 @end
