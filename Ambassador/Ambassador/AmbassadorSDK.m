@@ -137,17 +137,8 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 #pragma mark - Track
 
 + (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options {
-    // Checks to make sure that the 'conversion' option is true
-    if ([options[@"conversion"] boolValue] == TRUE) {
-        // Creates a conversion parameters object based on the properties dictionary
-        AMBConversionParameters *parameters = [[AMBConversionParameters alloc] initWithProperties:properties];
-        
-        // Checks if the conversion should only happen once based on option
-        BOOL restricted = [options[@"restrictedToInstall"] boolValue];
-        
-        // Registers the conversion to Ambassador
-        [[AmbassadorSDK sharedInstance] localRegisterConversion:parameters restrictToInstall:restricted completion:nil];
-    }
+    // Calls overloaded function with a nil completion block
+    [AmbassadorSDK trackEvent:eventName properties:properties options:options completion:nil];
 }
 
 + (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion {

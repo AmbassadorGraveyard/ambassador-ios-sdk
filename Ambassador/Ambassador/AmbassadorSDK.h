@@ -52,24 +52,12 @@ typedef enum conversionStatus {
  Recommended to put on a login screen or after the initial call to run Ambassador if you have the user's info stored.
  
  @param userID A unique ID tied to the user being identified
- @param traits Extra values tied to the user. Ex: Email, first name, last name
+ @param traits Extra values tied to the user. Ex: Email, first name, last name, etc.
  
  @warning It is highly recommended to at least include an 'email' value in the traits dictionary in order for full functionality in the Ambassador SDK.
  
  */
 + (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits;
-
-
-/**
- 
- */
-+ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options;
-
-
-/**
- 
- */
-+ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion;
 
 
 /**
@@ -81,7 +69,40 @@ typedef enum conversionStatus {
  @param completion Block that tells the user when the conversion is done attempting to send.  Block passes back the conversion, the conversionStatus, and an error if one occurs.
  
  */
-+ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion;
++ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion __attribute__((deprecated("Use method 'trackEvent: properties: options:' instead")));
+
+
+/**
+ 
+ Tracks an event with Ambassador.
+ 
+ Currently, the only event Ambassador tracks is a conversion.
+ 
+ @param eventName An optional value for the name of the event being tracked. 
+ @param properties Properties set for the event. Ex: Campaign, email, revenue, etc.
+ @param options Additional options that can be set for the event. 
+ 
+ @warning In order to register the event as a conversion, the key/pair value '@"conversion" : @YES' must be added to the 'options' dictionary.
+ 
+ */
++ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options;
+
+
+/**
+ 
+ Tracks an event with Ambassador.
+ 
+ Currently, the only event Ambassador tracks is a conversion.
+ 
+ @param eventName An optional value for the name of the event being tracked.
+ @param properties Properties set for the event. Ex: Campaign, email, revenue, etc.
+ @param options Additional options that can be set for the event.
+ @param competion If event is a conversion, this block that tells the user when the conversion is done attempting to send.  Block passes back the conversion, the conversionStatus, and an error if one occurs.
+ 
+ @warning In order to register the event as a conversion, the key/pair value '@"conversion" : @YES' must be added to the 'options' dictionary.
+ 
+ */
++ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion;
 
 
 /**
