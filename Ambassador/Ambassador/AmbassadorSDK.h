@@ -53,11 +53,12 @@ typedef enum conversionStatus {
  
  @param userID A unique ID tied to the user being identified
  @param traits Extra values tied to the user. Ex: Email, first name, last name, etc.
+ @param options Used to pass extra options for the identify call. Ex: Passing the key/pair value '@"campaign" : @"1"' will auto-enroll the user in the campaign.
  
  @warning It is highly recommended to at least include an 'email' value in the traits dictionary in order for full functionality in the Ambassador SDK.
  
  */
-+ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits;
++ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits options:(NSDictionary *)options;
 
 
 /**

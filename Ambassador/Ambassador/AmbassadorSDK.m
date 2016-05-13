@@ -99,16 +99,16 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 #pragma mark - Identify
 
-+ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits {
-    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits];
++ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits options:(NSDictionary *)options {
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits options:options];
 }
 
 + (void)identifyWithEmail:(NSString *)email {
     // Uses new idenity logic when deprecated identify method is called
-    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:email traits:@{@"email" : email}];
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:email traits:@{@"email" : email} options:nil];
 }
 
-- (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits {
+- (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits options:(NSDictionary *)options {
     // Creates an identify object and saves it to user defaults
     AMBIdentifyNetworkObject *identifyObject = [[AMBIdentifyNetworkObject alloc] initWithUserID:userID traits:traits];
     [AMBValues setUserIdentifyObject:identifyObject];
@@ -121,9 +121,15 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     
     // Subscribes to Pusher with a brand new channel since the old one is likely disconnected/terminated
     [self subscribeToPusherWithSuccess:^{
+        // Check to see if there is a campaign value set in options, and auto-enroll if so
+        NSString *campaign = options[@"campaign"] ? [NSString stringWithFormat:@"%@", options[@"campaign"]] : nil;
+        BOOL shouldEnroll = campaign != nil;
+        
+        if (shouldEnroll) { DLog(@"[Identify] Attempting to auto enroll for campaign %@.", campaign); }
+        
         // Perfom identify request to get and save campaigns to local storage
-        [[AMBNetworkManager sharedInstance] sendIdentifyForCampaign:nil shouldEnroll:NO success:^(NSString *response) {
-            DLog(@"SEND IDENTIFY Response - %@", response);
+        [[AMBNetworkManager sharedInstance] sendIdentifyForCampaign:campaign shouldEnroll:shouldEnroll success:^(NSString *response) {
+            DLog(@"[Identify] Successfully identified.");
         } failure:^(NSString *error) {
             DLog(@"SEND IDENTIFY Response - %@", error);
         }];
@@ -226,7 +232,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 // AMBInputAlert Delegate
 - (void)AMBInputAlertActionButtonTapped:(NSString *)inputValue {
-    [self localIdentifyWithUserID:inputValue traits:@{@"email" : inputValue}];
+    [self localIdentifyWithUserID:inputValue traits:@{@"email" : inputValue} options:nil];
     [self presentRAFForCampaign:self.tempCampID FromViewController:self.tempPresentController withThemePlist:self.tempPlistName];
 }
 
