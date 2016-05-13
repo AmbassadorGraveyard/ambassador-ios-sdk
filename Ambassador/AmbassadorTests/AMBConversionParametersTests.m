@@ -58,7 +58,36 @@
     NSError *checkError = [parameters checkForError];
     
     // THEN
+    [mockEntity verify];
     XCTAssertNotNil(checkError);
+}
+
+- (void)testInitWithProperties {
+    // GIVEN
+    NSNumber *campaign = @200;
+    NSNumber *revenue = @1.00;
+    NSNumber *commissionApproved = @NO;
+    NSString *eventData1 = @"testData";
+    NSString *blankString = @"";
+    
+    NSDictionary *properties = @{ @"campaign" : campaign,
+                                  @"revenue" : revenue,
+                                  @"commissionApproved" : commissionApproved,
+                                  @"eventData1" : eventData1 };
+    
+    
+    
+    // WHEN
+    AMBConversionParameters *params = [[AMBConversionParameters alloc] initWithProperties:properties];
+    
+    // THEN
+    XCTAssertEqualObjects(params.mbsy_campaign, campaign);
+    XCTAssertEqualObjects(params.mbsy_revenue, revenue);
+    XCTAssertEqualObjects(params.mbsy_is_approved, commissionApproved);
+    XCTAssertEqualObjects(params.mbsy_event_data1, eventData1);
+    XCTAssertEqualObjects(params.mbsy_event_data2, blankString);
+    XCTAssertEqualObjects(params.mbsy_event_data3, blankString);
+    XCTAssertEqualObjects(params.mbsy_transaction_uid, blankString);
 }
 
 - (void)testCheckForNoError {

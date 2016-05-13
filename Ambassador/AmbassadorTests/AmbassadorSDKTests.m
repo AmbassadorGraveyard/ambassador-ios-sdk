@@ -104,6 +104,36 @@ NSString * const universalToken = @"test";
     [self.mockAmbassadorSDK verify];
 }
 
+- (void)testTrackEvent {
+    // GIVEN
+    NSString *eventName = @"test";
+    NSDictionary *properties = @{ @"test" : @"value" };
+    NSDictionary *options = @{ @"test" : @"value" };
+    [[[self.mockAmbassadorSDK expect] andDo:nil] trackEvent:eventName properties:properties options:options completion:nil];
+    
+    // WHEN
+    [AmbassadorSDK trackEvent:eventName properties:properties options:options];
+    
+    // THEN
+    [self.mockAmbassadorSDK verify];
+}
+
+- (void)testTrackEventWithCompletion {
+    // GIVEN
+    NSString *eventName = @"test";
+    NSDictionary *properties = @{ @"test" : @"value" };
+    NSDictionary *options = @{ @"conversion" : @YES };
+    [[[self.mockAmbassadorSDK expect] andDo:nil] trackEvent:eventName properties:properties options:options completion:[OCMArg isNotNil]];
+    
+    // WHEN
+    [AmbassadorSDK trackEvent:eventName properties:properties options:options completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {
+        NSLog(@"Track hit competion");
+    }];
+    
+    // THEN
+    [self.mockAmbassadorSDK verify];
+}
+
 - (void)testClassPresentRAF {
     // GIVEN
     NSString *campID = @"200";
