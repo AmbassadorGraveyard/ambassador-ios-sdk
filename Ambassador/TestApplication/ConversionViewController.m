@@ -81,6 +81,11 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [super viewDidLoad];
     [self setUpTheme];
     [self setupSlidingViews];
+    
+    // TEMPORARY-- Sets up 3 second press gesture to test out the 'Track' function
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(testTrack:)];
+    longPress.minimumPressDuration = 3;
+    [self.btnSubmit addGestureRecognizer:longPress];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -264,7 +269,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 
 #pragma mark - Helper Functions
 
-- (void)getShortCodeAndSubmit {
+- (void)getShortCodeAndSubmitForTest:(BOOL)testing {
     // Sets up request
     NSString *urlString = [NSString stringWithFormat:@"urls/?campaign_uid=%@&email=%@", self.selectedCampaign.campID, self.tfReferrerEmail.text];
     
@@ -296,7 +301,15 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
             if (returnDict[@"count"] > [NSNumber numberWithInteger:0]) {
                 // Grabs the shortcode from the response and makes a conversion call
                 NSString *shortCode = [self shortCodeFromDictionary:returnDict];
-                [self registerConversionWithShortCode:shortCode];
+                
+                // If testing, we call the new Track method
+                if (testing) {
+                    [self performTrackWithShortCode:shortCode];
+                    
+                // Else, we call the regular RegisterConversion method
+                } else {
+                    [self registerConversionWithShortCode:shortCode];
+                }
             } else {
                 UIAlertView *failAlert = [[UIAlertView alloc] initWithTitle:@"Conversion Failed" message:@"An ambassador could not be found for the email and campaign provided." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
                 [failAlert show];
@@ -337,7 +350,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 
 - (void)performConversionActionWithShortCode {
     if (![self invalidFields:YES]) {
-        [self getShortCodeAndSubmit];
+        [self getShortCodeAndSubmitForTest:NO];
     }
 }
 
@@ -592,6 +605,50 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     }
     
     return nil;
+}
+
+- (void)performTrackWithShortCode:(NSString *)shortCode {
+    // Saves short code based on referrer email
+    [AMBValues setMbsyCookieWithCode:shortCode];
+    
+    // Sets all properties for converions
+    NSDictionary *propertiesDictionary = @{ @"orderId" : self.tfTransactionUID.text,
+                                            @"campaign" : [NSNumber numberWithInteger:[self.selectedCampaign.campID integerValue]],
+                                            @"revenue" : [NSNumber numberWithFloat:[self.tfRevAmt.text floatValue]],
+                                            @"commissionApproved" : [NSNumber numberWithBool:self.swtApproved.isOn],
+                                            @"eventData1" : self.tfEventData1.text,
+                                            @"eventData2" : self.tfEventData2.text,
+                                            @"eventData3" : self.tfEventData3.text };
+    
+    // Sets option dictionary for the conversion
+    NSDictionary *optionsDictionary = @{ @"conversion" : @YES,
+                                         @"restrictedToInstall" : @NO };
+    
+    // Call the track function and trigger the conversion
+    [AmbassadorSDK trackEvent:@"New event" properties:propertiesDictionary options:optionsDictionary completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {
+        NSLog(@"Track object - %@", conversion);
+        
+        switch (conversionStatus) {
+            case ConversionSuccessful:
+                NSLog(@"Success!");
+                break;
+            case ConversionPending:
+                NSLog(@"Pending!");
+                break;
+            case ConversionError:
+                NSLog(@"Error :(");
+                break;
+            default:
+                break;
+        }
+    }];
+}
+
+// Called when the 'Submit' button is long-pressed for 3 seconds
+- (void)testTrack:(UIGestureRecognizer *)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        [self getShortCodeAndSubmitForTest:YES];
+    }
 }
 
 @end

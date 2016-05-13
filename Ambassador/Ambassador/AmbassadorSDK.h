@@ -10,8 +10,8 @@
 
 // Enum for Conversion status types
 typedef enum conversionStatus {
-    ConversionSuccessful, // Conversion was successful sent to Ambassador.
-    ConversionPending, // Conversion has been savedto database, but not yet sent to Ambassasdor. The main reason for this is because no referrer was yet found.
+    ConversionSuccessful, // Conversion was successfully sent to Ambassador.
+    ConversionPending, // Conversion has been saved to the database, but not yet sent to Ambassasdor. The main reason for this is because no referrer was found yet.
     ConversionError // Conversion parameter object contains an error(s).  Will not attempt to send to Ambassador until fixed.
 } ConversionStatus;
 
@@ -52,7 +52,7 @@ typedef enum conversionStatus {
  Recommended to put on a login screen or after the initial call to run Ambassador if you have the user's info stored.
  
  @param userID A unique ID tied to the user being identified
- @param traits Extra values tied to the user. Ex: Email, first name, last name
+ @param traits Extra values tied to the user. Ex: Email, first name, last name, etc.
  
  @warning It is highly recommended to at least include an 'email' value in the traits dictionary in order for full functionality in the Ambassador SDK.
  
@@ -65,11 +65,44 @@ typedef enum conversionStatus {
  Registers a conversion with Ambassador.
  
  @param conversionParameters The object used to set all of the values for a specific conversion.
- @param restrictToInstall Boolean value that decides where the conversion should only be allowed to get called once.
+ @param restrictToInstall Boolean value that decides if the conversion should only be allowed to get called once.
  @param completion Block that tells the user when the conversion is done attempting to send.  Block passes back the conversion, the conversionStatus, and an error if one occurs.
  
  */
-+ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion;
++ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion __attribute__((deprecated("Use method 'trackEvent: properties: options:' instead")));
+
+
+/**
+ 
+ Tracks an event with Ambassador.
+ 
+ Currently, the only event Ambassador tracks is a conversion.
+ 
+ @param eventName An optional value for the name of the event being tracked. 
+ @param properties Properties set for the event. Ex: Campaign, email, revenue, etc.
+ @param options Additional options that can be set for the event. 
+ 
+ @warning In order to register the event as a conversion, the key/pair value '@"conversion" : @YES' must be added to the 'options' dictionary.
+ 
+ */
++ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options;
+
+
+/**
+ 
+ Tracks an event with Ambassador.
+ 
+ Currently, the only event Ambassador tracks is a conversion.
+ 
+ @param eventName An optional value for the name of the event being tracked.
+ @param properties Properties set for the event. Ex: Campaign, email, revenue, etc.
+ @param options Additional options that can be set for the event.
+ @param completion If event is a conversion, this block that tells the user when the conversion is done attempting to send.  Block passes back the conversion, the conversionStatus, and an error if one occurs.
+ 
+ @warning In order to register the event as a conversion, the key/pair value '@"conversion" : @YES' must be added to the 'options' dictionary.
+ 
+ */
++ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion;
 
 
 /**
@@ -103,7 +136,7 @@ typedef enum conversionStatus {
  Presents a Net Promoter Score (NPS) survey when triggered by a Push Notification.
  
  This function should be called from the AppDelegate's 'didReceiveRemoteNotification:(NSDictionary *)userInfo' function.
- Put an 'if (userInfo[@"ambassador_sdk"] && [userInfo[@"ambassador_sdk"] boolValue])' statement around this function to guaruntee that the notificaiton is intended for Ambassador.
+ Put an 'if (userInfo[@"ambassador_sdk"] && [userInfo[@"ambassador_sdk"] boolValue])' statement around this function to guaruntee that the notification is intended for Ambassador.
  
  @param notification The notification body sent through the AppDelegate's 'didReceiveRemoteNotification:(NSDictionary *)userInfo' function.
  
@@ -116,7 +149,7 @@ typedef enum conversionStatus {
  Presents a Net Promoter Score (NPS) survey based on a Push Notification using a custom theme.
  
  This function should be called from the AppDelegate's 'didReceiveRemoteNotification:(NSDictionary *)userInfo' function.
- Put an 'if (userInfo[@"ambassador_sdk"] && [userInfo[@"ambassador_sdk"] boolValue])' statement around this function to guaruntee that the notificaiton is intended for Ambassador.
+ Put an 'if (userInfo[@"ambassador_sdk"] && [userInfo[@"ambassador_sdk"] boolValue])' statement around this function to guarantee that the notification is intended for Ambassador.
  
  @param notification The notification body sent through the AppDelegate's 'didReceiveRemoteNotification:(NSDictionary *)userInfo' function.
  @param backgroundColor The background color of the NPS survey.
