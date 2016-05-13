@@ -123,11 +123,13 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     [self subscribeToPusherWithSuccess:^{
         // Check to see if there is a campaign value set in options, and auto-enroll if so
         NSString *campaign = options[@"campaign"] ? [NSString stringWithFormat:@"%@", options[@"campaign"]] : nil;
-        BOOL shouldEnroll = campaign == nil;
+        BOOL shouldEnroll = campaign != nil;
+        
+        if (shouldEnroll) { DLog(@"[Identify] Attempting to auto enroll for campaign %@.", campaign); }
         
         // Perfom identify request to get and save campaigns to local storage
         [[AMBNetworkManager sharedInstance] sendIdentifyForCampaign:campaign shouldEnroll:shouldEnroll success:^(NSString *response) {
-            DLog(@"SEND IDENTIFY Response - %@", response);
+            DLog(@"[Identify] Successfully identified.");
         } failure:^(NSString *error) {
             DLog(@"SEND IDENTIFY Response - %@", error);
         }];
