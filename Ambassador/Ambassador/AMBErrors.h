@@ -22,6 +22,7 @@
 
 // AlertView Errors
 + (void)errorAlertNoMatchingCampaignIdsForVC:(UIViewController*)viewController;
++ (void)errorCampaignNoLongerActive:(UIViewController *)viewController;
 + (void)errorLinkedInShareForVC:(UIViewController*)viewController withMessage:(NSString*)message;
 + (void)errorLinkedInReauthForVC:(UIViewController*)viewController;
 + (void)errorNetworkTimeoutForVC:(UIViewController*)viewController;
