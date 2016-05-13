@@ -136,7 +136,11 @@
     
     if ([Validator isValidEmail:email]) {
         NSDictionary *infoDict = @{@"email" : self.tfEmail.text};
-        [AmbassadorSDK identifyWithUserID:@"0" traits:infoDict];
+        
+        // Creates options to auto-enroll user is signed in as jake+test@getambassador.com
+        NSDictionary *optionsDict = [[DefaultsHandler getFullName] isEqualToString:@"Jake Test"] ? @{ @"campaign" : @"1048" } : nil;
+        
+        [AmbassadorSDK identifyWithUserID:@"0" traits:infoDict options:optionsDict];
         
         NSString *confirmationMessage = [NSString stringWithFormat:@"You have succesfully identified as %@! You can now track conversion events and create commissions!", email];
         UIAlertView *confirmationAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:confirmationMessage delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
