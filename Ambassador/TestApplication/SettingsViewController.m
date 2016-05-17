@@ -11,6 +11,7 @@
 #import "DefaultsHandler.h"
 #import "MyTabBarController.h"
 #import "AMBValues.h"
+#import <Ambassador/AmbassadorSDK.h>
 
 @interface SettingsViewController()
 
@@ -120,8 +121,8 @@ NSInteger copiedWdt = 170;
     MyTabBarController *controller = (MyTabBarController*)self.tabBarController;
     [controller checkForLogin];
     
-    // Clears Pusher channel on logout
-    [AMBValues setPusherChannelObject:nil];
+    // Clears values for user identified
+    [AmbassadorSDK unidentify];
 }
 
 - (IBAction)copyTokenToClipboard:(id)sender {
