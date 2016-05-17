@@ -432,6 +432,13 @@ int contactServiceType;
         return;
     }
     
+    // Checks to make sure that the campaign is still active
+    if (self.urlNetworkObj && !self.urlNetworkObj.is_active) {
+        [self.waitViewTimer invalidate];
+        [AMBErrors errorCampaignNoLongerActive:self];
+        return;
+    }
+    
     // If it makes it past the checks, we finish loading the RAF
     [[AMBUtilities sharedInstance] hideLoadingView];
     self.lblURL.text = self.urlNetworkObj.url;

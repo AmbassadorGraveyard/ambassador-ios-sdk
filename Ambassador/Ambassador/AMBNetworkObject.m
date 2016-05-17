@@ -68,8 +68,8 @@
         self.short_code = [aDecoder decodeObjectForKey:@"short_code"];
         self.subject = [aDecoder decodeObjectForKey:@"subject"];
         self.url = [aDecoder decodeObjectForKey:@"url"];
-        self.has_access = [aDecoder decodeObjectForKey:@"has_access"];
-        self.is_active = [aDecoder decodeObjectForKey:@"is_active"];
+        self.has_access = [aDecoder decodeBoolForKey:@"has_access"];
+        self.is_active = [aDecoder decodeBoolForKey:@"is_active"];
     }
     
     return self;

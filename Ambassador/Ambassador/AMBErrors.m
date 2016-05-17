@@ -7,6 +7,7 @@
 //
 
 #import "AMBErrors.h"
+#import "AMBValues.h"
 
 @implementation AMBErrors
 
@@ -40,7 +41,12 @@
 #pragma mark - AlertView Errors
 
 + (void)errorAlertNoMatchingCampaignIdsForVC:(UIViewController*)viewController {
-    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"No matching campaigns were found!" withUniqueID:nil forViewController:viewController shouldDismissVCImmediately:YES];
+    NSString *messageString = [NSString stringWithFormat:@"%@ is not authorized to access this campaign.", [AMBValues getUserEmail]];
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:messageString withUniqueID:nil forViewController:viewController shouldDismissVCImmediately:YES];
+}
+
++ (void)errorCampaignNoLongerActive:(UIViewController *)viewController {
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"This campaign is no longer active." withUniqueID:nil forViewController:viewController shouldDismissVCImmediately:YES];
 }
 
 + (void)errorLinkedInShareForVC:(UIViewController*)viewController withMessage:(NSString*)message {
