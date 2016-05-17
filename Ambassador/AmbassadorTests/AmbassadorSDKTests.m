@@ -201,6 +201,27 @@ NSString * const universalToken = @"test";
     [mockNtwMgr stopMocking];
 }
 
+- (void)testUnidentify {
+    // GIVEN
+    id mockValues = [OCMockObject mockForClass:[AMBValues class]];
+    [[[mockValues expect] andDo:nil] setUserIdentifyObject:nil];
+    [[[mockValues expect] andDo:nil] setUserFirstNameWithString:nil];
+    [[[mockValues expect] andDo:nil] setUserLastNameWithString:nil];
+    [[[mockValues expect] andDo:nil] setLinkedInClientID:nil];
+    [[[mockValues expect] andDo:nil] setLinkedInAccessToken:nil];
+    [[[mockValues expect] andDo:nil] setLinkedInClientSecret:nil];
+    [[[mockValues expect] andDo:nil] setLinkedInExpirationDate:nil];
+    [[[mockValues expect] andDo:nil] setUserURLObject:nil];
+    [[[mockValues expect] andDo:nil] setUserCampaignList:nil];
+    
+    // WHEN
+    [AmbassadorSDK unidentify];
+    
+    // THEN
+    [mockValues verify];
+    [mockValues stopMocking];
+}
+
 - (void)testLocalRegisterConversionNoRestriction {
     // GIVEN
     [AMBValues setMbsyCookieWithCode:@""];
