@@ -63,6 +63,18 @@ typedef enum conversionStatus {
 
 /**
  
+ Clears an identified user's saved data.
+ 
+ Recommended to put this function on a logout action.
+ 
+ @warning This function acts as a secondary layer of security, so it is highly recommended to utilize it.
+ 
+ */
++ (void)unidentify;
+
+
+/**
+ 
  Registers a conversion with Ambassador.
  
  @param conversionParameters The object used to set all of the values for a specific conversion.
