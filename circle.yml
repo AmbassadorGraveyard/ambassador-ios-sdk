@@ -13,6 +13,7 @@ dependencies:
 test:
   override:
     - bash secrets.sh
+    - echo AMBSecrets.m
     - set -o pipefail &&
      xcodebuild -workspace Ambassador.xcworkspace
       -sdk iphonesimulator
