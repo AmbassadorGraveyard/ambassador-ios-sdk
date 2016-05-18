@@ -96,6 +96,23 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     }
 }
 
++ (void)unidentify {
+    // Nullifies user properties
+    [AMBValues setUserIdentifyObject:nil];
+    [AMBValues setUserFirstNameWithString:nil];
+    [AMBValues setUserLastNameWithString:nil];
+    
+    // Nullifies linkedIn properties
+    [AMBValues setLinkedInClientID:nil];
+    [AMBValues setLinkedInAccessToken:nil];
+    [AMBValues setLinkedInClientSecret:nil];
+    [AMBValues setLinkedInExpirationDate:nil];
+    
+    // Nullifies pusher values
+    [AMBValues setUserURLObject:nil];
+    [AMBValues setUserCampaignList:nil];
+}
+
 
 #pragma mark - Identify
 
