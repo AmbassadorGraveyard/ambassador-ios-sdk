@@ -1,15 +1,37 @@
 #!/bin/sh
 
 cd Ambassador
-echo "<?xml version="1.0" encoding="UTF-8"?>" >> AmbassadorSecrets.plist
-echo "<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">" >> AmbassadorSecrets.plist
-echo "<plist version="1.0">" >> AmbassadorSecrets.plist
-echo "<dict>" >> AmbassadorSecrets.plist
-echo "    <key>PUSHER_DEV_KEY</key>" >> AmbassadorSecrets.plist
-echo "    <string>$PUSHER_DEV_KEY</string>" >> AmbassadorSecrets.plist
-echo "    <key>PUSHER_PROD_KEY</key>" >> AmbassadorSecrets.plist
-echo "    <string>$PUSHER_PROD_KEY</string>" >> AmbassadorSecrets.plist
-echo "    <key>SENTRY_KEY</key>" >> AmbassadorSecrets.plist
-echo "    <string>$SENTRY_KEY</string>" >> AmbassadorSecrets.plist
-echo "</dict>" >> AmbassadorSecrets.plist
-echo "</plist>" >> AmbassadorSecrets.plist
+
+echo #import "AMBSecrets.h"
+
+echo @implementation AMBSecrets
+
+echo NSString const * PUSHER_DEV_KEY = @"$PUSHER_DEV_KEY";
+echo NSString const * PUSHER_PROD_KEY = @"$PUSHER_PROD_KEY";
+echo NSString const * SENTRY_KEY = @"$SENTRY_KEY";
+
+echo + (NSDictionary *)secretsDictionary {
+echo     NSBundle *ambassadorBundle = [NSBundle bundleForClass:[self class]];
+echo     NSString *secretsPath = [ambassadorBundle pathForResource:@"AmbassadorSecrets" ofType:@"plist"];
+    
+echo     return [NSDictionary dictionaryWithContentsOfFile:secretsPath];
+echo }
+
+echo + (NSString *)secretForKey:(AMBSecretKeys)key {
+echo     NSDictionary *secretsDict = [AMBSecrets secretsDictionary];
+echo     NSString *dictKey = [AMBSecrets stringForKey:key];
+echo     NSString *returnString = secretsDict[dictKey] != nil ? secretsDict[dictKey] : @"Unavailable";
+    
+echo     return returnString;
+echo }
+
+echo + (NSString *)stringForKey:(AMBSecretKeys)key {
+echo     switch (key) {
+echo         case AMB_PUSHER_DEV_KEY: return @"PUSHER_DEV_KEY";
+echo         case AMB_PUSHER_PROD_KEY: return @"PUSHER_PROD_KEY";
+echo         case AMB_SENTRY_KEY: return @"SENTRY_KEY";
+echo         default: return @"Unavailable";
+echo     }
+echo }
+
+echo @end
