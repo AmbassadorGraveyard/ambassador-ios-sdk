@@ -231,6 +231,7 @@
 		EF7D076C1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */; };
 		EF7D076E1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */; };
 		EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
+		EF891E571CECFE190063DB1C /* AMBSecrets.m in Sources */ = {isa = PBXBuildFile; fileRef = EF896FD51CBD3D63003E270D /* AMBSecrets.m */; };
 		EF896FD61CBD3D63003E270D /* AMBSecrets.h in Headers */ = {isa = PBXBuildFile; fileRef = EF896FD41CBD3D63003E270D /* AMBSecrets.h */; };
 		EF896FD71CBD3D63003E270D /* AMBSecrets.m in Sources */ = {isa = PBXBuildFile; fileRef = EF896FD51CBD3D63003E270D /* AMBSecrets.m */; };
 		EF8FD8A41CA5965F00C0ADB7 /* CampaignObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */; };
@@ -2034,6 +2035,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF891E571CECFE190063DB1C /* AMBSecrets.m in Sources */,
 				EF280DA81CC8272E00326FD6 /* GroupFooterCell.m in Sources */,
 				EF280DA91CC8272E00326FD6 /* GroupCell.m in Sources */,
 				EF280DAA1CC8272E00326FD6 /* GroupObject.m in Sources */,
