@@ -178,7 +178,6 @@
 		EF280DAA1CC8272E00326FD6 /* GroupObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */; };
 		EF280DAB1CC8272E00326FD6 /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F381CC6C5AC008EE886 /* GroupListViewController.m */; };
 		EF28DF291CC132FE0070994F /* FileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5C5F1CBFEBD300458480 /* FileWriter.m */; };
-		EF28DF2B1CC142250070994F /* AmbassadorSecrets.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */; };
 		EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */; };
 		EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */; };
 		EF3079161C6E205800403F56 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */; };
@@ -593,7 +592,6 @@
 		EF64CFAD1BE2AACE0072014B /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		EF67F0F81CD1547400F52546 /* AmbassadorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmbassadorHelper.h; sourceTree = "<group>"; };
 		EF67F0F91CD1547400F52546 /* AmbassadorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorHelper.m; sourceTree = "<group>"; };
-		EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorSecrets.plist; sourceTree = "<group>"; };
 		EF6A5C5E1CBFEBD300458480 /* FileWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileWriter.h; sourceTree = "<group>"; };
 		EF6A5C5F1CBFEBD300458480 /* FileWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileWriter.m; sourceTree = "<group>"; };
 		EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBCoreDataManagerTests.m; sourceTree = "<group>"; };
@@ -1262,7 +1260,6 @@
 			children = (
 				EF896FD41CBD3D63003E270D /* AMBSecrets.h */,
 				EF896FD51CBD3D63003E270D /* AMBSecrets.m */,
-				EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */,
 			);
 			name = Secrets;
 			sourceTree = "<group>";
@@ -2041,7 +2038,6 @@
 				EF280DA91CC8272E00326FD6 /* GroupCell.m in Sources */,
 				EF280DAA1CC8272E00326FD6 /* GroupObject.m in Sources */,
 				EF280DAB1CC8272E00326FD6 /* GroupListViewController.m in Sources */,
-				EF28DF2B1CC142250070994F /* AmbassadorSecrets.plist in Sources */,
 				EF28DF291CC132FE0070994F /* FileWriter.m in Sources */,
 				EF8FD8AF1CA9CA9900C0ADB7 /* SocialCell.m in Sources */,
 				EF499DB51CAC4FB000D2EB01 /* NoAccountViewController.m in Sources */,
