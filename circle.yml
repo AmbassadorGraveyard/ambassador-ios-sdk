@@ -13,7 +13,6 @@ dependencies:
 test:
   override:
     - bash secrets.sh
-    - echo AMBSecrets.m
     - set -o pipefail &&
      xcodebuild -workspace Ambassador.xcworkspace
       -sdk iphonesimulator
@@ -23,14 +22,14 @@ test:
        VALID_ARCHS=x86_64
        clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
       xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
-  # post:
-  #   - bundle exec slather coverage Ambassador.xcodeproj
-  #
-  #   - set -o pipefail &&
-  #    xcodebuild -workspace Ambassador.xcworkspace
-  #     -sdk iphonesimulator
-  #      -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
-  #      -scheme AmbassadorUITests
-  #      -configuration Debug
-  #      clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
-  #     xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
+  post:
+    - bundle exec slather coverage Ambassador.xcodeproj
+
+    - set -o pipefail &&
+     xcodebuild -workspace Ambassador.xcworkspace
+      -sdk iphonesimulator
+       -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
+       -scheme AmbassadorUITests
+       -configuration Debug
+       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml

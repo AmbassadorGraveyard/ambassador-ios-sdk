@@ -6,9 +6,9 @@ echo  '#import "AMBSecrets.h"' >> AMBSecrets.m
 
 echo "@implementation AMBSecrets" >> AMBSecrets.m
 
-echo 'NSString * PUSHER_DEV_KEY = @"$PUSHER_DEV_KEY";' >> AMBSecrets.m
-echo 'NSString * PUSHER_PROD_KEY = @"$PUSHER_PROD_KEY";' >> AMBSecrets.m
-echo 'NSString * SENTRY_KEY = @"$SENTRY_KEY";' >> AMBSecrets.m
+echo 'NSString * PUSHER_DEV_KEY = @"'$PUSHER_DEV_KEY'";'  >> AMBSecrets.m
+echo 'NSString * PUSHER_PROD_KEY = @"'$PUSHER_PROD_KEY'";' >> AMBSecrets.m
+echo 'NSString * SENTRY_KEY = @"'$SENTRY_KEY'";' >> AMBSecrets.m
 
 echo "+ (NSString *)secretForKey:(AMBSecretKeys)key {" >> AMBSecrets.m
 echo "    NSString *keyString = [self stringForKey:key];" >> AMBSecrets.m
