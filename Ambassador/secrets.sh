@@ -22,7 +22,7 @@ echo "    switch (key) {" >> AMBSecrets.m
 echo "        case AMB_PUSHER_DEV_KEY: return PUSHER_DEV_KEY;" >> AMBSecrets.m
 echo "        case AMB_PUSHER_PROD_KEY: return PUSHER_PROD_KEY;" >> AMBSecrets.m
 echo "        case AMB_SENTRY_KEY: return SENTRY_KEY;" >> AMBSecrets.m
-echo "        default: return @"Unavailable";" >> AMBSecrets.m
+echo '        default: return @"Unavailable";' >> AMBSecrets.m
 echo "    }" >> AMBSecrets.m
 echo "}" >> AMBSecrets.m
 
