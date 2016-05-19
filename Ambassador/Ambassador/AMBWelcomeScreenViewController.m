@@ -40,7 +40,7 @@ NSInteger const CELL_HEIGHT = 25;
     [super viewDidLoad];
     
     self.ivProfilePic.image = self.referrerImage;
-    
+
     [self setTheme];
     [self setupCollectionView];
 }
@@ -117,10 +117,10 @@ NSInteger const CELL_HEIGHT = 25;
         self.btnAction.backgroundColor = self.welcomeScreenAccent;
     }
     
-    // Labels
-    self.lblReferred.text = [self getCorrectString:self.parameters.referralMessage];
-    self.lblDescription.text = [self getCorrectString:self.parameters.detailMessage];
-    self.linkArray = [self getUpdatedLinkArray];
+    // Labels with nil value checks
+    if (self.parameters.referralMessage) { self.lblReferred.text = [self getCorrectString:self.parameters.referralMessage]; }
+    if (self.parameters.detailMessage) { self.lblDescription.text = [self getCorrectString:self.parameters.detailMessage]; }
+    if (self.parameters.linkArray) { self.linkArray = [self getUpdatedLinkArray]; }
 }
 
 - (void)setupCollectionView {
