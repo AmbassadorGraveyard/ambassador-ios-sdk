@@ -178,7 +178,6 @@
 		EF280DAA1CC8272E00326FD6 /* GroupObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F3C1CC6CD07008EE886 /* GroupObject.m */; };
 		EF280DAB1CC8272E00326FD6 /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F381CC6C5AC008EE886 /* GroupListViewController.m */; };
 		EF28DF291CC132FE0070994F /* FileWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5C5F1CBFEBD300458480 /* FileWriter.m */; };
-		EF28DF2B1CC142250070994F /* AmbassadorSecrets.plist in Sources */ = {isa = PBXBuildFile; fileRef = EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */; };
 		EF2DA1691BF3F80900DB4D3A /* AMBConversionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA1681BF3F80900DB4D3A /* AMBConversionsTests.m */; };
 		EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */; };
 		EF3079161C6E205800403F56 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */; };
@@ -233,11 +232,11 @@
 		EF7D076E1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */; };
 		EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF896FD61CBD3D63003E270D /* AMBSecrets.h in Headers */ = {isa = PBXBuildFile; fileRef = EF896FD41CBD3D63003E270D /* AMBSecrets.h */; };
-		EF896FD71CBD3D63003E270D /* AMBSecrets.m in Sources */ = {isa = PBXBuildFile; fileRef = EF896FD51CBD3D63003E270D /* AMBSecrets.m */; };
 		EF8FD8A41CA5965F00C0ADB7 /* CampaignObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */; };
 		EF8FD8A81CA59EEA00C0ADB7 /* CampaignListController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8A71CA59EEA00C0ADB7 /* CampaignListController.m */; };
 		EF8FD8AC1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8AB1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m */; };
 		EF8FD8AF1CA9CA9900C0ADB7 /* SocialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8AE1CA9CA9900C0ADB7 /* SocialCell.m */; };
+		EF934E881CED060D009DCA2F /* AMBSecrets.m in Sources */ = {isa = PBXBuildFile; fileRef = EF934E871CED060D009DCA2F /* AMBSecrets.m */; };
 		EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C41CA1839600F5711F /* ThemeHandler.m */; };
 		EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C71CA1906400F5711F /* RAFItem.m */; };
 		EF9D98D41CA31A5F00F5711F /* ValuesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */; };
@@ -593,7 +592,6 @@
 		EF64CFAD1BE2AACE0072014B /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		EF67F0F81CD1547400F52546 /* AmbassadorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmbassadorHelper.h; sourceTree = "<group>"; };
 		EF67F0F91CD1547400F52546 /* AmbassadorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmbassadorHelper.m; sourceTree = "<group>"; };
-		EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AmbassadorSecrets.plist; sourceTree = "<group>"; };
 		EF6A5C5E1CBFEBD300458480 /* FileWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileWriter.h; sourceTree = "<group>"; };
 		EF6A5C5F1CBFEBD300458480 /* FileWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileWriter.m; sourceTree = "<group>"; };
 		EF6BDC761C63FD75004CCDF8 /* AMBCoreDataManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBCoreDataManagerTests.m; sourceTree = "<group>"; };
@@ -607,7 +605,6 @@
 		EF7D076B1C5AA0A5004D6FE6 /* AMBUtilitiesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBUtilitiesTests.m; sourceTree = "<group>"; };
 		EF7D076D1C5AA0BC004D6FE6 /* AMBSendCompletionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSendCompletionTests.m; sourceTree = "<group>"; };
 		EF896FD41CBD3D63003E270D /* AMBSecrets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBSecrets.h; sourceTree = "<group>"; };
-		EF896FD51CBD3D63003E270D /* AMBSecrets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSecrets.m; sourceTree = "<group>"; };
 		EF8FD8A21CA5965F00C0ADB7 /* CampaignObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CampaignObject.h; sourceTree = "<group>"; };
 		EF8FD8A31CA5965F00C0ADB7 /* CampaignObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CampaignObject.m; sourceTree = "<group>"; };
 		EF8FD8A61CA59EEA00C0ADB7 /* CampaignListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CampaignListController.h; sourceTree = "<group>"; };
@@ -616,6 +613,7 @@
 		EF8FD8AB1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialShareOptionsHandler.m; sourceTree = "<group>"; };
 		EF8FD8AD1CA9CA9900C0ADB7 /* SocialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialCell.h; sourceTree = "<group>"; };
 		EF8FD8AE1CA9CA9900C0ADB7 /* SocialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialCell.m; sourceTree = "<group>"; };
+		EF934E871CED060D009DCA2F /* AMBSecrets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSecrets.m; sourceTree = "<group>"; };
 		EF9D98C31CA1839600F5711F /* ThemeHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeHandler.h; sourceTree = "<group>"; };
 		EF9D98C41CA1839600F5711F /* ThemeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeHandler.m; sourceTree = "<group>"; };
 		EF9D98C61CA1906400F5711F /* RAFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFItem.h; sourceTree = "<group>"; };
@@ -1261,8 +1259,7 @@
 			isa = PBXGroup;
 			children = (
 				EF896FD41CBD3D63003E270D /* AMBSecrets.h */,
-				EF896FD51CBD3D63003E270D /* AMBSecrets.m */,
-				EF6A5BDA1CBD4E8E00458480 /* AmbassadorSecrets.plist */,
+				EF934E871CED060D009DCA2F /* AMBSecrets.m */,
 			);
 			name = Secrets;
 			sourceTree = "<group>";
@@ -1935,6 +1932,7 @@
 				DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */,
 				DBA3FC231BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m in Sources */,
 				DBA3FC211BA8AA1D00672D82 /* AMBPTPusherMockConnection.m in Sources */,
+				EF934E881CED060D009DCA2F /* AMBSecrets.m in Sources */,
 				EFE7D7991C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld in Sources */,
 				DBA3FBB41BA8A24F00672D82 /* AMBSendCompletionModal.m in Sources */,
 				DBA3FC141BA8AA1D00672D82 /* AMBPTPusherChannel.m in Sources */,
@@ -1952,7 +1950,6 @@
 				EFE7D79D1C21CB2D00D7F92C /* AMBCoreDataManager.m in Sources */,
 				DBA3FB721BA8A23C00672D82 /* AmbassadorSDK.m in Sources */,
 				DBA3FC0A1BA8AA1D00672D82 /* AMBPTBlockEventListener.m in Sources */,
-				EF896FD71CBD3D63003E270D /* AMBSecrets.m in Sources */,
 				EF5579FB1C84F65500F66761 /* AMBWelcomeScreenViewController.m in Sources */,
 				EF1A4F2D1CC58DE8008EE886 /* SlidingView.m in Sources */,
 				DBA3FC151BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m in Sources */,
@@ -2041,7 +2038,6 @@
 				EF280DA91CC8272E00326FD6 /* GroupCell.m in Sources */,
 				EF280DAA1CC8272E00326FD6 /* GroupObject.m in Sources */,
 				EF280DAB1CC8272E00326FD6 /* GroupListViewController.m in Sources */,
-				EF28DF2B1CC142250070994F /* AmbassadorSecrets.plist in Sources */,
 				EF28DF291CC132FE0070994F /* FileWriter.m in Sources */,
 				EF8FD8AF1CA9CA9900C0ADB7 /* SocialCell.m in Sources */,
 				EF499DB51CAC4FB000D2EB01 /* NoAccountViewController.m in Sources */,
