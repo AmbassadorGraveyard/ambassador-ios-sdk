@@ -126,6 +126,9 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 }
 
 - (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits options:(NSDictionary *)options {
+    // Flag that tells if an identify process is happening currently
+    [AmbassadorSDK sharedInstance].identifyInProgress = YES;
+    
     // Creates an identify object and saves it to user defaults
     AMBIdentifyNetworkObject *identifyObject = [[AMBIdentifyNetworkObject alloc] initWithUserID:userID traits:traits];
     [AMBValues setUserIdentifyObject:identifyObject];

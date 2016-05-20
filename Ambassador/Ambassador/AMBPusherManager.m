@@ -121,6 +121,9 @@
         // Sets our pusher channel objec to nil to avoid unauthorized re-use 
         [AMBValues setPusherChannelObject:nil];
         
+        // Sets flag to tell that we're done identifying
+        [AmbassadorSDK sharedInstance].identifyInProgress = NO;
+        
         // Attempts to send unsent conversions now that we would have the shortCode/fingerprint if referred
         [[AmbassadorSDK sharedInstance].conversion retryUnsentConversions];
     }
