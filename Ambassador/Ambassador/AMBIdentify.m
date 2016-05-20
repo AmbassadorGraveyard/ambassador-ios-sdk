@@ -74,6 +74,12 @@ NSInteger const maxTryCount = 5;
     
     self.tryCount++;
     
+    // Removes the safari VC if page never finished loading
+    if (self.safariVC) {
+        [self.safariVC.view removeFromSuperview];
+        [self.safariVC removeFromParentViewController];
+    }
+    
     // Checks to see if the Safari ViewController has already been initialized
     if (!self.safariVC) {
         self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AMBValues getUniversalID]]]];
