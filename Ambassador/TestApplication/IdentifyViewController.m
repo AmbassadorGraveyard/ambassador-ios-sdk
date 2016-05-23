@@ -42,11 +42,14 @@
 // Private properties
 @property (nonatomic, strong) NSString *codeExportString;
 @property (nonatomic, strong) CampaignObject *selectedCampaign;
+@property (nonatomic, strong) UITextField *selectedTextField;
 
 @end
 
 
 @implementation IdentifyViewController
+
+CGFloat identifyOffset;
 
 
 #pragma mark - LifeCycle
@@ -66,11 +69,16 @@
 }
 
 
-#pragma mark - IBActions
+#pragma mark - Actions
 
 - (IBAction)submitTapped:(id)sender {
     [self identify];
     [self.tfEmail resignFirstResponder];
+}
+
+// Action that happens when 'Done' is clicked for certian keyboards
+- (void)doneClicked:(id)sender {
+    [self.view endEditing:YES];
 }
 
 
@@ -87,6 +95,8 @@
         
         return NO;
     }
+    
+    self.selectedTextField = textField;
     
     return YES;
 }
@@ -114,24 +124,23 @@
 
 - (void)registerForKeyboardNotificaitons {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)keyboardWillShow:(NSNotification*)notificaiton {
+    // Saves where the scrollview was currently at before scrolling
+    identifyOffset = self.scrollView.contentOffset.y;
+    
+    // Grabs the keyboard's dimensions
     CGRect keyboardFrame = [notificaiton.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
-    CGFloat textfieldPosition = self.tfEmail.frame.origin.y + 10;
+    CGFloat textfieldPosition = self.selectedTextField.frame.origin.y + self.selectedTextField.superview.frame.origin.y;
     CGFloat difference = self.scrollView.frame.size.height - textfieldPosition;
+    CGFloat newY = keyboardFrame.size.height - difference;
     
-    if (keyboardFrame.size.height > difference) {
-        CGFloat newY = keyboardFrame.size.height - difference;
+    // Makes sure the textfield is not above the keyboard already
+    if (newY > 0 && newY > identifyOffset) {
         [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
     }
-}
-
-- (void)keyboardWillBeHidden:(NSNotification*)notification {
-    // Resets the scrollview to original position
-    [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 
@@ -169,6 +178,14 @@
     
     // Images
     self.imageBGView.layer.cornerRadius = 5;
+    
+    // Adds done button to keyboard
+    UIToolbar *keyboardDoneButtonView = [[UIToolbar alloc] init];
+    [keyboardDoneButtonView sizeToFit];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneClicked:)];
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
+    self.tfZip.inputAccessoryView = keyboardDoneButtonView;
+    self.tfPhone.inputAccessoryView = keyboardDoneButtonView;
 }
 
 - (void)addExportButton {
@@ -201,7 +218,7 @@
                                      };
         
         // Creates options to auto-enroll user is signed in as jake+test@getambassador.com
-        NSDictionary *optionsDict = self.selectedCampaign ? @{ @"campaign" : self.selectedCampaign.campID } : nil;
+        NSDictionary *optionsDict = self.selectedCampaign && self.swtEnroll.isOn ? @{ @"campaign" : self.selectedCampaign.campID } : nil;
         
         // Call identify
         [AmbassadorSDK identifyWithUserID:@"0" traits:traitsDict options:optionsDict];
