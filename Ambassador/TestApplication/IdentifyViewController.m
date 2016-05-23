@@ -15,6 +15,7 @@
 #import "FileWriter.h"
 #import <ZipZap/ZipZap.h>
 #import "UIActivityViewController+ZipShare.h"
+#import "CampaignObject.h"
 
 @interface IdentifyViewController () <AMBWelcomeScreenDelegate>
 
@@ -30,11 +31,14 @@
 @property (nonatomic, weak) IBOutlet UITextField *tfState;
 @property (nonatomic, weak) IBOutlet UITextField *tfZip;
 @property (nonatomic, weak) IBOutlet UITextField *tfCountry;
+@property (nonatomic, weak) IBOutlet UITextField *tfCampaign;
+@property (nonatomic, weak) IBOutlet UISwitch *swtEnroll;
 @property (nonatomic, weak) IBOutlet UIView *imageBGView;
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 
 // Private properties
 @property (nonatomic, strong) NSString *codeExportString;
+@property (nonatomic, strong) CampaignObject *selectedCampaign;
 
 @end
 
@@ -141,16 +145,32 @@
 #pragma mark - Helper Functions
 
 - (void)identify {
+    // Grabs strings to pass to in Identify call
     NSString *email = self.tfEmail.text;
     
+    // Checks to make sure that a valid email is passed before identifying
     if ([Validator isValidEmail:email]) {
-        NSDictionary *infoDict = @{@"email" : self.tfEmail.text};
+        // Creates 'traits' dictionary for identify call
+        NSDictionary *traitsDict = @{@"email" : self.tfEmail.text,
+                                     @"firstName" : self.tfFirstName.text,
+                                     @"lastName" : self.tfLastName.text,
+                                     @"company" : self.tfCompany.text,
+                                     @"phone" : self.tfPhone.text,
+                                     @"address" : @{
+                                         @"street" : self.tfStreet.text,
+                                         @"city" : self.tfCity.text,
+                                         @"state" : self.tfState.text,
+                                         @"postalCode" : self.tfZip.text,
+                                         @"country" : self.tfCountry.text}
+                                     };
         
         // Creates options to auto-enroll user is signed in as jake+test@getambassador.com
-        NSDictionary *optionsDict = [[DefaultsHandler getFullName] isEqualToString:@"Jake Test"] ? @{ @"campaign" : @"1048" } : nil;
+        NSDictionary *optionsDict = self.selectedCampaign ? @{ @"campaign" : self.selectedCampaign.campID } : nil;
         
-        [AmbassadorSDK identifyWithUserID:@"0" traits:infoDict options:optionsDict];
+        // Call identify
+        [AmbassadorSDK identifyWithUserID:@"0" traits:traitsDict options:optionsDict];
         
+        // Create an identify success message
         NSString *confirmationMessage = [NSString stringWithFormat:@"You have succesfully identified as %@! You can now track conversion events and create commissions!", email];
         UIAlertView *confirmationAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:confirmationMessage delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [confirmationAlert show];
