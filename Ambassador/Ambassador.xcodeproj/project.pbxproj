@@ -201,11 +201,11 @@
 		EF5390DA1C4565D9005F6944 /* RAFCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5390D91C4565D9005F6944 /* RAFCell.m */; };
 		EF5390DC1C458FFD005F6944 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF5390DB1C458FFD005F6944 /* GenericTheme.plist */; };
 		EF5390E21C46CFE5005F6944 /* ApplicationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5390E11C46CFE5005F6944 /* ApplicationUITests.swift */; };
-		EF5579FA1C84F65500F66761 /* AMBWelcomeScreenViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */; };
+		EF5579FA1C84F65500F66761 /* AMBWelcomeScreenViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5579F81C84F65500F66761 /* AMBWelcomeScreenViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EF5579FB1C84F65500F66761 /* AMBWelcomeScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5579F91C84F65500F66761 /* AMBWelcomeScreenViewController.m */; };
 		EF557A001C85E34600F66761 /* AMBLinkCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5579FE1C85E34600F66761 /* AMBLinkCell.h */; };
 		EF557A011C85E34600F66761 /* AMBLinkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5579FF1C85E34600F66761 /* AMBLinkCell.m */; };
-		EF557A041C86038F00F66761 /* AMBWelcomeScreenParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = EF557A021C86038F00F66761 /* AMBWelcomeScreenParameters.h */; };
+		EF557A041C86038F00F66761 /* AMBWelcomeScreenParameters.h in Headers */ = {isa = PBXBuildFile; fileRef = EF557A021C86038F00F66761 /* AMBWelcomeScreenParameters.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EF557A051C86038F00F66761 /* AMBWelcomeScreenParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A031C86038F00F66761 /* AMBWelcomeScreenParameters.m */; };
 		EF557A0A1C888E5100F66761 /* AMBWelcomeScreenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A091C888E5100F66761 /* AMBWelcomeScreenTests.m */; };
 		EF557A0E1C88AC3700F66761 /* AMBLinkCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A0D1C88AC3700F66761 /* AMBLinkCellTests.m */; };
@@ -1517,6 +1517,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF5579FA1C84F65500F66761 /* AMBWelcomeScreenViewController.h in Headers */,
+				EF557A041C86038F00F66761 /* AMBWelcomeScreenParameters.h in Headers */,
 				EF896FD61CBD3D63003E270D /* AMBSecrets.h in Headers */,
 				DBA3FC161BA8AA1D00672D82 /* AMBPTPusherConnection.h in Headers */,
 				DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */,
@@ -1560,7 +1562,6 @@
 				EFE7D79C1C21CB2D00D7F92C /* AMBCoreDataManager.h in Headers */,
 				DBA3FC091BA8AA1D00672D82 /* AMBPTURLRequestOperation.h in Headers */,
 				DBA3FC1E1BA8AA1D00672D82 /* AMBPTPusherEventPublisher.h in Headers */,
-				EF5579FA1C84F65500F66761 /* AMBWelcomeScreenViewController.h in Headers */,
 				EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */,
 				DBA3FC251BA8AA1D00672D82 /* AMBPusher.h in Headers */,
 				EF67F0FA1CD1547400F52546 /* AmbassadorHelper.h in Headers */,
@@ -1569,7 +1570,6 @@
 				DBA3FB7F1BA8A23C00672D82 /* AMBConversion.h in Headers */,
 				EF1A4F461CC7B9F7008EE886 /* GroupCell.h in Headers */,
 				EFDFA0CF1BE154B8002FA3ED /* UIColor+AMBColorValues.h in Headers */,
-				EF557A041C86038F00F66761 /* AMBWelcomeScreenParameters.h in Headers */,
 				DB844D411BA75CE6003FD7A9 /* Ambassador.h in Headers */,
 				EFDFA0CA1BE148A5002FA3ED /* AMBValues.h in Headers */,
 				DB6A24671BD01D8A00CE3230 /* AMBNetworkObject.h in Headers */,
@@ -2268,7 +2268,7 @@
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
-				VALID_ARCHS = "arm64 armv7 armv7s i386";
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -2294,7 +2294,7 @@
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
-				VALID_ARCHS = "arm64 armv7 armv7s i386";
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
 			name = Release;
 		};

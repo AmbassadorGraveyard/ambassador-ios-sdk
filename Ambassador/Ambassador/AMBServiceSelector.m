@@ -399,7 +399,7 @@ int contactServiceType;
         [self removeLoadingView];
     
     // Checks to make sure an identify process is NOT currently happening and attempts to auto-enroll user
-    } else if ([AmbassadorSDK sharedInstance].pusherManager.connectionState != PTPusherConnectionConnected) {
+    } else if (![AmbassadorSDK sharedInstance].identifyInProgress) {
         [self attemptAutoEnroll];
     
     // Here we can assume that an identify process is currently happening, so we just wait for it to finish

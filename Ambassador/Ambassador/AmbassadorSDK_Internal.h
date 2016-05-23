@@ -23,6 +23,7 @@
 + (AmbassadorSDK*)sharedInstance;
 - (void)subscribeToPusherWithSuccess:(void(^)())success;
 
+@property (nonatomic) BOOL identifyInProgress;
 @property (nonatomic, strong) AMBPusherManager *pusherManager;
 @property (nonatomic, strong) AMBIdentify *identify;
 @property (nonatomic, strong) AMBUserNetworkObject *user;
