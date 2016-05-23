@@ -19,13 +19,22 @@
 @interface IdentifyViewController () <AMBWelcomeScreenDelegate>
 
 // IBOutlets
-@property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
-@property (nonatomic, strong) IBOutlet UITextField * tfEmail;
-@property (nonatomic, strong) IBOutlet UIView * imageBGView;
-@property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
+@property (nonatomic, weak) IBOutlet UIButton *btnSubmit;
+@property (nonatomic, weak) IBOutlet UITextField *tfEmail;
+@property (nonatomic, weak) IBOutlet UITextField *tfFirstName;
+@property (nonatomic, weak) IBOutlet UITextField *tfLastName;
+@property (nonatomic, weak) IBOutlet UITextField *tfCompany;
+@property (nonatomic, weak) IBOutlet UITextField *tfPhone;
+@property (nonatomic, weak) IBOutlet UITextField *tfStreet;
+@property (nonatomic, weak) IBOutlet UITextField *tfCity;
+@property (nonatomic, weak) IBOutlet UITextField *tfState;
+@property (nonatomic, weak) IBOutlet UITextField *tfZip;
+@property (nonatomic, weak) IBOutlet UITextField *tfCountry;
+@property (nonatomic, weak) IBOutlet UIView *imageBGView;
+@property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 
 // Private properties
-@property (nonatomic, strong) NSString * codeExportString;
+@property (nonatomic, strong) NSString *codeExportString;
 
 @end
 
