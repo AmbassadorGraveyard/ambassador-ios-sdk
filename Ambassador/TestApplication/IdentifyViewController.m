@@ -19,7 +19,7 @@
 #import "CampaignListController.h"
 #import "SlidingView.h"
 
-@interface IdentifyViewController () <AMBWelcomeScreenDelegate, CampaignListDelegate, UITextFieldDelegate>
+@interface IdentifyViewController () <AMBWelcomeScreenDelegate, CampaignListDelegate, UITextFieldDelegate, SlidingViewDatasource>
 
 // IBOutlets
 @property (nonatomic, weak) IBOutlet UIButton *btnSubmit;
@@ -37,6 +37,7 @@
 @property (nonatomic, weak) IBOutlet UISwitch *swtEnroll;
 @property (nonatomic, weak) IBOutlet UIView *imageBGView;
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, weak) IBOutlet SlidingView *enrollSlider;
 
 // Private properties
 @property (nonatomic, strong) NSString *codeExportString;
@@ -138,6 +139,17 @@
 
 - (void)campaignListCampaignChosen:(CampaignObject *)campaignObject {
     self.tfCampaign.text = campaignObject.name;
+}
+
+
+#pragma mark - Sliding View Datasource
+
+- (NSInteger)slidingViewExpandedHeight:(SlidingView *)slidingView {
+    return 85;
+}
+
+- (NSInteger)slidingViewCollapsedHeight:(SlidingView *)slidingView {
+    return 35;
 }
 
 
