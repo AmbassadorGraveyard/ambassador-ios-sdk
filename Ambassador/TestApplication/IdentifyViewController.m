@@ -16,8 +16,10 @@
 #import <ZipZap/ZipZap.h>
 #import "UIActivityViewController+ZipShare.h"
 #import "CampaignObject.h"
+#import "CampaignListController.h"
+#import "SlidingView.h"
 
-@interface IdentifyViewController () <AMBWelcomeScreenDelegate>
+@interface IdentifyViewController () <AMBWelcomeScreenDelegate, CampaignListDelegate, UITextFieldDelegate>
 
 // IBOutlets
 @property (nonatomic, weak) IBOutlet UIButton *btnSubmit;
@@ -73,6 +75,21 @@
 
 #pragma mark - TextField Delegate
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if ([textField isEqual:self.tfCampaign]) {
+        // Show Campaign list VC
+        CampaignListController *campaignList = [[CampaignListController alloc] init];
+        campaignList.delegate = self;
+        
+        // Reason for presentin with tabBarController.parentController is so that the list covers the navBAR
+        [self.tabBarController.parentViewController presentViewController:campaignList animated:YES completion:nil];
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
@@ -114,6 +131,13 @@
 - (void)keyboardWillBeHidden:(NSNotification*)notification {
     // Resets the scrollview to original position
     [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+}
+
+
+#pragma mark - Campaign List Delegate
+
+- (void)campaignListCampaignChosen:(CampaignObject *)campaignObject {
+    self.tfCampaign.text = campaignObject.name;
 }
 
 
