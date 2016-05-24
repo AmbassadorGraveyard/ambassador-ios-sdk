@@ -29,30 +29,76 @@ class ApplicationUITests: XCTestCase {
 // UI Tests
 extension ApplicationUITests {
     func testIdentify() {
+        // Tap identify in tabBar
         app.tabBars.buttons["Identify"].tap()
-
+        
+        let scrollViewsQuery = app.scrollViews
+        let elementsQuery = scrollViewsQuery.otherElements
+        
+        // Type invalid email
+        let emailTextField = elementsQuery.textFields["Email *"]
+        emailTextField.tap()
+        emailTextField.typeText("test")
+        app.buttons["Done"].tap()
+        
+        scrollViewsQuery.otherElements.containingType(.StaticText, identifier:"Identify").element.swipeUp()
         
         let submitButton = app.buttons["Submit"]
         submitButton.tap()
         
         // Check to make sure we get an invalid email alert
         XCTAssertTrue(app.alerts["Hold on!"].exists)
-        let okayButton = app.alerts["Hold on!"].collectionViews.buttons["Okay"]
-        okayButton.tap()
+
+        app.alerts["Hold on!"].collectionViews.buttons["Okay"].tap()
+        scrollViewsQuery.otherElements.containingType(.StaticText, identifier:"Identify").childrenMatchingType(.Other).elementBoundByIndex(1).tap()
         
-        // Type an invalid email
-        let emailTextField = app.textFields["Email"]
-        emailTextField.tap()
-        emailTextField.typeText("test")
-        submitButton.tap()
+        // Fill out fields
+        let firstNameField = elementsQuery.textFields["First Name"]
+        firstNameField.tap()
+        firstNameField.typeText("Test")
         
-        // Check to make sure we get an invalid email alert
-        XCTAssertTrue(app.alerts["Hold on!"].exists)
-        okayButton.tap()
-    
-        // Type a valid email
+        let lastNameTextField = elementsQuery.textFields["Last Name"]
+        lastNameTextField.tap()
+        lastNameTextField.typeText("McTest")
+        
+        let phoneTextField = elementsQuery.textFields["Phone"]
+        phoneTextField.tap()
+        phoneTextField.typeText("5555555555")
+        
+        let companyTextField = elementsQuery.textFields["Company"]
+        companyTextField.tap()
+        companyTextField.typeText("Ambassador")
+        
+        let streetTextField = elementsQuery.textFields["Street"]
+        streetTextField.tap()
+        streetTextField.typeText("Dream Street")
+        
+        let cityTextField = elementsQuery.textFields["City"]
+        cityTextField.tap()
+        cityTextField.typeText("Royal Oak")
+        
+        let stateTextField = elementsQuery.textFields["State"]
+        stateTextField.tap()
+        stateTextField.typeText("Michigan")
+        
+        app.buttons["Done"].tap()
+        
+        let postalTextField = elementsQuery.textFields["Postal Code"]
+        postalTextField.tap()
+        postalTextField.typeText("48076")
+        
+        app.toolbars.buttons["Done"].tap()
+        
+        let countryTextField = elementsQuery.textFields["Country"]
+        countryTextField.tap()
+        countryTextField.typeText("USA")
+        
+        // Type valid email
         emailTextField.tap()
-        emailTextField.typeText("@example.com")
+        emailTextField.typeText("@exmaple.com")
+        
+        app.buttons["Done"].tap()
+        
         submitButton.tap()
         
         // Check to make sure we get a succes message
