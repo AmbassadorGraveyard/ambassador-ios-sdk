@@ -15,22 +15,41 @@
 #import "FileWriter.h"
 #import <ZipZap/ZipZap.h>
 #import "UIActivityViewController+ZipShare.h"
+#import "CampaignObject.h"
+#import "CampaignListController.h"
+#import "SlidingView.h"
 
-@interface IdentifyViewController () <AMBWelcomeScreenDelegate>
+@interface IdentifyViewController () <AMBWelcomeScreenDelegate, CampaignListDelegate, UITextFieldDelegate, SlidingViewDatasource>
 
 // IBOutlets
-@property (nonatomic, strong) IBOutlet UIButton * btnSubmit;
-@property (nonatomic, strong) IBOutlet UITextField * tfEmail;
-@property (nonatomic, strong) IBOutlet UIView * imageBGView;
-@property (nonatomic, strong) IBOutlet UIScrollView * scrollView;
+@property (nonatomic, weak) IBOutlet UIButton *btnSubmit;
+@property (nonatomic, weak) IBOutlet UITextField *tfEmail;
+@property (nonatomic, weak) IBOutlet UITextField *tfFirstName;
+@property (nonatomic, weak) IBOutlet UITextField *tfLastName;
+@property (nonatomic, weak) IBOutlet UITextField *tfCompany;
+@property (nonatomic, weak) IBOutlet UITextField *tfPhone;
+@property (nonatomic, weak) IBOutlet UITextField *tfStreet;
+@property (nonatomic, weak) IBOutlet UITextField *tfCity;
+@property (nonatomic, weak) IBOutlet UITextField *tfState;
+@property (nonatomic, weak) IBOutlet UITextField *tfZip;
+@property (nonatomic, weak) IBOutlet UITextField *tfCountry;
+@property (nonatomic, weak) IBOutlet UITextField *tfCampaign;
+@property (nonatomic, weak) IBOutlet UISwitch *swtEnroll;
+@property (nonatomic, weak) IBOutlet UIView *imageBGView;
+@property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, weak) IBOutlet SlidingView *enrollSlider;
 
 // Private properties
-@property (nonatomic, strong) NSString * codeExportString;
+@property (nonatomic, strong) NSString *codeExportString;
+@property (nonatomic, strong) CampaignObject *selectedCampaign;
+@property (nonatomic, strong) UITextField *selectedTextField;
 
 @end
 
 
 @implementation IdentifyViewController
+
+CGFloat identifyOffset;
 
 
 #pragma mark - LifeCycle
@@ -50,15 +69,37 @@
 }
 
 
-#pragma mark - IBActions
+#pragma mark - Actions
 
 - (IBAction)submitTapped:(id)sender {
     [self identify];
     [self.tfEmail resignFirstResponder];
 }
 
+// Action that happens when 'Done' is clicked for certian keyboards
+- (void)doneClicked:(id)sender {
+    [self.view endEditing:YES];
+}
+
 
 #pragma mark - TextField Delegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if ([textField isEqual:self.tfCampaign]) {
+        // Show Campaign list VC
+        CampaignListController *campaignList = [[CampaignListController alloc] init];
+        campaignList.delegate = self;
+        
+        // Reason for presentin with tabBarController.parentController is so that the list covers the navBAR
+        [self.tabBarController.parentViewController presentViewController:campaignList animated:YES completion:nil];
+        
+        return NO;
+    }
+    
+    self.selectedTextField = textField;
+    
+    return YES;
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -83,24 +124,42 @@
 
 - (void)registerForKeyboardNotificaitons {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)keyboardWillShow:(NSNotification*)notificaiton {
+    // Saves where the scrollview was currently at before scrolling
+    identifyOffset = self.scrollView.contentOffset.y;
+    
+    // Grabs the keyboard's dimensions
     CGRect keyboardFrame = [notificaiton.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
-    CGFloat textfieldPosition = self.tfEmail.frame.origin.y + 10;
+    CGFloat textfieldPosition = self.selectedTextField.frame.origin.y + self.selectedTextField.superview.frame.origin.y;
     CGFloat difference = self.scrollView.frame.size.height - textfieldPosition;
+    CGFloat newY = keyboardFrame.size.height - difference;
     
-    if (keyboardFrame.size.height > difference) {
-        CGFloat newY = keyboardFrame.size.height - difference;
+    // Makes sure the textfield is not above the keyboard already
+    if (newY > 0 && newY > identifyOffset) {
         [self.scrollView setContentOffset:CGPointMake(0, newY) animated:YES];
     }
 }
 
-- (void)keyboardWillBeHidden:(NSNotification*)notification {
-    // Resets the scrollview to original position
-    [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+
+#pragma mark - Campaign List Delegate
+
+- (void)campaignListCampaignChosen:(CampaignObject *)campaignObject {
+    self.tfCampaign.text = campaignObject.name;
+    self.selectedCampaign = campaignObject;
+}
+
+
+#pragma mark - Sliding View Datasource
+
+- (NSInteger)slidingViewExpandedHeight:(SlidingView *)slidingView {
+    return 85;
+}
+
+- (NSInteger)slidingViewCollapsedHeight:(SlidingView *)slidingView {
+    return 35;
 }
 
 
@@ -120,6 +179,14 @@
     
     // Images
     self.imageBGView.layer.cornerRadius = 5;
+    
+    // Adds done button to keyboard
+    UIToolbar *keyboardDoneButtonView = [[UIToolbar alloc] init];
+    [keyboardDoneButtonView sizeToFit];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneClicked:)];
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:doneButton, nil]];
+    self.tfZip.inputAccessoryView = keyboardDoneButtonView;
+    self.tfPhone.inputAccessoryView = keyboardDoneButtonView;
 }
 
 - (void)addExportButton {
@@ -132,16 +199,34 @@
 #pragma mark - Helper Functions
 
 - (void)identify {
+    // Grabs strings to pass to in Identify call
     NSString *email = self.tfEmail.text;
     
+    // Checks to make sure that a valid email is passed before identifying
     if ([Validator isValidEmail:email]) {
-        NSDictionary *infoDict = @{@"email" : self.tfEmail.text};
+        // Creates 'traits' dictionary for identify call
+        NSDictionary *traitsDict = @{@"email" : self.tfEmail.text,
+                                     @"firstName" : self.tfFirstName.text,
+                                     @"lastName" : self.tfLastName.text,
+                                     @"company" : self.tfCompany.text,
+                                     @"phone" : self.tfPhone.text,
+                                     @"address" : @{
+                                         @"street" : self.tfStreet.text,
+                                         @"city" : self.tfCity.text,
+                                         @"state" : self.tfState.text,
+                                         @"postalCode" : self.tfZip.text,
+                                         @"country" : self.tfCountry.text}
+                                     };
         
-        // Creates options to auto-enroll user is signed in as jake+test@getambassador.com
-        NSDictionary *optionsDict = [[DefaultsHandler getFullName] isEqualToString:@"Jake Test"] ? @{ @"campaign" : @"1048" } : nil;
+        // Creates options to auto-enroll user if campaign is selected and the switch is on
+        NSDictionary *optionsDict = self.selectedCampaign && self.swtEnroll.isOn ? @{ @"campaign" : self.selectedCampaign.campID } : nil;
         
-        [AmbassadorSDK identifyWithUserID:@"0" traits:infoDict options:optionsDict];
+        // Call identify
+        [AmbassadorSDK identifyWithUserID:@"0" traits:traitsDict options:optionsDict];
         
+        NSLog(@"Traits Dict = %@, Options Dict = %@", traitsDict, optionsDict);
+        
+        // Create an identify success message
         NSString *confirmationMessage = [NSString stringWithFormat:@"You have succesfully identified as %@! You can now track conversion events and create commissions!", email];
         UIAlertView *confirmationAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:confirmationMessage delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [confirmationAlert show];

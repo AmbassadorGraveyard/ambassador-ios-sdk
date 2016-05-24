@@ -27,6 +27,10 @@
 
 #pragma mark - LifeCycle
 
+- (void)awakeFromNib {
+    [self setup];
+}
+
 - (void)setup {
     // Sets up the TARGET VIEW -- which triggers the slide
     if (![self.targetView isKindOfClass:[UISwitch class]]) {

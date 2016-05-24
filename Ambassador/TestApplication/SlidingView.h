@@ -30,8 +30,8 @@
 // Class
 @interface SlidingView : UIView
 
-@property (nonatomic, weak) id<SlidingViewDatasource> datasource;
-@property (nonatomic, weak) id<SlidingViewDelegate> delegate;
+@property (nonatomic, weak) IBOutlet id<SlidingViewDatasource> datasource;
+@property (nonatomic, weak) IBOutlet id<SlidingViewDelegate> delegate;
 
 - (void)setup;
 - (void)setNewExpandedHeight:(NSInteger)newHeight;
