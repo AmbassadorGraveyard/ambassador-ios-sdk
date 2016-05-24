@@ -148,6 +148,7 @@ CGFloat identifyOffset;
 
 - (void)campaignListCampaignChosen:(CampaignObject *)campaignObject {
     self.tfCampaign.text = campaignObject.name;
+    self.selectedCampaign = campaignObject;
 }
 
 
@@ -217,7 +218,7 @@ CGFloat identifyOffset;
                                          @"country" : self.tfCountry.text}
                                      };
         
-        // Creates options to auto-enroll user is signed in as jake+test@getambassador.com
+        // Creates options to auto-enroll user if campaign is selected and the switch is on
         NSDictionary *optionsDict = self.selectedCampaign && self.swtEnroll.isOn ? @{ @"campaign" : self.selectedCampaign.campID } : nil;
         
         // Call identify
