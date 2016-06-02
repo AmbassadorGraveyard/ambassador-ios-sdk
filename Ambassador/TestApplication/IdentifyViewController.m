@@ -318,9 +318,50 @@ CGFloat identifyOffset;
 
 // Creates a Swift App Delegate file
 - (ZZArchiveEntry *)getSwiftFile:(NSString *)email {
+    // Creates traits dictionary
+    NSMutableString *traitsDictString = [[NSMutableString alloc] init];
+    [traitsDictString appendString:@"        // Create dictionary for user traits\n"];
+    [traitsDictString appendString:[NSString stringWithFormat:@"        var traitsDict = [\"email\" : \"%@\",\n", email]];
+    
+    // Checks all the traits inputs to see if they are filled out and should be added
+    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"firstName\" : \"%@\",\n", [self tabSpace], self.tfFirstName.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"lastName\" : \"%@\",\n", [self tabSpace], self.tfLastName.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCompany.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"company\" : \"%@\",\n", [self tabSpace], self.tfCompany.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfPhone.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"phone\" : \"%@\",\n", [self tabSpace], self.tfPhone.text]]; }
+    
+    // Checks if any section of the address is filled out
+    if (![AMBUtilities stringIsEmpty:self.tfStreet.text] || ![AMBUtilities stringIsEmpty:self.tfCity.text] || ![AMBUtilities stringIsEmpty:self.tfState.text] || ![AMBUtilities stringIsEmpty:self.tfZip.text] || ![AMBUtilities stringIsEmpty:self.tfCountry.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@\"address\" : [\n", [self tabSpace]]];
+    }
+    
+    // Formats the address portion of traits if provided
+    if (![AMBUtilities stringIsEmpty:self.tfStreet.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"street\" : \"%@\"\n", [self largeTabSpace], self.tfStreet.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCity.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"city\" : \"%@\"\n", [self largeTabSpace], self.tfCity.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfState.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"state\" : \"%@\"\n", [self largeTabSpace], self.tfState.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfZip.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"postalCode\" : \"%@\"\n", [self largeTabSpace], self.tfZip.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCountry.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"country\" : \"%@\"]\n", [self largeTabSpace], self.tfCountry.text]]; }
+    
+    [traitsDictString appendString:[NSString stringWithFormat:@"%@]\n\n", [self tabSpace]]];
+    
+    // Creates options dictionary if switch is on
+    NSMutableString *optionsDictString = nil;
+    if (self.swtEnroll.isOn && self.selectedCampaign) {
+        optionsDictString = [[NSMutableString alloc] initWithString:@"        // Create dictionary with option to auto-enroll user in campaign\n"];
+        [optionsDictString appendString:[NSString stringWithFormat:@"        var optionsDict = [\"campaign\" : \"%@\"]\n\n", self.selectedCampaign.campID]];
+    }
+    
+    // Creates the correct identify string based on options dict being nil
+    NSString *identifyString = (optionsDictString) ? @"        AmbassadorSDK.identifyWithUserID(\"yourId\", traits: infoDict, options: optionsDict)\n" : @"    AmbassadorSDK.identifyWithUserID(\"youId\", traits: infoDict, options: nil)\n";
+    
+    // Creates a full identify string to be inserted into appDelegate template
+    NSMutableString *fullString = [[NSMutableString alloc] init];
+    if (traitsDictString) { [fullString appendString:traitsDictString]; }
+    if (optionsDictString) { [fullString appendString:optionsDictString]; }
+    [fullString appendString:identifyString];
+    
+    
     // Gets dynamic strings from user's tokens and email input
-    NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithEmail(\"%@\") \n\n", email];
-    NSString *swiftString = [FileWriter swiftAppDelegateFileWithInsert:identifyString];
+    NSString *swiftString = [FileWriter swiftAppDelegateFileWithInsert:fullString];
 
     ZZArchiveEntry *swiftEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.swift" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
         return [swiftString dataUsingEncoding:NSUTF8StringEncoding];
