@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <Ambassador/Ambassador.h>
+#import <Rainforest/Rainforest.h>
 
 @interface AppDelegate ()
 
@@ -24,6 +25,11 @@
 
     [self setUpAppearance];
 
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
+    {
+        [[Rainforest shared] bootstrap];
+    });
+    
     // Registers app for notifications
     UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound|UIUserNotificationTypeAlert|UIUserNotificationTypeBadge) categories:nil];
     [application registerForRemoteNotifications];
