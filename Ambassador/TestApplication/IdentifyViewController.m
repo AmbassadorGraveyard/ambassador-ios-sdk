@@ -351,7 +351,7 @@ CGFloat identifyOffset;
     }
     
     // Creates the correct identify string based on options dict being nil
-    NSString *identifyString = (optionsDictString) ? @"        AmbassadorSDK.identifyWithUserID(\"yourId\", traits: infoDict, options: optionsDict)\n" : @"    AmbassadorSDK.identifyWithUserID(\"youId\", traits: infoDict, options: nil)\n";
+    NSString *identifyString = (optionsDictString) ? @"        AmbassadorSDK.identifyWithUserID(\"yourId\", traits: infoDict, options: optionsDict)\n" : @"        AmbassadorSDK.identifyWithUserID(\"yourId\", traits: infoDict, options: nil)\n";
     
     // Creates a full identify string to be inserted into appDelegate template
     NSMutableString *fullString = [[NSMutableString alloc] init];
@@ -372,9 +372,50 @@ CGFloat identifyOffset;
 
 // Creates an example Java file
 - (ZZArchiveEntry *)getJavaFile:(NSString *)email {
-    // Gets dynamic strings from user's tokens and email input
-    NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identify(\"%@\"); \n", email];
-    NSString *javaString = [FileWriter javaMyApplicationFileWithInsert:identifyString];
+    NSString *spacing = @"        ";
+    NSMutableString *traitsString = [[NSMutableString alloc] initWithFormat:@"%@// Create bundle with traits about user\n", spacing];
+    [traitsString appendFormat:@"%@Bundle traits = new Bundle();\n", spacing];
+    [traitsString appendFormat:@"%@traits.putString(\"email\", \"%@\");\n", spacing, self.tfEmail.text];
+    
+    // If the optional forms are filled out, we add them to the snippet
+    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsString appendFormat:@"%@traits.putString(\"firstName\", \"%@\");\n", spacing, self.tfFirstName.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsString appendFormat:@"%@traits.putString(\"lastName\", \"%@\");\n", spacing, self.tfLastName.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCompany.text]) { [traitsString appendFormat:@"%@traits.putString(\"company\", \"%@\");\n", spacing, self.tfCompany.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfPhone.text]) { [traitsString appendFormat:@"%@traits.putString(\"phone\", \"%@\");\n\n", spacing, self.tfPhone.text]; }
+    
+    // Checks if any address fields have been filled out before adding the address bundle code
+    if (![AMBUtilities stringIsEmpty:self.tfStreet.text] || ![AMBUtilities stringIsEmpty:self.tfCity.text] || ![AMBUtilities stringIsEmpty:self.tfState.text] || ![AMBUtilities stringIsEmpty:self.tfZip.text] || ![AMBUtilities stringIsEmpty:self.tfCountry.text]) {
+        [traitsString appendFormat:@"%@// Create an address bundle to go inside of traits bundle\n", spacing];
+        [traitsString appendFormat:@"%@Bundle address = new Bundle();\n", spacing];
+        
+        // Go through each address field and add them to the snippet
+        if (![AMBUtilities stringIsEmpty:self.tfStreet.text]) { [traitsString appendFormat:@"%@address.putString(\"street\", \"%@\");\n", spacing, self.tfStreet.text]; }
+        if (![AMBUtilities stringIsEmpty:self.tfCity.text]) { [traitsString appendFormat:@"%@address.putString(\"city\", \"%@\");\n", spacing, self.tfCity.text]; }
+        if (![AMBUtilities stringIsEmpty:self.tfState.text]) { [traitsString appendFormat:@"%@address.putString(\"state\", \"%@\");\n", spacing, self.tfState.text]; }
+        if (![AMBUtilities stringIsEmpty:self.tfZip.text]) { [traitsString appendFormat:@"%@address.putString(\"postalCode\", \"%@\");\n", spacing, self.tfZip.text]; }
+        if (![AMBUtilities stringIsEmpty:self.tfCountry.text]) { [traitsString appendFormat:@"%@address.putString(\"country\", \"%@\");\n", spacing, self.tfCountry.text]; }
+        
+        // Add address bundle in traits
+        [traitsString appendFormat:@"%@traits.putBundle(\"address\", address);\n\n", spacing];
+    }
+    
+    NSMutableString *optionsString = nil;
+    if (self.swtEnroll.isOn && self.selectedCampaign) {
+        optionsString = [[NSMutableString alloc] initWithFormat:@"%@// Create bundle with option to auto-enroll user in campaign\n", spacing];
+        [optionsString appendFormat:@"%@Bundle options = new Bundle();\n", spacing];
+        [optionsString appendFormat:@"%@options.putString(\"campaign\", \"%@\");\n\n", spacing, self.selectedCampaign.campID];
+    }
+    
+    // Creates the correct identify string based on options being nil
+    NSString *identifyString = (optionsString) ? [NSString stringWithFormat:@"%@AmbassadorSDK.identify(\"yourId\", traits, options);\n", spacing] : [NSString stringWithFormat:@"%@AmbassadorSDK.identify(\"yourId\", traits, nil);\n", spacing];
+    
+    // Creates a full identify string to be inserted into appDelegate template
+    NSMutableString *fullString = [[NSMutableString alloc] init];
+    if (traitsString) { [fullString appendString:traitsString]; }
+    if (optionsString) { [fullString appendString:optionsString]; }
+    [fullString appendString:identifyString];
+
+    NSString *javaString = [FileWriter javaMyApplicationFileWithInsert:fullString];
     
     ZZArchiveEntry *javaEntry = [ZZArchiveEntry archiveEntryWithFileName:@"MyApplication.java" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
         return [javaString dataUsingEncoding:NSUTF8StringEncoding];

@@ -14,7 +14,7 @@
 
 + (NSString *)objcAppDelegateFileWithInsert:(NSString *)insert {
     // Gets dynamic strings from user's tokens and email input
-    NSString *runWithKeysString = [NSString stringWithFormat:@"    [AmbassadorSDK runWithUniversalToken:\"%@\" universalID:\"%@\"]; \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    NSString *runWithKeysString = [NSString stringWithFormat:@"    [AmbassadorSDK runWithUniversalToken:\"%@\" universalID:\"%@\"]; \n\n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
     
     // Builds Objective-C implementation file
     NSMutableString *objectiveCString = [[NSMutableString alloc] init];
@@ -34,7 +34,7 @@
 }
 
 + (NSString *)swiftAppDelegateFileWithInsert:(NSString *)insert {
-    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithUniversalToken(\"%@\", universalID: \"%@\") \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithUniversalToken(\"%@\", universalID: \"%@\") \n\n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
     
     // Builds Swift file
     NSMutableString *swiftString = [[NSMutableString alloc] init];
@@ -54,7 +54,7 @@
 
 + (NSString *)javaMyApplicationFileWithInsert:(NSString *)insert {
     // Gets dynamic strings from user's tokens and email input
-    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithKeys(this, \"SDKToken %@\", \"%@\"); \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithKeys(this, \"SDKToken %@\", \"%@\"); \n\n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
     
     // Builds Java file
     NSMutableString *javaString = [[NSMutableString alloc] init];
