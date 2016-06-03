@@ -26,7 +26,7 @@
     [objectiveCString appendString: @"- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions { \n"];
     [objectiveCString appendString: runWithKeysString];
     [objectiveCString appendString:insert];
-    [objectiveCString appendString:@"    return YES; \n"];
+    [objectiveCString appendString:@"\n    return YES; \n"];
     [objectiveCString appendString:@"} \n\n"];
     [objectiveCString appendString: @"@end"];
     
@@ -45,7 +45,7 @@
     [swiftString appendString:@"    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool { \n"];
     [swiftString appendString:runWithKeysString];
     [swiftString appendString:insert];
-    [swiftString appendString:@"        return true \n"];
+    [swiftString appendString:@"\n        return true \n"];
     [swiftString appendString:@"    } \n"];
     [swiftString appendString:@"}"];
     
