@@ -407,7 +407,7 @@ CGFloat identifyOffset;
     }
     
     // Creates the correct identify string based on options being nil
-    NSString *identifyString = (optionsString) ? [NSString stringWithFormat:@"%@AmbassadorSDK.identify(\"yourId\", traits, options);\n", spacing] : [NSString stringWithFormat:@"%@AmbassadorSDK.identify(\"yourId\", traits, nil);\n", spacing];
+    NSString *identifyString = (optionsString) ? [NSString stringWithFormat:@"%@AmbassadorSDK.identify(\"yourId\", traits, options);\n", spacing] : [NSString stringWithFormat:@"%@AmbassadorSDK.identify(\"yourId\", traits, null);\n", spacing];
     
     // Creates a full identify string to be inserted into appDelegate template
     NSMutableString *fullString = [[NSMutableString alloc] init];
