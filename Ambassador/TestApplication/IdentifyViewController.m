@@ -18,6 +18,7 @@
 #import "CampaignObject.h"
 #import "CampaignListController.h"
 #import "SlidingView.h"
+#import "AMBUtilities.h"
 
 @interface IdentifyViewController () <AMBWelcomeScreenDelegate, CampaignListDelegate, UITextFieldDelegate, SlidingViewDatasource>
 
@@ -264,9 +265,49 @@ CGFloat identifyOffset;
 
 // Creates an Objective-C App Delegate file
 - (ZZArchiveEntry *)getObjectiveFile:(NSString *)email {
+    // Creates traits dictionary
+    NSMutableString *traitsDictString = [[NSMutableString alloc] init];
+    [traitsDictString appendString:@"    // Create dictionary for user traits\n"];
+    [traitsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *traitsDict = @{@\"email\" : @\"%@\",\n", email]];
+    
+    // Checks all the traits inputs to see if they are filled out and should be added
+    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"firstName\" : @\"%@\",\n", [self tabSpace], self.tfFirstName.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"lastName\" : @\"%@\",\n", [self tabSpace], self.tfLastName.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCompany.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"company\" : @\"%@\",\n", [self tabSpace], self.tfCompany.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfPhone.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"phone\" : @\"%@\",\n", [self tabSpace], self.tfPhone.text]]; }
+    
+    // Checks if any section of the address is filled out
+    if (![AMBUtilities stringIsEmpty:self.tfStreet.text] || ![AMBUtilities stringIsEmpty:self.tfCity.text] || ![AMBUtilities stringIsEmpty:self.tfState.text] || ![AMBUtilities stringIsEmpty:self.tfZip.text] || ![AMBUtilities stringIsEmpty:self.tfCountry.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"address\" : @{\n", [self tabSpace]]];
+    }
+    
+    // Formats the address portion of traits if provided
+    if (![AMBUtilities stringIsEmpty:self.tfStreet.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"street\" : @\"%@\"\n", [self largeTabSpace], self.tfStreet.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCity.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"city\" : @\"%@\"\n", [self largeTabSpace], self.tfCity.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfState.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"state\" : @\"%@\"\n", [self largeTabSpace], self.tfState.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfZip.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"postalCode\" : @\"%@\"\n", [self largeTabSpace], self.tfZip.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCountry.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"country\" : @\"%@\"}\n", [self largeTabSpace], self.tfCountry.text]]; }
+    
+    [traitsDictString appendString:[NSString stringWithFormat:@"%@};\n\n", [self tabSpace]]];
+    
+    // Creates options dictionary if switch is on
+    NSMutableString *optionsDictString = nil;
+    if (self.swtEnroll.isOn && self.selectedCampaign) {
+        optionsDictString = [[NSMutableString alloc] initWithString:@"    // Create dictionary with option to auto-enroll user in campaign\n"];
+        [optionsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *optionsDict = @{@\"campaign\" : @\"%@\"};\n\n", self.selectedCampaign.campID]];
+    }
+    
+    // Creates the correct identify string based on options dict being nil
+    NSString *identifyString = (optionsDictString) ? @"    [AmbassadorSDK identifyWithUserID:@\"yourId\" traits:traitsDict options:optionsDict];\n" : @"    [AmbassadorSDK identifyWithUserID:@\"yourId\" traits:traitsDict options:nil];\n";
+    
+    // Creates a full identify string to be inserted into appDelegate template
+    NSMutableString *fullString = [[NSMutableString alloc] init];
+    if (traitsDictString) { [fullString appendString:traitsDictString]; }
+    if (optionsDictString) { [fullString appendString:optionsDictString]; }
+    [fullString appendString:identifyString];
+    
     // Gets dynamic strings from user's tokens and email input
-    NSString *identifyString = [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithEmail:@\"%@\"]; \n\n", email];
-    NSString *objectiveCString = [FileWriter objcAppDelegateFileWithInsert:identifyString];
+    NSString *objectiveCString = [FileWriter objcAppDelegateFileWithInsert:fullString];
  
     ZZArchiveEntry *objcEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.m" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
         return [objectiveCString dataUsingEncoding:NSUTF8StringEncoding];
@@ -277,9 +318,50 @@ CGFloat identifyOffset;
 
 // Creates a Swift App Delegate file
 - (ZZArchiveEntry *)getSwiftFile:(NSString *)email {
+    // Creates traits dictionary
+    NSMutableString *traitsDictString = [[NSMutableString alloc] init];
+    [traitsDictString appendString:@"        // Create dictionary for user traits\n"];
+    [traitsDictString appendString:[NSString stringWithFormat:@"        var traitsDict = [\"email\" : \"%@\",\n", email]];
+    
+    // Checks all the traits inputs to see if they are filled out and should be added
+    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"firstName\" : \"%@\",\n", [self tabSpace], self.tfFirstName.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"lastName\" : \"%@\",\n", [self tabSpace], self.tfLastName.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCompany.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"company\" : \"%@\",\n", [self tabSpace], self.tfCompany.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfPhone.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"phone\" : \"%@\",\n", [self tabSpace], self.tfPhone.text]]; }
+    
+    // Checks if any section of the address is filled out
+    if (![AMBUtilities stringIsEmpty:self.tfStreet.text] || ![AMBUtilities stringIsEmpty:self.tfCity.text] || ![AMBUtilities stringIsEmpty:self.tfState.text] || ![AMBUtilities stringIsEmpty:self.tfZip.text] || ![AMBUtilities stringIsEmpty:self.tfCountry.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@\"address\" : [\n", [self tabSpace]]];
+    }
+    
+    // Formats the address portion of traits if provided
+    if (![AMBUtilities stringIsEmpty:self.tfStreet.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"street\" : \"%@\"\n", [self largeTabSpace], self.tfStreet.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCity.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"city\" : \"%@\"\n", [self largeTabSpace], self.tfCity.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfState.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"state\" : \"%@\"\n", [self largeTabSpace], self.tfState.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfZip.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"postalCode\" : \"%@\"\n", [self largeTabSpace], self.tfZip.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCountry.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"country\" : \"%@\"]\n", [self largeTabSpace], self.tfCountry.text]]; }
+    
+    [traitsDictString appendString:[NSString stringWithFormat:@"%@]\n\n", [self tabSpace]]];
+    
+    // Creates options dictionary if switch is on
+    NSMutableString *optionsDictString = nil;
+    if (self.swtEnroll.isOn && self.selectedCampaign) {
+        optionsDictString = [[NSMutableString alloc] initWithString:@"        // Create dictionary with option to auto-enroll user in campaign\n"];
+        [optionsDictString appendString:[NSString stringWithFormat:@"        var optionsDict = [\"campaign\" : \"%@\"]\n\n", self.selectedCampaign.campID]];
+    }
+    
+    // Creates the correct identify string based on options dict being nil
+    NSString *identifyString = (optionsDictString) ? @"        AmbassadorSDK.identifyWithUserID(\"yourId\", traits: infoDict, options: optionsDict)\n" : @"        AmbassadorSDK.identifyWithUserID(\"yourId\", traits: infoDict, options: nil)\n";
+    
+    // Creates a full identify string to be inserted into appDelegate template
+    NSMutableString *fullString = [[NSMutableString alloc] init];
+    if (traitsDictString) { [fullString appendString:traitsDictString]; }
+    if (optionsDictString) { [fullString appendString:optionsDictString]; }
+    [fullString appendString:identifyString];
+    
+    
     // Gets dynamic strings from user's tokens and email input
-    NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithEmail(\"%@\") \n\n", email];
-    NSString *swiftString = [FileWriter swiftAppDelegateFileWithInsert:identifyString];
+    NSString *swiftString = [FileWriter swiftAppDelegateFileWithInsert:fullString];
 
     ZZArchiveEntry *swiftEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.swift" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
         return [swiftString dataUsingEncoding:NSUTF8StringEncoding];
@@ -290,9 +372,50 @@ CGFloat identifyOffset;
 
 // Creates an example Java file
 - (ZZArchiveEntry *)getJavaFile:(NSString *)email {
-    // Gets dynamic strings from user's tokens and email input
-    NSString *identifyString = [NSString stringWithFormat:@"        AmbassadorSDK.identify(\"%@\"); \n", email];
-    NSString *javaString = [FileWriter javaMyApplicationFileWithInsert:identifyString];
+    NSString *spacing = @"        ";
+    NSMutableString *traitsString = [[NSMutableString alloc] initWithFormat:@"%@// Create bundle with traits about user\n", spacing];
+    [traitsString appendFormat:@"%@Bundle traits = new Bundle();\n", spacing];
+    [traitsString appendFormat:@"%@traits.putString(\"email\", \"%@\");\n", spacing, self.tfEmail.text];
+    
+    // If the optional forms are filled out, we add them to the snippet
+    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsString appendFormat:@"%@traits.putString(\"firstName\", \"%@\");\n", spacing, self.tfFirstName.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsString appendFormat:@"%@traits.putString(\"lastName\", \"%@\");\n", spacing, self.tfLastName.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCompany.text]) { [traitsString appendFormat:@"%@traits.putString(\"company\", \"%@\");\n", spacing, self.tfCompany.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfPhone.text]) { [traitsString appendFormat:@"%@traits.putString(\"phone\", \"%@\");\n\n", spacing, self.tfPhone.text]; }
+    
+    // Checks if any address fields have been filled out before adding the address bundle code
+    if (![AMBUtilities stringIsEmpty:self.tfStreet.text] || ![AMBUtilities stringIsEmpty:self.tfCity.text] || ![AMBUtilities stringIsEmpty:self.tfState.text] || ![AMBUtilities stringIsEmpty:self.tfZip.text] || ![AMBUtilities stringIsEmpty:self.tfCountry.text]) {
+        [traitsString appendFormat:@"%@// Create an address bundle to go inside of traits bundle\n", spacing];
+        [traitsString appendFormat:@"%@Bundle address = new Bundle();\n", spacing];
+        
+        // Go through each address field and add them to the snippet
+        if (![AMBUtilities stringIsEmpty:self.tfStreet.text]) { [traitsString appendFormat:@"%@address.putString(\"street\", \"%@\");\n", spacing, self.tfStreet.text]; }
+        if (![AMBUtilities stringIsEmpty:self.tfCity.text]) { [traitsString appendFormat:@"%@address.putString(\"city\", \"%@\");\n", spacing, self.tfCity.text]; }
+        if (![AMBUtilities stringIsEmpty:self.tfState.text]) { [traitsString appendFormat:@"%@address.putString(\"state\", \"%@\");\n", spacing, self.tfState.text]; }
+        if (![AMBUtilities stringIsEmpty:self.tfZip.text]) { [traitsString appendFormat:@"%@address.putString(\"postalCode\", \"%@\");\n", spacing, self.tfZip.text]; }
+        if (![AMBUtilities stringIsEmpty:self.tfCountry.text]) { [traitsString appendFormat:@"%@address.putString(\"country\", \"%@\");\n", spacing, self.tfCountry.text]; }
+        
+        // Add address bundle in traits
+        [traitsString appendFormat:@"%@traits.putBundle(\"address\", address);\n\n", spacing];
+    }
+    
+    NSMutableString *optionsString = nil;
+    if (self.swtEnroll.isOn && self.selectedCampaign) {
+        optionsString = [[NSMutableString alloc] initWithFormat:@"%@// Create bundle with option to auto-enroll user in campaign\n", spacing];
+        [optionsString appendFormat:@"%@Bundle options = new Bundle();\n", spacing];
+        [optionsString appendFormat:@"%@options.putString(\"campaign\", \"%@\");\n\n", spacing, self.selectedCampaign.campID];
+    }
+    
+    // Creates the correct identify string based on options being nil
+    NSString *identifyString = (optionsString) ? [NSString stringWithFormat:@"%@AmbassadorSDK.identify(\"yourId\", traits, options);\n", spacing] : [NSString stringWithFormat:@"%@AmbassadorSDK.identify(\"yourId\", traits, null);\n", spacing];
+    
+    // Creates a full identify string to be inserted into appDelegate template
+    NSMutableString *fullString = [[NSMutableString alloc] init];
+    if (traitsString) { [fullString appendString:traitsString]; }
+    if (optionsString) { [fullString appendString:optionsString]; }
+    [fullString appendString:identifyString];
+
+    NSString *javaString = [FileWriter javaMyApplicationFileWithInsert:fullString];
     
     ZZArchiveEntry *javaEntry = [ZZArchiveEntry archiveEntryWithFileName:@"MyApplication.java" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
         return [javaString dataUsingEncoding:NSUTF8StringEncoding];
@@ -304,6 +427,14 @@ CGFloat identifyOffset;
 - (void)showValidationError:(NSString*)action {
     UIAlertView *invalidEmailAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:[NSString stringWithFormat:@"Please enter a valid email address before %@.", action]  delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
     [invalidEmailAlert show];
+}
+
+- (NSString *)tabSpace {
+    return @"                                 ";
+}
+
+- (NSString *)largeTabSpace {
+    return @"                                     ";
 }
 
 @end

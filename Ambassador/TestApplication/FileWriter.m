@@ -14,7 +14,7 @@
 
 + (NSString *)objcAppDelegateFileWithInsert:(NSString *)insert {
     // Gets dynamic strings from user's tokens and email input
-    NSString *runWithKeysString = [NSString stringWithFormat:@"    [AmbassadorSDK runWithUniversalToken:\"%@\" universalID:\"%@\"]; \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    NSString *runWithKeysString = [NSString stringWithFormat:@"    [AmbassadorSDK runWithUniversalToken:\"%@\" universalID:\"%@\"]; \n\n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
     
     // Builds Objective-C implementation file
     NSMutableString *objectiveCString = [[NSMutableString alloc] init];
@@ -26,7 +26,7 @@
     [objectiveCString appendString: @"- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions { \n"];
     [objectiveCString appendString: runWithKeysString];
     [objectiveCString appendString:insert];
-    [objectiveCString appendString:@"    return YES; \n"];
+    [objectiveCString appendString:@"\n    return YES; \n"];
     [objectiveCString appendString:@"} \n\n"];
     [objectiveCString appendString: @"@end"];
     
@@ -34,7 +34,7 @@
 }
 
 + (NSString *)swiftAppDelegateFileWithInsert:(NSString *)insert {
-    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithUniversalToken(\"%@\", universalID: \"%@\") \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithUniversalToken(\"%@\", universalID: \"%@\") \n\n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
     
     // Builds Swift file
     NSMutableString *swiftString = [[NSMutableString alloc] init];
@@ -45,7 +45,7 @@
     [swiftString appendString:@"    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool { \n"];
     [swiftString appendString:runWithKeysString];
     [swiftString appendString:insert];
-    [swiftString appendString:@"        return true \n"];
+    [swiftString appendString:@"\n        return true \n"];
     [swiftString appendString:@"    } \n"];
     [swiftString appendString:@"}"];
     
@@ -54,7 +54,7 @@
 
 + (NSString *)javaMyApplicationFileWithInsert:(NSString *)insert {
     // Gets dynamic strings from user's tokens and email input
-    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithKeys(this, \"SDKToken %@\", \"%@\"); \n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    NSString *runWithKeysString = [NSString stringWithFormat:@"        AmbassadorSDK.runWithKeys(this, \"SDKToken %@\", \"%@\"); \n\n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
     
     // Builds Java file
     NSMutableString *javaString = [[NSMutableString alloc] init];
