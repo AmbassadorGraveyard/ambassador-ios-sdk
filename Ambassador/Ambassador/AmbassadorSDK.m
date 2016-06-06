@@ -117,6 +117,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 #pragma mark - Identify
 
 + (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits options:(NSDictionary *)options {
+    DLog(@"[Identify] Identifying with userID - %@, \nTraits - %@, \nOptions-%@", userID, traits, options);
     [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits options:options];
 }
 
@@ -280,7 +281,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
                 // Triggers completion block
                 if (success) { success(); }
             } else {
-                DLog(@"Error binding to pusher channel - %@", error);
+                DLog(@"[Identify] Error binding to Pusher channel - %@", error);
             }
         }];
     

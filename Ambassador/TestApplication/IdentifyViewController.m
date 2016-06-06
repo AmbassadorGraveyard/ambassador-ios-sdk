@@ -225,8 +225,6 @@ CGFloat identifyOffset;
         // Call identify
         [AmbassadorSDK identifyWithUserID:@"0" traits:traitsDict options:optionsDict];
         
-        NSLog(@"Traits Dict = %@, Options Dict = %@", traitsDict, optionsDict);
-        
         // Create an identify success message
         NSString *confirmationMessage = [NSString stringWithFormat:@"You have succesfully identified as %@! You can now track conversion events and create commissions!", email];
         UIAlertView *confirmationAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:confirmationMessage delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];

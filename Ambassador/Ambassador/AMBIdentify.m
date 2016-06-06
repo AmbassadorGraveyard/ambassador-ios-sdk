@@ -87,7 +87,7 @@ NSInteger const maxTryCount = 5;
         self.safariVC.delegate = self;
     }
     
-    DLog(@"Performing Identify with SAFARI VC for iOS 9 - Attempt %li", (long)self.tryCount);
+    DLog(@"[Identify] Performing Identify with SAFARI VC for iOS 9 - Attempt %li.", (long)self.tryCount);
     
     // Gets the top viewController and adds the safari VC to it if not already added
     UIViewController *topVC = [AMBUtilities getTopViewController];
@@ -115,7 +115,6 @@ NSInteger const maxTryCount = 5;
     // Removes the safari VC after inital load
     [controller.view removeFromSuperview];
     [controller removeFromParentViewController];
-    DLog(@"SFVC REMOVED!");
 }
 
 @end
