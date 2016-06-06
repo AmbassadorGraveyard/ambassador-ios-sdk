@@ -295,7 +295,6 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             // Grabs the dictionary returned from the call
             NSDictionary *returnDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            NSLog(@"%@", returnDict);
             
             // Checks if the count is greater than zero
             if (returnDict[@"count"] > [NSNumber numberWithInteger:0]) {
@@ -618,7 +617,8 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
                                             @"commissionApproved" : [NSNumber numberWithBool:self.swtApproved.isOn],
                                             @"eventData1" : self.tfEventData1.text,
                                             @"eventData2" : self.tfEventData2.text,
-                                            @"eventData3" : self.tfEventData3.text };
+                                            @"eventData3" : self.tfEventData3.text,
+                                            @"emailNewAmbassador" : [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn] };
     
     // Sets option dictionary for the conversion
     NSDictionary *optionsDictionary = @{ @"conversion" : @YES,
@@ -626,8 +626,6 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     
     // Call the track function and trigger the conversion
     [AmbassadorSDK trackEvent:@"New event" properties:propertiesDictionary options:optionsDictionary completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {
-        NSLog(@"Track object - %@", conversion);
-        
         switch (conversionStatus) {
             case ConversionSuccessful:
                 NSLog(@"Success!");

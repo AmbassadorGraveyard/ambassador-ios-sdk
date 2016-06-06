@@ -86,6 +86,8 @@
         self.mbsy_transaction_uid = properties[@"orderId"] ? properties[@"orderId"] : blankString;
         self.mbsy_email_new_ambassador = properties[@"emailNewAmbassador"] ? properties[@"emailNewAmbassador"] : @0;
         [self setUpPropertyArray];
+        
+        DLog(@"[Conversion] Creating conversion with properties -\n%@", [self description]);
     }
     
     return self;

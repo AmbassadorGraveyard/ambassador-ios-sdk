@@ -161,9 +161,7 @@
     
     [[self.urlSession dataTaskWithRequest:conversionRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
-        DLog(@"SEND CONVERSION Status code = %li", (long)statusCode);
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-            DLog(@"Sending Conversion SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:NSUTF8StringEncoding error:nil]); }
         } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Sending Conversion FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);

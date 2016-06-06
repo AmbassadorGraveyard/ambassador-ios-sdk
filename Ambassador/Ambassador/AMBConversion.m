@@ -87,7 +87,7 @@
     
     // Make network call to send off our conversion
     [[AMBNetworkManager sharedInstance] sendRegisteredConversion:payloadDict success:^(NSDictionary *response) {
-        DLog(@"Conversion Send Success - %@", response);
+        DLog(@"[Conversion] Conversion Send Success.");
         
         // Call the success block if there is one
         if (success) { success(); }
