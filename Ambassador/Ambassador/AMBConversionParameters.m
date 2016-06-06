@@ -84,6 +84,7 @@
         self.mbsy_event_data2 = properties[@"eventData2"] ? properties[@"eventData2"] : blankString;
         self.mbsy_event_data3 = properties[@"eventData3"] ? properties[@"eventData3"] : blankString;
         self.mbsy_transaction_uid = properties[@"orderId"] ? properties[@"orderId"] : blankString;
+        self.mbsy_email_new_ambassador = properties[@"emailNewAmbassador"] ? properties[@"emailNewAmbassador"] : @0;
         [self setUpPropertyArray];
     }
     
