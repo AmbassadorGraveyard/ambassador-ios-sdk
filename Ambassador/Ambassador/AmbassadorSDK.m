@@ -252,7 +252,11 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 // AMBInputAlert Delegate
 - (void)AMBInputAlertActionButtonTapped:(NSString *)inputValue {
-    [self localIdentifyWithUserID:inputValue traits:@{@"email" : inputValue} options:nil];
+    // Creates traits dictionary including identify_type value telling that this identify was called from email prompt
+    NSDictionary *traits = @{@"email" : inputValue, @"identify_type" : @"raf"};
+    
+    // Identifies and presents RAF
+    [self localIdentifyWithUserID:inputValue traits:traits options:nil];
     [self presentRAFForCampaign:self.tempCampID FromViewController:self.tempPresentController withThemePlist:self.tempPlistName];
 }
 
@@ -276,7 +280,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
                 // Triggers completion block
                 if (success) { success(); }
             } else {
-                DLog(@"Error binding to pusher channel - %@", error);
+                DLog(@"[Identify] Error binding to Pusher channel - %@", error);
             }
         }];
     

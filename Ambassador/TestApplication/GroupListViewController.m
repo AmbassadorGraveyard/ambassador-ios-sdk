@@ -178,7 +178,6 @@ CGFloat groupTableHeaderHeight = 50;
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             // Grab the return dictionary from response
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            NSLog(@"%@", results);
             
             // If there are no groups
             if ([results[@"count"]  isEqual: @0]) {

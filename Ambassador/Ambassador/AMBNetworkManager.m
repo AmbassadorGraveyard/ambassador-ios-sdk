@@ -42,13 +42,12 @@
     
     [[self.urlSession dataTaskWithRequest:identifyRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSInteger statusCode = (int)((NSHTTPURLResponse*) response).statusCode;
-        DLog(@"SEND IDENTIFY Status code = %li", (long)statusCode);
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             if (success) { success([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
         } else {
-            DLog(@"SEND IDENTIFY Error - %@", error);
+            DLog(@"[Identify] Send Identify Error - %li %@", (long)statusCode, error);
             if (failure) { failure([error localizedFailureReason]); }
         }
     }] resume];
@@ -162,9 +161,7 @@
     
     [[self.urlSession dataTaskWithRequest:conversionRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
-        DLog(@"SEND CONVERSION Status code = %li", (long)statusCode);
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-            DLog(@"Sending Conversion SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:NSUTF8StringEncoding error:nil]); }
         } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             DLog(@"Sending Conversion FAILED with response - %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
@@ -180,9 +177,7 @@
     NSMutableURLRequest *pusherRequest = [self createURLRequestWithURL:[AMBValues getPusherSessionUrl] requestType:@"POST"];
     [[self.urlSession dataTaskWithRequest:pusherRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSInteger statusCode = ((NSHTTPURLResponse*) response).statusCode;
-        DLog(@"PUSHER SESSION Status code = %li", (long)statusCode);
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
-            DLog(@"Pusher Session SUCCESSFUL with response - %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             if (success) { success([NSJSONSerialization JSONObjectWithData:data options:0 error:nil]); }
         } else if (!error && statusCode == 401) {
             DLog(@"NO access to SDK");

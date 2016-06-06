@@ -230,7 +230,8 @@
     self.email = @"";
     self.campaign_id = @"";
     self.enroll = NO;
-    self.source = @"";
+    self.source = @"ios_sdk_pilot";
+    self.identify_type = @"";
     
     return self;
 }
@@ -241,8 +242,11 @@
         self.remote_customer_id = userID;
         self.enroll = NO;
         self.campaign_id = @"";
-        self.source = @"";
+        self.source = @"ios_sdk_pilot";
+        self.identify_type = @"";
         [self formatTraits:traits];
+        
+        DLog(@"[Identify] Identifying with set properties -\n%@", [self toDictionary]);
     }
     
     return self;
@@ -259,6 +263,8 @@
     self.custom2 = traits[@"customLabel2"] ? traits[@"customLabel2"] : blankString;
     self.custom3 = traits[@"customLabel3"] ? traits[@"customLabel3"] : blankString;
     self.company = traits[@"company"] ? traits[@"company"] : blankString;
+    self.add_to_groups = traits[@"add_to_groups"] ? traits[@"add_to_groups"] : blankString;
+    self.identify_type = traits[@"identify_typ"] ? traits[@"identify_type"] : blankString;
     self.street = traits[@"address"][@"street"] ? traits[@"address"][@"street"] : blankString;
     self.city = traits[@"address"][@"city"] ? traits[@"address"][@"city"] : blankString;
     self.state = traits[@"address"][@"state"] ? traits[@"address"][@"state"] : blankString;
