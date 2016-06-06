@@ -83,6 +83,7 @@
 @property (nonatomic, strong) NSString * phone;
 @property (nonatomic, strong) NSString * company;
 @property (nonatomic, strong) NSString * add_to_groups;
+@property (nonatomic, strong) NSString * identify_type; // This trait should not be displayed to any user
 @property (nonatomic, strong) NSString * street;
 @property (nonatomic, strong) NSString * city;
 @property (nonatomic, strong) NSString * state;
