@@ -245,6 +245,8 @@
         self.source = @"ios_sdk_pilot";
         self.identify_type = @"";
         [self formatTraits:traits];
+        
+        DLog(@"[Identify] Identifying with set properties -\n%@", [self toDictionary]);
     }
     
     return self;
