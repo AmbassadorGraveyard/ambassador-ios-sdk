@@ -35,6 +35,7 @@
 @property (nonatomic, weak) IBOutlet UITextField *tfZip;
 @property (nonatomic, weak) IBOutlet UITextField *tfCountry;
 @property (nonatomic, weak) IBOutlet UITextField *tfCampaign;
+@property (nonatomic, weak) IBOutlet UITextField *tfUID;
 @property (nonatomic, weak) IBOutlet UISwitch *swtEnroll;
 @property (nonatomic, weak) IBOutlet UIView *imageBGView;
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
@@ -296,7 +297,9 @@ CGFloat identifyOffset;
     }
     
     // Creates the correct identify string based on options dict being nil
-    NSString *identifyString = (optionsDictString) ? @"    [AmbassadorSDK identifyWithUserID:@\"yourId\" traits:traitsDict options:optionsDict];\n" : @"    [AmbassadorSDK identifyWithUserID:@\"yourId\" traits:traitsDict options:nil];\n";
+    NSString *userIdString = [AMBUtilities stringIsEmpty:self.tfUID.text] ? @"nil" : [NSString stringWithFormat:@"@\"%@\"", self.tfUID.text];
+    NSString *identifyString = (optionsDictString) ? [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict options:optionsDict];\n", userIdString] :
+                                                    [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict options:nil];\n", userIdString];
     
     // Creates a full identify string to be inserted into appDelegate template
     NSMutableString *fullString = [[NSMutableString alloc] init];
@@ -349,7 +352,9 @@ CGFloat identifyOffset;
     }
     
     // Creates the correct identify string based on options dict being nil
-    NSString *identifyString = (optionsDictString) ? @"        AmbassadorSDK.identifyWithUserID(\"yourId\", traits: infoDict, options: optionsDict)\n" : @"        AmbassadorSDK.identifyWithUserID(\"yourId\", traits: infoDict, options: nil)\n";
+    NSString *userIdString = [AMBUtilities stringIsEmpty:self.tfUID.text] ? @"nil" : [NSString stringWithFormat:@"\"%@\"", self.tfUID.text];
+    NSString *identifyString = (optionsDictString) ? [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithUserID(%@, traits: infoDict, options: optionsDict)\n", userIdString] :
+                                                    [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithUserID(%@, traits: infoDict, options: nil)\n", userIdString];
     
     // Creates a full identify string to be inserted into appDelegate template
     NSMutableString *fullString = [[NSMutableString alloc] init];
@@ -405,7 +410,9 @@ CGFloat identifyOffset;
     }
     
     // Creates the correct identify string based on options being nil
-    NSString *identifyString = (optionsString) ? [NSString stringWithFormat:@"%@AmbassadorSDK.identify(\"yourId\", traits, options);\n", spacing] : [NSString stringWithFormat:@"%@AmbassadorSDK.identify(\"yourId\", traits, null);\n", spacing];
+    NSString *userIdString = [AMBUtilities stringIsEmpty:self.tfUID.text] ? @"null" : [NSString stringWithFormat:@"\"%@\"", self.tfUID.text];
+    NSString *identifyString = (optionsString) ? [NSString stringWithFormat:@"%@AmbassadorSDK.identify(%@, traits, options);\n", spacing, userIdString] :
+                                                [NSString stringWithFormat:@"%@AmbassadorSDK.identify(%@, traits, null);\n", spacing, userIdString];
     
     // Creates a full identify string to be inserted into appDelegate template
     NSMutableString *fullString = [[NSMutableString alloc] init];
