@@ -267,8 +267,8 @@
     self.custom2 = traits[@"customLabel2"] ? traits[@"customLabel2"] : blankString;
     self.custom3 = traits[@"customLabel3"] ? traits[@"customLabel3"] : blankString;
     self.company = traits[@"company"] ? traits[@"company"] : blankString;
-    self.add_to_groups = traits[@"add_to_groups"] ? traits[@"add_to_groups"] : blankString;
-    self.identify_type = traits[@"identify_type"] ? traits[@"identify_type"] : blankString;
+    self.add_to_groups = traits[@"addToGroups"] ? traits[@"addToGroups"] : blankString;
+    self.identify_type = traits[@"identifyType"] ? traits[@"identifyType"] : blankString;
     self.street = traits[@"address"][@"street"] ? traits[@"address"][@"street"] : blankString;
     self.city = traits[@"address"][@"city"] ? traits[@"address"][@"city"] : blankString;
     self.state = traits[@"address"][@"state"] ? traits[@"address"][@"state"] : blankString;
