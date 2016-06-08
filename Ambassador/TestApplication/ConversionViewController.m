@@ -371,7 +371,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 }
 
 - (ZZArchiveEntry *)getObjcFile {
-    // Create identify part of snippet starting with traits dict
+    // Create IDENTIFY part of snippet starting with traits dict
     NSMutableString *traitsDictString = [[NSMutableString alloc] init];
     [traitsDictString appendString:@"    // Create dictionary for user traits\n"];
     [traitsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *traitsDict = @{@\"email\" : @\"%@\",\n", self.tfRefEmail.text]];
@@ -383,20 +383,18 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     if (![AMBUtilities stringIsEmpty:self.tfCustom1.text]) { [traitsDictString appendFormat:@"%@@\"customLabel1\" : @\"%@\",\n", [self tabSpace], self.tfCustom1.text]; }
     if (![AMBUtilities stringIsEmpty:self.tfCustom2.text]) { [traitsDictString appendFormat:@"%@@\"customLabel2\" : @\"%@\",\n", [self tabSpace], self.tfCustom2.text]; }
     if (![AMBUtilities stringIsEmpty:self.tfCustom3.text]) { [traitsDictString appendFormat:@"%@@\"customLabel3\" : @\"%@\",\n", [self tabSpace], self.tfCustom3.text]; }
-    
-    
     [traitsDictString appendString:[NSString stringWithFormat:@"%@};\n\n", [self tabSpace]]];
     
     // Creates options dictionary if switch is on
     NSMutableString *optionsDictString = nil;
     if (self.swtAutoCreate.isOn) {
         optionsDictString = [[NSMutableString alloc] initWithString:@"    // Create dictionary with option to auto-enroll user in campaign\n"];
-        [optionsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *optionsDict = @{@\"campaign\" : @\"%@\"};\n\n", self.selectedCampaign.campID]];
+        [optionsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *identifyOptionsDictionary = @{@\"campaign\" : @\"%@\"};\n\n", self.selectedCampaign.campID]];
     }
     
     // Creates the correct identify string based on options dict being nil
     NSString *userIdString = [AMBUtilities stringIsEmpty:self.tfUID.text] ? @"nil" : [NSString stringWithFormat:@"@\"%@\"", self.tfUID.text];
-    NSString *identifyString = (optionsDictString) ? [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict options:optionsDict];\n", userIdString] :
+    NSString *identifyString = (optionsDictString) ? [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict options:identifyOptionsDictionary];\n", userIdString] :
     [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict options:nil];\n", userIdString];
     
     // Creates a full identify string to be inserted into appDelegate template
@@ -405,8 +403,47 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     if (optionsDictString) { [fullString appendString:optionsDictString]; }
     [fullString appendString:identifyString];
     
+    
+    /* Create CONVERSION part of snippet */
+    NSMutableString *conversionPropertyString = [[NSMutableString alloc] init];
+    [conversionPropertyString appendString:@"    // Create dictionary for conversion properties\n"];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"    NSDictionary *propertiesDictionary = @{@\"email\" : @\"%@\",\n", self.tfRefEmail.text]];
+    
+    // Checks all the traits inputs to see if they are filled out and should be added
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@@\"campaign\" : @\"%@\",\n", [self tabSpace], self.selectedCampaign.campID]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@@\"revenue\" : @%@,\n", [self tabSpace], self.tfRevAmt.text]];
+    [conversionPropertyString appendFormat:@"%@@\"commissionApproved\" : @%@\n", [self tabSpace], [self stringForBool:self.swtApproved.isOn forSwift:NO]];
+    if (self.swtAutoCreate.isOn) { [conversionPropertyString appendFormat:@"%@@\"emailNewAmbassador\" : @\"%@\",\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn forSwift:NO]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfTransactionUID.text]) { [conversionPropertyString appendFormat:@"%@@\"orderId\" : @\"%@\",\n", [self tabSpace], self.tfTransactionUID.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfEventData1.text]) { [conversionPropertyString appendFormat:@"%@@\"eventData1\" : @\"%@\",\n", [self tabSpace], self.tfEventData1.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfEventData2.text]) { [conversionPropertyString appendFormat:@"%@@\"eventData2\" : @\"%@\",\n", [self tabSpace], self.tfEventData2.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfEventData3.text]) { [conversionPropertyString appendFormat:@"%@@\"eventData3\" : @\"%@\",\n", [self tabSpace], self.tfEventData3.text]; }
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@};\n\n", [self tabSpace]]];
+    
+    [conversionPropertyString appendString:@"    // Create options dictionary for conversion\n"];
+    [conversionPropertyString appendString:@"    NSDictionary *optionsDictionary = @{@\"conversion\" : @YES};\n"];
+    
+    NSMutableString *conversionString = [[NSMutableString alloc] initWithString:@"    [AmbassadorSDK trackEvent:@\"Event Name\" properties:propertiesDictionary options:optionsDictionary completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {\n"];
+    [conversionString appendFormat:@"%@switch (conversionStatus) {\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@    case ConversionSuccessful:\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        NSLog(@\"Success!\");\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        break;\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@    case ConversionPending:\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        NSLog(@\"Pending!\");\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        break;\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@    case ConversionError:\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        NSLog(@\"Error!\");\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        break;\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@    default\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        break;\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@}\n", [self doubleTab]];
+    [conversionString appendString:@"    }];\n"];
+    
+    // Full identify/conversion string
+    NSString *fullConversionString = [NSString stringWithFormat:@"%@\n%@", conversionPropertyString, conversionString];
+    
     // Creats app delegate file
-    NSString *objcConversion = [NSString stringWithFormat:@"%@\n \n\n", fullString];
+    NSString *objcConversion = [NSString stringWithFormat:@"%@\n\n\n%@\n\n", fullString, fullConversionString];
     NSString *objcSnippet = [FileWriter objcAppDelegateFileWithInsert:objcConversion];
     
     ZZArchiveEntry *objcEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.m" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
@@ -645,6 +682,10 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         [self getShortCodeAndSubmitForTest:YES];
     }
+}
+
+- (NSString *)doubleTab {
+    return @"        ";
 }
 
 - (NSString *)tabSpace {
