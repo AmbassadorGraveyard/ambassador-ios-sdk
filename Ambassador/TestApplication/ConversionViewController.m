@@ -434,7 +434,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [conversionString appendFormat:@"%@    case ConversionError:\n", [self doubleTab]];
     [conversionString appendFormat:@"%@        NSLog(@\"Error!\");\n", [self doubleTab]];
     [conversionString appendFormat:@"%@        break;\n", [self doubleTab]];
-    [conversionString appendFormat:@"%@    default\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@    default:\n", [self doubleTab]];
     [conversionString appendFormat:@"%@        break;\n", [self doubleTab]];
     [conversionString appendFormat:@"%@}\n", [self doubleTab]];
     [conversionString appendString:@"    }];\n"];
@@ -454,44 +454,79 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 }
 
 - (ZZArchiveEntry *)getSwiftFile {
-    // Creates first part of snippet for setting params
-    NSMutableString *conversionParamString = [NSMutableString stringWithString:@"\n        let conversionParameters = AMBConversionParameters()\n\n        // Set required properties\n"];
+    // Create IDENTIFY part of snippet starting with traits dict
+    NSMutableString *traitsDictString = [[NSMutableString alloc] init];
+    [traitsDictString appendString:@"        // Create dictionary for user traits\n"];
+    [traitsDictString appendString:[NSString stringWithFormat:@"        let traitsDict = [\"email\" : \"%@\",\n", self.tfRefEmail.text]];
     
-    // Creates an AMBConversionParameter object
-    AMBConversionParameters *params = [self conversionParameterFromValues];
-    NSDictionary *dict = [params propertyDictionary];
+    // Checks all the traits inputs to see if they are filled out and should be added
+    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"firstName\" : \"%@\",\n", [self tabSpace], self.tfFirstName.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"lastName\" : \"%@\",\n", [self tabSpace], self.tfLastName.text]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfGroupID.text] && self.swtAutoCreate.isOn) { [traitsDictString appendFormat:@"%@\"addToGroups\" : \"%@\",\n", [self tabSpace], self.tfGroupID.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCustom1.text]) { [traitsDictString appendFormat:@"%@\"customLabel1\" : \"%@\",\n", [self tabSpace], self.tfCustom1.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCustom2.text]) { [traitsDictString appendFormat:@"%@\"customLabel2\" : \"%@\",\n", [self tabSpace], self.tfCustom2.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfCustom3.text]) { [traitsDictString appendFormat:@"%@\"customLabel3\" : \"%@\",\n", [self tabSpace], self.tfCustom3.text]; }
+    [traitsDictString appendString:[NSString stringWithFormat:@"%@]\n\n", [self tabSpace]]];
     
-    // Goes through each property in the conversionparam object
-    for (NSString *string in [params propertyArray]) {
-        // Creates the base setter string
-        NSString *setterString = [AMBConversionParameters isStringProperty:string] ? @"        conversionParameters.%@ = \"%@\" \n" : @"        conversionParameters.%@ = %@ \n";
-        
-        NSString *boolString = nil;
-        
-        // Checks if property is a boolean and creates a string based on the boolean value
-        if ([AMBConversionParameters isBoolProperty:string]) {
-            BOOL boolValue = [[dict valueForKey:string] boolValue];
-            boolString = [self stringForBool:boolValue forSwift:YES];
-        }
-        
-        // Creates full propertyString and appends to to the full string
-        NSString *propString = boolString ? [NSString stringWithFormat:setterString, string, boolString] : [NSString stringWithFormat:setterString, string, [dict valueForKey:string]];
-        [conversionParamString appendString: propString];
-        
-        // If the property is 'revenue' then we add a new comment line to start optional properties
-        if ([string isEqualToString:@"mbsy_revenue"]) { [conversionParamString appendString:@"\n        // Set optional properties\n"];}
+    // Creates options dictionary if switch is on
+    NSMutableString *optionsDictString = nil;
+    if (self.swtAutoCreate.isOn) {
+        optionsDictString = [[NSMutableString alloc] initWithString:@"        // Create dictionary with option to auto-enroll user in campaign\n"];
+        [optionsDictString appendString:[NSString stringWithFormat:@"        let identifyOptionsDictionary = [\"campaign\" : \"%@\"]\n\n", self.selectedCampaign.campID]];
     }
-
-    NSMutableString *implementationString = [[NSMutableString alloc] initWithString:@"        AmbassadorSDK.registerConversion(conversionParameters, restrictToInstall: false) { (error) -> Void in \n"];
-    [implementationString appendString:@"            if ((error) != nil) { \n"];
-    [implementationString appendString:@"                print(\"Error \\(error)\") \n"];
-    [implementationString appendString:@"            } else { \n"];
-    [implementationString appendString:@"                print(\"All conversion parameters are set properly\") \n"];
-    [implementationString appendString:@"            } \n"];
-    [implementationString appendString:@"        }"];
+    
+    // Creates the correct identify string based on options dict being nil
+    NSString *userIdString = [AMBUtilities stringIsEmpty:self.tfUID.text] ? @"nil" : [NSString stringWithFormat:@"\"%@\"", self.tfUID.text];
+    NSString *identifyString = (optionsDictString) ? [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithUserID(%@, traits:traitsDict, options:identifyOptionsDictionary)\n", userIdString] :
+                                                    [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithUserID(%@, traits:traitsDict, options:nil)\n", userIdString];
+    
+    // Creates a full identify string to be inserted into appDelegate template
+    NSMutableString *fullString = [[NSMutableString alloc] init];
+    if (traitsDictString) { [fullString appendString:traitsDictString]; }
+    if (optionsDictString) { [fullString appendString:optionsDictString]; }
+    [fullString appendString:identifyString];
+    
+    
+    /* Create CONVERSION part of snippet */
+    NSMutableString *conversionPropertyString = [[NSMutableString alloc] init];
+    [conversionPropertyString appendString:@"        // Create dictionary for conversion properties\n"];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"        let propertiesDictionary = [\"email\" : \"%@\",\n", self.tfRefEmail.text]];
+    
+    // Checks all the traits inputs to see if they are filled out and should be added
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"campaign\" : \"%@\",\n", [self tabSpace], self.selectedCampaign.campID]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"revenue\" : %@,\n", [self tabSpace], self.tfRevAmt.text]];
+    [conversionPropertyString appendFormat:@"%@\"commissionApproved\" : %@,\n", [self tabSpace], [self stringForBool:self.swtApproved.isOn forSwift:YES]];
+    if (self.swtAutoCreate.isOn) { [conversionPropertyString appendFormat:@"%@\"emailNewAmbassador\" : \"%@\",\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn forSwift:YES]]; }
+    if (![AMBUtilities stringIsEmpty:self.tfTransactionUID.text]) { [conversionPropertyString appendFormat:@"%@\"orderId\" : \"%@\",\n", [self tabSpace], self.tfTransactionUID.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfEventData1.text]) { [conversionPropertyString appendFormat:@"%@\"eventData1\" : \"%@\",\n", [self tabSpace], self.tfEventData1.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfEventData2.text]) { [conversionPropertyString appendFormat:@"%@\"eventData2\" : \"%@\",\n", [self tabSpace], self.tfEventData2.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfEventData3.text]) { [conversionPropertyString appendFormat:@"%@\"eventData3\" : \"%@\",\n", [self tabSpace], self.tfEventData3.text]; }
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@]\n\n", [self tabSpace]]];
+    
+    [conversionPropertyString appendString:@"        // Create options dictionary for conversion\n"];
+    [conversionPropertyString appendString:@"        let optionsDictionary = [\"conversion\" : true]\n"];
+    
+    NSMutableString *conversionString = [[NSMutableString alloc] initWithString:@"        AmbassadorSDK.trackEvent(\"Event Name\", properties:propertiesDictionary, options:optionsDictionary) { (parameters, conversionStatus, error) in\n"];
+    [conversionString appendFormat:@"%@    switch conversionStatus {\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@    case ConversionSuccessful:\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        print(\"Success!\")\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        break\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@    case ConversionPending:\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        print(\"Pending!\")\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        break\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@    case ConversionError:\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        print(\"Error!\")\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        break\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@    default:\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@        break\n", [self doubleTab]];
+    [conversionString appendFormat:@"%@    }\n", [self doubleTab]];
+    [conversionString appendString:@"        }"];
+    
+    // Full identify/conversion string
+    NSString *fullConversionString = [NSString stringWithFormat:@"%@\n%@", conversionPropertyString, conversionString];
     
     // Creates swift app delegate file
-    NSString *swiftConversion = [NSString stringWithFormat:@"%@\n%@ \n\n", conversionParamString, implementationString];
+    NSString *swiftConversion = [NSString stringWithFormat:@"%@\n%@ \n", fullString, fullConversionString];
     NSString *swiftSnippet = [FileWriter swiftAppDelegateFileWithInsert:swiftConversion];
     
     ZZArchiveEntry *swiftEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.swift" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
