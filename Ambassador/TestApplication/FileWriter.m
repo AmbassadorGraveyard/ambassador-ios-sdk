@@ -14,7 +14,7 @@
 
 + (NSString *)objcAppDelegateFileWithInsert:(NSString *)insert {
     // Gets dynamic strings from user's tokens and email input
-    NSString *runWithKeysString = [NSString stringWithFormat:@"    [AmbassadorSDK runWithUniversalToken:\"%@\" universalID:\"%@\"]; \n\n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
+    NSString *runWithKeysString = [NSString stringWithFormat:@"    [AmbassadorSDK runWithUniversalToken:@\"%@\" universalID:@\"%@\"]; \n\n", [DefaultsHandler getSDKToken], [DefaultsHandler getUniversalID]];
     
     // Builds Objective-C implementation file
     NSMutableString *objectiveCString = [[NSMutableString alloc] init];
@@ -60,6 +60,7 @@
     NSMutableString *javaString = [[NSMutableString alloc] init];
     [javaString appendString:@"package com.example.example; \n\n"];
     [javaString appendString:@"import android.app.Application; \n"];
+    [javaString appendString:@"import android.os.Bundle;\n"];
     [javaString appendString:@"import com.ambassador.ambassadorsdk.ConversionParameters; \n"];
     [javaString appendString:@"import com.ambassador.ambassadorsdk.AmbassadorSDK; \n\n"];
     [javaString appendString:@"public class MyApplication extends Application { \n\n"];
