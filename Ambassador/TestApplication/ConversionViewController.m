@@ -377,12 +377,14 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [traitsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *traitsDict = @{@\"email\" : @\"%@\",\n", self.tfRefEmail.text]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
-    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"firstName\" : @\"%@\",\n", [self tabSpace], self.tfFirstName.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"lastName\" : @\"%@\",\n", [self tabSpace], self.tfLastName.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfGroupID.text] && self.swtAutoCreate.isOn) { [traitsDictString appendFormat:@"%@@\"addToGroups\" : @\"%@\",\n", [self tabSpace], self.tfGroupID.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCustom1.text]) { [traitsDictString appendFormat:@"%@@\"customLabel1\" : @\"%@\",\n", [self tabSpace], self.tfCustom1.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCustom2.text]) { [traitsDictString appendFormat:@"%@@\"customLabel2\" : @\"%@\",\n", [self tabSpace], self.tfCustom2.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCustom3.text]) { [traitsDictString appendFormat:@"%@@\"customLabel3\" : @\"%@\",\n", [self tabSpace], self.tfCustom3.text]; }
+    [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"firstName\" : @\"%@\",\n", [self tabSpace], self.tfFirstName.text]];
+    [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"lastName\" : @\"%@\",\n", [self tabSpace], self.tfLastName.text]];
+    
+    NSString *addToGroupsString = self.swtAutoCreate.isOn ? self.tfGroupID.text : @"";
+    [traitsDictString appendFormat:@"%@@\"addToGroups\" : @\"%@\",\n", [self tabSpace], addToGroupsString];
+    [traitsDictString appendFormat:@"%@@\"customLabel1\" : @\"%@\",\n", [self tabSpace], self.tfCustom1.text];
+    [traitsDictString appendFormat:@"%@@\"customLabel2\" : @\"%@\",\n", [self tabSpace], self.tfCustom2.text];
+    [traitsDictString appendFormat:@"%@@\"customLabel3\" : @\"%@\"\n", [self tabSpace], self.tfCustom3.text];
     [traitsDictString appendString:[NSString stringWithFormat:@"%@};\n\n", [self tabSpace]]];
     
     // Creates options dictionary if switch is on
@@ -413,11 +415,11 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@@\"campaign\" : @\"%@\",\n", [self tabSpace], self.selectedCampaign.campID]];
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@@\"revenue\" : @%@,\n", [self tabSpace], self.tfRevAmt.text]];
     [conversionPropertyString appendFormat:@"%@@\"commissionApproved\" : @%@\n", [self tabSpace], [self stringForBool:self.swtApproved.isOn forSwift:NO]];
-    if (self.swtAutoCreate.isOn) { [conversionPropertyString appendFormat:@"%@@\"emailNewAmbassador\" : @%@,\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn forSwift:NO]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfTransactionUID.text]) { [conversionPropertyString appendFormat:@"%@@\"orderId\" : @\"%@\",\n", [self tabSpace], self.tfTransactionUID.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfEventData1.text]) { [conversionPropertyString appendFormat:@"%@@\"eventData1\" : @\"%@\",\n", [self tabSpace], self.tfEventData1.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfEventData2.text]) { [conversionPropertyString appendFormat:@"%@@\"eventData2\" : @\"%@\",\n", [self tabSpace], self.tfEventData2.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfEventData3.text]) { [conversionPropertyString appendFormat:@"%@@\"eventData3\" : @\"%@\",\n", [self tabSpace], self.tfEventData3.text]; }
+    [conversionPropertyString appendFormat:@"%@@\"emailNewAmbassador\" : @%@,\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn && self.swtAutoCreate.isOn forSwift:NO]];
+    [conversionPropertyString appendFormat:@"%@@\"orderId\" : @\"%@\",\n", [self tabSpace], self.tfTransactionUID.text];
+    [conversionPropertyString appendFormat:@"%@@\"eventData1\" : @\"%@\",\n", [self tabSpace], self.tfEventData1.text];
+    [conversionPropertyString appendFormat:@"%@@\"eventData2\" : @\"%@\",\n", [self tabSpace], self.tfEventData2.text];
+    [conversionPropertyString appendFormat:@"%@@\"eventData3\" : @\"%@\"\n", [self tabSpace], self.tfEventData3.text];
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@};\n\n", [self tabSpace]]];
     
     [conversionPropertyString appendString:@"    // Create options dictionary for conversion\n"];
@@ -460,12 +462,14 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [traitsDictString appendString:[NSString stringWithFormat:@"        let traitsDict = [\"email\" : \"%@\",\n", self.tfRefEmail.text]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
-    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"firstName\" : \"%@\",\n", [self tabSpace], self.tfFirstName.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"lastName\" : \"%@\",\n", [self tabSpace], self.tfLastName.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfGroupID.text] && self.swtAutoCreate.isOn) { [traitsDictString appendFormat:@"%@\"addToGroups\" : \"%@\",\n", [self tabSpace], self.tfGroupID.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCustom1.text]) { [traitsDictString appendFormat:@"%@\"customLabel1\" : \"%@\",\n", [self tabSpace], self.tfCustom1.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCustom2.text]) { [traitsDictString appendFormat:@"%@\"customLabel2\" : \"%@\",\n", [self tabSpace], self.tfCustom2.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCustom3.text]) { [traitsDictString appendFormat:@"%@\"customLabel3\" : \"%@\",\n", [self tabSpace], self.tfCustom3.text]; }
+    [traitsDictString appendString:[NSString stringWithFormat:@"%@\"firstName\" : \"%@\",\n", [self tabSpace], self.tfFirstName.text]];
+    [traitsDictString appendString:[NSString stringWithFormat:@"%@\"lastName\" : \"%@\",\n", [self tabSpace], self.tfLastName.text]];
+    
+    NSString *addToGroupsString = self.swtAutoCreate.isOn ? self.tfGroupID.text : @"";
+    [traitsDictString appendFormat:@"%@\"addToGroups\" : \"%@\",\n", [self tabSpace], addToGroupsString];
+    [traitsDictString appendFormat:@"%@\"customLabel1\" : \"%@\",\n", [self tabSpace], self.tfCustom1.text];
+    [traitsDictString appendFormat:@"%@\"customLabel2\" : \"%@\",\n", [self tabSpace], self.tfCustom2.text];
+    [traitsDictString appendFormat:@"%@\"customLabel3\" : \"%@\"\n", [self tabSpace], self.tfCustom3.text];
     [traitsDictString appendString:[NSString stringWithFormat:@"%@]\n\n", [self tabSpace]]];
     
     // Creates options dictionary if switch is on
@@ -496,11 +500,11 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"campaign\" : \"%@\",\n", [self tabSpace], self.selectedCampaign.campID]];
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"revenue\" : %@,\n", [self tabSpace], self.tfRevAmt.text]];
     [conversionPropertyString appendFormat:@"%@\"commissionApproved\" : %@,\n", [self tabSpace], [self stringForBool:self.swtApproved.isOn forSwift:YES]];
-    if (self.swtAutoCreate.isOn) { [conversionPropertyString appendFormat:@"%@\"emailNewAmbassador\" : %@,\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn forSwift:YES]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfTransactionUID.text]) { [conversionPropertyString appendFormat:@"%@\"orderId\" : \"%@\",\n", [self tabSpace], self.tfTransactionUID.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfEventData1.text]) { [conversionPropertyString appendFormat:@"%@\"eventData1\" : \"%@\",\n", [self tabSpace], self.tfEventData1.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfEventData2.text]) { [conversionPropertyString appendFormat:@"%@\"eventData2\" : \"%@\",\n", [self tabSpace], self.tfEventData2.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfEventData3.text]) { [conversionPropertyString appendFormat:@"%@\"eventData3\" : \"%@\",\n", [self tabSpace], self.tfEventData3.text]; }
+    [conversionPropertyString appendFormat:@"%@\"emailNewAmbassador\" : %@,\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn && self.swtAutoCreate.isOn forSwift:YES]];
+    [conversionPropertyString appendFormat:@"%@\"orderId\" : \"%@\",\n", [self tabSpace], self.tfTransactionUID.text];
+    [conversionPropertyString appendFormat:@"%@\"eventData1\" : \"%@\",\n", [self tabSpace], self.tfEventData1.text];
+    [conversionPropertyString appendFormat:@"%@\"eventData2\" : \"%@\",\n", [self tabSpace], self.tfEventData2.text];
+    [conversionPropertyString appendFormat:@"%@\"eventData3\" : \"%@\"\n", [self tabSpace], self.tfEventData3.text];
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@]\n\n", [self tabSpace]]];
     
     [conversionPropertyString appendString:@"        // Create options dictionary for conversion\n"];
@@ -544,9 +548,15 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [traitsString appendFormat:@"%@Bundle traits = new Bundle();\n", spacing];
     [traitsString appendFormat:@"%@traits.putString(\"email\", \"%@\");\n", spacing, self.tfRefEmail.text];
     
-    // If the optional forms are filled out, we add them to the snippet
-    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsString appendFormat:@"%@traits.putString(\"firstName\", \"%@\");\n", spacing, self.tfFirstName.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsString appendFormat:@"%@traits.putString(\"lastName\", \"%@\");\n", spacing, self.tfLastName.text]; }
+    // Add optional values
+    [traitsString appendFormat:@"%@traits.putString(\"firstName\", \"%@\");\n", spacing, self.tfFirstName.text];
+    [traitsString appendFormat:@"%@traits.putString(\"lastName\", \"%@\");\n", spacing, self.tfLastName.text];
+    
+    NSString *addToGroupsString = self.swtAutoCreate.isOn ? self.tfGroupID.text : @"";
+    [traitsString appendFormat:@"%@traits.putString(\"addToGroups\", \"%@\");\n", spacing, addToGroupsString];
+    [traitsString appendFormat:@"%@traits.putString(\"customLabel1\", \"%@\");\n", spacing, self.tfCustom1.text];
+    [traitsString appendFormat:@"%@traits.putString(\"customLabel2\", \"%@\");\n", spacing, self.tfCustom2.text];
+    [traitsString appendFormat:@"%@traits.putString(\"customLabel3\", \"%@\");\n\n", spacing, self.tfCustom3.text];
     
     NSMutableString *optionsString = nil;
     if (self.swtAutoCreate && self.selectedCampaign) {
@@ -570,13 +580,14 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     // Creates propertiest bundle part of string
     NSMutableString *javaString = [[NSMutableString alloc] initWithFormat:@"%@// Create properties bundle\n", [self doubleTab]];
     [javaString appendFormat:@"%@Bundle properties = new Bundle();\n", [self doubleTab]];
+    [javaString appendFormat:@"%@properties.putInt(\"email\", \"%@\");\n", [self doubleTab], self.tfRefEmail.text];
     [javaString appendFormat:@"%@properties.putInt(\"campaign\", %@);\n", [self doubleTab], self.selectedCampaign.campID];
     [javaString appendFormat:@"%@properties.putFloat(\"revenue\", %@f);\n", [self doubleTab], self.tfRevAmt.text];
     [javaString appendFormat:@"%@properties.putInt(\"commissionApproved\", %@);\n", [self doubleTab], [NSNumber numberWithBool:self.swtApproved.isOn]];
-    if (![AMBUtilities stringIsEmpty:self.tfEventData1.text]) { [javaString appendFormat:@"%@properties.putString(\"eventData1\", %@);\n", [self doubleTab], self.tfEventData1.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfEventData2.text]) { [javaString appendFormat:@"%@properties.putString(\"eventData2\", %@);\n", [self doubleTab], self.tfEventData2.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfEventData3.text]) { [javaString appendFormat:@"%@properties.putString(\"eventData3\", %@);\n", [self doubleTab], self.tfEventData3.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfTransactionUID.text]) { [javaString appendFormat:@"%@properties.putString(\"orderId\", %@);\n", [self doubleTab], self.tfTransactionUID.text]; }
+    [javaString appendFormat:@"%@properties.putString(\"eventData1\", \"%@\");\n", [self doubleTab], self.tfEventData1.text];
+    [javaString appendFormat:@"%@properties.putString(\"eventData2\", \"%@\");\n", [self doubleTab], self.tfEventData2.text];
+    [javaString appendFormat:@"%@properties.putString(\"eventData3\", \"%@\");\n", [self doubleTab], self.tfEventData3.text];
+    [javaString appendFormat:@"%@properties.putString(\"orderId\", \"%@\");\n\n", [self doubleTab], self.tfTransactionUID.text];
     if (self.swtAutoCreate.isOn) { [javaString appendFormat:@"%@properties.putInt(\"emailNewAmbassadord\", %@);\n\n", [self doubleTab], [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn]]; }
 
     [javaString appendFormat:@"%@// Create options bundle\n", [self doubleTab]];
