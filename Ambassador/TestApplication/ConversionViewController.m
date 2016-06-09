@@ -569,6 +569,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     
     // Creates propertiest bundle part of string
     NSMutableString *javaString = [[NSMutableString alloc] initWithFormat:@"%@// Create properties bundle\n", [self doubleTab]];
+    [javaString appendFormat:@"%@Bundle properties = new Bundle();\n", [self doubleTab]];
     [javaString appendFormat:@"%@properties.putInt(\"campaign\", %@);\n", [self doubleTab], self.selectedCampaign.campID];
     [javaString appendFormat:@"%@properties.putFloat(\"revenue\", %@f);\n", [self doubleTab], self.tfRevAmt.text];
     [javaString appendFormat:@"%@properties.putInt(\"commissionApproved\", %@);\n", [self doubleTab], [NSNumber numberWithBool:self.swtApproved.isOn]];
