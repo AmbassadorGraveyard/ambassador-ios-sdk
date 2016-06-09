@@ -413,7 +413,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@@\"campaign\" : @\"%@\",\n", [self tabSpace], self.selectedCampaign.campID]];
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@@\"revenue\" : @%@,\n", [self tabSpace], self.tfRevAmt.text]];
     [conversionPropertyString appendFormat:@"%@@\"commissionApproved\" : @%@\n", [self tabSpace], [self stringForBool:self.swtApproved.isOn forSwift:NO]];
-    if (self.swtAutoCreate.isOn) { [conversionPropertyString appendFormat:@"%@@\"emailNewAmbassador\" : @\"%@\",\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn forSwift:NO]]; }
+    if (self.swtAutoCreate.isOn) { [conversionPropertyString appendFormat:@"%@@\"emailNewAmbassador\" : @%@,\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn forSwift:NO]]; }
     if (![AMBUtilities stringIsEmpty:self.tfTransactionUID.text]) { [conversionPropertyString appendFormat:@"%@@\"orderId\" : @\"%@\",\n", [self tabSpace], self.tfTransactionUID.text]; }
     if (![AMBUtilities stringIsEmpty:self.tfEventData1.text]) { [conversionPropertyString appendFormat:@"%@@\"eventData1\" : @\"%@\",\n", [self tabSpace], self.tfEventData1.text]; }
     if (![AMBUtilities stringIsEmpty:self.tfEventData2.text]) { [conversionPropertyString appendFormat:@"%@@\"eventData2\" : @\"%@\",\n", [self tabSpace], self.tfEventData2.text]; }
@@ -496,7 +496,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"campaign\" : \"%@\",\n", [self tabSpace], self.selectedCampaign.campID]];
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"revenue\" : %@,\n", [self tabSpace], self.tfRevAmt.text]];
     [conversionPropertyString appendFormat:@"%@\"commissionApproved\" : %@,\n", [self tabSpace], [self stringForBool:self.swtApproved.isOn forSwift:YES]];
-    if (self.swtAutoCreate.isOn) { [conversionPropertyString appendFormat:@"%@\"emailNewAmbassador\" : \"%@\",\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn forSwift:YES]]; }
+    if (self.swtAutoCreate.isOn) { [conversionPropertyString appendFormat:@"%@\"emailNewAmbassador\" : %@,\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn forSwift:YES]]; }
     if (![AMBUtilities stringIsEmpty:self.tfTransactionUID.text]) { [conversionPropertyString appendFormat:@"%@\"orderId\" : \"%@\",\n", [self tabSpace], self.tfTransactionUID.text]; }
     if (![AMBUtilities stringIsEmpty:self.tfEventData1.text]) { [conversionPropertyString appendFormat:@"%@\"eventData1\" : \"%@\",\n", [self tabSpace], self.tfEventData1.text]; }
     if (![AMBUtilities stringIsEmpty:self.tfEventData2.text]) { [conversionPropertyString appendFormat:@"%@\"eventData2\" : \"%@\",\n", [self tabSpace], self.tfEventData2.text]; }
@@ -537,34 +537,66 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 }
 
 - (ZZArchiveEntry *)getJavaFile {
-    // Creats conversion parameter object from values
-    AMBConversionParameters *params = [self conversionParameterFromValues];
+    NSString *spacing = @"        ";
     
-    // Build java conversion string
-    NSMutableString *conversionString = [[NSMutableString alloc] initWithString:@"        ConversionParameters conversionParameters = new ConversionParameters.Builder()\n"];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setEmail(\"%@\")\n", params.mbsy_email]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setRevenue(%@f)\n", params.mbsy_revenue]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setCampaign(%@)\n", params.mbsy_campaign]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setAddToGroupId(\"%@\")\n", params.mbsy_add_to_group_id]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setFirstName(\"%@\")\n", params.mbsy_first_name]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setLastName(\"%@\")\n", params.mbsy_last_name]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setUID(\"%@\")\n", params.mbsy_uid]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setCustom1(\"%@\")\n", params.mbsy_custom1]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setCustom2(\"%@\")\n", params.mbsy_custom2]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setCustom3(\"%@\")\n", params.mbsy_custom3]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setTransactionUID(\"%@\")\n", params.mbsy_transaction_uid]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setEventData1(\"%@\")\n", params.mbsy_event_data1]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setEventData2(\"%@\")\n", params.mbsy_event_data2]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setEventData3(\"%@\")\n", params.mbsy_event_data3]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setIsApproved(%@)\n", params.mbsy_is_approved]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setAutoCreate(%@)\n", params.mbsy_auto_create]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setDeactivateNewAmbassador(%@)\n", params.mbsy_deactivate_new_ambassador]];
-    [conversionString appendString:[NSString stringWithFormat:@"            .setEmailNewAmbassador(%@)\n", params.mbsy_email_new_ambassador]];
-    [conversionString appendString:@"            .build();\n"];
-    [conversionString appendString:@"        AmbassadorSDK.registerConversion(conversionParameters, false);\n"];
+    // Create IDENTIFY starting with traits
+    NSMutableString *traitsString = [[NSMutableString alloc] initWithFormat:@"%@// Create bundle with traits about user\n", spacing];
+    [traitsString appendFormat:@"%@Bundle traits = new Bundle();\n", spacing];
+    [traitsString appendFormat:@"%@traits.putString(\"email\", \"%@\");\n", spacing, self.tfRefEmail.text];
+    
+    // If the optional forms are filled out, we add them to the snippet
+    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsString appendFormat:@"%@traits.putString(\"firstName\", \"%@\");\n", spacing, self.tfFirstName.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsString appendFormat:@"%@traits.putString(\"lastName\", \"%@\");\n", spacing, self.tfLastName.text]; }
+    
+    NSMutableString *optionsString = nil;
+    if (self.swtAutoCreate && self.selectedCampaign) {
+        optionsString = [[NSMutableString alloc] initWithFormat:@"%@// Create bundle with option to auto-enroll user in campaign\n", spacing];
+        [optionsString appendFormat:@"%@Bundle options = new Bundle();\n", spacing];
+        [optionsString appendFormat:@"%@options.putString(\"campaign\", \"%@\");\n\n", spacing, self.selectedCampaign.campID];
+    }
+    
+    // Creates the correct identify string based on options being nil
+    NSString *userIdString = [AMBUtilities stringIsEmpty:self.tfUID.text] ? @"null" : [NSString stringWithFormat:@"\"%@\"", self.tfUID.text];
+    NSString *identifyString = (optionsString) ? [NSString stringWithFormat:@"%@AmbassadorSDK.identify(%@, traits, options);\n", spacing, userIdString] :
+    [NSString stringWithFormat:@"%@AmbassadorSDK.identify(%@, traits, null);\n", spacing, userIdString];
+    
+    // Creates a full identify string to be inserted into appDelegate template
+    NSMutableString *javaIdentifyString = [[NSMutableString alloc] init];
+    if (traitsString) { [javaIdentifyString appendString:traitsString]; }
+    if (optionsString) { [javaIdentifyString appendString:optionsString]; }
+    [javaIdentifyString appendString:identifyString];
+    
+    
+    // Creates propertiest bundle part of string
+    NSMutableString *javaString = [[NSMutableString alloc] initWithFormat:@"%@// Create properties bundle\n", [self doubleTab]];
+    [javaString appendFormat:@"%@properties.putInt(\"campaign\", %@);\n", [self doubleTab], self.selectedCampaign.campID];
+    [javaString appendFormat:@"%@properties.putFloat(\"revenue\", %@f);\n", [self doubleTab], self.tfRevAmt.text];
+    [javaString appendFormat:@"%@properties.putInt(\"commissionApproved\", %@);\n", [self doubleTab], [NSNumber numberWithBool:self.swtApproved.isOn]];
+    if (![AMBUtilities stringIsEmpty:self.tfEventData1.text]) { [javaString appendFormat:@"%@properties.putString(\"eventData1\", %@);\n", [self doubleTab], self.tfEventData1.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfEventData2.text]) { [javaString appendFormat:@"%@properties.putString(\"eventData2\", %@);\n", [self doubleTab], self.tfEventData2.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfEventData3.text]) { [javaString appendFormat:@"%@properties.putString(\"eventData3\", %@);\n", [self doubleTab], self.tfEventData3.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfTransactionUID.text]) { [javaString appendFormat:@"%@properties.putString(\"orderId\", %@);\n", [self doubleTab], self.tfTransactionUID.text]; }
+    if (self.swtAutoCreate.isOn) { [javaString appendFormat:@"%@properties.putInt(\"emailNewAmbassadord\", %@);\n\n", [self doubleTab], [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn]]; }
+
+    [javaString appendFormat:@"%@// Create options bundle\n", [self doubleTab]];
+    [javaString appendFormat:@"%@properties.putBoolean(\"conversion\", true);\n\n", [self doubleTab]];
+    
+    [javaString appendFormat:@"%@AmbassadorSDK.trackEvent(\"Event Name\", properties, options, new ConversionStatusListener() {\n", [self doubleTab]];
+    [javaString appendFormat:@"%@    @Override\n", [self doubleTab]];
+    [javaString appendFormat:@"%@    public void success() {\n", [self doubleTab]];
+    [javaString appendFormat:@"%@%@println(\"Success!\");\n    %@}\n\n", [self doubleTab], [self doubleTab], [self doubleTab]];
+    [javaString appendFormat:@"%@    @Override\n", [self doubleTab]];
+    [javaString appendFormat:@"%@    public void pending() {\n", [self doubleTab]];
+    [javaString appendFormat:@"%@%@println(\"Pending!\");\n    %@}\n\n", [self doubleTab], [self doubleTab], [self doubleTab]];
+    [javaString appendFormat:@"%@    @Override\n", [self doubleTab]];
+    [javaString appendFormat:@"%@    public void error() {\n", [self doubleTab]];
+    [javaString appendFormat:@"%@%@println(\"Error!\");\n    %@}\n", [self doubleTab], [self doubleTab], [self doubleTab]];
+    [javaString appendFormat:@"%@});\n", [self doubleTab]];
+
+    NSString *completeSnippet = [NSString stringWithFormat:@"%@\n%@", javaIdentifyString, javaString];
     
     // Creates java file
-    NSString *javaFileString = [FileWriter javaMyApplicationFileWithInsert:conversionString];
+    NSString *javaFileString = [FileWriter javaMyApplicationFileWithInsert:completeSnippet];
     
     ZZArchiveEntry *javaEntry = [ZZArchiveEntry archiveEntryWithFileName:@"MyApplication.java" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
         return [javaFileString dataUsingEncoding:NSUTF8StringEncoding];
