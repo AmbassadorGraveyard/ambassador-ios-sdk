@@ -445,7 +445,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     NSString *fullConversionString = [NSString stringWithFormat:@"%@\n%@", conversionPropertyString, conversionString];
     
     // Creats app delegate file
-    NSString *objcConversion = [NSString stringWithFormat:@"%@\n\n\n%@\n\n", fullString, fullConversionString];
+    NSString *objcConversion = [NSString stringWithFormat:@"%@\n\n\n%@\n", fullString, fullConversionString];
     NSString *objcSnippet = [FileWriter objcAppDelegateFileWithInsert:objcConversion];
     
     ZZArchiveEntry *objcEntry = [ZZArchiveEntry archiveEntryWithFileName:@"AppDelegate.m" compress:YES dataBlock:^NSData * _Nullable(NSError * _Nullable __autoreleasing * _Nullable error) {
