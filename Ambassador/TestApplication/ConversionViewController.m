@@ -81,11 +81,6 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [super viewDidLoad];
     [self setUpTheme];
     [self setupSlidingViews];
-    
-    // TEMPORARY-- Sets up 3 second press gesture to test out the 'Track' function
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(testTrack:)];
-    longPress.minimumPressDuration = 3;
-    [self.btnSubmit addGestureRecognizer:longPress];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -269,7 +264,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 
 #pragma mark - Helper Functions
 
-- (void)getShortCodeAndSubmitForTest:(BOOL)testing {
+- (void)getShortCodeAndSubmit {
     // Sets up request
     NSString *urlString = [NSString stringWithFormat:@"urls/?campaign_uid=%@&email=%@", self.selectedCampaign.campID, self.tfReferrerEmail.text];
     
@@ -301,14 +296,9 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
                 // Grabs the shortcode from the response and makes a conversion call
                 NSString *shortCode = [self shortCodeFromDictionary:returnDict];
                 
-                // If testing, we call the new Track method
-                if (testing) {
-                    [self performTrackWithShortCode:shortCode];
-                    
-                // Else, we call the regular RegisterConversion method
-                } else {
-                    [self registerConversionWithShortCode:shortCode];
-                }
+                // Register conversion
+                [self performTrackWithShortCode:shortCode];
+              
             } else {
                 UIAlertView *failAlert = [[UIAlertView alloc] initWithTitle:@"Conversion Failed" message:@"An ambassador could not be found for the email and campaign provided." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
                 [failAlert show];
@@ -320,36 +310,9 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     }] resume];
 }
 
-- (void)registerConversionWithShortCode:(NSString*)shortCode {
-    // Gets the conversion object and saves the short code so that the conversion can be registered
-    AMBConversionParameters *conversionParameters = [self conversionParameterFromValues];
-    [AMBValues setMbsyCookieWithCode:shortCode];
-    
-    UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:@"You have successfully registered a conversion." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [successAlert show];
-    
-    [AmbassadorSDK registerConversion:conversionParameters restrictToInstall:NO completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {
-        NSLog(@"Conversion Object - %@", conversion);
-        
-        switch (conversionStatus) {
-            case ConversionSuccessful:
-                NSLog(@"Success!");
-                break;
-            case ConversionPending:
-                NSLog(@"Pending!");
-                break;
-            case ConversionError:
-                NSLog(@"Error :(");
-                break;
-            default:
-                break;
-        }
-    }];
-}
-
 - (void)performConversionActionWithShortCode {
     if (![self invalidFields:YES]) {
-        [self getShortCodeAndSubmitForTest:NO];
+        [self getShortCodeAndSubmit];
     }
 }
 
@@ -642,40 +605,6 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     return NO;
 }
 
-/* 
- Creates an AMBConversionParameter object based
- on the values set in the Conversion page.
- If the value is left blank, the property is set
- to the default value from the object's
- instantiation */
-- (AMBConversionParameters*)conversionParameterFromValues {
-    AMBConversionParameters *parameters = [[AMBConversionParameters alloc] init];
-    
-    // Required Params
-    parameters.mbsy_email = self.tfRefEmail.text;
-    parameters.mbsy_campaign = [NSNumber numberWithInteger:[self.selectedCampaign.campID integerValue]];
-    parameters.mbsy_revenue = [NSNumber numberWithFloat:[self.tfRevAmt.text floatValue]];
-    
-    // Optional Params
-    parameters.mbsy_add_to_group_id = ![self isEmpty:self.tfGroupID] && self.swtAutoCreate.isOn ? self.tfGroupID.text : parameters.mbsy_add_to_group_id;
-    parameters.mbsy_first_name = ![self isEmpty:self.tfFirstName] ? self.tfFirstName.text : parameters.mbsy_first_name;
-    parameters.mbsy_last_name = ![self isEmpty:self.tfLastName] ? self.tfLastName.text : parameters.mbsy_last_name;
-    parameters.mbsy_email_new_ambassador = self.swtAutoCreate.isOn ? [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn] : [NSNumber numberWithBool:NO];
-    parameters.mbsy_uid = ![self isEmpty:self.tfUID] ? self.tfUID.text : parameters.mbsy_uid;
-    parameters.mbsy_custom1 = ![self isEmpty:self.tfCustom1] ? self.tfCustom1.text : parameters.mbsy_custom1;
-    parameters.mbsy_custom2 = ![self isEmpty:self.tfCustom2] ? self.tfCustom2.text : parameters.mbsy_custom2;
-    parameters.mbsy_custom3 = ![self isEmpty:self.tfCustom3] ? self.tfCustom3.text : parameters.mbsy_custom3;
-    parameters.mbsy_auto_create = [NSNumber numberWithBool: self.swtAutoCreate.isOn];
-    parameters.mbsy_deactivate_new_ambassador = [NSNumber numberWithBool: NO];
-    parameters.mbsy_transaction_uid = ![self isEmpty:self.tfTransactionUID] ? self.tfTransactionUID.text : parameters.mbsy_transaction_uid;
-    parameters.mbsy_event_data1 = ![self isEmpty:self.tfEventData1] ? self.tfEventData1.text : parameters.mbsy_event_data1;
-    parameters.mbsy_event_data2 = ![self isEmpty:self.tfEventData2] ? self.tfEventData2.text : parameters.mbsy_event_data2;
-    parameters.mbsy_event_data3 = ![self isEmpty:self.tfEventData3] ? self.tfEventData3.text : parameters.mbsy_event_data3;
-    parameters.mbsy_is_approved = [NSNumber numberWithBool:self.swtApproved.isOn];
-    
-    return parameters;
-}
-
 - (BOOL)isEmpty:(UITextField*)textField {
     NSString *stringWithoutSpaces = [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     return [stringWithoutSpaces isEqualToString:@""];
@@ -724,15 +653,42 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     // Saves short code based on referrer email
     [AMBValues setMbsyCookieWithCode:shortCode];
     
+    UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:@"You have successfully registered a conversion." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    [successAlert show];
+    
+    // Format strings
+    NSString *addToGroupString = self.swtAutoCreate.isOn ? self.tfGroupID.text : @"";
+    NSString *idUID = ![AMBUtilities stringIsEmpty:self.tfUID.text] ? self.tfUID.text : nil;
+    
+    // Create traits for identify
+    NSDictionary *traitsDictionary = @{ @"email" : self.tfRefEmail.text,
+                                        @"firstName" : self.tfFirstName.text,
+                                        @"lastName" : self.tfLastName.text,
+                                        @"customLabel1" : self.tfCustom1.text,
+                                        @"customLabel2" : self.tfCustom2.text,
+                                        @"customLabel3" : self.tfCustom3.text,
+                                        @"addToGroups" : addToGroupString};
+    
+    // Create identify options dict is needed
+    NSDictionary *identifyOptions = nil;
+    if (self.swtAutoCreate.isOn) {
+        identifyOptions = @{@"campaign" : self.selectedCampaign.campID};
+    }
+    
+    // Call identify
+    [AmbassadorSDK identifyWithUserID:idUID traits:traitsDictionary options:identifyOptions];
+    
+    
     // Sets all properties for converions
-    NSDictionary *propertiesDictionary = @{ @"orderId" : self.tfTransactionUID.text,
+    NSDictionary *propertiesDictionary = @{ @"email" : self.tfRefEmail.text,
+                                            @"orderId" : self.tfTransactionUID.text,
                                             @"campaign" : [NSNumber numberWithInteger:[self.selectedCampaign.campID integerValue]],
                                             @"revenue" : [NSNumber numberWithFloat:[self.tfRevAmt.text floatValue]],
                                             @"commissionApproved" : [NSNumber numberWithBool:self.swtApproved.isOn],
                                             @"eventData1" : self.tfEventData1.text,
                                             @"eventData2" : self.tfEventData2.text,
                                             @"eventData3" : self.tfEventData3.text,
-                                            @"emailNewAmbassador" : [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn] };
+                                            @"emailNewAmbassador" : [NSNumber numberWithBool:(self.swtAutoCreate.isOn && self.swtEmailNewAmbassador.isOn)] };
     
     // Sets option dictionary for the conversion
     NSDictionary *optionsDictionary = @{ @"conversion" : @YES,
@@ -754,13 +710,6 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
                 break;
         }
     }];
-}
-
-// Called when the 'Submit' button is long-pressed for 3 seconds
-- (void)testTrack:(UIGestureRecognizer *)recognizer {
-    if (recognizer.state == UIGestureRecognizerStateBegan) {
-        [self getShortCodeAndSubmitForTest:YES];
-    }
 }
 
 - (NSString *)doubleTab {

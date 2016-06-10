@@ -223,8 +223,10 @@ CGFloat identifyOffset;
         // Creates options to auto-enroll user if campaign is selected and the switch is on
         NSDictionary *optionsDict = self.selectedCampaign && self.swtEnroll.isOn ? @{ @"campaign" : self.selectedCampaign.campID } : nil;
         
+        NSString *UIDString = ![AMBUtilities stringIsEmpty:self.tfUID.text] ? self.tfUID.text : nil;
+        
         // Call identify
-        [AmbassadorSDK identifyWithUserID:@"0" traits:traitsDict options:optionsDict];
+        [AmbassadorSDK identifyWithUserID:UIDString traits:traitsDict options:optionsDict];
         
         // Create an identify success message
         NSString *confirmationMessage = [NSString stringWithFormat:@"You have succesfully identified as %@! You can now track conversion events and create commissions!", email];
