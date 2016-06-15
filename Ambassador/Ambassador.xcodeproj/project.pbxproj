@@ -237,6 +237,8 @@
 		EF8FD8AC1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8AB1CA9C60400C0ADB7 /* SocialShareOptionsHandler.m */; };
 		EF8FD8AF1CA9CA9900C0ADB7 /* SocialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8FD8AE1CA9CA9900C0ADB7 /* SocialCell.m */; };
 		EF934E881CED060D009DCA2F /* AMBSecrets.m in Sources */ = {isa = PBXBuildFile; fileRef = EF934E871CED060D009DCA2F /* AMBSecrets.m */; };
+		EF9604891D11D7A100C8EEF1 /* UIAlertController+CancelAlertController.h in Headers */ = {isa = PBXBuildFile; fileRef = EF9604871D11D7A100C8EEF1 /* UIAlertController+CancelAlertController.h */; };
+		EF96048A1D11D7A100C8EEF1 /* UIAlertController+CancelAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9604881D11D7A100C8EEF1 /* UIAlertController+CancelAlertController.m */; };
 		EF9D98C51CA1839600F5711F /* ThemeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C41CA1839600F5711F /* ThemeHandler.m */; };
 		EF9D98C81CA1906400F5711F /* RAFItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98C71CA1906400F5711F /* RAFItem.m */; };
 		EF9D98D41CA31A5F00F5711F /* ValuesHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9D98D31CA31A5F00F5711F /* ValuesHandler.m */; };
@@ -614,6 +616,8 @@
 		EF8FD8AD1CA9CA9900C0ADB7 /* SocialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocialCell.h; sourceTree = "<group>"; };
 		EF8FD8AE1CA9CA9900C0ADB7 /* SocialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocialCell.m; sourceTree = "<group>"; };
 		EF934E871CED060D009DCA2F /* AMBSecrets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSecrets.m; sourceTree = "<group>"; };
+		EF9604871D11D7A100C8EEF1 /* UIAlertController+CancelAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+CancelAlertController.h"; sourceTree = "<group>"; };
+		EF9604881D11D7A100C8EEF1 /* UIAlertController+CancelAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+CancelAlertController.m"; sourceTree = "<group>"; };
 		EF9D98C31CA1839600F5711F /* ThemeHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThemeHandler.h; sourceTree = "<group>"; };
 		EF9D98C41CA1839600F5711F /* ThemeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThemeHandler.m; sourceTree = "<group>"; };
 		EF9D98C61CA1906400F5711F /* RAFItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RAFItem.h; sourceTree = "<group>"; };
@@ -1414,6 +1418,8 @@
 				EFE7D7921C21BA7400D7F92C /* Theme Manager */,
 				EF1CC8051C99E11000C2752B /* Custom Input */,
 				EFE7D7911C21BA5F00D7F92C /* Utilities */,
+				EF9604871D11D7A100C8EEF1 /* UIAlertController+CancelAlertController.h */,
+				EF9604881D11D7A100C8EEF1 /* UIAlertController+CancelAlertController.m */,
 			);
 			name = Misc;
 			sourceTree = "<group>";
@@ -1559,6 +1565,7 @@
 				EFE7D7B51C2202C900D7F92C /* AMBConversionParametersEntity.h in Headers */,
 				DB95D7671BD821D9006A1E4A /* AMBOptions.h in Headers */,
 				DBA3FB7B1BA8A23C00672D82 /* AMBContactLoader.h in Headers */,
+				EF9604891D11D7A100C8EEF1 /* UIAlertController+CancelAlertController.h in Headers */,
 				EFE7D79C1C21CB2D00D7F92C /* AMBCoreDataManager.h in Headers */,
 				DBA3FC091BA8AA1D00672D82 /* AMBPTURLRequestOperation.h in Headers */,
 				DBA3FC1E1BA8AA1D00672D82 /* AMBPTPusherEventPublisher.h in Headers */,
@@ -1951,6 +1958,7 @@
 				DBA3FB721BA8A23C00672D82 /* AmbassadorSDK.m in Sources */,
 				DBA3FC0A1BA8AA1D00672D82 /* AMBPTBlockEventListener.m in Sources */,
 				EF5579FB1C84F65500F66761 /* AMBWelcomeScreenViewController.m in Sources */,
+				EF96048A1D11D7A100C8EEF1 /* UIAlertController+CancelAlertController.m in Sources */,
 				EF1A4F2D1CC58DE8008EE886 /* SlidingView.m in Sources */,
 				DBA3FC151BA8AA1D00672D82 /* AMBPTPusherChannelAuthorizationOperation.m in Sources */,
 				DBA3FBAC1BA8A24F00672D82 /* AMBLinkedInShare.m in Sources */,

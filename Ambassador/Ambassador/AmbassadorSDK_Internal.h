@@ -18,7 +18,7 @@
 #import "AMBConversion.h"
 #import "AMBConversionParameter_Internal.h"
 
-@interface AmbassadorSDK () <AMBInputAlertDelegate, UIAlertViewDelegate>
+@interface AmbassadorSDK () <AMBInputAlertDelegate>
 
 + (AmbassadorSDK*)sharedInstance;
 - (void)subscribeToPusherWithSuccess:(void(^)())success;
