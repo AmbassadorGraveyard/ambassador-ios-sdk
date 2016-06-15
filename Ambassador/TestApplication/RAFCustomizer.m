@@ -19,6 +19,7 @@
 #import "AMBThemeManager.h"
 #import "Validator.h"
 #import "AmbassadorHelper.h"
+#import "UIAlertController+CancelAlertController.h"
 
 @interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate,
                             UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate, UIAlertViewDelegate>
@@ -492,15 +493,15 @@ NSString * originalName;
 - (BOOL)validForm {
     // Checks for empty RAF Name
     if ([AMBUtilities stringIsEmpty:self.tfRafName.text]) {
-        UIAlertView *emptyNameAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Integration Name field cannot be blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [emptyNameAlert show];
+        UIAlertController *emptyNameAlert = [UIAlertController cancelAlertWithTitle:@"Hold on!" message:@"The Integration Name field cannot be blank." cancelMessage:@"Okay"];
+        [self presentViewController:emptyNameAlert animated:YES completion:nil];
         return NO;
     }
     
     // Checks for Empty campaign ID
     if ([AMBUtilities stringIsEmpty:self.tfCampId.text]) {
-        UIAlertView *emptyIDAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Campaign field cannot be blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [emptyIDAlert show];
+        UIAlertController *emptyIDAlert = [UIAlertController cancelAlertWithTitle:@"Hold on!" message:@"The Campaign field cannot be blank." cancelMessage:@"Okay"];
+        [self presentViewController:emptyIDAlert animated:YES completion:nil];
         return NO;
     }
     
@@ -509,8 +510,8 @@ NSString * originalName;
 
     if ([ThemeHandler duplicateRAFName:nameWithoutSpaces] && ![nameWithoutSpaces isEqualToString:originalName]) {
         NSString *errorString = [NSString stringWithFormat:@"Duplicate RAF names are not allowed: %@", self.tfRafName.text];
-        UIAlertView *duplicateAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:errorString delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [duplicateAlert show];
+        UIAlertController *duplicateAlert = [UIAlertController cancelAlertWithTitle:@"Hold on!" message:errorString cancelMessage:@"Okay"];
+        [self presentViewController:duplicateAlert animated:YES completion:nil];
         return NO;
     }
     
