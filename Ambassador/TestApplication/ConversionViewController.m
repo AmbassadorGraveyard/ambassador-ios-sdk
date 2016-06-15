@@ -22,6 +22,7 @@
 #import "CampaignListController.h"
 #import "GroupListViewController.h"
 #import "GroupObject.h"
+#import "UIAlertController+CancelAlertController.h"
 
 @interface ConversionViewController () <UITextFieldDelegate, SlidingViewDatasource, SlidingViewDelegate, CampaignListDelegate, GroupListDelegate>
 
@@ -300,12 +301,12 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
                 [self performTrackWithShortCode:shortCode];
               
             } else {
-                UIAlertView *failAlert = [[UIAlertView alloc] initWithTitle:@"Conversion Failed" message:@"An ambassador could not be found for the email and campaign provided." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-                [failAlert show];
+                UIAlertController *failAlert = [UIAlertController cancelAlertWithTitle:@"Conversion Failed" message:@"An ambassador could not be found for the email and campaign provided." cancelMessage:@"Okay"];
+                [self presentViewController:failAlert animated:YES completion:nil];
             }
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Conversion Failed" message:@"There was an error registering the conversion.  Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-            [alert show];
+            UIAlertController *failAlert = [UIAlertController cancelAlertWithTitle:@"Conversion Failed" message:@"There was an error registering the conversion.  Please try again." cancelMessage:@"Okay"];
+            [self presentViewController:failAlert animated:YES completion:nil];
         }
     }] resume];
 }
@@ -582,22 +583,22 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 
 - (BOOL)invalidFields:(BOOL)checkReferrer {
     if (![Validator isValidEmail:self.tfReferrerEmail.text] && checkReferrer) {
-        UIAlertView *blankRefAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Referrer Email field must be a valid email." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [blankRefAlert show];
+        UIAlertController *failAlert = [UIAlertController cancelAlertWithTitle:@"Hold on!" message:@"The Referrer Email field must be a valid email." cancelMessage:@"Okay"];
+        [self presentViewController:failAlert animated:YES completion:nil];
         
         return YES;
     }
     
     if ([Validator emptyString:self.tfRefEmail.text] || [Validator emptyString:self.tfRevAmt.text] || [Validator emptyString:self.tfCampID.text]) {
-        UIAlertView *blankAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"Required fields cannot be left blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [blankAlert show];
+        UIAlertController *failAlert = [UIAlertController cancelAlertWithTitle:@"Hold on!" message:@"Required fields cannot be left blank." cancelMessage:@"Okay"];
+        [self presentViewController:failAlert animated:YES completion:nil];
         
         return YES;
     }
     
     if (![Validator isValidEmail:self.tfRefEmail.text]) {
-        UIAlertView *invalidEmailAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:[NSString stringWithFormat:@"Please enter a valid email address."]  delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [invalidEmailAlert show];
+        UIAlertController *failAlert = [UIAlertController cancelAlertWithTitle:@"Hold on!" message:@"Please enter a valid email address." cancelMessage:@"Okay"];
+        [self presentViewController:failAlert animated:YES completion:nil];
         
         return YES;
     }
@@ -652,9 +653,9 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 - (void)performTrackWithShortCode:(NSString *)shortCode {
     // Saves short code based on referrer email
     [AMBValues setMbsyCookieWithCode:shortCode];
-    
-    UIAlertView *successAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:@"You have successfully registered a conversion." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [successAlert show];
+
+    UIAlertController *successAlert = [UIAlertController cancelAlertWithTitle:@"Great!" message:@"You have successfully registered a conversion." cancelMessage:@"Okay"];
+    [self presentViewController:successAlert animated:YES completion:nil];
     
     // Format strings
     NSString *addToGroupString = self.swtAutoCreate.isOn ? self.tfGroupID.text : @"";
