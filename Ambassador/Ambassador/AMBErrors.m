@@ -90,9 +90,9 @@
         default:
             break;
     }
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Unable to select!" message:errorString delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [alertView show];
+
+    UIAlertController *errorAlert = [UIAlertController cancelAlertWithTitle:@"Unable to select!" message:errorString cancelMessage:@"Okay"];
+    [[AMBUtilities getTopViewController] presentViewController:errorAlert animated:YES completion:nil];
 }
 
 + (void)errorLoadingContactsForVC:(UIViewController*)viewController {
@@ -100,8 +100,9 @@
 }
 
 + (void)errorSimpleInvalidEmail:(NSString*)attemptedEmail {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Invalid Email" message:[NSString stringWithFormat:@"You have entered an invalid email: %@. Please try again.", attemptedEmail] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [alertView show];
+    NSString *errorString = [NSString stringWithFormat:@"You have entered an invalid email: %@. Please try again.", attemptedEmail];
+    UIAlertController *errorAlert = [UIAlertController cancelAlertWithTitle:@"Invalid Email" message:errorString cancelMessage:@"Okay"];
+    [[AMBUtilities getTopViewController] presentViewController:errorAlert animated:YES completion:nil];
 }
 
 @end
