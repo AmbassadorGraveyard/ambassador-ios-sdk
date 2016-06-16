@@ -353,7 +353,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
                 [AmbassadorSDK sharedInstance].npsContentColor = nil;
                 [AmbassadorSDK sharedInstance].npsButtonColor = nil;
             } else {
-                // Once the alertView is dismissed is when we want to present the survey
+                // Once the alertcontroller is dismissed is when we want to present the survey
                 [self presentNPSSurvey];
             }
         }];
@@ -364,7 +364,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
         
         [[AMBUtilities getTopViewController] presentViewController:alert animated:YES completion:nil];
         
-        // If the user taps on the app when in the background then we skip the alertView
+        // If the user taps on the app when in the background then we skip the alertcontroller
     } else {
         // If an action is passed in, the action is performed
         if (action) { action(); }
