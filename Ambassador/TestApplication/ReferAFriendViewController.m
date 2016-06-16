@@ -18,7 +18,7 @@
 #import "UIActivityViewController+ZipShare.h"
 #import "AmbassadorHelper.h"
 
-@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, RAFCellDelegate, RAFCustomizerDelegate>
+@interface ReferAFriendViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, RAFCellDelegate, RAFCustomizerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIView * imgBGView;
@@ -139,17 +139,6 @@ NSInteger shareCellIndex;
 }
 
 
-#pragma mark - UIAlertView Delegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    // Checks to make sure 'Yes' was tapped
-    if (buttonIndex == 1) {
-        [ThemeHandler deleteRafItem:itemToDelete];
-        [self reloadThemesWithFade:YES];
-    }
-}
-
-
 #pragma mark - RAFCustomizer Delegate
 
 - (void)RAFCustomizerSavedRAF:(RAFItem *)rafItem {
@@ -162,8 +151,17 @@ NSInteger shareCellIndex;
 - (void)RAFCellDeleteTappedForRAFItem:(RAFItem *)rafItem {
     // Shows confirmation alert
     NSString *confirmationString = [NSString stringWithFormat:@"%@ will be permanently deleted.", rafItem.rafName];
-    UIAlertView *deleteConfirmation = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:confirmationString delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-    [deleteConfirmation show];
+    
+    UIAlertController *deleteConfirmation = [UIAlertController alertControllerWithTitle:@"Are you sure?" message:confirmationString preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *no = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *yes = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [ThemeHandler deleteRafItem:itemToDelete];
+        [self reloadThemesWithFade:YES];
+    }];
+    
+    [deleteConfirmation addAction:no];
+    [deleteConfirmation addAction:yes];
+    [self presentViewController:deleteConfirmation animated:YES completion:nil];
     
     // Gets rafItem to delete
     itemToDelete = rafItem;

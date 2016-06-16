@@ -19,7 +19,7 @@
 #import "AMBNPSViewController.h"
 
 // Testing category made to reveal private methods only in tests
-@interface AmbassadorSDK (Tests) <UIAlertViewDelegate>
+@interface AmbassadorSDK (Tests)
 
 @property (nonatomic, strong) AMBConversion *conversion;
 @property (nonatomic, strong) AMBPusherManager *pusherManager;
@@ -403,24 +403,6 @@ NSString * const universalToken = @"test";
     [mockSB verify];
     [mockNtwkMng verify];
     [mockNtwkMng stopMocking];
-}
-
-
-#pragma mark - UIAlertView Delegate Tests
-
-- (void)testAlertViewClickedButton {
-    // GIVEN
-    id mockAlertView = [OCMockObject mockForClass:[UIAlertView class]];
-    
-    [[[self.mockAmbassadorSDK expect] andDo:nil] presentNPSSurvey];
-    
-    // WHEN
-    [self.ambassadorSDK alertView:mockAlertView didDismissWithButtonIndex:1];
-    
-    // THEN
-    [self.mockAmbassadorSDK verify];
-    
-    [mockAlertView stopMocking];
 }
 
 @end

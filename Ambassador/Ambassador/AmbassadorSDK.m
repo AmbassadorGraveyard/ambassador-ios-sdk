@@ -342,10 +342,29 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     
     // Checks if the app is already open and shows an alert if so
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"Can you help us out by taking a quick survey?" delegate:[AmbassadorSDK sharedInstance] cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-        [alertView show];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"Can you help us out by taking a quick survey?" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *yes = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            // If there are temp colors set, we present the themed NPS controller
+            if ([AmbassadorSDK sharedInstance].npsBackgroundColor || [AmbassadorSDK sharedInstance].npsContentColor || [AmbassadorSDK sharedInstance].npsButtonColor) {
+                [[AmbassadorSDK sharedInstance] presentThemedNPSSurveyWithBackgroundColor:[AmbassadorSDK sharedInstance].npsBackgroundColor contentColor:[AmbassadorSDK sharedInstance].npsContentColor buttonColor:[AmbassadorSDK sharedInstance].npsButtonColor];
+                
+                // Sets the temp colors to nil
+                [AmbassadorSDK sharedInstance].npsBackgroundColor = nil;
+                [AmbassadorSDK sharedInstance].npsContentColor = nil;
+                [AmbassadorSDK sharedInstance].npsButtonColor = nil;
+            } else {
+                // Once the alertcontroller is dismissed is when we want to present the survey
+                [self presentNPSSurvey];
+            }
+        }];
         
-        // If the user taps on the app when in the background then we skip the alertView
+        UIAlertAction *no = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:yes];
+        [alert addAction:no];
+        
+        [[AMBUtilities getTopViewController] presentViewController:alert animated:YES completion:nil];
+        
+        // If the user taps on the app when in the background then we skip the alertcontroller
     } else {
         // If an action is passed in, the action is performed
         if (action) { action(); }
@@ -388,26 +407,6 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
         } failure:^(NSString *error) {
             DLog(@"Could not create the Welcome Screen - %@", error);
         }];
-    }
-}
-
-
-#pragma mark - UIAlertView Delegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        // If there are temp colors set, we present the themed NPS controller
-        if ([AmbassadorSDK sharedInstance].npsBackgroundColor || [AmbassadorSDK sharedInstance].npsContentColor || [AmbassadorSDK sharedInstance].npsButtonColor) {
-            [[AmbassadorSDK sharedInstance] presentThemedNPSSurveyWithBackgroundColor:[AmbassadorSDK sharedInstance].npsBackgroundColor contentColor:[AmbassadorSDK sharedInstance].npsContentColor buttonColor:[AmbassadorSDK sharedInstance].npsButtonColor];
-            
-            // Sets the temp colors to nil
-            [AmbassadorSDK sharedInstance].npsBackgroundColor = nil;
-            [AmbassadorSDK sharedInstance].npsContentColor = nil;
-            [AmbassadorSDK sharedInstance].npsButtonColor = nil;
-        } else {
-            // Once the alertView is dismissed is when we want to present the survey
-            [self presentNPSSurvey];
-        }
     }
 }
 

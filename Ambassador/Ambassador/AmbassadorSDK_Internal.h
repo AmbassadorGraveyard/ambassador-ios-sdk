@@ -18,7 +18,7 @@
 #import "AMBConversion.h"
 #import "AMBConversionParameter_Internal.h"
 
-@interface AmbassadorSDK () <AMBInputAlertDelegate, UIAlertViewDelegate>
+@interface AmbassadorSDK () <AMBInputAlertDelegate>
 
 + (AmbassadorSDK*)sharedInstance;
 - (void)subscribeToPusherWithSuccess:(void(^)())success;
@@ -36,7 +36,7 @@
 @property (nonatomic, weak) NSString * tempPlistName;
 @property (nonatomic, weak) UIViewController * tempPresentController;
 
-// Temp vars used to call presentNPS with arguments passed if through alertView
+// Temp vars used to call presentNPS with arguments passed if through alertcontroller
 @property (nonatomic, weak) NSDictionary * notificationData;
 @property (nonatomic, weak) UIColor * npsBackgroundColor;
 @property (nonatomic, weak) UIColor * npsContentColor;

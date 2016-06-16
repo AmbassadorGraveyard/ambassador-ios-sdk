@@ -19,9 +19,10 @@
 #import "AMBThemeManager.h"
 #import "Validator.h"
 #import "AmbassadorHelper.h"
+#import "UIAlertController+CancelAlertController.h"
 
 @interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate,
-                            UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate, UIAlertViewDelegate>
+                            UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIImageView * ivProductPhoto;
@@ -181,16 +182,6 @@ NSString * originalName;
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     self.selectedView = textView;
     return YES;
-}
-
-
-#pragma mark - UIAlertView Delegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    // Checks to make sure user wants to cancel 
-    if (buttonIndex == 1) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
 }
 
 
@@ -492,15 +483,15 @@ NSString * originalName;
 - (BOOL)validForm {
     // Checks for empty RAF Name
     if ([AMBUtilities stringIsEmpty:self.tfRafName.text]) {
-        UIAlertView *emptyNameAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Integration Name field cannot be blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [emptyNameAlert show];
+        UIAlertController *emptyNameAlert = [UIAlertController cancelAlertWithTitle:@"Hold on!" message:@"The Integration Name field cannot be blank." cancelMessage:@"Okay"];
+        [self presentViewController:emptyNameAlert animated:YES completion:nil];
         return NO;
     }
     
     // Checks for Empty campaign ID
     if ([AMBUtilities stringIsEmpty:self.tfCampId.text]) {
-        UIAlertView *emptyIDAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:@"The Campaign field cannot be blank." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [emptyIDAlert show];
+        UIAlertController *emptyIDAlert = [UIAlertController cancelAlertWithTitle:@"Hold on!" message:@"The Campaign field cannot be blank." cancelMessage:@"Okay"];
+        [self presentViewController:emptyIDAlert animated:YES completion:nil];
         return NO;
     }
     
@@ -509,8 +500,8 @@ NSString * originalName;
 
     if ([ThemeHandler duplicateRAFName:nameWithoutSpaces] && ![nameWithoutSpaces isEqualToString:originalName]) {
         NSString *errorString = [NSString stringWithFormat:@"Duplicate RAF names are not allowed: %@", self.tfRafName.text];
-        UIAlertView *duplicateAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:errorString delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [duplicateAlert show];
+        UIAlertController *duplicateAlert = [UIAlertController cancelAlertWithTitle:@"Hold on!" message:errorString cancelMessage:@"Okay"];
+        [self presentViewController:duplicateAlert animated:YES completion:nil];
         return NO;
     }
     
@@ -518,8 +509,16 @@ NSString * originalName;
 }
 
 - (void)showCancelConfirmation {
-    UIAlertView *cancelAlert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"By cancelling, all changes will be lost." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-    [cancelAlert show];
+    UIAlertController *cancelAlert = [UIAlertController alertControllerWithTitle:@"Are you sure?" message:@"By cancelling, all changes will be lost." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *no = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *yes = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [cancelAlert addAction:no];
+    [cancelAlert addAction:yes];
+    
+    [self presentViewController:cancelAlert animated:YES completion:nil];
 }
 
 - (void)updateStatusBarTheme {

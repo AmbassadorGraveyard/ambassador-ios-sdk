@@ -209,7 +209,7 @@ int contactServiceType;
 }
 
 
-#pragma mark - CustomAlertView Delegate
+#pragma mark - CustomAlert Delegate
 
 - (void)okayButtonClickedForUniqueID:(NSString *)uniqueID {
     if ([uniqueID isEqualToString:@"linkedInAuth"]) {

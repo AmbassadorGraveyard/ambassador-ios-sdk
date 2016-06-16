@@ -11,6 +11,7 @@
 #import "AMBErrors.h"
 #import "AMBUtilities.h"
 #import "AMBSendCompletionModal.h"
+#import "UIAlertController+CancelAlertController.h"
 
 @interface AMBErrorsUnitTests : XCTestCase
 
@@ -71,11 +72,11 @@
 }
 
 
-#pragma mark - AlertView Errors
+#pragma mark - Custom Alert Errors
 
 - (void)testAlertErrorNoMatchingIds {
     // GIVEN
-    [self mockAlertview];
+    [self mockCustomAlert];
     [[[self.mockUtilites expect] andDo:nil] presentAlertWithSuccess:NO message:[OCMArg isKindOfClass:[NSString class]] withUniqueID:nil forViewController:[OCMArg any] shouldDismissVCImmediately:YES];
     
     // WHEN
@@ -112,7 +113,7 @@
 
 - (void)testAlertErrorNetworkTimeout {
     // GIVEN
-    [self mockAlertview];
+    [self mockCustomAlert];
     [[[self.mockUtilites expect] andDo:nil] presentAlertWithSuccess:NO message:@"The network request has timed out. Please check your connection and try again." withUniqueID:@"networkTimeOut" forViewController:self.mockVC shouldDismissVCImmediately:YES];
     
     // WHEN
@@ -125,7 +126,7 @@
 - (void)testAlertErrorSharingMessage {
     // GIVEN
     NSString *errorMessage = @"Error message";
-    [self mockAlertview];
+    [self mockCustomAlert];
     [[[self.mockUtilites expect] andDo:nil] presentAlertWithSuccess:NO message:@"Unable to share message.  Please try again." withUniqueID:nil forViewController:self.mockVC shouldDismissVCImmediately:NO];
     
     // WHEN
@@ -161,20 +162,14 @@
     // GIVEN
     NSString *invalidValue = @"123543465";
     AMBSocialServiceType serviceType = AMBSocialServiceTypeFacebook;
-    id mockAlertView = [OCMockObject mockForClass:[UIAlertView class]];
-    [[[mockAlertView expect] andReturn:mockAlertView] alloc];
-    mockAlertView = [[[mockAlertView expect] andDo:nil] initWithTitle:[OCMArg any] message:[OCMArg any] delegate:nil cancelButtonTitle:[OCMArg any] otherButtonTitles:nil];
     
     // WHEN
     [AMBErrors errorSelectingInvalidValueForValue:invalidValue type:serviceType];
-    
-    // THEN
-    [mockAlertView verify];
 }
 
 - (void)testAlertErrorLoadingContacts {
     // GIVEN
-    [self mockAlertview];
+    [self mockCustomAlert];
     [[[self.mockUtilites expect] andDo:nil] presentAlertWithSuccess:NO message:@"Sharing requires access to your contact book. You can enable this in your settings." withUniqueID:@"contactError" forViewController:self.mockVC shouldDismissVCImmediately:NO];
     
     // WHEN
@@ -187,7 +182,7 @@
 
 #pragma mark - Helper Functions
 
-- (void)mockAlertview {
+- (void)mockCustomAlert {
     id mockSB = [OCMockObject mockForClass:[UIStoryboard class]];
     id mockVC = [OCMockObject mockForClass:[AMBSendCompletionModal class]];
     [[[mockSB expect] andDo:nil] storyboardWithName:@"Main" bundle:[OCMArg any]];

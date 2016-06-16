@@ -19,6 +19,7 @@
 #import "CampaignListController.h"
 #import "SlidingView.h"
 #import "AMBUtilities.h"
+#import "UIAlertController+CancelAlertController.h"
 
 @interface IdentifyViewController () <AMBWelcomeScreenDelegate, CampaignListDelegate, UITextFieldDelegate, SlidingViewDatasource>
 
@@ -112,13 +113,13 @@ CGFloat identifyOffset;
 #pragma mark - WelcomeScreen Delegate
 
 - (void)welcomeScreenActionButtonPressed:(UIButton *)actionButton {
-    UIAlertView *actionAlert = [[UIAlertView alloc] initWithTitle:@"Action Button" message:@"You pressed the action button on the welcome screen" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [actionAlert show];
+    UIAlertController *actionAlert = [UIAlertController cancelAlertWithTitle:@"Action Button" message:@"You pressed the action button on the welcome screen" cancelMessage:@"Okay"];
+    [self presentViewController:actionAlert animated:YES completion:nil];
 }
 
 - (void)welcomeScreenLinkPressedAtIndex:(NSInteger)linkIndex {
-    UIAlertView *linkAlert = [[UIAlertView alloc] initWithTitle:@"Link Tapped" message:[NSString stringWithFormat:@"You tapped a link at index %li", (long)linkIndex] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [linkAlert show];
+    UIAlertController *linkAlert = [UIAlertController cancelAlertWithTitle:@"Link Tapped" message:[NSString stringWithFormat:@"You tapped a link at index %li", (long)linkIndex] cancelMessage:@"Okay"];
+    [self presentViewController:linkAlert animated:YES completion:nil];
 }
 
 
@@ -230,8 +231,8 @@ CGFloat identifyOffset;
         
         // Create an identify success message
         NSString *confirmationMessage = [NSString stringWithFormat:@"You have succesfully identified as %@! You can now track conversion events and create commissions!", email];
-        UIAlertView *confirmationAlert = [[UIAlertView alloc] initWithTitle:@"Great!" message:confirmationMessage delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        [confirmationAlert show];
+        UIAlertController *confirmationAlert = [UIAlertController cancelAlertWithTitle:@"Great!" message:confirmationMessage cancelMessage:@"Okay"];
+        [self presentViewController:confirmationAlert animated:YES completion:nil];
         
         return;
     }
@@ -432,8 +433,8 @@ CGFloat identifyOffset;
 }
 
 - (void)showValidationError:(NSString*)action {
-    UIAlertView *invalidEmailAlert = [[UIAlertView alloc] initWithTitle:@"Hold on!" message:[NSString stringWithFormat:@"Please enter a valid email address before %@.", action]  delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-    [invalidEmailAlert show];
+    UIAlertController *invalidEmailAlert = [UIAlertController cancelAlertWithTitle:@"Hold on!" message:[NSString stringWithFormat:@"Please enter a valid email address before %@.", action] cancelMessage:@"Okay"];
+    [self presentViewController:invalidEmailAlert animated:YES completion:nil];
 }
 
 - (NSString *)tabSpace {

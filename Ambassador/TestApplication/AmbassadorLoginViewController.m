@@ -10,6 +10,7 @@
 #import "DefaultsHandler.h"
 #import <Ambassador/Ambassador.h>
 #import "LoadingScreen.h"
+#import "UIAlertController+CancelAlertController.h"
 
 @interface AmbassadorLoginViewController() <UITextFieldDelegate>
 
@@ -133,8 +134,8 @@
             NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
             [self handleSuccessfulLogin:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not Sign In" message:@"There was an error when signing in. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-            [alert show];
+            UIAlertController *cancelAlert = [UIAlertController cancelAlertWithTitle:@"Could not Sign In" message:@"There was an error while signing in. Please try again." cancelMessage:@"Okay"];
+            [self presentViewController:cancelAlert animated:YES completion:nil];
         }
     }] resume];
 }
