@@ -22,7 +22,7 @@
 #import "UIAlertController+CancelAlertController.h"
 
 @interface RAFCustomizer() <ColorPickerDelegate, UITextFieldDelegate, UITextViewDelegate, CampaignListDelegate,
-                            UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate, UIAlertViewDelegate>
+                            UIImagePickerControllerDelegate, UINavigationControllerDelegate, SocialShareHandlerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UIImageView * ivProductPhoto;
@@ -182,16 +182,6 @@ NSString * originalName;
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     self.selectedView = textView;
     return YES;
-}
-
-
-#pragma mark - UIAlertView Delegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    // Checks to make sure user wants to cancel 
-    if (buttonIndex == 1) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
 }
 
 

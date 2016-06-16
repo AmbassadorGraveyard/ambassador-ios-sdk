@@ -20,7 +20,7 @@
 // NSErrors
 + (NSError*)restrictedConversionError;
 
-// AlertView Errors
+// Alert Errors
 + (void)errorAlertNoMatchingCampaignIdsForVC:(UIViewController*)viewController;
 + (void)errorCampaignNoLongerActive:(UIViewController *)viewController;
 + (void)errorLinkedInShareForVC:(UIViewController*)viewController withMessage:(NSString*)message;

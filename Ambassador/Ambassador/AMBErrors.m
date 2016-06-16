@@ -38,7 +38,7 @@
 }
 
 
-#pragma mark - AlertView Errors
+#pragma mark - Alert Errors
 
 + (void)errorAlertNoMatchingCampaignIdsForVC:(UIViewController*)viewController {
     NSString *messageString = [NSString stringWithFormat:@"%@ is not authorized to access this campaign.", [AMBValues getUserEmail]];
