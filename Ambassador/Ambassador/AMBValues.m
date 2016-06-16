@@ -87,8 +87,6 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
         baseUrl = @"https://staging.mbsy.co/universal/landing";
     #endif
     
-    DLog(@"%@", [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID]]);
-    
     return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID]];
 }
 

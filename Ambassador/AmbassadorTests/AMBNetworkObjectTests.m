@@ -40,7 +40,7 @@
     NSMutableDictionary *expectedDictionary = [identifyObject toDictionary];
     
     // THEN
-    XCTAssertEqual(4, expectedDictionary.count);
+    XCTAssertEqual(5, expectedDictionary.count);
     XCTAssertEqualObjects(identifyObject.email, expectedDictionary[@"email"]);
     XCTAssertEqualObjects(identifyObject.campaign_id, expectedDictionary[@"campaign_id"]);
 }
@@ -160,7 +160,7 @@
     // THEN
     XCTAssertEqualObjects(identifyObject.email, blankString);
     XCTAssertEqualObjects(identifyObject.campaign_id, blankString);
-    XCTAssertEqualObjects(identifyObject.source, blankString);
+    XCTAssertEqualObjects(identifyObject.source, @"ios_sdk_pilot");
     XCTAssertFalse(identifyObject.enroll);
 }
 

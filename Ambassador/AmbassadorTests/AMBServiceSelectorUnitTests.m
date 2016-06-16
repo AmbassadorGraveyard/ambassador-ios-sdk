@@ -286,7 +286,7 @@
 }
 
 
-#pragma mark - Custom AlertView Delegate
+#pragma mark - Custom Alert Delegate
 
 - (void)testOkayButtonClicked {
     // GIVEN

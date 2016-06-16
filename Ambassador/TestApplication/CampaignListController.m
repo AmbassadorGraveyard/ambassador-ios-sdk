@@ -10,6 +10,7 @@
 #import "DefaultsHandler.h"
 #import "LoadingScreen.h"
 #import "AMBUtilities.h"
+#import "UIAlertController+CancelAlertController.h"
 
 @interface CampaignListController() <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
@@ -156,13 +157,12 @@ CGFloat tableHeaderHeight = 50;
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             // Grab the return dictionary from response
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            NSLog(@"%@", results);
             
             // If there are no campaigns
             if ([results[@"count"]  isEqual: @0]) {
                 [self dismissViewControllerAnimated:YES completion:^{
-                    UIAlertView *noCampAlert = [[UIAlertView alloc] initWithTitle:@"No Campaigns Found" message:@"You must set up at least 1 campaign." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-                    [noCampAlert show];
+                    UIAlertController *noCampaignAlert = [UIAlertController cancelAlertWithTitle:@"No Campaigns Found" message:@"You must set up at least 1 campaign." cancelMessage:@"Okay"];
+                    [[AMBUtilities getTopViewController] presentViewController:noCampaignAlert animated:YES completion:nil];
                 }];
             } else {
                 // Save the campaign list to defaults and then show list
@@ -173,8 +173,8 @@ CGFloat tableHeaderHeight = 50;
         }
         
         [self dismissViewControllerAnimated:YES completion:^{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable to load campaigns" message:@"Unable to load campaigns at this time. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-            [alert show];
+            UIAlertController *noCampaignAlert = [UIAlertController cancelAlertWithTitle:@"Unable to load campaigns" message:@"Unable to load campaigns at this time. Please try again." cancelMessage:@"Okay"];
+            [[AMBUtilities getTopViewController] presentViewController:noCampaignAlert animated:YES completion:nil];
         }];
     }] resume];
 }

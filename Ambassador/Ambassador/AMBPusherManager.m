@@ -86,7 +86,7 @@
                 }
             }];
         } else if (json[@"mbsy_cookie_code"] && json[@"mbsy_cookie_code"] != [NSNull null]) {
-            DLog(@"MBSY COOKIE = %@ and FINGERPRINT = %@", json[@"mbsy_cookie_code"], json[@"fingerprint"]);
+            DLog(@"[Identify] Short code '%@' and fingerprint recieved.", json[@"mbsy_cookie_code"]);
             [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
             [AMBValues setDeviceFingerPrintWithDictionary:json[@"fingerprint"]]; // Saves device fp to defaults
             [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
@@ -112,7 +112,7 @@
 - (void)closeSocket {
     // Checks to make sure we have finished the backend identify request and safariVC fingerprinting before closing the channel
     if (self.campaignListRecieved && [AmbassadorSDK sharedInstance].identify.identifyProcessComplete) {
-        DLog(@"Pusher client disconnected");
+        DLog(@"[Identify] Identify process complete, Pusher client disconnected.");
         [self.client disconnect];
         
         // If there is an existing channel, we need to unsubscribe in order to avoid duplicate event actions
@@ -160,7 +160,6 @@
 }
 
 - (void)pusher:(AMBPTPusher *)pusher didSubscribeToChannel:(AMBPTPusherChannel *)channel {
-    DLog(@"Subscribed to channel - %@", channel.name);
     [self throwComletion:channel error:nil];
 }
 
@@ -174,7 +173,6 @@
 
 - (void)pusher:(AMBPTPusher *)pusher connectionDidConnect:(AMBPTPusherConnection *)connection {
     // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been CONNECTED
-    DLog(@"Pusher connection state changed to CONNECTED");
     self.connectionState = PTPusherConnectionConnected;
 }
 
@@ -184,13 +182,11 @@
 
 - (void)pusher:(AMBPTPusher *)pusher connection:(AMBPTPusherConnection *)connection failedWithError:(NSError *)error {
     // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been DISCONNECTED
-    DLog(@"Pusher connection state changed to DISCONNECTED");
     self.connectionState = PTPusherConnectionDisconnected;
 }
 
 - (void)pusher:(AMBPTPusher *)pusher connection:(AMBPTPusherConnection *)connection didDisconnectWithError:(NSError *)error willAttemptReconnect:(BOOL)willAttemptReconnect {
     // FUNCTIONALITY: Lets pusherManager know when the pusher socket has been DISCONNECTED
-    DLog(@"Pusher connection state changed to DISCONNECTED");
     self.connectionState = PTPusherConnectionDisconnected;
 }
 

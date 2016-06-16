@@ -191,6 +191,8 @@
         self.custom1 = [decoder decodeObjectForKey:@"custom1"];
         self.custom2 = [decoder decodeObjectForKey:@"custom2"];
         self.custom3 = [decoder decodeObjectForKey:@"custom3"];
+        self.add_to_groups = [decoder decodeObjectForKey:@"add_to_groups"];
+        self.identify_type = [decoder decodeObjectForKey:@"identify_type"];
         self.phone = [decoder decodeObjectForKey:@"phone"];
         self.company = [decoder decodeObjectForKey:@"company"];
         self.street = [decoder decodeObjectForKey:@"street"];
@@ -215,6 +217,8 @@
     [encoder encodeObject:self.custom1 forKey:@"custom1"];
     [encoder encodeObject:self.custom2 forKey:@"custom2"];
     [encoder encodeObject:self.custom3 forKey:@"custom3"];
+    [encoder encodeObject:self.add_to_groups forKey:@"add_to_groups"];
+    [encoder encodeObject:self.identify_type forKey:@"identify_type"];
     [encoder encodeObject:self.phone forKey:@"phone"];
     [encoder encodeObject:self.company forKey:@"company"];
     [encoder encodeObject:self.street forKey:@"street"];
@@ -230,7 +234,8 @@
     self.email = @"";
     self.campaign_id = @"";
     self.enroll = NO;
-    self.source = @"";
+    self.source = @"ios_sdk_pilot";
+    self.identify_type = @"";
     
     return self;
 }
@@ -241,8 +246,11 @@
         self.remote_customer_id = userID;
         self.enroll = NO;
         self.campaign_id = @"";
-        self.source = @"";
+        self.source = @"ios_sdk_pilot";
+        self.identify_type = @"";
         [self formatTraits:traits];
+        
+        DLog(@"[Identify] Identifying with set properties -\n%@", [self toDictionary]);
     }
     
     return self;
@@ -259,6 +267,8 @@
     self.custom2 = traits[@"customLabel2"] ? traits[@"customLabel2"] : blankString;
     self.custom3 = traits[@"customLabel3"] ? traits[@"customLabel3"] : blankString;
     self.company = traits[@"company"] ? traits[@"company"] : blankString;
+    self.add_to_groups = traits[@"addToGroups"] ? traits[@"addToGroups"] : blankString;
+    self.identify_type = traits[@"identifyType"] ? traits[@"identifyType"] : blankString;
     self.street = traits[@"address"][@"street"] ? traits[@"address"][@"street"] : blankString;
     self.city = traits[@"address"][@"city"] ? traits[@"address"][@"city"] : blankString;
     self.state = traits[@"address"][@"state"] ? traits[@"address"][@"state"] : blankString;

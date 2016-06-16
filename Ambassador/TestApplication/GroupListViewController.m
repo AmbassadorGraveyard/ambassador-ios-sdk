@@ -13,6 +13,7 @@
 #import "GroupFooterCell.h"
 #import "GroupCell.h"
 #import "AMBUtilities.h"
+#import "UIAlertController+CancelAlertController.h"
 
 @interface GroupListViewController() <UITableViewDelegate, UITableViewDataSource, GroupFooterCellDelegate>
 
@@ -178,13 +179,12 @@ CGFloat groupTableHeaderHeight = 50;
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             // Grab the return dictionary from response
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            NSLog(@"%@", results);
             
             // If there are no groups
             if ([results[@"count"]  isEqual: @0]) {
                 [self dismissViewControllerAnimated:YES completion:^{
-                    UIAlertView *noCampAlert = [[UIAlertView alloc] initWithTitle:@"No Groups Found" message:@"You must set up at least 1 group." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-                    [noCampAlert show];
+                    UIAlertController *successAlert = [UIAlertController cancelAlertWithTitle:@"No Groups Found" message:@"You must set up at least 1 group." cancelMessage:@"Okay"];
+                    [[AMBUtilities getTopViewController] presentViewController:successAlert animated:YES completion:nil];
                 }];
             } else {
                 // Save the groups and show the list
@@ -195,8 +195,8 @@ CGFloat groupTableHeaderHeight = 50;
         }
         
         [self dismissViewControllerAnimated:YES completion:^{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Unable to load groups" message:@"Unable to load groups at this time. Please try again." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-            [alert show];
+            UIAlertController *successAlert = [UIAlertController cancelAlertWithTitle:@"Unable to load groups" message:@"Unable to load groups at this time. Please try again." cancelMessage:@"Okay"];
+            [[AMBUtilities getTopViewController] presentViewController:successAlert animated:YES completion:nil];
         }];
     }] resume];
 }

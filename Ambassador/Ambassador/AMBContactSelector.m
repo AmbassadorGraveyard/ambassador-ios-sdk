@@ -25,7 +25,7 @@
 @interface AMBContactSelector () <UITableViewDataSource, UITableViewDelegate,
                                 AMBSelectedCellDelegate, UITextFieldDelegate,
                                 UITextViewDelegate, AMBUtilitiesDelegate, AMBContactLoaderDelegate,
-                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate, AMBContactCellDelegate, UIAlertViewDelegate, AMBSMSHandlerDelegate>
+                                AMBUtilitiesDelegate, UIGestureRecognizerDelegate, AMBNamePromptDelegate, AMBContactCellDelegate, AMBSMSHandlerDelegate>
 
 // IBOutlets
 @property (nonatomic, strong) IBOutlet UITableView *contactsTable;
@@ -249,17 +249,6 @@ BOOL keyboardShowing = NO;
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     if (!self.messageEditing) { [self editMessageButtonTapped:nil]; }
     return YES;
-}
-
-
-#pragma mark - UIAlertView Delegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        [self insertURL];
-    } else if (buttonIndex == 1) {
-        [self sendMessage];
-    }
 }
 
 
@@ -507,8 +496,20 @@ BOOL keyboardShowing = NO;
         return YES;
     } else {
         NSString *alertString = [NSString stringWithFormat:@"Your share link is not included in the message: %@", [AMBValues getUserURLObject].url];
-        UIAlertView *missingURLAlert = [[UIAlertView alloc] initWithTitle:@"Hold On!" message:alertString delegate:self cancelButtonTitle:nil otherButtonTitles:@"Insert Link", @"Continue Sending", nil];
-        [missingURLAlert show];
+        
+        UIAlertController *missingURLAlert = [UIAlertController alertControllerWithTitle:@"Hold on!" message:alertString preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *insertAction = [UIAlertAction actionWithTitle:@"Insert Link" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self insertURL];
+        }];
+        
+        UIAlertAction *continueSending = [UIAlertAction actionWithTitle:@"Continue Sending" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self sendMessage];
+        }];
+        
+        [missingURLAlert addAction:insertAction];
+        [missingURLAlert addAction:continueSending];
+        [self presentViewController:missingURLAlert animated:YES completion:nil];
+        
         return NO;
     }
 }

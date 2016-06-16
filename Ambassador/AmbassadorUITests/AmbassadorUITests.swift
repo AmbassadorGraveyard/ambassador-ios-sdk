@@ -78,7 +78,7 @@ extension AmbassadorUITests {
         if app.alerts["No Twitter Accounts"].exists {
             app.alerts["No Twitter Accounts"].collectionViews.buttons["Cancel"].tap()
         } else {
-            // Make sure that the cancel button works correctly with the twitter alertView
+            // Make sure that the cancel button works correctly with the twitter alertcontroller
             let twitterNavigationBar = app.navigationBars["Twitter"]
             twitterNavigationBar.buttons["Cancel"].tap()
             
@@ -86,7 +86,7 @@ extension AmbassadorUITests {
             app.collectionViews.childrenMatchingType(.Cell).elementBoundByIndex(1).tap()
             twitterNavigationBar.buttons["Post"].tap()
             
-            // If we get an alert about duplicate tweets, we will press the OK button in the alertview
+            // If we get an alert about duplicate tweets, we will press the OK button in the alertcontroller
             if app.alerts.elementBoundByIndex(0).exists { app.buttons["OK"].tap() }
             
             // Tap OKAY on the success message and check that the message went away
