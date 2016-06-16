@@ -519,8 +519,16 @@ NSString * originalName;
 }
 
 - (void)showCancelConfirmation {
-    UIAlertView *cancelAlert = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"By cancelling, all changes will be lost." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-    [cancelAlert show];
+    UIAlertController *cancelAlert = [UIAlertController alertControllerWithTitle:@"Are you sure?" message:@"By cancelling, all changes will be lost." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *no = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *yes = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [cancelAlert addAction:no];
+    [cancelAlert addAction:yes];
+    
+    [self presentViewController:cancelAlert animated:YES completion:nil];
 }
 
 - (void)updateStatusBarTheme {
