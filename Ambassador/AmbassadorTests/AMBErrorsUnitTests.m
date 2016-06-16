@@ -162,15 +162,9 @@
     // GIVEN
     NSString *invalidValue = @"123543465";
     AMBSocialServiceType serviceType = AMBSocialServiceTypeFacebook;
-//    id mockCustomAlert = [OCMockObject mockForClass:[UIAlertController class]];
-//    [[[mockCustomAlert expect] andReturn:mockCustomAlert] alloc];
-//    mockCustomAlert = [[[mockCustomAlert expect] andDo:nil] cancelAlertWithTitle:[OCMArg any] message:[OCMArg any] cancelMessage:@"Okay"];
     
     // WHEN
     [AMBErrors errorSelectingInvalidValueForValue:invalidValue type:serviceType];
-    
-    // THEN
-//    [mockCustomAlert verify];
 }
 
 - (void)testAlertErrorLoadingContacts {
