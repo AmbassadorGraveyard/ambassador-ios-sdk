@@ -173,28 +173,28 @@
 
 #pragma mark - MFMessageComposeViewController Delegate
 
-//- (void)testDidFinishWithResult {
-//    // GIVEN
-//    id mockParent = [OCMockObject mockForClass:[AMBContactSelector class]];
-//    self.handler.parentController = mockParent;
-//    
-//    [[[mockParent expect] andDo:nil] dismissViewControllerAnimated:YES completion:nil];
-//    [[[mockParent expect] andDo:nil] registerForKeyboardNotifications];
-//    
-//    id mockDelegate = [OCMockObject mockForProtocol:@protocol(AMBSMSHandlerDelegate)];
-//    [[[mockDelegate expect] andDo:nil] AMBSMSHandlerMessageSharedSuccessfullyWithContacts:[OCMArg any]];
-//    self.handler.delegate = mockDelegate;
-//    
-//    // WHEN
-//    [self.handler messageComposeViewController:[[MFMessageComposeViewController alloc] init] didFinishWithResult: MessageComposeResultSent];
-//    
-//    // THEN
-//    [mockParent verify];
-//    [mockDelegate verify];
-//    
-//    [mockParent stopMocking];
-//    [mockDelegate stopMocking];
-//}
+- (void)testDidFinishWithResult {
+    // GIVEN
+    id mockParent = [OCMockObject mockForClass:[AMBContactSelector class]];
+    self.handler.parentController = mockParent;
+    
+    [[[mockParent expect] andDo:nil] dismissViewControllerAnimated:YES completion:nil];
+    [[[mockParent expect] andDo:nil] registerForKeyboardNotifications];
+    
+    id mockDelegate = [OCMockObject mockForProtocol:@protocol(AMBSMSHandlerDelegate)];
+    [[[mockDelegate expect] andDo:nil] AMBSMSHandlerMessageSharedSuccessfullyWithContacts:[OCMArg any]];
+    self.handler.delegate = mockDelegate;
+    
+    // WHEN
+    [self.handler messageComposeViewController:[[MFMessageComposeViewController alloc] init] didFinishWithResult: MessageComposeResultSent];
+    
+    // THEN
+    [mockParent verify];
+    [mockDelegate verify];
+    
+    [mockParent stopMocking];
+    [mockDelegate stopMocking];
+}
 
 
 #pragma mark - Helper Functions
