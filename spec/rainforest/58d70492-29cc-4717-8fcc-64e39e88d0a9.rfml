@@ -1,0 +1,23 @@
+#! 58d70492-29cc-4717-8fcc-64e39e88d0a9
+# title: iPhone : Settings screen
+# start_uri: /
+# tags: ios
+#
+
+- iphone-login
+
+# redirect: false
+Click the Settings icon in the nav bar at the bottom of the screen.
+Does is now say Settings at the top of the screen?
+
+Remain here.
+Do you see fields for Universal ID and SDK Token?
+
+Click the copy icon next to the Universal ID value.
+Did you see an alert near the bottom of the screen that said "Copied!"?
+
+Click the copy icon next to the SDK Token value.
+Did you see an alert near the bottom of the screen that said "Copied!"?
+
+Click Logout.
+Were you taken back to the login screen?

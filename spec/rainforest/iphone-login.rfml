@@ -1,0 +1,7 @@
+#! iphone-login
+# title: Embedded : iPhone : Login
+# start_uri: /
+#
+
+Enter {{ambassador_client_login.email}} and {{ambassador_client_login.password}} in the username and password fields then click the Sign In button.
+Were you able to successfully login?

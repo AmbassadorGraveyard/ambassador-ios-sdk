@@ -1,0 +1,35 @@
+#! c629e5c6-6320-4a7c-a550-1e545cf3967f
+# title: iPhone : Refer a Friend screen
+# start_uri: /
+# tags: ios
+#
+
+- iphone-login
+
+# redirect: false
+Click the '+' icon in the top right corner of the screen.
+Does the screen now say Edit Refer-a-friend View with Cancel and Save buttons?
+
+Enter "Test RAF" in the Integration Name field.
+Were you able to enter the text?
+
+Tap the Save button.
+Did you receive an alert that says The Campaign field cannot be blank?
+
+Tap Okay on the alert.
+Did the alert go away?
+
+Tap the Campaign field.
+Did a modal popup with a list of campaigns?
+
+Tap one of the campaigns in the list.
+Is that name of the campaign you selected in the Campaign field now?
+
+Tap the Save button at the top of the screen.
+Were you taken back to the Refer a Friend screen and is there an item there that says "Test RAF"?
+
+Tap the Edit button in the top left corner of the screen then tap the red delete icon next to "Test RAF".
+Did you receive an alert that says Are you sure?
+
+Tap Yes on the alert.
+Did the "Test RAF" disappear from the list?
