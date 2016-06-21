@@ -19,7 +19,7 @@ test:
       -scheme DemoApp
       -archivePath Ambassador.xcarchive
       CODE_SIGNING_REQUIRED=NO
-      CODE_SIGN_IDENTITY="iOS Developer"
+      CODE_SIGN_IDENTITY=$GYM_CODE_SIGNING_IDENTITY
       # PROVISIONING_PROFILE="Ambassador_SDK_Application"
   post:
     - bundle exec slather coverage Ambassador.xcodeproj
