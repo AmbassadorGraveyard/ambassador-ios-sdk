@@ -14,12 +14,10 @@ dependencies:
 test:
   override:
     - bash secrets.sh
-
     - set -o pipefail &&
     xcodebuild archive -workspace Ambassador.xcodeproj
       -scheme DemoApp
       -archivePath Ambassador.xcarchive
-
     - set -o pipefail &&
     xcodebuild -exportArchive
       -archivePath Ambassador.xcarchive
