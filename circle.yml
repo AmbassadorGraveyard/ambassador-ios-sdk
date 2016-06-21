@@ -19,7 +19,7 @@ test:
       -scheme DemoApp
       -archivePath Ambassador.xcarchive
      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
- post:
+  post:
     - bundle exec slather coverage Ambassador.xcodeproj
 
     - set -o pipefail &&
