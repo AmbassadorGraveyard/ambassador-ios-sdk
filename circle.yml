@@ -18,14 +18,14 @@ test:
     xcodebuild archive -workspace Ambassador.xcodeproj
       -scheme DemoApp
       -archivePath Ambassador.xcarchive
-
-      -exportArchive
+    - set -o pipefail &&
+    xcodebuild -exportArchive
       -archivePath Ambassador.xcarchive
       -exportPath $CIRCLE_ARTIFACTS/ipaFiles/
       -exportFormat ipa
       -exportProvisioningProfile "Ambassador SDK Profile"
       
-  post:
+ post:
     - bundle exec slather coverage Ambassador.xcodeproj
 
     - set -o pipefail &&
