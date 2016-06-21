@@ -15,11 +15,10 @@ test:
   override:
     - bash secrets.sh
     - set -o pipefail &&
-    xcodebuild archive -workspace Ambassador.xcodeproj
+     xcodebuild archive -workspace Ambassador.xcworkspace
       -scheme DemoApp
       -archivePath Ambassador.xcarchive
-   xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
-
+     xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
  post:
     - bundle exec slather coverage Ambassador.xcodeproj
 
