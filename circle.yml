@@ -1,6 +1,8 @@
 general:
   build_dir: Ambassador
 machine:
+  environment:
+    GYM_CODE_SIGNING_IDENTITY:  "iPhone Distribution: Zferral, Inc. (2H59A3U3KT)"
   xcode:
     version: "7.2"
 checkout:
@@ -16,11 +18,11 @@ test:
     - bash secrets.sh
     - set -o pipefail &&
      xcodebuild archive -workspace Ambassador.xcworkspace
+     CODE_SIGNING_REQUIRED=NO
+     CODE_SIGN_IDENTITY=$GYM_CODE_SIGNING_IDENTITY
       -scheme DemoApp
       -archivePath Ambassador.xcarchive
-      CODE_SIGNING_REQUIRED=NO
-      CODE_SIGN_IDENTITY="iPhone Distribution: Zferral, Inc. (2H59A3U3KT)"
-      # PROVISIONING_PROFILE="Ambassador_SDK_Application"
+
   post:
     - bundle exec slather coverage Ambassador.xcodeproj
 
