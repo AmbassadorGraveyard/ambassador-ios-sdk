@@ -24,7 +24,8 @@ test:
       -exportPath $CIRCLE_ARTIFACTS/ipaFiles/
       -exportFormat ipa
       -exportProvisioningProfile "Ambassador SDK Profile"
- post:
+      
+  post:
     - bundle exec slather coverage Ambassador.xcodeproj
 
     - set -o pipefail &&
