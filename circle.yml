@@ -14,20 +14,17 @@ dependencies:
 test:
   override:
     - bash secrets.sh
-    - set -o pipefail &&
-     xcodebuild -workspace Ambassador.xcworkspace
-      -sdk iphonesimulator
-       -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
-       -configuration Debug
-       -scheme DemoApp archive
-       VALID_ARCHS=x86_64
-       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
-      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
 
     - set -o pipefail &&
-     xcodebuild -exportArchive
+    xcodebuild archive -workspace Ambassador.xcodeproj
+      -scheme DemoApp
+      -archivePath Ambassador.xcarchive
+
+    - set -o pipefail &&
+    xcodebuild -exportArchive
+      -archivePath Ambassador.xcarchive
+      -exportPath $CIRCLE_ARTIFACTS/ipaFiles/
       -exportFormat ipa
-      -exportPath $CIRCLE_ARTIFACTS/ipaFiles/ambassador.ipa
       -exportProvisioningProfile "Ambassador SDK Profile"
  post:
     - bundle exec slather coverage Ambassador.xcodeproj
