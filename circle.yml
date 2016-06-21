@@ -18,7 +18,7 @@ test:
     xcodebuild archive -workspace Ambassador.xcodeproj
       -scheme DemoApp
       -archivePath Ambassador.xcarchive
-    - set -o pipefail &&
+
     xcodebuild -exportArchive
       -archivePath Ambassador.xcarchive
       -exportPath $CIRCLE_ARTIFACTS/ipaFiles/
