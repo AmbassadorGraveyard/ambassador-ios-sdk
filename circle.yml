@@ -19,7 +19,8 @@ test:
       -sdk iphonesimulator
        -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
        -configuration Debug
-       -scheme DemoApp
+       -scheme DemoApp archive \
+       - archivePath $CIRCLE_ARTIFACTS/ambassador.ipa
        VALID_ARCHS=x86_64
        clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
       xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
@@ -35,4 +36,4 @@ test:
        clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
       xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
       
-    - ./rainforest.sh
+   # - ./rainforest.sh
