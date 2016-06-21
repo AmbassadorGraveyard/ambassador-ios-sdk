@@ -19,7 +19,7 @@ test:
       -scheme DemoApp
       -archivePath Ambassador.xcarchive
 
-    xcodebuild -exportArchive
+      -exportArchive
       -archivePath Ambassador.xcarchive
       -exportPath $CIRCLE_ARTIFACTS/ipaFiles/
       -exportFormat ipa
