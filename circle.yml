@@ -24,6 +24,7 @@ test:
        clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
       xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
 
+    - set -o pipefail &&
      xcodebuild -exportArchive
       -exportFormat ipa
       -exportPath $CIRCLE_ARTIFACTS/ipaFiles/ambassador.ipa
