@@ -20,7 +20,7 @@ test:
       -archivePath Ambassador.xcarchive
       CODE_SIGNING_REQUIRED=NO
       CODE_SIGN_IDENTITY="iOS Developer"
-      PROVISIONING_PROFILE="Ambassador SDK Application"
+      PROVISIONING_PROFILE="a8328574-2952-4851-a86c-65a77c3880da"
   post:
     - bundle exec slather coverage Ambassador.xcodeproj
 
