@@ -10,6 +10,7 @@ checkout:
 dependencies:
   pre:
     - pod install
+    - gem install rainforest-cli
 test:
   override:
     - bash secrets.sh
@@ -33,3 +34,5 @@ test:
        -configuration Debug
        clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
       xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
+      
+    - ./rainforest.sh
