@@ -17,8 +17,6 @@ test:
     - bash iosArchive.sh
 
   post:
-    - bundle exec slather coverage Ambassador.xcodeproj
-
     - set -o pipefail &&
      xcodebuild -workspace Ambassador.xcworkspace
       -sdk iphonesimulator
