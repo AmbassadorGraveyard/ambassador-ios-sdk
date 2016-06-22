@@ -16,12 +16,7 @@ dependencies:
 test:
   override:
     - bash secrets.sh
-    - set -o pipefail &&
-     xcodebuild archive -workspace Ambassador.xcworkspace
-     CODE_SIGNING_REQUIRED=NO
-     CODE_SIGN_IDENTITY=$GYM_CODE_SIGNING_IDENTITY
-      -scheme DemoApp
-      -archivePath Ambassador.xcarchive
+    - iosArchive.sh
 
   post:
     - bundle exec slather coverage Ambassador.xcodeproj
