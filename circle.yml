@@ -15,7 +15,8 @@ test:
   override:
     - bash secrets.sh
     - xcodebuild archive -workspace Ambassador.xcworkspace -scheme DemoApp -archivePath Ambassador.xcarchive
-    - xcodebuild -exportArchive -archivePath Ambassador.xcarchive -exportPath $CIRCLE_ARTIFACTS/test.ipa -exportFormat ipa
+    - xcodebuild -exportArchive -archivePath Ambassador.xcarchive -exportPath $CIRCLE_ARTIFACTS/Ambassador.ipa -exportFormat ipa
+    - curl https://s3-us-west-2.amazonaws.com/ambassador-rainforest/Ambassador.ipa -T $CIRCLE_ARTIFACTS/Ambassador.ipa
   # post:
     # - set -o pipefail &&
     #  xcodebuild -workspace Ambassador.xcworkspace
