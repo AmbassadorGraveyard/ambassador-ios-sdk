@@ -16,7 +16,7 @@ dependencies:
 test:
   override:
     - bash secrets.sh
-    - iosArchive.sh
+    - bash iosArchive.sh
 
   post:
     - bundle exec slather coverage Ambassador.xcodeproj
