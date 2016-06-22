@@ -11,12 +11,15 @@ dependencies:
   pre:
     - pod install
     - gem install rainforest-cli
+    - pip install awscli
 test:
   override:
     - bash secrets.sh
     - xcodebuild archive -workspace Ambassador.xcworkspace -scheme DemoApp -archivePath Ambassador.xcarchive
     - xcodebuild -exportArchive -archivePath Ambassador.xcarchive -exportPath $CIRCLE_ARTIFACTS/Ambassador.ipa -exportFormat ipa
     - curl https://s3-us-west-2.amazonaws.com/ambassador-rainforest/Ambassador.ipa -T $CIRCLE_ARTIFACTS/Ambassador.ipa
+    - aws configure -aws_access_key_id $AWS_NAME -aws_secret_access_key $aws_access_key_id
+    - aws s3 cp $CIRCLE_ARTIFACTS/Ambassador.ipa s3://ambassador-rainforest/Ambassador.ipa
   # post:
     # - set -o pipefail &&
     #  xcodebuild -workspace Ambassador.xcworkspace
