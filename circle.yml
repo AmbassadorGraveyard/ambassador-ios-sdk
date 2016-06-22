@@ -1,8 +1,6 @@
 general:
   build_dir: Ambassador
 machine:
-  environment:
-    GYM_CODE_SIGNING_IDENTITY:  "iPhone Distribution: Zferral, Inc. (2H59A3U3KT)"
   xcode:
     version: "7.2"
 checkout:
