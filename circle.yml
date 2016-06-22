@@ -16,14 +16,14 @@ test:
     - bash secrets.sh
     - bash iosArchive.sh
 
-  post:
-    - set -o pipefail &&
-     xcodebuild -workspace Ambassador.xcworkspace
-      -sdk iphonesimulator
-       -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
-       -scheme AmbassadorUITests
-       -configuration Debug
-       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
-      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
+  # post:
+    # - set -o pipefail &&
+    #  xcodebuild -workspace Ambassador.xcworkspace
+    #   -sdk iphonesimulator
+    #    -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
+    #    -scheme AmbassadorUITests
+    #    -configuration Debug
+    #    clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+    #   xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
 
    # - ./rainforest.sh
