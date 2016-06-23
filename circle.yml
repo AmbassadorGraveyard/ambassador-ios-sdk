@@ -11,7 +11,7 @@ dependencies:
   pre:
     - pod install
     - gem install rainforest-cli
-    - pip install awscli --upgrade --ignore-installed six
+    - sudo pip install awscli --upgrade --ignore-installed six
 test:
   override:
     - bash secrets.sh
