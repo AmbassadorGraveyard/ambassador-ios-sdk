@@ -11,6 +11,7 @@ dependencies:
   pre:
     - pod install
     - gem install rainforest-cli
+  override:
     - sudo pip install awscli
 test:
   override:
