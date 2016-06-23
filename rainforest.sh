@@ -9,5 +9,5 @@ if [ "$CIRCLE_BRANCH" == "rainforest" ]
      rainforest upload --token $RAINFOREST_TOKEN
 
      GITHUB_PULL_NUMBER=$(echo $CI_PULL_REQUEST | awk -F/ '{print $7}')
-     rainforest run all --fg --fail-fast --git-trigger --token "$RAINFOREST_TOKEN" --site-id "$RAINFOREST_SITE" --description "CI run for $CIRCLE_BRANCH" --custom-url "https://$HEROKU_APP_NAME-pr-$GITHUB_PULL_NUMBER.herokuapp.com"
+     rainforest run --fg --fail-fast --git-trigger --token $RAINFOREST_TOKEN --browsers iphone_6s_v9_0 --app-source-url https://s3-us-west-2.amazonaws.com/ambassador-rainforest/Ambassador.ipa
 fi

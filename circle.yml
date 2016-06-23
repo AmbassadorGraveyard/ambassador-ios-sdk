@@ -18,7 +18,8 @@ test:
     - xcodebuild archive -workspace Ambassador.xcworkspace -scheme DemoApp -archivePath Ambassador.xcarchive
     - xcodebuild -exportArchive -archivePath Ambassador.xcarchive -exportPath $CIRCLE_ARTIFACTS/Ambassador.ipa -exportFormat ipa
     - aws s3 cp $CIRCLE_ARTIFACTS/Ambassador.ipa s3://ambassador-rainforest/Ambassador.ipa
-  # post:
+  post:
+    - ./rainforest.sh
     # - set -o pipefail &&
     #  xcodebuild -workspace Ambassador.xcworkspace
     #   -sdk iphonesimulator
@@ -27,5 +28,3 @@ test:
     #    -configuration Debug
     #    clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
     #   xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
-
-   # - ./rainforest.sh
