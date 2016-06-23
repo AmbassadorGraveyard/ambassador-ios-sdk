@@ -17,7 +17,7 @@ test:
     - bash secrets.sh
     - xcodebuild archive -workspace Ambassador.xcworkspace -scheme DemoApp -archivePath Ambassador.xcarchive
     - xcodebuild -exportArchive -archivePath Ambassador.xcarchive -exportPath $CIRCLE_ARTIFACTS/Ambassador.ipa -exportFormat ipa
-    - aws s3 cp $CIRCLE_ARTIFACTS/Ambassador.ipa s3://ambassador-rainforest/Ambassador.ipa
+    - aws s3 cp $CIRCLE_ARTIFACTS/Ambassador.ipa s3://ambassador-rainforest/Ambassador.ipa --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
   post:
     - bash rainforest.sh
     # - set -o pipefail &&
