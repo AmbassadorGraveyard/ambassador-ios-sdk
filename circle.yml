@@ -19,7 +19,8 @@ test:
     - xcodebuild -exportArchive -archivePath Ambassador.xcarchive -exportPath $CIRCLE_ARTIFACTS/Ambassador.ipa -exportFormat ipa
     - aws s3 cp $CIRCLE_ARTIFACTS/Ambassador.ipa s3://ambassador-rainforest/Ambassador.ipa
   post:
-    - ./rainforest.sh
+    - cd ..
+    - bash rainforest.sh
     # - set -o pipefail &&
     #  xcodebuild -workspace Ambassador.xcworkspace
     #   -sdk iphonesimulator
