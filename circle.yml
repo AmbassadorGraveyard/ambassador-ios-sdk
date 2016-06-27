@@ -13,29 +13,26 @@ dependencies:
 test:
   override:
     - bash secrets.sh
-    - xcodebuild -workspace Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6' -configuration Release -scheme Framework -derivedDataPath DerivedData clean build
-    - mv /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.framework $CIRCLE_ARTIFACTS/Ambassador.framework
-    - echo $(basename /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/*)
 
-    # - set -o pipefail &&
-    #  xcodebuild -workspace Ambassador.xcworkspace
-    #   -sdk iphonesimulator
-    #    -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
-    #    -configuration Debug
-    #    -scheme DemoApp
-    #    VALID_ARCHS=x86_64
-    #    clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
-    #   xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
+    - set -o pipefail &&
+     xcodebuild -workspace Ambassador.xcworkspace
+      -sdk iphonesimulator
+       -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
+       -configuration Debug
+       -scheme DemoApp
+       VALID_ARCHS=x86_64
+       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
   post:
-    # - bundle exec slather coverage Ambassador.xcodeproj
-    #
-    # - set -o pipefail &&
-    #  xcodebuild -workspace Ambassador.xcworkspace
-    #   -sdk iphonesimulator
-    #    -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
-    #    -scheme AmbassadorUITests
-    #    -configuration Debug
-    #    clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
-    #   xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
+    - bundle exec slather coverage Ambassador.xcodeproj
 
-    # - bash buildFramework.sh
+    - set -o pipefail &&
+     xcodebuild -workspace Ambassador.xcworkspace
+      -sdk iphonesimulator
+       -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
+       -scheme AmbassadorUITests
+       -configuration Debug
+       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
+
+    - bash buildFramework.sh
