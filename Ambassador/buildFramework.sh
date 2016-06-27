@@ -11,5 +11,5 @@
 
       echo $(basename /*)
 
-      cp /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedDataclean/Ambassador/Build/Products/Release-iphoneos/Ambassador.framework $CIRCLE_ARTIFACTS/Ambassador.framework
+      cp /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedDataclean/Build/Products/Release-iphoneos/Ambassador.framework $CIRCLE_ARTIFACTS/Ambassador.framework
 #fi
