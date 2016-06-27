@@ -5,7 +5,7 @@
       #mkdir $CIRCLE_ARTIFACTS/Framework_files
       xcodebuild -workspace Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6' -configuration Release -scheme Framework -derivedDataPath DerivedDataclean build 
      
-      for file in /DerivedData/Ambassador/Build/Products/Release-iphoneos/*; do
+      for file in /DerivedDataclean/Ambassador/Build/Products/Release-iphoneos/*; do
         echo ${file##*/} 
       done
 
