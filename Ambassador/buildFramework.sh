@@ -9,5 +9,7 @@
         echo ${file##*/} 
       done
 
+      echo $(basename /*)
+
       cp /DerivedData/Ambassador/Build/Products/Release-iphoneos/Ambassador.framework $CIRCLE_ARTIFACTS/Ambassador.framework
 #fi
