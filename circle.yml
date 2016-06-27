@@ -15,7 +15,7 @@ test:
     - bash secrets.sh
     - xcodebuild -workspace Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6' -configuration Release -scheme Framework -derivedDataPath DerivedData clean build
     - cp /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.framework $CIRCLE_ARTIFACTS/Ambassador.framework
-    - echo $(basename /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/*)
+    - echo $(basename /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/*)
 
     # - set -o pipefail &&
     #  xcodebuild -workspace Ambassador.xcworkspace
