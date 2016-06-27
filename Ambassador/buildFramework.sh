@@ -1,4 +1,4 @@
-#!/bin/sh
+y#!/bin/sh
 
 #if [ "$CIRCLE_BRANCH" == *"release"*]
  #  then
