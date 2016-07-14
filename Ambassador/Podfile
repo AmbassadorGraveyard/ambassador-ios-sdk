@@ -1,6 +1,10 @@
-target 'DemoApp' do
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
 
-pod 'zipzap'
+target 'DemoApp' do
+   pod 'zipzap'
+   pod 'SentrySwift', :git => 'git@github.com:getsentry/sentry-swift.git', :branch => 'master'
 end
 
 workspace 'Ambassador'
