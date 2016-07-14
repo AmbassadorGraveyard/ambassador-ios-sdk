@@ -147,7 +147,6 @@
 		EF07452A1C52C8E1009AF919 /* OCMock in Resources */ = {isa = PBXBuildFile; fileRef = EF0745291C52C8E1009AF919 /* OCMock */; };
 		EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF07452B1C52C8FA009AF919 /* libOCMock.a */; };
 		EF1399AC1C6551AB0005054D /* AMBContactLoaderUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */; };
-		EF1A4F271CC56DF7008EE886 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1A4F261CC56DF7008EE886 /* libzipzap.a */; };
 		EF1A4F2C1CC58DE8008EE886 /* SlidingView.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F2A1CC58DE8008EE886 /* SlidingView.h */; };
 		EF1A4F2D1CC58DE8008EE886 /* SlidingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F2B1CC58DE8008EE886 /* SlidingView.m */; };
 		EF1A4F341CC67802008EE886 /* UIActivityViewController+ZipShare.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F321CC67802008EE886 /* UIActivityViewController+ZipShare.h */; };
@@ -182,12 +181,6 @@
 		EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */; };
 		EF3079161C6E205800403F56 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */; };
 		EF3079171C6E205800403F56 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3079151C6E205800403F56 /* AMBPusherChannelObject.m */; };
-		EF33DCF81C739D6A009689CA /* Raven.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF21C739D6A009689CA /* Raven.h */; };
-		EF33DCF91C739D6A009689CA /* RavenClient.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF31C739D6A009689CA /* RavenClient.h */; };
-		EF33DCFA1C739D6A009689CA /* RavenClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCF41C739D6A009689CA /* RavenClient.m */; };
-		EF33DCFB1C739D6A009689CA /* RavenClient_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF51C739D6A009689CA /* RavenClient_Private.h */; };
-		EF33DCFC1C739D6A009689CA /* RavenConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF61C739D6A009689CA /* RavenConfig.h */; };
-		EF33DCFD1C739D6A009689CA /* RavenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCF71C739D6A009689CA /* RavenConfig.m */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF499DB51CAC4FB000D2EB01 /* NoAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF499DB41CAC4FB000D2EB01 /* NoAccountViewController.m */; };
@@ -216,6 +209,9 @@
 		EF5B00881C91C22A002BD361 /* AMBSMSHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5B00861C91C22A002BD361 /* AMBSMSHandler.h */; };
 		EF5B00891C91C22A002BD361 /* AMBSMSHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5B00871C91C22A002BD361 /* AMBSMSHandler.m */; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
+		EF5E47731D3803FF00F73733 /* zipzap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47721D3803FF00F73733 /* zipzap.framework */; };
+		EF5E47761D3822FE00F73733 /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47741D3822FE00F73733 /* KSCrash.framework */; };
+		EF5E47771D3822FE00F73733 /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47751D3822FE00F73733 /* SentrySwift.framework */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
 		EF67F0FA1CD1547400F52546 /* AmbassadorHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF67F0F81CD1547400F52546 /* AmbassadorHelper.h */; };
@@ -581,6 +577,12 @@
 		EF5B00851C90AD69002BD361 /* AMBConversionModel_2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMBConversionModel_2.xcdatamodel; sourceTree = "<group>"; };
 		EF5B00861C91C22A002BD361 /* AMBSMSHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBSMSHandler.h; sourceTree = "<group>"; };
 		EF5B00871C91C22A002BD361 /* AMBSMSHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSMSHandler.m; sourceTree = "<group>"; };
+		EF5E47661D37ECDC00F73733 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSCrash.framework; path = "Pods/../build/Debug-iphoneos/KSCrash/KSCrash.framework"; sourceTree = "<group>"; };
+		EF5E47671D37ECDC00F73733 /* SentrySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SentrySwift.framework; path = "DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift/SentrySwift.framework"; sourceTree = "<group>"; };
+		EF5E47701D37EFA500F73733 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSCrash.framework; path = "DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash/KSCrash.framework"; sourceTree = "<group>"; };
+		EF5E47721D3803FF00F73733 /* zipzap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = zipzap.framework; path = "DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/zipzap/zipzap.framework"; sourceTree = "<group>"; };
+		EF5E47741D3822FE00F73733 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSCrash.framework; path = "DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash/KSCrash.framework"; sourceTree = "<group>"; };
+		EF5E47751D3822FE00F73733 /* SentrySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SentrySwift.framework; path = "DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift/SentrySwift.framework"; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -660,6 +662,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF5E47761D3822FE00F73733 /* KSCrash.framework in Frameworks */,
+				EF5E47771D3822FE00F73733 /* SentrySwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,7 +690,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF1A4F271CC56DF7008EE886 /* libzipzap.a in Frameworks */,
+				EF5E47731D3803FF00F73733 /* zipzap.framework in Frameworks */,
 				EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */,
 				DB844D891BA76C1E003FD7A9 /* libAmbassador.a in Frameworks */,
 				C254602E989BF5CFFEE392D6 /* Pods_DemoApp.framework in Frameworks */,
@@ -713,6 +717,12 @@
 		0D24CFB05292A555B6506D41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EF5E47741D3822FE00F73733 /* KSCrash.framework */,
+				EF5E47751D3822FE00F73733 /* SentrySwift.framework */,
+				EF5E47721D3803FF00F73733 /* zipzap.framework */,
+				EF5E47701D37EFA500F73733 /* KSCrash.framework */,
+				EF5E47661D37ECDC00F73733 /* KSCrash.framework */,
+				EF5E47671D37ECDC00F73733 /* SentrySwift.framework */,
 				EF1A4F261CC56DF7008EE886 /* libzipzap.a */,
 				EF1A4F241CC51663008EE886 /* libzipzap.a */,
 				EF28DF421CC1804F0070994F /* libobjective-zip.a */,
@@ -1514,8 +1524,6 @@
 				EF896FD61CBD3D63003E270D /* AMBSecrets.h in Headers */,
 				DBA3FC161BA8AA1D00672D82 /* AMBPTPusherConnection.h in Headers */,
 				DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */,
-				EF33DCFB1C739D6A009689CA /* RavenClient_Private.h in Headers */,
-				EF33DCFC1C739D6A009689CA /* RavenConfig.h in Headers */,
 				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
 				EFE7D7951C21C19B00D7F92C /* AMBCoreDataDelegate.h in Headers */,
 				EF1A4F3D1CC6CD07008EE886 /* GroupObject.h in Headers */,
@@ -1542,7 +1550,6 @@
 				EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */,
 				DB6A24841BD1842800CE3230 /* AmbassadorSDK_Internal.h in Headers */,
 				DBA3FC1F1BA8AA1D00672D82 /* AMBPTPusherMacros.h in Headers */,
-				EF33DCF81C739D6A009689CA /* Raven.h in Headers */,
 				DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
 				DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */,
@@ -1589,7 +1596,6 @@
 				DBA3FC1A1BA8AA1D00672D82 /* AMBPTPusherEvent.h in Headers */,
 				DBA3FB8E1BA8A23C00672D82 /* AMBIdentify.h in Headers */,
 				DBA3FB731BA8A23C00672D82 /* AMBAuthorizeLinkedIn.h in Headers */,
-				EF33DCF91C739D6A009689CA /* RavenClient.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1931,12 +1937,10 @@
 				DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */,
 				EFB3C7E81CB70E9400EF9533 /* AMBNPSViewController.m in Sources */,
 				EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */,
-				EF33DCFD1C739D6A009689CA /* RavenConfig.m in Sources */,
 				DBA3FB7E1BA8A23C00672D82 /* AMBContactSelector.m in Sources */,
 				DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */,
 				DBA3FC121BA8AA1D00672D82 /* AMBPTPusherAPI.m in Sources */,
 				DBA3FC001BA8AA1D00672D82 /* NSDictionary+QueryString.m in Sources */,
-				EF33DCFA1C739D6A009689CA /* RavenClient.m in Sources */,
 				DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */,
 				DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */,
 				DBA3FC231BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m in Sources */,
@@ -2262,7 +2266,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				DEAD_CODE_STRIPPING = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ambassador/Ambassador-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
@@ -2271,7 +2281,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2288,7 +2298,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				DEAD_CODE_STRIPPING = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ambassador/Ambassador-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
@@ -2297,7 +2313,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2429,6 +2445,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/zipzap",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2458,6 +2480,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Zferral, Inc. (2H59A3U3KT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zferral, Inc. (2H59A3U3KT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/zipzap",
+				);
 				INFOPLIST_FILE = TestApplication/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
