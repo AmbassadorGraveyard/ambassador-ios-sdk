@@ -210,8 +210,9 @@
 		EF5B00891C91C22A002BD361 /* AMBSMSHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5B00871C91C22A002BD361 /* AMBSMSHandler.m */; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF5E47731D3803FF00F73733 /* zipzap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47721D3803FF00F73733 /* zipzap.framework */; };
-		EF5E47761D3822FE00F73733 /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47741D3822FE00F73733 /* KSCrash.framework */; };
-		EF5E47771D3822FE00F73733 /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47751D3822FE00F73733 /* SentrySwift.framework */; };
+		EF5E477A1D3835D000F73733 /* libAmbassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB844D261BA75BB8003FD7A9 /* libAmbassador.a */; };
+		EF5E47801D383DD200F73733 /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47671D37ECDC00F73733 /* SentrySwift.framework */; };
+		EF5E47831D383EBA00F73733 /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47701D37EFA500F73733 /* KSCrash.framework */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
 		EF67F0FA1CD1547400F52546 /* AmbassadorHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF67F0F81CD1547400F52546 /* AmbassadorHelper.h */; };
@@ -583,6 +584,9 @@
 		EF5E47721D3803FF00F73733 /* zipzap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = zipzap.framework; path = "DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/zipzap/zipzap.framework"; sourceTree = "<group>"; };
 		EF5E47741D3822FE00F73733 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSCrash.framework; path = "DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash/KSCrash.framework"; sourceTree = "<group>"; };
 		EF5E47751D3822FE00F73733 /* SentrySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SentrySwift.framework; path = "DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift/SentrySwift.framework"; sourceTree = "<group>"; };
+		EF5E477B1D3837E500F73733 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSCrash.framework; path = "Pods/../build/Debug-iphoneos/KSCrash/KSCrash.framework"; sourceTree = "<group>"; };
+		EF5E477C1D3837E500F73733 /* SentrySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SentrySwift.framework; path = "Pods/../build/Debug-iphoneos/SentrySwift/SentrySwift.framework"; sourceTree = "<group>"; };
+		EF5E47811D383DD200F73733 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSCrash.framework; path = "Pods/../build/Debug-iphoneos/KSCrash/KSCrash.framework"; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -662,8 +666,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF5E47761D3822FE00F73733 /* KSCrash.framework in Frameworks */,
-				EF5E47771D3822FE00F73733 /* SentrySwift.framework in Frameworks */,
+				EF5E47831D383EBA00F73733 /* KSCrash.framework in Frameworks */,
+				EF5E47801D383DD200F73733 /* SentrySwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,9 +675,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */,
 				EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */,
 				DB6A246E1BD031A100CE3230 /* libicucore.tbd in Frameworks */,
-				DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,6 +685,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF5E477A1D3835D000F73733 /* libAmbassador.a in Frameworks */,
 				EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */,
 				EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */,
 			);
@@ -717,6 +722,9 @@
 		0D24CFB05292A555B6506D41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EF5E47811D383DD200F73733 /* KSCrash.framework */,
+				EF5E477B1D3837E500F73733 /* KSCrash.framework */,
+				EF5E477C1D3837E500F73733 /* SentrySwift.framework */,
 				EF5E47741D3822FE00F73733 /* KSCrash.framework */,
 				EF5E47751D3822FE00F73733 /* SentrySwift.framework */,
 				EF5E47721D3803FF00F73733 /* zipzap.framework */,
@@ -2202,7 +2210,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fembed-bitcode";
@@ -2246,7 +2254,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fembed-bitcode";
@@ -2272,6 +2280,8 @@
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/KSCrash",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/SentrySwift",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ambassador/Ambassador-Prefix.pch";
@@ -2304,6 +2314,8 @@
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/KSCrash",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/SentrySwift",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ambassador/Ambassador-Prefix.pch";
@@ -2334,6 +2346,9 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(PROJECT_DIR)/AmbassadorTests",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -2343,6 +2358,7 @@
 				INFOPLIST_FILE = AmbassadorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/AmbassadorTests";
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2364,11 +2380,15 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(PROJECT_DIR)/AmbassadorTests",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AmbassadorTests";
 				INFOPLIST_FILE = AmbassadorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/AmbassadorTests";
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-framework",
