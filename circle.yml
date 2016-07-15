@@ -17,7 +17,7 @@ test:
        -configuration Debug
        -scheme DemoApp
        VALID_ARCHS=x86_64
-       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+       build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
       xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
   post:
     - bundle exec slather coverage Ambassador.xcodeproj
