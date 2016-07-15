@@ -190,6 +190,7 @@
 		EF3E4DC01D393BC6000E08CF /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47701D37EFA500F73733 /* KSCrash.framework */; };
 		EF3E4DC51D396B62000E08CF /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF3E4DC11D3958E5000E08CF /* KSCrash.framework */; };
 		EF3E4DC61D396B62000E08CF /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF3E4DC31D3958EE000E08CF /* SentrySwift.framework */; };
+		EF3E4DC71D396D4D000E08CF /* libAmbassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB844D261BA75BB8003FD7A9 /* libAmbassador.a */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF499DB51CAC4FB000D2EB01 /* NoAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF499DB41CAC4FB000D2EB01 /* NoAccountViewController.m */; };
@@ -735,6 +736,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF3E4DC71D396D4D000E08CF /* libAmbassador.a in Frameworks */,
 				EF3E4DC51D396B62000E08CF /* KSCrash.framework in Frameworks */,
 				EF3E4DC61D396B62000E08CF /* SentrySwift.framework in Frameworks */,
 			);
@@ -2618,11 +2620,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(SDKROOT)/Developer/Library/Frameworks",
 				);
 				INFOPLIST_FILE = AmbassadorUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.AmbassadorUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2640,10 +2643,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(SDKROOT)/Developer/Library/Frameworks",
 				);
 				INFOPLIST_FILE = AmbassadorUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.AmbassadorUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
