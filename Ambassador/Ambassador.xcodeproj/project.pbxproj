@@ -187,6 +187,7 @@
 		EF3E4DBC1D39354F000E08CF /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47701D37EFA500F73733 /* KSCrash.framework */; };
 		EF3E4DBD1D39354F000E08CF /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47671D37ECDC00F73733 /* SentrySwift.framework */; };
 		EF3E4DBF1D39354F000E08CF /* Pods_DemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF3E4DBE1D39354F000E08CF /* Pods_DemoApp.framework */; };
+		EF3E4DC01D393BC6000E08CF /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47701D37EFA500F73733 /* KSCrash.framework */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF499DB51CAC4FB000D2EB01 /* NoAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF499DB41CAC4FB000D2EB01 /* NoAccountViewController.m */; };
@@ -688,6 +689,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF3E4DC01D393BC6000E08CF /* KSCrash.framework in Frameworks */,
 				EF3E4DA71D3842B9000E08CF /* SentrySwift.framework in Frameworks */,
 				DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */,
 				EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */,
@@ -2376,6 +2378,7 @@
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -2412,6 +2415,7 @@
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AmbassadorTests";
 				INFOPLIST_FILE = AmbassadorTests/Info.plist;
