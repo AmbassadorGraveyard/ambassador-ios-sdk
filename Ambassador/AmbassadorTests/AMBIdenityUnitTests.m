@@ -72,17 +72,8 @@
     
     // THEN
     [mockIdentify verify];
-    XCTAssertNotNil(self.identify.identifyTimer);
 }
 
-- (void)testPerformIdentifyForiOS9 {
-    // WHEN
-    [self.identify performIdentifyForiOS9];
-    
-    // THEN
-    XCTAssertNotNil(self.identify.safariVC);
-    XCTAssertTrue([self.identify.safariVC.view isHidden]);
-}
 
 - (void)testDeviceInfoReceived {
     // GIVEN
@@ -96,29 +87,6 @@
     // THEN
     [mockTimer verify];
     [mockTimer stopMocking];
-}
-
-
-#pragma mark - SafariViewController Delegate
-
-- (void)testSFVCDidCompleteInitialLoad {
-    // GIVEN
-    id mockSFVC = [OCMockObject mockForClass:[SFSafariViewController class]];
-    [[[mockSFVC expect] andDo:nil] removeFromParentViewController];
-    
-    id mockSFView = [OCMockObject mockForClass:[UIView class]];
-    [[[mockSFView expect] andDo:nil] removeFromSuperview];
-    [[[mockSFVC expect] andReturn:mockSFView] view];
-    
-    // WHEN
-    [self.identify safariViewController:mockSFVC didCompleteInitialLoad:YES];
-    
-    // THEN
-    [mockSFVC verify];
-    [mockSFView verify];
-    
-    [mockSFVC stopMocking];
-    [mockSFView stopMocking];
 }
 
 @end

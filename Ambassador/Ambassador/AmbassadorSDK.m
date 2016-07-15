@@ -100,8 +100,6 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 #pragma mark - Identify
 
 + (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits options:(NSDictionary *)options {
-    NSArray *array = @[@"One"];
-    [array objectAtIndex:10];
     [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits options:options];
 }
 

@@ -314,6 +314,13 @@
 			remoteGlobalIDString = DB844D251BA75BB8003FD7A9;
 			remoteInfo = Ambassador;
 		};
+		EF3E4DB81D392880000E08CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB844D601BA76BDE003FD7A9;
+			remoteInfo = DemoApp;
+		};
 		EF64CFA81BE2A47D0072014B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
@@ -1645,6 +1652,7 @@
 			dependencies = (
 				EF90FAFE1BF1069700716427 /* PBXTargetDependency */,
 				DB844D341BA75BB8003FD7A9 /* PBXTargetDependency */,
+				EF3E4DB91D392880000E08CF /* PBXTargetDependency */,
 			);
 			name = AmbassadorTests;
 			productName = AmbassadorTests;
@@ -1741,6 +1749,7 @@
 					};
 					DB844D301BA75BB8003FD7A9 = {
 						CreatedOnToolsVersion = 6.4;
+						TestTargetID = DB844D601BA76BDE003FD7A9;
 					};
 					DB844D471BA75F9F003FD7A9 = {
 						CreatedOnToolsVersion = 6.4;
@@ -2139,6 +2148,11 @@
 			target = DB844D251BA75BB8003FD7A9 /* Ambassador */;
 			targetProxy = EF33DCEE1C73949A009689CA /* PBXContainerItemProxy */;
 		};
+		EF3E4DB91D392880000E08CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB844D601BA76BDE003FD7A9 /* DemoApp */;
+			targetProxy = EF3E4DB81D392880000E08CF /* PBXContainerItemProxy */;
+		};
 		EF64CFA91BE2A47D0072014B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DB844D601BA76BDE003FD7A9 /* DemoApp */;
@@ -2368,6 +2382,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DemoApp.app/DemoApp";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -2398,6 +2413,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DemoApp.app/DemoApp";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
