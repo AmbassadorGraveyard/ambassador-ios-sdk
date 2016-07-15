@@ -218,26 +218,6 @@
     [mockView verify];
 }
 
-//- (void)testRotateFadeForView {
-//    // GIVEN
-//    id mockView = [OCMockObject mockForClass:[UIView class]];
-//    id mockFadeView = [OCMockObject mockForClass:[UIView class]];
-//    self.utilities.fadeView = mockFadeView;
-//    
-//    [[[mockFadeView expect] andReturnValue:OCMOCK_VALUE(YES)] isDescendantOfView:mockView];
-//    [[[mockView expect] andDo:nil] frame];
-//    [[[mockView expect] andDo:nil] frame];
-//    [[[mockFadeView expect] andDo:nil] setFrame:[mockView frame]];
-//    [[[mockView expect] andDo:nil] bringSubviewToFront:mockFadeView];
-//    
-//    // WHEN
-//    [self.utilities rotateFadeForView:mockView];
-//    
-//    // THEN
-//    [mockView verify];
-//    [mockFadeView verify];
-//}
-
 
 #pragma mark - Misc Class Functions
 
