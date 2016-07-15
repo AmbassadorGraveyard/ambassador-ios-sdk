@@ -2,7 +2,7 @@ general:
   build_dir: Ambassador
 machine:
   xcode:
-    version: "7.2"
+    version: "7.3"
 dependencies:
   pre:
     - gem update cocoapods
