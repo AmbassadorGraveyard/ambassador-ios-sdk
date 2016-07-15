@@ -37,16 +37,16 @@
 
 #pragma mark - AMBContact Tests
 
-- (void)testInit {
-    // GIVEN
-    ABRecordRef ref = [self createRef];
-    
-    // WHEN
-    AMBFullContact *contact = [[AMBFullContact alloc] initWithABPersonRef:ref];
-    
-    // THEN
-    XCTAssertNotNil(contact);
-}
+//- (void)testInit {
+//    // GIVEN
+//    ABRecordRef ref = [self createRef];
+//    
+//    // WHEN
+//    AMBFullContact *contact = [[AMBFullContact alloc] initWithABPersonRef:ref];
+//    
+//    // THEN
+//    XCTAssertNotNil(contact);
+//}
 
 - (void)testFullName {
     // GIVEN
@@ -65,29 +65,29 @@
 
 #pragma mark - AMBFullContact Tests
 
-- (void)testGetPhoneNumbers {
-    // GIVEN
-    ABRecordRef ref = [self createRef];
-    AMBFullContact *fullContact = [[AMBFullContact alloc] init];
-    
-    // WHEN
-    NSMutableArray *returnArray = [fullContact getPhoneNumbers:ref withFirstName:@"FirstTest" lastName:@"LastTest" contactImage:nil];
-    
-    // THEN
-    XCTAssertNotEqual([returnArray count], 0);
-}
-
-- (void)testGetEmailAddresses {
-    // GIVEN
-    ABRecordRef ref = [self createRef];
-    AMBFullContact *fullContact = [[AMBFullContact alloc] init];
-    
-    // WHEN
-    NSMutableArray *returnArray = [fullContact getEmailAddresses:ref withFirstName:@"First" lastName:@"Last" contactImage:nil];
-    
-    // THEN
-    XCTAssertNotEqual([returnArray count], 0);
-}
+//- (void)testGetPhoneNumbers {
+//    // GIVEN
+//    ABRecordRef ref = [self createRef];
+//    AMBFullContact *fullContact = [[AMBFullContact alloc] init];
+//    
+//    // WHEN
+//    NSMutableArray *returnArray = [fullContact getPhoneNumbers:ref withFirstName:@"FirstTest" lastName:@"LastTest" contactImage:nil];
+//    
+//    // THEN
+//    XCTAssertNotEqual([returnArray count], 0);
+//}
+//
+//- (void)testGetEmailAddresses {
+//    // GIVEN
+//    ABRecordRef ref = [self createRef];
+//    AMBFullContact *fullContact = [[AMBFullContact alloc] init];
+//    
+//    // WHEN
+//    NSMutableArray *returnArray = [fullContact getEmailAddresses:ref withFirstName:@"First" lastName:@"Last" contactImage:nil];
+//    
+//    // THEN
+//    XCTAssertNotEqual([returnArray count], 0);
+//}
 
 
 #pragma mark - Helper Functions
