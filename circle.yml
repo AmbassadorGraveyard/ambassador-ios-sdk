@@ -3,12 +3,9 @@ general:
 machine:
   xcode:
     version: "7.2"
-checkout:
-  post:
-    - git submodule sync
-    - git submodule update
 dependencies:
   pre:
+    - gem update cocoapods
     - pod install
 test:
   override:
