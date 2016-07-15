@@ -2505,6 +2505,7 @@
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/zipzap",
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
+					"$(SRCROOT)/**",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
