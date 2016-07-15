@@ -93,7 +93,20 @@
 #pragma mark - Helper Functions
 
 - (ABRecordRef)createRef {
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    ABAddressBookRef addressBook = ABAddressBookCreate(); // create address book record
+    ABRecordRef person = ABPersonCreate(); // create a person
+    
+    NSString *phone = @"0123456789"; // the phone number to add
+    
+    //Phone number is a list of phone number, so create a multivalue
+    ABMutableMultiValueRef phoneNumberMultiValue  = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+    ABMultiValueAddValueAndLabel(phoneNumberMultiValue, (__bridge CFTypeRef)(phone), kABPersonPhoneMobileLabel, NULL);
+    
+    ABRecordSetValue(person, kABPersonFirstNameProperty, @"FirstTest" , nil); // first name of the new person
+    ABRecordSetValue(person, kABPersonLastNameProperty, @"LastTest", nil); // his last name
+    ABAddressBookAddRecord(addressBook, person, nil);
+    ABAddressBookSave(addressBook, nil); //save the record
+
     ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
     NSArray *contactArray = (__bridge NSArray *)ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonFirstNameProperty);
     return (__bridge ABRecordRef)contactArray[1];
