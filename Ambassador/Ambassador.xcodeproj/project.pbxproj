@@ -184,6 +184,9 @@
 		EF3E4DA71D3842B9000E08CF /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47671D37ECDC00F73733 /* SentrySwift.framework */; };
 		EF3E4DBA1D3933E9000E08CF /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47701D37EFA500F73733 /* KSCrash.framework */; };
 		EF3E4DBB1D3933E9000E08CF /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47671D37ECDC00F73733 /* SentrySwift.framework */; };
+		EF3E4DBC1D39354F000E08CF /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47701D37EFA500F73733 /* KSCrash.framework */; };
+		EF3E4DBD1D39354F000E08CF /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47671D37ECDC00F73733 /* SentrySwift.framework */; };
+		EF3E4DBF1D39354F000E08CF /* Pods_DemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF3E4DBE1D39354F000E08CF /* Pods_DemoApp.framework */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF499DB51CAC4FB000D2EB01 /* NoAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF499DB41CAC4FB000D2EB01 /* NoAccountViewController.m */; };
@@ -214,8 +217,6 @@
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		EF5E47731D3803FF00F73733 /* zipzap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47721D3803FF00F73733 /* zipzap.framework */; };
 		EF5E477A1D3835D000F73733 /* libAmbassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB844D261BA75BB8003FD7A9 /* libAmbassador.a */; };
-		EF5E47801D383DD200F73733 /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47671D37ECDC00F73733 /* SentrySwift.framework */; };
-		EF5E47831D383EBA00F73733 /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47701D37EFA500F73733 /* KSCrash.framework */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
 		EF67F0FA1CD1547400F52546 /* AmbassadorHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF67F0F81CD1547400F52546 /* AmbassadorHelper.h */; };
@@ -551,6 +552,7 @@
 		EF33DCF51C739D6A009689CA /* RavenClient_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient_Private.h; sourceTree = "<group>"; };
 		EF33DCF61C739D6A009689CA /* RavenConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenConfig.h; sourceTree = "<group>"; };
 		EF33DCF71C739D6A009689CA /* RavenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenConfig.m; sourceTree = "<group>"; };
+		EF3E4DBE1D39354F000E08CF /* Pods_DemoApp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_DemoApp.framework; path = "DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/Pods_DemoApp.framework"; sourceTree = "<group>"; };
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF499DB31CAC4FB000D2EB01 /* NoAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoAccountViewController.h; sourceTree = "<group>"; };
@@ -676,8 +678,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF5E47831D383EBA00F73733 /* KSCrash.framework in Frameworks */,
-				EF5E47801D383DD200F73733 /* SentrySwift.framework in Frameworks */,
+				EF3E4DBF1D39354F000E08CF /* Pods_DemoApp.framework in Frameworks */,
+				EF3E4DBC1D39354F000E08CF /* KSCrash.framework in Frameworks */,
+				EF3E4DBD1D39354F000E08CF /* SentrySwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +738,7 @@
 		0D24CFB05292A555B6506D41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EF3E4DBE1D39354F000E08CF /* Pods_DemoApp.framework */,
 				EF5E47811D383DD200F73733 /* KSCrash.framework */,
 				EF5E477B1D3837E500F73733 /* KSCrash.framework */,
 				EF5E477C1D3837E500F73733 /* SentrySwift.framework */,
@@ -2302,6 +2306,7 @@
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/KSCrash",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ambassador/Ambassador-Prefix.pch";
@@ -2336,6 +2341,7 @@
 					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/KSCrash",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ambassador/Ambassador-Prefix.pch";
