@@ -2,22 +2,22 @@ general:
   build_dir: Ambassador
 machine:
   xcode:
-    version: "7.2"
+    version: "7.3"
 dependencies:
   pre:
     - pod install
 test:
   override:
     - bash secrets.sh
-    - set -o pipefail &&
-     xcodebuild -workspace Ambassador.xcworkspace
-      -sdk iphonesimulator
-       -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
-       -configuration Debug
-       -scheme DemoApp
-       VALID_ARCHS=x86_64
-       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
-      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
+    # - set -o pipefail &&
+    #  xcodebuild -workspace Ambassador.xcworkspace
+    #   -sdk iphonesimulator
+    #    -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
+    #    -configuration Debug
+    #    -scheme DemoApp
+    #    VALID_ARCHS=x86_64
+    #    clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+    #   xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
   post:
     - bundle exec slather coverage Ambassador.xcodeproj
 
@@ -30,7 +30,7 @@ test:
     #    -configuration Debug
     #    clean build test |
     #   xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
-    - sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer/
+    - sudo xcode-select -switch ~/Applications/Xcode.app/Contents/Developer/
     - xcodebuild -workspace Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6' -configuration Release -scheme Framework -derivedDataPath DerivedData clean build
     - mv /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.framework $CIRCLE_ARTIFACTS/Ambassador.framework
     - mv /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.bundle $CIRCLE_ARTIFACTS/Ambassador.bundle
