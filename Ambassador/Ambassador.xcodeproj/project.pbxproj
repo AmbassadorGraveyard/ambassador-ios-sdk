@@ -23,7 +23,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		39895D3DFF3918E34BF190F1 /* libPods-DemoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C49757526ECDA9D677C5F2C /* libPods-DemoApp.a */; };
+		C254602E989BF5CFFEE392D6 /* Pods_DemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18948B1BD77767BC9142BC26 /* Pods_DemoApp.framework */; };
 		DB6A245F1BD00F3F00CE3230 /* AMBNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */; };
 		DB6A24601BD00F3F00CE3230 /* AMBNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */; };
 		DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24611BD017A700CE3230 /* AMBErrors.h */; };
@@ -147,7 +147,6 @@
 		EF07452A1C52C8E1009AF919 /* OCMock in Resources */ = {isa = PBXBuildFile; fileRef = EF0745291C52C8E1009AF919 /* OCMock */; };
 		EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF07452B1C52C8FA009AF919 /* libOCMock.a */; };
 		EF1399AC1C6551AB0005054D /* AMBContactLoaderUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */; };
-		EF1A4F271CC56DF7008EE886 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1A4F261CC56DF7008EE886 /* libzipzap.a */; };
 		EF1A4F2C1CC58DE8008EE886 /* SlidingView.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F2A1CC58DE8008EE886 /* SlidingView.h */; };
 		EF1A4F2D1CC58DE8008EE886 /* SlidingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1A4F2B1CC58DE8008EE886 /* SlidingView.m */; };
 		EF1A4F341CC67802008EE886 /* UIActivityViewController+ZipShare.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F321CC67802008EE886 /* UIActivityViewController+ZipShare.h */; };
@@ -182,12 +181,15 @@
 		EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */; };
 		EF3079161C6E205800403F56 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */; };
 		EF3079171C6E205800403F56 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3079151C6E205800403F56 /* AMBPusherChannelObject.m */; };
-		EF33DCF81C739D6A009689CA /* Raven.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF21C739D6A009689CA /* Raven.h */; };
-		EF33DCF91C739D6A009689CA /* RavenClient.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF31C739D6A009689CA /* RavenClient.h */; };
-		EF33DCFA1C739D6A009689CA /* RavenClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCF41C739D6A009689CA /* RavenClient.m */; };
-		EF33DCFB1C739D6A009689CA /* RavenClient_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF51C739D6A009689CA /* RavenClient_Private.h */; };
-		EF33DCFC1C739D6A009689CA /* RavenConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF61C739D6A009689CA /* RavenConfig.h */; };
-		EF33DCFD1C739D6A009689CA /* RavenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCF71C739D6A009689CA /* RavenConfig.m */; };
+		EF3E4DA71D3842B9000E08CF /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47671D37ECDC00F73733 /* SentrySwift.framework */; };
+		EF3E4DBC1D39354F000E08CF /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47701D37EFA500F73733 /* KSCrash.framework */; };
+		EF3E4DBD1D39354F000E08CF /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47671D37ECDC00F73733 /* SentrySwift.framework */; };
+		EF3E4DBF1D39354F000E08CF /* Pods_DemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF3E4DBE1D39354F000E08CF /* Pods_DemoApp.framework */; };
+		EF3E4DC01D393BC6000E08CF /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47701D37EFA500F73733 /* KSCrash.framework */; };
+		EF3E4DCB1D3D2D86000E08CF /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47741D3822FE00F73733 /* KSCrash.framework */; };
+		EF3E4DCC1D3D2D86000E08CF /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47751D3822FE00F73733 /* SentrySwift.framework */; };
+		EF3E4DCF1D3D2D8C000E08CF /* KSCrash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF3E4DCD1D3D2D8C000E08CF /* KSCrash.framework */; };
+		EF3E4DD01D3D2D8C000E08CF /* SentrySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF3E4DCE1D3D2D8C000E08CF /* SentrySwift.framework */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF499DB51CAC4FB000D2EB01 /* NoAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF499DB41CAC4FB000D2EB01 /* NoAccountViewController.m */; };
@@ -216,6 +218,8 @@
 		EF5B00881C91C22A002BD361 /* AMBSMSHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = EF5B00861C91C22A002BD361 /* AMBSMSHandler.h */; };
 		EF5B00891C91C22A002BD361 /* AMBSMSHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF5B00871C91C22A002BD361 /* AMBSMSHandler.m */; };
 		EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
+		EF5E47731D3803FF00F73733 /* zipzap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF5E47721D3803FF00F73733 /* zipzap.framework */; };
+		EF5E477A1D3835D000F73733 /* libAmbassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB844D261BA75BB8003FD7A9 /* libAmbassador.a */; };
 		EF64CFA61BE2A47D0072014B /* AmbassadorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */; };
 		EF64CFAE1BE2AACE0072014B /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = EF64CFAD1BE2AACE0072014B /* spinner.png */; };
 		EF67F0FA1CD1547400F52546 /* AmbassadorHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = EF67F0F81CD1547400F52546 /* AmbassadorHelper.h */; };
@@ -316,6 +320,13 @@
 			remoteGlobalIDString = DB844D251BA75BB8003FD7A9;
 			remoteInfo = Ambassador;
 		};
+		EF3E4DB81D392880000E08CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB844D601BA76BDE003FD7A9;
+			remoteInfo = DemoApp;
+		};
 		EF64CFA81BE2A47D0072014B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
@@ -354,15 +365,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0079A83364A4D337331258FB /* libPods-Ambassador.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ambassador.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C49757526ECDA9D677C5F2C /* libPods-DemoApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4304F0FD25CED9DD5F227F5A /* Pods-DemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp.debug.xcconfig"; sourceTree = "<group>"; };
-		6A47EBEA1D60C44F384D7022 /* Pods-Ambassador.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ambassador.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ambassador/Pods-Ambassador.release.xcconfig"; sourceTree = "<group>"; };
-		6B06D813C3591AAA17C70304 /* Pods-DemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp.release.xcconfig"; sourceTree = "<group>"; };
-		6C128C3383D1721F1F87EF25 /* libPods-TestApplication.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TestApplication.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6FB986901906A3DD3E86D546 /* Pods-TestApplication.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApplication.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestApplication/Pods-TestApplication.release.xcconfig"; sourceTree = "<group>"; };
-		75B51AA7CD49D1C0E04EC243 /* Pods-Ambassador.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ambassador.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ambassador/Pods-Ambassador.debug.xcconfig"; sourceTree = "<group>"; };
-		D4D2ED3AB7E35941B5B43CCE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		18948B1BD77767BC9142BC26 /* Pods_DemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BD304ED1EBB1E5CDC65D86D /* Pods-DemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNetworkManager.h; sourceTree = "<group>"; };
 		DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworkManager.m; sourceTree = "<group>"; };
 		DB6A24611BD017A700CE3230 /* AMBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBErrors.h; sourceTree = "<group>"; };
@@ -551,6 +555,9 @@
 		EF33DCF51C739D6A009689CA /* RavenClient_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient_Private.h; sourceTree = "<group>"; };
 		EF33DCF61C739D6A009689CA /* RavenConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenConfig.h; sourceTree = "<group>"; };
 		EF33DCF71C739D6A009689CA /* RavenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenConfig.m; sourceTree = "<group>"; };
+		EF3E4DBE1D39354F000E08CF /* Pods_DemoApp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_DemoApp.framework; path = "DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/Pods_DemoApp.framework"; sourceTree = "<group>"; };
+		EF3E4DCD1D3D2D8C000E08CF /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KSCrash.framework; sourceTree = "<group>"; };
+		EF3E4DCE1D3D2D8C000E08CF /* SentrySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SentrySwift.framework; sourceTree = "<group>"; };
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF499DB31CAC4FB000D2EB01 /* NoAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoAccountViewController.h; sourceTree = "<group>"; };
@@ -588,6 +595,15 @@
 		EF5B00851C90AD69002BD361 /* AMBConversionModel_2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AMBConversionModel_2.xcdatamodel; sourceTree = "<group>"; };
 		EF5B00861C91C22A002BD361 /* AMBSMSHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBSMSHandler.h; sourceTree = "<group>"; };
 		EF5B00871C91C22A002BD361 /* AMBSMSHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSMSHandler.m; sourceTree = "<group>"; };
+		EF5E47661D37ECDC00F73733 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSCrash.framework; path = "Pods/../build/Debug-iphoneos/KSCrash/KSCrash.framework"; sourceTree = "<group>"; };
+		EF5E47671D37ECDC00F73733 /* SentrySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SentrySwift.framework; path = "DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift/SentrySwift.framework"; sourceTree = "<group>"; };
+		EF5E47701D37EFA500F73733 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSCrash.framework; path = "DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash/KSCrash.framework"; sourceTree = "<group>"; };
+		EF5E47721D3803FF00F73733 /* zipzap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = zipzap.framework; path = "DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/zipzap/zipzap.framework"; sourceTree = "<group>"; };
+		EF5E47741D3822FE00F73733 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSCrash.framework; path = "DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash/KSCrash.framework"; sourceTree = "<group>"; };
+		EF5E47751D3822FE00F73733 /* SentrySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SentrySwift.framework; path = "DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift/SentrySwift.framework"; sourceTree = "<group>"; };
+		EF5E477B1D3837E500F73733 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSCrash.framework; path = "Pods/../build/Debug-iphoneos/KSCrash/KSCrash.framework"; sourceTree = "<group>"; };
+		EF5E477C1D3837E500F73733 /* SentrySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SentrySwift.framework; path = "Pods/../build/Debug-iphoneos/SentrySwift/SentrySwift.framework"; sourceTree = "<group>"; };
+		EF5E47811D383DD200F73733 /* KSCrash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSCrash.framework; path = "Pods/../build/Debug-iphoneos/KSCrash/KSCrash.framework"; sourceTree = "<group>"; };
 		EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmbassadorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF64CFA51BE2A47D0072014B /* AmbassadorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbassadorUITests.swift; sourceTree = "<group>"; };
 		EF64CFA71BE2A47D0072014B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -659,7 +675,7 @@
 		EFE7D7C71C24671600D7F92C /* AMBConversionParameter_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBConversionParameter_Internal.h; sourceTree = "<group>"; };
 		EFED7B041BDA9F0A00F6C360 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		EFF58F9F1BF4F8F5001AB2DE /* AMBMedia.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AMBMedia.xcassets; sourceTree = "<group>"; };
-		FE9134FEDC8C6784B298583E /* Pods-TestApplication.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestApplication.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestApplication/Pods-TestApplication.debug.xcconfig"; sourceTree = "<group>"; };
+		F14E3E0C4E0DBD4F4CDDCA06 /* Pods-DemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -667,6 +683,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF3E4DCF1D3D2D8C000E08CF /* KSCrash.framework in Frameworks */,
+				EF3E4DBF1D39354F000E08CF /* Pods_DemoApp.framework in Frameworks */,
+				EF3E4DBC1D39354F000E08CF /* KSCrash.framework in Frameworks */,
+				EF3E4DBD1D39354F000E08CF /* SentrySwift.framework in Frameworks */,
+				EF3E4DD01D3D2D8C000E08CF /* SentrySwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,9 +695,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF3E4DC01D393BC6000E08CF /* KSCrash.framework in Frameworks */,
+				EF3E4DA71D3842B9000E08CF /* SentrySwift.framework in Frameworks */,
+				DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */,
 				EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */,
 				DB6A246E1BD031A100CE3230 /* libicucore.tbd in Frameworks */,
-				DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -684,6 +707,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF5E477A1D3835D000F73733 /* libAmbassador.a in Frameworks */,
 				EF5DB5141BDAB8E40036E29F /* libicucore.tbd in Frameworks */,
 				EFED7B0C1BDAA20500F6C360 /* libsqlite3.tbd in Frameworks */,
 			);
@@ -693,10 +717,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF1A4F271CC56DF7008EE886 /* libzipzap.a in Frameworks */,
-				39895D3DFF3918E34BF190F1 /* libPods-DemoApp.a in Frameworks */,
+				EF3E4DCB1D3D2D86000E08CF /* KSCrash.framework in Frameworks */,
+				EF3E4DCC1D3D2D86000E08CF /* SentrySwift.framework in Frameworks */,
+				EF5E47731D3803FF00F73733 /* zipzap.framework in Frameworks */,
 				EF7D80B81C24B1410098D054 /* libicucore.tbd in Frameworks */,
 				DB844D891BA76C1E003FD7A9 /* libAmbassador.a in Frameworks */,
+				C254602E989BF5CFFEE392D6 /* Pods_DemoApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,6 +746,16 @@
 		0D24CFB05292A555B6506D41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EF3E4DBE1D39354F000E08CF /* Pods_DemoApp.framework */,
+				EF5E47811D383DD200F73733 /* KSCrash.framework */,
+				EF5E477B1D3837E500F73733 /* KSCrash.framework */,
+				EF5E477C1D3837E500F73733 /* SentrySwift.framework */,
+				EF5E47741D3822FE00F73733 /* KSCrash.framework */,
+				EF5E47751D3822FE00F73733 /* SentrySwift.framework */,
+				EF5E47721D3803FF00F73733 /* zipzap.framework */,
+				EF5E47701D37EFA500F73733 /* KSCrash.framework */,
+				EF5E47661D37ECDC00F73733 /* KSCrash.framework */,
+				EF5E47671D37ECDC00F73733 /* SentrySwift.framework */,
 				EF1A4F261CC56DF7008EE886 /* libzipzap.a */,
 				EF1A4F241CC51663008EE886 /* libzipzap.a */,
 				EF28DF421CC1804F0070994F /* libobjective-zip.a */,
@@ -742,25 +778,9 @@
 				DBA3FC3B1BA8AC5400672D82 /* Security.framework */,
 				DBA3FC391BA8AC3A00672D82 /* libcommonCrypto.dylib */,
 				DBA3FC371BA8AC3100672D82 /* libsystem_coreservices.dylib */,
-				0079A83364A4D337331258FB /* libPods-Ambassador.a */,
-				D4D2ED3AB7E35941B5B43CCE /* libPods.a */,
-				6C128C3383D1721F1F87EF25 /* libPods-TestApplication.a */,
-				3C49757526ECDA9D677C5F2C /* libPods-DemoApp.a */,
+				18948B1BD77767BC9142BC26 /* Pods_DemoApp.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		27B8BF6A2922B5E6C03D8090 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				75B51AA7CD49D1C0E04EC243 /* Pods-Ambassador.debug.xcconfig */,
-				6A47EBEA1D60C44F384D7022 /* Pods-Ambassador.release.xcconfig */,
-				FE9134FEDC8C6784B298583E /* Pods-TestApplication.debug.xcconfig */,
-				6FB986901906A3DD3E86D546 /* Pods-TestApplication.release.xcconfig */,
-				4304F0FD25CED9DD5F227F5A /* Pods-DemoApp.debug.xcconfig */,
-				6B06D813C3591AAA17C70304 /* Pods-DemoApp.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		DB844D1D1BA75BB8003FD7A9 = {
@@ -774,7 +794,7 @@
 				EF64CFA41BE2A47D0072014B /* AmbassadorUITests */,
 				DB844D271BA75BB8003FD7A9 /* Products */,
 				0D24CFB05292A555B6506D41 /* Frameworks */,
-				27B8BF6A2922B5E6C03D8090 /* Pods */,
+				DDE9330800775B63D53A9A1D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -794,6 +814,8 @@
 		DB844D281BA75BB8003FD7A9 /* Ambassador */ = {
 			isa = PBXGroup;
 			children = (
+				EF3E4DCD1D3D2D8C000E08CF /* KSCrash.framework */,
+				EF3E4DCE1D3D2D8C000E08CF /* SentrySwift.framework */,
 				DB844D291BA75BB8003FD7A9 /* Ambassador.h */,
 				DBA3FB521BA8A23B00672D82 /* AmbassadorSDK.h */,
 				DBA3FB531BA8A23B00672D82 /* AmbassadorSDK.m */,
@@ -1015,6 +1037,15 @@
 				DBA3FC2C1BA8AA5600672D82 /* AMBSRWebSocket.m */,
 			);
 			name = "Socket Rocket";
+			sourceTree = "<group>";
+		};
+		DDE9330800775B63D53A9A1D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4BD304ED1EBB1E5CDC65D86D /* Pods-DemoApp.debug.xcconfig */,
+				F14E3E0C4E0DBD4F4CDDCA06 /* Pods-DemoApp.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		EF185A2B1C528E7800AD6330 /* Custom Alert */ = {
@@ -1528,8 +1559,6 @@
 				EF896FD61CBD3D63003E270D /* AMBSecrets.h in Headers */,
 				DBA3FC161BA8AA1D00672D82 /* AMBPTPusherConnection.h in Headers */,
 				DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */,
-				EF33DCFB1C739D6A009689CA /* RavenClient_Private.h in Headers */,
-				EF33DCFC1C739D6A009689CA /* RavenConfig.h in Headers */,
 				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
 				EFE7D7951C21C19B00D7F92C /* AMBCoreDataDelegate.h in Headers */,
 				EF1A4F3D1CC6CD07008EE886 /* GroupObject.h in Headers */,
@@ -1556,7 +1585,6 @@
 				EF7BA1CC1BDEB17E00788160 /* AMBBulkShareHelper.h in Headers */,
 				DB6A24841BD1842800CE3230 /* AmbassadorSDK_Internal.h in Headers */,
 				DBA3FC1F1BA8AA1D00672D82 /* AMBPTPusherMacros.h in Headers */,
-				EF33DCF81C739D6A009689CA /* Raven.h in Headers */,
 				DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
 				DBB8BD0A1BAC6B6D00B87896 /* AMBPTPusher+Testing.h in Headers */,
@@ -1603,7 +1631,6 @@
 				DBA3FC1A1BA8AA1D00672D82 /* AMBPTPusherEvent.h in Headers */,
 				DBA3FB8E1BA8A23C00672D82 /* AMBIdentify.h in Headers */,
 				DBA3FB731BA8A23C00672D82 /* AMBAuthorizeLinkedIn.h in Headers */,
-				EF33DCF91C739D6A009689CA /* RavenClient.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1643,6 +1670,7 @@
 			dependencies = (
 				EF90FAFE1BF1069700716427 /* PBXTargetDependency */,
 				DB844D341BA75BB8003FD7A9 /* PBXTargetDependency */,
+				EF3E4DB91D392880000E08CF /* PBXTargetDependency */,
 			);
 			name = AmbassadorTests;
 			productName = AmbassadorTests;
@@ -1670,11 +1698,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DB844D811BA76BDE003FD7A9 /* Build configuration list for PBXNativeTarget "DemoApp" */;
 			buildPhases = (
-				93D959191E7FE69DFA7022ED /* Check Pods Manifest.lock */,
+				A2D034BC08581E5E082CF417 /* [CP] Check Pods Manifest.lock */,
 				DB844D5D1BA76BDE003FD7A9 /* Sources */,
 				DB844D5E1BA76BDE003FD7A9 /* Frameworks */,
 				DB844D5F1BA76BDE003FD7A9 /* Resources */,
-				38DC99D89825390B53BB5102 /* Copy Pods Resources */,
+				E93D4AC6A7308C37D1AABC62 /* [CP] Embed Pods Frameworks */,
+				1D844ACD85DEBA021388BCE0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1738,6 +1767,7 @@
 					};
 					DB844D301BA75BB8003FD7A9 = {
 						CreatedOnToolsVersion = 6.4;
+						TestTargetID = DB844D601BA76BDE003FD7A9;
 					};
 					DB844D471BA75F9F003FD7A9 = {
 						CreatedOnToolsVersion = 6.4;
@@ -1860,14 +1890,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		38DC99D89825390B53BB5102 /* Copy Pods Resources */ = {
+		1D844ACD85DEBA021388BCE0 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1875,14 +1905,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		93D959191E7FE69DFA7022ED /* Check Pods Manifest.lock */ = {
+		A2D034BC08581E5E082CF417 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1918,6 +1948,21 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\nset +u\n# Avoid recursively calling this script.\nif [[ $SF_MASTER_SCRIPT_RUNNING ]]\nthen\nexit 0\nfi\nset -u\nexport SF_MASTER_SCRIPT_RUNNING=1\n\nSF_TARGET_NAME=${PROJECT_NAME}\nSF_EXECUTABLE_PATH=\"lib${SF_TARGET_NAME}.a\"\nSF_WRAPPER_NAME=\"${SF_TARGET_NAME}.framework\"\n\n# The following conditionals come from\n# https://github.com/kstenerud/iOS-Universal-Framework\n\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]\nthen\nSF_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\necho \"Could not find platform name from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]\nthen\nSF_SDK_VERSION=${BASH_REMATCH[1]}\nelse\necho \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\nif [[ \"$SF_SDK_PLATFORM\" = \"iphoneos\" ]]\nthen\nSF_OTHER_PLATFORM=iphonesimulator\nelse\nSF_OTHER_PLATFORM=iphoneos\nfi\n\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$SF_SDK_PLATFORM$ ]]\nthen\nSF_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${SF_OTHER_PLATFORM}\"\nelse\necho \"Could not find platform name from build products directory: $BUILT_PRODUCTS_DIR\"\nexit 1\nfi\n\n# Build the other platform.\nxcrun xcodebuild -project \"${PROJECT_FILE_PATH}\" -target \"${TARGET_NAME}\" -configuration \"${CONFIGURATION}\" -sdk ${SF_OTHER_PLATFORM}${SF_SDK_VERSION} BUILD_DIR=\"${BUILD_DIR}\" OBJROOT=\"${OBJROOT}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\" $ACTION OTHER_CFLAGS=\"-fembed-bitcode\"\n\n# Smash the two static libraries into one fat binary and store it in the .framework\nxcrun lipo -create \"${BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_EXECUTABLE_PATH}\" -output \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"\n\n# Copy the binary to the other architecture folder to have a complete framework in both.\ncp -a \"${BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\" \"${SF_OTHER_BUILT_PRODUCTS_DIR}/${SF_WRAPPER_NAME}/Versions/A/${SF_TARGET_NAME}\"";
 		};
+		E93D4AC6A7308C37D1AABC62 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1929,12 +1974,10 @@
 				DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */,
 				EFB3C7E81CB70E9400EF9533 /* AMBNPSViewController.m in Sources */,
 				EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */,
-				EF33DCFD1C739D6A009689CA /* RavenConfig.m in Sources */,
 				DBA3FB7E1BA8A23C00672D82 /* AMBContactSelector.m in Sources */,
 				DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */,
 				DBA3FC121BA8AA1D00672D82 /* AMBPTPusherAPI.m in Sources */,
 				DBA3FC001BA8AA1D00672D82 /* NSDictionary+QueryString.m in Sources */,
-				EF33DCFA1C739D6A009689CA /* RavenClient.m in Sources */,
 				DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */,
 				DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */,
 				DBA3FC231BA8AA1D00672D82 /* AMBPTTargetActionEventListener.m in Sources */,
@@ -2123,6 +2166,11 @@
 			target = DB844D251BA75BB8003FD7A9 /* Ambassador */;
 			targetProxy = EF33DCEE1C73949A009689CA /* PBXContainerItemProxy */;
 		};
+		EF3E4DB91D392880000E08CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB844D601BA76BDE003FD7A9 /* DemoApp */;
+			targetProxy = EF3E4DB81D392880000E08CF /* PBXContainerItemProxy */;
+		};
 		EF64CFA91BE2A47D0072014B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DB844D601BA76BDE003FD7A9 /* DemoApp */;
@@ -2196,7 +2244,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fembed-bitcode";
@@ -2240,7 +2288,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fembed-bitcode";
@@ -2260,7 +2308,17 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				DEAD_CODE_STRIPPING = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/KSCrash",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator",
+					"$(PROJECT_DIR)/Ambassador",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ambassador/Ambassador-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
@@ -2269,7 +2327,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2286,7 +2344,17 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				DEAD_CODE_STRIPPING = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/KSCrash",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator",
+					"$(PROJECT_DIR)/Ambassador",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Ambassador/Ambassador-Prefix.pch";
 				HEADER_SEARCH_PATHS = "";
@@ -2295,7 +2363,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2312,10 +2380,15 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(PROJECT_DIR)/AmbassadorTests",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -2325,6 +2398,7 @@
 				INFOPLIST_FILE = AmbassadorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/AmbassadorTests";
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2332,6 +2406,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DemoApp.app/DemoApp";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -2342,15 +2417,21 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(PROJECT_DIR)/AmbassadorTests",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AmbassadorTests";
 				INFOPLIST_FILE = AmbassadorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/AmbassadorTests";
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -2358,6 +2439,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DemoApp.app/DemoApp";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
@@ -2366,8 +2448,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				OTHER_CFLAGS = "";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "'-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9ee6a895-39ff-44da-9e96-8addc6c42720";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -2376,8 +2465,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
-				OTHER_CFLAGS = "";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "'-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9ee6a895-39ff-44da-9e96-8addc6c42720";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
@@ -2422,11 +2518,21 @@
 		};
 		DB844D821BA76BDE003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4304F0FD25CED9DD5F227F5A /* Pods-DemoApp.debug.xcconfig */;
+			baseConfigurationReference = 4BD304ED1EBB1E5CDC65D86D /* Pods-DemoApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/zipzap",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
+					"$(SRCROOT)/**",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2451,11 +2557,20 @@
 		};
 		DB844D831BA76BDE003FD7A9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6B06D813C3591AAA17C70304 /* Pods-DemoApp.release.xcconfig */;
+			baseConfigurationReference = F14E3E0C4E0DBD4F4CDDCA06 /* Pods-DemoApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Zferral, Inc. (2H59A3U3KT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zferral, Inc. (2H59A3U3KT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/SentrySwift",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/zipzap",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Debug-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/KSCrash",
+					"$(PROJECT_DIR)/DerivedData/Ambassador/Build/Products/Release-iphonesimulator/SentrySwift",
+				);
 				INFOPLIST_FILE = TestApplication/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2519,6 +2634,10 @@
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+				);
 				INFOPLIST_FILE = AmbassadorUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2536,9 +2655,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_CODE_COVERAGE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+				);
 				INFOPLIST_FILE = AmbassadorUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.AmbassadorUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

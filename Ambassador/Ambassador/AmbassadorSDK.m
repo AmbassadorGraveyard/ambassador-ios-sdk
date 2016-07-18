@@ -14,7 +14,7 @@
 #import "AMBPusherManager.h"
 #import "AMBNetworkManager.h"
 #import "AMBErrors.h"
-#import "RavenClient.h"
+@import SentrySwift;
 
 
 @implementation AmbassadorSDK
@@ -34,19 +34,6 @@
 
 
 #pragma mark - Crash Analytics
-
-NSUncaughtExceptionHandler *parentHandler = nil;
-
-void ambassadorUncaughtExceptionHandler(NSException *exception) {
-    if (stackTraceForContainsString(exception, @"AmbassadorSDK")) {
-        [[RavenClient sharedClient] captureException:exception sendNow:NO];
-    }
-    
-    // If the parent app has an exceptionHandler already, we call it
-    if (parentHandler) {
-        parentHandler(exception);
-    }
-}
 
 BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     NSArray *callStackArray = [NSArray arrayWithArray:exception.callStackSymbols];
@@ -87,12 +74,8 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 - (void)setUpCrashAnalytics {
     // Sets up Sentry if in release mode
     if ([AMBValues isProduction]) {
-        RavenClient *client = [RavenClient clientWithDSN:[AMBValues getSentryDSNValue]];
-        [RavenClient setSharedClient:client];
-        parentHandler = NSGetUncaughtExceptionHandler(); // Creates a reference to parent project's exceptionHandler in order to fire it in override
-        
-        [[RavenClient sharedClient] setupExceptionHandler]; // Is overridden to use our custom handler but still grabs crashes
-        NSSetUncaughtExceptionHandler(ambassadorUncaughtExceptionHandler); // Sets our overridden exceptionHandler that only sends on AmbassadorSDK stacktraces
+        [SentryClient setShared:[[SentryClient alloc] initWithDsnString:[AMBValues getSentryDSNValue]]];
+        [[SentryClient shared] startCrashHandler];
     }
 }
 
@@ -123,6 +106,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 + (void)identifyWithEmail:(NSString *)email {
     // Uses new idenity logic when deprecated identify method is called
     [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:email traits:@{@"email" : email} options:nil];
+    
 }
 
 - (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits options:(NSDictionary *)options {

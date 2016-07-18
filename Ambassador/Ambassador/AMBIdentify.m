@@ -91,7 +91,7 @@ NSInteger const maxTryCount = 5;
     
     // Gets the top viewController and adds the safari VC to it if not already added
     UIViewController *topVC = [AMBUtilities getTopViewController];
-    if (![self.safariVC.view isDescendantOfView:topVC.view]) {
+    if (self.safariVC && ![self.safariVC.view isDescendantOfView:topVC.view]) {
         [topVC.view addSubview:self.safariVC.view];
         [topVC addChildViewController:self.safariVC];
     }
