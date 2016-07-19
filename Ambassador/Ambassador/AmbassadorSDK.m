@@ -82,6 +82,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
     // Sets up Sentry Crash Analytics
     [self setUpCrashAnalytics];
+    NSLog(@"[Ambassador] AmbassadorSDK was successfully initialized with the UniversalID: %@.", universalID);
 }
 
 - (void)setUpCrashAnalytics {

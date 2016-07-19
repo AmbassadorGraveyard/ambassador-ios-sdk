@@ -64,6 +64,7 @@
             AMBConversionParameters *parameters = [[AMBConversionParameters alloc] initWithEntity:entity];
             [self sendConversion:parameters success:^{
                 DLog(@"Conversion retry success - %@", parameters);
+                NSLog(@"[Ambasssador] Conversion retry was successful!");
                 
                 // Deletes the coredata object after successful send
                 [AMBCoreDataManager deleteCoreDataObject:entity];
