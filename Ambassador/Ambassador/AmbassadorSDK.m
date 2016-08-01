@@ -117,16 +117,16 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 #pragma mark - Identify
 
-+ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits options:(NSDictionary *)options {
-    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits options:options];
++ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits {
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:nil];
 }
 
 + (void)identifyWithEmail:(NSString *)email {
     // Uses new idenity logic when deprecated identify method is called
-    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:email traits:@{@"email" : email} options:nil];
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:email traits:@{@"email" : email} autoEnrollCampaign:nil];
 }
 
-- (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits options:(NSDictionary *)options {
+- (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits autoEnrollCampaign:(NSString *)campaign {
     // Flag that tells if an identify process is happening currently
     [AmbassadorSDK sharedInstance].identifyInProgress = YES;
     
