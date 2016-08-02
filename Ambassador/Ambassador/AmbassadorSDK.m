@@ -117,16 +117,20 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 #pragma mark - Identify
 
-+ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits options:(NSDictionary *)options {
-    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits options:options];
++ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits autoEnrollCampaign:(NSString *)campaign {
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:campaign];
+}
+
++ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits {
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:nil];
 }
 
 + (void)identifyWithEmail:(NSString *)email {
     // Uses new idenity logic when deprecated identify method is called
-    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:email traits:@{@"email" : email} options:nil];
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:email traits:@{@"email" : email} autoEnrollCampaign:nil];
 }
 
-- (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits options:(NSDictionary *)options {
+- (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits autoEnrollCampaign:(NSString *)campaign {
     // Flag that tells if an identify process is happening currently
     [AmbassadorSDK sharedInstance].identifyInProgress = YES;
     
@@ -142,8 +146,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     
     // Subscribes to Pusher with a brand new channel since the old one is likely disconnected/terminated
     [self subscribeToPusherWithSuccess:^{
-        // Check to see if there is a campaign value set in options, and auto-enroll if so
-        NSString *campaign = options[@"campaign"] ? [NSString stringWithFormat:@"%@", options[@"campaign"]] : nil;
+        // Checks to see if a campaign is passed and whether it should auto-enroll
         BOOL shouldEnroll = campaign != nil;
         
         if (shouldEnroll) { DLog(@"[Identify] Attempting to auto enroll for campaign %@.", campaign); }
@@ -257,7 +260,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     NSDictionary *traits = @{@"email" : inputValue, @"identify_type" : @"raf"};
     
     // Identifies and presents RAF
-    [self localIdentifyWithUserID:inputValue traits:traits options:nil];
+    [self localIdentifyWithUserID:inputValue traits:traits autoEnrollCampaign:nil];
     [self presentRAFForCampaign:self.tempCampID FromViewController:self.tempPresentController withThemePlist:self.tempPlistName];
 }
 

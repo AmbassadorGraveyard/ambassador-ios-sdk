@@ -670,14 +670,11 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
                                         @"customLabel3" : self.tfCustom3.text,
                                         @"addToGroups" : addToGroupString};
     
-    // Create identify options dict is needed
-    NSDictionary *identifyOptions = nil;
-    if (self.swtAutoCreate.isOn) {
-        identifyOptions = @{@"campaign" : self.selectedCampaign.campID};
-    }
+    // Create auto-enroll campaign string
+    NSString *enrollCampaign = self.swtAutoCreate.isOn ? self.selectedCampaign.campID : nil;
     
     // Call identify
-    [AmbassadorSDK identifyWithUserID:idUID traits:traitsDictionary options:identifyOptions];
+    [AmbassadorSDK identifyWithUserID:idUID traits:traitsDictionary autoEnrollCampaign:enrollCampaign];
     
     
     // Sets all properties for converions
