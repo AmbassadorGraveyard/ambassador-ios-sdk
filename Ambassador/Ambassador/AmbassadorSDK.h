@@ -108,7 +108,6 @@ typedef enum conversionStatus {
  
  @param eventName An optional value for the name of the event being tracked. 
  @param properties Properties set for the event. Ex: Campaign, email, revenue, etc.
- @param options Additional options that can be set for the event. 
  
  @warning In order to register the event as a conversion, the key/pair value '@"conversion" : @YES' must be added to the 'options' dictionary.
  
@@ -124,13 +123,29 @@ typedef enum conversionStatus {
  
  @param eventName An optional value for the name of the event being tracked.
  @param properties Properties set for the event. Ex: Campaign, email, revenue, etc.
- @param options Additional options that can be set for the event.
  @param completion If event is a conversion, this block that tells the user when the conversion is done attempting to send.  Block passes back the conversion, the conversionStatus, and an error if one occurs.
  
  @warning In order to register the event as a conversion, the key/pair value '@"conversion" : @YES' must be added to the 'options' dictionary.
  
  */
-+ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion;
++ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion;
+
+
+/**
+ 
+ Tracks an event with Ambassador.
+ 
+ Currently, the only event Ambassador tracks is a conversion.
+ 
+ @param eventName An optional value for the name of the event being tracked.
+ @param properties Properties set for the event. Ex: Campaign, email, revenue, etc.
+ @param restrictedToInstall If set to YES, the event will only be able to occur one time. Even if the event is hit again, no conversion will be sent.
+ @param completion If event is a conversion, this block that tells the user when the conversion is done attempting to send.  Block passes back the conversion, the conversionStatus, and an error if one occurs.
+ 
+ @warning In order to register the event as a conversion, the key/pair value '@"conversion" : @YES' must be added to the 'options' dictionary.
+ 
+ */
++ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties restrictToInstall:(BOOL)restricted completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion;
 
 
 /**
