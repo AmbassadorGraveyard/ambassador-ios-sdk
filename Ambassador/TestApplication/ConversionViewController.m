@@ -688,12 +688,8 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
                                             @"eventData3" : self.tfEventData3.text,
                                             @"emailNewAmbassador" : [NSNumber numberWithBool:(self.swtAutoCreate.isOn && self.swtEmailNewAmbassador.isOn)] };
     
-    // Sets option dictionary for the conversion
-    NSDictionary *optionsDictionary = @{ @"conversion" : @YES,
-                                         @"restrictedToInstall" : @NO };
-    
     // Call the track function and trigger the conversion
-    [AmbassadorSDK trackEvent:@"New event" properties:propertiesDictionary options:optionsDictionary completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {
+    [AmbassadorSDK trackEvent:@"New event" properties:propertiesDictionary restrictToInstall:YES completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {
         switch (conversionStatus) {
             case ConversionSuccessful:
                 NSLog(@"Success!");
