@@ -123,11 +123,10 @@ NSString * const universalToken = @"test";
     // GIVEN
     NSString *eventName = @"test";
     NSDictionary *properties = @{ @"test" : @"value" };
-    NSDictionary *options = @{ @"test" : @"value" };
-    [[[self.mockAmbassadorSDK expect] andDo:nil] trackEvent:eventName properties:properties options:options completion:nil];
+    [[[self.mockAmbassadorSDK expect] andDo:nil] trackEvent:eventName properties:properties completion:nil];
     
     // WHEN
-    [AmbassadorSDK trackEvent:eventName properties:properties options:options];
+    [AmbassadorSDK trackEvent:eventName properties:properties completion:nil];
     
     // THEN
     [self.mockAmbassadorSDK verify];
@@ -138,10 +137,10 @@ NSString * const universalToken = @"test";
     NSString *eventName = @"test";
     NSDictionary *properties = @{ @"test" : @"value" };
     NSDictionary *options = @{ @"conversion" : @YES };
-    [[[self.mockAmbassadorSDK expect] andDo:nil] trackEvent:eventName properties:properties options:options completion:[OCMArg isNotNil]];
+    [[[self.mockAmbassadorSDK expect] andDo:nil] trackEvent:eventName properties:properties completion:[OCMArg isNotNil]];
     
     // WHEN
-    [AmbassadorSDK trackEvent:eventName properties:properties options:options completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {
+    [AmbassadorSDK trackEvent:eventName properties:properties completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {
         NSLog(@"Track hit competion");
     }];
     
