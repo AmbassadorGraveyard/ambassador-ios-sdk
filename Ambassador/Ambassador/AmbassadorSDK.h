@@ -112,7 +112,7 @@ typedef enum conversionStatus {
  @warning In order to register the event as a conversion, the key/pair value '@"conversion" : @YES' must be added to the 'options' dictionary.
  
  */
-+ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties options:(NSDictionary *)options;
++ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties;
 
 
 /**
