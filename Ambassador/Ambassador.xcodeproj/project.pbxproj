@@ -24,6 +24,7 @@
 
 /* Begin PBXBuildFile section */
 		0EE91F1B978D71581B795ECA /* libPods-DemoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D4F3F6CA2DB2A812094EBBA /* libPods-DemoApp.a */; };
+		590051241E2FFA320045DC29 /* AMBSecrets.m in Sources */ = {isa = PBXBuildFile; fileRef = 590051231E2FFA320045DC29 /* AMBSecrets.m */; };
 		DB6A245F1BD00F3F00CE3230 /* AMBNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */; };
 		DB6A24601BD00F3F00CE3230 /* AMBNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */; };
 		DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24611BD017A700CE3230 /* AMBErrors.h */; };
@@ -355,6 +356,7 @@
 
 /* Begin PBXFileReference section */
 		3585AE98B33CB0BBDA30984D /* Pods-DemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		590051231E2FFA320045DC29 /* AMBSecrets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBSecrets.m; sourceTree = "<group>"; };
 		9D4F3F6CA2DB2A812094EBBA /* libPods-DemoApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNetworkManager.h; sourceTree = "<group>"; };
 		DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworkManager.m; sourceTree = "<group>"; };
@@ -1241,6 +1243,7 @@
 			children = (
 				EF896FD41CBD3D63003E270D /* AMBSecrets.h */,
 				EF934E871CED060D009DCA2F /* AMBSecrets.m */,
+				590051231E2FFA320045DC29 /* AMBSecrets.m */,
 			);
 			name = Secrets;
 			sourceTree = "<group>";
@@ -1725,6 +1728,8 @@
 					};
 					DB844D301BA75BB8003FD7A9 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 2H59A3U3KT;
+						ProvisioningStyle = Automatic;
 					};
 					DB844D471BA75F9F003FD7A9 = {
 						CreatedOnToolsVersion = 6.4;
@@ -1943,6 +1948,7 @@
 				DBA3FC211BA8AA1D00672D82 /* AMBPTPusherMockConnection.m in Sources */,
 				EF934E881CED060D009DCA2F /* AMBSecrets.m in Sources */,
 				EFE7D7991C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld in Sources */,
+				590051241E2FFA320045DC29 /* AMBSecrets.m in Sources */,
 				DBA3FBB41BA8A24F00672D82 /* AMBSendCompletionModal.m in Sources */,
 				DBA3FC141BA8AA1D00672D82 /* AMBPTPusherChannel.m in Sources */,
 				DBA3FB7A1BA8A23C00672D82 /* AMBContactCell.m in Sources */,
@@ -2314,6 +2320,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 2H59A3U3KT;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -2344,6 +2351,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 2H59A3U3KT;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

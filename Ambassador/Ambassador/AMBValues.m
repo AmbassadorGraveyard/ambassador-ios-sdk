@@ -167,6 +167,10 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     [[AMBValues ambUserDefaults] setValue:cookieCode forKey:@"mbsy_cookie_code"];
 }
 
++ (void)setMbsyCampaign:(NSString *)campaignID {
+    [[AMBValues ambUserDefaults] setValue:campaignID forKey:@"mbsy_campaign"];
+}
+
 + (void)setDeviceFingerPrintWithDictionary:(NSDictionary *)dictionary {
     [[AMBValues ambUserDefaults] setObject:dictionary forKey:@"device_fingerprint"];
 }

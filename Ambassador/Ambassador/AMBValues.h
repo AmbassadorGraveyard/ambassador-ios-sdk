@@ -39,6 +39,7 @@ extern NSString * TEST_APP_CONTSTANT;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
++ (void)setMbsyCampaign:(NSString*)campaignID;
 + (void)setDeviceFingerPrintWithDictionary:(NSDictionary*)dictionary;
 + (void)setHasInstalled;
 + (void)setUniversalIDWithID:(NSString*)universalID;
