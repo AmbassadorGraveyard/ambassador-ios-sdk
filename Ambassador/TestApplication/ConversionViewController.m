@@ -672,6 +672,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     
     // Create auto-enroll campaign string
     NSString *enrollCampaign = self.swtAutoCreate.isOn ? self.selectedCampaign.campID : nil;
+    [AMBValues setMbsyCampaign:enrollCampaign];
     
     // Call identify
     [AmbassadorSDK identifyWithUserID:idUID traits:traitsDictionary autoEnrollCampaign:enrollCampaign];
