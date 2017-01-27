@@ -215,4 +215,14 @@ typedef enum conversionStatus {
  */
 + (void)presentWelcomeScreen:(AMBWelcomeScreenParameters*)parameters ifAvailable:(void(^)(AMBWelcomeScreenViewController *welcomeScreenVC))available;
 
+
+/**
+ 
+ Gets the short_code of the referring ambassador (if exists)
+ 
+ The short_code will only be available if the app was installed from an Ambassador referral.
+ 
+ */
++ (NSString *)getReferringShortCode;
+
 @end

@@ -413,4 +413,14 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     }
 }
 
+
+
+#pragma mark - Referring Short Code
+
++ (NSString *)getReferringShortCode {
+    return [AMBValues getMbsyCookieCode];
+}
+
+
+
 @end
