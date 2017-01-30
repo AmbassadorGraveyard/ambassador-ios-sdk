@@ -10,6 +10,7 @@ checkout:
 dependencies:
   pre:
     - pod install
+    - open -b com.apple.iphonesimulator
 test:
   override:
     - bash secrets.sh
