@@ -419,12 +419,12 @@ NSString * const universalToken = @"test";
 }
 
 
-- (void)testGetReferringShortCode {
+- (void)testGetReferredByShortCode {
     // GIVEN
     [AMBValues setMbsyCookieWithCode:@"fakeCode"];
     
     // THEN
-    XCTAssertEqual(@"fakeCode", [AmbassadorSDK getReferringShortCode]);
+    XCTAssertEqual(@"fakeCode", [AmbassadorSDK getReferredByShortCode]);
 }
 
 @end

@@ -223,6 +223,6 @@ typedef enum conversionStatus {
  The short_code will only be available if the app was installed from an Ambassador referral.
  
  */
-+ (NSString *)getReferringShortCode;
++ (NSString *)getReferredByShortCode;
 
 @end
