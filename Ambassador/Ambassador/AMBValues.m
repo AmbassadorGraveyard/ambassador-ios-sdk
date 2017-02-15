@@ -11,6 +11,7 @@
 #import "AMBUtilities.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBSecrets.h"
+#import "DefaultsHandler.h"
 
 @implementation AMBValues
 
@@ -251,6 +252,48 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 + (NSString*)getMbsyCookieCode {
     return ([[AMBValues ambUserDefaults] valueForKey:@"mbsy_cookie_code"]) ? [[AMBValues ambUserDefaults] valueForKey:@"mbsy_cookie_code"] : @"";
 }
+
+
++ (NSString *)campaignIdFromDictionary: (NSDictionary *)dictionary {
+    // Goes through the dictionary and grabs the campaign if there is one
+    NSArray *results = dictionary[@"results"];
+    NSDictionary *resultsDict = results[0];
+    
+    return resultsDict[@"campaign_uid"];
+}
+
++ (NSString*)getCampaignIdFromShortCode: (NSString *)shortCode {
+    // check if exists locally, if not get from url
+    NSString *urlString = [NSString stringWithFormat:@"urls/?short_code=%@", shortCode];
+    
+    NSURL *ambassadorURL;
+#if AMBPRODUCTION
+    ambassadorURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.getambassador.com/%@",  urlString]];
+#else
+    ambassadorURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/%@", urlString]];
+#endif
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:ambassadorURL];
+    [request setHTTPMethod:@"GET"];
+    [request setValue:[NSString stringWithFormat:@"SDKToken %@", [DefaultsHandler getSDKToken]] forHTTPHeaderField:@"Authorization"];
+
+    NSMutableData *responseData;
+    responseData = [NSMutableData data];
+    NSURLResponse *response = nil;
+    NSError *error = nil;
+    //getting the data
+    NSData *newData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    //json parse
+    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:newData options:0 error:nil];
+    if ([results[@"count"]  isEqual: @0]) {
+        return @"";
+    } else {
+        // Save the groups and show the list
+        NSString *campaignId = [self campaignIdFromDictionary:results];
+        
+        // Register conversion
+        return campaignId;
+    }
 
 }
 

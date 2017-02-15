@@ -225,4 +225,13 @@ typedef enum conversionStatus {
  */
 + (NSString *)getReferredByShortCode;
 
+
+/**
+ 
+ Gets the campaign id associated with the provided short_code
+ 
+ */
++ (NSString *)getCampaignIdFromShortCode;
+
+
 @end

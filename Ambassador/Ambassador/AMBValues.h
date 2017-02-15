@@ -60,6 +60,7 @@ extern NSString * TEST_APP_CONTSTANT;
 
 // Default getters
 + (NSString*)getMbsyCookieCode;
++ (NSString*)getCampaignIdFromShortCode:(NSString*)shortCode;
 + (NSDictionary*)getDeviceFingerPrint;
 + (BOOL)getHasInstalledBoolean;
 + (NSString*)getUniversalID;

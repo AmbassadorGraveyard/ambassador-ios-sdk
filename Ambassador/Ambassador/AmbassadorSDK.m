@@ -422,5 +422,13 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 }
 
 
+#pragma mark - Campaign ID from Short Code
+
++ (NSString *)getCampaignIdFromShortCode:(NSString *)shortCode {
+    return [AMBValues getCampaignIdFromShortCode:shortCode];
+}
+
+
+
 
 @end
