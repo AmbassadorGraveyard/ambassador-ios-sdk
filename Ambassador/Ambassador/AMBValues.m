@@ -252,8 +252,6 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     return ([[AMBValues ambUserDefaults] valueForKey:@"mbsy_cookie_code"]) ? [[AMBValues ambUserDefaults] valueForKey:@"mbsy_cookie_code"] : @"";
 }
 
-+ (NSString*)getMbsyCampaign {
-    return ([[AMBValues ambUserDefaults] valueForKey:@"mbsy_campaign"]) ? [[AMBValues ambUserDefaults] valueForKey:@"mbsy_campaign"] : @"";
 }
 
 + (NSDictionary *)getDeviceFingerPrint {

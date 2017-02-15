@@ -69,7 +69,6 @@ extern NSString * TEST_APP_CONTSTANT;
 + (NSDate*)getLinkedInTokenExirationDate;
 + (NSString*)getLinkedInAccessToken;
 + (NSString*)getUserEmail;
-+ (NSString*)getMbsyCampaign;
 + (AMBPusherChannelObject*)getPusherChannelObject;
 + (AMBUserUrlNetworkObject*)getUserURLObject;
 + (AMBUserNetworkObject *)getUserCampaignList;
