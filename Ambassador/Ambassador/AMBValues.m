@@ -259,7 +259,7 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     NSArray *results = dictionary[@"results"];
     NSDictionary *resultsDict = results[0];
     
-    return resultsDict[@"campaign_uid"];
+    return resultsDict[@"campaign_id"];
 }
 
 + (NSString*)getCampaignIdFromShortCode: (NSString *)shortCode {
