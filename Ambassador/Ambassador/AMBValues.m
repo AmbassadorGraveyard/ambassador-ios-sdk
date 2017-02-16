@@ -262,6 +262,27 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     return resultsDict[@"campaign_id"];
 }
 
+
++ (NSData *) getDataFrom:(NSURL *)url{
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setHTTPMethod:@"GET"];
+    [request setURL:url];
+    [request setValue:[NSString stringWithFormat:@"SDKToken %@", [DefaultsHandler getSDKToken]] forHTTPHeaderField:@"Authorization"];
+    
+    NSError *error = nil;
+    NSHTTPURLResponse *responseCode = nil;
+    
+    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    
+    if([responseCode statusCode] != 200){
+        NSLog(@"Error getting %@, HTTP status code %li", url, (long)[responseCode statusCode]);
+        return nil;
+    }
+    
+    return oResponseData;
+}
+
+
 + (NSString*)getCampaignIdFromShortCode: (NSString *)shortCode {
     // check if exists locally, if not get from url
     NSString *urlString = [NSString stringWithFormat:@"urls/?short_code=%@", shortCode];
@@ -273,27 +294,11 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     ambassadorURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/%@", urlString]];
 #endif
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:ambassadorURL];
-    [request setHTTPMethod:@"GET"];
-    [request setValue:[NSString stringWithFormat:@"SDKToken %@", [DefaultsHandler getSDKToken]] forHTTPHeaderField:@"Authorization"];
-
-    NSMutableData *responseData;
-    responseData = [NSMutableData data];
-    NSURLResponse *response = nil;
-    NSError *error = nil;
-    //getting the data
-    NSData *newData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    //json parse
-    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:newData options:0 error:nil];
-    if ([results[@"count"]  isEqual: @0]) {
-        return @"";
-    } else {
-        // Save the groups and show the list
-        NSString *campaignId = [self campaignIdFromDictionary:results];
-        
-        // Register conversion
-        return campaignId;
-    }
+    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[self getDataFrom:ambassadorURL] options:0 error:nil];
+    NSString *campaignId = [self campaignIdFromDictionary:results];
+    
+    // Register conversion
+    return campaignId;
 
 }
 
