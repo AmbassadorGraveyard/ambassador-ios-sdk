@@ -6,12 +6,12 @@
 //  Copyright © 2015 Ambassador. All rights reserved.
 //
 
+#import "DefaultsHandler.h"
 #import "AMBValues.h"
 #import "AMBPusherChannelObject.h"
 #import "AMBUtilities.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBSecrets.h"
-#import "DefaultsHandler.h"
 
 @implementation AMBValues
 
