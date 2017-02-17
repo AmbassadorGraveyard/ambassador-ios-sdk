@@ -6,7 +6,6 @@
 //  Copyright © 2015 Ambassador. All rights reserved.
 //
 
-#import "DefaultsHandler.h"
 #import "AMBValues.h"
 #import "AMBPusherChannelObject.h"
 #import "AMBUtilities.h"
@@ -262,12 +261,16 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     return resultsDict[@"campaign_id"];
 }
 
++ (NSString*)getSDKToken {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"SDK_TOKEN"] ? [[NSUserDefaults standardUserDefaults] objectForKey:@"SDK_TOKEN"] : @"";
+}
+
 
 + (NSData *) getDataFrom:(NSURL *)url{
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setHTTPMethod:@"GET"];
     [request setURL:url];
-    [request setValue:[NSString stringWithFormat:@"SDKToken %@", [DefaultsHandler getSDKToken]] forHTTPHeaderField:@"Authorization"];
+    [request setValue:[NSString stringWithFormat:@"SDKToken %@", [self getSDKToken]] forHTTPHeaderField:@"Authorization"];
     
     NSError *error = nil;
     NSHTTPURLResponse *responseCode = nil;
@@ -276,7 +279,7 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     
     if([responseCode statusCode] != 200){
         NSLog(@"Error getting %@, HTTP status code %li", url, (long)[responseCode statusCode]);
-        return nil;
+        return [[NSData alloc] init];
     }
     
     return oResponseData;
