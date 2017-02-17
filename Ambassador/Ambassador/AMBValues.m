@@ -11,6 +11,7 @@
 #import "AMBUtilities.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBSecrets.h"
+#import "AMBNetworkManager.h"
 
 @implementation AMBValues
 
@@ -129,6 +130,13 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 + (NSString*)getPusherAuthUrl {
     return [AMBValues isProduction] ? @"https://api.getambassador.com/auth/subscribe/" : @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
 }
+
+
++ (NSString*)getUrlInformationUrl:(NSString*)shortCode {
+    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getambassador.com/urls/?short_code=%@", shortCode] :
+    [NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/urls/?short_code=%@", shortCode];
+}
+
 
 + (NSString*)getSentryDSNValue {
     return [NSString stringWithFormat:@"https://%@@app.getsentry.com/67182", [AMBSecrets secretForKey:AMB_SENTRY_KEY]];
@@ -261,46 +269,13 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     return resultsDict[@"campaign_id"];
 }
 
-+ (NSString*)getSDKToken {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"SDK_TOKEN"] ? [[NSUserDefaults standardUserDefaults] objectForKey:@"SDK_TOKEN"] : @"";
-}
-
-
-+ (NSData *) getDataFrom:(NSURL *)url{
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setHTTPMethod:@"GET"];
-    [request setURL:url];
-    [request setValue:[NSString stringWithFormat:@"SDKToken %@", [self getSDKToken]] forHTTPHeaderField:@"Authorization"];
-    
-    NSError *error = nil;
-    NSHTTPURLResponse *responseCode = nil;
-    
-    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
-    
-    if([responseCode statusCode] != 200){
-        NSLog(@"Error getting %@, HTTP status code %li", url, (long)[responseCode statusCode]);
-        return [[NSData alloc] init];
-    }
-    
-    return oResponseData;
-}
-
 
 + (NSString*)getCampaignIdFromShortCode: (NSString *)shortCode {
-    // check if exists locally, if not get from url
-    NSString *urlString = [NSString stringWithFormat:@"urls/?short_code=%@", shortCode];
-    
-    NSURL *ambassadorURL;
-#if AMBPRODUCTION
-    ambassadorURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.getambassador.com/%@",  urlString]];
-#else
-    ambassadorURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/%@", urlString]];
-#endif
-    
-    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[self getDataFrom:ambassadorURL] options:0 error:nil];
+    // get data from /urls endpoint 
+    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[[AMBNetworkManager sharedInstance] getUrlInformationWithSuccess:shortCode] options:0 error:nil];
     NSString *campaignId = [self campaignIdFromDictionary:results];
     
-    // Register conversion
+    // return campaignid
     return campaignId;
 
 }
