@@ -24,6 +24,8 @@
 
 /* Begin PBXBuildFile section */
 		0EE91F1B978D71581B795ECA /* libPods-DemoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D4F3F6CA2DB2A812094EBBA /* libPods-DemoApp.a */; };
+		594B60421E573EF400FB0027 /* DefaultsHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = EF557A191C88D39C00F66761 /* DefaultsHandler.h */; };
+		594B60471E573F5900FB0027 /* DefaultsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EF557A1A1C88D39C00F66761 /* DefaultsHandler.m */; };
 		DB6A245F1BD00F3F00CE3230 /* AMBNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */; };
 		DB6A24601BD00F3F00CE3230 /* AMBNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */; };
 		DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24611BD017A700CE3230 /* AMBErrors.h */; };
@@ -1514,6 +1516,7 @@
 				EF896FD61CBD3D63003E270D /* AMBSecrets.h in Headers */,
 				DBA3FC161BA8AA1D00672D82 /* AMBPTPusherConnection.h in Headers */,
 				DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */,
+				594B60421E573EF400FB0027 /* DefaultsHandler.h in Headers */,
 				EF33DCFB1C739D6A009689CA /* RavenClient_Private.h in Headers */,
 				EF33DCFC1C739D6A009689CA /* RavenConfig.h in Headers */,
 				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
@@ -1927,6 +1930,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				594B60471E573F5900FB0027 /* DefaultsHandler.m in Sources */,
 				DBA3FC0E1BA8AA1D00672D82 /* AMBPTPusher.m in Sources */,
 				DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */,
 				EFB3C7E81CB70E9400EF9533 /* AMBNPSViewController.m in Sources */,
