@@ -137,6 +137,9 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     [NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/urls/?short_code=%@", shortCode];
 }
 
++ (NSString*)getReferringShortCodeUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/universal/action/conversion/referrer" : @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/referrer";
+}
 
 + (NSString*)getSentryDSNValue {
     return [NSString stringWithFormat:@"https://%@@app.getsentry.com/67182", [AMBSecrets secretForKey:AMB_SENTRY_KEY]];
@@ -260,6 +263,20 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     return ([[AMBValues ambUserDefaults] valueForKey:@"mbsy_cookie_code"]) ? [[AMBValues ambUserDefaults] valueForKey:@"mbsy_cookie_code"] : @"";
 }
 
++ (NSString*)getReferringShortCode{
+    // get fingerprint
+    NSDictionary *fp = [AMBValues getDeviceFingerPrint];
+    // send fingerprint to api to determine referrer's shortcode
+    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[[AMBNetworkManager sharedInstance] getReferringShortCodeFromFingerprint:fp] options:0 error:nil];
+    
+    NSString *shortCode = @"";
+    if ( [results valueForKey:@"short_code"] != nil) {
+        // get short_code from results
+        shortCode = results[@"short_code"];
+    }
+    return shortCode;
+}
+
 
 + (NSString *)campaignIdFromDictionary: (NSDictionary *)dictionary {
     // Goes through the dictionary and grabs the campaign if there is one
@@ -273,8 +290,13 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 + (NSString*)getCampaignIdFromShortCode: (NSString *)shortCode {
     // get data from /urls endpoint 
     NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[[AMBNetworkManager sharedInstance] getUrlInformationWithSuccess:shortCode] options:0 error:nil];
-    NSString *campaignId = [self campaignIdFromDictionary:results];
     
+    NSString *campaignId = @"";
+
+    if (![results[@"count"] isEqual: @0]) {
+        // get campaign from results
+        campaignId = [self campaignIdFromDictionary:results];
+    }
     // return campaignid
     return campaignId;
 
