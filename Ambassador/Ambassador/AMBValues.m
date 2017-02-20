@@ -138,7 +138,7 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 }
 
 + (NSString*)getReferringShortCodeUrl {
-    return [AMBValues isProduction] ? @"https://api.getambassador.com/universal/action/conversion/referrer" : @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/referrer";
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/universal/action/conversion/referrer/" : @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/referrer/";
 }
 
 + (NSString*)getSentryDSNValue {
