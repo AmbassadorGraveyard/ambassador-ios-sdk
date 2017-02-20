@@ -36,6 +36,8 @@ extern NSString * TEST_APP_CONTSTANT;
 + (NSString*)getLinkedinClientValuesUrl:(NSString*)clientUID;
 + (NSString*)getLinkedinAccessTokenUrl:(NSString*)popupValue;
 + (NSString*)getUrlInformationUrl:(NSString*)shortCode;
++ (NSString*)getReferringShortCodeUrl;
++ (NSString*)getReferringShortCode;
 + (NSString*)getReferrerInformationUrl;
 
 // Default setters
