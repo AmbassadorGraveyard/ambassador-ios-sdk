@@ -232,9 +232,9 @@
 - (NSData *)getReferringShortCodeFromFingerprint:(NSDictionary*)fp{
     // Encodes the url
     NSString *encodedUrl = [[AMBValues getReferringShortCodeUrl] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
+    NSDictionary *payloadDict = @{@"fp" : fp};
     NSMutableURLRequest *request = [self createURLRequestWithURL:encodedUrl requestType:@"POST"];
-    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:fp options:0 error:nil];
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payloadDict options:0 error:nil];
     NSError *error = nil;
     NSHTTPURLResponse *responseCode = nil;
     
