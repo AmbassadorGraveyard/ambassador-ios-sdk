@@ -288,14 +288,16 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 
 
 + (NSString*)getCampaignIdFromShortCode: (NSString *)shortCode {
-    // get data from /urls endpoint 
-    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[[AMBNetworkManager sharedInstance] getUrlInformationWithSuccess:shortCode] options:0 error:nil];
-    
+    // get data from /urls endpoint
     NSString *campaignId = @"";
+    
+    if (![shortCode  isEqual: @""] && ![shortCode  isEqual:nil]){
+        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[[AMBNetworkManager sharedInstance] getUrlInformationWithSuccess:shortCode] options:0 error:nil];
 
-    if (![results[@"count"] isEqual: @0]) {
-        // get campaign from results
-        campaignId = [self campaignIdFromDictionary:results];
+        if (![results[@"count"] isEqual: @0]) {
+            // get campaign from results
+            campaignId = [self campaignIdFromDictionary:results];
+        }
     }
     // return campaignid
     return campaignId;
