@@ -55,6 +55,7 @@
 @property (nonatomic, strong) NSString *uid;
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSMutableArray *urls;
+@property (nonatomic, strong) NSDictionary *fingerprint;
 
 - (void)fillWithUrl:(NSString *)url completion:(void(^)(NSString *error))completion;
 - (void)fillWithDictionary:(NSMutableDictionary *)d completion:(void(^)())completion;

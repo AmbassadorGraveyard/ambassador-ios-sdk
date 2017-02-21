@@ -82,6 +82,7 @@
                     [AMBValues setUserCampaignList:user];
                     [AMBValues setUserFirstNameWithString:user.first_name];
                     [AMBValues setUserLastNameWithString:user.last_name];
+                    [AMBValues setDeviceFingerPrintWithDictionary:user.fingerprint]; // Saves device fp to defaults
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
                 }
             }];
@@ -104,6 +105,7 @@
                 [AMBValues setUserCampaignList:user];
                 [AMBValues setUserFirstNameWithString:user.first_name];
                 [AMBValues setUserLastNameWithString:user.last_name];
+                [AMBValues setDeviceFingerPrintWithDictionary:user.fingerprint]; // Saves device fp to defaults
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
             }];
         }
