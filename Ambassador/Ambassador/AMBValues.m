@@ -12,6 +12,7 @@
 #import "AmbassadorSDK_Internal.h"
 #import "AMBSecrets.h"
 #import "AMBNetworkManager.h"
+#import "AMBThemeManager.h"
 
 @implementation AMBValues
 
@@ -88,7 +89,11 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
         baseUrl = @"https://staging.mbsy.co/universal/landing";
     #endif
     
-    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID]];
+    NSString *loader_message = [[AMBThemeManager sharedInstance] messageForKey:LandingPageMessage];
+    
+    NSString *mbsyLoader = ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 10) ? [NSString stringWithFormat:@"&mbsy_loader=true&mbsy_loader_message=%@", loader_message] : @"";
+    
+    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID, mbsyLoader]];
 }
 
 + (NSString*)getSendIdentifyUrl {

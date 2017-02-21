@@ -146,6 +146,9 @@ static NSDictionary * valuesDic;
         case DefaultShareMessage:
             return @"DefaultShareMessage";
             break;
+        case LandingPageMessage:
+            return @"LandingPageMessage";
+            break;
         default:
             return @"Unavailable";
             break;
