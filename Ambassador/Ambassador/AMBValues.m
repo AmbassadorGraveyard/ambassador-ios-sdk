@@ -89,9 +89,11 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
         baseUrl = @"https://staging.mbsy.co/universal/landing";
     #endif
     
+    [[AMBThemeManager sharedInstance] createDicFromPlist:@"GenericTheme"];
     NSString *loader_message = [[AMBThemeManager sharedInstance] messageForKey:LandingPageMessage];
     
     NSString *mbsyLoader = ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 10) ? [NSString stringWithFormat:@"&mbsy_loader=true&mbsy_loader_message=%@", loader_message] : @"";
+    mbsyLoader = [mbsyLoader stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID, mbsyLoader]];
 }
