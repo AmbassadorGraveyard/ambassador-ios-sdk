@@ -109,7 +109,6 @@ NSInteger const ios10MaxTryCount = 10;
 
 
 - (void)performIdentifyForiOS10 {
-    NSLog(@"In iOS10");
     // Presenting on an iMessage modal view causes issues
     if ([[AMBUtilities getTopViewController] isKindOfClass:[MFMessageComposeViewController class]]) {
         return;
@@ -117,8 +116,6 @@ NSInteger const ios10MaxTryCount = 10;
 
     // Checks if try count is at its max
     if (self.tryCount >= maxTryCount) {
-        NSLog(@"identify complete");
-        NSLog(@"%@", [AMBValues getDeviceFingerPrint]);
         [self.identifyTimer invalidate];
         [self identifyComplete];
         if (self.safariVC) {
@@ -129,8 +126,6 @@ NSInteger const ios10MaxTryCount = 10;
     self.tryCount++;
 
     if ((self.identifyProcessComplete == YES) || !([[AMBValues getDeviceFingerPrint] isEqual:@{}])) {
-        NSLog(@"identify complete");
-        NSLog(@"%@", [AMBValues getDeviceFingerPrint]);
         [self.identifyTimer invalidate];
         [self identifyComplete];
         if (self.safariVC) {
