@@ -88,5 +88,7 @@
 	<string></string>
 	<key>LandingPageMessage</key>
 	<string>Default Message</string>
+	<key>LandingPageBackgroundColor</key>
+	<string>#FFFFFF</string>
 </dict>
 </plist>

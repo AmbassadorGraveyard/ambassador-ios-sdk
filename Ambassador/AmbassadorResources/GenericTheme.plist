@@ -92,9 +92,11 @@
 	<string></string>
 	<key>Channels</key>
 	<string>Facebook, Twitter, LinkedIn, SMS, Email</string>
-    <key>LANDING PAGE SETTINGS ------------</key>
-    <string></string>
-    <key>LandingPageMessage</key>
-    <string>Default Message</string>
+	<key>LANDING PAGE SETTINGS ------------</key>
+	<string></string>
+	<key>LandingPageMessage</key>
+	<string>Default Message</string>
+	<key>LandingPageBackgroundColor</key>
+	<string>#FFFFFF</string>
 </dict>
 </plist>

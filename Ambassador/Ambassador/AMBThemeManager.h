@@ -46,7 +46,8 @@ typedef enum ambassadorMessages {
     RAFDescriptionTextMessage,
     DefaultShareMessage,
     // Landing page message
-    LandingPageMessage
+    LandingPageMessage,
+    LandingPageBackgroundColor
 } AmbassadorMessages;
 
 typedef enum ambassadorFonts {

@@ -75,6 +75,11 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 }
 
 #pragma mark - URLs
++ (NSString *)urlEncodeValue:(NSString *)str
+{
+    NSString *result = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)str, NULL, CFSTR(":/?#[]@!$&’()*+,;="), kCFStringEncodingUTF8));
+    return result;
+}
 
 + (NSString *)identifyUrlWithUniversalID:(NSString *)uid {
     AMBPusherChannelObject *networkUrlObject = [AMBValues getPusherChannelObject];
@@ -92,9 +97,12 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     NSBundle *ambassadorBundle = [self AMBframeworkBundle];
     NSString *plistPath = [ambassadorBundle pathForResource:@"GenericTheme" ofType:@"plist"];
     NSDictionary *valuesDic = [NSDictionary dictionaryWithContentsOfFile:plistPath];
-    NSString *loader_message = loader_message = [valuesDic valueForKey:@"LandingPageMessage"] ? [valuesDic valueForKey:@"LandingPageMessage"] : @"";
+    NSString *loader_message = [valuesDic valueForKey:@"LandingPageMessage"] ? [valuesDic valueForKey:@"LandingPageMessage"] : @"";
+    loader_message = [self urlEncodeValue:loader_message];
+    NSString *loader_bgcolor = [valuesDic valueForKey:@"LandingPageBackgroundColor"] ? [valuesDic valueForKey:@"LandingPageBackgroundColor"] : @"";
     
-    NSString *mbsyLoader = ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 10) ? [NSString stringWithFormat:@"&mbsy_loader=true&mbsy_loader_message=%@", loader_message] : @"";
+    
+    NSString *mbsyLoader = ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 10) ? [NSString stringWithFormat:@"&mbsy_loader=true&mbsy_loader_message=%@&mbsy_loader_background_color=%@", loader_message, loader_bgcolor] : @"";
     mbsyLoader = [mbsyLoader stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     DLog(@"%@", mbsyLoader);

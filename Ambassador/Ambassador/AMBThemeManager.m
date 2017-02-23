@@ -149,6 +149,9 @@ static NSDictionary * valuesDic;
         case LandingPageMessage:
             return @"LandingPageMessage";
             break;
+        case LandingPageBackgroundColor:
+            return @"LandingPageBackgroundColor";
+            break;
         default:
             return @"Unavailable";
             break;
