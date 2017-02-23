@@ -45,6 +45,7 @@ typedef enum ambassadorMessages {
     RAFWelcomeTextMessage,
     RAFDescriptionTextMessage,
     DefaultShareMessage,
+    // Landing page message
     LandingPageMessage
 } AmbassadorMessages;
 
