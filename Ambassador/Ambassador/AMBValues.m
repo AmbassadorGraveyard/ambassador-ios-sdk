@@ -88,12 +88,17 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     #else
         baseUrl = @"https://staging.mbsy.co/universal/landing";
     #endif
-    
-    [[AMBThemeManager sharedInstance] createDicFromPlist:@"GenericTheme"];
-    NSString *loader_message = [[AMBThemeManager sharedInstance] messageForKey:LandingPageMessage];
+
+    NSBundle *ambassadorBundle = [self AMBframeworkBundle];
+    NSString *plistPath = [ambassadorBundle pathForResource:@"GenericTheme" ofType:@"plist"];
+    NSDictionary *valuesDic = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    NSString *loader_message = loader_message = [valuesDic valueForKey:@"LandingPageMessage"] ? [valuesDic valueForKey:@"LandingPageMessage"] : @"";
     
     NSString *mbsyLoader = ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 10) ? [NSString stringWithFormat:@"&mbsy_loader=true&mbsy_loader_message=%@", loader_message] : @"";
     mbsyLoader = [mbsyLoader stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    DLog(@"%@", mbsyLoader);
+    DLog(@"%@", [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID, mbsyLoader]]);
     
     return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID, mbsyLoader]];
 }
