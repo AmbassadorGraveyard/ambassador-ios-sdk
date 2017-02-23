@@ -140,7 +140,6 @@ NSInteger const ios10MaxTryCount = 10;
     }
 
     DLog(@"[Identify] Performing Identify with SAFARI VC for iOS 10 - Attempt %li.", (long)self.tryCount);
-    NSLog(@"[Identify] Performing Identify with SAFARI VC for iOS 10 - Attempt %li.", (long)self.tryCount);
     
     // Gets the top viewController and adds the safari VC to it if not already added
     UIViewController *topVC = [AMBUtilities getTopViewController];
