@@ -210,6 +210,44 @@
     }] resume];
 }
 
+- (NSData *)getUrlInformationWithSuccess:(NSString*)shortCode {
+    // Encodes the url
+    NSString *encodedUrl = [[AMBValues getUrlInformationUrl:shortCode] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSMutableURLRequest *request = [self createURLRequestWithURL:encodedUrl requestType:@"GET"];
+    NSError *error = nil;
+    NSHTTPURLResponse *responseCode = nil;
+    
+    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    
+    if([responseCode statusCode] != 200){
+        NSLog(@"Error getting %@, HTTP status code %li", encodedUrl, (long)[responseCode statusCode]);
+    }
+    
+    return oResponseData;
+    
+}
+
+
+- (NSData *)getReferringShortCodeFromFingerprint:(NSDictionary*)fp{
+    // Encodes the url
+    NSString *encodedUrl = [[AMBValues getReferringShortCodeUrl] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *payloadDict = @{@"fp" : fp};
+    NSMutableURLRequest *request = [self createURLRequestWithURL:encodedUrl requestType:@"POST"];
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payloadDict options:0 error:nil];
+    NSError *error = nil;
+    NSHTTPURLResponse *responseCode = nil;
+    
+    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    
+    if([responseCode statusCode] != 200){
+        NSLog(@"Error getting %@, HTTP status code %li", encodedUrl, (long)[responseCode statusCode]);
+    }
+    
+    return oResponseData;
+    
+}
+
 
 #pragma mark - LinkedIn Requests
 

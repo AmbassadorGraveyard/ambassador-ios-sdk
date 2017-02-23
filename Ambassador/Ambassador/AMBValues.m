@@ -11,6 +11,8 @@
 #import "AMBUtilities.h"
 #import "AmbassadorSDK_Internal.h"
 #import "AMBSecrets.h"
+#import "AMBNetworkManager.h"
+#import "AMBThemeManager.h"
 
 @implementation AMBValues
 
@@ -73,6 +75,11 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 }
 
 #pragma mark - URLs
++ (NSString *)urlEncodeValue:(NSString *)str
+{
+    NSString *result = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)str, NULL, CFSTR(":/?#[]@!$&’()*+,;="), kCFStringEncodingUTF8));
+    return result;
+}
 
 + (NSString *)identifyUrlWithUniversalID:(NSString *)uid {
     AMBPusherChannelObject *networkUrlObject = [AMBValues getPusherChannelObject];
@@ -86,8 +93,22 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     #else
         baseUrl = @"https://staging.mbsy.co/universal/landing";
     #endif
+
+    NSBundle *ambassadorBundle = [self AMBframeworkBundle];
+    NSString *plistPath = [ambassadorBundle pathForResource:@"GenericTheme" ofType:@"plist"];
+    NSDictionary *valuesDic = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    NSString *loader_message = [valuesDic valueForKey:@"LandingPageMessage"] ? [valuesDic valueForKey:@"LandingPageMessage"] : @"";
+    loader_message = [self urlEncodeValue:loader_message];
+    NSString *loader_bgcolor = [valuesDic valueForKey:@"LandingPageBackgroundColor"] ? [valuesDic valueForKey:@"LandingPageBackgroundColor"] : @"";
     
-    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID]];
+    
+    NSString *mbsyLoader = ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 10) ? [NSString stringWithFormat:@"&mbsy_loader=true&mbsy_loader_message=%@&mbsy_loader_background_color=%@", loader_message, loader_bgcolor] : @"";
+    mbsyLoader = [mbsyLoader stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    DLog(@"%@", mbsyLoader);
+    DLog(@"%@", [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID, mbsyLoader]]);
+    
+    return [baseUrl stringByAppendingString:[NSString stringWithFormat:@"?url=%@://&universal_id=%@&mbsy_client_session_id=%@&mbsy_client_request_id=%@%@", @"ambassador:ios", uid, networkUrlObject.sessionId, requestID, mbsyLoader]];
 }
 
 + (NSString*)getSendIdentifyUrl {
@@ -130,6 +151,16 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     return [AMBValues isProduction] ? @"https://api.getambassador.com/auth/subscribe/" : @"https://dev-ambassador-api.herokuapp.com/auth/subscribe/";
 }
 
+
++ (NSString*)getUrlInformationUrl:(NSString*)shortCode {
+    return [AMBValues isProduction] ? [NSString stringWithFormat:@"https://api.getambassador.com/urls/?short_code=%@", shortCode] :
+    [NSString stringWithFormat:@"https://dev-ambassador-api.herokuapp.com/urls/?short_code=%@", shortCode];
+}
+
++ (NSString*)getReferringShortCodeUrl {
+    return [AMBValues isProduction] ? @"https://api.getambassador.com/universal/action/conversion/referrer/" : @"https://dev-ambassador-api.herokuapp.com/universal/action/conversion/referrer/";
+}
+
 + (NSString*)getSentryDSNValue {
     return [NSString stringWithFormat:@"https://%@@app.getsentry.com/67182", [AMBSecrets secretForKey:AMB_SENTRY_KEY]];
 }
@@ -165,6 +196,10 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode {
     [[AMBValues ambUserDefaults] setValue:cookieCode forKey:@"mbsy_cookie_code"];
+}
+
++ (void)setMbsyCampaign:(NSString *)campaignID {
+    [[AMBValues ambUserDefaults] setValue:campaignID forKey:@"mbsy_campaign"];
 }
 
 + (void)setDeviceFingerPrintWithDictionary:(NSDictionary *)dictionary {
@@ -246,6 +281,47 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 
 + (NSString*)getMbsyCookieCode {
     return ([[AMBValues ambUserDefaults] valueForKey:@"mbsy_cookie_code"]) ? [[AMBValues ambUserDefaults] valueForKey:@"mbsy_cookie_code"] : @"";
+}
+
++ (NSString*)getReferringShortCode{
+    // get fingerprint
+    NSDictionary *fp = [AMBValues getDeviceFingerPrint];
+    // send fingerprint to api to determine referrer's shortcode
+    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[[AMBNetworkManager sharedInstance] getReferringShortCodeFromFingerprint:fp] options:0 error:nil];
+    
+    NSString *shortCode = @"";
+    if ( [results valueForKey:@"short_code"] != nil) {
+        // get short_code from results
+        shortCode = results[@"short_code"];
+    }
+    return shortCode;
+}
+
+
++ (NSString *)campaignIdFromDictionary: (NSDictionary *)dictionary {
+    // Goes through the dictionary and grabs the campaign if there is one
+    NSArray *results = dictionary[@"results"];
+    NSDictionary *resultsDict = results[0];
+    
+    return resultsDict[@"campaign_id"];
+}
+
+
++ (NSString*)getCampaignIdFromShortCode: (NSString *)shortCode {
+    // get data from /urls endpoint
+    NSString *campaignId = @"";
+    
+    if (![shortCode  isEqual: @""] && ![shortCode  isEqual:nil]){
+        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[[AMBNetworkManager sharedInstance] getUrlInformationWithSuccess:shortCode] options:0 error:nil];
+
+        if (![results[@"count"] isEqual: @0]) {
+            // get campaign from results
+            campaignId = [self campaignIdFromDictionary:results];
+        }
+    }
+    // return campaignid
+    return campaignId;
+
 }
 
 + (NSDictionary *)getDeviceFingerPrint {

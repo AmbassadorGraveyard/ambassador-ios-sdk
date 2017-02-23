@@ -35,10 +35,14 @@ extern NSString * TEST_APP_CONTSTANT;
 + (NSString*)getCompanyDetailsUrl;
 + (NSString*)getLinkedinClientValuesUrl:(NSString*)clientUID;
 + (NSString*)getLinkedinAccessTokenUrl:(NSString*)popupValue;
++ (NSString*)getUrlInformationUrl:(NSString*)shortCode;
++ (NSString*)getReferringShortCodeUrl;
++ (NSString*)getReferringShortCode;
 + (NSString*)getReferrerInformationUrl;
 
 // Default setters
 + (void)setMbsyCookieWithCode:(NSString*)cookieCode;
++ (void)setMbsyCampaign:(NSString*)campaignID;
 + (void)setDeviceFingerPrintWithDictionary:(NSDictionary*)dictionary;
 + (void)setHasInstalled;
 + (void)setUniversalIDWithID:(NSString*)universalID;
@@ -59,6 +63,7 @@ extern NSString * TEST_APP_CONTSTANT;
 
 // Default getters
 + (NSString*)getMbsyCookieCode;
++ (NSString*)getCampaignIdFromShortCode:(NSString*)shortCode;
 + (NSDictionary*)getDeviceFingerPrint;
 + (BOOL)getHasInstalledBoolean;
 + (NSString*)getUniversalID;

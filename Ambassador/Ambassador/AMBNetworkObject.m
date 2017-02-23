@@ -114,6 +114,7 @@
         self.uid = [decoder decodeObjectForKey:@"uid"];
         self.url = [decoder decodeObjectForKey:@"url"];
         self.urls = [decoder decodeObjectForKey:@"urls"];
+        self.fingerprint = [decoder decodeObjectForKey:@"fingerprint"];
     }
     
     return self;
@@ -128,6 +129,7 @@
     [encoder encodeObject:self.uid forKey:@"uid"];
     [encoder encodeObject:self.url forKey:@"url"];
     [encoder encodeObject:self.urls forKey:@"urls"];
+    [encoder encodeObject:self.fingerprint forKey:@"fingerprint"];
 }
 
 // Used if pusher payload is too big to get back and only external url is given back
@@ -150,6 +152,7 @@
     self.phone = bodyDict[@"phone"];
     self.uid = bodyDict[@"uid"];
     self.url = bodyDict[@"url"];
+    self.fingerprint = bodyDict[@"fingerprint"];
     self.urls = [[NSMutableArray alloc] init];
     
     NSArray *urls = bodyDict[@"urls"];

@@ -418,4 +418,13 @@ NSString * const universalToken = @"test";
     [mockNtwkMng stopMocking];
 }
 
+
+- (void)testGetReferredByShortCode {
+    // GIVEN
+    [AMBValues setMbsyCookieWithCode:@"fakeCode"];
+    
+    // THEN
+    XCTAssertEqual(@"fakeCode", [AmbassadorSDK getReferredByShortCode]);
+}
+
 @end

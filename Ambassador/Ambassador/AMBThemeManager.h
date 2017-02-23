@@ -44,7 +44,10 @@ typedef enum ambassadorMessages {
     // RAF ViewController
     RAFWelcomeTextMessage,
     RAFDescriptionTextMessage,
-    DefaultShareMessage
+    DefaultShareMessage,
+    // Landing page message
+    LandingPageMessage,
+    LandingPageBackgroundColor
 } AmbassadorMessages;
 
 typedef enum ambassadorFonts {
