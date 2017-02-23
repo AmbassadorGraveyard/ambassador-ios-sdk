@@ -152,6 +152,9 @@ NSInteger const ios10MaxTryCount = 10;
 - (void)deviceInfoReceived {
     [self.identifyTimer invalidate];
     [self identifyComplete];
+    if (self.safariVC && ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 10)) {
+        [self.safariVC dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 // Called when either the identify response is returned or the max try count is reached
