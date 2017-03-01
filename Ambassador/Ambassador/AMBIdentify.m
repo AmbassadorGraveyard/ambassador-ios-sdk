@@ -23,6 +23,8 @@
 @property (nonatomic, strong) SFSafariViewController * safariVC;
 @property (nonatomic, strong) NSTimer * identifyTimer;
 @property (nonatomic) NSInteger tryCount;
+@property (nonatomic, copy) void (^identifyCompletion)(BOOL *success);
+@property (nonatomic) BOOL identifyCompletionCalled; // this is to make sure that the callback isn't called 2x
 
 @end
 
@@ -38,13 +40,16 @@ NSInteger const ios10MaxTryCount = 10;
 - (id)init {
     self = [super init];
     self.tryCount = 0;
+    self.identifyCompletionCalled = NO;
     return self;
 }
 
 
 #pragma mark - Identify Functions
 
-- (void)getIdentity {
+- (void)getIdentity:(void (^)(BOOL *success))completion{
+    // set completion handler
+    if (completion){ self.identifyCompletion = completion; self.identifyCompletionCalled = NO;}
     // If a the run is a UI test, we don't identify
     if (![AMBValues isUITestRun]) {
         if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 10) {
@@ -160,6 +165,8 @@ NSInteger const ios10MaxTryCount = 10;
 - (void)identifyComplete {
     self.identifyProcessComplete = YES;
     [[AmbassadorSDK sharedInstance].pusherManager closeSocket];
+    BOOL success = YES;
+    if (self.identifyCompletion && !self.identifyCompletionCalled) { self.identifyCompletion(&success); self.identifyCompletionCalled = YES;}
 }
 
 

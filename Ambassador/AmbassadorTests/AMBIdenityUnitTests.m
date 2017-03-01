@@ -68,7 +68,7 @@
     }
     
     // WHEN
-    [self.identify getIdentity];
+    [self.identify getIdentity:nil];
     
     // THEN
     [mockIdentify verify];
