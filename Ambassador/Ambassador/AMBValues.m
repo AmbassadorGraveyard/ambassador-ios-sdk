@@ -102,7 +102,7 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     NSString *loader_bgcolor = [valuesDic valueForKey:@"LandingPageBackgroundColor"] ? [valuesDic valueForKey:@"LandingPageBackgroundColor"] : @"";
     
     
-    NSString *mbsyLoader = ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 10) ? [NSString stringWithFormat:@"&mbsy_loader=true&mbsy_loader_message=%@&mbsy_loader_background_color=%@", loader_message, loader_bgcolor] : @"";
+    NSString *mbsyLoader = ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) ? [NSString stringWithFormat:@"&mbsy_loader=true&mbsy_loader_message=%@&mbsy_loader_background_color=%@", loader_message, loader_bgcolor] : @"";
     mbsyLoader = [mbsyLoader stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     DLog(@"%@", mbsyLoader);
