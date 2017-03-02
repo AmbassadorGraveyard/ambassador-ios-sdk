@@ -81,7 +81,7 @@
     
     // THEN
     XCTAssertNotNil(self.identify.safariVC);
-    XCTAssertTrue([self.identify.safariVC.view isHidden]);
+    XCTAssertFalse([self.identify.safariVC.view isHidden]);
 }
 
 - (void)testDeviceInfoReceived {
