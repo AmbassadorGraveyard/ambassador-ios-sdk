@@ -118,19 +118,27 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 #pragma mark - Identify
 
 + (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits autoEnrollCampaign:(NSString *)campaign {
-    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:campaign];
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:campaign completion: nil];
+}
+
++ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits autoEnrollCampaign:(NSString *)campaign completion:(void (^)(BOOL *success))completion{
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:campaign completion:completion];
 }
 
 + (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits {
-    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:nil];
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:nil completion:nil];
+}
+
++ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits completion:(void (^)(BOOL *success))completion{
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:nil completion:completion];
 }
 
 + (void)identifyWithEmail:(NSString *)email {
     // Uses new idenity logic when deprecated identify method is called
-    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:email traits:@{@"email" : email} autoEnrollCampaign:nil];
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:email traits:@{@"email" : email} autoEnrollCampaign:nil completion:nil];
 }
 
-- (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits autoEnrollCampaign:(NSString *)campaign {
+- (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits autoEnrollCampaign:(NSString *)campaign completion:(void (^)(BOOL *success))completion{
     // Flag that tells if an identify process is happening currently
     [AmbassadorSDK sharedInstance].identifyInProgress = YES;
     
@@ -156,10 +164,18 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
             DLog(@"[Identify] Successfully identified.");
         } failure:^(NSString *error) {
             DLog(@"SEND IDENTIFY Response - %@", error);
+            BOOL success = NO;
+            if (completion) { completion(&success); }
         }];
         
         // If not already performed, we perform the safariVC identify to get shortCode and device FP
-        if (!self.identify.identifyProcessComplete) { [self.identify getIdentity]; }
+        if (!self.identify.identifyProcessComplete) {
+            [self.identify getIdentity:completion];
+        }
+        else{
+            BOOL success = YES;
+            if (completion) { completion(&success); }
+        }
     }];
 }
 
@@ -259,7 +275,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     NSDictionary *traits = @{@"email" : inputValue, @"identify_type" : @"raf"};
     
     // Identifies and presents RAF
-    [self localIdentifyWithUserID:inputValue traits:traits autoEnrollCampaign:nil];
+    [self localIdentifyWithUserID:inputValue traits:traits autoEnrollCampaign:nil completion:nil];
     [self presentRAFForCampaign:self.tempCampID FromViewController:self.tempPresentController withThemePlist:self.tempPlistName];
 }
 

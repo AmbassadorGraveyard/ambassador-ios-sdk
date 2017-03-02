@@ -95,8 +95,10 @@
 	<key>LANDING PAGE SETTINGS ------------</key>
 	<string></string>
 	<key>LandingPageMessage</key>
-	<string>Default Message</string>
+	<string>Thank you for downloading our app!</string>
 	<key>LandingPageBackgroundColor</key>
 	<string>#FFFFFF</string>
+	<key>LandingPageMinimumSeconds</key>
+	<integer>2</integer>
 </dict>
 </plist>
