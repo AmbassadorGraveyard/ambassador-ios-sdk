@@ -81,7 +81,7 @@ NSString * const universalToken = @"test";
     NSDictionary *traits = @{@"email": @"ambassadorTest@example.com"};
     NSString *uniqueID = @"1234567890";
     NSString *campID = @"100";
-    [[self.mockAmbassadorSDK expect] localIdentifyWithUserID:uniqueID traits:traits autoEnrollCampaign:campID];
+    [[self.mockAmbassadorSDK expect] localIdentifyWithUserID:uniqueID traits:traits autoEnrollCampaign:campID completion:nil];
     
     // WHEN
     [AmbassadorSDK identifyWithUserID:uniqueID traits:traits autoEnrollCampaign:campID];
@@ -94,7 +94,7 @@ NSString * const universalToken = @"test";
     // GIVEN
     NSDictionary *traits = @{@"email": @"ambassadorTest@example.com"};
     NSString *uniqueID = @"1234567890";
-    [[self.mockAmbassadorSDK expect] localIdentifyWithUserID:uniqueID traits:traits autoEnrollCampaign:nil];
+    [[self.mockAmbassadorSDK expect] localIdentifyWithUserID:uniqueID traits:traits autoEnrollCampaign:nil completion:nil];
     
     // WHEN
     [AmbassadorSDK identifyWithUserID:uniqueID traits:traits];
@@ -203,7 +203,7 @@ NSString * const universalToken = @"test";
     [[[mockNtwMgr expect] andDo:nil] sendIdentifyForCampaign:campID shouldEnroll:YES success:[OCMArg isNotNil] failure:[OCMArg isNotNil]];
     
     // WHEN
-    [self.ambassadorSDK localIdentifyWithUserID:mockUserID traits:mockTraits autoEnrollCampaign:campID];
+    [self.ambassadorSDK localIdentifyWithUserID:mockUserID traits:mockTraits autoEnrollCampaign:campID completion:nil];
     NSString *savedEmail = [AMBValues getUserEmail];
     
     // THEN
