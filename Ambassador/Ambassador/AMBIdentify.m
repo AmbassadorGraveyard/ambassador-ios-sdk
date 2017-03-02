@@ -58,6 +58,11 @@ NSInteger const maxTryCount = 10;
         loaderTime = [NSNumber numberWithInt:2];
     }
     NSInteger minimumTime = [loaderTime integerValue];
+    if (minimumTime > 30){
+        minimumTime = 30;
+    }else if (minimumTime < 2){
+        minimumTime = 2;
+    }
     return minimumTime;
 }
 
