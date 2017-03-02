@@ -19,7 +19,7 @@
 @property (nonatomic) NSInteger tryCount;
 
 - (void)deviceInfoReceived;
-- (void)performIdentifyForiOS9;
+- (void)performIdentifyForiOS10;
 
 @end
 
@@ -64,7 +64,7 @@
     id mockIdentify = [OCMockObject partialMockForObject:self.identify];
     
     if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
-        [[[mockIdentify expect] andDo:nil] performIdentifyForiOS9];
+        [[[mockIdentify expect] andDo:nil] performIdentifyForiOS10];
     }
     
     // WHEN
@@ -75,9 +75,9 @@
     XCTAssertNotNil(self.identify.identifyTimer);
 }
 
-- (void)testPerformIdentifyForiOS9 {
+- (void)testPerformIdentifyForiOS10 {
     // WHEN
-    [self.identify performIdentifyForiOS9];
+    [self.identify performIdentifyForiOS10];
     
     // THEN
     XCTAssertNotNil(self.identify.safariVC);
