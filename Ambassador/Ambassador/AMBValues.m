@@ -302,8 +302,9 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     // Goes through the dictionary and grabs the campaign if there is one
     NSArray *results = dictionary[@"results"];
     NSDictionary *resultsDict = results[0];
+    NSString *campaign = [[NSString alloc] initWithFormat:@"%@", resultsDict[@"campaign_id"]];
     
-    return resultsDict[@"campaign_id"];
+    return campaign;
 }
 
 
