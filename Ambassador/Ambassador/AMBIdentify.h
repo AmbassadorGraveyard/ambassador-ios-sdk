@@ -14,6 +14,6 @@
 @property (nonatomic) BOOL identifyProcessComplete;
 
 - (id)init;
-- (void)getIdentity:(void (^)(BOOL *success))completion;
+- (void)getIdentity:(void (^)(BOOL))completion;
 
 @end
