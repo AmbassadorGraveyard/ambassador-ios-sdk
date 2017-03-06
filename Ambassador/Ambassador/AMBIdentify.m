@@ -47,8 +47,15 @@ NSInteger const maxTryCount = 10;
 }
 
 - (NSInteger)getMinimumTime{
+
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    NSString *plistPath = [mainBundle pathForResource:@"GenericTheme" ofType:@"plist"];
+
     NSBundle *ambassadorBundle = [AMBValues AMBframeworkBundle];
-    NSString *plistPath = [ambassadorBundle pathForResource:@"GenericTheme" ofType:@"plist"];
+    if (!plistPath){
+        plistPath = [ambassadorBundle pathForResource:@"GenericTheme" ofType:@"plist"];
+    }
+
     NSDictionary *valuesDic = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     NSNumber *loaderTime = nil;
     if ((int)[valuesDic valueForKey:@"LandingPageMinimumSeconds"]){

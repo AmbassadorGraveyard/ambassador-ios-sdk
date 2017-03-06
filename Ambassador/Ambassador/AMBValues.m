@@ -94,8 +94,15 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
         baseUrl = @"https://staging.mbsy.co/universal/landing";
     #endif
 
+    
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    NSString *plistPath = [mainBundle pathForResource:@"GenericTheme" ofType:@"plist"];
+
     NSBundle *ambassadorBundle = [self AMBframeworkBundle];
-    NSString *plistPath = [ambassadorBundle pathForResource:@"GenericTheme" ofType:@"plist"];
+    if (!plistPath){
+        plistPath = [ambassadorBundle pathForResource:@"GenericTheme" ofType:@"plist"];
+    }
+    
     NSDictionary *valuesDic = [NSDictionary dictionaryWithContentsOfFile:plistPath];
     NSString *loader_message = [valuesDic valueForKey:@"LandingPageMessage"] ? [valuesDic valueForKey:@"LandingPageMessage"] : @"";
     loader_message = [self urlEncodeValue:loader_message];
