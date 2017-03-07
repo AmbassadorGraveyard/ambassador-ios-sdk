@@ -173,11 +173,18 @@ NSInteger const maxTryCount = 10;
 #pragma mark - SFSafariViewController Delegate
 
 - (void)safariViewController:(SFSafariViewController *)controller safariViewControllerDidFinish:(BOOL)didFinishSuccessfully {
-    NSLog(@"Safari safariViewControllerDidFinish called");
     if ((self.identifyProcessComplete == YES) || !([[AMBValues getDeviceFingerPrint] isEqual:@{}])) {
         [self.safariVC dismissViewControllerAnimated:YES completion:^{
             [self deviceInfoReceivedNoWait];
         }];
+    }
+}
+
+- (void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
+    // Removes the safari VC after inital load
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion < 9) {
+        [controller.view removeFromSuperview];
+        [controller removeFromParentViewController];
     }
 }
 
