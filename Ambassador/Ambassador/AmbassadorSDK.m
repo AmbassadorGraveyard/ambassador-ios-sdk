@@ -163,9 +163,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
         [[AMBNetworkManager sharedInstance] sendIdentifyForCampaign:campaign shouldEnroll:shouldEnroll success:^(NSString *response) {
             DLog(@"[Identify] Successfully identified.");
         } failure:^(NSString *error) {
-            DLog(@"SEND IDENTIFY Response - %@", error);
-            BOOL success = NO;
-            if (completion) { completion(success); }
+            DLog(@"[Identify] Error - %@", error);
         }];
         
         // If not already performed, we perform the safariVC identify to get shortCode and device FP
