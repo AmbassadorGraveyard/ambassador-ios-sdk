@@ -43,6 +43,7 @@ NSInteger const maxTryCount = 10;
     self.tryCount = 0;
     self.identifyCompletionCalled = NO;
     self.minimumTime = [self getMinimumTime];
+    self.startDate = nil;
     return self;
 }
 
@@ -123,22 +124,41 @@ NSInteger const maxTryCount = 10;
     // Gets the top viewController and adds the safari VC to it if not already added
     UIViewController *topVC = [AMBUtilities getTopViewController];
     if (![self.safariVC.view isDescendantOfView:topVC.view]) {
+        self.safariVC.delegate = self;
+        self.safariVC.modalPresentationStyle = UIModalPresentationPopover;
+        self.safariVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         [topVC presentViewController:self.safariVC animated:YES completion:nil];
-        self.startDate = [NSDate date];
+        if (self.startDate){
+            NSInteger secondsSinceStart = (NSInteger)[[NSDate date] timeIntervalSinceDate:self.startDate];
+            if (secondsSinceStart > self.minimumTime){
+                self.startDate = [NSDate date];
+            }
+        }else{
+            self.startDate = [NSDate date];
+        }
     }
 }
 
 - (void)deviceInfoReceived {
+    [self.identifyTimer invalidate];
     NSInteger secondsSinceStart = (NSInteger)[[NSDate date] timeIntervalSinceDate:self.startDate];
     if (secondsSinceStart < self.minimumTime){
         NSInteger difference = self.minimumTime - secondsSinceStart;
         [NSThread sleepForTimeInterval:difference];
     }
+    if (self.safariVC && ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0)) {
+        [self.safariVC dismissViewControllerAnimated:YES completion:^{
+            [self identifyComplete];
+        }];
+    }
+    else{
+        [self identifyComplete];
+    }
+}
+
+- (void)deviceInfoReceivedNoWait {
     [self.identifyTimer invalidate];
     [self identifyComplete];
-    if (self.safariVC && ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0)) {
-        [self.safariVC dismissViewControllerAnimated:YES completion:nil];
-    }
 }
 
 // Called when either the identify response is returned or the max try count is reached
@@ -152,11 +172,12 @@ NSInteger const maxTryCount = 10;
 
 #pragma mark - SFSafariViewController Delegate
 
-- (void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
-    // Removes the safari VC after inital load
-    if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion < 10) {
-        [controller.view removeFromSuperview];
-        [controller removeFromParentViewController];
+- (void)safariViewController:(SFSafariViewController *)controller safariViewControllerDidFinish:(BOOL)didFinishSuccessfully {
+    NSLog(@"Safari safariViewControllerDidFinish called");
+    if ((self.identifyProcessComplete == YES) || !([[AMBValues getDeviceFingerPrint] isEqual:@{}])) {
+        [self.safariVC dismissViewControllerAnimated:YES completion:^{
+            [self deviceInfoReceivedNoWait];
+        }];
     }
 }
 
