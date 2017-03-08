@@ -108,9 +108,12 @@ NSInteger const maxTryCount = 10;
         [self.identifyTimer invalidate];
         [[AmbassadorSDK sharedInstance].pusherManager closeSocket];
         BOOL success = YES;
-        if (self.identifyCompletion && !self.identifyCompletionCalled) { self.identifyCompletion(success); self.identifyCompletionCalled = YES;}
         if (self.safariVC && ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0)) {
-            [self.safariVC dismissViewControllerAnimated:YES completion:nil];
+            [self.safariVC dismissViewControllerAnimated:YES completion:^{
+                if (self.identifyCompletion && !self.identifyCompletionCalled) { self.identifyCompletion(success); self.identifyCompletionCalled = YES;}
+            }];
+        }else{
+            if (self.identifyCompletion && !self.identifyCompletionCalled) { self.identifyCompletion(success); self.identifyCompletionCalled = YES;}
         }
         return;
     }
