@@ -73,10 +73,8 @@
 - (void)bindToChannelEvent:(NSString*)eventName {
     [self.channel bindToEventNamed:eventName handleWithBlock:^(AMBPTPusherEvent *event) {
         NSMutableDictionary *json = (NSMutableDictionary *)event.data[@"body"];
-        NSLog(@"%@", json);
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
         if (event.data[@"url"]) {
-            NSLog(@"[bindToChannelEvent] url");
             // Attempts to close socket
             [self receivedIdentifyAction];
             [user fillWithUrl:event.data[@"url"] completion:^(NSString *error) {
@@ -89,7 +87,7 @@
                 }
             }];
         } else if (json[@"mbsy_cookie_code"] && json[@"mbsy_cookie_code"] != [NSNull null]) {
-            NSLog(@"[bindToChannelEvent] Short code '%@' and fingerprint recieved.", json[@"mbsy_cookie_code"]);
+            DLog(@"[Identify] Short code '%@' and fingerprint recieved.", json[@"mbsy_cookie_code"]);
             [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
             NSDictionary *consumerDict = @{@"UID" : json[@"fingerprint"][@"consumer"][@"UID"]};
             NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"], @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
@@ -102,9 +100,7 @@
             NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"], @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
             NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
             [AMBValues setDeviceFingerPrintWithDictionary:fingerPrintDict]; // Saves device fp to defaults
-            NSLog(@"[bindToChannelEvent] Fingerprint recieved. %@", fingerPrintDict);
         }else {
-            NSLog(@"[bindToChannelEvent] else");
             // Attempts to close socket
             [self receivedIdentifyAction];
             [user fillWithDictionary:json completion:^{
