@@ -127,6 +127,7 @@ NSInteger const maxTryCount = 10;
         self.safariVC.delegate = self;
         self.safariVC.modalPresentationStyle = UIModalPresentationPopover;
         self.safariVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        self.safariVC.popoverPresentationController.sourceView = topVC.view;
         [topVC presentViewController:self.safariVC animated:YES completion:nil];
         if (self.startDate){
             NSInteger secondsSinceStart = (NSInteger)[[NSDate date] timeIntervalSinceDate:self.startDate];
