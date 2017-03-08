@@ -87,7 +87,8 @@ NSInteger const maxTryCount = 10;
             
             // Checks to make sure the timer is not already running before instantiating a new one
             if (!self.identifyTimer.isValid) {
-                self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(performIdentifyForiOS10) userInfo:nil repeats:YES];
+                self.tryCount = 0;
+                self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(performIdentifyForiOS10) userInfo:nil repeats:YES];
             }
             
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceInfoReceived) name:@"deviceInfoReceived" object:nil];
@@ -104,7 +105,13 @@ NSInteger const maxTryCount = 10;
 
     // Checks if try count is at its max
     if (self.tryCount >= maxTryCount) {
-        [self deviceInfoReceived];
+        [self.identifyTimer invalidate];
+        [[AmbassadorSDK sharedInstance].pusherManager closeSocket];
+        BOOL success = YES;
+        if (self.identifyCompletion && !self.identifyCompletionCalled) { self.identifyCompletion(success); self.identifyCompletionCalled = YES;}
+        if (self.safariVC && ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0)) {
+            [self.safariVC dismissViewControllerAnimated:YES completion:nil];
+        }
         return;
     }
     self.tryCount++;
@@ -129,12 +136,7 @@ NSInteger const maxTryCount = 10;
         self.safariVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         self.safariVC.popoverPresentationController.sourceView = topVC.view;
         [topVC presentViewController:self.safariVC animated:YES completion:nil];
-        if (self.startDate){
-            NSInteger secondsSinceStart = (NSInteger)[[NSDate date] timeIntervalSinceDate:self.startDate];
-            if (secondsSinceStart > self.minimumTime){
-                self.startDate = [NSDate date];
-            }
-        }else{
+        if (!self.startDate){
             self.startDate = [NSDate date];
         }
     }
