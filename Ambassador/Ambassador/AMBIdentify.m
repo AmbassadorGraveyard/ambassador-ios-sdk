@@ -22,6 +22,8 @@
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
 @property (nonatomic, strong) SFSafariViewController * safariVC;
 @property (nonatomic, strong) NSTimer * identifyTimer;
+@property (nonatomic, strong) NSTimer * identifyFinishedTimer;
+@property (nonatomic) NSInteger tryCountFinish;
 @property (nonatomic) NSInteger tryCount;
 @property (nonatomic, copy) void (^identifyCompletion)(BOOL);
 @property (nonatomic) BOOL identifyCompletionCalled; // this is to make sure that the callback isn't called 2x
@@ -41,6 +43,7 @@ NSInteger const maxTryCount = 10;
 - (id)init {
     self = [super init];
     self.tryCount = 0;
+    self.tryCountFinish = 0;
     self.identifyCompletionCalled = NO;
     self.minimumTime = [self getMinimumTime];
     self.startDate = nil;
@@ -128,13 +131,13 @@ NSInteger const maxTryCount = 10;
     if (!self.safariVC) {
         self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AMBValues getUniversalID]]]];
     }
+    self.safariVC.delegate = self;
 
     DLog(@"[Identify] Performing Identify with SAFARI VC for iOS 10 - Attempt %li.", (long)self.tryCount);
     
     // Gets the top viewController and adds the safari VC to it if not already added
     UIViewController *topVC = [AMBUtilities getTopViewController];
     if (![self.safariVC.view isDescendantOfView:topVC.view]) {
-        self.safariVC.delegate = self;
         self.safariVC.modalPresentationStyle = UIModalPresentationPopover;
         self.safariVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         self.safariVC.popoverPresentationController.sourceView = topVC.view;
@@ -150,8 +153,23 @@ NSInteger const maxTryCount = 10;
     NSInteger secondsSinceStart = (NSInteger)[[NSDate date] timeIntervalSinceDate:self.startDate];
     if (secondsSinceStart < self.minimumTime){
         NSInteger difference = self.minimumTime - secondsSinceStart;
-        [NSThread sleepForTimeInterval:difference];
+        if (!self.identifyFinishedTimer.isValid) {
+            self.identifyFinishedTimer = [NSTimer scheduledTimerWithTimeInterval:difference target:self selector:@selector(finishIdentify) userInfo:nil repeats:YES];
+        }
+    }else{
+        if (self.safariVC && ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0)) {
+            [self.safariVC dismissViewControllerAnimated:YES completion:^{
+                [self identifyComplete];
+            }];
+        }
+        else{
+            [self identifyComplete];
+        }
     }
+}
+
+- (void)finishIdentify {
+    [self.identifyFinishedTimer invalidate];
     if (self.safariVC && ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0)) {
         [self.safariVC dismissViewControllerAnimated:YES completion:^{
             [self identifyComplete];
@@ -164,6 +182,7 @@ NSInteger const maxTryCount = 10;
 
 - (void)deviceInfoReceivedNoWait {
     [self.identifyTimer invalidate];
+    [self.identifyFinishedTimer invalidate];
     [self identifyComplete];
 }
 
@@ -178,11 +197,13 @@ NSInteger const maxTryCount = 10;
 
 #pragma mark - SFSafariViewController Delegate
 
-- (void)safariViewController:(SFSafariViewController *)controller safariViewControllerDidFinish:(BOOL)didFinishSuccessfully {
+-(void)safariViewControllerDidFinish:(SFSafariViewController *)controller {
+    // Done button pressed
     if ((self.identifyProcessComplete == YES) || !([[AMBValues getDeviceFingerPrint] isEqual:@{}])) {
-        [self.safariVC dismissViewControllerAnimated:YES completion:^{
-            [self deviceInfoReceivedNoWait];
-        }];
+        [self.identifyFinishedTimer invalidate];
+        [controller.view removeFromSuperview];
+        [controller removeFromParentViewController];
+        [self deviceInfoReceivedNoWait];
     }
 }
 
