@@ -29,6 +29,7 @@
 @property (nonatomic) BOOL identifyCompletionCalled; // this is to make sure that the callback isn't called 2x
 @property (nonatomic) NSDate * startDate;
 @property (nonatomic) NSInteger minimumTime;
+@property (nonatomic) BOOL doneButtonPressed; // this is to track that the Done button has been pressed (used for timing of browser close)
 
 @end
 
@@ -45,6 +46,7 @@ NSInteger const maxTryCount = 10;
     self.tryCount = 0;
     self.tryCountFinish = 0;
     self.identifyCompletionCalled = NO;
+    self.doneButtonPressed = NO;
     self.minimumTime = [self getMinimumTime];
     self.startDate = nil;
     return self;
@@ -91,6 +93,7 @@ NSInteger const maxTryCount = 10;
             // Checks to make sure the timer is not already running before instantiating a new one
             if (!self.identifyTimer.isValid) {
                 self.tryCount = 0;
+                self.doneButtonPressed = NO;
                 self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(performIdentifyForiOS10) userInfo:nil repeats:YES];
             }
             
@@ -151,7 +154,7 @@ NSInteger const maxTryCount = 10;
 - (void)deviceInfoReceived {
     [self.identifyTimer invalidate];
     NSInteger secondsSinceStart = (NSInteger)[[NSDate date] timeIntervalSinceDate:self.startDate];
-    if (secondsSinceStart < self.minimumTime){
+    if (secondsSinceStart < self.minimumTime && !self.doneButtonPressed){
         NSInteger difference = self.minimumTime - secondsSinceStart;
         if (!self.identifyFinishedTimer.isValid) {
             self.identifyFinishedTimer = [NSTimer scheduledTimerWithTimeInterval:difference target:self selector:@selector(finishIdentify) userInfo:nil repeats:YES];
@@ -205,6 +208,7 @@ NSInteger const maxTryCount = 10;
         [controller removeFromParentViewController];
         [self deviceInfoReceivedNoWait];
     }
+    self.doneButtonPressed = YES;
 }
 
 - (void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
