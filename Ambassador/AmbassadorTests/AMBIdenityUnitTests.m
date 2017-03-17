@@ -104,11 +104,7 @@
 - (void)testSFVCDidCompleteInitialLoad {
     // GIVEN
     id mockSFVC = [OCMockObject mockForClass:[SFSafariViewController class]];
-    [[[mockSFVC expect] andDo:nil] removeFromParentViewController];
-    
     id mockSFView = [OCMockObject mockForClass:[UIView class]];
-    [[[mockSFView expect] andDo:nil] removeFromSuperview];
-    [[[mockSFVC expect] andReturn:mockSFView] view];
     
     // WHEN
     [self.identify safariViewController:mockSFVC didCompleteInitialLoad:YES];

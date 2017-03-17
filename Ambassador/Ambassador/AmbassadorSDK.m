@@ -121,7 +121,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:campaign completion: nil];
 }
 
-+ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits autoEnrollCampaign:(NSString *)campaign completion:(void (^)(BOOL *success))completion{
++ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits autoEnrollCampaign:(NSString *)campaign completion:(void (^)(BOOL))completion{
     [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:campaign completion:completion];
 }
 
@@ -129,7 +129,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:nil completion:nil];
 }
 
-+ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits completion:(void (^)(BOOL *success))completion{
++ (void)identifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits completion:(void (^)(BOOL))completion{
     [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:userID traits:traits autoEnrollCampaign:nil completion:completion];
 }
 
@@ -138,7 +138,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:email traits:@{@"email" : email} autoEnrollCampaign:nil completion:nil];
 }
 
-- (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits autoEnrollCampaign:(NSString *)campaign completion:(void (^)(BOOL *success))completion{
+- (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits autoEnrollCampaign:(NSString *)campaign completion:(void (^)(BOOL))completion{
     // Flag that tells if an identify process is happening currently
     [AmbassadorSDK sharedInstance].identifyInProgress = YES;
     
@@ -163,9 +163,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
         [[AMBNetworkManager sharedInstance] sendIdentifyForCampaign:campaign shouldEnroll:shouldEnroll success:^(NSString *response) {
             DLog(@"[Identify] Successfully identified.");
         } failure:^(NSString *error) {
-            DLog(@"SEND IDENTIFY Response - %@", error);
-            BOOL success = NO;
-            if (completion) { completion(&success); }
+            DLog(@"[Identify] Error - %@", error);
         }];
         
         // If not already performed, we perform the safariVC identify to get shortCode and device FP
@@ -174,7 +172,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
         }
         else{
             BOOL success = YES;
-            if (completion) { completion(&success); }
+            if (completion) { completion(success); }
         }
     }];
 }
