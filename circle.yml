@@ -2,7 +2,7 @@ general:
   build_dir: Ambassador
 machine:
   xcode:
-    version: "7.2"
+    version: "8.2"
 checkout:
   post:
     - git submodule sync
