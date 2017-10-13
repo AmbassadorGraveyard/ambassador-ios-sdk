@@ -333,6 +333,11 @@ int contactServiceType;
     closeButton.tintColor = [[AMBThemeManager sharedInstance] colorForKey:NavBarTextColor];
     [closeButton addTarget:self action:@selector(closeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
+    if (@available(iOS 9, *)) {
+        [closeButton.widthAnchor constraintEqualToConstant: 16].active = YES;
+        [closeButton.heightAnchor constraintEqualToConstant: 16].active = YES;
+    }
+
     UIBarButtonItem *closeBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:closeButton];
     self.navigationItem.leftBarButtonItem = closeBarButtonItem;
 }
