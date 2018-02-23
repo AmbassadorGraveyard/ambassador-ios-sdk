@@ -64,9 +64,9 @@
 
 - (void)testAnimateCheckMarkIn {
     // GIVEN
-    id mockConstraint = [OCMockObject mockForClass:[NSLayoutConstraint class]];
+    id mockConstraint = [OCMockObject niceMockForClass:[NSLayoutConstraint class]];
     [[[mockConstraint expect] andDo:nil] setConstant:16];
-    [[[mockConstraint expect] andReturnValue:OCMOCK_VALUE(16)] constant];
+    [(NSLayoutConstraint*)[[mockConstraint stub] andReturnValue:OCMOCK_VALUE(16)] constant];
     
     self.contactCell.checkmarkConstraint = mockConstraint;
     NSInteger expectedConstraintSize = 16;
@@ -83,7 +83,7 @@
     // GIVEN
     id mockConstraint = [OCMockObject mockForClass:[NSLayoutConstraint class]];
     [[[mockConstraint expect] andDo:nil] setConstant:-50];
-    [[[mockConstraint expect] andReturnValue:OCMOCK_VALUE(-50)] constant];
+    [(NSLayoutConstraint*)[[mockConstraint stub] andReturnValue:OCMOCK_VALUE(-50)] constant];
     
     id mockCheckmark = [OCMockObject mockForClass:[UIImageView class]];
     [[[mockCheckmark expect] andReturnValue:OCMOCK_VALUE(CGRectMake(0, 0, 50, 0))] frame];

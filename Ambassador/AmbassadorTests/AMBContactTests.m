@@ -71,7 +71,7 @@
     AMBFullContact *fullContact = [[AMBFullContact alloc] init];
     
     // WHEN
-    NSMutableArray *returnArray = [fullContact getPhoneNumbers:ref withFirstName:@"FirstTest" lastName:@"LastTest" contactImage:nil];
+    NSMutableArray *returnArray = [fullContact getPhoneNumbers:ref withFirstName:@"First" lastName:@"Last" contactImage:nil];
     
     // THEN
     XCTAssertNotEqual([returnArray count], 0);
@@ -93,10 +93,26 @@
 #pragma mark - Helper Functions
 
 - (ABRecordRef)createRef {
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-    ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
-    NSArray *contactArray = (__bridge NSArray *)ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonFirstNameProperty);
-    return (__bridge ABRecordRef)contactArray[1];
+    // Create the contact
+    ABRecordRef contact = ABPersonCreate();
+    
+    // Set the first and last names
+    ABRecordSetValue(contact, kABPersonFirstNameProperty, (__bridge CFStringRef)@"First", nil);
+    ABRecordSetValue(contact, kABPersonLastNameProperty, (__bridge CFStringRef)@"Last", nil);
+    
+    // Set the phone number
+    ABMutableMultiValueRef phoneNumbers = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+    ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFStringRef)@"123456789", kABPersonPhoneMainLabel, NULL);
+    ABRecordSetValue(contact, kABPersonPhoneProperty, phoneNumbers, nil);
+    CFRelease(phoneNumbers);
+    
+    // Set the email address
+    ABMutableMultiValueRef emailAddresses = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+    ABMultiValueAddValueAndLabel(emailAddresses, @"first.last@getambassador.com", kABWorkLabel, NULL);
+    ABRecordSetValue(contact, kABPersonEmailProperty, emailAddresses, nil);
+    CFRelease(emailAddresses);
+    
+    return contact;
 }
 
 @end

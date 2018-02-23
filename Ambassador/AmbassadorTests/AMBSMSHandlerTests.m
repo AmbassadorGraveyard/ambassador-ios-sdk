@@ -135,6 +135,7 @@
 - (void)testSendViaDirectSMSDevice {
     // GIVEN
     id mockMF = [OCMockObject mockForClass:[MFMessageComposeViewController class]];
+    [[[mockMF stub] andDo:nil] alloc];
     [[[mockMF expect] andReturnValue:OCMOCK_VALUE(YES)] canSendText];
 
     id mockParentController = [OCMockObject mockForClass:[AMBContactSelector class]];
@@ -175,6 +176,9 @@
 
 - (void)testDidFinishWithResult {
     // GIVEN
+    id mockMF = [OCMockObject mockForClass:[MFMessageComposeViewController class]];
+    [[[mockMF stub] andDo:nil] alloc];
+    
     id mockParent = [OCMockObject mockForClass:[AMBContactSelector class]];
     self.handler.parentController = mockParent;
     
@@ -189,6 +193,8 @@
     [self.handler messageComposeViewController:[[MFMessageComposeViewController alloc] init] didFinishWithResult: MessageComposeResultSent];
     
     // THEN
+    [mockMF stopMocking];
+
     [mockParent verify];
     [mockDelegate verify];
     

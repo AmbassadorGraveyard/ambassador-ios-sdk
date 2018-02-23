@@ -1,5 +1,5 @@
 //
-//  AMBIdenityUnitTests.m
+//  AMBIdentityUnitTests.m
 //  Ambassador
 //
 //  Created by Jake Dunahee on 2/3/16.
@@ -24,14 +24,14 @@
 @end
 
 
-@interface AMBIdenityUnitTests : XCTestCase
+@interface AMBIdentityUnitTests : XCTestCase
 
 @property (nonatomic, strong) AMBIdentify * identify;
 
 @end
 
 
-@implementation AMBIdenityUnitTests
+@implementation AMBIdentityUnitTests
 
 - (void)setUp {
     [super setUp];
@@ -76,6 +76,9 @@
 }
 
 - (void)testPerformIdentifyForiOS10 {
+    // GIVEN
+    [AMBValues setDeviceFingerPrintWithDictionary:@{}];
+    
     // WHEN
     [self.identify performIdentifyForiOS10];
     

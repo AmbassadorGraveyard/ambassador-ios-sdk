@@ -124,7 +124,7 @@ NSInteger const maxTryCount = 10;
         return;
     }
     self.tryCount++;
-
+    id test = [AMBValues getDeviceFingerPrint];
     if ((self.identifyProcessComplete == YES) || !([[AMBValues getDeviceFingerPrint] isEqual:@{}])) {
         [self deviceInfoReceived];
         return;

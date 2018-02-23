@@ -487,8 +487,8 @@
     [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
         void (^success)() = nil;
         [invocation getArgument:&success atIndex:4];
-        success();
-    }] sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn contactList:nil success:[OCMArg invokeBlock] failure:[OCMArg any]];
+        success(@{@"key1":@"Test"});
+    }] sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn contactList:nil success:[OCMArg any] failure:[OCMArg any]];
     
     // WHEN
     [self.serviceSelector userDidPostFromService:@"LinkedIn"];
@@ -502,7 +502,7 @@
     [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
         void (^failure)() = nil;
         [invocation getArgument:&failure atIndex:5];
-        failure();
+        failure(@"ERROR");
     }] sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn contactList:nil success:[OCMArg any] failure:[OCMArg invokeBlock]];
     
     // WHEN
@@ -517,7 +517,7 @@
     [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
         void (^success)() = nil;
         [invocation getArgument:&success atIndex:5];
-        success();
+        success(@{@"key1":@"Test"});
     }] sendIdentifyForCampaign:[OCMArg any] shouldEnroll:YES success:[OCMArg invokeBlock] failure:[OCMArg any]];
     
     // WHEN
@@ -532,7 +532,7 @@
     [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
         void (^failure)() = nil;
         [invocation getArgument:&failure atIndex:5];
-        failure();
+        failure(@"ERROR");
     }] sendIdentifyForCampaign:[OCMArg any] shouldEnroll:YES success:[OCMArg any] failure:[OCMArg invokeBlock]];
     
     // WHEN

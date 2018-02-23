@@ -116,12 +116,16 @@
 
 - (void)testSuccessBlock {
     // GIVEN
+    id delegate = [OCMockObject mockForProtocol:@protocol(AMBShareServiceDelegate)];
+    self.linkedInShareVC.delegate = delegate;
+    [[[delegate expect] andDo:nil] userDidPostFromService:[OCMArg isKindOfClass:[NSString class]]];
+    
     id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
     [[[mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
         void (^success)() = nil;
         [invocation getArgument:&success atIndex:3];
-        success();
-    }] shareToLinkedInWithMessage:[OCMArg isKindOfClass:[NSString class]] success:[OCMArg invokeBlock] failure:[OCMArg any]];
+        success(@"ACCESS_TOKEN");
+    }] shareToLinkedInWithMessage:[OCMArg isKindOfClass:[NSString class]] success:[OCMArg any] failure:[OCMArg any]];
     
     // WHEN
     [self.linkedInShareVC didSelectPost];
@@ -129,16 +133,23 @@
     // THEN
     [mockNetworkMgr verify];
     [mockNetworkMgr stopMocking];
+    
+    [delegate verify];
+    [delegate stopMocking];
 }
 
 - (void)testFailureBlock {
     // GIVEN
+    id delegate = [OCMockObject mockForProtocol:@protocol(AMBShareServiceDelegate)];
+    self.linkedInShareVC.delegate = delegate;
+    [[[delegate expect] andDo:nil] networkError:[OCMArg isKindOfClass:[NSString class]] message:[OCMArg isKindOfClass:[NSString class]]];
+    
     id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
     [[[mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
         void (^failure)() = nil;
-        [invocation getArgument:&failure atIndex:3];
-        failure();
-    }] shareToLinkedInWithMessage:[OCMArg isKindOfClass:[NSString class]] success:[OCMArg any] failure:[OCMArg invokeBlock]];
+        [invocation getArgument:&failure atIndex:4];
+        failure(@"ERROR");
+    }] shareToLinkedInWithMessage:[OCMArg isKindOfClass:[NSString class]] success:[OCMArg any] failure:[OCMArg any]];
     
     // WHEN
     [self.linkedInShareVC didSelectPost];
@@ -146,6 +157,9 @@
     // THEN
     [mockNetworkMgr verify];
     [mockNetworkMgr stopMocking];
+    
+    [delegate verify];
+    [delegate stopMocking];
 }
 
 @end
