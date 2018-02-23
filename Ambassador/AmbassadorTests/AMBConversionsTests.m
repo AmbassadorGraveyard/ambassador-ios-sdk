@@ -104,11 +104,6 @@
     // THEN
     XCTAssertTrue(containsError);
     [mockParams verify];
-    
-    // ------------------------------------------------
-    // REMOVE THIS WHEN THE TEST BELOW IS FIXED!!!
-//    [AMBValues setDeviceFingerPrintWithDictionary:@{}];
-    // ------------------------------------------------
 }
 
 // Skipped because OCMock can't mock NSManagedObject - https://github.com/erikdoe/ocmock/issues/339
