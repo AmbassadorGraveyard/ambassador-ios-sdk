@@ -12,15 +12,6 @@
 
 @implementation AMBLinkedInShare
 
-- (id)initWithDelegate:(id)delegate
-{
-    self = [super init];
-    if (self) {
-        self.delegate = delegate;
-    }
-    return self;
-}
-
 
 #pragma mark - LifeCycle
 
