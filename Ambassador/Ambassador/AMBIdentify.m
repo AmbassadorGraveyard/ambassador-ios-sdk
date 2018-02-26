@@ -110,7 +110,7 @@ NSInteger const maxTryCount = 10;
     }
 
     // Checks if try count is at its max
-    if (self.tryCount >= maxTryCount) {
+    if (self.tryCount >= maxTryCount || (self.doneButtonPressed && self.identifyCompletion)) {
         [self.identifyTimer invalidate];
         [[AmbassadorSDK sharedInstance].pusherManager closeSocket];
         BOOL success = YES;
