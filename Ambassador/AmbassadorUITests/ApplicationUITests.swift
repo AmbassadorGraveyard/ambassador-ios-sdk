@@ -41,16 +41,25 @@ extension ApplicationUITests {
         emailTextField.typeText("test")
         app.buttons["Done"].tap()
         
-        scrollViewsQuery.otherElements.containingType(.StaticText, identifier:"Identify").element.swipeUp()
+        scrollViewsQuery.otherElements.containing(.staticText, identifier:"Identify").element.swipeUp()
+        
+        addUIInterruptionMonitor(withDescription: "Hold on!") { (alert) -> Bool in
+            alert.buttons["Okay"].tap()
+            return true
+        }
+        
+        addUIInterruptionMonitor(withDescription: "Great!") { (alert) -> Bool in
+            alert.buttons["Okay"].tap()
+            return true
+        }
         
         let submitButton = app.buttons["Submit"]
         submitButton.tap()
         
         // Check to make sure we get an invalid email alert
         XCTAssertTrue(app.alerts["Hold on!"].exists)
-
-        app.alerts["Hold on!"].collectionViews.buttons["Okay"].tap()
-        scrollViewsQuery.otherElements.containingType(.StaticText, identifier:"Identify").childrenMatchingType(.Other).elementBoundByIndex(1).tap()
+        
+        app.tap()
         
         // Fill out fields
         let firstNameField = elementsQuery.textFields["First Name"]
@@ -95,7 +104,7 @@ extension ApplicationUITests {
         
         // Type valid email
         emailTextField.tap()
-        emailTextField.typeText("@exmaple.com")
+        emailTextField.typeText("@example.com")
         
         app.buttons["Done"].tap()
         
@@ -103,12 +112,21 @@ extension ApplicationUITests {
         
         // Check to make sure we get a succes message
         XCTAssertTrue(app.alerts["Great!"].exists)
-        let okayButton2 = app.alerts["Great!"].collectionViews.buttons["Okay"]
-        okayButton2.tap()
+        app.tap()
     }
     
     func testConversion() {
         app.tabBars.buttons["Conversion"].tap()
+        
+        addUIInterruptionMonitor(withDescription: "Hold on!") { (alert) -> Bool in
+            alert.buttons["Okay"].tap()
+            return true
+        }
+
+        addUIInterruptionMonitor(withDescription: "Great!") { (alert) -> Bool in
+            alert.buttons["Okay"].tap()
+            return true
+        }
         
         let elementsQuery = app.scrollViews.otherElements
         let submitButton = elementsQuery.buttons["Submit"]
@@ -116,8 +134,7 @@ extension ApplicationUITests {
         
         // Checks to make sure we get blank fields error
         XCTAssertTrue(app.alerts["Hold on!"].exists)
-        let okayButton = app.alerts["Hold on!"].collectionViews.buttons["Okay"]
-        okayButton.tap()
+        app.tap()
         
         // Type referrer email text
         let referrerTF = app.scrollViews.otherElements.searchFields["referrerEmail"]
@@ -148,8 +165,7 @@ extension ApplicationUITests {
         
         // Checks to make sure we get invalid email error
         XCTAssertTrue(app.alerts["Hold on!"].exists)
-        app.alerts["Hold on!"].collectionViews.buttons["Okay"]
-        okayButton.tap()
+        app.tap()
         
         referredEmailTextField.tap()
         referredEmailTextField.typeText("@example.com")
@@ -161,20 +177,20 @@ extension ApplicationUITests {
         
         // Checks to make sure that we got a success message
         let existsPredicate = NSPredicate(format: "exists == 1")
-        expectationForPredicate(existsPredicate, evaluatedWithObject: app.alerts["Great!"], handler: nil)
-        waitForExpectationsWithTimeout(3, handler: nil)
+        expectation(for: existsPredicate, evaluatedWith: app.alerts["Great!"], handler: nil)
+        waitForExpectations(timeout: 3, handler: nil)
         
         XCTAssertTrue(app.alerts["Great!"].exists)
-        app.alerts["Great!"].collectionViews.buttons["Okay"].tap()
+        app.tap()
     }
     
     func testSettingsPage() {
         app.tabBars.buttons["Settings"].tap()
-        
+
         let scrollViewsQuery = app.scrollViews
-        let jakeTestElementsQuery = scrollViewsQuery.otherElements.containingType(.StaticText, identifier:"Jake Test")
-        jakeTestElementsQuery.childrenMatchingType(.Other).elementBoundByIndex(1).buttons["copyIcon"].tap()
-        jakeTestElementsQuery.childrenMatchingType(.Other).elementBoundByIndex(3).buttons["copyIcon"].tap()
+        let jakeTestElementsQuery = scrollViewsQuery.otherElements.containing(.staticText, identifier:"Jake Test")
+        jakeTestElementsQuery.children(matching: .other).element(boundBy: 1).buttons["copyIcon"].tap()
+        jakeTestElementsQuery.children(matching: .other).element(boundBy: 3).buttons["copyIcon"].tap()
         scrollViewsQuery.otherElements.buttons["Logout"].tap()
     }
     
@@ -182,10 +198,10 @@ extension ApplicationUITests {
         // Open color picker
         app.navigationBars["Refer a Friend"].buttons["Edit"].tap()
         app.tables.staticTexts["Test"].tap()
-        app.scrollViews.otherElements.containingType(.Button, identifier:"Clear Image").childrenMatchingType(.Button).elementBoundByIndex(1).tap()
+        app.scrollViews.otherElements.containing(.button, identifier:"Clear Image").children(matching: .button).element(boundBy: 1).tap()
         
         // Tap the color picker
-        app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).elementBoundByIndex(1).childrenMatchingType(.Other).element.tap()
+        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element(boundBy: 1).children(matching: .other).element.tap()
         
         // Check to see if hex color code matches the color tapped
         let textField = app.textFields["hexTextField"]
