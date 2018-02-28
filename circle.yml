@@ -10,7 +10,7 @@ checkout:
 dependencies:
   pre:
     - pod install
-    - xcrun instruments -w "iPhone 8" || true
+    - xcrun instruments -w "iPhone 8 (11.2) [46B44694" || true
 
 test:
   override:
