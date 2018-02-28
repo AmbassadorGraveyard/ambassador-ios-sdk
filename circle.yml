@@ -10,6 +10,8 @@ checkout:
 dependencies:
   pre:
     - pod install
+    - xcrun instruments -w "iPhone 8" || true
+
 test:
   override:
     - bash secrets.sh
