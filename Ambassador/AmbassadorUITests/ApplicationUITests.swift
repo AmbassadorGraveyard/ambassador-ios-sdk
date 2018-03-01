@@ -39,16 +39,12 @@ extension ApplicationUITests {
         let emailTextField = elementsQuery.textFields["Email *"]
         emailTextField.tap()
         emailTextField.typeText("test")
+        
         app.buttons["Done"].tap()
         
         scrollViewsQuery.otherElements.containing(.staticText, identifier:"Identify").element.swipeUp()
         
         addUIInterruptionMonitor(withDescription: "Hold on!") { (alert) -> Bool in
-            alert.buttons["Okay"].tap()
-            return true
-        }
-        
-        addUIInterruptionMonitor(withDescription: "Great!") { (alert) -> Bool in
             alert.buttons["Okay"].tap()
             return true
         }
@@ -108,6 +104,11 @@ extension ApplicationUITests {
         
         app.buttons["Done"].tap()
         
+        addUIInterruptionMonitor(withDescription: "Great!") { (alert) -> Bool in
+            alert.buttons["Okay"].tap()
+            return true
+        }
+
         submitButton.tap()
         
         // Check to make sure we get a succes message
@@ -213,6 +214,12 @@ extension ApplicationUITests {
 extension ApplicationUITests {
     func ambassadorLogin() {
         if app.buttons["Sign In"].exists {
+            // If the "Allow Notifications" alert is displayed click Allow
+            addUIInterruptionMonitor(withDescription: "Notifications") { (alert) -> Bool in
+                alert.buttons["Allow"].tap()
+                return true
+            }
+
             let usernameTextField = app.textFields["Username"]
             usernameTextField.tap()
             usernameTextField.typeText("jake+test@getambassador.com")

@@ -96,6 +96,12 @@ extension AmbassadorUITests {
     }
     
     func testSMS() {
+        // If the "Contacts Access" alert is displayed click Ok
+        addUIInterruptionMonitor(withDescription: "Contacts") { (alert) -> Bool in
+            alert.buttons["OK"].tap()
+            return true
+        }
+
         // Tap the SMS cell
         app.collectionViews.children(matching: .cell).element(boundBy: 3).tap()
         
@@ -117,6 +123,12 @@ extension AmbassadorUITests {
     }
     
     func testEmail() {
+        // If the "Contacts Access" alert is displayed click Ok
+        addUIInterruptionMonitor(withDescription: "Contacts") { (alert) -> Bool in
+            alert.buttons["OK"].tap()
+            return true
+        }
+
         // Tap email cell
         app.collectionViews.children(matching: .cell).element(boundBy: 4).tap()
         
@@ -138,6 +150,12 @@ extension AmbassadorUITests {
     }
     
     func testSearch() {
+        // If the "Contacts Access" alert is displayed click Ok
+        addUIInterruptionMonitor(withDescription: "Contacts") { (alert) -> Bool in
+            alert.buttons["OK"].tap()
+            return true
+        }
+
         // Tap sms cell
         app.collectionViews.children(matching: .cell).element(boundBy: 3).tap()
         
@@ -162,6 +180,12 @@ extension AmbassadorUITests {
 extension AmbassadorUITests {
     func ambassadorLogin() {
         if app.buttons["Sign In"].exists {
+            // If the "Allow Notifications" alert is displayed click Allow
+            addUIInterruptionMonitor(withDescription: "Notifications") { (alert) -> Bool in
+                alert.buttons["Allow"].tap()
+                return true
+            }
+
             let usernameTextField = app.textFields["Username"]
             usernameTextField.tap()
             usernameTextField.typeText("jake+test@getambassador.com")
