@@ -86,6 +86,18 @@
     [self.mockUtilites verify];
 }
 
+- (void)testAlertAppNotInstalled {
+    // GIVEN
+    [self mockCustomAlert];
+    [[[self.mockUtilites expect] andDo:nil] presentAlertWithSuccess:NO message:@"Make sure you have Twitter installed and are logged in to continue." withUniqueID:@"appNotInstalled" forViewController:self.mockVC shouldDismissVCImmediately:NO];
+    
+    // WHEN
+    [AMBErrors appNotInstalled:self.mockVC app:@"Twitter"];
+    
+    // THEN
+    [self.mockUtilites verify];
+}
+
 - (void)testAlertErrorLinkedInShare {
     // GIVEN
     NSString *errorMessage = @"Error message";
