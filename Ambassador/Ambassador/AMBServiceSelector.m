@@ -140,10 +140,18 @@ int contactServiceType;
     AMBShareServiceCell *selectedCell = (AMBShareServiceCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
     switch (selectedCell.cellType) {
         case Facebook:
-            [self stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
+            if ([self isFacebookAppInstalled]) {
+                [self stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
+            } else {
+                [AMBErrors appNotInstalled:self app:@"Facebook"];
+            }
             break;
         case Twitter:
-            [self stockShareWithSocialMediaType:AMBSocialServiceTypeTwitter];
+            if ([self isTwitterAppInstalled]) {
+                [self stockShareWithSocialMediaType:AMBSocialServiceTypeTwitter];
+            } else {
+                [AMBErrors appNotInstalled:self app:@"Twitter"];
+            }
             break;
         case LinkedIn:
             [self checkLinkedInToken];
@@ -371,6 +379,23 @@ int contactServiceType;
             }];
         }
     };
+}
+
+- (BOOL)isFacebookAppInstalled {
+    NSArray* fbSchemes = @[@"fbapi://", @"fb-messenger-api://", @"fbauth2://", @"fbshareextension://"];
+    BOOL isInstalled = false;
+
+    for (NSString* fbScheme in fbSchemes) {
+        isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:fbScheme]];
+        if (isInstalled) break;
+    }
+
+    return isInstalled;
+}
+
+- (BOOL)isTwitterAppInstalled {
+    NSString* twitterScheme = @"twitter://";
+    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:twitterScheme]];
 }
 
 - (void)checkLinkedInToken {
