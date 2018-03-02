@@ -49,6 +49,11 @@
     [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:@"This campaign is no longer active." withUniqueID:nil forViewController:viewController shouldDismissVCImmediately:YES];
 }
 
++ (void)appNotInstalled:(UIViewController*)viewController app:(NSString*)app {
+    NSString *messageString = [NSString stringWithFormat:@"Make sure you have %@ installed and are logged in to continue.", app];
+    [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:messageString withUniqueID:@"appNotInstalled" forViewController:viewController shouldDismissVCImmediately:NO];
+}
+
 + (void)errorLinkedInShareForVC:(UIViewController*)viewController withMessage:(NSString*)message {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         [[AMBUtilities sharedInstance] presentAlertWithSuccess:NO message:message withUniqueID:@"linkedShareFail" forViewController:viewController shouldDismissVCImmediately:NO];

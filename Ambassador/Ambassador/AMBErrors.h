@@ -23,6 +23,7 @@
 // Alert Errors
 + (void)errorAlertNoMatchingCampaignIdsForVC:(UIViewController*)viewController;
 + (void)errorCampaignNoLongerActive:(UIViewController *)viewController;
++ (void)appNotInstalled:(UIViewController*)viewController app:(NSString*)app;
 + (void)errorLinkedInShareForVC:(UIViewController*)viewController withMessage:(NSString*)message;
 + (void)errorLinkedInReauthForVC:(UIViewController*)viewController;
 + (void)errorNetworkTimeoutForVC:(UIViewController*)viewController;
