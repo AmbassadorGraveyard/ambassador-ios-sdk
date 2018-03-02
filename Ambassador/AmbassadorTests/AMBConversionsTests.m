@@ -106,6 +106,7 @@
     [mockParams verify];
 }
 
+// Skipped because OCMock can't mock NSManagedObject - https://github.com/erikdoe/ocmock/issues/339
 - (void)testRetryUnsentConversions {
     // GIVEN
     [AMBValues setDeviceFingerPrintWithDictionary:@{}];

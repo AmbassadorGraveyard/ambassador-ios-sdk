@@ -51,6 +51,8 @@
 - (void)removeLoadingView;
 - (void)sendIdentify;
 - (void)attemptAutoEnroll;
+- (BOOL)isFacebookAppInstalled;
+- (BOOL)isTwitterAppInstalled;
 
 @end
 
@@ -215,6 +217,7 @@
 - (void)testDidSelectItemCollectionView {
     // GIVEN
     [[self.mockSS expect] stockShareWithSocialMediaType:AMBSocialServiceTypeFacebook];
+    [[[self.mockSS expect] andReturnValue:OCMOCK_VALUE(YES)] isFacebookAppInstalled];
     
     // WHEN
     [self.serviceSelector collectionView:self.serviceSelector.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
@@ -487,8 +490,8 @@
     [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
         void (^success)() = nil;
         [invocation getArgument:&success atIndex:4];
-        success();
-    }] sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn contactList:nil success:[OCMArg invokeBlock] failure:[OCMArg any]];
+        success(@{@"key1":@"Test"});
+    }] sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn contactList:nil success:[OCMArg any] failure:[OCMArg any]];
     
     // WHEN
     [self.serviceSelector userDidPostFromService:@"LinkedIn"];
@@ -502,7 +505,7 @@
     [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
         void (^failure)() = nil;
         [invocation getArgument:&failure atIndex:5];
-        failure();
+        failure(@"ERROR");
     }] sendShareTrackForServiceType:AMBSocialServiceTypeLinkedIn contactList:nil success:[OCMArg any] failure:[OCMArg invokeBlock]];
     
     // WHEN
@@ -517,7 +520,7 @@
     [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
         void (^success)() = nil;
         [invocation getArgument:&success atIndex:5];
-        success();
+        success(@{@"key1":@"Test"});
     }] sendIdentifyForCampaign:[OCMArg any] shouldEnroll:YES success:[OCMArg invokeBlock] failure:[OCMArg any]];
     
     // WHEN
@@ -532,7 +535,7 @@
     [[[self.mockNetworkMgr expect] andDo:^(NSInvocation *invocation) {
         void (^failure)() = nil;
         [invocation getArgument:&failure atIndex:5];
-        failure();
+        failure(@"ERROR");
     }] sendIdentifyForCampaign:[OCMArg any] shouldEnroll:YES success:[OCMArg any] failure:[OCMArg invokeBlock]];
     
     // WHEN
@@ -558,6 +561,61 @@
     [self.mockSS verify];
     
     [mockAmbassadorSDK stopMocking];
+}
+
+- (void)testIsFacebookAppInstalled {
+    // GIVEN
+    id mockUIApplication = [OCMockObject mockForClass:[UIApplication class]];
+    [[[mockUIApplication stub] andReturn:mockUIApplication] sharedApplication];
+    [[[mockUIApplication expect] andReturnValue:OCMOCK_VALUE(NO)] canOpenURL:[NSURL URLWithString:@"fbapi://"]];
+    [[[mockUIApplication expect] andReturnValue:OCMOCK_VALUE(NO)] canOpenURL:[NSURL URLWithString:@"fb-messenger-api://"]];
+    [[[mockUIApplication expect] andReturnValue:OCMOCK_VALUE(NO)] canOpenURL:[NSURL URLWithString:@"fbauth2://"]];
+    [[[mockUIApplication expect] andReturnValue:OCMOCK_VALUE(NO)] canOpenURL:[NSURL URLWithString:@"fbshareextension://"]];
+
+    // WHEN
+    BOOL installed = [self.serviceSelector isFacebookAppInstalled];
+
+    // THEN
+    XCTAssertFalse(installed);
+    [mockUIApplication verify];
+
+    // GIVEN
+    [[[mockUIApplication expect] andReturnValue:OCMOCK_VALUE(NO)] canOpenURL:[NSURL URLWithString:@"fbapi://"]];
+    [[[mockUIApplication expect] andReturnValue:OCMOCK_VALUE(NO)] canOpenURL:[NSURL URLWithString:@"fb-messenger-api://"]];
+    [[[mockUIApplication expect] andReturnValue:OCMOCK_VALUE(YES)] canOpenURL:[NSURL URLWithString:@"fbauth2://"]];
+
+    // WHEN
+    installed = [self.serviceSelector isFacebookAppInstalled];
+
+    // THEN
+    XCTAssertTrue(installed);
+    [mockUIApplication verify];
+    [mockUIApplication stopMocking];
+}
+
+- (void)testIsTwitterAppInstalled {
+    // GIVEN
+    id mockUIApplication = [OCMockObject mockForClass:[UIApplication class]];
+    [[[mockUIApplication stub] andReturn:mockUIApplication] sharedApplication];
+    [[[mockUIApplication expect] andReturnValue:OCMOCK_VALUE(NO)] canOpenURL:[NSURL URLWithString:@"twitter://"]];
+
+    // WHEN
+    BOOL installed = [self.serviceSelector isTwitterAppInstalled];
+
+    // THEN
+    XCTAssertFalse(installed);
+    [mockUIApplication verify];
+
+    // GIVEN
+    [[[mockUIApplication expect] andReturnValue:OCMOCK_VALUE(YES)] canOpenURL:[NSURL URLWithString:@"twitter://"]];
+
+    // WHEN
+    installed = [self.serviceSelector isTwitterAppInstalled];
+
+    // THEN
+    XCTAssertTrue(installed);
+    [mockUIApplication verify];
+    [mockUIApplication stopMocking];
 }
 
 @end

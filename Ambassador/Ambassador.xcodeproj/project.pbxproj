@@ -24,6 +24,8 @@
 
 /* Begin PBXBuildFile section */
 		0EE91F1B978D71581B795ECA /* libPods-DemoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D4F3F6CA2DB2A812094EBBA /* libPods-DemoApp.a */; };
+		ADA1D14A20408B9400258E58 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FE11BA9AD04005EE0D0 /* Main.storyboard */; };
+		ADADAE38203F0DB6003F9D01 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF07452B1C52C8FA009AF919 /* libOCMock.a */; };
 		DB6A245F1BD00F3F00CE3230 /* AMBNetworkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */; };
 		DB6A24601BD00F3F00CE3230 /* AMBNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */; };
 		DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = DB6A24611BD017A700CE3230 /* AMBErrors.h */; };
@@ -145,7 +147,6 @@
 		DBEB6FFF1BA9B2D8005EE0D0 /* successIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FF01BA9B2D8005EE0D0 /* successIcon.png */; };
 		DBEB70001BA9B2D8005EE0D0 /* twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FF11BA9B2D8005EE0D0 /* twitter.png */; };
 		EF07452A1C52C8E1009AF919 /* OCMock in Resources */ = {isa = PBXBuildFile; fileRef = EF0745291C52C8E1009AF919 /* OCMock */; };
-		EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF07452B1C52C8FA009AF919 /* libOCMock.a */; };
 		EF1399AC1C6551AB0005054D /* AMBContactLoaderUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF1399AB1C6551AB0005054D /* AMBContactLoaderUnitTests.m */; };
 		EF1A4F271CC56DF7008EE886 /* libzipzap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1A4F261CC56DF7008EE886 /* libzipzap.a */; };
 		EF1A4F2C1CC58DE8008EE886 /* SlidingView.h in Headers */ = {isa = PBXBuildFile; fileRef = EF1A4F2A1CC58DE8008EE886 /* SlidingView.h */; };
@@ -356,6 +357,7 @@
 /* Begin PBXFileReference section */
 		3585AE98B33CB0BBDA30984D /* Pods-DemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9D4F3F6CA2DB2A812094EBBA /* libPods-DemoApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADADAE36203F0B17003F9D01 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = "../../../../../Volumes/OCMock 3.4-1/iOS library/libOCMock.a"; sourceTree = "<group>"; };
 		DB6A245D1BD00F3F00CE3230 /* AMBNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBNetworkManager.h; sourceTree = "<group>"; };
 		DB6A245E1BD00F3F00CE3230 /* AMBNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBNetworkManager.m; sourceTree = "<group>"; };
 		DB6A24611BD017A700CE3230 /* AMBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBErrors.h; sourceTree = "<group>"; };
@@ -667,7 +669,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF07452C1C52C8FA009AF919 /* libOCMock.a in Frameworks */,
+				ADADAE38203F0DB6003F9D01 /* libOCMock.a in Frameworks */,
 				DB6A246E1BD031A100CE3230 /* libicucore.tbd in Frameworks */,
 				DB844D321BA75BB8003FD7A9 /* libAmbassador.a in Frameworks */,
 			);
@@ -713,6 +715,7 @@
 		0D24CFB05292A555B6506D41 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ADADAE36203F0B17003F9D01 /* libOCMock.a */,
 				EF1A4F261CC56DF7008EE886 /* libzipzap.a */,
 				EF1A4F241CC51663008EE886 /* libzipzap.a */,
 				EF28DF421CC1804F0070994F /* libobjective-zip.a */,
@@ -1735,6 +1738,7 @@
 					DB844D601BA76BDE003FD7A9 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 2H59A3U3KT;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -1783,6 +1787,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADA1D14A20408B9400258E58 /* Main.storyboard in Resources */,
 				EF50EFC01C5692E70077CC63 /* GenericTheme.plist in Resources */,
 				EF07452A1C52C8E1009AF919 /* OCMock in Resources */,
 				EF5356501BF109A400BC80C4 /* unitTestImage.png in Resources */,
@@ -1868,13 +1873,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DemoApp-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DB844D421BA75E54003FD7A9 /* Prepare Framework */ = {
@@ -2198,7 +2206,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fembed-bitcode";
@@ -2242,7 +2250,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fembed-bitcode";
@@ -2316,11 +2324,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(PROJECT_DIR)/AmbassadorTests",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2347,11 +2351,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(PROJECT_DIR)/AmbassadorTests",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/AmbassadorTests";
 				INFOPLIST_FILE = AmbassadorTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -2437,6 +2437,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2H59A3U3KT;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2454,6 +2456,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTestApplication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2465,7 +2468,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Zferral, Inc. (2H59A3U3KT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zferral, Inc. (2H59A3U3KT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2H59A3U3KT;
 				INFOPLIST_FILE = TestApplication/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2479,6 +2484,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTestApplication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2489,10 +2495,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2512,10 +2515,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = TestApplicationTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -2539,6 +2539,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = DemoApp;
 				USES_XCTRUNNER = YES;
 			};
@@ -2554,6 +2555,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.AmbassadorUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = DemoApp;
 				USES_XCTRUNNER = YES;
 			};

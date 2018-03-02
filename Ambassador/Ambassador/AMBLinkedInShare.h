@@ -22,6 +22,6 @@
 @property (nonatomic, strong) NSString *defaultMessage;
 @property (nonatomic, strong) NSString *shortCode;
 @property (nonatomic, strong) NSString *shortURL;
-@property (nonatomic, weak) id<AMBShareServiceDelegate>delegate;
+@property (nonatomic, weak) id <AMBShareServiceDelegate> delegate;
 
 @end

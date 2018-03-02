@@ -30,6 +30,7 @@
 
 #pragma mark - Initialization Tests
 
+// Skipped because OCMock can't mock NSManagedObject - https://github.com/erikdoe/ocmock/issues/339
 - (void)testInitWithEntity {
     // GIVEN
     id mockEntity = [OCMockObject mockForClass:[AMBConversionParametersEntity class]];
@@ -53,10 +54,10 @@
     [[[mockEntity expect] andReturn:@1] mbsy_revenue];
     
     AMBConversionParameters *parameters = [[AMBConversionParameters alloc] initWithEntity:mockEntity];
-    
+
     // WHEN
     NSError *checkError = [parameters checkForError];
-    
+
     // THEN
     [mockEntity verify];
     XCTAssertNotNil(checkError);

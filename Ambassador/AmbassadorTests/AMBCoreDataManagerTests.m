@@ -29,6 +29,7 @@
     [super tearDown];
 }
 
+// Skipped because OCMock can't mock NSManagedObject - https://github.com/erikdoe/ocmock/issues/339
 - (void)testSaveNewObject {
     // GIVEN
     NSString *testEntityName = @"TestEntity";
@@ -82,6 +83,7 @@
     [mockCoreDataMgr verify];
 }
 
+// Skipped because OCMock can't mock NSManagedObject - https://github.com/erikdoe/ocmock/issues/339
 - (void)testDeleteCoreData {
     // GIVEN
     id fakeObject = [OCMockObject mockForClass:[NSManagedObject class]];
