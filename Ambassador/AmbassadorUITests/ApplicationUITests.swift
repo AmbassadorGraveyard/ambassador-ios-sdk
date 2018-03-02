@@ -202,7 +202,15 @@ extension ApplicationUITests {
         app.scrollViews.otherElements.containing(.button, identifier:"Clear Image").children(matching: .button).element(boundBy: 1).tap()
         
         // Tap the color picker
-        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element(boundBy: 1).children(matching: .other).element.tap()
+        let element = app.children(matching: .window).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element(boundBy: 1).children(matching: .other).element
+        
+        if (element.isHittable) {
+            element.tap()
+        }
+        else {
+            let coordinate = element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            coordinate.tap()
+        }
         
         // Check to see if hex color code matches the color tapped
         let textField = app.textFields["hexTextField"]
