@@ -46,9 +46,15 @@ extension AmbassadorUITests {
     }
 
     func testFacebook() {
-//        // Tap the facebook cell
-//        app.collectionViews.children(matching: .cell).element(boundBy: 0).tap()
-//
+        // Tap the facebook cell
+        app.collectionViews.children(matching: .cell).element(boundBy: 0).tap()
+
+        // Check the alert text
+        XCTAssertTrue(app.staticTexts["Make sure you have Facebook installed and are logged in to continue."].exists)
+
+        // Close the alert
+        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element(boundBy: 0).children(matching: .other).element(boundBy: 1).tap()
+
 //        RunLoop.main.run(until: NSDate().addingTimeInterval(3) as Date)
 //
 //        if app.alerts["Make sure you have Facebook installed and are logged in to continue."].exists {
@@ -70,25 +76,31 @@ extension AmbassadorUITests {
     }
 
     func testTwitter() {
-//        // Tap the twitter cell
-//        app.collectionViews.children(matching: .cell).element(boundBy: 1).tap()
-//        
+        // Tap the twitter cell
+        app.collectionViews.children(matching: .cell).element(boundBy: 1).tap()
+
+        // Check the alert text
+        XCTAssertTrue(app.staticTexts["Make sure you have Twitter installed and are logged in to continue."].exists)
+
+        // Close the alert
+        app.children(matching: .window).element(boundBy: 0).children(matching: .other).element(boundBy: 0).children(matching: .other).element(boundBy: 1).tap()
+
 //        RunLoop.main.run(until: NSDate().addingTimeInterval(3) as Date)
-//        
+//
 //        if app.alerts["No Twitter Accounts"].exists {
 //            app.alerts["No Twitter Accounts"].collectionViews.buttons["Cancel"].tap()
 //        } else {
 //            // Make sure that the cancel button works correctly with the twitter alertcontroller
 //            let twitterNavigationBar = app.navigationBars["Twitter"]
 //            twitterNavigationBar.buttons["Cancel"].tap()
-//            
+//
 //            // Now we tap the twitter cell again and Post
 //            app.collectionViews.children(matching: .cell).element(boundBy: 1).tap()
 //            twitterNavigationBar.buttons["Post"].tap()
-//            
+//
 //            // If we get an alert about duplicate tweets, we will press the OK button in the alertcontroller
 //            if app.alerts.element(boundBy: 0).exists { app.buttons["OK"].tap() }
-//            
+//
 //            // Tap OKAY on the success message and check that the message went away
 //            app.buttons["OKAY"].tap()
 //            XCTAssertEqual(app.buttons["OKAY"].exists, false)
