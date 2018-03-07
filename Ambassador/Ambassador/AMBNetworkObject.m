@@ -9,6 +9,8 @@
 #import <objc/runtime.h>
 #import "AMBNetworkObject.h"
 #import "AMBNetworkManager.h"
+#import <Sentry/Sentry.h>
+
 
 @implementation AMBNetworkObject
 
@@ -27,6 +29,13 @@
     }
     
     return returnDictionary;
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString*)key {
+    NSString *failureReasonString = [NSString stringWithFormat:@"The key \"%@\" does not exist.", key];
+    [SentryClient.sharedClient reportUserException:@"Uknown key exception" reason:failureReasonString language:@"objective-c" lineOfCode:@"50" stackTrace:[NSArray arrayWithObjects:
+                                                                                                                                                           @"AMBNetworkObject.m, line 41: in function fillWithDictionary",
+                                                                                                                                                           nil] logAllThreads:NO terminateProgram:NO];
 }
 
 - (void)fillWithDictionary:(NSMutableDictionary *)dictionary {

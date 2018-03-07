@@ -15,6 +15,7 @@
 #import "AMBNetworkManager.h"
 #import "AMBErrors.h"
 #import "RavenClient.h"
+#import <Sentry/Sentry.h>
 
 
 @implementation AmbassadorSDK
@@ -86,6 +87,19 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 }
 
 - (void)setUpCrashAnalytics {
+    NSError *error = nil;
+    SentryClient *client = [[SentryClient alloc] initWithDsn:[AMBValues getSentryDSNValue] didFailWithError:&error];
+    SentryClient.sharedClient = client;
+    [SentryClient.sharedClient startCrashHandlerWithError:&error];
+    if (nil != error) {
+        NSLog(@"%@", error);
+    }
+    
+    NSString *failureReasonString = [NSString stringWithFormat:@"The key \"%@\" does not exist.", @"unknown_key"];
+    [SentryClient.sharedClient reportUserException:@"Uknown key exception" reason:failureReasonString language:@"objective-c" lineOfCode:@"50" stackTrace:[NSArray arrayWithObjects:
+                                                                                                                                                           @"AMBNetworkObject.m, line 41: in function fillWithDictionary",
+                                                                                                                                                           nil] logAllThreads:NO terminateProgram:NO];
+
     // Sets up Sentry if in release mode
     if ([AMBValues isProduction]) {
         RavenClient *client = [RavenClient clientWithDSN:[AMBValues getSentryDSNValue]];
