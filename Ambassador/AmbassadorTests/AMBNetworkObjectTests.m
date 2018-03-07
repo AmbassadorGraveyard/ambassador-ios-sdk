@@ -10,6 +10,7 @@
 #import <OCMock/OCMock.h>
 #import "AMBNetworkManager.h"
 #import "AMBNetworkObject.h"
+#import "AMBValues.h"
 #import "Sentry.h"
 
 @interface AMBNetworkObjectTests : XCTestCase

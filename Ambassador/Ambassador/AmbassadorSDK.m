@@ -87,16 +87,16 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 }
 
 - (void)setUpCrashAnalytics {
-    NSError *error = nil;
-    SentryClient *client = [[SentryClient alloc] initWithDsn:[AMBValues getSentryDSNValue] didFailWithError:&error];
-    SentryClient.sharedClient = client;
-    [SentryClient.sharedClient startCrashHandlerWithError:&error];
-    if (nil != error) {
-        NSLog(@"%@", error);
-    }
-    
     // Sets up Sentry if in release mode
     if ([AMBValues isProduction]) {
+        NSError *error = nil;
+        SentryClient *sentryClient = [[SentryClient alloc] initWithDsn:[AMBValues getSentryDSNValue] didFailWithError:&error];
+        SentryClient.sharedClient = sentryClient;
+        [SentryClient.sharedClient startCrashHandlerWithError:&error];
+        if (nil != error) {
+            NSLog(@"%@", error);
+        }
+
         RavenClient *client = [RavenClient clientWithDSN:[AMBValues getSentryDSNValue]];
         [RavenClient setSharedClient:client];
         parentHandler = NSGetUncaughtExceptionHandler(); // Creates a reference to parent project's exceptionHandler in order to fire it in override
