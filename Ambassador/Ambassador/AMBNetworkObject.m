@@ -9,7 +9,7 @@
 #import <objc/runtime.h>
 #import "AMBNetworkObject.h"
 #import "AMBNetworkManager.h"
-#import <Sentry/Sentry.h>
+#import "Sentry.h"
 
 
 @implementation AMBNetworkObject

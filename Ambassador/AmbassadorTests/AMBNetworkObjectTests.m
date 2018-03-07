@@ -10,7 +10,7 @@
 #import <OCMock/OCMock.h>
 #import "AMBNetworkManager.h"
 #import "AMBNetworkObject.h"
-#import "AMBValues.h"
+#import "Sentry.h"
 
 @interface AMBNetworkObjectTests : XCTestCase
 
@@ -47,6 +47,13 @@
 
 - (void)testFillWithDictionary {
     // GIVEN
+    SentryClient *client = [[SentryClient alloc] initWithDsn:@"DSN_VALUE" didFailWithError:nil];
+    SentryClient.sharedClient = client;
+    id mockSentryClient = [OCMockObject partialMockForObject:[SentryClient sharedClient]];
+    [[[mockSentryClient expect] andDo:nil] reportUserException:@"Uknown key exception" reason:@"The key \"unknown_key\" does not exist." language:@"objective-c" lineOfCode:@"50" stackTrace:[NSArray arrayWithObjects:
+                                                                                                                                                                 @"AMBNetworkObject.m, line 41: in function fillWithDictionary",
+                                                                                                                                                                 nil] logAllThreads:NO terminateProgram:NO];
+    
     NSString *mockCampaign = @"206";
     NSString *mockShortCode = @"lbBf";
     NSString *mockSubject = @"Fake subject line";
@@ -61,6 +68,7 @@
     [mockDictionary setValue:mockUrl forKey:@"url"];
     [mockDictionary setValue:[NSNumber numberWithBool:mockAccess] forKey:@"has_access"];
     [mockDictionary setValue:[NSNumber numberWithBool:mockActive] forKey:@"is_active"];
+    [mockDictionary setValue:@"Unknown key value" forKey:@"unknown_key"];
     
     AMBUserUrlNetworkObject *expectedUserUrlNetworkObj = [[AMBUserUrlNetworkObject alloc] init];
    
@@ -74,6 +82,9 @@
     XCTAssertEqualObjects(mockUrl, expectedUserUrlNetworkObj.url, @"%@ is not equal to %@", mockUrl, expectedUserUrlNetworkObj);
     XCTAssertEqualObjects([NSNumber numberWithBool:mockActive], [NSNumber numberWithBool:expectedUserUrlNetworkObj.is_active], @"%@ is not equal to %@", [NSNumber numberWithBool:mockActive], [NSNumber numberWithBool:expectedUserUrlNetworkObj.is_active]);
     XCTAssertEqualObjects([NSNumber numberWithBool:mockAccess], [NSNumber numberWithBool:expectedUserUrlNetworkObj.has_access], @"%@ is not equal to %@", [NSNumber numberWithBool:mockAccess], [NSNumber numberWithBool:expectedUserUrlNetworkObj.has_access]);
+    
+    [mockSentryClient verify];
+    [mockSentryClient stopMocking];
 }
 
 - (void)testToData {
