@@ -51,9 +51,7 @@
     SentryClient *client = [[SentryClient alloc] initWithDsn:@"DSN_VALUE" didFailWithError:nil];
     SentryClient.sharedClient = client;
     id mockSentryClient = [OCMockObject partialMockForObject:[SentryClient sharedClient]];
-    [[[mockSentryClient expect] andDo:nil] reportUserException:@"Uknown key exception" reason:@"The key \"unknown_key\" does not exist." language:@"objective-c" lineOfCode:@"50" stackTrace:[NSArray arrayWithObjects:
-                                                                                                                                                                 @"AMBNetworkObject.m, line 41: in function fillWithDictionary",
-                                                                                                                                                                 nil] logAllThreads:NO terminateProgram:NO];
+    [[[mockSentryClient expect] andDo:nil] sendEvent:[OCMArg any] withCompletionHandler:nil];
     
     NSString *mockCampaign = @"206";
     NSString *mockShortCode = @"lbBf";

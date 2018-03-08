@@ -32,10 +32,14 @@
 }
 
 - (void)setValue:(id)value forUndefinedKey:(NSString*)key {
-    NSString *failureReasonString = [NSString stringWithFormat:@"The key \"%@\" does not exist.", key];
-    [SentryClient.sharedClient reportUserException:@"Uknown key exception" reason:failureReasonString language:@"objective-c" lineOfCode:@"50" stackTrace:[NSArray arrayWithObjects:
-                                                                                                                                                           @"AMBNetworkObject.m, line 41: in function fillWithDictionary",
-                                                                                                                                                           nil] logAllThreads:NO terminateProgram:NO];
+    NSString *reason = [NSString stringWithFormat:@"The key \"%@\" does not exist.", key];
+    SentryException *exception = [[SentryException alloc] initWithValue:reason type:@"Uknown key exception"];
+    NSArray <SentryException *> *exceptions = @[exception];
+    SentryEvent *event = [[SentryEvent alloc] initWithLevel:kSentrySeverityError];
+    event.message = reason;
+    event.exceptions = exceptions;
+    
+    [SentryClient.sharedClient sendEvent:event withCompletionHandler:nil];
 }
 
 - (void)fillWithDictionary:(NSMutableDictionary *)dictionary {
