@@ -373,12 +373,6 @@
 		EF2DA16B1BF4E56000DB4D3A /* AMBOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */; };
 		EF3079161C6E205800403F56 /* AMBPusherChannelObject.h in Headers */ = {isa = PBXBuildFile; fileRef = EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */; };
 		EF3079171C6E205800403F56 /* AMBPusherChannelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3079151C6E205800403F56 /* AMBPusherChannelObject.m */; };
-		EF33DCF81C739D6A009689CA /* Raven.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF21C739D6A009689CA /* Raven.h */; };
-		EF33DCF91C739D6A009689CA /* RavenClient.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF31C739D6A009689CA /* RavenClient.h */; };
-		EF33DCFA1C739D6A009689CA /* RavenClient.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCF41C739D6A009689CA /* RavenClient.m */; };
-		EF33DCFB1C739D6A009689CA /* RavenClient_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF51C739D6A009689CA /* RavenClient_Private.h */; };
-		EF33DCFC1C739D6A009689CA /* RavenConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = EF33DCF61C739D6A009689CA /* RavenConfig.h */; };
-		EF33DCFD1C739D6A009689CA /* RavenConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EF33DCF71C739D6A009689CA /* RavenConfig.m */; };
 		EF407F1E1BB344500074D2AE /* AMBThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF407F1C1BB344500074D2AE /* AMBThemeManager.h */; };
 		EF407F1F1BB344500074D2AE /* AMBThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EF407F1D1BB344500074D2AE /* AMBThemeManager.m */; };
 		EF499DB51CAC4FB000D2EB01 /* NoAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF499DB41CAC4FB000D2EB01 /* NoAccountViewController.m */; };
@@ -919,13 +913,6 @@
 		EF2DA16A1BF4E56000DB4D3A /* AMBOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBOptionsTests.m; sourceTree = "<group>"; };
 		EF3079141C6E205800403F56 /* AMBPusherChannelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBPusherChannelObject.h; sourceTree = "<group>"; };
 		EF3079151C6E205800403F56 /* AMBPusherChannelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBPusherChannelObject.m; sourceTree = "<group>"; };
-		EF33DCF11C739D6A009689CA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EF33DCF21C739D6A009689CA /* Raven.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raven.h; sourceTree = "<group>"; };
-		EF33DCF31C739D6A009689CA /* RavenClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient.h; sourceTree = "<group>"; };
-		EF33DCF41C739D6A009689CA /* RavenClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenClient.m; sourceTree = "<group>"; };
-		EF33DCF51C739D6A009689CA /* RavenClient_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenClient_Private.h; sourceTree = "<group>"; };
-		EF33DCF61C739D6A009689CA /* RavenConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RavenConfig.h; sourceTree = "<group>"; };
-		EF33DCF71C739D6A009689CA /* RavenConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RavenConfig.m; sourceTree = "<group>"; };
 		EF407F1C1BB344500074D2AE /* AMBThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBThemeManager.h; sourceTree = "<group>"; };
 		EF407F1D1BB344500074D2AE /* AMBThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBThemeManager.m; sourceTree = "<group>"; };
 		EF499DB31CAC4FB000D2EB01 /* NoAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoAccountViewController.h; sourceTree = "<group>"; };
@@ -1742,20 +1729,6 @@
 			name = "Custom Input";
 			sourceTree = "<group>";
 		};
-		EF33DCF01C739D6A009689CA /* Raven */ = {
-			isa = PBXGroup;
-			children = (
-				EF33DCF11C739D6A009689CA /* Info.plist */,
-				EF33DCF21C739D6A009689CA /* Raven.h */,
-				EF33DCF31C739D6A009689CA /* RavenClient.h */,
-				EF33DCF41C739D6A009689CA /* RavenClient.m */,
-				EF33DCF51C739D6A009689CA /* RavenClient_Private.h */,
-				EF33DCF61C739D6A009689CA /* RavenConfig.h */,
-				EF33DCF71C739D6A009689CA /* RavenConfig.m */,
-			);
-			path = Raven;
-			sourceTree = "<group>";
-		};
 		EF441B651C345F440038F6BB /* Name Prompt */ = {
 			isa = PBXGroup;
 			children = (
@@ -2113,7 +2086,6 @@
 			children = (
 				ADD79F882050077000CE89E3 /* KSCrash */,
 				ADD7A0172050077000CE89E3 /* Sentry */,
-				EF33DCF01C739D6A009689CA /* Raven */,
 				DBA3FBD81BA8A9CA00672D82 /* Pusher */,
 			);
 			name = Libraries;
@@ -2234,10 +2206,8 @@
 				ADD7A0C52050077000CE89E3 /* StringRef.h in Headers */,
 				DBA3FC161BA8AA1D00672D82 /* AMBPTPusherConnection.h in Headers */,
 				DBA3FC0D1BA8AA1D00672D82 /* AMBPTPusher.h in Headers */,
-				EF33DCFB1C739D6A009689CA /* RavenClient_Private.h in Headers */,
 				ADD7A0C72050077000CE89E3 /* Casting.h in Headers */,
 				ADD7A0CE2050077000CE89E3 /* SwiftStrings.h in Headers */,
-				EF33DCFC1C739D6A009689CA /* RavenConfig.h in Headers */,
 				DBA3FB811BA8A23C00672D82 /* AMBConversionParameters.h in Headers */,
 				EFE7D7951C21C19B00D7F92C /* AMBCoreDataDelegate.h in Headers */,
 				ADD7A05D2050077000CE89E3 /* KSCrashReportFilterBasic.h in Headers */,
@@ -2310,7 +2280,6 @@
 				ADD7A0732050077000CE89E3 /* KSCrashMonitor_System.h in Headers */,
 				ADD7A0CA2050077000CE89E3 /* type_traits.h in Headers */,
 				DBA3FC1F1BA8AA1D00672D82 /* AMBPTPusherMacros.h in Headers */,
-				EF33DCF81C739D6A009689CA /* Raven.h in Headers */,
 				DB6A24621BD017A700CE3230 /* AMBErrors.h in Headers */,
 				DBA3FB711BA8A23C00672D82 /* AmbassadorSDK.h in Headers */,
 				ADD7A0742050077000CE89E3 /* KSCrashMonitor_MachException.h in Headers */,
@@ -2405,7 +2374,6 @@
 				DBA3FB731BA8A23C00672D82 /* AMBAuthorizeLinkedIn.h in Headers */,
 				ADD7A0592050077000CE89E3 /* Container+DeepSearch.h in Headers */,
 				ADD7A0C42050077000CE89E3 /* Optional.h in Headers */,
-				EF33DCF91C739D6A009689CA /* RavenClient.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2752,7 +2720,6 @@
 				DBA3FBB61BA8A24F00672D82 /* AMBServiceSelector.m in Sources */,
 				EFB3C7E81CB70E9400EF9533 /* AMBNPSViewController.m in Sources */,
 				EF1CB0B21C3C2FF500F65031 /* AMBContactCard.m in Sources */,
-				EF33DCFD1C739D6A009689CA /* RavenConfig.m in Sources */,
 				DBA3FB7E1BA8A23C00672D82 /* AMBContactSelector.m in Sources */,
 				DBA3FBC01BA8A24F00672D82 /* AMBUtilities.m in Sources */,
 				ADD7A0612050077000CE89E3 /* KSCrash.m in Sources */,
@@ -2765,7 +2732,6 @@
 				ADD7A0AA2050077000CE89E3 /* KSJSONCodec.c in Sources */,
 				ADD7A1052050077100CE89E3 /* SentryNSURLRequest.m in Sources */,
 				DBA3FC001BA8AA1D00672D82 /* NSDictionary+QueryString.m in Sources */,
-				EF33DCFA1C739D6A009689CA /* RavenClient.m in Sources */,
 				ADD7A0972050077000CE89E3 /* KSStackCursor.c in Sources */,
 				DB6A24721BD04E3900CE3230 /* AMBPusherManager.m in Sources */,
 				DBA3FC301BA8AA5600672D82 /* NSData+SRB64Additions.m in Sources */,
