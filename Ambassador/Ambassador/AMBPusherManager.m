@@ -95,7 +95,7 @@
             [AMBValues setDeviceFingerPrintWithDictionary:fingerPrintDict]; // Saves device fp to defaults
             [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
             
-        } else if (json[@"fingerprint"] && json[@"fingerprint"] != [NSNull null]) {
+        } else if (!json[@"uid"] && json[@"fingerprint"] && json[@"fingerprint"] != [NSNull null]) {
             NSDictionary *consumerDict = @{@"UID" : json[@"fingerprint"][@"consumer"][@"UID"]};
             NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"], @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
             NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
