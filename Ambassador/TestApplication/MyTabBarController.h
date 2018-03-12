@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Ambassador/Ambassador.h>
 
-@interface MyTabBarController : UITabBarController
+@interface MyTabBarController : UITabBarController <AMBWelcomeScreenDelegate>
 
 - (void)checkForLogin;
 

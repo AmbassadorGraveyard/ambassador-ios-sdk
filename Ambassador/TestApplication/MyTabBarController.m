@@ -44,6 +44,21 @@ NSString * loginSegue = @"ambassador_login_segue";
     // Grabs the index of viewController based on tag set in storyboards
     NSInteger itemIndex = item.tag;
     
+    NSDictionary *infoDict = @{@"email": @"jay+iostrack@example.com"};
+    [AmbassadorSDK identifyWithUserID:@"" traits:infoDict completion:^(BOOL success){
+        AMBWelcomeScreenParameters *params = [[AMBWelcomeScreenParameters alloc] init];
+        params.referralMessage = @"{{ name }} has referred you to Ambassador!";
+        params.detailMessage = @"You understand the value of referrals. Maybe you've even explored referral marketing software.";
+        params.actionButtonTitle = @"CREATE AN ACCOUNT";
+        params.linkArray = @[@"Testimonials", @"Request Demo"];
+        params.accentColor = [UIColor colorWithRed:0.23 green:0.59 blue:0.83 alpha:1];
+        
+        [AmbassadorSDK presentWelcomeScreen:params ifAvailable:^(AMBWelcomeScreenViewController *welcomeScreenVC) {
+            welcomeScreenVC.delegate = self;
+            [self presentViewController:welcomeScreenVC animated:YES completion:nil];
+        }];
+    }];
+    
     // Grabs the viewController that will be presented and refreshes it
     UIViewController *controller = self.viewControllers[itemIndex];
     [controller viewWillAppear:YES];
