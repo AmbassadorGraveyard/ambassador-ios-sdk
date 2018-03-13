@@ -247,9 +247,10 @@ typedef enum conversionStatus {
  @param parameters An object that contains the parameters used to customize the Welcome Screen.
  @param available A block that gets called if a referral took place and passes back the AMBWelcomeScreenViewController to be handled.
  
+ @warning The Welcome Screen feature is no longer supported.
+ 
  */
-+ (void)presentWelcomeScreen:(AMBWelcomeScreenParameters*)parameters ifAvailable:(void(^)(AMBWelcomeScreenViewController *welcomeScreenVC))available;
-
++ (void)presentWelcomeScreen:(AMBWelcomeScreenParameters*)parameters ifAvailable:(void(^)(AMBWelcomeScreenViewController *welcomeScreenVC))available __attribute__((deprecated("This feature has been deprecated.")));
 
 /**
  
