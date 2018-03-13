@@ -14,7 +14,6 @@
 #import "AMBPusherManager.h"
 #import "AMBNetworkManager.h"
 #import "AMBErrors.h"
-#import "RavenClient.h"
 #import "Sentry.h"
 
 
@@ -40,7 +39,12 @@ NSUncaughtExceptionHandler *parentHandler = nil;
 
 void ambassadorUncaughtExceptionHandler(NSException *exception) {
     if (stackTraceForContainsString(exception, @"AmbassadorSDK")) {
-        [[RavenClient sharedClient] captureException:exception sendNow:NO];
+        SentryException *sentryException = [[SentryException alloc] initWithValue:exception.reason type:exception.name];
+        NSArray <SentryException *> *exceptions = @[sentryException];
+        SentryEvent *event = [[SentryEvent alloc] initWithLevel:kSentrySeverityError];
+        event.message = exception.reason;
+        event.exceptions = exceptions;
+        [[SentryClient sharedClient] sendEvent:event withCompletionHandler:nil];
     }
     
     // If the parent app has an exceptionHandler already, we call it
@@ -97,11 +101,8 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
             NSLog(@"%@", error);
         }
 
-        RavenClient *client = [RavenClient clientWithDSN:[AMBValues getSentryDSNValue]];
-        [RavenClient setSharedClient:client];
         parentHandler = NSGetUncaughtExceptionHandler(); // Creates a reference to parent project's exceptionHandler in order to fire it in override
         
-        [[RavenClient sharedClient] setupExceptionHandler]; // Is overridden to use our custom handler but still grabs crashes
         NSSetUncaughtExceptionHandler(ambassadorUncaughtExceptionHandler); // Sets our overridden exceptionHandler that only sends on AmbassadorSDK stacktraces
     }
 }
