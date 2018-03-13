@@ -9,6 +9,8 @@
 #import <objc/runtime.h>
 #import "AMBNetworkObject.h"
 #import "AMBNetworkManager.h"
+#import "Sentry.h"
+
 
 @implementation AMBNetworkObject
 
@@ -27,6 +29,17 @@
     }
     
     return returnDictionary;
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString*)key {
+    NSString *reason = [NSString stringWithFormat:@"The key \"%@\" does not exist.", key];
+    SentryException *exception = [[SentryException alloc] initWithValue:reason type:@"Uknown key exception"];
+    NSArray <SentryException *> *exceptions = @[exception];
+    SentryEvent *event = [[SentryEvent alloc] initWithLevel:kSentrySeverityError];
+    event.message = reason;
+    event.exceptions = exceptions;
+    
+    [SentryClient.sharedClient sendEvent:event withCompletionHandler:nil];
 }
 
 - (void)fillWithDictionary:(NSMutableDictionary *)dictionary {
