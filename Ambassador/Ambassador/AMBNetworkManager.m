@@ -34,11 +34,14 @@
     identifyObject.campaign_id = campaign;
     identifyObject.enroll = enroll;
     identifyObject.fp = [AMBValues getDeviceFingerPrint];
+    identifyObject.sandbox = YES;
     
     NSMutableURLRequest *identifyRequest = [self createURLRequestWithURL:[AMBValues getSendIdentifyUrl] requestType:@"POST"];
     [identifyRequest setValue:[AMBValues getPusherChannelObject].sessionId forHTTPHeaderField:@"X-Mbsy-Client-Session-ID"];
     [identifyRequest setValue:[AMBValues getPusherChannelObject].requestId forHTTPHeaderField:@"X-Mbsy-Client-Request-ID"];
+
     identifyRequest.HTTPBody = [identifyObject toData];
+    NSLog(@"%@", identifyRequest.HTTPBody);
     
     [[self.urlSession dataTaskWithRequest:identifyRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSInteger statusCode = (int)((NSHTTPURLResponse*) response).statusCode;

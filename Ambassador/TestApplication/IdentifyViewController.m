@@ -218,8 +218,8 @@ CGFloat identifyOffset;
                                          @"city" : self.tfCity.text,
                                          @"state" : self.tfState.text,
                                          @"postalCode" : self.tfZip.text,
-                                         @"country" : self.tfCountry.text}
-                                     };
+                                         @"country" : self.tfCountry.text},
+                                     @"sandbox": @1};
         
         // Creates options to auto-enroll user if campaign is selected and the switch is on
         NSString *enrollCampaign = self.selectedCampaign && self.swtEnroll.isOn ? self.selectedCampaign.campID : nil;

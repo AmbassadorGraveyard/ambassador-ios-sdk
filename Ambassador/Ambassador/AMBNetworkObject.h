@@ -73,6 +73,7 @@
 @property (nonatomic, strong) NSString *source;
 @property (nonatomic, strong) NSDictionary *fp;
 @property BOOL enroll;
+@property BOOL sandbox;
 
 // Traits
 @property (nonatomic, strong) NSString * email;

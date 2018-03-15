@@ -261,6 +261,7 @@
     if (self = [super init]) {
         self.remote_customer_id = userID;
         self.enroll = NO;
+        self.sandbox = YES;
         self.campaign_id = @"";
         self.source = @"ios_sdk_pilot";
         self.identify_type = @"";
@@ -291,6 +292,7 @@
     self.zip = traits[@"address"][@"postalCode"] ? traits[@"address"][@"postalCode"] : blankString;
     self.country = traits[@"address"][@"country"] ? traits[@"address"][@"country"] : blankString;
     self.phone = traits[@"phone"] ? traits[@"phone"] : blankString;
+    //self.phone = traits[@"sandbox"] ? traits[@"sandbox"] : @1;
 }
 
 @end
