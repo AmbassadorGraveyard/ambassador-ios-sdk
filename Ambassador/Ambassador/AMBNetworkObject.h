@@ -90,6 +90,7 @@
 @property (nonatomic, strong) NSString * state;
 @property (nonatomic, strong) NSString * zip;
 @property (nonatomic, strong) NSString * country;
+@property (nonatomic) BOOL sandbox;
 
 - (instancetype)initWithUserID:(NSString *)userID traits:(NSDictionary *)traits;
 

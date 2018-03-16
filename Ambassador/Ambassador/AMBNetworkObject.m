@@ -217,6 +217,7 @@
         self.zip = [decoder decodeObjectForKey:@"zip"];
         self.country = [decoder decodeObjectForKey:@"country"];
         self.remote_customer_id = [decoder decodeObjectForKey:@"remote_customer_id"];
+        self.sandbox = [[decoder decodeObjectForKey:@"sandbox"] isEqualToString:@"YES"];
     }
     
     return self;
@@ -243,6 +244,7 @@
     [encoder encodeObject:self.zip forKey:@"zip"];
     [encoder encodeObject:self.country forKey:@"country"];
     [encoder encodeObject:self.remote_customer_id forKey:@"remote_customer_id"];
+    [encoder encodeObject:self.sandbox ? @"YES" : @"NO" forKey:@"sandbox"];
 }
 
 - (instancetype)init {
@@ -291,6 +293,7 @@
     self.zip = traits[@"address"][@"postalCode"] ? traits[@"address"][@"postalCode"] : blankString;
     self.country = traits[@"address"][@"country"] ? traits[@"address"][@"country"] : blankString;
     self.phone = traits[@"phone"] ? traits[@"phone"] : blankString;
+    self.sandbox = traits[@"sandbox"] ? [traits[@"sandbox"] boolValue] : NO;
 }
 
 @end
