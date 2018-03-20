@@ -178,6 +178,10 @@
             completion();
         }
     }
+    
+    if ([urls count] == 0) {
+        completion();
+    }
 }
 
 - (AMBUserUrlNetworkObject *)urlObjForCampaignID:(NSNumber *)cID {
