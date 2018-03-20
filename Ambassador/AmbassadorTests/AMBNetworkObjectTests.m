@@ -41,7 +41,7 @@
     NSMutableDictionary *expectedDictionary = [identifyObject toDictionary];
     
     // THEN
-    XCTAssertEqual(5, expectedDictionary.count);
+    XCTAssertEqual(6, expectedDictionary.count);
     XCTAssertEqualObjects(identifyObject.email, expectedDictionary[@"email"]);
     XCTAssertEqualObjects(identifyObject.campaign_id, expectedDictionary[@"campaign_id"]);
 }

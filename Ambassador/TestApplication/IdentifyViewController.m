@@ -41,6 +41,8 @@
 @property (nonatomic, weak) IBOutlet UIView *imageBGView;
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet SlidingView *enrollSlider;
+@property (weak, nonatomic) IBOutlet UISwitch *sandboxSwitch;
+
 
 // Private properties
 @property (nonatomic, strong) NSString *codeExportString;
@@ -204,11 +206,12 @@ CGFloat identifyOffset;
 - (void)identify {
     // Grabs strings to pass to in Identify call
     NSString *email = self.tfEmail.text;
-    
+
     // Checks to make sure that a valid email is passed before identifying
     if ([Validator isValidEmail:email]) {
         // Creates 'traits' dictionary for identify call
         NSDictionary *traitsDict = @{@"email" : self.tfEmail.text,
+                                     @"sandbox": @([self.sandboxSwitch isOn]),
                                      @"firstName" : self.tfFirstName.text,
                                      @"lastName" : self.tfLastName.text,
                                      @"company" : self.tfCompany.text,
