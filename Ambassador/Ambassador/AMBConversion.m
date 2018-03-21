@@ -114,7 +114,7 @@
     NSDictionary *deviceDict = @{@"type" : deviceFingerprint[@"device"][@"type"], @"ID" : deviceFingerprint[@"device"][@"ID"]};
     NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
     
-    return @{@"fp" : fingerPrintDict, @"fields" : mbsyFields };
+    return @{@"fp" : fingerPrintDict, @"fields" : mbsyFields, @"source" : @"ios_sdk_1_0_13" };
 }
 
 - (BOOL)canSendConversion {
