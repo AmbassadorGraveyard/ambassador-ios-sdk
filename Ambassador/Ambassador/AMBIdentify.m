@@ -133,13 +133,19 @@ NSInteger const maxTryCount = 10;
     // Checks to see if the Safari ViewController has already been initialized
     if (!self.safariVC) {
         self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AMBValues getUniversalID]]]];
+        [self.safariVC.view setHidden:YES];
+        [self.safariVC.view setFrame:CGRectMake(1,1,-10000,-10000)];
+        CGRect frame = [self.safariVC.view frame];
+        frame.origin.x = frame.origin.x - 10000;
+        frame.origin.y = frame.origin.y - 10000;
     }
     self.safariVC.delegate = self;
 
     DLog(@"[Identify] Performing Identify with SAFARI VC for iOS 10 - Attempt %li.", (long)self.tryCount);
     
     // Gets the top viewController and adds the safari VC to it if not already added
-    UIViewController *topVC = [AMBUtilities getTopViewController];
+    //UIViewController *topVC = [AMBUtilities getTopViewController];
+    UIViewController *topVC = [[UIViewController alloc] init];
     if (![self.safariVC.view isDescendantOfView:topVC.view]) {
         self.safariVC.modalPresentationStyle = UIModalPresentationPopover;
         self.safariVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
