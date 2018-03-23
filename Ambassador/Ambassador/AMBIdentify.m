@@ -133,6 +133,11 @@ NSInteger const maxTryCount = 10;
     // Checks to see if the Safari ViewController has already been initialized
     if (!self.safariVC) {
         self.safariVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:[AMBValues identifyUrlWithUniversalID:[AMBValues getUniversalID]]]];
+        //[self.safariVC.view setHidden:YES];
+        [self.safariVC.view setFrame:CGRectMake(1,1,-10000,-10000)];
+        CGRect frame = [self.safariVC.view frame];
+        frame.origin.x = frame.origin.x - 10000;
+        frame.origin.y = frame.origin.y - 10000;
     }
     self.safariVC.delegate = self;
 
@@ -140,11 +145,41 @@ NSInteger const maxTryCount = 10;
     
     // Gets the top viewController and adds the safari VC to it if not already added
     UIViewController *topVC = [AMBUtilities getTopViewController];
-    if (![self.safariVC.view isDescendantOfView:topVC.view]) {
-        self.safariVC.modalPresentationStyle = UIModalPresentationPopover;
-        self.safariVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-        self.safariVC.popoverPresentationController.sourceView = topVC.view;
-        [topVC presentViewController:self.safariVC animated:YES completion:nil];
+    
+    // EXPERIMENTAL
+    /*
+    UIViewController *intermVC = [[UIViewController alloc] init];
+    UIView *innerView=[[UIView alloc]initWithFrame:CGRectMake(1, 1, 10, 10)];
+    [innerView setBackgroundColor:[UIColor yellowColor]];
+    intermVC.view = innerView;
+    [intermVC.view.superview setFrame:CGRectMake(1,1,10,10)];
+    CGRect frame = [intermVC.view frame];
+    //frame.origin.x = frame.origin.x - 10000;
+    //frame.origin.y = frame.origin.y - 10000;
+    frame.size.height = 10;
+    frame.size.width = 10;
+    intermVC.view.superview.frame = frame;
+    //[topVC presentViewController:intermVC animated:NO completion:nil];
+    intermVC.view.frame = CGRectMake(1,1,10,10);
+    intermVC.view.superview.frame = CGRectMake(1,1,10,10);
+    innerView.frame = CGRectMake(1,1,10,10);
+    */
+    // END EXPERIMENTAL
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:[AMBValues AMBframeworkBundle]];
+    UIViewController *vc = [sb instantiateViewControllerWithIdentifier:@"PARENTVC"];
+    
+    if (![vc.view isDescendantOfView:topVC.view]) {
+        [topVC presentViewController:vc animated:NO completion:nil];
+    }
+    [vc.view setClipsToBounds:YES];
+    
+    if (![self.safariVC.view isDescendantOfView:vc.view]) {
+        //self.safariVC.modalPresentationStyle = UIModalPresentationPopover;
+        //self.safariVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        //self.safariVC.popoverPresentationController.sourceView = vc.view;
+        [vc presentViewController:self.safariVC animated:NO completion:nil];
+        [self.safariVC.view setClipsToBounds:YES];
         if (!self.startDate){
             self.startDate = [NSDate date];
         }
