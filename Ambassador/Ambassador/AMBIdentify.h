@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <SafariServices/SafariServices.h>
 
 @interface AMBIdentify : NSObject
 
 @property (nonatomic) BOOL identifyProcessComplete;
+@property (nonatomic, strong) SFSafariViewController * safariVC;
 
 - (id)init;
 - (void)getIdentity:(void (^)(BOOL))completion;
-
+   
 @end

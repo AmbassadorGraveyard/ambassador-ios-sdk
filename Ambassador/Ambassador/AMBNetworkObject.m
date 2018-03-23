@@ -294,7 +294,7 @@
     self.short_code = @"";
     self.social_name = @"";
     self.from_email =  ([AMBValues getUserEmail]) ? [AMBValues getUserEmail] : @"";
-    
+
     return self;
 }
 
