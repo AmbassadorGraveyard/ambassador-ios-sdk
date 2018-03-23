@@ -19,8 +19,8 @@
 
 @interface AMBIdentify () <SFSafariViewControllerDelegate>
 
+
 @property (nonatomic, copy) void (^completion)(NSMutableDictionary *resp, NSError *e);
-@property (nonatomic, strong) SFSafariViewController * safariVC;
 @property (nonatomic, strong) NSTimer * identifyTimer;
 @property (nonatomic, strong) NSTimer * identifyFinishedTimer;
 @property (nonatomic) NSInteger tryCountFinish;

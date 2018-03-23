@@ -7,6 +7,7 @@
 #import <Foundation/Foundation.h>
 #import "AMBConversionParameters.h"
 #import "AMBWelcomeScreenViewController.h"
+#import <SafariServices/SafariServices.h>
 
 // Enum for Conversion status types
 typedef enum conversionStatus {
@@ -267,6 +268,14 @@ typedef enum conversionStatus {
  
  */
 + (NSString *)getCampaignIdFromShortCode:(NSString *) shortCode;
+
+
+/**
+ 
+ Get the safari vc instance
+ 
+ */
++ (SFSafariViewController *)getSafariVC;
 
 
 @end

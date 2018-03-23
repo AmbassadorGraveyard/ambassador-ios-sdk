@@ -15,6 +15,7 @@
 #import "AMBNetworkManager.h"
 #import "AMBErrors.h"
 #import "RavenClient.h"
+#import <SafariServices/SafariServices.h>
 
 
 @implementation AmbassadorSDK
@@ -446,6 +447,10 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 }
 
 
++ (SFSafariViewController *)getSafariVC{
+    // Gain access to identify class
+    return [AmbassadorSDK sharedInstance].identify.safariVC;
+}
 
 
 @end
