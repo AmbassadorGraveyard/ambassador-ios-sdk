@@ -201,7 +201,8 @@
     NSDictionary *returnDict = [self.conversion payloadForConversionCallWithFP:fpDict mbsyFields:(NSMutableDictionary*)mbsyFields];
     
     // THEN
-    XCTAssertEqual([[returnDict allKeys] count], 2);
+    XCTAssertEqual([[returnDict allKeys] count], 3);
+    XCTAssertEqualObjects([returnDict valueForKey:@"source"], @"ios_sdk_1_0_13");
 }
 
 @end
