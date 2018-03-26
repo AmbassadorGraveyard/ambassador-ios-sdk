@@ -145,7 +145,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
 
 + (void)identifyWithEmail:(NSString *)email {
     // Uses new idenity logic when deprecated identify method is called
-    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:email traits:@{@"email" : email} autoEnrollCampaign:nil completion:nil];
+    [[AmbassadorSDK sharedInstance] localIdentifyWithUserID:@"" traits:@{@"email" : email} autoEnrollCampaign:nil completion:nil];
 }
 
 - (void)localIdentifyWithUserID:(NSString *)userID traits:(NSDictionary *)traits autoEnrollCampaign:(NSString *)campaign completion:(void (^)(BOOL))completion{
@@ -283,7 +283,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     NSDictionary *traits = @{@"email" : inputValue, @"identify_type" : @"raf"};
     
     // Identifies and presents RAF
-    [self localIdentifyWithUserID:inputValue traits:traits autoEnrollCampaign:nil completion:nil];
+    [self localIdentifyWithUserID:@"" traits:traits autoEnrollCampaign:nil completion:nil];
     [self presentRAFForCampaign:self.tempCampID FromViewController:self.tempPresentController withThemePlist:self.tempPlistName];
 }
 
