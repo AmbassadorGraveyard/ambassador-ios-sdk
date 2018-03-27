@@ -40,4 +40,4 @@ test:
     - mv /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.bundle $CIRCLE_ARTIFACTS/Ambassador.bundle
 
     - xcodebuild ENABLE_BITCODE=NO -workspace 'Ambassador.xcworkspace' -scheme 'DemoApp' -arch x86_64 -configuration "Debug" -sdk iphonesimulator
-    - aws s3 cp DemoApp.app s3://ambassador-rainforestqa/ios/DemoApp.app
+    - aws s3 cp /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Debug-iphonesimulator/DemoApp.app s3://ambassador-rainforestqa/ios/DemoApp.app
