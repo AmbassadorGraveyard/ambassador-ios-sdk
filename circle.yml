@@ -1,5 +1,5 @@
 general:
-  build_dir: Ambassadors
+  build_dir: Ambassador
 machine:
   xcode:
     version: "9.0"
