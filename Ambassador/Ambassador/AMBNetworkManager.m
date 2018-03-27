@@ -16,14 +16,14 @@
 #pragma mark - Shared Instance
 
 + (instancetype)sharedInstance {
-    static AMBNetworkManager* _sharedInsance = nil;
+    static AMBNetworkManager* _sharedInstance = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
-        _sharedInsance = [[AMBNetworkManager alloc] init];
-        _sharedInsance.urlSession = [_sharedInsance createURLSession];
+        _sharedInstance = [[AMBNetworkManager alloc] init];
+        _sharedInstance.urlSession = [_sharedInstance createURLSession];
     });
     
-    return _sharedInsance;
+    return _sharedInstance;
 }
 
 

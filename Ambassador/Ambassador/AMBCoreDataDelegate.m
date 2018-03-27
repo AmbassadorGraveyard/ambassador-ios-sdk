@@ -11,10 +11,10 @@
 @implementation AMBCoreDataDelegate
 
 + (AMBCoreDataDelegate *)sharedInstance {
-    static AMBCoreDataDelegate* _sharedInsance = nil;
+    static AMBCoreDataDelegate* _sharedInstance = nil;
     static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{ _sharedInsance = [[AMBCoreDataDelegate alloc] init]; });
-    return _sharedInsance;
+    dispatch_once(&oncePredicate, ^{ _sharedInstance = [[AMBCoreDataDelegate alloc] init]; });
+    return _sharedInstance;
 }
 
 #pragma mark - Core Data stack

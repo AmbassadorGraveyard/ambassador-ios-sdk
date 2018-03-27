@@ -15,10 +15,10 @@
 #pragma mark - LifeCycle
 
 + (AMBUtilities *)sharedInstance {
-    static AMBUtilities* _sharedInsance = nil;
+    static AMBUtilities* _sharedInstance = nil;
     static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{ _sharedInsance = [[AMBUtilities alloc] init]; });
-    return _sharedInsance;
+    dispatch_once(&oncePredicate, ^{ _sharedInstance = [[AMBUtilities alloc] init]; });
+    return _sharedInstance;
 }
 
 
