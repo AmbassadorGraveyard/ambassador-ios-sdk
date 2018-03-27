@@ -266,8 +266,13 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 #pragma mark - Helper Functions
 
 - (void)getShortCodeAndSubmit {
+    NSString *charactersToEscape = @"!#$%&'*+-/=?^_`{|}~\"(),:;<>[]\\ ";
+    NSCharacterSet *allowedCharacters = [[NSCharacterSet characterSetWithCharactersInString:charactersToEscape] invertedSet];
+    NSString *encodedEmail = [self.tfReferrerEmail.text stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
+    NSLog(@"%@", encodedEmail);
+
     // Sets up request
-    NSString *urlString = [NSString stringWithFormat:@"urls/?campaign_uid=%@&email=%@", self.selectedCampaign.campID, self.tfReferrerEmail.text];
+    NSString *urlString = [NSString stringWithFormat:@"urls/?campaign_uid=%@&email=%@", self.selectedCampaign.campID, encodedEmail];
     
     NSURL *ambassadorURL;
     #if AMBPRODUCTION
@@ -552,7 +557,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [javaString appendFormat:@"%@properties.putString(\"eventData2\", \"%@\");\n", [self doubleTab], self.tfEventData2.text];
     [javaString appendFormat:@"%@properties.putString(\"eventData3\", \"%@\");\n", [self doubleTab], self.tfEventData3.text];
     [javaString appendFormat:@"%@properties.putString(\"orderId\", \"%@\");\n\n", [self doubleTab], self.tfTransactionUID.text];
-    if (self.swtAutoCreate.isOn) { [javaString appendFormat:@"%@properties.putInt(\"emailNewAmbassadord\", %@);\n\n", [self doubleTab], [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn]]; }
+    if (self.swtAutoCreate.isOn) { [javaString appendFormat:@"%@properties.putInt(\"emailNewAmbassador\", %@);\n\n", [self doubleTab], [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn]]; }
 
     [javaString appendFormat:@"%@// Create options bundle\n", [self doubleTab]];
     [javaString appendFormat:@"%@properties.putBoolean(\"conversion\", true);\n\n", [self doubleTab]];
