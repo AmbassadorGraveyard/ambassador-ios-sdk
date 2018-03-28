@@ -22,14 +22,14 @@
 #pragma mark - LifeCycle
 
 + (AmbassadorSDK *)sharedInstance {
-    static AmbassadorSDK* _sharedInsance = nil;
+    static AmbassadorSDK* _sharedInstance = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
-        _sharedInsance = [[AmbassadorSDK alloc] init];
-        _sharedInsance.identify = [[AMBIdentify alloc] init];
+        _sharedInstance = [[AmbassadorSDK alloc] init];
+        _sharedInstance.identify = [[AMBIdentify alloc] init];
     });
     
-    return _sharedInsance;
+    return _sharedInstance;
 }
 
 

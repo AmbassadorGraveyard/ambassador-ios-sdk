@@ -19,13 +19,13 @@ static NSDictionary * valuesDic;
 
 + (AMBThemeManager *)sharedInstance
 {
-    static AMBThemeManager* _sharedInsance = nil;
+    static AMBThemeManager* _sharedInstance = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
-        _sharedInsance = [[AMBThemeManager alloc] init];
+        _sharedInstance = [[AMBThemeManager alloc] init];
     });
     
-    return _sharedInsance;
+    return _sharedInstance;
 }
 
 - (void)createDicFromPlist:(NSString*)plistName {
