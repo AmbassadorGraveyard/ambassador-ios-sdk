@@ -15,7 +15,7 @@
 }
 
 + (NSString *)androidVersionNumber {
-    return @"1.2.9+";
+    return @"1.1.5";
 }
 
 @end
