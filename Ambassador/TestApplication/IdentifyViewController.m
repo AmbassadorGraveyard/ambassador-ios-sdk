@@ -273,33 +273,66 @@ CGFloat identifyOffset;
     // Creates traits dictionary
     NSMutableString *traitsDictString = [[NSMutableString alloc] init];
     [traitsDictString appendString:@"    // Create dictionary for user traits\n"];
-    [traitsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *traitsDict = @{@\"email\" : @\"%@\",\n", email]];
+    [traitsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *traitsDict = @{\n%@@\"email\" : @\"%@\"", [self tabSpace], email]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
-    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"firstName\" : @\"%@\",\n", [self tabSpace], self.tfFirstName.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"lastName\" : @\"%@\",\n", [self tabSpace], self.tfLastName.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCompany.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"company\" : @\"%@\",\n", [self tabSpace], self.tfCompany.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfPhone.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"phone\" : @\"%@\",\n", [self tabSpace], self.tfPhone.text]]; }
-    
-    // Checks if any section of the address is filled out
-    if (![AMBUtilities stringIsEmpty:self.tfStreet.text] || ![AMBUtilities stringIsEmpty:self.tfCity.text] || ![AMBUtilities stringIsEmpty:self.tfState.text] || ![AMBUtilities stringIsEmpty:self.tfZip.text] || ![AMBUtilities stringIsEmpty:self.tfCountry.text]) {
-        [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"address\" : @{\n", [self tabSpace]]];
+    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@@\"firstName\" : @\"%@\"", [self tabSpace], self.tfFirstName.text]];
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@@\"lastName\" : @\"%@\"", [self tabSpace], self.tfLastName.text]];
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfCompany.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@@\"company\" : @\"%@\"", [self tabSpace], self.tfCompany.text]];
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfPhone.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@@\"phone\" : @\"%@\"", [self tabSpace], self.tfPhone.text]];
+    }
+    if ([self.sandboxSwitch isOn]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@@\"sandbox\" : @\"true\"", [self tabSpace]]];
     }
     
-    // Formats the address portion of traits if provided
-    if (![AMBUtilities stringIsEmpty:self.tfStreet.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"street\" : @\"%@\"\n", [self largeTabSpace], self.tfStreet.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCity.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"city\" : @\"%@\"\n", [self largeTabSpace], self.tfCity.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfState.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"state\" : @\"%@\"\n", [self largeTabSpace], self.tfState.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfZip.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"postalCode\" : @\"%@\"\n", [self largeTabSpace], self.tfZip.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCountry.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"country\" : @\"%@\"}\n", [self largeTabSpace], self.tfCountry.text]]; }
+    BOOL addressFilledOut = ![AMBUtilities stringIsEmpty:self.tfStreet.text] || ![AMBUtilities stringIsEmpty:self.tfCity.text] || ![AMBUtilities stringIsEmpty:self.tfState.text] || ![AMBUtilities stringIsEmpty:self.tfZip.text] || ![AMBUtilities stringIsEmpty:self.tfCountry.text];
     
-    [traitsDictString appendString:[NSString stringWithFormat:@"%@};\n\n", [self tabSpace]]];
+    // Checks if any section of the address is filled out
+    if (addressFilledOut) {
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@@\"address\" : @{\n", [self tabSpace]]];
+    }
+    
+    BOOL hasAddressFields = NO;
+    
+    // Formats the address portion of traits if provided
+    if (![AMBUtilities stringIsEmpty:self.tfStreet.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"street\" : @\"%@\"", [self largeTabSpace], self.tfStreet.text]];
+        hasAddressFields = YES;
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfCity.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@%@@\"city\" : @\"%@\"", hasAddressFields ? @",\n" : @"", [self largeTabSpace], self.tfCity.text]];
+        hasAddressFields = YES;
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfState.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@%@@\"state\" : @\"%@\"", hasAddressFields ? @",\n" : @"", [self largeTabSpace], self.tfState.text]];
+        hasAddressFields = YES;
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfZip.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@%@@\"postalCode\" : @\"%@\"", hasAddressFields ? @",\n" : @"", [self largeTabSpace], self.tfZip.text]];
+        hasAddressFields = YES;
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfCountry.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@%@@\"country\" : @\"%@\"", hasAddressFields ? @",\n" : @"", [self largeTabSpace], self.tfCountry.text]];
+    }
+    
+    if (addressFilledOut) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"\n%@}", [self largeTabSpace]]];
+    }
+    
+    [traitsDictString appendString:[NSString stringWithFormat:@"\n%@};\n\n", [self tabSpace]]];
     
     // Creates options dictionary if switch is on
     NSMutableString *optionsDictString = nil;
     if (self.swtEnroll.isOn && self.selectedCampaign) {
         optionsDictString = [[NSMutableString alloc] initWithString:@"    // Create dictionary with option to auto-enroll user in campaign\n"];
-        [optionsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *optionsDict = @{@\"campaign\" : @\"%@\"};\n\n", self.selectedCampaign.campID]];
+        [optionsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *optionsDict = @{\n%@ @\"campaign\" : @\"%@\"\n%@ };\n\n", [self tabSpace], self.selectedCampaign.campID, [self tabSpace]]];
     }
     
     // Creates the correct identify string based on options dict being nil
@@ -328,33 +361,66 @@ CGFloat identifyOffset;
     // Creates traits dictionary
     NSMutableString *traitsDictString = [[NSMutableString alloc] init];
     [traitsDictString appendString:@"        // Create dictionary for user traits\n"];
-    [traitsDictString appendString:[NSString stringWithFormat:@"        var traitsDict = [\"email\" : \"%@\",\n", email]];
+    [traitsDictString appendString:[NSString stringWithFormat:@"        var traitsDict = [\n%@\"email\" : \"%@\"", [self tabSpaceSwift], email]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
-    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"firstName\" : \"%@\",\n", [self tabSpace], self.tfFirstName.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"lastName\" : \"%@\",\n", [self tabSpace], self.tfLastName.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCompany.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"company\" : \"%@\",\n", [self tabSpace], self.tfCompany.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfPhone.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"phone\" : \"%@\",\n", [self tabSpace], self.tfPhone.text]]; }
-    
-    // Checks if any section of the address is filled out
-    if (![AMBUtilities stringIsEmpty:self.tfStreet.text] || ![AMBUtilities stringIsEmpty:self.tfCity.text] || ![AMBUtilities stringIsEmpty:self.tfState.text] || ![AMBUtilities stringIsEmpty:self.tfZip.text] || ![AMBUtilities stringIsEmpty:self.tfCountry.text]) {
-        [traitsDictString appendString:[NSString stringWithFormat:@"%@\"address\" : [\n", [self tabSpace]]];
+    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@\"firstName\" : \"%@\"", [self tabSpaceSwift], self.tfFirstName.text]];
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@\"lastName\" : \"%@\"", [self tabSpaceSwift], self.tfLastName.text]];
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfCompany.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@\"company\" : \"%@\"", [self tabSpaceSwift], self.tfCompany.text]];
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfPhone.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@\"phone\" : \"%@\"", [self tabSpaceSwift], self.tfPhone.text]];
+    }
+    if ([self.sandboxSwitch isOn]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@\"sandbox\" : \"true\"", [self tabSpaceSwift]]];
     }
     
-    // Formats the address portion of traits if provided
-    if (![AMBUtilities stringIsEmpty:self.tfStreet.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"street\" : \"%@\"\n", [self largeTabSpace], self.tfStreet.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCity.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"city\" : \"%@\"\n", [self largeTabSpace], self.tfCity.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfState.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"state\" : \"%@\"\n", [self largeTabSpace], self.tfState.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfZip.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"postalCode\" : \"%@\"\n", [self largeTabSpace], self.tfZip.text]]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCountry.text]) { [traitsDictString appendString:[NSString stringWithFormat:@"%@\"country\" : \"%@\"]\n", [self largeTabSpace], self.tfCountry.text]]; }
+    BOOL addressFilledOut = ![AMBUtilities stringIsEmpty:self.tfStreet.text] || ![AMBUtilities stringIsEmpty:self.tfCity.text] || ![AMBUtilities stringIsEmpty:self.tfState.text] || ![AMBUtilities stringIsEmpty:self.tfZip.text] || ![AMBUtilities stringIsEmpty:self.tfCountry.text];
     
-    [traitsDictString appendString:[NSString stringWithFormat:@"%@]\n\n", [self tabSpace]]];
+    // Checks if any section of the address is filled out
+    if (addressFilledOut) {
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@\"address\" : [\n", [self tabSpaceSwift]]];
+    }
+    
+    BOOL hasAddressFields = NO;
+    
+    // Formats the address portion of traits if provided
+    if (![AMBUtilities stringIsEmpty:self.tfStreet.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@\"street\" : \"%@\"", [self largeTabSpaceSwift], self.tfStreet.text]];
+        hasAddressFields = YES;
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfCity.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@%@\"city\" : \"%@\"", hasAddressFields ? @",\n" : @"", [self largeTabSpaceSwift], self.tfCity.text]];
+        hasAddressFields = YES;
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfState.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@%@\"state\" : \"%@\"", hasAddressFields ? @",\n" : @"", [self largeTabSpaceSwift], self.tfState.text]];
+        hasAddressFields = YES;
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfZip.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@%@\"postalCode\" : \"%@\"", hasAddressFields ? @",\n" : @"", [self largeTabSpaceSwift], self.tfZip.text]];
+        hasAddressFields = YES;
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfCountry.text]) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"%@%@\"country\" : \"%@\"", hasAddressFields ? @",\n" : @"", [self largeTabSpaceSwift], self.tfCountry.text]];
+    }
+    
+    if (addressFilledOut) {
+        [traitsDictString appendString:[NSString stringWithFormat:@"\n%@]", [self tabSpaceSwift]]];
+    }
+    
+    [traitsDictString appendString:[NSString stringWithFormat:@"\n        ]\n\n"]];
     
     // Creates options dictionary if switch is on
     NSMutableString *optionsDictString = nil;
     if (self.swtEnroll.isOn && self.selectedCampaign) {
         optionsDictString = [[NSMutableString alloc] initWithString:@"        // Create dictionary with option to auto-enroll user in campaign\n"];
-        [optionsDictString appendString:[NSString stringWithFormat:@"        var optionsDict = [\"campaign\" : \"%@\"]\n\n", self.selectedCampaign.campID]];
+        [optionsDictString appendString:[NSString stringWithFormat:@"        var optionsDict = [\n%@\"campaign\" : \"%@\"\n        ]\n\n", [self tabSpaceSwift], self.selectedCampaign.campID]];
     }
     
     // Creates the correct identify string based on options dict being nil
@@ -387,10 +453,21 @@ CGFloat identifyOffset;
     [traitsString appendFormat:@"%@traits.putString(\"email\", \"%@\");\n", spacing, self.tfEmail.text];
     
     // If the optional forms are filled out, we add them to the snippet
-    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) { [traitsString appendFormat:@"%@traits.putString(\"firstName\", \"%@\");\n", spacing, self.tfFirstName.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) { [traitsString appendFormat:@"%@traits.putString(\"lastName\", \"%@\");\n", spacing, self.tfLastName.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfCompany.text]) { [traitsString appendFormat:@"%@traits.putString(\"company\", \"%@\");\n", spacing, self.tfCompany.text]; }
-    if (![AMBUtilities stringIsEmpty:self.tfPhone.text]) { [traitsString appendFormat:@"%@traits.putString(\"phone\", \"%@\");\n\n", spacing, self.tfPhone.text]; }
+    if (![AMBUtilities stringIsEmpty:self.tfFirstName.text]) {
+        [traitsString appendFormat:@"%@traits.putString(\"firstName\", \"%@\");\n", spacing, self.tfFirstName.text];
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfLastName.text]) {
+        [traitsString appendFormat:@"%@traits.putString(\"lastName\", \"%@\");\n", spacing, self.tfLastName.text];
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfCompany.text]) {
+        [traitsString appendFormat:@"%@traits.putString(\"company\", \"%@\");\n", spacing, self.tfCompany.text];
+    }
+    if (![AMBUtilities stringIsEmpty:self.tfPhone.text]) {
+        [traitsString appendFormat:@"%@traits.putString(\"phone\", \"%@\");\n", spacing, self.tfPhone.text];
+    }
+    if ([self.sandboxSwitch isOn]) {
+        [traitsString appendFormat:@"%@traits.putString(\"sandbox\", \"true\");\n\n", spacing];
+    }
     
     // Checks if any address fields have been filled out before adding the address bundle code
     if (![AMBUtilities stringIsEmpty:self.tfStreet.text] || ![AMBUtilities stringIsEmpty:self.tfCity.text] || ![AMBUtilities stringIsEmpty:self.tfState.text] || ![AMBUtilities stringIsEmpty:self.tfZip.text] || ![AMBUtilities stringIsEmpty:self.tfCountry.text]) {
@@ -398,11 +475,21 @@ CGFloat identifyOffset;
         [traitsString appendFormat:@"%@Bundle address = new Bundle();\n", spacing];
         
         // Go through each address field and add them to the snippet
-        if (![AMBUtilities stringIsEmpty:self.tfStreet.text]) { [traitsString appendFormat:@"%@address.putString(\"street\", \"%@\");\n", spacing, self.tfStreet.text]; }
-        if (![AMBUtilities stringIsEmpty:self.tfCity.text]) { [traitsString appendFormat:@"%@address.putString(\"city\", \"%@\");\n", spacing, self.tfCity.text]; }
-        if (![AMBUtilities stringIsEmpty:self.tfState.text]) { [traitsString appendFormat:@"%@address.putString(\"state\", \"%@\");\n", spacing, self.tfState.text]; }
-        if (![AMBUtilities stringIsEmpty:self.tfZip.text]) { [traitsString appendFormat:@"%@address.putString(\"postalCode\", \"%@\");\n", spacing, self.tfZip.text]; }
-        if (![AMBUtilities stringIsEmpty:self.tfCountry.text]) { [traitsString appendFormat:@"%@address.putString(\"country\", \"%@\");\n", spacing, self.tfCountry.text]; }
+        if (![AMBUtilities stringIsEmpty:self.tfStreet.text]) {
+            [traitsString appendFormat:@"%@address.putString(\"street\", \"%@\");\n", spacing, self.tfStreet.text];
+        }
+        if (![AMBUtilities stringIsEmpty:self.tfCity.text]) {
+            [traitsString appendFormat:@"%@address.putString(\"city\", \"%@\");\n", spacing, self.tfCity.text];
+        }
+        if (![AMBUtilities stringIsEmpty:self.tfState.text]) {
+            [traitsString appendFormat:@"%@address.putString(\"state\", \"%@\");\n", spacing, self.tfState.text];
+        }
+        if (![AMBUtilities stringIsEmpty:self.tfZip.text]) {
+            [traitsString appendFormat:@"%@address.putString(\"postalCode\", \"%@\");\n", spacing, self.tfZip.text];
+        }
+        if (![AMBUtilities stringIsEmpty:self.tfCountry.text]) {
+            [traitsString appendFormat:@"%@address.putString(\"country\", \"%@\");\n", spacing, self.tfCountry.text];
+        }
         
         // Add address bundle in traits
         [traitsString appendFormat:@"%@traits.putBundle(\"address\", address);\n\n", spacing];
@@ -446,6 +533,14 @@ CGFloat identifyOffset;
 
 - (NSString *)largeTabSpace {
     return @"                                     ";
+}
+
+- (NSString *)tabSpaceSwift {
+    return @"            ";
+}
+
+- (NSString *)largeTabSpaceSwift {
+    return @"                ";
 }
 
 @end

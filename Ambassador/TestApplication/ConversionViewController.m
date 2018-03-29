@@ -343,7 +343,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     // Create IDENTIFY part of snippet starting with traits dict
     NSMutableString *traitsDictString = [[NSMutableString alloc] init];
     [traitsDictString appendString:@"    // Create dictionary for user traits\n"];
-    [traitsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *traitsDict = @{@\"email\" : @\"%@\",\n", self.tfRefEmail.text]];
+    [traitsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *traitsDict = @{\n%@@\"email\" : @\"%@\",\n", [self tabSpace], self.tfRefEmail.text]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
     [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"firstName\" : @\"%@\",\n", [self tabSpace], self.tfFirstName.text]];
@@ -378,7 +378,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     /* Create CONVERSION part of snippet */
     NSMutableString *conversionPropertyString = [[NSMutableString alloc] init];
     [conversionPropertyString appendString:@"    // Create dictionary for conversion properties\n"];
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"    NSDictionary *propertiesDictionary = @{@\"email\" : @\"%@\",\n", self.tfRefEmail.text]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"    NSDictionary *propertiesDictionary = @{\n%@@\"email\" : @\"%@\",\n", [self tabSpace], self.tfRefEmail.text]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@@\"campaign\" : @\"%@\",\n", [self tabSpace], self.selectedCampaign.campID]];
@@ -428,18 +428,18 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     // Create IDENTIFY part of snippet starting with traits dict
     NSMutableString *traitsDictString = [[NSMutableString alloc] init];
     [traitsDictString appendString:@"        // Create dictionary for user traits\n"];
-    [traitsDictString appendString:[NSString stringWithFormat:@"        let traitsDict = [\"email\" : \"%@\",\n", self.tfRefEmail.text]];
+    [traitsDictString appendString:[NSString stringWithFormat:@"        let traitsDict = [\n%@\"email\" : \"%@\",\n", [self tabSpaceSwift], self.tfRefEmail.text]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
-    [traitsDictString appendString:[NSString stringWithFormat:@"%@\"firstName\" : \"%@\",\n", [self tabSpace], self.tfFirstName.text]];
-    [traitsDictString appendString:[NSString stringWithFormat:@"%@\"lastName\" : \"%@\",\n", [self tabSpace], self.tfLastName.text]];
+    [traitsDictString appendString:[NSString stringWithFormat:@"%@\"firstName\" : \"%@\",\n", [self tabSpaceSwift], self.tfFirstName.text]];
+    [traitsDictString appendString:[NSString stringWithFormat:@"%@\"lastName\" : \"%@\",\n", [self tabSpaceSwift], self.tfLastName.text]];
     
     NSString *addToGroupsString = self.swtAutoCreate.isOn ? self.tfGroupID.text : @"";
-    [traitsDictString appendFormat:@"%@\"addToGroups\" : \"%@\",\n", [self tabSpace], addToGroupsString];
-    [traitsDictString appendFormat:@"%@\"customLabel1\" : \"%@\",\n", [self tabSpace], self.tfCustom1.text];
-    [traitsDictString appendFormat:@"%@\"customLabel2\" : \"%@\",\n", [self tabSpace], self.tfCustom2.text];
-    [traitsDictString appendFormat:@"%@\"customLabel3\" : \"%@\"\n", [self tabSpace], self.tfCustom3.text];
-    [traitsDictString appendString:[NSString stringWithFormat:@"%@]\n\n", [self tabSpace]]];
+    [traitsDictString appendFormat:@"%@\"addToGroups\" : \"%@\",\n", [self tabSpaceSwift], addToGroupsString];
+    [traitsDictString appendFormat:@"%@\"customLabel1\" : \"%@\",\n", [self tabSpaceSwift], self.tfCustom1.text];
+    [traitsDictString appendFormat:@"%@\"customLabel2\" : \"%@\",\n", [self tabSpaceSwift], self.tfCustom2.text];
+    [traitsDictString appendFormat:@"%@\"customLabel3\" : \"%@\"\n", [self tabSpaceSwift], self.tfCustom3.text];
+    [traitsDictString appendString:[NSString stringWithFormat:@"        ]\n\n"]];
     
     // Creates options dictionary if switch is on
     NSMutableString *optionsDictString = nil;
@@ -463,18 +463,18 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     /* Create CONVERSION part of snippet */
     NSMutableString *conversionPropertyString = [[NSMutableString alloc] init];
     [conversionPropertyString appendString:@"        // Create dictionary for conversion properties\n"];
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"        let propertiesDictionary = [\"email\" : \"%@\",\n", self.tfRefEmail.text]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"        let propertiesDictionary = [\n%@\"email\" : \"%@\",\n", [self tabSpaceSwift], self.tfRefEmail.text]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"campaign\" : \"%@\",\n", [self tabSpace], self.selectedCampaign.campID]];
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"revenue\" : %@,\n", [self tabSpace], self.tfRevAmt.text]];
-    [conversionPropertyString appendFormat:@"%@\"commissionApproved\" : %@,\n", [self tabSpace], [self stringForBool:self.swtApproved.isOn forSwift:YES]];
-    [conversionPropertyString appendFormat:@"%@\"emailNewAmbassador\" : %@,\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn && self.swtAutoCreate.isOn forSwift:YES]];
-    [conversionPropertyString appendFormat:@"%@\"orderId\" : \"%@\",\n", [self tabSpace], self.tfTransactionUID.text];
-    [conversionPropertyString appendFormat:@"%@\"eventData1\" : \"%@\",\n", [self tabSpace], self.tfEventData1.text];
-    [conversionPropertyString appendFormat:@"%@\"eventData2\" : \"%@\",\n", [self tabSpace], self.tfEventData2.text];
-    [conversionPropertyString appendFormat:@"%@\"eventData3\" : \"%@\"\n", [self tabSpace], self.tfEventData3.text];
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@]\n\n", [self tabSpace]]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"campaign\" : \"%@\",\n", [self tabSpaceSwift], self.selectedCampaign.campID]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"revenue\" : %@,\n", [self tabSpaceSwift], self.tfRevAmt.text]];
+    [conversionPropertyString appendFormat:@"%@\"commissionApproved\" : %@,\n", [self tabSpaceSwift], [self stringForBool:self.swtApproved.isOn forSwift:YES]];
+    [conversionPropertyString appendFormat:@"%@\"emailNewAmbassador\" : %@,\n", [self tabSpaceSwift], [self stringForBool:self.swtEmailNewAmbassador.isOn && self.swtAutoCreate.isOn forSwift:YES]];
+    [conversionPropertyString appendFormat:@"%@\"orderId\" : \"%@\",\n", [self tabSpaceSwift], self.tfTransactionUID.text];
+    [conversionPropertyString appendFormat:@"%@\"eventData1\" : \"%@\",\n", [self tabSpaceSwift], self.tfEventData1.text];
+    [conversionPropertyString appendFormat:@"%@\"eventData2\" : \"%@\",\n", [self tabSpaceSwift], self.tfEventData2.text];
+    [conversionPropertyString appendFormat:@"%@\"eventData3\" : \"%@\"\n", [self tabSpaceSwift], self.tfEventData3.text];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"        ]\n\n"]];
     
     [conversionPropertyString appendString:@"        // Create options dictionary for conversion\n"];
     [conversionPropertyString appendString:@"        let optionsDictionary = [\"conversion\" : true]\n"];
@@ -557,7 +557,9 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [javaString appendFormat:@"%@properties.putString(\"eventData2\", \"%@\");\n", [self doubleTab], self.tfEventData2.text];
     [javaString appendFormat:@"%@properties.putString(\"eventData3\", \"%@\");\n", [self doubleTab], self.tfEventData3.text];
     [javaString appendFormat:@"%@properties.putString(\"orderId\", \"%@\");\n\n", [self doubleTab], self.tfTransactionUID.text];
-    if (self.swtAutoCreate.isOn) { [javaString appendFormat:@"%@properties.putInt(\"emailNewAmbassador\", %@);\n\n", [self doubleTab], [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn]]; }
+    if (self.swtAutoCreate.isOn) {
+        [javaString appendFormat:@"%@properties.putInt(\"emailNewAmbassador\", %@);\n\n", [self doubleTab], [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn]];
+    }
 
     [javaString appendFormat:@"%@// Create options bundle\n", [self doubleTab]];
     [javaString appendFormat:@"%@properties.putBoolean(\"conversion\", true);\n\n", [self doubleTab]];
@@ -722,6 +724,14 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 
 - (NSString *)largeTabSpace {
     return @"                                     ";
+}
+
+- (NSString *)tabSpaceSwift {
+    return @"            ";
+}
+
+- (NSString *)largeTabSpaceSwift {
+    return @"                ";
 }
 
 @end
