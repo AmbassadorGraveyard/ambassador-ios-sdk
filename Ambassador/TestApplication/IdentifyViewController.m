@@ -289,7 +289,7 @@ CGFloat identifyOffset;
         [traitsDictString appendString:[NSString stringWithFormat:@",\n%@@\"phone\" : @\"%@\"", [self tabSpace], self.tfPhone.text]];
     }
     if ([self.sandboxSwitch isOn]) {
-        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@@\"sandbox\" : @\"true\"", [self tabSpace]]];
+        [traitsDictString appendString:[NSString stringWithFormat:@",\n%@@\"sandbox\" : @YES", [self tabSpace]]];
     }
     
     BOOL addressFilledOut = ![AMBUtilities stringIsEmpty:self.tfStreet.text] || ![AMBUtilities stringIsEmpty:self.tfCity.text] || ![AMBUtilities stringIsEmpty:self.tfState.text] || ![AMBUtilities stringIsEmpty:self.tfZip.text] || ![AMBUtilities stringIsEmpty:self.tfCountry.text];
@@ -450,7 +450,7 @@ CGFloat identifyOffset;
         [traitsString appendFormat:@"%@traits.putString(\"phone\", \"%@\");\n", spacing, self.tfPhone.text];
     }
     if ([self.sandboxSwitch isOn]) {
-        [traitsString appendFormat:@"%@traits.putString(\"sandbox\", \"true\");\n\n", spacing];
+        [traitsString appendFormat:@"%@traits.putString(\"sandbox\", 1);\n\n", spacing];
     }
     
     // Checks if any address fields have been filled out before adding the address bundle code

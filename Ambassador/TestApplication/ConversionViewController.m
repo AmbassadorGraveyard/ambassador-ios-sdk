@@ -529,7 +529,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [javaString appendFormat:@"%@Bundle properties = new Bundle();\n", [self doubleTab]];
     [javaString appendFormat:@"%@properties.putInt(\"email\", \"%@\");\n", [self doubleTab], self.tfRefEmail.text];
     [javaString appendFormat:@"%@properties.putInt(\"campaign\", %@);\n", [self doubleTab], self.selectedCampaign.campID];
-    [javaString appendFormat:@"%@properties.putFloat(\"revenue\", %@f);\n", [self doubleTab], self.tfRevAmt.text];
+    [javaString appendFormat:@"%@properties.putFloat(\"revenue\", %@);\n", [self doubleTab], self.tfRevAmt.text];
     [javaString appendFormat:@"%@properties.putInt(\"commissionApproved\", %@);\n", [self doubleTab], [NSNumber numberWithBool:self.swtApproved.isOn]];
     [javaString appendFormat:@"%@properties.putString(\"eventData1\", \"%@\");\n", [self doubleTab], self.tfEventData1.text];
     [javaString appendFormat:@"%@properties.putString(\"eventData2\", \"%@\");\n", [self doubleTab], self.tfEventData2.text];
