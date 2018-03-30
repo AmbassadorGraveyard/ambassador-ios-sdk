@@ -132,7 +132,7 @@ typedef enum conversionStatus {
  @param completion Block that tells the user when the conversion is done attempting to send.  Block passes back the conversion, the conversionStatus, and an error if one occurs.
  
  */
-+ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion __attribute__((deprecated("Use method 'trackEvent: properties: options:' instead")));
++ (void)registerConversion:(AMBConversionParameters *)conversionParameters restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion __attribute__((deprecated("Use method 'trackEvent: properties:' instead")));
 
 
 /**
