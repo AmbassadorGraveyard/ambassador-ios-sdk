@@ -328,22 +328,14 @@ CGFloat identifyOffset;
     
     [traitsDictString appendString:[NSString stringWithFormat:@"\n%@};\n\n", [self tabSpace]]];
     
-    // Creates options dictionary if switch is on
-    NSMutableString *optionsDictString = nil;
-    if (self.swtEnroll.isOn && self.selectedCampaign) {
-        optionsDictString = [[NSMutableString alloc] initWithString:@"    // Create dictionary with option to auto-enroll user in campaign\n"];
-        [optionsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *optionsDict = @{\n%@ @\"campaign\" : @\"%@\"\n%@ };\n\n", [self tabSpace], self.selectedCampaign.campID, [self tabSpace]]];
-    }
-    
     // Creates the correct identify string based on options dict being nil
     NSString *userIdString = [AMBUtilities stringIsEmpty:self.tfUID.text] ? @"nil" : [NSString stringWithFormat:@"@\"%@\"", self.tfUID.text];
-    NSString *identifyString = (optionsDictString) ? [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict options:optionsDict];\n", userIdString] :
-                                                    [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict options:nil];\n", userIdString];
+    NSString *identifyString = (self.swtEnroll.isOn && self.selectedCampaign) ? [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict autoEnrollCampaign:@\"%@\"];\n", userIdString, self.selectedCampaign.campID] :
+                                                    [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict];\n", userIdString];
     
     // Creates a full identify string to be inserted into appDelegate template
     NSMutableString *fullString = [[NSMutableString alloc] init];
     if (traitsDictString) { [fullString appendString:traitsDictString]; }
-    if (optionsDictString) { [fullString appendString:optionsDictString]; }
     [fullString appendString:identifyString];
     
     // Gets dynamic strings from user's tokens and email input
@@ -416,22 +408,14 @@ CGFloat identifyOffset;
     
     [traitsDictString appendString:[NSString stringWithFormat:@"\n        ]\n\n"]];
     
-    // Creates options dictionary if switch is on
-    NSMutableString *optionsDictString = nil;
-    if (self.swtEnroll.isOn && self.selectedCampaign) {
-        optionsDictString = [[NSMutableString alloc] initWithString:@"        // Create dictionary with option to auto-enroll user in campaign\n"];
-        [optionsDictString appendString:[NSString stringWithFormat:@"        var optionsDict = [\n%@\"campaign\" : \"%@\"\n        ]\n\n", [self tabSpaceSwift], self.selectedCampaign.campID]];
-    }
-    
     // Creates the correct identify string based on options dict being nil
     NSString *userIdString = [AMBUtilities stringIsEmpty:self.tfUID.text] ? @"nil" : [NSString stringWithFormat:@"\"%@\"", self.tfUID.text];
-    NSString *identifyString = (optionsDictString) ? [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithUserID(%@, traits: infoDict, options: optionsDict)\n", userIdString] :
-                                                    [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithUserID(%@, traits: infoDict, options: nil)\n", userIdString];
+    NSString *identifyString = (self.swtEnroll.isOn && self.selectedCampaign) ? [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithUserID(%@, traits: infoDict, autoEnrollCampaign: \"%@\")\n", userIdString, self.selectedCampaign.campID] :
+                                                    [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithUserID(%@, traits: infoDict)\n", userIdString];
     
     // Creates a full identify string to be inserted into appDelegate template
     NSMutableString *fullString = [[NSMutableString alloc] init];
     if (traitsDictString) { [fullString appendString:traitsDictString]; }
-    if (optionsDictString) { [fullString appendString:optionsDictString]; }
     [fullString appendString:identifyString];
     
     
