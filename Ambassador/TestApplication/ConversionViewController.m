@@ -373,7 +373,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [conversionPropertyString appendString:[NSString stringWithFormat:@"    NSDictionary *propertiesDictionary = @{\n%@          @\"email\" : @\"%@\",\n", [self tabSpace], self.tfRefEmail.text]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@          @\"campaign\" : @\"%@\",\n", [self tabSpace], self.selectedCampaign.campID]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@          @\"campaign\" : @%@,\n", [self tabSpace], self.selectedCampaign.campID]];
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@          @\"revenue\" : @%@,\n", [self tabSpace], self.tfRevAmt.text]];
     [conversionPropertyString appendFormat:@"%@          @\"commissionApproved\" : @%@,\n", [self tabSpace], [self stringForBool:self.swtApproved.isOn forSwift:NO]];
     [conversionPropertyString appendFormat:@"%@          @\"emailNewAmbassador\" : @%@,\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn && self.swtAutoCreate.isOn forSwift:NO]];
@@ -447,7 +447,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [conversionPropertyString appendString:[NSString stringWithFormat:@"        let propertiesDictionary = [\n%@\"email\" : \"%@\",\n", [self tabSpaceSwift], self.tfRefEmail.text]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"campaign\" : \"%@\",\n", [self tabSpaceSwift], self.selectedCampaign.campID]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"campaign\" : %@,\n", [self tabSpaceSwift], self.selectedCampaign.campID]];
     [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"revenue\" : %@,\n", [self tabSpaceSwift], self.tfRevAmt.text]];
     [conversionPropertyString appendFormat:@"%@\"commissionApproved\" : %@,\n", [self tabSpaceSwift], [self stringForBool:self.swtApproved.isOn forSwift:YES]];
     [conversionPropertyString appendFormat:@"%@\"emailNewAmbassador\" : %@,\n", [self tabSpaceSwift], [self stringForBool:self.swtEmailNewAmbassador.isOn && self.swtAutoCreate.isOn forSwift:YES]];
