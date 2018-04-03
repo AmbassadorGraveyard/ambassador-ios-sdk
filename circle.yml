@@ -11,6 +11,10 @@ dependencies:
   pre:
     - pod install
     - sudo pip install awscli
+    - curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-linux-amd64.tgz
+    - sudo tar -xf rainforest-cli-stable-linux-amd64.tgz -C /usr/local/bin
+  cache_directories:
+    - "~/.cocoapods"
 test:
   override:
     - bash secrets.sh
@@ -44,5 +48,5 @@ test:
     - aws s3 cp /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Debug-iphonesimulator/DemoApp.app.zip s3://ambassador-rainforest/ios/debug/DemoApp.app.zip
 
     - xcodebuild ENABLE_BITCODE=NO -workspace 'Ambassador.xcworkspace' -scheme 'DemoApp' -arch x86_64 -configuration "Release" -sdk iphonesimulator
-    - cd /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Debug-iphonesimulator/ && zip -r DemoApp.app.zip DemoApp.app
+    - cd /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Release-iphonesimulator/ && zip -r DemoApp.app.zip DemoApp.app
     - aws s3 cp /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Release-iphonesimulator/DemoApp.app.zip s3://ambassador-rainforest/ios/release/DemoApp.app.zip
