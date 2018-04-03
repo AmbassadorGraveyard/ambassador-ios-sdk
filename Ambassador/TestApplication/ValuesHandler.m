@@ -11,7 +11,7 @@
 @implementation ValuesHandler
 
 + (NSString *)iosVersionNumber {
-    return @"1.0.5";
+    return @"1.0.12+";
 }
 
 + (NSString *)androidVersionNumber {
