@@ -33,7 +33,7 @@
 
 - (void)setValue:(id)value forUndefinedKey:(NSString*)key {
     NSString *reason = [NSString stringWithFormat:@"The key \"%@\" does not exist.", key];
-    SentryException *exception = [[SentryException alloc] initWithValue:reason type:@"Uknown key exception"];
+    SentryException *exception = [[SentryException alloc] initWithValue:reason type:@"Unknown key exception"];
     NSArray <SentryException *> *exceptions = @[exception];
     SentryEvent *event = [[SentryEvent alloc] initWithLevel:kSentrySeverityError];
     event.message = reason;
