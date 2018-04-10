@@ -102,8 +102,10 @@
             NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
             [AMBValues setDeviceFingerPrintWithDictionary:fingerPrintDict]; // Saves device fp to defaults
             [self receivedIdentifyAction];
+            NSLog(@"FP DICT: %@", fingerPrintDict);
             [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
         }else {
+            NSLog(@"[Identify] no url, cookie, or fingerprint.");
             // Attempts to close socket
             [self receivedIdentifyAction];
             [user fillWithDictionary:json completion:^{
