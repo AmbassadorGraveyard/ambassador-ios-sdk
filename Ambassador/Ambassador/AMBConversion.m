@@ -42,6 +42,8 @@
         if (success) { success(parameters); }
     } failure:^{
         // If the call fails at this point, we can assume it's a network issue and will save it for later
+        NSLog(@"parameters %@", parameters);
+        NSLog(@"Failure");
         if (pending) { pending(parameters); }
     }];
 }
@@ -121,11 +123,15 @@
     // If no device fingerprint is available, an empty dictionary will be returned
     NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint];
     
+    NSLog(@"userDefaultsIdentify: %@", userDefaultsIdentify);
+    NSLog(@"getMbsyCookieCode: %@", [AMBValues getMbsyCookieCode]);
+
     // Checks to make sure we have either a short code OR device fingerprint before moving on
     if ([AMBUtilities stringIsEmpty:[AMBValues getMbsyCookieCode]] && [userDefaultsIdentify isEqual:@{}]) {
+        NSLog(@"canSendConversion NO");
         return NO;
     }
-    
+    NSLog(@"canSendConversion YES");
     return YES;
 }
 
