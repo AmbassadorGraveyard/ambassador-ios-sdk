@@ -296,7 +296,7 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     // get fingerprint
     NSDictionary *fp = [AMBValues getDeviceFingerPrint];
     // Only send if fingerprint exists
-    if (fp && ![fp  isEqual: @{}]){
+    if (fp && ![fp isEqual: @{}]){
         // send fingerprint to api to determine referrer's shortcode
         NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[[AMBNetworkManager sharedInstance] getReferringShortCodeFromFingerprint:fp] options:0 error:nil];
         
