@@ -291,15 +291,20 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 }
 
 + (NSString*)getReferringShortCode{
+    // Initialize shortCode
+    NSString *shortCode = @"";
     // get fingerprint
     NSDictionary *fp = [AMBValues getDeviceFingerPrint];
-    // send fingerprint to api to determine referrer's shortcode
-    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[[AMBNetworkManager sharedInstance] getReferringShortCodeFromFingerprint:fp] options:0 error:nil];
-    
-    NSString *shortCode = @"";
-    if ( [results valueForKey:@"short_code"] != nil) {
-        // get short_code from results
-        shortCode = results[@"short_code"];
+    // Only send if fingerprint exists
+    if (fp && ![fp  isEqual: @{}]){
+        // send fingerprint to api to determine referrer's shortcode
+        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[[AMBNetworkManager sharedInstance] getReferringShortCodeFromFingerprint:fp] options:0 error:nil];
+        
+        
+        if ( [results valueForKey:@"short_code"] != nil) {
+            // get short_code from results
+            shortCode = results[@"short_code"];
+        }
     }
     return shortCode;
 }
