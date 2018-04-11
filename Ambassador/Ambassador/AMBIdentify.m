@@ -136,7 +136,7 @@ NSInteger const maxTryCount = 10;
     }
     self.safariVC.delegate = self;
 
-    DLog(@"[Identify] Performing Identify with SAFARI VC for iOS 10 - Attempt %li.", (long)self.tryCount);
+    NSLog(@"[Identify] Performing Identify with SAFARI VC for iOS 10 - Attempt %li.", (long)self.tryCount);
     
     // Gets the top viewController and adds the safari VC to it if not already added
     UIViewController *topVC = [AMBUtilities getTopViewController];
@@ -152,6 +152,7 @@ NSInteger const maxTryCount = 10;
 }
 
 - (void)deviceInfoReceived {
+    NSLog(@"deviceInfoReceived");
     [self.identifyTimer invalidate];
     NSInteger secondsSinceStart = (NSInteger)[[NSDate date] timeIntervalSinceDate:self.startDate];
     if (secondsSinceStart < self.minimumTime && !self.doneButtonPressed){

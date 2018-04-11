@@ -76,6 +76,7 @@
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
         if (event.data[@"url"]) {
             // Attempts to close socket
+            NSLog(@"[Identify] Url recieved.");
             [self receivedIdentifyAction];
             [user fillWithUrl:event.data[@"url"] completion:^(NSString *error) {
                 if (!error) {
@@ -118,8 +119,11 @@
                 [AMBValues setUserFirstNameWithString:user.first_name];
                 [AMBValues setUserLastNameWithString:user.last_name];
                 if (user.fingerprint){
+                    NSLog(@"User Fingerprint exists");
+                    NSLog(@"%@", user.fingerprint);
                     [AMBValues setDeviceFingerPrintWithDictionary:user.fingerprint]; // Saves device fp to defaults
                 }else if ((json[@"fingerprint"] && json[@"fingerprint"] != [NSNull null])){
+                    NSLog(@"[Identify] fingerprint recieved.");
                     NSDictionary *consumerDict = @{@"UID" : json[@"fingerprint"][@"consumer"][@"UID"]};
                     NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"], @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
                     NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
