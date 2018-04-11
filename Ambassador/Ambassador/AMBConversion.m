@@ -42,8 +42,6 @@
         if (success) { success(parameters); }
     } failure:^{
         // If the call fails at this point, we can assume it's a network issue and will save it for later
-        NSLog(@"parameters %@", parameters);
-        NSLog(@"Failure");
         if (pending) { pending(parameters); }
     }];
 }
@@ -95,8 +93,6 @@
         // Call the success block if there is one
         if (success) { success(); }
     } failure:^(NSInteger statusCode, NSData *data) {
-        NSLog(@"statusCode: %ld", (long)statusCode);
-        NSLog(@"data: %@", data);
         [AMBErrors errorLogCannotSendConversion:statusCode errorData:data];
         
         // Saves AMBConversionParameter object to the database without the mbsy_short_code value, because it is manually added on later
@@ -125,15 +121,11 @@
     // If no device fingerprint is available, an empty dictionary will be returned
     NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint];
     
-    NSLog(@"userDefaultsIdentify: %@", userDefaultsIdentify);
-    NSLog(@"getMbsyCookieCode: %@", [AMBValues getMbsyCookieCode]);
-
     // Checks to make sure we have either a short code OR device fingerprint before moving on
     if ([AMBUtilities stringIsEmpty:[AMBValues getMbsyCookieCode]] && [userDefaultsIdentify isEqual:@{}]) {
-        NSLog(@"canSendConversion NO");
         return NO;
     }
-    NSLog(@"canSendConversion YES");
+    
     return YES;
 }
 
