@@ -50,3 +50,9 @@ test:
     - xcodebuild ENABLE_BITCODE=NO -workspace 'Ambassador.xcworkspace' -scheme 'DemoApp' -arch x86_64 -configuration "Release" -sdk iphonesimulator
     - cd /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Release-iphonesimulator/ && zip -r DemoApp.app.zip DemoApp.app
     - aws s3 cp --acl public-read /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Release-iphonesimulator/DemoApp.app.zip s3://ambassador-rainforest/ios/release/DemoApp.app.zip
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - ./rainforest_post_deploy.sh
