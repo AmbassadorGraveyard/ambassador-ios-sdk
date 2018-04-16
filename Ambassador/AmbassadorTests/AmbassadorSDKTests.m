@@ -421,10 +421,48 @@ NSString * const universalToken = @"test";
 
 - (void)testGetReferredByShortCode {
     // GIVEN
+    // mbsy cookie code set
     [AMBValues setMbsyCookieWithCode:@"fakeCode"];
     
     // THEN
     XCTAssertEqualObjects(@"fakeCode", [AmbassadorSDK getReferredByShortCode]);
+}
+
+- (void)testGetReferredByShortCodeFingerprint {
+    // GIVEN
+    // mbsy cookie code not set
+    [AMBValues setMbsyCookieWithCode:@""];
+    // fingerprint set
+    NSDictionary *consumerDict = @{@"UID" : @"cuid12345"};
+    NSDictionary *deviceDict = @{@"type" : @"SmartPhone", @"ID" : @"did12345"};
+    NSDictionary *mockDictionary = @{@"consumer" : consumerDict, @"device" : deviceDict};
+    
+    // WHEN
+    [AMBValues setDeviceFingerPrintWithDictionary:mockDictionary];
+
+    id mockNetworkMgr = [OCMockObject partialMockForObject:[AMBNetworkManager sharedInstance]];
+    NSData *data = [@"{\"short_code\":\"fakeCode\"}" dataUsingEncoding:NSUTF8StringEncoding];
+    [[[mockNetworkMgr stub] andReturnValue:OCMOCK_VALUE(data)] getReferringShortCodeFromFingerprint:mockDictionary];
+
+    // THEN
+    XCTAssertEqualObjects(data, [mockNetworkMgr getReferringShortCodeFromFingerprint:[AMBValues getDeviceFingerPrint]]);
+    XCTAssertEqualObjects(mockDictionary, [AMBValues getDeviceFingerPrint]);
+    XCTAssertEqualObjects(@"fakeCode", [AmbassadorSDK getReferredByShortCode]);
+
+    [mockNetworkMgr verify];
+    [mockNetworkMgr stopMocking];
+
+}
+
+- (void)testGetReferredByShortCodeNoCode {
+    // GIVEN
+    // mbsy cookie code not set
+    [AMBValues setMbsyCookieWithCode:@""];
+    // fingerprint not set
+    [AMBValues setDeviceFingerPrintWithDictionary:@{}];
+    
+    // THEN
+    XCTAssertEqualObjects(@"", [AmbassadorSDK getReferredByShortCode]);
 }
 
 @end
