@@ -445,8 +445,6 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     // get mbsy cookie code if set, else get referring short code using method
     // Note: calling getReferringShortCode assumes that identify has been called
     // resulting in the fingerprint being set in user values
-    NSLog(@"[AMBValues getMbsyCookieCode]: %@", [AMBValues getMbsyCookieCode]);
-    NSLog(@"[AMBValues getReferringShortCode]: %@", [AMBValues getReferringShortCode]);
     return [[AMBValues getMbsyCookieCode] length] ? [AMBValues getMbsyCookieCode] : [AMBValues getReferringShortCode];
 }
 

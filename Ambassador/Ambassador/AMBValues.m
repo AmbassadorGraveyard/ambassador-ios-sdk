@@ -291,15 +291,23 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 }
 
 + (NSString*)getReferringShortCode{
+    // Initialize shortCode
+    NSString *shortCode = @"";
     // get fingerprint
     NSDictionary *fp = [AMBValues getDeviceFingerPrint];
-    // send fingerprint to api to determine referrer's shortcode
-    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[[AMBNetworkManager sharedInstance] getReferringShortCodeFromFingerprint:fp] options:0 error:nil];
-    NSLog(@"FP: %@", fp);
-    NSString *shortCode = @"";
-    if ( [results valueForKey:@"short_code"] != nil) {
-        // get short_code from results
-        shortCode = results[@"short_code"];
+    // Only send if fingerprint exists
+    if (fp && ![fp isEqual: @{}]){
+        // send fingerprint to api to determine referrer's shortcode
+        NSData *responseData = [[AMBNetworkManager sharedInstance] getReferringShortCodeFromFingerprint:fp];
+
+        if (responseData){
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
+
+            if ( [results valueForKey:@"short_code"] != nil) {
+                // get short_code from results
+                shortCode = results[@"short_code"];
+            }
+        }
     }
     return shortCode;
 }
@@ -320,11 +328,16 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
     NSString *campaignId = @"";
     
     if (![shortCode  isEqual: @""] && ![shortCode  isEqual:nil]){
-        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:[[AMBNetworkManager sharedInstance] getUrlInformationWithSuccess:shortCode] options:0 error:nil];
+        
+        NSData *responseData = [[AMBNetworkManager sharedInstance] getUrlInformationWithSuccess:shortCode];
+        
+        if (responseData){
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
 
-        if (![results[@"count"] isEqual: @0]) {
-            // get campaign from results
-            campaignId = [self campaignIdFromDictionary:results];
+            if (![results[@"count"] isEqual: @0]) {
+                // get campaign from results
+                campaignId = [self campaignIdFromDictionary:results];
+            }
         }
     }
     // return campaignid
