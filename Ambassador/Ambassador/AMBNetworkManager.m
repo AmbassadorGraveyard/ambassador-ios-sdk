@@ -237,13 +237,17 @@
 
 - (NSData *)getUrlInformationWithSuccess:(NSString*)shortCode {
     // Encodes the url
-    NSString *encodedUrl = [[AMBValues getUrlInformationUrl:shortCode] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *charactersToEscape = @"!#$%&'*+-/=?^_`{|}~\"(),:;<>[]\\ ";
+    NSCharacterSet *allowedCharacters = [[NSCharacterSet characterSetWithCharactersInString:charactersToEscape] invertedSet];
+    NSString *encodedShortCode = [shortCode stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
+    NSString *encodedUrl = [AMBValues getUrlInformationUrl:encodedShortCode];
+    NSLog(@"%@", encodedUrl);
     
     NSMutableURLRequest *request = [self createURLRequestWithURL:encodedUrl requestType:@"GET"];
     NSError *error = nil;
     NSHTTPURLResponse *responseCode = nil;
     
-    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    NSData *oResponseData = [self sendSynchronousRequest:request returningResponse:&responseCode error:&error];
     
     if([responseCode statusCode] != 200){
         NSLog(@"Error getting %@, HTTP status code %li", encodedUrl, (long)[responseCode statusCode]);
@@ -255,18 +259,18 @@
 
 
 - (NSData *)getReferringShortCodeFromFingerprint:(NSDictionary*)fp{
-    // Encodes the url
-    NSString *encodedUrl = [[AMBValues getReferringShortCodeUrl] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *url = [AMBValues getReferringShortCodeUrl];
+    
     NSDictionary *payloadDict = @{@"fp" : fp};
-    NSMutableURLRequest *request = [self createURLRequestWithURL:encodedUrl requestType:@"POST"];
+    NSMutableURLRequest *request = [self createURLRequestWithURL:url requestType:@"POST"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payloadDict options:0 error:nil];
     NSError *error = nil;
     NSHTTPURLResponse *responseCode = nil;
     
-    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    NSData *oResponseData = [self sendSynchronousRequest:request returningResponse:&responseCode error:&error];
     
     if([responseCode statusCode] != 200){
-        NSLog(@"Error getting %@, HTTP status code %li", encodedUrl, (long)[responseCode statusCode]);
+        NSLog(@"Error getting %@, HTTP status code %li", url, (long)[responseCode statusCode]);
     }
     
     return oResponseData;
