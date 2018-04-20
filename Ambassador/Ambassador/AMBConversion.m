@@ -42,8 +42,6 @@
         if (success) { success(parameters); }
     } failure:^{
         // If the call fails at this point, we can assume it's a network issue and will save it for later
-        NSLog(@"parameters %@", parameters);
-        NSLog(@"Failure");
         if (pending) { pending(parameters); }
     }];
 }
