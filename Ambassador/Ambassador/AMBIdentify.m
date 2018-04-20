@@ -88,6 +88,7 @@ NSInteger const maxTryCount = 10;
     // If a the run is a UI test, we don't identify
     if (![AMBValues isUITestRun]) {
         if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceInfoReceived) name:@"deviceInfoReceived" object:nil];
             [self performIdentifyForiOS10];
             
             // Checks to make sure the timer is not already running before instantiating a new one
@@ -97,7 +98,6 @@ NSInteger const maxTryCount = 10;
                 self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(performIdentifyForiOS10) userInfo:nil repeats:YES];
             }
             
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceInfoReceived) name:@"deviceInfoReceived" object:nil];
         }
     }
 }
