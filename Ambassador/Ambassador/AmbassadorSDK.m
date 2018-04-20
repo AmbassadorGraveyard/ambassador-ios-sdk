@@ -287,11 +287,8 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     NSDictionary *traits = @{@"email" : inputValue, @"identify_type" : @"raf"};
     
     // Identifies and presents RAF
-    [self localIdentifyWithUserID:@"" traits:traits autoEnrollCampaign:nil completion:^(BOOL success){
-        if (success){
-            [self presentRAFForCampaign:self.tempCampID FromViewController:self.tempPresentController withThemePlist:self.tempPlistName];
-        }
-    }];
+    [self localIdentifyWithUserID:@"" traits:traits autoEnrollCampaign:nil completion:nil];
+    [self presentRAFForCampaign:self.tempCampID FromViewController:self.tempPresentController withThemePlist:self.tempPlistName];
     
 }
 
