@@ -168,6 +168,10 @@ NSInteger const maxTryCount = 10;
             [self.safariVC dismissViewControllerAnimated:YES completion:^{
                 [self identifyComplete];
             }];
+            // catch when safari view controller isn't present
+            if (!self.identifyProcessComplete){
+                [self identifyComplete];
+            }
         }
         else{
             [self identifyComplete];
@@ -181,6 +185,10 @@ NSInteger const maxTryCount = 10;
         [self.safariVC dismissViewControllerAnimated:YES completion:^{
             [self identifyComplete];
         }];
+        // catch when safari view controller isn't present
+        if (!self.identifyProcessComplete){
+            [self identifyComplete];
+        }
     }
     else{
         [self identifyComplete];
