@@ -178,10 +178,12 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
         
         // If not already performed, we perform the safariVC identify to get shortCode and device FP
         if (!self.identify.identifyProcessComplete) {
+            DLog(@"[Identify] getIdentity");
             [self.identify getIdentity:completion];
         }
         else{
             BOOL success = YES;
+            DLog(@"[Identify] completion");
             if (completion) { completion(success); }
         }
     }];

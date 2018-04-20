@@ -76,7 +76,7 @@
         AMBUserNetworkObject *user = [[AMBUserNetworkObject alloc] init];
         if (event.data[@"url"]) {
             // Attempts to close socket
-            NSLog(@"[Identify] Url recieved.");
+            DLog(@"[Identify] Url recieved.");
             [self receivedIdentifyAction];
             [user fillWithUrl:event.data[@"url"] completion:^(NSString *error) {
                 if (!error) {
@@ -84,33 +84,33 @@
                     [AMBValues setUserFirstNameWithString:user.first_name];
                     [AMBValues setUserLastNameWithString:user.last_name];
                     if (user.fingerprint){
-                        NSLog(@"User Fingerprint exists");
-                        NSLog(@"%@", user.fingerprint);
+                        DLog(@"User Fingerprint exists");
+                        DLog(@"%@", user.fingerprint);
                         [AMBValues setDeviceFingerPrintWithDictionary:user.fingerprint]; // Saves device fp to defaults
                     }
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"PusherReceived" object:nil];
                 }
             }];
         } else if (json[@"mbsy_cookie_code"] && json[@"mbsy_cookie_code"] != [NSNull null]) {
-            NSLog(@"[Identify] Short code '%@' and fingerprint recieved.", json[@"mbsy_cookie_code"]);
+            DLog(@"[Identify] Short code '%@' and fingerprint recieved.", json[@"mbsy_cookie_code"]);
             [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
             NSDictionary *consumerDict = @{@"UID" : json[@"fingerprint"][@"consumer"][@"UID"]};
             NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"], @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
             NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
             [AMBValues setDeviceFingerPrintWithDictionary:fingerPrintDict]; // Saves device fp to defaults
             [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
-            
+
         } else if (!json[@"uid"] && json[@"fingerprint"] && json[@"fingerprint"] != [NSNull null]) {
-            NSLog(@"[Identify] fingerprint recieved.");
+            DLog(@"[Identify] fingerprint recieved.");
             NSDictionary *consumerDict = @{@"UID" : json[@"fingerprint"][@"consumer"][@"UID"]};
             NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"], @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
             NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
             [AMBValues setDeviceFingerPrintWithDictionary:fingerPrintDict]; // Saves device fp to defaults
             [self receivedIdentifyAction];
-            NSLog(@"FP DICT: %@", fingerPrintDict);
+            DLog(@"FP DICT: %@", fingerPrintDict);
             [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
         }else {
-            NSLog(@"[Identify] no url, cookie, or fingerprint.");
+            DLog(@"[Identify] no url, cookie, or fingerprint.");
             // Attempts to close socket
             [self receivedIdentifyAction];
             [user fillWithDictionary:json completion:^{
@@ -119,11 +119,11 @@
                 [AMBValues setUserFirstNameWithString:user.first_name];
                 [AMBValues setUserLastNameWithString:user.last_name];
                 if (user.fingerprint){
-                    NSLog(@"User Fingerprint exists");
-                    NSLog(@"%@", user.fingerprint);
+                    DLog(@"User Fingerprint exists");
+                    DLog(@"%@", user.fingerprint);
                     [AMBValues setDeviceFingerPrintWithDictionary:user.fingerprint]; // Saves device fp to defaults
                 }else if ((json[@"fingerprint"] && json[@"fingerprint"] != [NSNull null])){
-                    NSLog(@"[Identify] fingerprint recieved.");
+                    DLog(@"[Identify] fingerprint recieved.");
                     NSDictionary *consumerDict = @{@"UID" : json[@"fingerprint"][@"consumer"][@"UID"]};
                     NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"], @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
                     NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
