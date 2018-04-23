@@ -95,10 +95,10 @@
 	<key>LANDING PAGE SETTINGS ------------</key>
 	<string></string>
 	<key>LandingPageMessage</key>
-	<string>Thank you for downloading our app!</string>
+	<string>&lt;div style=&quot;color:#ffffff; font-size: 1.4em;font-family:SF UI Text Regular,Helvetica,Arial&quot;&gt;Thank you for downloading our app!&lt;/div&gt;</string>
 	<key>LandingPageBackgroundColor</key>
-	<string>#FFFFFF</string>
+	<string>#3C97D3</string>
 	<key>LandingPageMinimumSeconds</key>
-	<integer>2</integer>
+	<integer>5</integer>
 </dict>
 </plist>
