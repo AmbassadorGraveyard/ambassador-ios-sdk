@@ -241,7 +241,6 @@
     NSCharacterSet *allowedCharacters = [[NSCharacterSet characterSetWithCharactersInString:charactersToEscape] invertedSet];
     NSString *encodedShortCode = [shortCode stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
     NSString *encodedUrl = [AMBValues getUrlInformationUrl:encodedShortCode];
-    NSLog(@"%@", encodedUrl);
     
     NSMutableURLRequest *request = [self createURLRequestWithURL:encodedUrl requestType:@"GET"];
     NSError *error = nil;
