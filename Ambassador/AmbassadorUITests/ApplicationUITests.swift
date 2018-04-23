@@ -111,6 +111,7 @@ extension ApplicationUITests {
 
         submitButton.tap()
         
+        sleep(30)
         // Check to make sure we get a succes message
         XCTAssertTrue(app.alerts["Great!"].exists)
         app.tap()
