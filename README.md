@@ -1,6 +1,6 @@
 # Ambassador iOS SDK
 
-Support Level: iOS 7
+[View Documentation](https://github.com/GetAmbassador/documentation/blob/master/documentation/process/mobile/ios_guides.md)
 
 ## Getting Started
 Install Git hooks:
