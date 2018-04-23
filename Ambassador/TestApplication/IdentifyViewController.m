@@ -230,12 +230,21 @@ CGFloat identifyOffset;
         NSString *UIDString = ![AMBUtilities stringIsEmpty:self.tfUID.text] ? self.tfUID.text : nil;
         
         // Call identify
-        [AmbassadorSDK identifyWithUserID:UIDString traits:traitsDict autoEnrollCampaign:enrollCampaign];
-        
-        // Create an identify success message
-        NSString *confirmationMessage = [NSString stringWithFormat:@"You have succesfully identified as %@! You can now track conversion events and create commissions!", email];
-        UIAlertController *confirmationAlert = [UIAlertController cancelAlertWithTitle:@"Great!" message:confirmationMessage cancelMessage:@"Okay"];
-        [self presentViewController:confirmationAlert animated:YES completion:nil];
+        [AmbassadorSDK identifyWithUserID:UIDString traits:traitsDict autoEnrollCampaign:enrollCampaign completion:^(BOOL success){
+            if (success){
+                // Create an identify success message
+                NSString *confirmationMessage = [NSString stringWithFormat:@"You have succesfully identified as %@! You can now track conversion events and create commissions!", email];
+                UIAlertController *confirmationAlert = [UIAlertController cancelAlertWithTitle:@"Great!" message:confirmationMessage cancelMessage:@"Okay"];
+                [self presentViewController:confirmationAlert animated:YES completion:nil];
+            }
+            else{
+                // Create an identify success message
+                NSString *confirmationMessage = [NSString stringWithFormat:@"There was an error identifying."];
+                UIAlertController *confirmationAlert = [UIAlertController cancelAlertWithTitle:@"Error" message:confirmationMessage cancelMessage:@"Okay"];
+                [self presentViewController:confirmationAlert animated:YES completion:nil];
+            }
+            
+        }];
         
         return;
     }
