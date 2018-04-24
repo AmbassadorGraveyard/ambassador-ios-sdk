@@ -10,7 +10,7 @@ checkout:
 dependencies:
   pre:
     - pod install
-    - sudo pip install awscli
+    - sudo -H pip install awscli
     
 test:
   override:
