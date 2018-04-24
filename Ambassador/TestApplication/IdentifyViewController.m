@@ -238,7 +238,7 @@ CGFloat identifyOffset;
                 [self presentViewController:confirmationAlert animated:YES completion:nil];
             }
             else{
-                // Create an identify success message
+                // Create an identify error message
                 NSString *confirmationMessage = [NSString stringWithFormat:@"There was an error identifying."];
                 UIAlertController *confirmationAlert = [UIAlertController cancelAlertWithTitle:@"Error" message:confirmationMessage cancelMessage:@"Okay"];
                 [self presentViewController:confirmationAlert animated:YES completion:nil];
