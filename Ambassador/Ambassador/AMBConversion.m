@@ -114,18 +114,17 @@
     NSDictionary *deviceDict = @{@"type" : deviceFingerprint[@"device"][@"type"], @"ID" : deviceFingerprint[@"device"][@"ID"]};
     NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
     
-    return @{@"fp" : fingerPrintDict, @"fields" : mbsyFields };
+    return @{@"fp" : fingerPrintDict, @"fields" : mbsyFields, @"source" : @"ios_sdk_1_1_0" };
 }
 
 - (BOOL)canSendConversion {
     // If no device fingerprint is available, an empty dictionary will be returned
     NSDictionary *userDefaultsIdentify = [AMBValues getDeviceFingerPrint];
-    
+
     // Checks to make sure we have either a short code OR device fingerprint before moving on
     if ([AMBUtilities stringIsEmpty:[AMBValues getMbsyCookieCode]] && [userDefaultsIdentify isEqual:@{}]) {
         return NO;
     }
-    
     return YES;
 }
 

@@ -266,8 +266,13 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 #pragma mark - Helper Functions
 
 - (void)getShortCodeAndSubmit {
+    NSString *charactersToEscape = @"!#$%&'*+-/=?^_`{|}~\"(),:;<>[]\\ ";
+    NSCharacterSet *allowedCharacters = [[NSCharacterSet characterSetWithCharactersInString:charactersToEscape] invertedSet];
+    NSString *encodedEmail = [self.tfReferrerEmail.text stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
+    NSLog(@"%@", encodedEmail);
+
     // Sets up request
-    NSString *urlString = [NSString stringWithFormat:@"urls/?campaign_uid=%@&email=%@", self.selectedCampaign.campID, self.tfReferrerEmail.text];
+    NSString *urlString = [NSString stringWithFormat:@"urls/?campaign_uid=%@&email=%@", self.selectedCampaign.campID, encodedEmail];
     
     NSURL *ambassadorURL;
     #if AMBPRODUCTION
@@ -338,7 +343,7 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     // Create IDENTIFY part of snippet starting with traits dict
     NSMutableString *traitsDictString = [[NSMutableString alloc] init];
     [traitsDictString appendString:@"    // Create dictionary for user traits\n"];
-    [traitsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *traitsDict = @{@\"email\" : @\"%@\",\n", self.tfRefEmail.text]];
+    [traitsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *traitsDict = @{\n%@@\"email\" : @\"%@\",\n", [self tabSpace], self.tfRefEmail.text]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
     [traitsDictString appendString:[NSString stringWithFormat:@"%@@\"firstName\" : @\"%@\",\n", [self tabSpace], self.tfFirstName.text]];
@@ -351,45 +356,34 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [traitsDictString appendFormat:@"%@@\"customLabel3\" : @\"%@\"\n", [self tabSpace], self.tfCustom3.text];
     [traitsDictString appendString:[NSString stringWithFormat:@"%@};\n\n", [self tabSpace]]];
     
-    // Creates options dictionary if switch is on
-    NSMutableString *optionsDictString = nil;
-    if (self.swtAutoCreate.isOn) {
-        optionsDictString = [[NSMutableString alloc] initWithString:@"    // Create dictionary with option to auto-enroll user in campaign\n"];
-        [optionsDictString appendString:[NSString stringWithFormat:@"    NSDictionary *identifyOptionsDictionary = @{@\"campaign\" : @\"%@\"};\n\n", self.selectedCampaign.campID]];
-    }
-    
     // Creates the correct identify string based on options dict being nil
     NSString *userIdString = [AMBUtilities stringIsEmpty:self.tfUID.text] ? @"nil" : [NSString stringWithFormat:@"@\"%@\"", self.tfUID.text];
-    NSString *identifyString = (optionsDictString) ? [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict options:identifyOptionsDictionary];\n", userIdString] :
-    [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict options:nil];\n", userIdString];
+    NSString *identifyString = self.swtAutoCreate.isOn ? [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict autoEnrollCampaign:@\"%@\"];\n", userIdString, self.selectedCampaign.campID] :
+    [NSString stringWithFormat:@"    [AmbassadorSDK identifyWithUserID:%@ traits:traitsDict];\n", userIdString];
     
     // Creates a full identify string to be inserted into appDelegate template
     NSMutableString *fullString = [[NSMutableString alloc] init];
     if (traitsDictString) { [fullString appendString:traitsDictString]; }
-    if (optionsDictString) { [fullString appendString:optionsDictString]; }
     [fullString appendString:identifyString];
     
     
     /* Create CONVERSION part of snippet */
     NSMutableString *conversionPropertyString = [[NSMutableString alloc] init];
     [conversionPropertyString appendString:@"    // Create dictionary for conversion properties\n"];
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"    NSDictionary *propertiesDictionary = @{@\"email\" : @\"%@\",\n", self.tfRefEmail.text]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"    NSDictionary *propertiesDictionary = @{\n%@          @\"email\" : @\"%@\",\n", [self tabSpace], self.tfRefEmail.text]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@@\"campaign\" : @\"%@\",\n", [self tabSpace], self.selectedCampaign.campID]];
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@@\"revenue\" : @%@,\n", [self tabSpace], self.tfRevAmt.text]];
-    [conversionPropertyString appendFormat:@"%@@\"commissionApproved\" : @%@\n", [self tabSpace], [self stringForBool:self.swtApproved.isOn forSwift:NO]];
-    [conversionPropertyString appendFormat:@"%@@\"emailNewAmbassador\" : @%@,\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn && self.swtAutoCreate.isOn forSwift:NO]];
-    [conversionPropertyString appendFormat:@"%@@\"orderId\" : @\"%@\",\n", [self tabSpace], self.tfTransactionUID.text];
-    [conversionPropertyString appendFormat:@"%@@\"eventData1\" : @\"%@\",\n", [self tabSpace], self.tfEventData1.text];
-    [conversionPropertyString appendFormat:@"%@@\"eventData2\" : @\"%@\",\n", [self tabSpace], self.tfEventData2.text];
-    [conversionPropertyString appendFormat:@"%@@\"eventData3\" : @\"%@\"\n", [self tabSpace], self.tfEventData3.text];
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@};\n\n", [self tabSpace]]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@          @\"campaign\" : @%@,\n", [self tabSpace], self.selectedCampaign.campID]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@          @\"revenue\" : @%@,\n", [self tabSpace], self.tfRevAmt.text]];
+    [conversionPropertyString appendFormat:@"%@          @\"commissionApproved\" : @%@,\n", [self tabSpace], [self stringForBool:self.swtApproved.isOn forSwift:NO]];
+    [conversionPropertyString appendFormat:@"%@          @\"emailNewAmbassador\" : @%@,\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn && self.swtAutoCreate.isOn forSwift:NO]];
+    [conversionPropertyString appendFormat:@"%@          @\"orderId\" : @\"%@\",\n", [self tabSpace], self.tfTransactionUID.text];
+    [conversionPropertyString appendFormat:@"%@          @\"eventData1\" : @\"%@\",\n", [self tabSpace], self.tfEventData1.text];
+    [conversionPropertyString appendFormat:@"%@          @\"eventData2\" : @\"%@\",\n", [self tabSpace], self.tfEventData2.text];
+    [conversionPropertyString appendFormat:@"%@          @\"eventData3\" : @\"%@\"\n", [self tabSpace], self.tfEventData3.text];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@          };\n\n", [self tabSpace]]];
     
-    [conversionPropertyString appendString:@"    // Create options dictionary for conversion\n"];
-    [conversionPropertyString appendString:@"    NSDictionary *optionsDictionary = @{@\"conversion\" : @YES};\n"];
-    
-    NSMutableString *conversionString = [[NSMutableString alloc] initWithString:@"    [AmbassadorSDK trackEvent:@\"Event Name\" properties:propertiesDictionary options:optionsDictionary completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {\n"];
+    NSMutableString *conversionString = [[NSMutableString alloc] initWithString:@"    [AmbassadorSDK trackEvent:@\"Event Name\" properties:propertiesDictionary completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {\n"];
     [conversionString appendFormat:@"%@switch (conversionStatus) {\n", [self doubleTab]];
     [conversionString appendFormat:@"%@    case ConversionSuccessful:\n", [self doubleTab]];
     [conversionString appendFormat:@"%@        NSLog(@\"Success!\");\n", [self doubleTab]];
@@ -423,58 +417,47 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     // Create IDENTIFY part of snippet starting with traits dict
     NSMutableString *traitsDictString = [[NSMutableString alloc] init];
     [traitsDictString appendString:@"        // Create dictionary for user traits\n"];
-    [traitsDictString appendString:[NSString stringWithFormat:@"        let traitsDict = [\"email\" : \"%@\",\n", self.tfRefEmail.text]];
+    [traitsDictString appendString:[NSString stringWithFormat:@"        let traitsDict = [\n%@\"email\" : \"%@\",\n", [self tabSpaceSwift], self.tfRefEmail.text]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
-    [traitsDictString appendString:[NSString stringWithFormat:@"%@\"firstName\" : \"%@\",\n", [self tabSpace], self.tfFirstName.text]];
-    [traitsDictString appendString:[NSString stringWithFormat:@"%@\"lastName\" : \"%@\",\n", [self tabSpace], self.tfLastName.text]];
+    [traitsDictString appendString:[NSString stringWithFormat:@"%@\"firstName\" : \"%@\",\n", [self tabSpaceSwift], self.tfFirstName.text]];
+    [traitsDictString appendString:[NSString stringWithFormat:@"%@\"lastName\" : \"%@\",\n", [self tabSpaceSwift], self.tfLastName.text]];
     
     NSString *addToGroupsString = self.swtAutoCreate.isOn ? self.tfGroupID.text : @"";
-    [traitsDictString appendFormat:@"%@\"addToGroups\" : \"%@\",\n", [self tabSpace], addToGroupsString];
-    [traitsDictString appendFormat:@"%@\"customLabel1\" : \"%@\",\n", [self tabSpace], self.tfCustom1.text];
-    [traitsDictString appendFormat:@"%@\"customLabel2\" : \"%@\",\n", [self tabSpace], self.tfCustom2.text];
-    [traitsDictString appendFormat:@"%@\"customLabel3\" : \"%@\"\n", [self tabSpace], self.tfCustom3.text];
-    [traitsDictString appendString:[NSString stringWithFormat:@"%@]\n\n", [self tabSpace]]];
-    
-    // Creates options dictionary if switch is on
-    NSMutableString *optionsDictString = nil;
-    if (self.swtAutoCreate.isOn) {
-        optionsDictString = [[NSMutableString alloc] initWithString:@"        // Create dictionary with option to auto-enroll user in campaign\n"];
-        [optionsDictString appendString:[NSString stringWithFormat:@"        let identifyOptionsDictionary = [\"campaign\" : \"%@\"]\n\n", self.selectedCampaign.campID]];
-    }
+    [traitsDictString appendFormat:@"%@\"addToGroups\" : \"%@\",\n", [self tabSpaceSwift], addToGroupsString];
+    [traitsDictString appendFormat:@"%@\"customLabel1\" : \"%@\",\n", [self tabSpaceSwift], self.tfCustom1.text];
+    [traitsDictString appendFormat:@"%@\"customLabel2\" : \"%@\",\n", [self tabSpaceSwift], self.tfCustom2.text];
+    [traitsDictString appendFormat:@"%@\"customLabel3\" : \"%@\"\n", [self tabSpaceSwift], self.tfCustom3.text];
+    [traitsDictString appendString:[NSString stringWithFormat:@"        ]\n\n"]];
     
     // Creates the correct identify string based on options dict being nil
     NSString *userIdString = [AMBUtilities stringIsEmpty:self.tfUID.text] ? @"nil" : [NSString stringWithFormat:@"\"%@\"", self.tfUID.text];
-    NSString *identifyString = (optionsDictString) ? [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithUserID(%@, traits:traitsDict, options:identifyOptionsDictionary)\n", userIdString] :
-                                                    [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithUserID(%@, traits:traitsDict, options:nil)\n", userIdString];
-    
+    NSString *identifyString = self.swtAutoCreate.isOn ? [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithUserID(%@, traits:traitsDict, autoEnrollCampaign:\"%@\")\n", userIdString, self.selectedCampaign.campID] :
+                                                    [NSString stringWithFormat:@"        AmbassadorSDK.identifyWithUserID(%@, traits:traitsDict)\n", userIdString];
+
     // Creates a full identify string to be inserted into appDelegate template
     NSMutableString *fullString = [[NSMutableString alloc] init];
     if (traitsDictString) { [fullString appendString:traitsDictString]; }
-    if (optionsDictString) { [fullString appendString:optionsDictString]; }
     [fullString appendString:identifyString];
     
     
     /* Create CONVERSION part of snippet */
     NSMutableString *conversionPropertyString = [[NSMutableString alloc] init];
     [conversionPropertyString appendString:@"        // Create dictionary for conversion properties\n"];
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"        let propertiesDictionary = [\"email\" : \"%@\",\n", self.tfRefEmail.text]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"        let propertiesDictionary = [\n%@\"email\" : \"%@\",\n", [self tabSpaceSwift], self.tfRefEmail.text]];
     
     // Checks all the traits inputs to see if they are filled out and should be added
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"campaign\" : \"%@\",\n", [self tabSpace], self.selectedCampaign.campID]];
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"revenue\" : %@,\n", [self tabSpace], self.tfRevAmt.text]];
-    [conversionPropertyString appendFormat:@"%@\"commissionApproved\" : %@,\n", [self tabSpace], [self stringForBool:self.swtApproved.isOn forSwift:YES]];
-    [conversionPropertyString appendFormat:@"%@\"emailNewAmbassador\" : %@,\n", [self tabSpace], [self stringForBool:self.swtEmailNewAmbassador.isOn && self.swtAutoCreate.isOn forSwift:YES]];
-    [conversionPropertyString appendFormat:@"%@\"orderId\" : \"%@\",\n", [self tabSpace], self.tfTransactionUID.text];
-    [conversionPropertyString appendFormat:@"%@\"eventData1\" : \"%@\",\n", [self tabSpace], self.tfEventData1.text];
-    [conversionPropertyString appendFormat:@"%@\"eventData2\" : \"%@\",\n", [self tabSpace], self.tfEventData2.text];
-    [conversionPropertyString appendFormat:@"%@\"eventData3\" : \"%@\"\n", [self tabSpace], self.tfEventData3.text];
-    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@]\n\n", [self tabSpace]]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"campaign\" : %@,\n", [self tabSpaceSwift], self.selectedCampaign.campID]];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"%@\"revenue\" : %@,\n", [self tabSpaceSwift], self.tfRevAmt.text]];
+    [conversionPropertyString appendFormat:@"%@\"commissionApproved\" : %@,\n", [self tabSpaceSwift], [self stringForBool:self.swtApproved.isOn forSwift:YES]];
+    [conversionPropertyString appendFormat:@"%@\"emailNewAmbassador\" : %@,\n", [self tabSpaceSwift], [self stringForBool:self.swtEmailNewAmbassador.isOn && self.swtAutoCreate.isOn forSwift:YES]];
+    [conversionPropertyString appendFormat:@"%@\"orderId\" : \"%@\",\n", [self tabSpaceSwift], self.tfTransactionUID.text];
+    [conversionPropertyString appendFormat:@"%@\"eventData1\" : \"%@\",\n", [self tabSpaceSwift], self.tfEventData1.text];
+    [conversionPropertyString appendFormat:@"%@\"eventData2\" : \"%@\",\n", [self tabSpaceSwift], self.tfEventData2.text];
+    [conversionPropertyString appendFormat:@"%@\"eventData3\" : \"%@\"\n", [self tabSpaceSwift], self.tfEventData3.text];
+    [conversionPropertyString appendString:[NSString stringWithFormat:@"        ]\n\n"]];
     
-    [conversionPropertyString appendString:@"        // Create options dictionary for conversion\n"];
-    [conversionPropertyString appendString:@"        let optionsDictionary = [\"conversion\" : true]\n"];
-    
-    NSMutableString *conversionString = [[NSMutableString alloc] initWithString:@"        AmbassadorSDK.trackEvent(\"Event Name\", properties:propertiesDictionary, options:optionsDictionary) { (parameters, conversionStatus, error) in\n"];
+    NSMutableString *conversionString = [[NSMutableString alloc] initWithString:@"        AmbassadorSDK.trackEvent(\"Event Name\", properties:propertiesDictionary) { (parameters, conversionStatus, error) in\n"];
     [conversionString appendFormat:@"%@    switch conversionStatus {\n", [self doubleTab]];
     [conversionString appendFormat:@"%@    case ConversionSuccessful:\n", [self doubleTab]];
     [conversionString appendFormat:@"%@        print(\"Success!\")\n", [self doubleTab]];
@@ -546,13 +529,15 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [javaString appendFormat:@"%@Bundle properties = new Bundle();\n", [self doubleTab]];
     [javaString appendFormat:@"%@properties.putInt(\"email\", \"%@\");\n", [self doubleTab], self.tfRefEmail.text];
     [javaString appendFormat:@"%@properties.putInt(\"campaign\", %@);\n", [self doubleTab], self.selectedCampaign.campID];
-    [javaString appendFormat:@"%@properties.putFloat(\"revenue\", %@f);\n", [self doubleTab], self.tfRevAmt.text];
+    [javaString appendFormat:@"%@properties.putFloat(\"revenue\", %@);\n", [self doubleTab], self.tfRevAmt.text];
     [javaString appendFormat:@"%@properties.putInt(\"commissionApproved\", %@);\n", [self doubleTab], [NSNumber numberWithBool:self.swtApproved.isOn]];
     [javaString appendFormat:@"%@properties.putString(\"eventData1\", \"%@\");\n", [self doubleTab], self.tfEventData1.text];
     [javaString appendFormat:@"%@properties.putString(\"eventData2\", \"%@\");\n", [self doubleTab], self.tfEventData2.text];
     [javaString appendFormat:@"%@properties.putString(\"eventData3\", \"%@\");\n", [self doubleTab], self.tfEventData3.text];
     [javaString appendFormat:@"%@properties.putString(\"orderId\", \"%@\");\n\n", [self doubleTab], self.tfTransactionUID.text];
-    if (self.swtAutoCreate.isOn) { [javaString appendFormat:@"%@properties.putInt(\"emailNewAmbassadord\", %@);\n\n", [self doubleTab], [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn]]; }
+    if (self.swtAutoCreate.isOn) {
+        [javaString appendFormat:@"%@properties.putInt(\"emailNewAmbassador\", %@);\n\n", [self doubleTab], [NSNumber numberWithBool:self.swtEmailNewAmbassador.isOn]];
+    }
 
     [javaString appendFormat:@"%@// Create options bundle\n", [self doubleTab]];
     [javaString appendFormat:@"%@properties.putBoolean(\"conversion\", true);\n\n", [self doubleTab]];
@@ -717,6 +702,14 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 
 - (NSString *)largeTabSpace {
     return @"                                     ";
+}
+
+- (NSString *)tabSpaceSwift {
+    return @"            ";
+}
+
+- (NSString *)largeTabSpaceSwift {
+    return @"                ";
 }
 
 @end

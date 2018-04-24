@@ -16,14 +16,14 @@
 #pragma mark - Shared Instance
 
 + (instancetype)sharedInstance {
-    static AMBNetworkManager* _sharedInsance = nil;
+    static AMBNetworkManager* _sharedInstance = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
-        _sharedInsance = [[AMBNetworkManager alloc] init];
-        _sharedInsance.urlSession = [_sharedInsance createURLSession];
+        _sharedInstance = [[AMBNetworkManager alloc] init];
+        _sharedInstance.urlSession = [_sharedInstance createURLSession];
     });
     
-    return _sharedInsance;
+    return _sharedInstance;
 }
 
 
@@ -210,15 +210,43 @@
     }] resume];
 }
 
+- (NSData *)sendSynchronousRequest:(NSURLRequest *)request returningResponse:(NSURLResponse **)response error:(NSError **)error
+{
+    
+    NSError __block *err = NULL;
+    NSData __block *data;
+    BOOL __block reqProcessed = false;
+    NSURLResponse __block *resp;
+    
+    [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable _data, NSURLResponse * _Nullable _response, NSError * _Nullable _error) {
+        resp = _response;
+        err = _error;
+        data = _data;
+        reqProcessed = true;
+    }] resume];
+    
+    while (!reqProcessed) {
+        [NSThread sleepForTimeInterval:0];
+    }
+    
+    *response = resp;
+    *error = err;
+    return data;
+}
+
+
 - (NSData *)getUrlInformationWithSuccess:(NSString*)shortCode {
     // Encodes the url
-    NSString *encodedUrl = [[AMBValues getUrlInformationUrl:shortCode] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *charactersToEscape = @"!#$%&'*+-/=?^_`{|}~\"(),:;<>[]\\ ";
+    NSCharacterSet *allowedCharacters = [[NSCharacterSet characterSetWithCharactersInString:charactersToEscape] invertedSet];
+    NSString *encodedShortCode = [shortCode stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacters];
+    NSString *encodedUrl = [AMBValues getUrlInformationUrl:encodedShortCode];
     
     NSMutableURLRequest *request = [self createURLRequestWithURL:encodedUrl requestType:@"GET"];
     NSError *error = nil;
     NSHTTPURLResponse *responseCode = nil;
     
-    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    NSData *oResponseData = [self sendSynchronousRequest:request returningResponse:&responseCode error:&error];
     
     if([responseCode statusCode] != 200){
         NSLog(@"Error getting %@, HTTP status code %li", encodedUrl, (long)[responseCode statusCode]);
@@ -230,18 +258,18 @@
 
 
 - (NSData *)getReferringShortCodeFromFingerprint:(NSDictionary*)fp{
-    // Encodes the url
-    NSString *encodedUrl = [[AMBValues getReferringShortCodeUrl] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *url = [AMBValues getReferringShortCodeUrl];
+    
     NSDictionary *payloadDict = @{@"fp" : fp};
-    NSMutableURLRequest *request = [self createURLRequestWithURL:encodedUrl requestType:@"POST"];
+    NSMutableURLRequest *request = [self createURLRequestWithURL:url requestType:@"POST"];
     request.HTTPBody = [NSJSONSerialization dataWithJSONObject:payloadDict options:0 error:nil];
     NSError *error = nil;
     NSHTTPURLResponse *responseCode = nil;
     
-    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
+    NSData *oResponseData = [self sendSynchronousRequest:request returningResponse:&responseCode error:&error];
     
     if([responseCode statusCode] != 200){
-        NSLog(@"Error getting %@, HTTP status code %li", encodedUrl, (long)[responseCode statusCode]);
+        NSLog(@"Error getting %@, HTTP status code %li", url, (long)[responseCode statusCode]);
     }
     
     return oResponseData;

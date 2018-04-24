@@ -88,6 +88,7 @@ NSInteger const maxTryCount = 10;
     // If a the run is a UI test, we don't identify
     if (![AMBValues isUITestRun]) {
         if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceInfoReceived) name:@"deviceInfoReceived" object:nil];
             [self performIdentifyForiOS10];
             
             // Checks to make sure the timer is not already running before instantiating a new one
@@ -97,7 +98,6 @@ NSInteger const maxTryCount = 10;
                 self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(performIdentifyForiOS10) userInfo:nil repeats:YES];
             }
             
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceInfoReceived) name:@"deviceInfoReceived" object:nil];
         }
     }
 }
@@ -110,12 +110,14 @@ NSInteger const maxTryCount = 10;
     }
 
     // Checks if try count is at its max
-    if (self.tryCount >= maxTryCount || (self.doneButtonPressed && self.identifyCompletion)) {
+    if (self.tryCount >= maxTryCount) {
+        DLog(@"[Identify] performIdentifyForiOS10 - Invalidate");
         [self.identifyTimer invalidate];
         [[AmbassadorSDK sharedInstance].pusherManager closeSocket];
         BOOL success = YES;
         if (self.safariVC && ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 9.0)) {
             [self.safariVC dismissViewControllerAnimated:YES completion:^{
+                DLog(@"[Identify] performIdentifyForiOS10 Completion called dismiss view controller");
                 if (self.identifyCompletion && !self.identifyCompletionCalled) { self.identifyCompletion(success); self.identifyCompletionCalled = YES;}
             }];
         }else{
@@ -126,6 +128,7 @@ NSInteger const maxTryCount = 10;
     self.tryCount++;
 
     if ((self.identifyProcessComplete == YES) || !([[AMBValues getDeviceFingerPrint] isEqual:@{}])) {
+        DLog(@"[Identify] performIdentifyForiOS10 identifyProcessComplete with Fingerprint - deviceInfoReceived");
         [self deviceInfoReceived];
         return;
     }
@@ -152,6 +155,7 @@ NSInteger const maxTryCount = 10;
 }
 
 - (void)deviceInfoReceived {
+    DLog(@"[deviceInfoReceived]");
     [self.identifyTimer invalidate];
     NSInteger secondsSinceStart = (NSInteger)[[NSDate date] timeIntervalSinceDate:self.startDate];
     if (secondsSinceStart < self.minimumTime && !self.doneButtonPressed){
@@ -164,6 +168,10 @@ NSInteger const maxTryCount = 10;
             [self.safariVC dismissViewControllerAnimated:YES completion:^{
                 [self identifyComplete];
             }];
+            // catch when safari view controller isn't present
+            if (!self.identifyProcessComplete){
+                [self identifyComplete];
+            }
         }
         else{
             [self identifyComplete];
@@ -177,6 +185,10 @@ NSInteger const maxTryCount = 10;
         [self.safariVC dismissViewControllerAnimated:YES completion:^{
             [self identifyComplete];
         }];
+        // catch when safari view controller isn't present
+        if (!self.identifyProcessComplete){
+            [self identifyComplete];
+        }
     }
     else{
         [self identifyComplete];

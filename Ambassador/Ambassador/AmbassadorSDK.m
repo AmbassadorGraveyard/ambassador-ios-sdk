@@ -22,14 +22,14 @@
 #pragma mark - LifeCycle
 
 + (AmbassadorSDK *)sharedInstance {
-    static AmbassadorSDK* _sharedInsance = nil;
+    static AmbassadorSDK* _sharedInstance = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
-        _sharedInsance = [[AmbassadorSDK alloc] init];
-        _sharedInsance.identify = [[AMBIdentify alloc] init];
+        _sharedInstance = [[AmbassadorSDK alloc] init];
+        _sharedInstance.identify = [[AMBIdentify alloc] init];
     });
     
-    return _sharedInsance;
+    return _sharedInstance;
 }
 
 
@@ -178,10 +178,12 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
         
         // If not already performed, we perform the safariVC identify to get shortCode and device FP
         if (!self.identify.identifyProcessComplete) {
+            DLog(@"[Identify] getIdentity");
             [self.identify getIdentity:completion];
         }
         else{
             BOOL success = YES;
+            DLog(@"[Identify] completion");
             if (completion) { completion(success); }
         }
     }];
@@ -246,10 +248,12 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     if (!themePlist || [themePlist isEqualToString:@""]) { themePlist = @"GenericTheme"; }
     
     // Checks to see if we have the user email
-    if (![AMBValues getUserIdentifyObject]) {
+    if (![[AMBValues getUserIdentifyObject].email length]) {
         // If we do NOT have it, we present an email prompt
+        DLog(@"[presentRAFForCampaign] Email not found");
         [[AmbassadorSDK sharedInstance] presentEmailPrompt:viewController campID:ID themePlist:themePlist];
     } else {
+        DLog(@"[presentRAFForCampaign] Email found.");
         // Otherwise- present RAF as normal
         [[AmbassadorSDK sharedInstance] presentRAFForCampaign:ID FromViewController:viewController withThemePlist:themePlist];
     }
@@ -285,6 +289,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     // Identifies and presents RAF
     [self localIdentifyWithUserID:@"" traits:traits autoEnrollCampaign:nil completion:nil];
     [self presentRAFForCampaign:self.tempCampID FromViewController:self.tempPresentController withThemePlist:self.tempPlistName];
+    
 }
 
 
@@ -445,7 +450,7 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     // get mbsy cookie code if set, else get referring short code using method
     // Note: calling getReferringShortCode assumes that identify has been called
     // resulting in the fingerprint being set in user values
-    return [AMBValues getMbsyCookieCode] ? [AMBValues getMbsyCookieCode] : [AMBValues getReferringShortCode];
+    return [[AMBValues getMbsyCookieCode] length] ? [AMBValues getMbsyCookieCode] : [AMBValues getReferringShortCode];
 }
 
 

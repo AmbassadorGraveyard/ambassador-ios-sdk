@@ -33,7 +33,7 @@
 
 - (void)setValue:(id)value forUndefinedKey:(NSString*)key {
     NSString *reason = [NSString stringWithFormat:@"The key \"%@\" does not exist.", key];
-    SentryException *exception = [[SentryException alloc] initWithValue:reason type:@"Uknown key exception"];
+    SentryException *exception = [[SentryException alloc] initWithValue:reason type:@"Unknown key exception"];
     NSArray <SentryException *> *exceptions = @[exception];
     SentryEvent *event = [[SentryEvent alloc] initWithLevel:kSentrySeverityError];
     event.message = reason;
@@ -256,7 +256,7 @@
     self.email = @"";
     self.campaign_id = @"";
     self.enroll = NO;
-    self.source = @"ios_sdk_pilot";
+    self.source = @"ios_sdk_1_1_0";
     self.identify_type = @"";
     
     return self;
@@ -268,7 +268,7 @@
         self.remote_customer_id = userID;
         self.enroll = NO;
         self.campaign_id = @"";
-        self.source = @"ios_sdk_pilot";
+        self.source = @"ios_sdk_1_1_0";
         self.identify_type = @"";
         [self formatTraits:traits];
         
