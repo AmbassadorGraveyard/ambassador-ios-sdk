@@ -60,4 +60,5 @@ deployment:
   staging:
     branch: staging
     commands:
-      - ./rainforest_prod.shdeployment:
+      - ./rainforest_prod.sh
+
