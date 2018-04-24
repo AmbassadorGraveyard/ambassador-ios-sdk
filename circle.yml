@@ -55,4 +55,9 @@ deployment:
   production:
     branch: master
     commands:
-      - ./rainforest_post_deploy.sh
+      - ./rainforest_staging.sh
+
+  staging:
+    branch: staging
+    commands:
+      - ./rainforest_prod.shdeployment:
