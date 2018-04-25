@@ -57,9 +57,9 @@ deployment:
   production:
     branch: master
     commands:
-      - curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-linux-amd64.tgz && sudo tar -xf rainforest-cli-stable-linux-amd64.tgz -C /usr/local/bin && ./rainforest_prod.sh
+      - curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && ./rainforest_prod.sh
 
   staging:
     branch: staging
     commands:
-      - curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-linux-amd64.tgz && sudo tar -xf rainforest-cli-stable-linux-amd64.tgz -C /usr/local/bin && ./rainforest_staging.sh
+      - curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && && ./rainforest_staging.sh
