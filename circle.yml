@@ -10,7 +10,7 @@ checkout:
 dependencies:
   pre:
     - pod install
-    - sudo -H pip install awscli
+    - sudo -H pip install awscli --ignore-installed six
     
 test:
   override:
