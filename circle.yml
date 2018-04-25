@@ -7,6 +7,9 @@ checkout:
   post:
     - git submodule sync
     - git submodule update
+environment:
+  RAINFOREST_TOKEN: $RAINFOREST_TOKEN
+  
 dependencies:
   pre:
     - pod install
