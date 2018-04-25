@@ -2,7 +2,7 @@ general:
   build_dir: Ambassador
 machine:
   xcode:
-    version: "7.2"
+    version: "9.2"
 checkout:
   post:
     - git submodule sync
@@ -10,23 +10,23 @@ checkout:
 dependencies:
   pre:
     - pod install
-    - sudo -H pip install awscli --ignore-installed six
-    
+    - sudo pip install awscli
+    - sudo pip install awscli --ignore-installed six
+  cache_directories:
+    - "~/.cocoapods"
 test:
   override:
     - bash secrets.sh
-    - xcodebuild archive -workspace Ambassador.xcworkspace -scheme DemoApp -archivePath Ambassador.xcarchive
-    - xcodebuild -exportArchive -archivePath Ambassador.xcarchive -exportPath $CIRCLE_ARTIFACTS/Ambassador.ipa -exportFormat ipa
-    - aws s3 cp $CIRCLE_ARTIFACTS/Ambassador.ipa s3://ambassador-rainforest/Ambassador.ipa --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+    - set -o pipefail &&
+     xcodebuild -workspace Ambassador.xcworkspace
+      -sdk iphonesimulator
+       -destination 'platform=iOS Simulator,OS=latest,name=iPhone 8'
+       -configuration Debug
+       -scheme DemoApp
+       VALID_ARCHS=x86_64
+       clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
   post:
-    # - set -o pipefail &&
-    #  xcodebuild -workspace Ambassador.xcworkspace
-    #   -sdk iphonesimulator
-    #    -destination 'platform=iOS Simulator,OS=latest,name=iPhone 6'
-    #    -scheme AmbassadorUITests
-    #    -configuration Debug
-    #    clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log |
-    #   xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
     - bundle exec slather coverage Ambassador.xcodeproj
 
     - set -o pipefail &&
@@ -42,17 +42,25 @@ test:
     - mv /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.framework $CIRCLE_ARTIFACTS/Ambassador.framework
     - mv /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.bundle $CIRCLE_ARTIFACTS/Ambassador.bundle
 
+    - xcodebuild ENABLE_BITCODE=NO -workspace 'Ambassador.xcworkspace' -scheme 'DemoApp' -arch x86_64 -configuration "Debug" -sdk iphonesimulator
+    - cd /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Debug-iphonesimulator/ && zip -r DemoApp.app.zip DemoApp.app
+    - aws s3 cp --acl public-read /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Debug-iphonesimulator/DemoApp.app.zip s3://ambassador-rainforest/ios/debug/DemoApp.app.zip
+
+    - xcodebuild ENABLE_BITCODE=NO -workspace 'Ambassador.xcworkspace' -scheme 'DemoApp' -arch x86_64 -configuration "Release" -sdk iphonesimulator
+    - cd /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Release-iphonesimulator/ && zip -r DemoApp.app.zip DemoApp.app
+    - aws s3 cp --acl public-read /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Release-iphonesimulator/DemoApp.app.zip s3://ambassador-rainforest/ios/release/DemoApp.app.zip
+
 deployment:
   production:
     branch: master
     commands:
-      - curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip
-      - unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin
-      - ./rainforest_staging.sh
+      - curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-linux-amd64.tgz
+      - sudo tar -xf rainforest-cli-stable-linux-amd64.tgz -C /usr/local/bin
+      - ./rainforest_prod.sh
 
   staging:
     branch: staging
     commands:
-      - curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip
-      - unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin
-      - ./rainforest_prod.sh
+      - curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-linux-amd64.tgz
+      - sudo tar -xf rainforest-cli-stable-linux-amd64.tgz -C /usr/local/bin
+      - ./rainforest_staging.sh
