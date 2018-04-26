@@ -10,6 +10,8 @@
 
 @interface ViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UILabel *myLabel;
+@property (strong, nonatomic) IBOutlet UITextView *outputText;
 
 @end
 

@@ -24,6 +24,10 @@
 
 /* Begin PBXBuildFile section */
 		0EE91F1B978D71581B795ECA /* libPods-DemoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D4F3F6CA2DB2A812094EBBA /* libPods-DemoApp.a */; };
+		594737FE2091FDE000AD8C19 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = 594737FD2091FDE000AD8C19 /* GenericTheme.plist */; };
+		594737FF2091FF8B00AD8C19 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
+		594738002091FF9D00AD8C19 /* libAmbassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB844D261BA75BB8003FD7A9 /* libAmbassador.a */; };
+		594738012092056F00AD8C19 /* Ambassador.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DB844D521BA7622D003FD7A9 /* Ambassador.bundle */; };
 		59B49D8D2091FBB600D70589 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B49D8C2091FBB600D70589 /* AppDelegate.m */; };
 		59B49D902091FBB600D70589 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B49D8F2091FBB600D70589 /* ViewController.m */; };
 		59B49D932091FBB600D70589 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59B49D912091FBB600D70589 /* Main.storyboard */; };
@@ -466,6 +470,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		594737F92091FCE800AD8C19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB844D251BA75BB8003FD7A9;
+			remoteInfo = Ambassador;
+		};
+		594737FB2091FCED00AD8C19 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB844D511BA7622D003FD7A9;
+			remoteInfo = AmbassadorResources;
+		};
 		DB844D331BA75BB8003FD7A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DB844D1E1BA75BB8003FD7A9 /* Project object */;
@@ -547,6 +565,7 @@
 
 /* Begin PBXFileReference section */
 		3585AE98B33CB0BBDA30984D /* Pods-DemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		594737FD2091FDE000AD8C19 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = GenericTheme.plist; path = ../../../TestManualApp/TestManualApp/GenericTheme.plist; sourceTree = "<group>"; };
 		59B49D892091FBB600D70589 /* SDKTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDKTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59B49D8B2091FBB600D70589 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		59B49D8C2091FBB600D70589 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -1047,6 +1066,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				594738002091FF9D00AD8C19 /* libAmbassador.a in Frameworks */,
+				594737FF2091FF8B00AD8C19 /* libicucore.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1138,6 +1159,7 @@
 		59B49D8A2091FBB600D70589 /* SDKTestApp */ = {
 			isa = PBXGroup;
 			children = (
+				594737FD2091FDE000AD8C19 /* GenericTheme.plist */,
 				59B49D8B2091FBB600D70589 /* AppDelegate.h */,
 				59B49D8C2091FBB600D70589 /* AppDelegate.m */,
 				59B49D8E2091FBB600D70589 /* ViewController.h */,
@@ -2435,6 +2457,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				594737FA2091FCE800AD8C19 /* PBXTargetDependency */,
+				594737FC2091FCED00AD8C19 /* PBXTargetDependency */,
 			);
 			name = SDKTestApp;
 			productName = SDKTestApp;
@@ -2635,6 +2659,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				594738012092056F00AD8C19 /* Ambassador.bundle in Resources */,
+				594737FE2091FDE000AD8C19 /* GenericTheme.plist in Resources */,
 				59B49D9B2091FBC000D70589 /* LaunchScreen.storyboard in Resources */,
 				59B49D982091FBC000D70589 /* Assets.xcassets in Resources */,
 				59B49D932091FBB600D70589 /* Main.storyboard in Resources */,
@@ -3053,6 +3079,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		594737FA2091FCE800AD8C19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB844D251BA75BB8003FD7A9 /* Ambassador */;
+			targetProxy = 594737F92091FCE800AD8C19 /* PBXContainerItemProxy */;
+		};
+		594737FC2091FCED00AD8C19 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB844D511BA7622D003FD7A9 /* AmbassadorResources */;
+			targetProxy = 594737FB2091FCED00AD8C19 /* PBXContainerItemProxy */;
+		};
 		DB844D341BA75BB8003FD7A9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = DB844D251BA75BB8003FD7A9 /* Ambassador */;
@@ -3166,8 +3202,15 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTestApp;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+					"-lstdc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -3199,8 +3242,15 @@
 				INFOPLIST_FILE = SDKTestApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTestApp;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+					"-lstdc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <Ambassador/Ambassador.h>
 
 @interface AppDelegate ()
 
@@ -17,6 +18,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSString *universal_token = [[NSProcessInfo processInfo] environment][@"RAINFOREST_SDK_TOKEN"];
+    NSString *universal_id = [[NSProcessInfo processInfo] environment][@"RAINFOREST_UNIVERSAL_ID"];
+    
+    
+    [AmbassadorSDK runWithUniversalToken:universal_token universalID:universal_id];
+    
     return YES;
 }
 
