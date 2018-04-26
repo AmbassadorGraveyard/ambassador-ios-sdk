@@ -24,11 +24,11 @@
 
 /* Begin PBXBuildFile section */
 		0EE91F1B978D71581B795ECA /* libPods-DemoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D4F3F6CA2DB2A812094EBBA /* libPods-DemoApp.a */; };
-		594737FE2091FDE000AD8C19 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = 594737FD2091FDE000AD8C19 /* GenericTheme.plist */; };
 		594737FF2091FF8B00AD8C19 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6A246D1BD031A100CE3230 /* libicucore.tbd */; };
 		594738002091FF9D00AD8C19 /* libAmbassador.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB844D261BA75BB8003FD7A9 /* libAmbassador.a */; };
 		594738012092056F00AD8C19 /* Ambassador.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DB844D521BA7622D003FD7A9 /* Ambassador.bundle */; };
 		5947380420920FB800AD8C19 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5947380320920FB800AD8C19 /* Constants.m */; };
+		59473807209237BB00AD8C19 /* GenericTheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = 59473806209237BB00AD8C19 /* GenericTheme.plist */; };
 		59B49D8D2091FBB600D70589 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B49D8C2091FBB600D70589 /* AppDelegate.m */; };
 		59B49D902091FBB600D70589 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B49D8F2091FBB600D70589 /* ViewController.m */; };
 		59B49D932091FBB600D70589 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59B49D912091FBB600D70589 /* Main.storyboard */; };
@@ -566,9 +566,9 @@
 
 /* Begin PBXFileReference section */
 		3585AE98B33CB0BBDA30984D /* Pods-DemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp.debug.xcconfig"; sourceTree = "<group>"; };
-		594737FD2091FDE000AD8C19 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = GenericTheme.plist; path = ../../../TestManualApp/TestManualApp/GenericTheme.plist; sourceTree = "<group>"; };
 		5947380220920FA400AD8C19 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		5947380320920FB800AD8C19 /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		59473806209237BB00AD8C19 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GenericTheme.plist; sourceTree = "<group>"; };
 		59B49D892091FBB600D70589 /* SDKTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDKTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59B49D8B2091FBB600D70589 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		59B49D8C2091FBB600D70589 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -1162,7 +1162,7 @@
 		59B49D8A2091FBB600D70589 /* SDKTestApp */ = {
 			isa = PBXGroup;
 			children = (
-				594737FD2091FDE000AD8C19 /* GenericTheme.plist */,
+				59473806209237BB00AD8C19 /* GenericTheme.plist */,
 				59B49D8B2091FBB600D70589 /* AppDelegate.h */,
 				59B49D8C2091FBB600D70589 /* AppDelegate.m */,
 				59B49D8E2091FBB600D70589 /* ViewController.h */,
@@ -2666,9 +2666,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				594738012092056F00AD8C19 /* Ambassador.bundle in Resources */,
-				594737FE2091FDE000AD8C19 /* GenericTheme.plist in Resources */,
 				59B49D9B2091FBC000D70589 /* LaunchScreen.storyboard in Resources */,
 				59B49D982091FBC000D70589 /* Assets.xcassets in Resources */,
+				59473807209237BB00AD8C19 /* GenericTheme.plist in Resources */,
 				59B49D932091FBB600D70589 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
