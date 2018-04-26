@@ -24,6 +24,13 @@
 
 /* Begin PBXBuildFile section */
 		0EE91F1B978D71581B795ECA /* libPods-DemoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D4F3F6CA2DB2A812094EBBA /* libPods-DemoApp.a */; };
+		59B49D8D2091FBB600D70589 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B49D8C2091FBB600D70589 /* AppDelegate.m */; };
+		59B49D902091FBB600D70589 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B49D8F2091FBB600D70589 /* ViewController.m */; };
+		59B49D932091FBB600D70589 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59B49D912091FBB600D70589 /* Main.storyboard */; };
+		59B49D962091FBB600D70589 /* SDKTestApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 59B49D942091FBB600D70589 /* SDKTestApp.xcdatamodeld */; };
+		59B49D982091FBC000D70589 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59B49D972091FBC000D70589 /* Assets.xcassets */; };
+		59B49D9B2091FBC000D70589 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59B49D992091FBC000D70589 /* LaunchScreen.storyboard */; };
+		59B49D9E2091FBC000D70589 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B49D9D2091FBC000D70589 /* main.m */; };
 		ADA1D14A20408B9400258E58 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBEB6FE11BA9AD04005EE0D0 /* Main.storyboard */; };
 		ADADAE38203F0DB6003F9D01 /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF07452B1C52C8FA009AF919 /* libOCMock.a */; };
 		ADD7A0572050077000CE89E3 /* Container+DeepSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD79F8C2050077000CE89E3 /* Container+DeepSearch.m */; };
@@ -540,6 +547,17 @@
 
 /* Begin PBXFileReference section */
 		3585AE98B33CB0BBDA30984D /* Pods-DemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoApp/Pods-DemoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		59B49D892091FBB600D70589 /* SDKTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDKTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		59B49D8B2091FBB600D70589 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		59B49D8C2091FBB600D70589 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		59B49D8E2091FBB600D70589 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		59B49D8F2091FBB600D70589 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		59B49D922091FBB600D70589 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		59B49D952091FBB600D70589 /* SDKTestApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SDKTestApp.xcdatamodel; sourceTree = "<group>"; };
+		59B49D972091FBC000D70589 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		59B49D9A2091FBC000D70589 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		59B49D9C2091FBC000D70589 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59B49D9D2091FBC000D70589 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9D4F3F6CA2DB2A812094EBBA /* libPods-DemoApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADADAE36203F0B17003F9D01 /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libOCMock.a; path = "../../../../../Volumes/OCMock 3.4-1/iOS library/libOCMock.a"; sourceTree = "<group>"; };
 		ADD79F8C2050077000CE89E3 /* Container+DeepSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Container+DeepSearch.m"; sourceTree = "<group>"; };
@@ -1025,6 +1043,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		59B49D862091FBB600D70589 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DB844D231BA75BB8003FD7A9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1108,6 +1133,23 @@
 				9D4F3F6CA2DB2A812094EBBA /* libPods-DemoApp.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		59B49D8A2091FBB600D70589 /* SDKTestApp */ = {
+			isa = PBXGroup;
+			children = (
+				59B49D8B2091FBB600D70589 /* AppDelegate.h */,
+				59B49D8C2091FBB600D70589 /* AppDelegate.m */,
+				59B49D8E2091FBB600D70589 /* ViewController.h */,
+				59B49D8F2091FBB600D70589 /* ViewController.m */,
+				59B49D912091FBB600D70589 /* Main.storyboard */,
+				59B49D972091FBC000D70589 /* Assets.xcassets */,
+				59B49D992091FBC000D70589 /* LaunchScreen.storyboard */,
+				59B49D9C2091FBC000D70589 /* Info.plist */,
+				59B49D9D2091FBC000D70589 /* main.m */,
+				59B49D942091FBB600D70589 /* SDKTestApp.xcdatamodeld */,
+			);
+			path = SDKTestApp;
 			sourceTree = "<group>";
 		};
 		ADD79F882050077000CE89E3 /* KSCrash */ = {
@@ -1443,6 +1485,7 @@
 				DB844D621BA76BDE003FD7A9 /* TestApplication */,
 				DB844D7C1BA76BDE003FD7A9 /* TestApplicationTests */,
 				EF64CFA41BE2A47D0072014B /* AmbassadorUITests */,
+				59B49D8A2091FBB600D70589 /* SDKTestApp */,
 				DB844D271BA75BB8003FD7A9 /* Products */,
 				0D24CFB05292A555B6506D41 /* Frameworks */,
 				FB29B5773FF95C0C3E89C522 /* Pods */,
@@ -1458,6 +1501,7 @@
 				DB844D611BA76BDE003FD7A9 /* DemoApp.app */,
 				DB844D791BA76BDE003FD7A9 /* TestApplicationTests.xctest */,
 				EF64CFA31BE2A47D0072014B /* AmbassadorUITests.xctest */,
+				59B49D892091FBB600D70589 /* SDKTestApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2380,6 +2424,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		59B49D882091FBB600D70589 /* SDKTestApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59B49D9F2091FBC000D70589 /* Build configuration list for PBXNativeTarget "SDKTestApp" */;
+			buildPhases = (
+				59B49D852091FBB600D70589 /* Sources */,
+				59B49D862091FBB600D70589 /* Frameworks */,
+				59B49D872091FBB600D70589 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SDKTestApp;
+			productName = SDKTestApp;
+			productReference = 59B49D892091FBB600D70589 /* SDKTestApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 		DB844D251BA75BB8003FD7A9 /* Ambassador */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DB844D3A1BA75BB8003FD7A9 /* Build configuration list for PBXNativeTarget "Ambassador" */;
@@ -2504,6 +2565,11 @@
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = Ambassador;
 				TargetAttributes = {
+					59B49D882091FBB600D70589 = {
+						CreatedOnToolsVersion = 9.3;
+						DevelopmentTeam = 2H59A3U3KT;
+						ProvisioningStyle = Automatic;
+					};
 					DB844D251BA75BB8003FD7A9 = {
 						CreatedOnToolsVersion = 6.4;
 					};
@@ -2559,11 +2625,22 @@
 				DB844D601BA76BDE003FD7A9 /* DemoApp */,
 				DB844D781BA76BDE003FD7A9 /* TestApplicationTests */,
 				EF64CFA21BE2A47D0072014B /* AmbassadorUITests */,
+				59B49D882091FBB600D70589 /* SDKTestApp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		59B49D872091FBB600D70589 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59B49D9B2091FBC000D70589 /* LaunchScreen.storyboard in Resources */,
+				59B49D982091FBC000D70589 /* Assets.xcassets in Resources */,
+				59B49D932091FBB600D70589 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DB844D2F1BA75BB8003FD7A9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2712,6 +2789,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		59B49D852091FBB600D70589 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59B49D902091FBB600D70589 /* ViewController.m in Sources */,
+				59B49D8D2091FBB600D70589 /* AppDelegate.m in Sources */,
+				59B49D9E2091FBC000D70589 /* main.m in Sources */,
+				59B49D962091FBB600D70589 /* SDKTestApp.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DB844D221BA75BB8003FD7A9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3013,6 +3101,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		59B49D912091FBB600D70589 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				59B49D922091FBB600D70589 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		59B49D992091FBC000D70589 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				59B49D9A2091FBC000D70589 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		DB844D6D1BA76BDE003FD7A9 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -3032,6 +3136,75 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		59B49DA02091FBC000D70589 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2H59A3U3KT;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SDKTestApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTestApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		59B49DA12091FBC000D70589 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2H59A3U3KT;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SDKTestApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Ambassador.SDKTestApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		DB844D381BA75BB8003FD7A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3314,7 +3487,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = TestApplication/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3353,7 +3526,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2H59A3U3KT;
 				INFOPLIST_FILE = TestApplication/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3456,6 +3629,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		59B49D9F2091FBC000D70589 /* Build configuration list for PBXNativeTarget "SDKTestApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59B49DA02091FBC000D70589 /* Debug */,
+				59B49DA12091FBC000D70589 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DB844D211BA75BB8003FD7A9 /* Build configuration list for PBXProject "Ambassador" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -3531,6 +3713,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		59B49D942091FBB600D70589 /* SDKTestApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				59B49D952091FBB600D70589 /* SDKTestApp.xcdatamodel */,
+			);
+			currentVersion = 59B49D952091FBB600D70589 /* SDKTestApp.xcdatamodel */;
+			path = SDKTestApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		EFE7D7971C21C9C700D7F92C /* AMBConversionModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
