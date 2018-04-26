@@ -49,17 +49,17 @@
     NSLog(@"identifyAction Clicked");
     
     NSDictionary *traitsDict = @{
-                                 @"email" : @"matt+testconvertios7@getambassador.com",
-                                 @"firstName" : @"Matt",
-                                 @"lastName" : @"Majewski",
+                                 @"email" : @"matt+testios@getambassador.com",
+                                 @"firstName" : @"iOS",
+                                 @"lastName" : @"Test App",
                                  @"phone" : @"5555555",
                                  @"sandbox" : @NO,
-                                 @"addToGroups": @"177",
+                                 @"addToGroups": @"133",
                                  @"address" : @{
-                                         @"street" : @"4 Main",
-                                         @"city" : @"Ro",
-                                         @"state" : @"Mi",
-                                         @"postalCode" : @"48071",
+                                         @"street" : @"1 Main",
+                                         @"city" : @"Detroit",
+                                         @"state" : @"MI",
+                                         @"postalCode" : @"48127",
                                          @"country" : @"USA"
                                          }
                                  };
@@ -117,14 +117,14 @@
 
 - (IBAction)showRAF:(id)sender {
     NSLog(@"RAF Clicked");
-    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"Test RAF"];
+    [AmbassadorSDK presentRAFForCampaign:@"33451" FromViewController:self withThemePlist:@"Test RAF"];
 }
 
 
 - (IBAction)clickConversion:(id)sender {
     // Create dictionary for conversion properties
     NSDictionary *propertiesDictionary = @{
-                                           @"campaign" : @260,
+                                           @"campaign" : @33451,
                                            @"revenue" : @1,
                                            @"commissionApproved" : @YES,
                                            @"emailNewAmbassador" : @1,
