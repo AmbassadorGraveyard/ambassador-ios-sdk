@@ -105,12 +105,6 @@
     [AmbassadorSDK unidentify];
 }
 
-- (IBAction)getURLInfo:(id)sender {
-    NSLog(@"getURLInfo clicked:");
-    NSString *campaignId = [AmbassadorSDK getCampaignIdFromShortCode:@"jqhMS"];
-    NSLog(@"%@", campaignId);
-}
-
 - (IBAction)svcGet:(id)sender {
     NSLog(@"svcGet:");
 }
