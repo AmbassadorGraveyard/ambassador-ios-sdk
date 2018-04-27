@@ -28,3 +28,7 @@ Pods/
 
 # OS
 .DS_Store
+
+Ambassador/SDKTestApp/env-vars.sh
+
+Ambassador/SDKTestApp/Constants.m

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>LandingPageMinimumSeconds</key>
+	<integer>5</integer>
+	<key>LandingPageBackgroundColor</key>
+	<string>#3C97D3</string>
+	<key>LandingPageMessageFull</key>
+	<string>&lt;div&gt;&lt;img src=&quot;https://s3.amazonaws.com/ambassador-ios/assets/Color_Mark_Circle%402x.png&quot;/&gt;&lt;/div&gt;&lt;div style=&quot;color:#ffffff; font-size: 1em;margin-top:2em;&quot;&gt;Thank you for downloading Ambassador!&lt;/div&gt;</string>
+	<key>LandingPageMessage</key>
+	<string>&lt;div style=&quot;color:#ffffff; font-size: 1.4em;font-family:SF UI Text Regular,Helvetica,Arial&quot;&gt;Thank you for downloading our app!&lt;/div&gt;</string>
+</dict>
+</plist>
