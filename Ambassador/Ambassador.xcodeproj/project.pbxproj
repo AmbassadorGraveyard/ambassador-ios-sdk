@@ -569,6 +569,7 @@
 		5947380220920FA400AD8C19 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		5947380320920FB800AD8C19 /* Constants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		59473806209237BB00AD8C19 /* GenericTheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GenericTheme.plist; sourceTree = "<group>"; };
+		594738322093CA8700AD8C19 /* DemoApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DemoApp.entitlements; sourceTree = "<group>"; };
 		59B49D892091FBB600D70589 /* SDKTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDKTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59B49D8B2091FBB600D70589 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		59B49D8C2091FBB600D70589 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -1506,6 +1507,7 @@
 		DB844D1D1BA75BB8003FD7A9 = {
 			isa = PBXGroup;
 			children = (
+				594738322093CA8700AD8C19 /* DemoApp.entitlements */,
 				DB844D281BA75BB8003FD7A9 /* Ambassador */,
 				DB844D531BA7622D003FD7A9 /* AmbassadorResources */,
 				DB844D351BA75BB8003FD7A9 /* AmbassadorTests */,
@@ -2621,7 +2623,7 @@
 								enabled = 0;
 							};
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -3549,6 +3551,7 @@
 			baseConfigurationReference = 3585AE98B33CB0BBDA30984D /* Pods-DemoApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DemoApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -3592,6 +3595,7 @@
 			baseConfigurationReference = F67902CBFAFE862FEAE36EE6 /* Pods-DemoApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DemoApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Zferral, Inc. (2H59A3U3KT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
