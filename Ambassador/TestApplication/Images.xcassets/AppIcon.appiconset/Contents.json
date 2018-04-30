@@ -139,7 +139,7 @@
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "Old-ambassador_certificate_large-1.png",
+      "filename" : "App_Store.png",
       "scale" : "1x"
     },
     {
@@ -204,7 +204,7 @@
     {
       "size" : "1024x1024",
       "idiom" : "watch-marketing",
-      "filename" : "Old-ambassador_certificate_large.png",
+      "filename" : "App_Store-1.png",
       "scale" : "1x"
     }
   ],
