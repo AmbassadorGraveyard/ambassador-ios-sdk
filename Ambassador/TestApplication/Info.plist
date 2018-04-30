@@ -19,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>4</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -36,7 +36,9 @@
 		<true/>
 	</dict>
 	<key>NSContactsUsageDescription</key>
-	<string>$(PRODUCT_NAME) contact use</string>
+	<string>To select contacts with whom to share your referral link</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>For specifying a Refer-a-Friend Image</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
