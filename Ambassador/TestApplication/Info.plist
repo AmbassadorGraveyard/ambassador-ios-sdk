@@ -36,7 +36,7 @@
 		<true/>
 	</dict>
 	<key>NSContactsUsageDescription</key>
-	<string>$(PRODUCT_NAME) contact use</string>
+	<string>To select contacts with whom to share your referral link</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>For specifying a Refer-a-Friend Image</string>
 	<key>UILaunchStoryboardName</key>
