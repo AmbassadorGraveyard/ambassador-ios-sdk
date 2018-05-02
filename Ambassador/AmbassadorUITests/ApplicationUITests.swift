@@ -184,7 +184,7 @@ extension ApplicationUITests {
         //expectation(for: existsPredicate, evaluatedWith: app.alerts["Great!"], handler: nil)
         //waitForExpectations(timeout: 30, handler: nil)
         //XCTAssertTrue(app.alerts["Great!"].exists)
-        app.tap()
+        //app.tap()
     }
     
     func testSettingsPage() {
