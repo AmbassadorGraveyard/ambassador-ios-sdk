@@ -638,9 +638,6 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
 - (void)performTrackWithShortCode:(NSString *)shortCode {
     // Saves short code based on referrer email
     [AMBValues setMbsyCookieWithCode:shortCode];
-
-    UIAlertController *successAlert = [UIAlertController cancelAlertWithTitle:@"Great!" message:@"You have successfully registered a conversion." cancelMessage:@"Okay"];
-    [self presentViewController:successAlert animated:YES completion:nil];
     
     // Format strings
     NSString *addToGroupString = self.swtAutoCreate.isOn ? self.tfGroupID.text : @"";
@@ -660,36 +657,48 @@ NSInteger ENROLL_SLIDING_HEIGHT = 123;
     [AMBValues setMbsyCampaign:enrollCampaign];
     
     // Call identify
-    [AmbassadorSDK identifyWithUserID:idUID traits:traitsDictionary autoEnrollCampaign:enrollCampaign];
-    
-    
-    // Sets all properties for converions
-    NSDictionary *propertiesDictionary = @{ @"email" : self.tfRefEmail.text,
-                                            @"orderId" : self.tfTransactionUID.text,
-                                            @"campaign" : [NSNumber numberWithInteger:[self.selectedCampaign.campID integerValue]],
-                                            @"revenue" : [NSNumber numberWithFloat:[self.tfRevAmt.text floatValue]],
-                                            @"commissionApproved" : [NSNumber numberWithBool:self.swtApproved.isOn],
-                                            @"eventData1" : self.tfEventData1.text,
-                                            @"eventData2" : self.tfEventData2.text,
-                                            @"eventData3" : self.tfEventData3.text,
-                                            @"emailNewAmbassador" : [NSNumber numberWithBool:(self.swtAutoCreate.isOn && self.swtEmailNewAmbassador.isOn)] };
-    
-    // Call the track function and trigger the conversion
-    [AmbassadorSDK trackEvent:@"New event" properties:propertiesDictionary restrictToInstall:NO completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {
-        switch (conversionStatus) {
-            case ConversionSuccessful:
-                NSLog(@"Success!");
-                break;
-            case ConversionPending:
-                NSLog(@"Pending!");
-                break;
-            case ConversionError:
-                NSLog(@"Error :(");
-                break;
-            default:
-                break;
+    [AmbassadorSDK identifyWithUserID:idUID traits:traitsDictionary autoEnrollCampaign:enrollCampaign completion:^(BOOL success){
+        if (success){
+            // Create an identify success message
+            // Sets all properties for converions
+            NSDictionary *propertiesDictionary = @{ @"email" : self.tfRefEmail.text,
+                                                    @"orderId" : self.tfTransactionUID.text,
+                                                    @"campaign" : [NSNumber numberWithInteger:[self.selectedCampaign.campID integerValue]],
+                                                    @"revenue" : [NSNumber numberWithFloat:[self.tfRevAmt.text floatValue]],
+                                                    @"commissionApproved" : [NSNumber numberWithBool:self.swtApproved.isOn],
+                                                    @"eventData1" : self.tfEventData1.text,
+                                                    @"eventData2" : self.tfEventData2.text,
+                                                    @"eventData3" : self.tfEventData3.text,
+                                                    @"emailNewAmbassador" : [NSNumber numberWithBool:(self.swtAutoCreate.isOn && self.swtEmailNewAmbassador.isOn)] };
+            
+            // Call the track function and trigger the conversion
+            [AmbassadorSDK trackEvent:@"New event" properties:propertiesDictionary restrictToInstall:NO completion:^(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error) {
+                switch (conversionStatus) {
+                    case ConversionSuccessful:
+                        NSLog(@"Success!");
+                        break;
+                    case ConversionPending:
+                        NSLog(@"Pending!");
+                        break;
+                    case ConversionError:
+                        NSLog(@"Error :(");
+                        break;
+                    default:
+                        break;
+                }
+            }];
+            UIAlertController *successAlert = [UIAlertController cancelAlertWithTitle:@"Great!" message:@"You have successfully registered a conversion." cancelMessage:@"Okay"];
+            [self presentViewController:successAlert animated:YES completion:nil];
         }
+        else{
+            // Create an identify error message
+            NSString *confirmationMessage = [NSString stringWithFormat:@"There was an error during conversion."];
+            UIAlertController *confirmationAlert = [UIAlertController cancelAlertWithTitle:@"Error" message:confirmationMessage cancelMessage:@"Okay"];
+            [self presentViewController:confirmationAlert animated:YES completion:nil];
+        }
+        
     }];
+    
 }
 
 - (NSString *)doubleTab {
