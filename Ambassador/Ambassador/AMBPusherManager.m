@@ -94,16 +94,16 @@
         } else if (json[@"mbsy_cookie_code"] && json[@"mbsy_cookie_code"] != [NSNull null]) {
             DLog(@"[Identify] Short code '%@' and fingerprint recieved.", json[@"mbsy_cookie_code"]);
             [AMBValues setMbsyCookieWithCode:json[@"mbsy_cookie_code"]]; // Saves mbsy cookie to defaults
-            NSDictionary *consumerDict = @{@"UID" : json[@"fingerprint"][@"consumer"][@"UID"]};
-            NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"], @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
+            NSDictionary *consumerDict = @{@"UID" : json[@"fingerprint"][@"consumer"][@"UID"] ? json[@"fingerprint"][@"consumer"][@"UID"] : @""};
+            NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"] ? json[@"fingerprint"][@"device"][@"type"] : @"Other", @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
             NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
             [AMBValues setDeviceFingerPrintWithDictionary:fingerPrintDict]; // Saves device fp to defaults
             [[NSNotificationCenter defaultCenter] postNotificationName:@"deviceInfoReceived" object:nil];
 
         } else if (!json[@"uid"] && json[@"fingerprint"] && json[@"fingerprint"] != [NSNull null]) {
             DLog(@"[Identify] fingerprint recieved.");
-            NSDictionary *consumerDict = @{@"UID" : json[@"fingerprint"][@"consumer"][@"UID"]};
-            NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"], @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
+            NSDictionary *consumerDict = @{@"UID" : json[@"fingerprint"][@"consumer"][@"UID"] ? json[@"fingerprint"][@"consumer"][@"UID"] : @""};
+            NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"] ? json[@"fingerprint"][@"device"][@"type"] : @"Other", @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
             NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
             [AMBValues setDeviceFingerPrintWithDictionary:fingerPrintDict]; // Saves device fp to defaults
             [self receivedIdentifyAction];
@@ -124,8 +124,8 @@
                     [AMBValues setDeviceFingerPrintWithDictionary:user.fingerprint]; // Saves device fp to defaults
                 }else if ((json[@"fingerprint"] && json[@"fingerprint"] != [NSNull null])){
                     DLog(@"[Identify] fingerprint recieved.");
-                    NSDictionary *consumerDict = @{@"UID" : json[@"fingerprint"][@"consumer"][@"UID"]};
-                    NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"], @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
+                    NSDictionary *consumerDict = @{@"UID" : json[@"fingerprint"][@"consumer"][@"UID"] ? json[@"fingerprint"][@"consumer"][@"UID"] : @""};
+                    NSDictionary *deviceDict = @{@"type" : json[@"fingerprint"][@"device"][@"type"] ? json[@"fingerprint"][@"device"][@"type"] : @"Other", @"ID" : json[@"fingerprint"][@"device"][@"ID"]};
                     NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
                     [AMBValues setDeviceFingerPrintWithDictionary:fingerPrintDict]; // Saves device fp to defaults
                 }
