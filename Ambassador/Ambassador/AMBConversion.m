@@ -110,7 +110,7 @@
     // If we DON'T have a device fingerprint, we set the 'fp' value to empty set the fields to the mbsy fields
     if (!deviceFingerprint || deviceFingerprint.count == 0) { return @{@"fp" : @{}, @"fields" : mbsyFields}; }
     
-    NSDictionary *consumerDict = @{@"UID" : deviceFingerprint[@"consumer"][@"UID"], @"insights" : (deviceFingerprint[@"consumer"][@"insights"]) ? deviceFingerprint[@"consumer"][@"insights"] : @{}};
+    NSDictionary *consumerDict = @{@"UID" : deviceFingerprint[@"consumer"][@"UID"] ? deviceFingerprint[@"consumer"][@"UID"] : @"", @"insights" : (deviceFingerprint[@"consumer"][@"insights"]) ? deviceFingerprint[@"consumer"][@"insights"] : @{}};
     NSDictionary *deviceDict = @{@"type" : deviceFingerprint[@"device"][@"type"], @"ID" : deviceFingerprint[@"device"][@"ID"]};
     NSDictionary *fingerPrintDict = @{@"consumer" : consumerDict, @"device" : deviceDict };
     
