@@ -221,6 +221,7 @@
             UITabBarController *tab = (UITabBarController *)topController;
             topController = tab.selectedViewController;
         } else {
+            DLog(@"[getTopViewController] Top View Controller Found");
             break;
         }
     }
