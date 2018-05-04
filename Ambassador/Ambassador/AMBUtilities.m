@@ -210,10 +210,21 @@
     UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
     
     // Checks if a modal VC is being presented
-    while (topController.presentedViewController) {
-        topController = topController.presentedViewController;
+    while (true)
+    {
+        if (topController.presentedViewController) {
+            topController = topController.presentedViewController;
+        } else if ([topController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *nav = (UINavigationController *)topController;
+            topController = nav.topViewController;
+        } else if ([topController isKindOfClass:[UITabBarController class]]) {
+            UITabBarController *tab = (UITabBarController *)topController;
+            topController = tab.selectedViewController;
+        } else {
+            DLog(@"[getTopViewController] Top View Controller Found");
+            break;
+        }
     }
-    
     return topController;
 }
     

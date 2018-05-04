@@ -205,4 +205,35 @@
     XCTAssertEqualObjects([returnDict valueForKey:@"source"], @"ios_sdk_1_1_0");
 }
 
+- (void)testPayloadForConversionNoCUID {
+    // GIVEN
+    NSDictionary *consumerDict = @{};
+    NSDictionary *deviceDict = @{@"type" : @"test", @"ID" : @"lksdjflksdjflksdjflkajisjsjetoa23423kjlj2i3oj2lj"};
+    NSDictionary *fpDict = @{@"consumer" : consumerDict, @"device" : deviceDict};
+    NSDictionary *mbsyFields = @{};
+    
+    // WHEN
+    NSDictionary *returnDict = [self.conversion payloadForConversionCallWithFP:fpDict mbsyFields:(NSMutableDictionary*)mbsyFields];
+    
+    // THEN
+    XCTAssertEqual([[returnDict allKeys] count], 3);
+    XCTAssertEqualObjects([returnDict valueForKey:@"source"], @"ios_sdk_1_1_0");
+}
+
+
+- (void)testPayloadForConversionNoInsights {
+    // GIVEN
+    NSDictionary *consumerDict = @{@"UID" : @""};
+    NSDictionary *deviceDict = @{@"type" : @"test", @"ID" : @"lksdjflksdjflksdjflkajisjsjetoa23423kjlj2i3oj2lj"};
+    NSDictionary *fpDict = @{@"consumer" : consumerDict, @"device" : deviceDict};
+    NSDictionary *mbsyFields = @{};
+    
+    // WHEN
+    NSDictionary *returnDict = [self.conversion payloadForConversionCallWithFP:fpDict mbsyFields:(NSMutableDictionary*)mbsyFields];
+    
+    // THEN
+    XCTAssertEqual([[returnDict allKeys] count], 3);
+    XCTAssertEqualObjects([returnDict valueForKey:@"source"], @"ios_sdk_1_1_0");
+}
+
 @end
