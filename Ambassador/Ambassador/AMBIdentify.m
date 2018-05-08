@@ -30,6 +30,7 @@
 @property (nonatomic) NSDate * startDate;
 @property (nonatomic) NSInteger minimumTime;
 @property (nonatomic) BOOL doneButtonPressed; // this is to track that the Done button has been pressed (used for timing of browser close)
+@property (nonatomic) BOOL safariViewLoaded;
 
 @end
 
@@ -49,6 +50,7 @@ NSInteger const maxTryCount = 10;
     self.doneButtonPressed = NO;
     self.minimumTime = [self getMinimumTime];
     self.startDate = nil;
+    self.safariViewLoaded = NO;
     return self;
 }
 
@@ -94,6 +96,7 @@ NSInteger const maxTryCount = 10;
             // Checks to make sure the timer is not already running before instantiating a new one
             if (!self.identifyTimer.isValid) {
                 self.tryCount = 0;
+                self.safariViewLoaded = NO;
                 self.doneButtonPressed = NO;
                 self.identifyTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(performIdentifyForiOS10) userInfo:nil repeats:YES];
             }
@@ -143,7 +146,7 @@ NSInteger const maxTryCount = 10;
     
     // Gets the top viewController and adds the safari VC to it if not already added
     UIViewController *topVC = [AMBUtilities getTopViewController];
-    if (![self.safariVC.view isDescendantOfView:topVC.view]) {
+    if (![self.safariVC.view isDescendantOfView:topVC.view] && !self.safariViewLoaded) {
         self.safariVC.modalPresentationStyle = UIModalPresentationPopover;
         self.safariVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
         self.safariVC.popoverPresentationController.sourceView = topVC.view;
@@ -229,6 +232,7 @@ NSInteger const maxTryCount = 10;
         [controller.view removeFromSuperview];
         [controller removeFromParentViewController];
     }
+    self.safariViewLoaded = YES;
 }
 
 @end
