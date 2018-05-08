@@ -44,10 +44,12 @@
         NSInteger statusCode = (int)((NSHTTPURLResponse*) response).statusCode;
         if (!error && [AMBUtilities isSuccessfulStatusCode:statusCode]) {
             if (success) { success([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+            DLog(@"[sendIdentifyForCampaign] Success.");
         } else if (!error && ![AMBUtilities isSuccessfulStatusCode:statusCode]) {
             if (failure) { failure([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); }
+            DLog(@"[sendIdentifyForCampaign] Failure.");
         } else {
-            DLog(@"[Identify] Send Identify Error - %li %@", (long)statusCode, error);
+            DLog(@"[sendIdentifyForCampaign] Failure in else - error - %li %@", (long)statusCode, error);
             if (failure) { failure([error localizedFailureReason]); }
         }
     }] resume];
