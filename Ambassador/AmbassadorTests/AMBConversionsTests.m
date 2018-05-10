@@ -202,7 +202,7 @@
     
     // THEN
     XCTAssertEqual([[returnDict allKeys] count], 3);
-    XCTAssertEqualObjects([returnDict valueForKey:@"source"], @"ios_sdk_1_1_0");
+    XCTAssertEqualObjects([returnDict valueForKey:@"source"], @"ios_sdk_1_1_2");
 }
 
 - (void)testPayloadForConversionNoCUID {
@@ -217,7 +217,7 @@
     
     // THEN
     XCTAssertEqual([[returnDict allKeys] count], 3);
-    XCTAssertEqualObjects([returnDict valueForKey:@"source"], @"ios_sdk_1_1_0");
+    XCTAssertEqualObjects([returnDict valueForKey:@"source"], @"ios_sdk_1_1_2");
 }
 
 
@@ -233,7 +233,7 @@
     
     // THEN
     XCTAssertEqual([[returnDict allKeys] count], 3);
-    XCTAssertEqualObjects([returnDict valueForKey:@"source"], @"ios_sdk_1_1_0");
+    XCTAssertEqualObjects([returnDict valueForKey:@"source"], @"ios_sdk_1_1_2");
 }
 
 @end

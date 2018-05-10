@@ -129,7 +129,7 @@
         }
     }
     
-    if (!nonNil) { NSLog(@"[Ambassador] Warning - ConversionPrameters object contained a nil property. Attempting to send anyway."); }
+    if (!nonNil) { NSLog(@"[Ambassador] Warning - ConversionParameters object contained a nil property. Attempting to send anyway."); }
     
     if (!requiredPropertiesSet) {
         DLog(@"[Ambassador] Error - ConversionParameter's required properties were not set! Ensure that 'MBSY_REVENUE', 'MBSY_EMAIL', and 'MBSY_CAMPAIGN' properties are being set. (The other properties are optional");
