@@ -32,13 +32,14 @@
     // If the conversion is unable to send because no fp or short_code we return 'pending'
     if (![self canSendConversion]) {
         // Save the conversion to the database for later sending
-        [AMBCoreDataManager saveNewObjectToCoreDataWithEntityName:@"AMBConversionParametersEntity" valuesToSave:[parameters propertyDictionary]];
+        NSLog(@"[Ambasssador] Conversion call was sent and is currently pending!");
         if (pending) { pending(parameters); }
         return;
     }
     
     // If there is no error with the object and we have the fp/short_code, we send it
     [self sendConversion:parameters success:^{
+        NSLog(@"[Ambasssador] Conversion call was sent and is currently processing!");
         if (success) { success(parameters); }
     } failure:^{
         // If the call fails at this point, we can assume it's a network issue and will save it for later
