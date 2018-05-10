@@ -28,7 +28,15 @@
         if (error) { error(conversionError, parameters); }
         return;
     }
-
+    
+    // If the conversion is unable to send because no fp or short_code we return 'pending'
+    if (![self canSendConversion]) {
+        // Save the conversion to the database for later sending
+        [AMBCoreDataManager saveNewObjectToCoreDataWithEntityName:@"AMBConversionParametersEntity" valuesToSave:[parameters propertyDictionary]];
+        if (pending) { pending(parameters); }
+        return;
+    }
+    
     // If there is no error with the object and we have the fp/short_code, we send it
     [self sendConversion:parameters success:^{
         if (success) { success(parameters); }
