@@ -45,6 +45,16 @@
 }
 
 
+- (IBAction)sendNativeEmail:(id)sender {
+    NSLog(@"sendNativeEmail Clicked");
+    NSString *recipients = @"mailto: ?bcc=second@example.com,third@example.com&subject=Hello from California!";
+    NSString *body = @"&body=It is raining in sunny California! https://mbsy.co/ly2";
+    NSString *email = [NSString stringWithFormat:@"%@%@", recipients, body];
+    email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
+}
+
 - (IBAction)identifyAction:(id)sender {
     NSLog(@"identifyAction Clicked");
     
@@ -111,7 +121,7 @@
 
 - (IBAction)showRAF:(id)sender {
     NSLog(@"RAF Clicked");
-    [AmbassadorSDK presentRAFForCampaign:@"33451" FromViewController:self withThemePlist:@"Test RAF"];
+    [AmbassadorSDK presentRAFForCampaign:@"260" FromViewController:self withThemePlist:@"Test RAF"];
 }
 
 

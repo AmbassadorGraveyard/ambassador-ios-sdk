@@ -142,6 +142,17 @@
                                 <color key="textColor" red="0.48542206339999999" green="0.60720387519999997" blue="0.75423008420000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5NV-dK-Fac">
+                                <rect key="frame" x="200" y="169" width="158" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.82940238710000003" green="0.88917630910000001" blue="0.95996409650000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Send Native Email">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendNativeEmail:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DrG-8L-h8O"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.26871204376220703" green="0.4689134955406189" blue="0.73043745756149292" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

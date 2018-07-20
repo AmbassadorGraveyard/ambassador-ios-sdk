@@ -378,7 +378,7 @@ NSString * TEST_APP_CONTSTANT = @"AMBTESTAPP";
 }
 
 + (NSString*)getUserEmail {
-    return [AMBValues getUserIdentifyObject].email;
+    return [AMBValues getUserIdentifyObject].email ? [AMBValues getUserIdentifyObject].email : @"";
 }
 
 + (AMBPusherChannelObject*)getPusherChannelObject {
