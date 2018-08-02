@@ -112,3 +112,12 @@ jobs:
         path: /tmp/circleci-artifacts
     - store_artifacts:
         path: /tmp/circleci-test-results
+    - deploy:
+        command: |
+        if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && cd /Users/distiller/ambassador-ios-sdk && ./rainforest_prod.sh
+        fi
+        if [ "${CIRCLE_BRANCH}" == "staging" ]; then
+            curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && cd /Users/distiller/ambassador-ios-sdk && ./rainforest_staging.sh
+        fi
+
