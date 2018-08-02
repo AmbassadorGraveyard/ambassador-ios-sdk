@@ -56,8 +56,9 @@ jobs:
     - run: echo -e "export RAILS_ENV=test\nexport RACK_ENV=test" >> $BASH_ENV
     - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
     - run: pwd
-    - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/
-    - run: pod install --verbose
+    - run:
+        working_directory: ~/GetAmbassador/ambassador-ios-sdk/Ambassador/
+        command: pod install --verbose
     # Save dependency cache
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
