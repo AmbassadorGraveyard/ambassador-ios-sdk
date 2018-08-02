@@ -114,12 +114,16 @@ jobs:
         path: /tmp/circleci-test-results
 
   deploy-stage:
+    macos:
+      xcode: '9.4.1'
     steps:
       - run:
         name: Deploy if tests pass and branch is Staging
         command: curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && cd /Users/distiller/ambassador-ios-sdk && ./rainforest_prod.sh
 
   deploy-prod:
+    macos:
+      xcode: '9.4.1'
     steps:
       - run:
         name: Deploy if tests pass and branch is Master
