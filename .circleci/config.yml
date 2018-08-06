@@ -80,7 +80,7 @@ jobs:
     - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && bash secrets.sh
     - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && set -o pipefail && xcodebuild -workspace Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 8' -configuration Debug -scheme DemoApp VALID_ARCHS=x86_64 clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log | xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
     # This is based on your 1.0 configuration file or project settings
-    - run: bundle exec slather coverage Ambassador.xcodeproj
+    - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && bundle exec slather coverage Ambassador.xcodeproj
     - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && set -o pipefail && xcodebuild -workspace Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 8' -scheme AmbassadorUITests -configuration Debug clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log | xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
     - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && xcodebuild -workspace Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 8' -configuration Release -scheme Framework -derivedDataPath DerivedData clean build
     - run: mv /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.framework $CIRCLE_ARTIFACTS/Ambassador.framework
