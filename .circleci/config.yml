@@ -55,8 +55,8 @@ jobs:
     # The following line was run implicitly in your 1.0 builds based on what CircleCI inferred about the structure of your project. In 2.0 you need to be explicit about which commands should be run. In some cases you can discard inferred commands if they are not relevant to your project.
     - run: echo -e "export RAILS_ENV=test\nexport RACK_ENV=test" >> $BASH_ENV
     - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
-    - run: pwd && ls
-    - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && pod install --verbose
+    - run: pwd && ls && ls ./Ambassador/
+    - run: cd $CIRCLE_WORKING_DIRECTORY/Ambassador/ && pod install --verbose
     # Save dependency cache
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
@@ -78,20 +78,20 @@ jobs:
     #   This would typically be a build job when using workflows, possibly combined with build
     # This is based on your 1.0 configuration file or project settings
     - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && bash secrets.sh
-    - run: set -o pipefail && xcodebuild -workspace $CIRCLE_WORKING_DIRECTORY/Ambassador/Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 8' -configuration Debug -scheme DemoApp VALID_ARCHS=x86_64 clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log | xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
+    - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && set -o pipefail && xcodebuild -workspace Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 8' -configuration Debug -scheme DemoApp VALID_ARCHS=x86_64 clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log | xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/unit-test-results/results.xml
     # This is based on your 1.0 configuration file or project settings
     - run: bundle exec slather coverage Ambassador.xcodeproj
-    - run: set -o pipefail && xcodebuild -workspace $CIRCLE_WORKING_DIRECTORY/Ambassador/Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 8' -scheme AmbassadorUITests -configuration Debug clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log | xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
-    - run: xcodebuild -workspace $CIRCLE_WORKING_DIRECTORY/Ambassador/Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 8' -configuration Release -scheme Framework -derivedDataPath DerivedData clean build
+    - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && set -o pipefail && xcodebuild -workspace Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 8' -scheme AmbassadorUITests -configuration Debug clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log | xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
+    - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && xcodebuild -workspace Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 8' -configuration Release -scheme Framework -derivedDataPath DerivedData clean build
     - run: mv /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.framework $CIRCLE_ARTIFACTS/Ambassador.framework
     - run: mv /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.bundle $CIRCLE_ARTIFACTS/Ambassador.bundle
-    - run: xcodebuild ENABLE_BITCODE=NO -workspace '$CIRCLE_WORKING_DIRECTORY/Ambassador/Ambassador.xcworkspace' -scheme 'DemoApp' -arch x86_64 -configuration "Debug" -sdk iphonesimulator
+    - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && xcodebuild ENABLE_BITCODE=NO -workspace 'Ambassador.xcworkspace' -scheme 'DemoApp' -arch x86_64 -configuration "Debug" -sdk iphonesimulator
     - run: cd /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Debug-iphonesimulator/ && zip -r DemoApp.app.zip DemoApp.app
     - run: aws s3 cp --acl public-read /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Debug-iphonesimulator/DemoApp.app.zip s3://ambassador-rainforest/ios/debug/DemoApp.app.zip
-    - run: xcodebuild ENABLE_BITCODE=NO -workspace '$CIRCLE_WORKING_DIRECTORY/Ambassador/Ambassador.xcworkspace' -scheme 'DemoApp' -arch x86_64 -configuration "Release" -sdk iphonesimulator
+    - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && xcodebuild ENABLE_BITCODE=NO -workspace 'Ambassador.xcworkspace' -scheme 'DemoApp' -arch x86_64 -configuration "Release" -sdk iphonesimulator
     - run: cd /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Release-iphonesimulator/ && zip -r DemoApp.app.zip DemoApp.app
     - run: aws s3 cp --acl public-read /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Release-iphonesimulator/DemoApp.app.zip s3://ambassador-rainforest/ios/release/DemoApp.app.zip
-    - run: xcodebuild ENABLE_BITCODE=NO -workspace '$CIRCLE_WORKING_DIRECTORY/Ambassador/Ambassador.xcworkspace' -scheme 'SDKTestApp' -arch x86_64 -configuration "Release" -sdk iphonesimulator
+    - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && xcodebuild ENABLE_BITCODE=NO -workspace 'Ambassador.xcworkspace' -scheme 'SDKTestApp' -arch x86_64 -configuration "Release" -sdk iphonesimulator
     - run: cd /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Release-iphonesimulator/ && zip -r SDKTestApp.app.zip SDKTestApp.app
     - run: aws s3 cp --acl public-read /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Release-iphonesimulator/SDKTestApp.app.zip s3://ambassador-rainforest/ios/release/SDKTestApp.app.zip
     # Deployment
