@@ -52,7 +52,7 @@ jobs:
     # This is based on your 1.0 configuration file or project settings
     - run:
         name: Bundle install
-        command: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && bundle check || bundle install
+        command: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && bundle check || sudo bundle install
     - run: sudo pip install awscli
     - run: sudo pip install awscli --ignore-installed six
     # The following line was run implicitly in your 1.0 builds based on what CircleCI inferred about the structure of your project. In 2.0 you need to be explicit about which commands should be run. In some cases you can discard inferred commands if they are not relevant to your project.
