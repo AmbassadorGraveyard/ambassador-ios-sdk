@@ -86,9 +86,10 @@ jobs:
       - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && bundle exec slather coverage Ambassador.xcodeproj
       - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && set -o pipefail && xcodebuild -workspace Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 8' -scheme AmbassadorUITests -configuration Debug clean build test | tee $CIRCLE_ARTIFACTS/xcode_raw.log | xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/ui-test-results/results.xml
       - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && xcodebuild -workspace Ambassador.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,OS=latest,name=iPhone 8' -configuration Release -scheme Framework -derivedDataPath DerivedData clean build
-      - run: mv /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.framework $CIRCLE_ARTIFACTS/Ambassador.framework
-      - run: mv /Users/distiller/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.bundle $CIRCLE_ARTIFACTS/Ambassador.bundle
+      - run: mv ~/GetAmbassador/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.framework $CIRCLE_ARTIFACTS/Ambassador.framework
+      - run: mv ~/GetAmbassador/ambassador-ios-sdk/Ambassador/DerivedData/Build/Products/Release-iphoneos/Ambassador.bundle $CIRCLE_ARTIFACTS/Ambassador.bundle
       - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && xcodebuild ENABLE_BITCODE=NO -workspace 'Ambassador.xcworkspace' -scheme 'DemoApp' -arch x86_64 -configuration "Debug" -sdk iphonesimulator
+      - run: ls /Users/distiller/Library/Developer/Xcode/DerivedData/
       - run: cd /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Debug-iphonesimulator/ && zip -r DemoApp.app.zip DemoApp.app
       - run: aws s3 cp --acl public-read /Users/distiller/Library/Developer/Xcode/DerivedData/Ambassador-besyrlrkrscgnsfebardmtdyiqvx/Build/Products/Debug-iphonesimulator/DemoApp.app.zip s3://ambassador-rainforest/ios/debug/DemoApp.app.zip
       - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && xcodebuild ENABLE_BITCODE=NO -workspace 'Ambassador.xcworkspace' -scheme 'DemoApp' -arch x86_64 -configuration "Release" -sdk iphonesimulator
