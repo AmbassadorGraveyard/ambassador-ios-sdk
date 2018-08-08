@@ -57,9 +57,9 @@ jobs:
     - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
     - run: pwd && ls && ls ./Ambassador/
     - run: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && pod install --verbose
-        - run:
-        name: Bundle install
-        command: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && bundle check || bundle install
+    - run:
+      name: Bundle install
+      command: cd ~/GetAmbassador/ambassador-ios-sdk/Ambassador/ && bundle check || bundle install
     # Save dependency cache
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
