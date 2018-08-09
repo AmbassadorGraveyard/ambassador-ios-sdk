@@ -117,20 +117,28 @@ jobs:
           path: /tmp/circleci-test-results
 
   deploy-stage:
+    working_directory: ~/GetAmbassador/ambassador-ios-sdk
+    shell: /bin/bash --login
+    environment:
+      RAINFOREST_TOKEN: $RAINFOREST_TOKEN
     macos:
       xcode: '9.2.0'
     steps:
       - run:
           name: Run Rainforest QA if tests pass and branch is staging
-          command: curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && cd ~/GetAmbassador/ambassador-ios-sdk/ && ./rainforest_prod.sh
+          command: curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && cd ~/GetAmbassador/ambassador-ios-sdk/ && ./rainforest_staging.sh
 
   deploy-prod:
+    working_directory: ~/GetAmbassador/ambassador-ios-sdk
+    shell: /bin/bash --login
+    environment:
+      RAINFOREST_TOKEN: $RAINFOREST_TOKEN
     macos:
       xcode: '9.2.0'
     steps:
       - run:
           name: Run Rainforest QA if tests pass and branch is master
-          command: curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && cd ~/GetAmbassador/ambassador-ios-sdk/ && ./rainforest_staging.sh
+          command: curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && cd ~/GetAmbassador/ambassador-ios-sdk/ && ./rainforest_prod.sh
 
 workflows:
   version: 2
