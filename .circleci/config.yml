@@ -119,12 +119,15 @@ jobs:
   deploy-stage:
     working_directory: ~/GetAmbassador/ambassador-ios-sdk
     shell: /bin/bash --login
-    environment:
-      RAINFOREST_TOKEN: $RAINFOREST_TOKEN
     macos:
       xcode: '9.2.0'
     steps:
       - checkout
+      - run:
+          name: Update PATH and Define Environment Variable at Runtime
+          command: |
+            echo 'export RAINFOREST_TOKEN=$RAINFOREST_TOKEN' >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: Run Rainforest QA if tests pass and branch is staging
           command: curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && cd ~/GetAmbassador/ambassador-ios-sdk/ && ./rainforest_staging.sh
@@ -132,12 +135,15 @@ jobs:
   deploy-prod:
     working_directory: ~/GetAmbassador/ambassador-ios-sdk
     shell: /bin/bash --login
-    environment:
-      RAINFOREST_TOKEN: $RAINFOREST_TOKEN
     macos:
       xcode: '9.2.0'
     steps:
       - checkout
+      - run:
+          name: Update PATH and Define Environment Variable at Runtime
+          command: |
+            echo 'export RAINFOREST_TOKEN=$RAINFOREST_TOKEN' >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: Run Rainforest QA if tests pass and branch is master
           command: curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && cd ~/GetAmbassador/ambassador-ios-sdk/ && ./rainforest_prod.sh
