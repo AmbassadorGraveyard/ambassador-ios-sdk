@@ -124,6 +124,7 @@ jobs:
     macos:
       xcode: '9.2.0'
     steps:
+      - checkout
       - run:
           name: Run Rainforest QA if tests pass and branch is staging
           command: curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && cd ~/GetAmbassador/ambassador-ios-sdk/ && ./rainforest_staging.sh
@@ -136,6 +137,7 @@ jobs:
     macos:
       xcode: '9.2.0'
     steps:
+      - checkout
       - run:
           name: Run Rainforest QA if tests pass and branch is master
           command: curl -O https://bin.equinox.io/c/htRtQZagtfg/rainforest-cli-stable-darwin-amd64.zip && unzip rainforest-cli-stable-darwin-amd64.zip -d /usr/local/bin && cd ~/GetAmbassador/ambassador-ios-sdk/ && ./rainforest_prod.sh
