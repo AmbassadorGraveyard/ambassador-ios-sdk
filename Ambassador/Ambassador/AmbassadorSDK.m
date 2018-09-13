@@ -202,12 +202,12 @@ BOOL stackTraceForContainsString(NSException *exception, NSString *keyString) {
     [AmbassadorSDK trackEvent:eventName properties:properties restrictToInstall:NO completion:completion];
 }
 
-+ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties restrictToInstall:(BOOL)restricted completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion {
++ (void)trackEvent:(NSString *)eventName properties:(NSDictionary *)properties restrictToInstall:(BOOL)restrictToInstall completion:(void (^)(AMBConversionParameters *conversion, ConversionStatus conversionStatus, NSError *error))completion {
     // Creates a conversion parameters object based on the properties dictionary
     AMBConversionParameters *parameters = [[AMBConversionParameters alloc] initWithProperties:properties];
     
     // Registers the conversion to Ambassador and returns the conversion status in the completion block
-    [[AmbassadorSDK sharedInstance] localRegisterConversion:parameters restrictToInstall:restricted completion:^(ConversionStatus conversionStatus, NSError *error) {
+    [[AmbassadorSDK sharedInstance] localRegisterConversion:parameters restrictToInstall:restrictToInstall completion:^(ConversionStatus conversionStatus, NSError *error) {
         if (completion) { completion(parameters, conversionStatus, error); }
     }];
 }

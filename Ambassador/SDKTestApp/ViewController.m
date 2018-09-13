@@ -22,7 +22,6 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -47,14 +46,18 @@
 
 - (IBAction)identifyAction:(id)sender {
     NSLog(@"identifyAction Clicked");
-    
+    #if AMBPRODUCTION
+        NSString *groups = @"133";
+    #else
+        NSString *groups = @"19";
+    #endif
     NSDictionary *traitsDict = @{
                                  @"email" : @"matt+testios@getambassador.com",
                                  @"firstName" : @"iOS",
                                  @"lastName" : @"Test App",
                                  @"phone" : @"5555555",
                                  @"sandbox" : @NO,
-                                 @"addToGroups": @"133",
+                                 @"addToGroups": groups,
                                  @"address" : @{
                                          @"street" : @"1 Main",
                                          @"city" : @"Detroit",
