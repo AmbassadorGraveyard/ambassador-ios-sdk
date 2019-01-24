@@ -85,6 +85,8 @@
         self.mbsy_event_data3 = properties[@"eventData3"] ? properties[@"eventData3"] : blankString;
         self.mbsy_transaction_uid = properties[@"orderId"] ? properties[@"orderId"] : blankString;
         self.mbsy_email_new_ambassador = properties[@"emailNewAmbassador"] ? properties[@"emailNewAmbassador"] : @0;
+        self.mbsy_add_to_group_id = properties[@"addToGroups"] ? properties[@"addToGroups"] : @0;
+        self.mbsy_auto_create = properties[@"autoCreate"] ? properties[@"autoCreate"] : nil;
         [self setUpPropertyArray];
         
         DLog(@"[Conversion] Creating conversion with properties -\n%@", [self description]);
