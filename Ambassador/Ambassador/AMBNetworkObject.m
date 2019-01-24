@@ -256,7 +256,7 @@
     self.email = @"";
     self.campaign_id = @"";
     self.enroll = NO;
-    self.source = @"ios_sdk_1_1_2";
+    self.source = @"ios_sdk_1_1_4";
     self.identify_type = @"";
     
     return self;
@@ -268,7 +268,7 @@
         self.remote_customer_id = userID;
         self.enroll = NO;
         self.campaign_id = @"";
-        self.source = @"ios_sdk_1_1_2";
+        self.source = @"ios_sdk_1_1_4";
         self.identify_type = @"";
         [self formatTraits:traits];
         

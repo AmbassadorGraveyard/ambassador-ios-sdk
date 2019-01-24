@@ -170,7 +170,7 @@
     // THEN
     XCTAssertEqualObjects(identifyObject.email, blankString);
     XCTAssertEqualObjects(identifyObject.campaign_id, blankString);
-    XCTAssertEqualObjects(identifyObject.source, @"ios_sdk_1_1_2");
+    XCTAssertEqualObjects(identifyObject.source, @"ios_sdk_1_1_4");
     XCTAssertFalse(identifyObject.enroll);
 }
 
